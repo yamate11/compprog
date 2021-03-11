@@ -1,0 +1,579 @@
+
+
+
+
+
+
+<!DOCTYPE html>
+
+<html>
+<head>
+	<title>F - Distance Sums</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+	<meta http-equiv="Content-Language" content='en'>
+	<meta name="viewport" content="width=device-width,initial-scale=1.0">
+	<meta name="format-detection" content="telephone=no">
+	<meta name="google-site-verification" content="nXGC_JxO0yoP1qBzMnYD_xgufO6leSLw1kyNo2HZltM" />
+
+	
+	<meta name="description" content="AtCoder is a programming contest site for anyone from beginners to experts. We hold weekly programming contests online.">
+	<meta name="author" content="AtCoder Inc.">
+	<link rel="canonical" href="https://atcoder.jp/">
+
+	<meta property="og:site_name" content="AtCoder">
+	
+	<meta property="og:title" content="F - Distance Sums" />
+	<meta property="og:description" content="AtCoder is a programming contest site for anyone from beginners to experts. We hold weekly programming contests online." />
+	<meta property="og:type" content="website" />
+	<meta property="og:url" content="https://atcoder.jp/contests/arc103/tasks/arc103_d" />
+	<meta property="og:image" content="https://img.atcoder.jp/assets/atcoder.png" />
+	<meta name="twitter:card" content="summary" />
+	<meta name="twitter:site" content="@atcoder" />
+	
+	<meta property="twitter:title" content="F - Distance Sums" />
+
+	<link href='//fonts.googleapis.com/css?family=Lato:400,700' rel='stylesheet' type='text/css'>
+	<link rel="stylesheet" type="text/css" href='/public/css/bootstrap.min.css?v=201904042212'>
+	<link rel="stylesheet" type="text/css" href='/public/css/base.css?v=201904042212'>
+	<link rel="shortcut icon" type="image/png" href="//img.atcoder.jp/assets/favicon.png">
+	<link rel="apple-touch-icon" href="//img.atcoder.jp/assets/atcoder.png">
+	<script src='/public/js/lib/jquery-1.9.1.min.js?v=201904042212'></script>
+	<script src='/public/js/lib/bootstrap.min.js?v=201904042212'></script>
+	<script src="//cdnjs.cloudflare.com/ajax/libs/js-cookie/2.1.4/js.cookie.min.js"></script>
+	<script src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/moment.min.js"></script>
+	<script src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/locale/ja.js"></script>
+	<script>
+		var LANG = "en";
+		var userScreenName = "";
+	</script>
+	<script src='/public/js/utils.js?v=201904042212'></script>
+	
+	
+		<script src='/public/js/contest.js?v=201904042212'></script>
+		<link href='/public/css/contest.css?v=201904042212' rel="stylesheet" />
+		<script>
+			var contestScreenName = "arc103";
+			var remainingText = "Remaining Time";
+			var countDownText = "Contest begins in";
+			var startTime = moment("2018-09-29T21:00:00+09:00");
+			var endTime = moment("2018-09-29T22:40:00+09:00");
+		</script>
+		<style></style>
+	
+	
+		<script type="text/x-mathjax-config">MathJax.Hub.Config({messageStyle:"none",tex2jax:{skipTags:["script","noscript","style","textarea","code"],inlineMath:[['\\(','\\)']]}});</script>
+		<script src="//cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+		<script src='/public/js/task.js?v=201904042212'></script>
+	
+	
+	
+	
+		<link href="//cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/css/select2.min.css" rel="stylesheet" />
+		<link href="//cdnjs.cloudflare.com/ajax/libs/select2-bootstrap-theme/0.1.0-beta.10/select2-bootstrap.min.css" rel="stylesheet" />
+		<script src='/public/js/lib/select2.min.js?v=201904042212'></script>
+	
+	
+		<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/codemirror/5.38.0/codemirror.min.css">
+		<script src="//cdnjs.cloudflare.com/ajax/libs/codemirror/5.38.0/codemirror.min.js"></script>
+		<script src='/public/js/codeMirror/merged.js?v=201904042212'></script>
+	
+	
+		<script src="//cdn.rawgit.com/google/code-prettify/master/loader/run_prettify.js"></script>
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	<script src='/public/js/base.js?v=201904042212'></script>
+	<script src='/public/js/ga.js?v=201904042212'></script>
+</head>
+
+<body>
+<div id="modal-contest-start" class="modal fade" tabindex="-1" role="dialog">
+	<div class="modal-dialog" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+				<h4 class="modal-title">Contest started</h4>
+			</div>
+			<div class="modal-body">
+				<p>AtCoder Regular Contest 103 has begun.</p>
+			</div>
+			<div class="modal-footer">
+				
+					<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+				
+			</div>
+		</div>
+	</div>
+</div>
+<div id="modal-contest-end" class="modal fade" tabindex="-1" role="dialog">
+	<div class="modal-dialog" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+				<h4 class="modal-title">Contest is over</h4>
+			</div>
+			<div class="modal-body">
+				<p>AtCoder Regular Contest 103 has ended.</p>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+			</div>
+		</div>
+	</div>
+</div>
+<div id="main-div" class="float-container">
+	<nav class="navbar navbar-inverse navbar-fixed-top">
+		<div class="container-fluid">
+			<div class="navbar-header">
+				<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapse" aria-expanded="false">
+					<span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span>
+				</button>
+				<a class="navbar-brand" href="/"></a>
+			</div>
+			<div class="collapse navbar-collapse" id="navbar-collapse">
+				<ul class="nav navbar-nav">
+				
+					<li><a class="contest-title" href='/contests/arc103'>AtCoder Regular Contest 103</a></li>
+				
+				</ul>
+				<ul class="nav navbar-nav navbar-right">
+					
+					<li class="dropdown">
+						<a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
+							<img src='//img.atcoder.jp/assets/flag-lang/en.png'> English <span class="caret"></span>
+						</a>
+						<ul class="dropdown-menu">
+							<li><a href='/contests/arc103/tasks/arc103_d?lang=ja'><img src='//img.atcoder.jp/assets/flag-lang/ja.png'> 日本語</a></li>
+							<li><a href='/contests/arc103/tasks/arc103_d?lang=en'><img src='//img.atcoder.jp/assets/flag-lang/en.png'> English</a></li>
+						</ul>
+					</li>
+					
+					
+						<li><a href="/register?continue=https%3A%2F%2Fatcoder.jp%2Fcontests%2Farc103%2Ftasks%2Farc103_d">Sign Up</a></li>
+						<li><a href="/login?continue=https%3A%2F%2Fatcoder.jp%2Fcontests%2Farc103%2Ftasks%2Farc103_d">Sign In</a></li>
+					
+				</ul>
+			</div>
+		</div>
+	</nav>
+	<form method="POST" name="form_logout" action='/logout?continue=https%3A%2F%2Fatcoder.jp%2Fcontests%2Farc103%2Ftasks%2Farc103_d'>
+		<input type="hidden" name="csrf_token" value='TAvcMCP4GuqAxA4Z8s4fIDIQQNpIjaWWwUzIF1ZsZ2Y=' />
+	</form>
+	<div id="main-container" class="container" style="padding-top:50px;">
+		
+
+<div class="row">
+	<div id="contest-nav-tabs" class="col-sm-12 mb-2 cnvtb-fixed">
+	<div>
+		<small class="contest-duration">Contest Duration: <a href='http://www.timeanddate.com/worldclock/fixedtime.html?iso=20180929T2100&p1=248' target='blank'><time class='fixtime fixtime-full'>2018-09-29 21:00:00+0900</time></a> ~ <a href='http://www.timeanddate.com/worldclock/fixedtime.html?iso=20180929T2240&p1=248' target='blank'><time class='fixtime fixtime-full'>2018-09-29 22:40:00+0900</time></a> (local time)</small>
+		<small class="back-to-home pull-right"><a href='/'>Back to Home</a></small>
+	</div>
+	<ul class="nav nav-tabs">
+		<li><a href='/contests/arc103'><span class="glyphicon glyphicon-home" aria-hidden="true"></span> Top</a></li>
+		
+			<li class="active"><a href='/contests/arc103/tasks'><span class="glyphicon glyphicon-tasks" aria-hidden="true"></span> Tasks</a></li>
+		
+
+		
+			<li><a href='/contests/arc103/clarifications'><span class="glyphicon glyphicon-question-sign" aria-hidden="true"></span> Clarifications <span id="clar-badge" class="badge"></span></a></li>
+		
+
+		
+
+		
+			<li>
+				<a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false"><span class="glyphicon glyphicon-list" aria-hidden="true"></span> Submissions<span class="caret"></span></a>
+				<ul class="dropdown-menu">
+					<li><a href='/contests/arc103/submissions'><span class="glyphicon glyphicon-globe" aria-hidden="true"></span> All Submissions</a></li>
+					
+				</ul>
+			</li>
+		
+
+		
+			<li><a href='/contests/arc103/standings'><span class="glyphicon glyphicon-sort-by-attributes-alt" aria-hidden="true"></span> Standings</a></li>
+		
+
+		
+
+		
+			<li><a href='https://img.atcoder.jp/arc103/editorial.pdf' target="_blank"><span class="glyphicon glyphicon-book" aria-hidden="true"></span> Editorial</a></li>
+		
+
+		<li class="pull-right"><a id="fix-cnvtb" href="javascript:void(0)"><span class="glyphicon glyphicon-pushpin" aria-hidden="true"></span></a></li>
+	</ul>
+</div>
+	<div class="col-sm-12">
+		<span class="h2">F - Distance Sums</span>
+		<hr/>
+		<p>Time Limit: 2 sec / Memory Limit: 1024 MB</p>
+
+		<div id="task-statement">
+			<span class="lang">
+<span class="lang-ja">
+<p>配点 : <var>900</var> 点</p>
+
+<div class="part">
+<section>
+<h3>問題文</h3><p>長さ <var>N</var> の数列 <var>D_1, D_2, ..., D_N</var> が与えられます。
+<strong><var>D_i</var> の値はすべて異なります</strong>。
+以下の条件を満たす <var>N</var> 頂点の木は存在するでしょうか？</p>
+<ul>
+<li>各頂点には <var>1,2,..., N</var> の番号が付けられている</li>
+<li>各辺には <var>1,2,..., N-1</var> の番号が付けられていて、<var>i</var> 番目の辺は頂点 <var>u_i</var> と <var>v_i</var> をつないでいる</li>
+<li>各頂点 <var>i</var> に対して、<var>i</var> から他の頂点までの距離の和は <var>D_i</var> である。ただし、各辺の長さは <var>1</var> であるものとする。</li>
+</ul>
+<p>条件を満たす木が存在する場合、<var>1</var> つ構築してください。</p>
+</section>
+</div>
+
+<div class="part">
+<section>
+<h3>制約</h3><ul>
+<li><var>2 \leq N \leq 100000</var></li>
+<li><var>1 \leq D_i \leq 10^{12}</var></li>
+<li><var>D_i</var> はすべて異なる</li>
+</ul>
+</section>
+</div>
+
+<hr />
+
+<div class="io-style">
+<div class="part">
+<section>
+<h3>入力</h3><p>入力は以下の形式で標準入力から与えられる．</p>
+<pre><var>N</var>
+<var>D_1</var>
+<var>D_2</var>
+<var>:</var>
+<var>D_N</var>
+</pre>
+
+</section>
+</div>
+
+<div class="part">
+<section>
+<h3>出力</h3><p>条件を満たす <var>N</var> 頂点の木が存在しない場合、<code>-1</code> と出力してください。</p>
+<p>条件を満たす <var>N</var> 頂点の木が存在する場合、<var>N-1</var> 行出力してください。
+<var>i</var> 行目には <var>u_i,v_i</var> を空白区切りで出力してください。
+複数の木が条件を満たす場合、どれを出力しても構いません。</p>
+</section>
+</div>
+</div>
+
+<hr />
+
+<div class="part">
+<section>
+<h3>入力例 1</h3><pre>7
+10
+15
+13
+18
+11
+14
+19
+</pre>
+
+</section>
+</div>
+
+<div class="part">
+<section>
+<h3>出力例 1</h3><pre>1 2
+1 3
+1 5
+3 4
+5 6
+6 7
+</pre>
+
+<p>次のような木が条件を満たします。</p>
+<p><img alt="" src="https://img.atcoder.jp/arc103/92920696862ead4cacf3755c3c8135e0.png" /></p>
+</section>
+</div>
+
+<hr />
+
+<div class="part">
+<section>
+<h3>入力例 2</h3><pre>2
+1
+2
+</pre>
+
+</section>
+</div>
+
+<div class="part">
+<section>
+<h3>出力例 2</h3><pre>-1
+</pre>
+
+</section>
+</div>
+
+<hr />
+
+<div class="part">
+<section>
+<h3>入力例 3</h3><pre>15
+57
+62
+47
+45
+42
+74
+90
+75
+54
+50
+66
+63
+77
+87
+51
+</pre>
+
+</section>
+</div>
+
+<div class="part">
+<section>
+<h3>出力例 3</h3><pre>1 10
+1 11
+2 8
+2 15
+3 5
+3 9
+4 5
+4 10
+5 15
+6 12
+6 14
+7 13
+9 12
+11 13
+</pre></section>
+</div>
+</span>
+<span class="lang-en">
+<p>Score : <var>900</var> points</p>
+
+<div class="part">
+<section>
+<h3>Problem Statement</h3><p>You are given a sequence <var>D_1, D_2, ..., D_N</var> of length <var>N</var>.
+<strong>The values of <var>D_i</var> are all distinct.</strong>
+Does a tree with <var>N</var> vertices that satisfies the following conditions exist?</p>
+<ul>
+<li>The vertices are numbered <var>1,2,..., N</var>.</li>
+<li>The edges are numbered <var>1,2,..., N-1</var>, and Edge <var>i</var> connects Vertex <var>u_i</var> and <var>v_i</var>.</li>
+<li>For each vertex <var>i</var>, the sum of the distances from <var>i</var> to the other vertices is <var>D_i</var>, assuming that the length of each edge is <var>1</var>.</li>
+</ul>
+<p>If such a tree exists, construct one such tree.</p>
+</section>
+</div>
+
+<div class="part">
+<section>
+<h3>Constraints</h3><ul>
+<li><var>2 \leq N \leq 100000</var></li>
+<li><var>1 \leq D_i \leq 10^{12}</var></li>
+<li><var>D_i</var> are all distinct.</li>
+</ul>
+</section>
+</div>
+
+<hr />
+
+<div class="io-style">
+<div class="part">
+<section>
+<h3>Input</h3><p>Input is given from Standard Input in the following format:</p>
+<pre><var>N</var>
+<var>D_1</var>
+<var>D_2</var>
+<var>:</var>
+<var>D_N</var>
+</pre>
+
+</section>
+</div>
+
+<div class="part">
+<section>
+<h3>Output</h3><p>If a tree with <var>n</var> vertices that satisfies the conditions does not exist, print <code>-1</code>.</p>
+<p>If a tree with <var>n</var> vertices that satisfies the conditions exist, print <var>n-1</var> lines.
+The <var>i</var>-th line should contain <var>u_i</var> and <var>v_i</var> with a space in between.
+If there are multiple trees that satisfy the conditions, any such tree will be accepted.</p>
+</section>
+</div>
+</div>
+
+<hr />
+
+<div class="part">
+<section>
+<h3>Sample Input 1</h3><pre>7
+10
+15
+13
+18
+11
+14
+19
+</pre>
+
+</section>
+</div>
+
+<div class="part">
+<section>
+<h3>Sample Output 1</h3><pre>1 2
+1 3
+1 5
+3 4
+5 6
+6 7
+</pre>
+
+<p>The tree shown below satisfies the conditions.</p>
+<p><img alt="" src="https://img.atcoder.jp/arc103/92920696862ead4cacf3755c3c8135e0.png" /></p>
+</section>
+</div>
+
+<hr />
+
+<div class="part">
+<section>
+<h3>Sample Input 2</h3><pre>2
+1
+2
+</pre>
+
+</section>
+</div>
+
+<div class="part">
+<section>
+<h3>Sample Output 2</h3><pre>-1
+</pre>
+
+</section>
+</div>
+
+<hr />
+
+<div class="part">
+<section>
+<h3>Sample Input 3</h3><pre>15
+57
+62
+47
+45
+42
+74
+90
+75
+54
+50
+66
+63
+77
+87
+51
+</pre>
+
+</section>
+</div>
+
+<div class="part">
+<section>
+<h3>Sample Output 3</h3><pre>1 10
+1 11
+2 8
+2 15
+3 5
+3 9
+4 5
+4 10
+5 15
+6 12
+6 14
+7 13
+9 12
+11 13
+</pre></section>
+</div>
+</span>
+</span>
+
+		</div>
+
+		
+
+		
+	</div>
+</div>
+
+
+		
+			<hr>
+			
+			
+			
+<div class="a2a_kit a2a_kit_size_20 a2a_default_style pull-right" data-a2a-url="https://atcoder.jp/contests/arc103/tasks/arc103_d?lang=en" data-a2a-title="F - Distance Sums">
+	<a class="a2a_button_facebook"></a>
+	<a class="a2a_button_twitter"></a>
+	
+		<a class="a2a_button_telegram"></a>
+	
+	<a class="a2a_dd" href="https://www.addtoany.com/share"></a>
+</div>
+
+		
+		<script async src="//static.addtoany.com/menu/page.js"></script>
+		
+	</div> 
+	<hr>
+</div> 
+<div class="container">
+    <footer class="footer">
+		
+			<ul>
+				<li><a href='/contests/arc103/rules'>Rule</a></li>
+				<li><a href='/contests/arc103/glossary'>Glossary</a></li>
+				
+			</ul>
+		
+		<ul>
+			<li><a href='/tos'>Terms of service</a></li>
+			<li><a href='/privacy'>Privacy Policy</a></li>
+			<li><a href='/personal'>Information Protection Policy</a></li>
+			<li><a href='/company'>Company</a></li>
+			<li><a href='/faq'>FAQ</a></li>
+			<li><a href='/contact'>Contact</a></li>
+			
+		</ul>
+    <div class="text-center">
+        <small id="copyright">Copyright Since 2012 &copy;<a href="http://atcoder.co.jp">AtCoder Inc.</a> All rights reserved.</small>
+    </div>
+    </footer>
+</div>
+<p id="fixed-server-timer" class='contest-timer'></p>
+
+	<div id="scroll-page-top" style="display:none;"><span class="glyphicon glyphicon-arrow-up" aria-hidden="true"></span> Page Top</div>
+
+</body>
+</html>
+
+

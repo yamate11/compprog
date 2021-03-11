@@ -1,0 +1,84 @@
+--- ans.hs	2019-01-09 01:42:17.884961300 +0900
++++ ans2.hs	2019-01-09 02:11:52.642176600 +0900
+@@ -19,7 +19,8 @@
+ import Debug.Trace
+ 
+ solve :: String -> String -> String
+-solve s t = reverse $ snd $ theFunc $ (len_s, len_t)
++-- solve s t = getS (len_s, len_t) ""
++solve s t = show $ theFunc (len_s, len_t)
+   where
+ 
+   vs = VU.fromList s
+@@ -32,10 +33,8 @@
+ 
+   dec = flip divMod (len_t+1)
+ 
+-  -- mf :: ((Int, Int) -> m (Int, String)) -> (Int, Int) -> m (Int, String)
+-  -- mf rd (p,q) | trace ("mf " ++ show (p,q)) False = undefined
+-  mf rd (0,_) = return (0, "")
+-  mf rd (_,0) = return (0, "")
++  mf rd (0,_) = return (0,"")
++  mf rd (_,0) = return (0,"")
+   mf rd (p,q)
+     | vs VU.! (p-1) == vt VU.! (q-1) = do
+         (y,cs) <- rd (p-1, q-1)
+@@ -43,11 +42,9 @@
+     | otherwise = do
+         (y1,cs1) <- rd (p-1, q)
+         (y2,cs2) <- rd (p, q-1)
+-        if y1 > y2 then return (y1, cs1)
+-                   else return (y2, cs2)
+-
+-  theFunc = func_from_memoB (memovecB enc dec mf [(len_s, len_t)])
++        if y1 > y2 then return (y1,cs1) else return (y2,cs2)
+ 
++  theFunc = func_from_memo (memovec enc dec mf [(len_s, len_t)])
+ 
+ readBInt :: B.ByteString -> Int
+ readBInt = fst . fromJust . B.readInt
+@@ -85,14 +82,15 @@
+ 
+ ----------------------------------------------------------------------
+ 
+-memovecB :: forall a d. (Show a, Show d) =>
++memovec :: forall a d. (Show a, Show d) =>
+            (d -> Int) -> (Int -> d) ->
+            (forall m. Monad m => (d -> m a) -> d -> m a) ->
+            [d] -> (V.Vector a, VU.Vector Bool, d -> Int)
+-memovecB encode decode mf ds = (vecV, vecF, encode)
++memovec encode decode mf ds = (vecV, vecF, encode)
+   where
+     (vecV, vecF) = mv_enc mf' (map encode ds)
+ 
++    mf' :: Monad m => (Int -> m a) -> Int -> m a
+     mf' f' i = mf (f' . encode) (decode i)
+ 
+     mv_enc :: (forall m. Monad m => (Int -> m a) -> Int -> m a)
+@@ -108,6 +106,8 @@
+ 
+       where
+ 
++        calc :: PrimMonad m => VM.MVector (PrimState m) a
++             -> VUM.MVector (PrimState m) Bool -> Int -> m a
+         calc v flags x = VUM.read flags x >>= ite231 (VM.read v x) else_e
+           where
+             else_e = do
+@@ -116,15 +116,11 @@
+               VUM.write flags x True
+               return val
+ 
+-func_from_memoB :: (V.Vector a, VU.Vector Bool, d->Int) -> d -> a
+-func_from_memoB (vecV, vecF, enc) d
++func_from_memo :: (V.Vector a, VU.Vector Bool, d->Int) -> d -> a
++func_from_memo (vecV, vecF, enc) d
+   | vecF VU.! x = vecV V.! x
+   | otherwise   = undefined
+   where x = enc d
+ 
+ ite231 :: a -> a -> Bool -> a
+ ite231 then_part else_part cond = if cond then then_part else else_part
+-
+-
+-
+-

@@ -1,0 +1,8 @@
+Codeforces R.362(Div.2) F.Legen...
+2020/11/14
+解けず
+Aho-Corasick
+
+TBW
+
+Aho-Corasick ライブラリを作らねば．

@@ -1,0 +1,205 @@
+i= 1 s0_cmb= [1]
+i= 2 s0_cmb= [1, 1]
+i= 3 s0_cmb= [1, 1, 1]
+i= 4 s0_cmb= [1, 1, 1, 1]
+i= 5 s0_cmb= [1, 1, 1, 1, 1]
+i= 6 s0_cmb= [1, 1, 1, 1, 1, 1]
+i= 7 s0_cmb= [1, 1, 1, 1, 1, 1, 1]
+i= 8 s0_cmb= [1, 1, 1, 1, 1, 1, 1, 1]
+i= 9 s0_cmb= [9]
+i= 10 s0_cmb= [1, 9]
+i= 11 s0_cmb= [1, 1, 9]
+i= 12 s0_cmb= [1, 1, 1, 9]
+i= 13 s0_cmb= [1, 1, 1, 1, 9]
+i= 14 s0_cmb= [1, 1, 1, 1, 1, 9]
+i= 15 s0_cmb= [1, 1, 1, 1, 1, 1, 9]
+i= 16 s0_cmb= [1, 1, 1, 1, 1, 1, 1, 9]
+i= 17 s0_cmb= [1, 1, 1, 1, 1, 1, 1, 1, 9]
+i= 18 s0_cmb= [9, 9]
+i= 19 s0_cmb= [1, 9, 9]
+i= 20 s0_cmb= [1, 1, 9, 9]
+i= 21 s0_cmb= [1, 1, 1, 9, 9]
+i= 22 s0_cmb= [1, 1, 1, 1, 9, 9]
+i= 23 s0_cmb= [1, 1, 1, 1, 1, 9, 9]
+i= 24 s0_cmb= [1, 1, 1, 1, 1, 1, 9, 9]
+i= 25 s0_cmb= [1, 1, 1, 1, 1, 1, 1, 9, 9]
+i= 27 s0_cmb= [9, 9, 9]
+i= 28 s0_cmb= [1, 9, 9, 9]
+i= 29 s0_cmb= [1, 1, 9, 9, 9]
+i= 30 s0_cmb= [1, 1, 1, 9, 9, 9]
+i= 31 s0_cmb= [1, 1, 1, 1, 9, 9, 9]
+i= 32 s0_cmb= [1, 1, 1, 1, 1, 9, 9, 9]
+i= 33 s0_cmb= [1, 1, 1, 1, 1, 1, 9, 9, 9]
+i= 36 s0_cmb= [9, 9, 9, 9]
+i= 37 s0_cmb= [1, 9, 9, 9, 9]
+i= 38 s0_cmb= [1, 1, 9, 9, 9, 9]
+i= 39 s0_cmb= [1, 1, 1, 9, 9, 9, 9]
+i= 40 s0_cmb= [1, 1, 1, 1, 9, 9, 9, 9]
+i= 41 s0_cmb= [1, 1, 1, 1, 1, 9, 9, 9, 9]
+i= 45 s0_cmb= [9, 9, 9, 9, 9]
+i= 46 s0_cmb= [1, 9, 9, 9, 9, 9]
+i= 47 s0_cmb= [1, 1, 9, 9, 9, 9, 9]
+i= 48 s0_cmb= [1, 1, 1, 9, 9, 9, 9, 9]
+i= 49 s0_cmb= [1, 1, 1, 1, 9, 9, 9, 9, 9]
+i= 54 s0_cmb= [9, 9, 9, 9, 9, 9]
+i= 55 s0_cmb= [1, 9, 9, 9, 9, 9, 9]
+i= 56 s0_cmb= [1, 1, 9, 9, 9, 9, 9, 9]
+i= 57 s0_cmb= [1, 1, 1, 9, 9, 9, 9, 9, 9]
+i= 63 s0_cmb= [9, 9, 9, 9, 9, 9, 9]
+i= 64 s0_cmb= [1, 9, 9, 9, 9, 9, 9, 9]
+i= 65 s0_cmb= [1, 1, 9, 9, 9, 9, 9, 9, 9]
+i= 72 s0_cmb= [9, 9, 9, 9, 9, 9, 9, 9]
+i= 73 s0_cmb= [1, 9, 9, 9, 9, 9, 9, 9, 9]
+i= 81 s0_cmb= [9, 9, 9, 9, 9, 9, 9, 9, 9]
+k= 0 c= 0 v= 2 m= 2 v_tbl= 2 c_tbl= 0 m_tbl= 0
+k= 0 c= 0 v= 2 m= 3 v_tbl= 3 c_tbl= 0 m_tbl= 0
+k= 0 c= 0 v= 2 m= 4 v_tbl= 4 c_tbl= 0 m_tbl= 0
+k= 0 c= 0 v= 2 m= 5 v_tbl= 5 c_tbl= 0 m_tbl= 0
+k= 0 c= 0 v= 2 m= 6 v_tbl= 6 c_tbl= 0 m_tbl= 0
+k= 0 c= 0 v= 2 m= 7 v_tbl= 7 c_tbl= 0 m_tbl= 0
+k= 0 c= 0 v= 2 m= 8 v_tbl= 8 c_tbl= 0 m_tbl= 0
+k= 0 c= 0 v= 2 m= 9 v_tbl= 9 c_tbl= 0 m_tbl= 0
+k= 0 c= 1 v= 1 m= 1 v_tbl= 1 c_tbl= 0 m_tbl= 0
+k= 0 c= 1 v= 1 m= 2 v_tbl= 2 c_tbl= 0 m_tbl= 0
+k= 0 c= 1 v= 1 m= 3 v_tbl= 3 c_tbl= 0 m_tbl= 0
+k= 0 c= 1 v= 1 m= 4 v_tbl= 4 c_tbl= 0 m_tbl= 0
+k= 0 c= 1 v= 1 m= 5 v_tbl= 5 c_tbl= 0 m_tbl= 0
+k= 0 c= 1 v= 1 m= 6 v_tbl= 6 c_tbl= 0 m_tbl= 0
+k= 0 c= 1 v= 1 m= 7 v_tbl= 7 c_tbl= 0 m_tbl= 0
+k= 0 c= 1 v= 1 m= 8 v_tbl= 8 c_tbl= 0 m_tbl= 0
+k= 0 c= 1 v= 1 m= 9 v_tbl= 9 c_tbl= 0 m_tbl= 0
+k= 0 c= 2 v= 0 m= 0 v_tbl= 0 c_tbl= 0 m_tbl= 0
+k= 0 c= 2 v= 0 m= 1 v_tbl= 1 c_tbl= 0 m_tbl= 0
+k= 0 c= 2 v= 0 m= 2 v_tbl= 2 c_tbl= 0 m_tbl= 0
+k= 0 c= 2 v= 0 m= 3 v_tbl= 3 c_tbl= 0 m_tbl= 0
+k= 0 c= 2 v= 0 m= 4 v_tbl= 4 c_tbl= 0 m_tbl= 0
+k= 0 c= 2 v= 0 m= 5 v_tbl= 5 c_tbl= 0 m_tbl= 0
+k= 0 c= 2 v= 0 m= 6 v_tbl= 6 c_tbl= 0 m_tbl= 0
+k= 0 c= 2 v= 0 m= 7 v_tbl= 7 c_tbl= 0 m_tbl= 0
+k= 0 c= 2 v= 0 m= 8 v_tbl= 8 c_tbl= 0 m_tbl= 0
+k= 0 c= 2 v= 0 m= 9 v_tbl= 9 c_tbl= 0 m_tbl= 0
+k= 1 c= 0 v= 7 m= 7 v_tbl= 9 c_tbl= 0 m_tbl= 2
+k= 1 c= 0 v= 7 m= 8 v_tbl= 10 c_tbl= 0 m_tbl= 2
+k= 1 c= 0 v= 7 m= 9 v_tbl= 11 c_tbl= 0 m_tbl= 2
+k= 1 c= 0 v= 17 m= 9 v_tbl= 10 c_tbl= 1 m_tbl= 1
+k= 1 c= 0 v= 27 m= 3 v_tbl= 3 c_tbl= 2 m_tbl= 0
+k= 1 c= 0 v= 27 m= 4 v_tbl= 4 c_tbl= 2 m_tbl= 0
+k= 1 c= 0 v= 27 m= 5 v_tbl= 5 c_tbl= 2 m_tbl= 0
+k= 1 c= 0 v= 27 m= 6 v_tbl= 6 c_tbl= 2 m_tbl= 0
+k= 1 c= 0 v= 27 m= 7 v_tbl= 7 c_tbl= 2 m_tbl= 0
+k= 1 c= 0 v= 27 m= 8 v_tbl= 8 c_tbl= 2 m_tbl= 0
+k= 1 c= 0 v= 27 m= 9 v_tbl= 9 c_tbl= 2 m_tbl= 0
+k= 1 c= 1 v= 6 m= 6 v_tbl= 8 c_tbl= 0 m_tbl= 2
+k= 1 c= 1 v= 6 m= 7 v_tbl= 9 c_tbl= 0 m_tbl= 2
+k= 1 c= 1 v= 6 m= 8 v_tbl= 10 c_tbl= 0 m_tbl= 2
+k= 1 c= 1 v= 6 m= 9 v_tbl= 11 c_tbl= 0 m_tbl= 2
+k= 1 c= 1 v= 16 m= 8 v_tbl= 9 c_tbl= 1 m_tbl= 1
+k= 1 c= 1 v= 16 m= 9 v_tbl= 10 c_tbl= 1 m_tbl= 1
+k= 1 c= 2 v= 5 m= 5 v_tbl= 7 c_tbl= 0 m_tbl= 2
+k= 1 c= 2 v= 5 m= 6 v_tbl= 8 c_tbl= 0 m_tbl= 2
+k= 1 c= 2 v= 5 m= 7 v_tbl= 9 c_tbl= 0 m_tbl= 2
+k= 1 c= 2 v= 5 m= 8 v_tbl= 10 c_tbl= 0 m_tbl= 2
+k= 1 c= 2 v= 5 m= 9 v_tbl= 11 c_tbl= 0 m_tbl= 2
+k= 1 c= 2 v= 15 m= 7 v_tbl= 8 c_tbl= 1 m_tbl= 1
+k= 1 c= 2 v= 15 m= 8 v_tbl= 9 c_tbl= 1 m_tbl= 1
+k= 1 c= 2 v= 15 m= 9 v_tbl= 10 c_tbl= 1 m_tbl= 1
+k= 1 c= 2 v= 25 m= 9 v_tbl= 9 c_tbl= 2 m_tbl= 0
+k= 1 c= 3 v= 4 m= 4 v_tbl= 6 c_tbl= 0 m_tbl= 2
+k= 1 c= 3 v= 4 m= 5 v_tbl= 7 c_tbl= 0 m_tbl= 2
+k= 1 c= 3 v= 4 m= 6 v_tbl= 8 c_tbl= 0 m_tbl= 2
+k= 1 c= 3 v= 4 m= 7 v_tbl= 9 c_tbl= 0 m_tbl= 2
+k= 1 c= 3 v= 4 m= 8 v_tbl= 10 c_tbl= 0 m_tbl= 2
+k= 1 c= 3 v= 4 m= 9 v_tbl= 11 c_tbl= 0 m_tbl= 2
+k= 1 c= 3 v= 14 m= 6 v_tbl= 7 c_tbl= 1 m_tbl= 1
+k= 1 c= 3 v= 14 m= 7 v_tbl= 8 c_tbl= 1 m_tbl= 1
+k= 1 c= 3 v= 14 m= 8 v_tbl= 9 c_tbl= 1 m_tbl= 1
+k= 1 c= 3 v= 14 m= 9 v_tbl= 10 c_tbl= 1 m_tbl= 1
+k= 1 c= 3 v= 24 m= 8 v_tbl= 8 c_tbl= 2 m_tbl= 0
+k= 1 c= 3 v= 24 m= 9 v_tbl= 9 c_tbl= 2 m_tbl= 0
+k= 1 c= 4 v= 3 m= 3 v_tbl= 5 c_tbl= 0 m_tbl= 2
+k= 1 c= 4 v= 3 m= 4 v_tbl= 6 c_tbl= 0 m_tbl= 2
+k= 1 c= 4 v= 3 m= 5 v_tbl= 7 c_tbl= 0 m_tbl= 2
+k= 1 c= 4 v= 3 m= 6 v_tbl= 8 c_tbl= 0 m_tbl= 2
+k= 1 c= 4 v= 3 m= 7 v_tbl= 9 c_tbl= 0 m_tbl= 2
+k= 1 c= 4 v= 3 m= 8 v_tbl= 10 c_tbl= 0 m_tbl= 2
+k= 1 c= 4 v= 3 m= 9 v_tbl= 11 c_tbl= 0 m_tbl= 2
+k= 1 c= 4 v= 13 m= 5 v_tbl= 6 c_tbl= 1 m_tbl= 1
+k= 1 c= 4 v= 13 m= 6 v_tbl= 7 c_tbl= 1 m_tbl= 1
+k= 1 c= 4 v= 13 m= 7 v_tbl= 8 c_tbl= 1 m_tbl= 1
+k= 1 c= 4 v= 13 m= 8 v_tbl= 9 c_tbl= 1 m_tbl= 1
+k= 1 c= 4 v= 13 m= 9 v_tbl= 10 c_tbl= 1 m_tbl= 1
+k= 1 c= 4 v= 23 m= 7 v_tbl= 7 c_tbl= 2 m_tbl= 0
+k= 1 c= 4 v= 23 m= 8 v_tbl= 8 c_tbl= 2 m_tbl= 0
+k= 1 c= 4 v= 23 m= 9 v_tbl= 9 c_tbl= 2 m_tbl= 0
+k= 1 c= 5 v= 2 m= 2 v_tbl= 4 c_tbl= 0 m_tbl= 2
+k= 1 c= 5 v= 2 m= 3 v_tbl= 5 c_tbl= 0 m_tbl= 2
+k= 1 c= 5 v= 2 m= 4 v_tbl= 6 c_tbl= 0 m_tbl= 2
+k= 1 c= 5 v= 2 m= 5 v_tbl= 7 c_tbl= 0 m_tbl= 2
+k= 1 c= 5 v= 2 m= 6 v_tbl= 8 c_tbl= 0 m_tbl= 2
+k= 1 c= 5 v= 2 m= 7 v_tbl= 9 c_tbl= 0 m_tbl= 2
+k= 1 c= 5 v= 2 m= 8 v_tbl= 10 c_tbl= 0 m_tbl= 2
+k= 1 c= 5 v= 2 m= 9 v_tbl= 11 c_tbl= 0 m_tbl= 2
+k= 1 c= 5 v= 12 m= 4 v_tbl= 5 c_tbl= 1 m_tbl= 1
+k= 1 c= 5 v= 12 m= 5 v_tbl= 6 c_tbl= 1 m_tbl= 1
+k= 1 c= 5 v= 12 m= 6 v_tbl= 7 c_tbl= 1 m_tbl= 1
+k= 1 c= 5 v= 12 m= 7 v_tbl= 8 c_tbl= 1 m_tbl= 1
+k= 1 c= 5 v= 12 m= 8 v_tbl= 9 c_tbl= 1 m_tbl= 1
+k= 1 c= 5 v= 12 m= 9 v_tbl= 10 c_tbl= 1 m_tbl= 1
+k= 1 c= 5 v= 22 m= 6 v_tbl= 6 c_tbl= 2 m_tbl= 0
+k= 1 c= 5 v= 22 m= 7 v_tbl= 7 c_tbl= 2 m_tbl= 0
+k= 1 c= 5 v= 22 m= 8 v_tbl= 8 c_tbl= 2 m_tbl= 0
+k= 1 c= 5 v= 22 m= 9 v_tbl= 9 c_tbl= 2 m_tbl= 0
+k= 1 c= 6 v= 1 m= 2 v_tbl= 4 c_tbl= 0 m_tbl= 2
+k= 1 c= 6 v= 1 m= 3 v_tbl= 5 c_tbl= 0 m_tbl= 2
+k= 1 c= 6 v= 1 m= 4 v_tbl= 6 c_tbl= 0 m_tbl= 2
+k= 1 c= 6 v= 1 m= 5 v_tbl= 7 c_tbl= 0 m_tbl= 2
+k= 1 c= 6 v= 1 m= 6 v_tbl= 8 c_tbl= 0 m_tbl= 2
+k= 1 c= 6 v= 1 m= 7 v_tbl= 9 c_tbl= 0 m_tbl= 2
+k= 1 c= 6 v= 1 m= 8 v_tbl= 10 c_tbl= 0 m_tbl= 2
+k= 1 c= 6 v= 1 m= 9 v_tbl= 11 c_tbl= 0 m_tbl= 2
+k= 1 c= 6 v= 11 m= 3 v_tbl= 4 c_tbl= 1 m_tbl= 1
+k= 1 c= 6 v= 11 m= 4 v_tbl= 5 c_tbl= 1 m_tbl= 1
+k= 1 c= 6 v= 11 m= 5 v_tbl= 6 c_tbl= 1 m_tbl= 1
+k= 1 c= 6 v= 11 m= 6 v_tbl= 7 c_tbl= 1 m_tbl= 1
+k= 1 c= 6 v= 11 m= 7 v_tbl= 8 c_tbl= 1 m_tbl= 1
+k= 1 c= 6 v= 11 m= 8 v_tbl= 9 c_tbl= 1 m_tbl= 1
+k= 1 c= 6 v= 11 m= 9 v_tbl= 10 c_tbl= 1 m_tbl= 1
+k= 1 c= 6 v= 21 m= 5 v_tbl= 5 c_tbl= 2 m_tbl= 0
+k= 1 c= 6 v= 21 m= 6 v_tbl= 6 c_tbl= 2 m_tbl= 0
+k= 1 c= 6 v= 21 m= 7 v_tbl= 7 c_tbl= 2 m_tbl= 0
+k= 1 c= 6 v= 21 m= 8 v_tbl= 8 c_tbl= 2 m_tbl= 0
+k= 1 c= 6 v= 21 m= 9 v_tbl= 9 c_tbl= 2 m_tbl= 0
+k= 1 c= 7 v= 0 m= 2 v_tbl= 4 c_tbl= 0 m_tbl= 2
+k= 1 c= 7 v= 0 m= 3 v_tbl= 5 c_tbl= 0 m_tbl= 2
+k= 1 c= 7 v= 0 m= 4 v_tbl= 6 c_tbl= 0 m_tbl= 2
+k= 1 c= 7 v= 0 m= 5 v_tbl= 7 c_tbl= 0 m_tbl= 2
+k= 1 c= 7 v= 0 m= 6 v_tbl= 8 c_tbl= 0 m_tbl= 2
+k= 1 c= 7 v= 0 m= 7 v_tbl= 9 c_tbl= 0 m_tbl= 2
+k= 1 c= 7 v= 0 m= 8 v_tbl= 10 c_tbl= 0 m_tbl= 2
+k= 1 c= 7 v= 0 m= 9 v_tbl= 11 c_tbl= 0 m_tbl= 2
+k= 1 c= 7 v= 10 m= 2 v_tbl= 3 c_tbl= 1 m_tbl= 1
+k= 1 c= 7 v= 10 m= 3 v_tbl= 4 c_tbl= 1 m_tbl= 1
+k= 1 c= 7 v= 10 m= 4 v_tbl= 5 c_tbl= 1 m_tbl= 1
+k= 1 c= 7 v= 10 m= 5 v_tbl= 6 c_tbl= 1 m_tbl= 1
+k= 1 c= 7 v= 10 m= 6 v_tbl= 7 c_tbl= 1 m_tbl= 1
+k= 1 c= 7 v= 10 m= 7 v_tbl= 8 c_tbl= 1 m_tbl= 1
+k= 1 c= 7 v= 10 m= 8 v_tbl= 9 c_tbl= 1 m_tbl= 1
+k= 1 c= 7 v= 10 m= 9 v_tbl= 10 c_tbl= 1 m_tbl= 1
+k= 1 c= 7 v= 20 m= 4 v_tbl= 4 c_tbl= 2 m_tbl= 0
+k= 1 c= 7 v= 20 m= 5 v_tbl= 5 c_tbl= 2 m_tbl= 0
+k= 1 c= 7 v= 20 m= 6 v_tbl= 6 c_tbl= 2 m_tbl= 0
+k= 1 c= 7 v= 20 m= 7 v_tbl= 7 c_tbl= 2 m_tbl= 0
+k= 1 c= 7 v= 20 m= 8 v_tbl= 8 c_tbl= 2 m_tbl= 0
+k= 1 c= 7 v= 20 m= 9 v_tbl= 9 c_tbl= 2 m_tbl= 0
+k= 1 c= 8 v= 9 m= 1 v_tbl= 2 c_tbl= 1 m_tbl= 1
+k= 1 c= 8 v= 9 m= 2 v_tbl= 3 c_tbl= 1 m_tbl= 1
+k= 1 c= 8 v= 9 m= 3 v_tbl= 4 c_tbl= 1 m_tbl= 1
+k= 1 c= 8 v= 9 m= 4 v_tbl= 5 c_tbl= 1 m_tbl= 1
+k= 1 c= 8 v= 9 m= 5 v_tbl= 6 c_tbl= 1 m_tbl= 1
+k= 1 c= 8 v= 9 m= 6 v_tbl= 7 c_tbl= 1 m_tbl= 1
+k= 1 c= 8 v= 9 m= 7 v_tbl= 8 c_tbl= 1 m_tbl= 1
+k= 1 c= 8 v= 9 m= 8 v_tbl= 9 c_tbl= 1 m_tbl= 1
+k= 1 c= 8 v= 9 m= 9 v_tbl= 10 c_tbl= 1 m_tbl= 1
+k= 1 c= 9 v= 8 m= 8 v_tbl= 9 c_tbl= 1 m_tbl= 1
+k= 1 c= 9 v= 8 m= 9 v_tbl= 10 c_tbl= 1 m_tbl= 1
+... [1000000000, 1000000000, 1000000000, 3, 4, 5, 6, 7, 8, 9]

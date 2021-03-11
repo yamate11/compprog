@@ -1,0 +1,457 @@
+
+
+
+
+
+
+<!DOCTYPE html>
+
+<html>
+<head>
+	<title>E - Roadwork</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+	<meta http-equiv="Content-Language" content='en'>
+	<meta name="viewport" content="width=device-width,initial-scale=1.0">
+	<meta name="format-detection" content="telephone=no">
+	<meta name="google-site-verification" content="nXGC_JxO0yoP1qBzMnYD_xgufO6leSLw1kyNo2HZltM" />
+
+	
+	<meta name="description" content="AtCoder is a programming contest site for anyone from beginners to experts. We hold weekly programming contests online.">
+	<meta name="author" content="AtCoder Inc.">
+	<link rel="canonical" href="https://atcoder.jp/">
+
+	<meta property="og:site_name" content="AtCoder">
+	
+	<meta property="og:title" content="E - Roadwork" />
+	<meta property="og:description" content="AtCoder is a programming contest site for anyone from beginners to experts. We hold weekly programming contests online." />
+	<meta property="og:type" content="website" />
+	<meta property="og:url" content="https://atcoder.jp/contests/abc128/tasks/abc128_e" />
+	<meta property="og:image" content="https://img.atcoder.jp/assets/atcoder.png" />
+	<meta name="twitter:card" content="summary" />
+	<meta name="twitter:site" content="@atcoder" />
+	
+	<meta property="twitter:title" content="E - Roadwork" />
+
+	<link href='//fonts.googleapis.com/css?family=Lato:400,700' rel='stylesheet' type='text/css'>
+	<link rel="stylesheet" type="text/css" href='/public/css/bootstrap.min.css?v=201905260955'>
+	<link rel="stylesheet" type="text/css" href='/public/css/base.css?v=201905260955'>
+	<link rel="shortcut icon" type="image/png" href="//img.atcoder.jp/assets/favicon.png">
+	<link rel="apple-touch-icon" href="//img.atcoder.jp/assets/atcoder.png">
+	<script src='/public/js/lib/jquery-1.9.1.min.js?v=201905260955'></script>
+	<script src='/public/js/lib/bootstrap.min.js?v=201905260955'></script>
+	<script src="//cdnjs.cloudflare.com/ajax/libs/js-cookie/2.1.4/js.cookie.min.js"></script>
+	<script src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/moment.min.js"></script>
+	<script src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/locale/ja.js"></script>
+	<script>
+		var LANG = "en";
+		var userScreenName = "";
+	</script>
+	<script src='/public/js/utils.js?v=201905260955'></script>
+	
+	
+		<script src='/public/js/contest.js?v=201905260955'></script>
+		<link href='/public/css/contest.css?v=201905260955' rel="stylesheet" />
+		<script>
+			var contestScreenName = "abc128";
+			var remainingText = "Remaining Time";
+			var countDownText = "Contest begins in";
+			var startTime = moment("2019-05-26T21:00:00+09:00");
+			var endTime = moment("2019-05-26T22:40:00+09:00");
+		</script>
+		<style></style>
+	
+	
+		<script type="text/x-mathjax-config">MathJax.Hub.Config({messageStyle:"none",tex2jax:{skipTags:["script","noscript","style","textarea","code"],inlineMath:[['\\(','\\)']]}});</script>
+		<script src="//cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+		<script src='/public/js/task.js?v=201905260955'></script>
+	
+	
+	
+	
+		<link href="//cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/css/select2.min.css" rel="stylesheet" />
+		<link href="//cdnjs.cloudflare.com/ajax/libs/select2-bootstrap-theme/0.1.0-beta.10/select2-bootstrap.min.css" rel="stylesheet" />
+		<script src='/public/js/lib/select2.min.js?v=201905260955'></script>
+	
+	
+		<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/codemirror/5.38.0/codemirror.min.css">
+		<script src="//cdnjs.cloudflare.com/ajax/libs/codemirror/5.38.0/codemirror.min.js"></script>
+		<script src='/public/js/codeMirror/merged.js?v=201905260955'></script>
+	
+	
+		<script src="//cdn.rawgit.com/google/code-prettify/master/loader/run_prettify.js"></script>
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	<script src='/public/js/base.js?v=201905260955'></script>
+	<script src='/public/js/ga.js?v=201905260955'></script>
+</head>
+
+<body>
+<div id="modal-contest-start" class="modal fade" tabindex="-1" role="dialog">
+	<div class="modal-dialog" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+				<h4 class="modal-title">Contest started</h4>
+			</div>
+			<div class="modal-body">
+				<p>AtCoder Beginner Contest 128 has begun.</p>
+			</div>
+			<div class="modal-footer">
+				
+					<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+				
+			</div>
+		</div>
+	</div>
+</div>
+<div id="modal-contest-end" class="modal fade" tabindex="-1" role="dialog">
+	<div class="modal-dialog" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+				<h4 class="modal-title">Contest is over</h4>
+			</div>
+			<div class="modal-body">
+				<p>AtCoder Beginner Contest 128 has ended.</p>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+			</div>
+		</div>
+	</div>
+</div>
+<div id="main-div" class="float-container">
+	<nav class="navbar navbar-inverse navbar-fixed-top">
+		<div class="container-fluid">
+			<div class="navbar-header">
+				<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapse" aria-expanded="false">
+					<span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span>
+				</button>
+				<a class="navbar-brand" href="/"></a>
+			</div>
+			<div class="collapse navbar-collapse" id="navbar-collapse">
+				<ul class="nav navbar-nav">
+				
+					<li><a class="contest-title" href='/contests/abc128'>AtCoder Beginner Contest 128</a></li>
+				
+				</ul>
+				<ul class="nav navbar-nav navbar-right">
+					
+					<li class="dropdown">
+						<a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
+							<img src='//img.atcoder.jp/assets/flag-lang/en.png'> English <span class="caret"></span>
+						</a>
+						<ul class="dropdown-menu">
+							<li><a href='/contests/abc128/tasks/abc128_e?lang=ja'><img src='//img.atcoder.jp/assets/flag-lang/ja.png'> 日本語</a></li>
+							<li><a href='/contests/abc128/tasks/abc128_e?lang=en'><img src='//img.atcoder.jp/assets/flag-lang/en.png'> English</a></li>
+						</ul>
+					</li>
+					
+					
+						<li><a href="/register?continue=https%3A%2F%2Fatcoder.jp%2Fcontests%2Fabc128%2Ftasks%2Fabc128_e">Sign Up</a></li>
+						<li><a href="/login?continue=https%3A%2F%2Fatcoder.jp%2Fcontests%2Fabc128%2Ftasks%2Fabc128_e">Sign In</a></li>
+					
+				</ul>
+			</div>
+		</div>
+	</nav>
+	<form method="POST" name="form_logout" action='/logout?continue=https%3A%2F%2Fatcoder.jp%2Fcontests%2Fabc128%2Ftasks%2Fabc128_e'>
+		<input type="hidden" name="csrf_token" value='yQQ37naiL&#43;gjG0o1OqKHjzG4M9X9EfoxoGwj30I50bQ=' />
+	</form>
+	<div id="main-container" class="container" style="padding-top:50px;">
+		
+
+<div class="row">
+	<div id="contest-nav-tabs" class="col-sm-12 mb-2 cnvtb-fixed">
+	<div>
+		<small class="contest-duration">Contest Duration: <a href='http://www.timeanddate.com/worldclock/fixedtime.html?iso=20190526T2100&p1=248' target='blank'><time class='fixtime fixtime-full'>2019-05-26 21:00:00+0900</time></a> ~ <a href='http://www.timeanddate.com/worldclock/fixedtime.html?iso=20190526T2240&p1=248' target='blank'><time class='fixtime fixtime-full'>2019-05-26 22:40:00+0900</time></a> (local time)</small>
+		<small class="back-to-home pull-right"><a href='/'>Back to Home</a></small>
+	</div>
+	<ul class="nav nav-tabs">
+		<li><a href='/contests/abc128'><span class="glyphicon glyphicon-home" aria-hidden="true"></span> Top</a></li>
+		
+			<li class="active"><a href='/contests/abc128/tasks'><span class="glyphicon glyphicon-tasks" aria-hidden="true"></span> Tasks</a></li>
+		
+
+		
+			<li><a href='/contests/abc128/clarifications'><span class="glyphicon glyphicon-question-sign" aria-hidden="true"></span> Clarifications <span id="clar-badge" class="badge"></span></a></li>
+		
+
+		
+
+		
+			<li>
+				<a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false"><span class="glyphicon glyphicon-list" aria-hidden="true"></span> Submissions<span class="caret"></span></a>
+				<ul class="dropdown-menu">
+					<li><a href='/contests/abc128/submissions'><span class="glyphicon glyphicon-globe" aria-hidden="true"></span> All Submissions</a></li>
+					
+				</ul>
+			</li>
+		
+
+		
+			<li><a href='/contests/abc128/standings'><span class="glyphicon glyphicon-sort-by-attributes-alt" aria-hidden="true"></span> Standings</a></li>
+		
+
+		
+
+		
+			<li><a href='https://img.atcoder.jp/abc128/editorial.pdf' target="_blank"><span class="glyphicon glyphicon-book" aria-hidden="true"></span> Editorial</a></li>
+		
+
+		<li class="pull-right"><a id="fix-cnvtb" href="javascript:void(0)"><span class="glyphicon glyphicon-pushpin" aria-hidden="true"></span></a></li>
+	</ul>
+</div>
+	<div class="col-sm-12">
+		<span class="h2">E - Roadwork</span>
+		<hr/>
+		<p>Time Limit: 2 sec / Memory Limit: 1024 MB</p>
+
+		<div id="task-statement">
+			<span class="lang">
+<span class="lang-ja">
+<p>配点 : <var>500</var> 点</p>
+
+<div class="part">
+<section>
+<h3>問題文</h3><p>東西に無限に続く <var>1</var> 本の大通りがあり、数直線とみなすことができます。</p>
+<p>この大通り上で <var>N</var> 回道路工事が行われます。
+<var>i</var> 番目の道路工事は時刻 <var>S_i - 0.5</var> から時刻 <var>T_i - 0.5</var> まで座標 <var>X_i</var> を通行止めにします。</p>
+<p><var>Q</var> 人の人が座標 <var>0</var> に立っています。
+<var>i</var> 番目の人は時刻 <var>D_i</var> に座標 <var>0</var> を出発し、速度 <var>1</var> で正の方向へ歩き続けます。
+歩いている途中で通行止めとなっている地点に到達した場合には、そこで歩くのをやめます。</p>
+<p><var>Q</var> 人それぞれが進む距離を求めてください。</p>
+</section>
+</div>
+
+<div class="part">
+<section>
+<h3>制約</h3><ul>
+<li>入力は全て整数</li>
+<li><var>1 \leq N, Q \leq 2 \times 10^5</var></li>
+<li><var>0 \leq S_i &lt; T_i \leq 10^9</var></li>
+<li><var>1 \leq X_i \leq 10^9</var></li>
+<li><var>0 \leq D_1 &lt; D_2 &lt; ... &lt; D_Q \leq 10^9</var></li>
+<li><var>i \neq j</var> かつ <var>X_i = X_j</var> の時、区間 <var>[S_i, T_i)</var> と 区間 <var>[S_j, T_j)</var> は重ならない</li>
+</ul>
+</section>
+</div>
+
+<hr />
+
+<div class="io-style">
+<div class="part">
+<section>
+<h3>入力</h3><p>入力は以下の形式で標準入力から与えられる。</p>
+<pre><var>N</var> <var>Q</var>
+<var>S_1</var> <var>T_1</var> <var>X_1</var>
+<var>:</var>
+<var>S_N</var> <var>T_N</var> <var>X_N</var>
+<var>D_1</var>
+<var>:</var>
+<var>D_Q</var>
+</pre>
+
+</section>
+</div>
+
+<div class="part">
+<section>
+<h3>出力</h3><p><var>Q</var> 行出力せよ。</p>
+<p><var>i</var> 行目には <var>i</var> 番目の人が進む距離を出力せよ。
+ただし <var>i</var> 番目の人が無限に歩き続ける場合は、代わりに <var>-1</var> を出力せよ。</p>
+</section>
+</div>
+</div>
+
+<hr />
+
+<div class="part">
+<section>
+<h3>入力例 1</h3><pre>4 6
+1 3 2
+7 13 10
+18 20 13
+3 4 2
+0
+1
+2
+3
+5
+8
+</pre>
+
+</section>
+</div>
+
+<div class="part">
+<section>
+<h3>出力例 1</h3><pre>2
+2
+10
+-1
+13
+-1
+</pre>
+
+<p><var>1</var> 番目の人は時刻 <var>0</var> に座標 <var>0</var> を出発し、時刻 <var>2</var> に座標 <var>2</var> に到着した時点で、<var>1</var> 番目の道路工事による通行止めによって歩くのをやめます。</p>
+<p><var>2</var> 番目の人は時刻 <var>1</var> に座標 <var>0</var> を出発し、時刻 <var>3</var> に座標 <var>2</var> に到着します。この時、<var>1</var> 番目の道路工事は既に終了していますが、<var>4</var> 番目の道路工事が始まっているため、同様に座標 <var>2</var> で歩くのをやめます。</p>
+<p><var>4</var> 番目および <var>6</var> 番目の人は、歩いている最中に通行止めに出くわさないため、無限に歩き続けます。</p></section>
+</div>
+</span>
+<span class="lang-en">
+<p>Score : <var>500</var> points</p>
+
+<div class="part">
+<section>
+<h3>Problem Statement</h3><p>There is an infinitely long street that runs west to east, which we consider as a number line.</p>
+<p>There are <var>N</var> roadworks scheduled on this street.
+The <var>i</var>-th roadwork blocks the point at coordinate <var>X_i</var> from time <var>S_i - 0.5</var> to time <var>T_i - 0.5</var>.</p>
+<p><var>Q</var> people are standing at coordinate <var>0</var>. The <var>i</var>-th person will start the coordinate <var>0</var> at time <var>D_i</var>, continue to walk with speed <var>1</var> in the positive direction and stop walking when reaching a blocked point.</p>
+<p>Find the distance each of the <var>Q</var> people will walk.</p>
+</section>
+</div>
+
+<div class="part">
+<section>
+<h3>Constraints</h3><ul>
+<li>All values in input are integers.</li>
+<li><var>1 \leq N, Q \leq 2 \times 10^5</var></li>
+<li><var>0 \leq S_i &lt; T_i \leq 10^9</var></li>
+<li><var>1 \leq X_i \leq 10^9</var></li>
+<li><var>0 \leq D_1 &lt; D_2 &lt; ... &lt; D_Q \leq 10^9</var></li>
+<li>If <var>i \neq j</var> and <var>X_i = X_j</var>, the intervals <var>[S_i, T_i)</var> and <var>[S_j, T_j)</var> do not overlap.</li>
+</ul>
+</section>
+</div>
+
+<hr />
+
+<div class="io-style">
+<div class="part">
+<section>
+<h3>Input</h3><p>Input is given from Standard Input in the following format:</p>
+<pre><var>N</var> <var>Q</var>
+<var>S_1</var> <var>T_1</var> <var>X_1</var>
+<var>:</var>
+<var>S_N</var> <var>T_N</var> <var>X_N</var>
+<var>D_1</var>
+<var>:</var>
+<var>D_Q</var>
+</pre>
+
+</section>
+</div>
+
+<div class="part">
+<section>
+<h3>Output</h3><p>Print <var>Q</var> lines. The <var>i</var>-th line should contain the distance the <var>i</var>-th person will walk or <var>-1</var> if that person walks forever.</p>
+</section>
+</div>
+</div>
+
+<hr />
+
+<div class="part">
+<section>
+<h3>Sample Input 1</h3><pre>4 6
+1 3 2
+7 13 10
+18 20 13
+3 4 2
+0
+1
+2
+3
+5
+8
+</pre>
+
+</section>
+</div>
+
+<div class="part">
+<section>
+<h3>Sample Output 1</h3><pre>2
+2
+10
+-1
+13
+-1
+</pre>
+
+<p>The first person starts coordinate <var>0</var> at time <var>0</var> and stops walking at coordinate <var>2</var> when reaching a point blocked by the first roadwork at time <var>2</var>.</p>
+<p>The second person starts coordinate <var>0</var> at time <var>1</var> and reaches coordinate <var>2</var> at time <var>3</var>. The first roadwork has ended, but the fourth roadwork has begun, so this person also stops walking at coordinate <var>2</var>.</p>
+<p>The fourth and sixth persons encounter no roadworks while walking, so they walk forever. The output for these cases is <var>-1</var>.</p></section>
+</div>
+</span>
+</span>
+
+		</div>
+
+		
+
+		
+	</div>
+</div>
+
+
+		
+			<hr>
+			
+			
+			
+<div class="a2a_kit a2a_kit_size_20 a2a_default_style pull-right" data-a2a-url="https://atcoder.jp/contests/abc128/tasks/abc128_e?lang=en" data-a2a-title="E - Roadwork">
+	<a class="a2a_button_facebook"></a>
+	<a class="a2a_button_twitter"></a>
+	
+		<a class="a2a_button_telegram"></a>
+	
+	<a class="a2a_dd" href="https://www.addtoany.com/share"></a>
+</div>
+
+		
+		<script async src="//static.addtoany.com/menu/page.js"></script>
+		
+	</div> 
+	<hr>
+</div> 
+<div class="container">
+    <footer class="footer">
+		
+			<ul>
+				<li><a href='/contests/abc128/rules'>Rule</a></li>
+				<li><a href='/contests/abc128/glossary'>Glossary</a></li>
+				
+			</ul>
+		
+		<ul>
+			<li><a href='/tos'>Terms of service</a></li>
+			<li><a href='/privacy'>Privacy Policy</a></li>
+			<li><a href='/personal'>Information Protection Policy</a></li>
+			<li><a href='/company'>Company</a></li>
+			<li><a href='/faq'>FAQ</a></li>
+			<li><a href='/contact'>Contact</a></li>
+			
+		</ul>
+    <div class="text-center">
+        <small id="copyright">Copyright Since 2012 &copy;<a href="http://atcoder.co.jp">AtCoder Inc.</a> All rights reserved.</small>
+    </div>
+    </footer>
+</div>
+<p id="fixed-server-timer" class='contest-timer'></p>
+
+	<div id="scroll-page-top" style="display:none;"><span class="glyphicon glyphicon-arrow-up" aria-hidden="true"></span> Page Top</div>
+
+</body>
+</html>
+
+

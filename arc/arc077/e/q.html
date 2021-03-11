@@ -1,0 +1,470 @@
+
+
+
+
+
+
+
+<!DOCTYPE html>
+
+<html>
+<head>
+	<title>E - guruguru</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+	<meta http-equiv="Content-Language" content='en'>
+	<meta name="viewport" content="width=device-width,initial-scale=1.0">
+	<meta name="format-detection" content="telephone=no">
+	<meta name="google-site-verification" content="nXGC_JxO0yoP1qBzMnYD_xgufO6leSLw1kyNo2HZltM" />
+
+	
+	<meta name="description" content="AtCoder is a programming contest site for anyone from beginners to experts. We hold weekly programming contests online.">
+	<meta name="author" content="AtCoder Inc.">
+	<link rel="canonical" href="https://atcoder.jp/">
+
+	<meta property="og:site_name" content="AtCoder">
+	
+	<meta property="og:title" content="E - guruguru" />
+	<meta property="og:description" content="AtCoder is a programming contest site for anyone from beginners to experts. We hold weekly programming contests online." />
+	<meta property="og:type" content="website" />
+	<meta property="og:url" content="https://atcoder.jp/contests/arc077/tasks/arc077_c" />
+	<meta property="og:image" content="https://img.atcoder.jp/assets/atcoder.png" />
+	<meta name="twitter:card" content="summary" />
+	<meta name="twitter:site" content="@atcoder" />
+	
+	<meta property="twitter:title" content="E - guruguru" />
+
+	<link href='//fonts.googleapis.com/css?family=Lato:400,700' rel='stylesheet' type='text/css'>
+	<link rel="stylesheet" type="text/css" href='/public/css/bootstrap.min.css?v=201902142051'>
+	<link rel="stylesheet" type="text/css" href='/public/css/base.css?v=201902142051'>
+	<link rel="shortcut icon" type="image/png" href="//img.atcoder.jp/assets/favicon.png">
+	<link rel="apple-touch-icon" href="//img.atcoder.jp/assets/favicon.png">
+	<script src='/public/js/lib/jquery-1.9.1.min.js?v=201902142051'></script>
+	<script src='/public/js/lib/bootstrap.min.js?v=201902142051'></script>
+	<script src="//cdnjs.cloudflare.com/ajax/libs/js-cookie/2.1.4/js.cookie.min.js"></script>
+	<script src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/moment.min.js"></script>
+	<script src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/locale/ja.js"></script>
+	<script>
+		var LANG = "en";
+		var userScreenName = "";
+	</script>
+	<script src='/public/js/utils.js?v=201902142051'></script>
+	
+	
+		<script src='/public/js/contest.js?v=201902142051'></script>
+		<link href='/public/css/contest.css?v=201902142051' rel="stylesheet" />
+		<script>
+			var contestScreenName = "arc077";
+			var remainingText = "Remaining Time";
+			var countDownText = "Contest begins in";
+			var startTime = moment("2017-07-01T21:00:00+09:00");
+			var endTime = moment("2017-07-01T22:40:00+09:00");
+		</script>
+		<style></style>
+	
+	
+		<script type="text/x-mathjax-config">MathJax.Hub.Config({messageStyle:"none",tex2jax:{skipTags:["script","noscript","style","textarea","code"],inlineMath:[['\\(','\\)']]}});</script>
+		<script src="//cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+		<script src='/public/js/task.js?v=201902142051'></script>
+	
+	
+	
+	
+		<link href="//cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/css/select2.min.css" rel="stylesheet" />
+		<link href="//cdnjs.cloudflare.com/ajax/libs/select2-bootstrap-theme/0.1.0-beta.10/select2-bootstrap.min.css" rel="stylesheet" />
+		<script src='/public/js/lib/select2.min.js?v=201902142051'></script>
+	
+	
+		<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/codemirror/5.38.0/codemirror.min.css">
+		<script src="//cdnjs.cloudflare.com/ajax/libs/codemirror/5.38.0/codemirror.min.js"></script>
+		<script src='/public/js/codeMirror/merged.js?v=201902142051'></script>
+	
+	
+		<script src="//cdn.rawgit.com/google/code-prettify/master/loader/run_prettify.js"></script>
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	<script src='/public/js/base.js?v=201902142051'></script>
+	<script src='/public/js/ga.js?v=201902142051'></script>
+</head>
+
+<body>
+<div id="modal-contest-start" class="modal fade" tabindex="-1" role="dialog">
+	<div class="modal-dialog" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+				<h4 class="modal-title">Contest started</h4>
+			</div>
+			<div class="modal-body">
+				<p>AtCoder Regular Contest 077 has begun.</p>
+			</div>
+			<div class="modal-footer">
+				
+					<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+				
+			</div>
+		</div>
+	</div>
+</div>
+<div id="modal-contest-end" class="modal fade" tabindex="-1" role="dialog">
+	<div class="modal-dialog" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+				<h4 class="modal-title">Contest is over</h4>
+			</div>
+			<div class="modal-body">
+				<p>AtCoder Regular Contest 077 has ended.</p>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+			</div>
+		</div>
+	</div>
+</div>
+<div id="main-div" class="float-container">
+	<nav class="navbar navbar-inverse navbar-fixed-top">
+		<div class="container-fluid">
+			<div class="navbar-header">
+				<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapse" aria-expanded="false">
+					<span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span>
+				</button>
+				<a class="navbar-brand" href="/"></a>
+			</div>
+			<div class="collapse navbar-collapse" id="navbar-collapse">
+				<ul class="nav navbar-nav">
+				
+					<li><a class="contest-title" href='/contests/arc077'>AtCoder Regular Contest 077</a></li>
+				
+				</ul>
+				<ul class="nav navbar-nav navbar-right">
+					
+					<li class="dropdown">
+						<a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
+							<img src='//img.atcoder.jp/assets/flag-lang/en.png'> English <span class="caret"></span>
+						</a>
+						<ul class="dropdown-menu">
+							<li><a href='/contests/arc077/tasks/arc077_c?lang=ja'><img src='//img.atcoder.jp/assets/flag-lang/ja.png'> 日本語</a></li>
+							<li><a href='/contests/arc077/tasks/arc077_c?lang=en'><img src='//img.atcoder.jp/assets/flag-lang/en.png'> English</a></li>
+						</ul>
+					</li>
+					
+					
+						<li><a href='/register?continue=https%3A%2F%2Fatcoder.jp%2Fcontests%2Farc077%2Ftasks%2Farc077_c'>Sign Up</a></li>
+						<li><a href='/login?continue=https%3A%2F%2Fatcoder.jp%2Fcontests%2Farc077%2Ftasks%2Farc077_c'>Sign In</a></li>
+					
+				</ul>
+			</div>
+		</div>
+	</nav>
+	<form method="POST" name="form_logout" action='/logout?continue=https%3A%2F%2Fatcoder.jp%2Fcontests%2Farc077%2Ftasks%2Farc077_c'>
+		<input type="hidden" name="csrf_token" value='jT6e3lwoogHpsHzF26QP9FvkrBEO2IjI/PRPs14BF8g=' />
+	</form>
+	<div id="main-container" class="container" style="padding-top:50px;">
+		
+
+<div class="row">
+	<div id="contest-nav-tabs" class="col-sm-12 mb-2 cnvtb-fixed">
+	<div>
+		<small class="contest-duration">Contest Duration: <a href='http://www.timeanddate.com/worldclock/fixedtime.html?iso=20170701T2100&p1=248' target='blank'><time class='fixtime fixtime-full'>2017-07-01 21:00:00+0900</time></a> ~ <a href='http://www.timeanddate.com/worldclock/fixedtime.html?iso=20170701T2240&p1=248' target='blank'><time class='fixtime fixtime-full'>2017-07-01 22:40:00+0900</time></a> (local time)</small>
+		<small class="back-to-home pull-right"><a href='/'>Back to Home</a></small>
+	</div>
+	<ul class="nav nav-tabs">
+		<li><a href='/contests/arc077'><span class="glyphicon glyphicon-home" aria-hidden="true"></span> Top</a></li>
+		
+			<li class="active"><a href='/contests/arc077/tasks'><span class="glyphicon glyphicon-tasks" aria-hidden="true"></span> Tasks</a></li>
+		
+
+		
+			<li><a href='/contests/arc077/clarifications'><span class="glyphicon glyphicon-question-sign" aria-hidden="true"></span> Clarifications <span id="clar-badge" class="badge"></span></a></li>
+		
+
+		
+
+		
+			<li>
+				<a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false"><span class="glyphicon glyphicon-list" aria-hidden="true"></span> Submissions<span class="caret"></span></a>
+				<ul class="dropdown-menu">
+					<li><a href='/contests/arc077/submissions'><span class="glyphicon glyphicon-globe" aria-hidden="true"></span> All Submissions</a></li>
+					
+				</ul>
+			</li>
+		
+
+		
+			<li><a href='/contests/arc077/standings'><span class="glyphicon glyphicon-sort-by-attributes-alt" aria-hidden="true"></span> Standings</a></li>
+		
+
+		
+
+		
+			<li><a href='https://atcoder.jp/img/arc077/editorial.pdf' target="_blank"><span class="glyphicon glyphicon-book" aria-hidden="true"></span> Editorial</a></li>
+		
+
+		<li class="pull-right"><a id="fix-cnvtb" href="javascript:void(0)"><span class="glyphicon glyphicon-pushpin" aria-hidden="true"></span></a></li>
+	</ul>
+</div>
+	<div class="col-sm-12">
+		<span class="h2">E - guruguru</span>
+		<hr />
+		<p>Time Limit: 2 sec / Memory Limit: 256 MB</p>
+
+		<div id="task-statement">
+			<span class="lang">
+<span class="lang-ja">
+<p>配点 : <var>700</var> 点</p>
+
+<div class="part">
+<section>
+<h3>問題文</h3><p>snuke 君は明るさを <var>m</var> 段階に切り替えられる照明を買いに来ました。
+この照明の 明るさは <var>1</var> 以上 <var>m</var> 以下の整数で表され、
+リモコンに付いた <var>2</var> 種類のボタンで明るさを切り替えます。</p>
+<p><var>1</var> つめのボタンは「順送り」ボタンで、
+明るさを <var>1</var> 増やすことができます。ただし、ボタンを押す前の明るさが最大の <var>m</var> である場合には、
+明るさは <var>1</var> になります。</p>
+<p><var>2</var> つめのボタンは「お気に入り」ボタンで、
+購入時に決めたお気に入りの明るさ <var>x</var> に切り替えることが出来ます。</p>
+<p>snuke 君はお気に入りの明るさ <var>x</var> を、できるだけ効率的に明るさが切り替えられるように設定しようと考えました。
+snuke 君は今後 <var>n-1</var> 回明るさを切り替える予定で、<var>i</var> 回目には明るさ <var>a_i</var> から
+明るさ <var>a_{i+1}</var> に切り替えようと計画しています。
+最初、明るさは <var>a_1</var> です。
+ボタンを押す回数の合計が最小になるようにお気に入りの明るさ <var>x</var> を決めた時の
+ボタンを押す回数を求めて下さい。</p>
+</section>
+</div>
+
+<div class="part">
+<section>
+<h3>制約</h3><ul>
+<li><var>2 \leq n,m \leq 10^5</var></li>
+<li><var>1 \leq a_i\leq m</var></li>
+<li><var>a_i \neq a_{i+1}</var></li>
+<li><var>n,m,a_i</var> は整数である。</li>
+</ul>
+</section>
+</div>
+
+<hr />
+
+<div class="io-style">
+<div class="part">
+<section>
+<h3>入力</h3><p>入力は以下の形式で標準入力から与えられる。</p>
+<pre><var>n</var> <var>m</var>
+<var>a_1</var> <var>a_2</var> … <var>a_n</var>
+</pre>
+
+</section>
+</div>
+
+<div class="part">
+<section>
+<h3>出力</h3><p>ボタンを押す回数の合計の最小値を出力せよ。</p>
+</section>
+</div>
+</div>
+
+<hr />
+
+<div class="part">
+<section>
+<h3>入力例 1</h3><pre>4 6
+1 5 1 4
+</pre>
+
+</section>
+</div>
+
+<div class="part">
+<section>
+<h3>出力例 1</h3><pre>5
+</pre>
+
+<p>お気に入りの明るさを <var>1,2,3,4,5,6</var> のそれぞれに設定したときのボタンを押す最小回数はそれぞれ
+<var>8,9,7,5,6,9</var> 回です。
+よって、お気に入りの明るさを <var>4</var> に設定したときにボタンを押す回数の合計を最小に出来ます。
+お気に入りの明るさを <var>4</var> に設定したときの切り替え方は以下のとおりです。</p>
+<ul>
+<li><var>1</var> 回目には、お気に入りボタンを <var>1</var> 回押した後、順送りボタンを <var>1</var> 回押します。</li>
+<li><var>2</var> 回目には、順送りボタンを <var>2</var> 回押します。</li>
+<li><var>3</var> 回目には、お気に入りボタンを <var>1</var> 回押します。</li>
+</ul>
+</section>
+</div>
+
+<hr />
+
+<div class="part">
+<section>
+<h3>入力例 2</h3><pre>10 10
+10 9 8 7 6 5 4 3 2 1
+</pre>
+
+</section>
+</div>
+
+<div class="part">
+<section>
+<h3>出力例 2</h3><pre>45
+</pre></section>
+</div>
+</span>
+<span class="lang-en">
+<p>Score : <var>700</var> points</p>
+
+<div class="part">
+<section>
+<h3>Problem Statement</h3><p>Snuke is buying a lamp.
+The light of the lamp can be adjusted to <var>m</var> levels of brightness, represented by integers from <var>1</var> through <var>m</var>, by the two buttons on the remote control.</p>
+<p>The first button is a "forward" button. When this button is pressed, the brightness level is increased by <var>1</var>, except when the brightness level is <var>m</var>, in which case the brightness level becomes <var>1</var>.</p>
+<p>The second button is a "favorite" button. When this button is pressed, the brightness level becomes the favorite brightness level <var>x</var>, which is set when the lamp is purchased.</p>
+<p>Snuke is thinking of setting the favorite brightness level <var>x</var> so that he can efficiently adjust the brightness.
+He is planning to change the brightness <var>n-1</var> times. In the <var>i</var>-th change, the brightness level is changed from <var>a_i</var> to <var>a_{i+1}</var>. The initial brightness level is <var>a_1</var>.
+Find the number of times Snuke needs to press the buttons when <var>x</var> is set to minimize this number.</p>
+</section>
+</div>
+
+<div class="part">
+<section>
+<h3>Constraints</h3><ul>
+<li><var>2 \leq n,m \leq 10^5</var></li>
+<li><var>1 \leq a_i\leq m</var></li>
+<li><var>a_i \neq a_{i+1}</var></li>
+<li><var>n</var>, <var>m</var> and <var>a_i</var> are integers.</li>
+</ul>
+</section>
+</div>
+
+<hr />
+
+<div class="io-style">
+<div class="part">
+<section>
+<h3>Input</h3><p>Input is given from Standard Input in the following format:</p>
+<pre><var>n</var> <var>m</var>
+<var>a_1</var> <var>a_2</var> … <var>a_n</var>
+</pre>
+
+</section>
+</div>
+
+<div class="part">
+<section>
+<h3>Output</h3><p>Print the minimum number of times Snuke needs to press the buttons.</p>
+</section>
+</div>
+</div>
+
+<hr />
+
+<div class="part">
+<section>
+<h3>Sample Input 1</h3><pre>4 6
+1 5 1 4
+</pre>
+
+</section>
+</div>
+
+<div class="part">
+<section>
+<h3>Sample Output 1</h3><pre>5
+</pre>
+
+<p>When the favorite brightness level is set to <var>1</var>, <var>2</var>, <var>3</var>, <var>4</var>, <var>5</var> and <var>6</var>, Snuke needs to press the buttons <var>8</var>, <var>9</var>, <var>7</var>, <var>5</var>, <var>6</var> and <var>9</var> times, respectively.
+Thus, Snuke should set the favorite brightness level to <var>4</var>.
+In this case, the brightness is adjusted as follows:</p>
+<ul>
+<li>In the first change, press the favorite button once, then press the forward button once.</li>
+<li>In the second change, press the forward button twice.</li>
+<li>In the third change, press the favorite button once.</li>
+</ul>
+</section>
+</div>
+
+<hr />
+
+<div class="part">
+<section>
+<h3>Sample Input 2</h3><pre>10 10
+10 9 8 7 6 5 4 3 2 1
+</pre>
+
+</section>
+</div>
+
+<div class="part">
+<section>
+<h3>Sample Output 2</h3><pre>45
+</pre></section>
+</div>
+</span>
+</span>
+
+		</div>
+
+		
+
+		
+	</div>
+</div>
+
+
+		
+			<hr>
+			
+			
+			
+<div class="a2a_kit a2a_kit_size_20 a2a_default_style pull-right" data-a2a-url="https://atcoder.jp/contests/arc077/tasks/arc077_c?lang=en" data-a2a-title="E - guruguru">
+	<a class="a2a_button_facebook"></a>
+	<a class="a2a_button_twitter"></a>
+	
+		<a class="a2a_button_telegram"></a>
+	
+	<a class="a2a_dd" href="https://www.addtoany.com/share"></a>
+</div>
+
+		
+		<script async src="//static.addtoany.com/menu/page.js"></script>
+		
+	</div> 
+	<hr>
+</div> 
+<div class="container">
+    <footer class="footer">
+		
+			<ul>
+				<li><a href='/contests/arc077/rules'>Rule</a></li>
+				<li><a href='/contests/arc077/glossary'>Glossary</a></li>
+				
+			</ul>
+		
+		<ul>
+			<li><a href='/tos'>Terms of service</a></li>
+			<li><a href='/privacy'>Privacy Policy</a></li>
+			<li><a href='/personal'>Information Protection Policy</a></li>
+			<li><a href='/company'>Company</a></li>
+			<li><a href='/faq'>FAQ</a></li>
+			<li><a href='/contact'>Contact</a></li>
+			
+		</ul>
+    <div class="text-center">
+        <small id="copyright">Copyright Since 2012 &copy;<a href="http://atcoder.co.jp">AtCoder Inc.</a> All rights reserved.</small>
+    </div>
+    </footer>
+</div>
+<p id="fixed-server-timer" class='contest-timer'></p>
+
+	<div id="scroll-page-top" style="display:none;"><span class="glyphicon glyphicon-arrow-up" aria-hidden="true"></span> Page Top</div>
+
+</body>
+</html>
+
+

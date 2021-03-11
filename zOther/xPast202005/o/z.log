@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<title>Forbidden</title>
+	</head>
+	<body>
+	
+	<h1>
+		Forbidden
+	</h1>
+	<p>
+		REVEL_CSRF: tokens mismatch.
+	</p>
+	
+	</body>
+</html>
+

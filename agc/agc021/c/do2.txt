@@ -1,0 +1,5 @@
+YES
+&lt;&gt;..^
+^.&lt;&gt;v
+v&lt;&gt;.^
+&lt;&gt;&lt;&gt;v

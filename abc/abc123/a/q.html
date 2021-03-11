@@ -1,0 +1,509 @@
+
+
+
+
+
+
+<!DOCTYPE html>
+
+<html>
+<head>
+	<title>A - Five Antennas</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+	<meta http-equiv="Content-Language" content='en'>
+	<meta name="viewport" content="width=device-width,initial-scale=1.0">
+	<meta name="format-detection" content="telephone=no">
+	<meta name="google-site-verification" content="nXGC_JxO0yoP1qBzMnYD_xgufO6leSLw1kyNo2HZltM" />
+
+	
+	<meta name="description" content="AtCoder is a programming contest site for anyone from beginners to experts. We hold weekly programming contests online.">
+	<meta name="author" content="AtCoder Inc.">
+
+	<meta property="og:site_name" content="AtCoder">
+	
+	<meta property="og:title" content="A - Five Antennas" />
+	<meta property="og:description" content="AtCoder is a programming contest site for anyone from beginners to experts. We hold weekly programming contests online." />
+	<meta property="og:type" content="website" />
+	<meta property="og:url" content="https://atcoder.jp/contests/abc123/tasks/abc123_a" />
+	<meta property="og:image" content="https://img.atcoder.jp/assets/atcoder.png" />
+	<meta name="twitter:card" content="summary" />
+	<meta name="twitter:site" content="@atcoder" />
+	
+	<meta property="twitter:title" content="A - Five Antennas" />
+
+	<link href="//fonts.googleapis.com/css?family=Lato:400,700" rel="stylesheet" type="text/css">
+	<link rel="stylesheet" type="text/css" href="/public/css/bootstrap.min.css?v=201911062058">
+	<link rel="stylesheet" type="text/css" href="/public/css/base.css?v=201911062058">
+	<link rel="shortcut icon" type="image/png" href="//img.atcoder.jp/assets/favicon.png">
+	<link rel="apple-touch-icon" href="//img.atcoder.jp/assets/atcoder.png">
+	<script src="/public/js/lib/jquery-1.9.1.min.js?v=201911062058"></script>
+	<script src="/public/js/lib/bootstrap.min.js?v=201911062058"></script>
+	<script src="//cdnjs.cloudflare.com/ajax/libs/js-cookie/2.1.4/js.cookie.min.js"></script>
+	<script src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/moment.min.js"></script>
+	<script src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/locale/ja.js"></script>
+	<script>
+		var LANG = "en";
+		var userScreenName = "";
+		var csrfToken = "xwgli/mE1GxH0cZrBDuW9BfL7X3az/vvqfafKr9sn78="
+	</script>
+	<script src="/public/js/utils.js?v=201911062058"></script>
+	
+	
+		<script src="/public/js/contest.js?v=201911062058"></script>
+		<link href="/public/css/contest.css?v=201911062058" rel="stylesheet" />
+		<script>
+			var contestScreenName = "abc123";
+			var remainingText = "Remaining Time";
+			var countDownText = "Contest begins in";
+			var startTime = moment("2019-04-06T21:00:00+09:00");
+			var endTime = moment("2019-04-06T22:40:00+09:00");
+		</script>
+		<style></style>
+	
+	
+		<script type="text/x-mathjax-config">MathJax.Hub.Config({messageStyle:"none",tex2jax:{skipTags:["script","noscript","style","textarea","code"],inlineMath:[['\\(','\\)']]},delayStartupUntil:"onload"});</script>
+		<script src="//cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+		<script>$(function(){$('var').each(function(){$(this).html('\\('+$(this).html()+'\\)');});});</script>
+	
+	
+		<link href="//cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/css/select2.min.css" rel="stylesheet" />
+		<link href="//cdnjs.cloudflare.com/ajax/libs/select2-bootstrap-theme/0.1.0-beta.10/select2-bootstrap.min.css" rel="stylesheet" />
+		<script src="/public/js/lib/select2.min.js?v=201911062058"></script>
+	
+	
+		<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/codemirror/5.38.0/codemirror.min.css">
+		<script src="//cdnjs.cloudflare.com/ajax/libs/codemirror/5.38.0/codemirror.min.js"></script>
+		<script src="/public/js/codeMirror/merged.js?v=201911062058"></script>
+	
+	
+		<script src="//cdn.rawgit.com/google/code-prettify/master/loader/run_prettify.js"></script>
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	<script src="/public/js/base.js?v=201911062058"></script>
+	<script src="/public/js/ga.js?v=201911062058"></script>
+</head>
+
+<body>
+<div id="modal-contest-start" class="modal fade" tabindex="-1" role="dialog">
+	<div class="modal-dialog" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+				<h4 class="modal-title">Contest started</h4>
+			</div>
+			<div class="modal-body">
+				<p>AtCoder Beginner Contest 123 has begun.</p>
+			</div>
+			<div class="modal-footer">
+				
+					<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+				
+			</div>
+		</div>
+	</div>
+</div>
+<div id="modal-contest-end" class="modal fade" tabindex="-1" role="dialog">
+	<div class="modal-dialog" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+				<h4 class="modal-title">Contest is over</h4>
+			</div>
+			<div class="modal-body">
+				<p>AtCoder Beginner Contest 123 has ended.</p>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+			</div>
+		</div>
+	</div>
+</div>
+<div id="main-div" class="float-container">
+	<nav class="navbar navbar-inverse navbar-fixed-top">
+		<div class="container-fluid">
+			<div class="navbar-header">
+				<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapse" aria-expanded="false">
+					<span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span>
+				</button>
+				<a class="navbar-brand" href="/"></a>
+			</div>
+			<div class="collapse navbar-collapse" id="navbar-collapse">
+				<ul class="nav navbar-nav">
+				
+					<li><a class="contest-title" href="/contests/abc123">AtCoder Beginner Contest 123</a></li>
+				
+				</ul>
+				<ul class="nav navbar-nav navbar-right">
+					
+					<li class="dropdown">
+						<a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
+							<img src='//img.atcoder.jp/assets/flag-lang/en.png'> English <span class="caret"></span>
+						</a>
+						<ul class="dropdown-menu">
+							<li><a href="/contests/abc123/tasks/abc123_a?lang=ja"><img src='//img.atcoder.jp/assets/flag-lang/ja.png'> 日本語</a></li>
+							<li><a href="/contests/abc123/tasks/abc123_a?lang=en"><img src='//img.atcoder.jp/assets/flag-lang/en.png'> English</a></li>
+						</ul>
+					</li>
+					
+					
+						<li><a href="/register?continue=https%3A%2F%2Fatcoder.jp%2Fcontests%2Fabc123%2Ftasks%2Fabc123_a">Sign Up</a></li>
+						<li><a href="/login?continue=https%3A%2F%2Fatcoder.jp%2Fcontests%2Fabc123%2Ftasks%2Fabc123_a">Sign In</a></li>
+					
+				</ul>
+			</div>
+		</div>
+	</nav>
+	<form method="POST" name="form_logout" action="/logout?continue=https%3A%2F%2Fatcoder.jp%2Fcontests%2Fabc123%2Ftasks%2Fabc123_a">
+		<input type="hidden" name="csrf_token" value="xwgli/mE1GxH0cZrBDuW9BfL7X3az/vvqfafKr9sn78=" />
+	</form>
+	<div id="main-container" class="container" style="padding-top:50px;">
+		
+
+<div class="row">
+	<div id="contest-nav-tabs" class="col-sm-12 mb-2 cnvtb-fixed">
+	<div>
+		<small class="contest-duration">Contest Duration: <a href='http://www.timeanddate.com/worldclock/fixedtime.html?iso=20190406T2100&p1=248' target='blank'><time class='fixtime fixtime-full'>2019-04-06 21:00:00+0900</time></a> ~ <a href='http://www.timeanddate.com/worldclock/fixedtime.html?iso=20190406T2240&p1=248' target='blank'><time class='fixtime fixtime-full'>2019-04-06 22:40:00+0900</time></a> (local time)</small>
+		<small class="back-to-home pull-right"><a href="/">Back to Home</a></small>
+	</div>
+	<ul class="nav nav-tabs">
+		<li><a href="/contests/abc123"><span class="glyphicon glyphicon-home" aria-hidden="true"></span> Top</a></li>
+		
+			<li class="active"><a href="/contests/abc123/tasks"><span class="glyphicon glyphicon-tasks" aria-hidden="true"></span> Tasks</a></li>
+		
+
+		
+			<li><a href="/contests/abc123/clarifications"><span class="glyphicon glyphicon-question-sign" aria-hidden="true"></span> Clarifications <span id="clar-badge" class="badge"></span></a></li>
+		
+
+		
+
+		
+			<li>
+				<a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false"><span class="glyphicon glyphicon-list" aria-hidden="true"></span> Results<span class="caret"></span></a>
+				<ul class="dropdown-menu">
+					<li><a href="/contests/abc123/submissions"><span class="glyphicon glyphicon-globe" aria-hidden="true"></span> All Submissions</a></li>
+					
+				</ul>
+			</li>
+		
+
+		
+			
+				
+					<li><a href="/contests/abc123/standings"><span class="glyphicon glyphicon-sort-by-attributes-alt" aria-hidden="true"></span> Standings</a></li>
+				
+			
+		
+
+		
+
+		
+			
+				
+					<li><a href="https://img.atcoder.jp/abc123/editorial.pdf" target="_blank"><span class="glyphicon glyphicon-book" aria-hidden="true"></span> Editorial</a></li>
+				
+			
+		
+		
+
+		<li class="pull-right"><a id="fix-cnvtb" href="javascript:void(0)"><span class="glyphicon glyphicon-pushpin" aria-hidden="true"></span></a></li>
+	</ul>
+</div>
+	<div class="col-sm-12">
+		<span class="h2">A - Five Antennas</span>
+		<hr/>
+		<p>Time Limit: 2 sec / Memory Limit: 1024 MB</p>
+
+		<div id="task-statement">
+			<span class="lang">
+<span class="lang-ja">
+<p>﻿配点: <var>100</var> 点</p>
+
+<div class="part">
+<section>
+<h3>問題文</h3>
+<p>AtCoder 市には、<var>5</var> つのアンテナが一直線上に並んでいます。これらは、西から順にアンテナ <var>A, B, C, D, E</var> と名付けられており、それぞれの座標は <var>a, b, c, d, e</var> です。<br />
+<var>2</var> つのアンテナ間の距離が <var>k</var> 以下であれば直接通信ができ、<var>k</var> より大きいと直接通信ができません。<br />
+さて、<strong>直接</strong> 通信ができないアンテナの組が存在するかどうか判定してください。<br />
+ただし、座標 <var>p</var> と座標 <var>q</var> (<var>p &lt; q</var>) のアンテナ間の距離は <var>q - p</var> であるとします。  </p>
+</section>
+</div>
+
+<div class="part">
+<section>
+<h3>制約</h3>
+<ul>
+<li><var>a, b, c, d, e, k</var> は <var>0</var> 以上 <var>123</var> 以下の整数</li>
+<li><var>a &lt; b &lt; c &lt; d &lt; e</var></li>
+</ul>
+</section>
+</div>
+
+<hr />
+
+<div class="io-style">
+<div class="part">
+<section>
+<h3>入力</h3>
+<p>入力は以下の形式で標準入力から与えられる。  </p>
+<pre><var>a</var>
+<var>b</var>
+<var>c</var>
+<var>d</var>
+<var>e</var>
+<var>k</var>
+</pre>
+
+</section>
+</div>
+
+<div class="part">
+<section>
+<h3>出力</h3>
+<p><strong>直接</strong> 通信ができないアンテナの組が存在する場合は <code>:(</code>、存在しない場合は <code>Yay!</code> と出力せよ。  </p>
+</section>
+</div>
+</div>
+
+<hr />
+
+<div class="part">
+<section>
+<h3>入力例 1</h3><pre>1
+2
+4
+8
+9
+15
+</pre>
+
+</section>
+</div>
+
+<div class="part">
+<section>
+<h3>出力例 1</h3><pre>Yay!
+</pre>
+
+<p>この場合、直接通信できないアンテナの組は存在しません。なぜなら、  </p>
+<ul>
+<li><var>(A, B)</var> の距離は <var>2 - 1</var> = <var>1</var></li>
+<li><var>(A, C)</var> の距離は <var>4 - 1</var> = <var>3</var></li>
+<li><var>(A, D)</var> の距離は <var>8 - 1</var> = <var>7</var></li>
+<li><var>(A, E)</var> の距離は <var>9 - 1</var> = <var>8</var></li>
+<li><var>(B, C)</var> の距離は <var>4 - 2</var> = <var>2</var></li>
+<li><var>(B, D)</var> の距離は <var>8 - 2</var> = <var>6</var></li>
+<li><var>(B, E)</var> の距離は <var>9 - 2</var> = <var>7</var></li>
+<li><var>(C, D)</var> の距離は <var>8 - 4</var> = <var>4</var></li>
+<li><var>(C, E)</var> の距離は <var>9 - 4</var> = <var>5</var></li>
+<li><var>(D, E)</var> の距離は <var>9 - 8</var> = <var>1</var></li>
+</ul>
+<p>そのように、全てのアンテナ間の距離が <var>15</var> 以下であるからです。<br />
+よって、<code>Yay!</code> と出力すれば正解となります。  </p>
+</section>
+</div>
+
+<hr />
+
+<div class="part">
+<section>
+<h3>入力例 2</h3><pre>15
+18
+26
+35
+36
+18
+</pre>
+
+</section>
+</div>
+
+<div class="part">
+<section>
+<h3>出力例 2</h3><pre>:(
+</pre>
+
+<p>この場合、アンテナ <var>A</var> と <var>D</var> の距離が <var>35 - 15</var> = <var>20</var> となり、<var>18</var> を超えるため直接通信ができません。<br />
+よって、<code>:(</code> と出力すれば正解となります。  </p></section>
+</div>
+</span>
+<span class="lang-en">
+<p>﻿Score: <var>100</var> points</p>
+
+<div class="part">
+<section>
+<h3>Problem Statement</h3>
+<p>In AtCoder city, there are five antennas standing in a straight line. They are called Antenna <var>A, B, C, D</var> and <var>E</var> from west to east, and their coordinates are <var>a, b, c, d</var> and <var>e</var>, respectively.<br />
+Two antennas can communicate directly if the distance between them is <var>k</var> or less, and they cannot if the distance is greater than <var>k</var>.<br />
+Determine if there exists a pair of antennas that cannot communicate <strong>directly</strong>.<br />
+Here, assume that the distance between two antennas at coordinates <var>p</var> and <var>q</var> (<var>p &lt; q</var>) is <var>q - p</var>.  </p>
+</section>
+</div>
+
+<div class="part">
+<section>
+<h3>Constraints</h3>
+<ul>
+<li><var>a, b, c, d, e</var> and <var>k</var> are integers between <var>0</var> and <var>123</var> (inclusive).</li>
+<li><var>a &lt; b &lt; c &lt; d &lt; e</var></li>
+</ul>
+</section>
+</div>
+
+<hr />
+
+<div class="io-style">
+<div class="part">
+<section>
+<h3>Input</h3>
+<p>Input is given from Standard Input in the following format:</p>
+<pre><var>a</var>
+<var>b</var>
+<var>c</var>
+<var>d</var>
+<var>e</var>
+<var>k</var>
+</pre>
+
+</section>
+</div>
+
+<div class="part">
+<section>
+<h3>Output</h3>
+<p>Print <code>:(</code> if there exists a pair of antennas that cannot communicate <strong>directly</strong>, and print <code>Yay!</code> if there is no such pair.</p>
+</section>
+</div>
+</div>
+
+<hr />
+
+<div class="part">
+<section>
+<h3>Sample Input 1</h3><pre>1
+2
+4
+8
+9
+15
+</pre>
+
+</section>
+</div>
+
+<div class="part">
+<section>
+<h3>Sample Output 1</h3><pre>Yay!
+</pre>
+
+<p>In this case, there is no pair of antennas that cannot communicate directly, because:</p>
+<ul>
+<li>the distance between <var>A</var> and <var>B</var> is <var>2 - 1</var> = <var>1</var></li>
+<li>the distance between <var>A</var> and <var>C</var> is <var>4 - 1</var> = <var>3</var></li>
+<li>the distance between <var>A</var> and <var>D</var> is <var>8 - 1</var> = <var>7</var></li>
+<li>the distance between <var>A</var> and <var>E</var> is <var>9 - 1</var> = <var>8</var></li>
+<li>the distance between <var>B</var> and <var>C</var> is <var>4 - 2</var> = <var>2</var></li>
+<li>the distance between <var>B</var> and <var>D</var> is <var>8 - 2</var> = <var>6</var></li>
+<li>the distance between <var>B</var> and <var>E</var> is <var>9 - 2</var> = <var>7</var></li>
+<li>the distance between <var>C</var> and <var>D</var> is <var>8 - 4</var> = <var>4</var></li>
+<li>the distance between <var>C</var> and <var>E</var> is <var>9 - 4</var> = <var>5</var></li>
+<li>the distance between <var>D</var> and <var>E</var> is <var>9 - 8</var> = <var>1</var></li>
+</ul>
+<p>and none of them is greater than <var>15</var>. Thus, the correct output is <code>Yay!</code>.</p>
+</section>
+</div>
+
+<hr />
+
+<div class="part">
+<section>
+<h3>Sample Input 2</h3><pre>15
+18
+26
+35
+36
+18
+</pre>
+
+</section>
+</div>
+
+<div class="part">
+<section>
+<h3>Sample Output 2</h3><pre>:(
+</pre>
+
+<p>In this case, the distance between antennas <var>A</var> and <var>D</var> is <var>35 - 15</var> = <var>20</var> and exceeds <var>18</var>, so they cannot communicate directly.
+Thus, the correct output is <code>:(</code>.</p></section>
+</div>
+</span>
+</span>
+
+		</div>
+
+		
+
+		
+	</div>
+</div>
+
+
+		
+			<hr>
+			
+			
+			
+<div class="a2a_kit a2a_kit_size_20 a2a_default_style pull-right" data-a2a-url="https://atcoder.jp/contests/abc123/tasks/abc123_a?lang=en" data-a2a-title="A - Five Antennas">
+	<a class="a2a_button_facebook"></a>
+	<a class="a2a_button_twitter"></a>
+	
+		<a class="a2a_button_telegram"></a>
+	
+	<a class="a2a_dd" href="https://www.addtoany.com/share"></a>
+</div>
+
+		
+		<script async src="//static.addtoany.com/menu/page.js"></script>
+		
+	</div> 
+	<hr>
+</div> 
+<div class="container" style="margin-bottom: 80px;">
+    <footer class="footer">
+		
+			<ul>
+				<li><a href='/contests/abc123/rules'>Rule</a></li>
+				<li><a href='/contests/abc123/glossary'>Glossary</a></li>
+				
+			</ul>
+		
+		<ul>
+			<li><a href='/tos'>Terms of service</a></li>
+			<li><a href='/privacy'>Privacy Policy</a></li>
+			<li><a href='/personal'>Information Protection Policy</a></li>
+			<li><a href='/company'>Company</a></li>
+			<li><a href='/faq'>FAQ</a></li>
+			<li><a href='/contact'>Contact</a></li>
+			
+		</ul>
+    <div class="text-center">
+        <small id="copyright">Copyright Since 2012 &copy;<a href="http://atcoder.co.jp">AtCoder Inc.</a> All rights reserved.</small>
+    </div>
+    </footer>
+</div>
+<p id="fixed-server-timer" class='contest-timer'></p>
+
+	<div id="scroll-page-top" style="display:none;"><span class="glyphicon glyphicon-arrow-up" aria-hidden="true"></span> Page Top</div>
+
+</body>
+</html>
+
+

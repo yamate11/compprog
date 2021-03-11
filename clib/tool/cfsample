@@ -1,0 +1,77 @@
+#!/usr/bin/env python3
+
+import sys, os, re, requests, argparse, bs4
+
+args = None
+sess = None
+
+def die(*msg):
+    print('FATAL: ', *msg, file=sys.stderr)
+    sys.exit(1)
+
+def getPage(url):
+    try:
+        r = sess.get(url)
+    except ValueError as e:
+        die(f'Failed to get page {url}: {type(e)}: {e}')
+    if r.status_code != requests.codes.ok:
+        die(f'Failed to get page {url}')
+    r.encoding = 'UTF-8'
+    with open('a.log', 'w', encoding='UTF-8') as wfp:
+        print(r.text, file=wfp)
+    return r.text
+
+def main():
+    global args, sess
+    parser = argparse.ArgumentParser(
+        description='Sample extraction from a CodeForces question page')
+    parser.add_argument('-f', '--force', action='store_true',
+                        help='overwrites din_*.txt')
+    parser.add_argument('-u', '--url', help='contest URL')
+    parser.add_argument('--outdir', help='directory where files are placed',
+                        default='.')
+    parser.add_argument('contest', nargs='?', default='',
+                        help='contest ID, such as 927')
+    parser.add_argument('problem', nargs='?', default='',
+                        help='problem ID, such as C2')
+    args = parser.parse_args()
+
+    if os.path.exists(f'{args.outdir}/din_1.txt') and not args.force:
+        die(f'{args.outdir}/din_1.txt exists.  Consider a force option.')
+
+    if args.url:
+        if args.contest or args.problem:
+            die('--url cannot be specified with contest/problem ID')
+        url = args.url
+    else:
+        if not (args.contest and args.problem):
+            die('contest ID and problem ID should be specified.')
+        url = f'https://codeforces.com/contest/{args.contest}' \
+              f'/problem/{args.problem}'
+    
+    sess = requests.Session()
+    soup = bs4.BeautifulSoup(getPage(url), 'lxml')
+    st_list = soup.find_all('div', class_='sample-test')
+    if len(st_list) == 0:
+        die('Empty result was returned.  '
+            f'Maybe contest/problem does not exist?  URL: {url}')
+    elif len(st_list) > 1:
+        die(f'Downloaded file not in expected format.  URL: {url}')
+    st = st_list[0]
+    idx = 0
+    for ip in st.find_all('div', class_='input'):
+        idx += 1
+        pr = ip.find('pre')
+        str = ''
+        for s in pr:
+            if type(s) is bs4.element.NavigableString:
+                str += s
+            elif type(s) is bs4.element.Tag and s.name == 'br':
+                str += '\n'
+            else:
+                die(f'Unexpected tag.  {list(pr.strings)}')
+        of = f'{args.outdir}/din_{idx}.txt'
+        with open(of, 'w', encoding='UTF-8') as fp:
+            print(str.strip(), file=fp)
+
+main()

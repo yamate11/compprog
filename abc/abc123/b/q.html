@@ -1,0 +1,575 @@
+
+
+
+
+
+
+<!DOCTYPE html>
+
+<html>
+<head>
+	<title>B - Five Dishes</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+	<meta http-equiv="Content-Language" content='en'>
+	<meta name="viewport" content="width=device-width,initial-scale=1.0">
+	<meta name="format-detection" content="telephone=no">
+	<meta name="google-site-verification" content="nXGC_JxO0yoP1qBzMnYD_xgufO6leSLw1kyNo2HZltM" />
+
+	
+	<meta name="description" content="AtCoder is a programming contest site for anyone from beginners to experts. We hold weekly programming contests online.">
+	<meta name="author" content="AtCoder Inc.">
+
+	<meta property="og:site_name" content="AtCoder">
+	
+	<meta property="og:title" content="B - Five Dishes" />
+	<meta property="og:description" content="AtCoder is a programming contest site for anyone from beginners to experts. We hold weekly programming contests online." />
+	<meta property="og:type" content="website" />
+	<meta property="og:url" content="https://atcoder.jp/contests/abc123/tasks/abc123_b" />
+	<meta property="og:image" content="https://img.atcoder.jp/assets/atcoder.png" />
+	<meta name="twitter:card" content="summary" />
+	<meta name="twitter:site" content="@atcoder" />
+	
+	<meta property="twitter:title" content="B - Five Dishes" />
+
+	<link href="//fonts.googleapis.com/css?family=Lato:400,700" rel="stylesheet" type="text/css">
+	<link rel="stylesheet" type="text/css" href="/public/css/bootstrap.min.css?v=201911062058">
+	<link rel="stylesheet" type="text/css" href="/public/css/base.css?v=201911062058">
+	<link rel="shortcut icon" type="image/png" href="//img.atcoder.jp/assets/favicon.png">
+	<link rel="apple-touch-icon" href="//img.atcoder.jp/assets/atcoder.png">
+	<script src="/public/js/lib/jquery-1.9.1.min.js?v=201911062058"></script>
+	<script src="/public/js/lib/bootstrap.min.js?v=201911062058"></script>
+	<script src="//cdnjs.cloudflare.com/ajax/libs/js-cookie/2.1.4/js.cookie.min.js"></script>
+	<script src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/moment.min.js"></script>
+	<script src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/locale/ja.js"></script>
+	<script>
+		var LANG = "en";
+		var userScreenName = "";
+		var csrfToken = "F3N/rvyQSaNqqN/wfaPE1h631jQPLRE7BpOlSrM2Jv4="
+	</script>
+	<script src="/public/js/utils.js?v=201911062058"></script>
+	
+	
+		<script src="/public/js/contest.js?v=201911062058"></script>
+		<link href="/public/css/contest.css?v=201911062058" rel="stylesheet" />
+		<script>
+			var contestScreenName = "abc123";
+			var remainingText = "Remaining Time";
+			var countDownText = "Contest begins in";
+			var startTime = moment("2019-04-06T21:00:00+09:00");
+			var endTime = moment("2019-04-06T22:40:00+09:00");
+		</script>
+		<style></style>
+	
+	
+		<script type="text/x-mathjax-config">MathJax.Hub.Config({messageStyle:"none",tex2jax:{skipTags:["script","noscript","style","textarea","code"],inlineMath:[['\\(','\\)']]},delayStartupUntil:"onload"});</script>
+		<script src="//cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+		<script>$(function(){$('var').each(function(){$(this).html('\\('+$(this).html()+'\\)');});});</script>
+	
+	
+		<link href="//cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/css/select2.min.css" rel="stylesheet" />
+		<link href="//cdnjs.cloudflare.com/ajax/libs/select2-bootstrap-theme/0.1.0-beta.10/select2-bootstrap.min.css" rel="stylesheet" />
+		<script src="/public/js/lib/select2.min.js?v=201911062058"></script>
+	
+	
+		<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/codemirror/5.38.0/codemirror.min.css">
+		<script src="//cdnjs.cloudflare.com/ajax/libs/codemirror/5.38.0/codemirror.min.js"></script>
+		<script src="/public/js/codeMirror/merged.js?v=201911062058"></script>
+	
+	
+		<script src="//cdn.rawgit.com/google/code-prettify/master/loader/run_prettify.js"></script>
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	<script src="/public/js/base.js?v=201911062058"></script>
+	<script src="/public/js/ga.js?v=201911062058"></script>
+</head>
+
+<body>
+<div id="modal-contest-start" class="modal fade" tabindex="-1" role="dialog">
+	<div class="modal-dialog" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+				<h4 class="modal-title">Contest started</h4>
+			</div>
+			<div class="modal-body">
+				<p>AtCoder Beginner Contest 123 has begun.</p>
+			</div>
+			<div class="modal-footer">
+				
+					<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+				
+			</div>
+		</div>
+	</div>
+</div>
+<div id="modal-contest-end" class="modal fade" tabindex="-1" role="dialog">
+	<div class="modal-dialog" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+				<h4 class="modal-title">Contest is over</h4>
+			</div>
+			<div class="modal-body">
+				<p>AtCoder Beginner Contest 123 has ended.</p>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+			</div>
+		</div>
+	</div>
+</div>
+<div id="main-div" class="float-container">
+	<nav class="navbar navbar-inverse navbar-fixed-top">
+		<div class="container-fluid">
+			<div class="navbar-header">
+				<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapse" aria-expanded="false">
+					<span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span>
+				</button>
+				<a class="navbar-brand" href="/"></a>
+			</div>
+			<div class="collapse navbar-collapse" id="navbar-collapse">
+				<ul class="nav navbar-nav">
+				
+					<li><a class="contest-title" href="/contests/abc123">AtCoder Beginner Contest 123</a></li>
+				
+				</ul>
+				<ul class="nav navbar-nav navbar-right">
+					
+					<li class="dropdown">
+						<a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
+							<img src='//img.atcoder.jp/assets/flag-lang/en.png'> English <span class="caret"></span>
+						</a>
+						<ul class="dropdown-menu">
+							<li><a href="/contests/abc123/tasks/abc123_b?lang=ja"><img src='//img.atcoder.jp/assets/flag-lang/ja.png'> 日本語</a></li>
+							<li><a href="/contests/abc123/tasks/abc123_b?lang=en"><img src='//img.atcoder.jp/assets/flag-lang/en.png'> English</a></li>
+						</ul>
+					</li>
+					
+					
+						<li><a href="/register?continue=https%3A%2F%2Fatcoder.jp%2Fcontests%2Fabc123%2Ftasks%2Fabc123_b">Sign Up</a></li>
+						<li><a href="/login?continue=https%3A%2F%2Fatcoder.jp%2Fcontests%2Fabc123%2Ftasks%2Fabc123_b">Sign In</a></li>
+					
+				</ul>
+			</div>
+		</div>
+	</nav>
+	<form method="POST" name="form_logout" action="/logout?continue=https%3A%2F%2Fatcoder.jp%2Fcontests%2Fabc123%2Ftasks%2Fabc123_b">
+		<input type="hidden" name="csrf_token" value="F3N/rvyQSaNqqN/wfaPE1h631jQPLRE7BpOlSrM2Jv4=" />
+	</form>
+	<div id="main-container" class="container" style="padding-top:50px;">
+		
+
+<div class="row">
+	<div id="contest-nav-tabs" class="col-sm-12 mb-2 cnvtb-fixed">
+	<div>
+		<small class="contest-duration">Contest Duration: <a href='http://www.timeanddate.com/worldclock/fixedtime.html?iso=20190406T2100&p1=248' target='blank'><time class='fixtime fixtime-full'>2019-04-06 21:00:00+0900</time></a> ~ <a href='http://www.timeanddate.com/worldclock/fixedtime.html?iso=20190406T2240&p1=248' target='blank'><time class='fixtime fixtime-full'>2019-04-06 22:40:00+0900</time></a> (local time)</small>
+		<small class="back-to-home pull-right"><a href="/">Back to Home</a></small>
+	</div>
+	<ul class="nav nav-tabs">
+		<li><a href="/contests/abc123"><span class="glyphicon glyphicon-home" aria-hidden="true"></span> Top</a></li>
+		
+			<li class="active"><a href="/contests/abc123/tasks"><span class="glyphicon glyphicon-tasks" aria-hidden="true"></span> Tasks</a></li>
+		
+
+		
+			<li><a href="/contests/abc123/clarifications"><span class="glyphicon glyphicon-question-sign" aria-hidden="true"></span> Clarifications <span id="clar-badge" class="badge"></span></a></li>
+		
+
+		
+
+		
+			<li>
+				<a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false"><span class="glyphicon glyphicon-list" aria-hidden="true"></span> Results<span class="caret"></span></a>
+				<ul class="dropdown-menu">
+					<li><a href="/contests/abc123/submissions"><span class="glyphicon glyphicon-globe" aria-hidden="true"></span> All Submissions</a></li>
+					
+				</ul>
+			</li>
+		
+
+		
+			
+				
+					<li><a href="/contests/abc123/standings"><span class="glyphicon glyphicon-sort-by-attributes-alt" aria-hidden="true"></span> Standings</a></li>
+				
+			
+		
+
+		
+
+		
+			
+				
+					<li><a href="https://img.atcoder.jp/abc123/editorial.pdf" target="_blank"><span class="glyphicon glyphicon-book" aria-hidden="true"></span> Editorial</a></li>
+				
+			
+		
+		
+
+		<li class="pull-right"><a id="fix-cnvtb" href="javascript:void(0)"><span class="glyphicon glyphicon-pushpin" aria-hidden="true"></span></a></li>
+	</ul>
+</div>
+	<div class="col-sm-12">
+		<span class="h2">B - Five Dishes</span>
+		<hr/>
+		<p>Time Limit: 2 sec / Memory Limit: 1024 MB</p>
+
+		<div id="task-statement">
+			<span class="lang">
+<span class="lang-ja">
+<p>﻿配点: <var>200</var> 点</p>
+
+<div class="part">
+<section>
+<h3>問題文</h3>
+<p>AtCoder 料理店では、以下の <var>5</var> つの料理が提供されています。ここで、「調理時間」は料理を注文してから客に届くまでの時間とします。  </p>
+<ul>
+<li>ABC 丼： 調理時間 <var>A</var> 分</li>
+<li>ARC カレー： 調理時間 <var>B</var> 分</li>
+<li>AGC パスタ： 調理時間 <var>C</var> 分</li>
+<li>APC ラーメン： 調理時間 <var>D</var> 分</li>
+<li>ATC ハンバーグ： 調理時間 <var>E</var> 分</li>
+</ul>
+<p>また、この店には以下のような「注文のルール」があります。  </p>
+<ul>
+<li>注文は、<var>10</var> の倍数の時刻 (時刻 <var>0, 10, 20, 30, ...</var>) にしかできない。</li>
+<li>一回の注文につき一つの料理しか注文できない。</li>
+<li>ある料理を注文したら、それが届くまで別の注文ができない。ただし、料理が届いたちょうどの時刻には注文ができる。</li>
+</ul>
+<p>E869120 君は時刻 <var>0</var> に料理店に着きました。彼は <var>5</var> つの料理全てを注文します。最後の料理が届く最も早い時刻を求めてください。<br />
+ただし、料理を注文する順番は自由であり、時刻 <var>0</var> に注文することも可能とであるとします。  </p>
+</section>
+</div>
+
+<div class="part">
+<section>
+<h3>制約</h3>
+<ul>
+<li><var>A, B, C, D, E</var> は <var>1</var> 以上 <var>123</var> 以下の整数</li>
+</ul>
+</section>
+</div>
+
+<hr />
+
+<div class="io-style">
+<div class="part">
+<section>
+<h3>入力</h3>
+<p>入力は以下の形式で標準入力から与えられる。  </p>
+<pre><var>A</var>
+<var>B</var>
+<var>C</var>
+<var>D</var>
+<var>E</var>
+</pre>
+
+</section>
+</div>
+
+<div class="part">
+<section>
+<h3>出力</h3>
+<p>最後の料理が届く最も早い時刻を整数で出力せよ。  </p>
+</section>
+</div>
+</div>
+
+<hr />
+
+<div class="part">
+<section>
+<h3>入力例 1</h3><pre>29
+20
+7
+35
+120
+</pre>
+
+</section>
+</div>
+
+<div class="part">
+<section>
+<h3>出力例 1</h3><pre>215
+</pre>
+
+<p>ABC 丼→ARC カレー→AGC パスタ→ATC ハンバーグ→APC ラーメン の順に注文することにすると、各料理の最も早い注文時刻・届く時刻は以下の通りになります。  </p>
+<ul>
+<li>時刻 <var>0</var> に ABC 丼を注文する。時刻 <var>29</var> に ABC 丼が届く。</li>
+<li>時刻 <var>30</var> に ARC カレーを注文する。時刻 <var>50</var> に ARC カレーが届く。</li>
+<li>時刻 <var>50</var> に AGC パスタを注文する。<var>57</var> に AGC パスタが届く。</li>
+<li>時刻 <var>60</var> に ATC ハンバーグを注文する。時刻 <var>180</var> に ATC ハンバーグが届く。</li>
+<li>時刻 <var>180</var> に APC ラーメンを注文する。時刻 <var>215</var> に APC ラーメンが届く。</li>
+</ul>
+<p>これより早く最後の料理が届くような方法は存在しません。  </p>
+</section>
+</div>
+
+<hr />
+
+<div class="part">
+<section>
+<h3>入力例 2</h3><pre>101
+86
+119
+108
+57
+</pre>
+
+</section>
+</div>
+
+<div class="part">
+<section>
+<h3>出力例 2</h3><pre>481
+</pre>
+
+<p>AGC パスタ→ARC カレー→ATC ハンバーグ→APC ラーメン→ABC 丼の順に注文することにすると、各料理の最も早い注文時刻・届く時刻は以下の通りになります。  </p>
+<ul>
+<li>時刻 <var>0</var> に AGC パスタを注文する。時刻 <var>119</var> に AGC パスタが届く。</li>
+<li>時刻 <var>120</var> に ARC カレーを注文する。時刻 <var>206</var> に ARC カレーが届く。</li>
+<li>時刻 <var>210</var> に ATC ハンバーグを注文する。時刻 <var>267</var> に ATC ハンバーグが届く。</li>
+<li>時刻 <var>270</var> に APC ラーメンを注文する。時刻 <var>378</var> に APC ラーメンが届く。</li>
+<li>時刻 <var>380</var> に ABC 丼を注文する。時刻 <var>481</var> に ABC 丼が届く。</li>
+</ul>
+<p>これより早く最後の料理が届くような方法は存在しません。  </p>
+</section>
+</div>
+
+<hr />
+
+<div class="part">
+<section>
+<h3>入力例 3</h3><pre>123
+123
+123
+123
+123
+</pre>
+
+</section>
+</div>
+
+<div class="part">
+<section>
+<h3>出力例 3</h3><pre>643
+</pre>
+
+<p>これが入力される最大のケースです。  </p></section>
+</div>
+</span>
+<span class="lang-en">
+<p>Score: <var>200</var> points</p>
+
+<div class="part">
+<section>
+<h3>Problem Statement</h3>
+<p>The restaurant AtCoder serves the following five dishes:</p>
+<ul>
+<li>ABC Don (rice bowl): takes <var>A</var> minutes to serve.</li>
+<li>ARC Curry: takes <var>B</var> minutes to serve.</li>
+<li>AGC Pasta: takes <var>C</var> minutes to serve.</li>
+<li>APC Ramen: takes <var>D</var> minutes to serve.</li>
+<li>ATC Hanbagu (hamburger patty): takes <var>E</var> minutes to serve.</li>
+</ul>
+<p>Here, the time to serve a dish is the time between when an order is placed and when the dish is delivered.</p>
+<p>This restaurant has the following rules on orders:</p>
+<ul>
+<li>An order can only be placed at a time that is a multiple of <var>10</var> (time <var>0</var>, <var>10</var>, <var>20</var>, <var>...</var>).</li>
+<li>Only one dish can be ordered at a time.</li>
+<li>No new order can be placed when an order is already placed and the dish is still not delivered, but a new order can be placed at the exact time when the dish is delivered.</li>
+</ul>
+<p>E869120 arrives at this restaurant at time <var>0</var>. He will order all five dishes. Find the earliest possible time for the last dish to be delivered.<br />
+Here, he can order the dishes in any order he likes, and he can place an order already at time <var>0</var>.</p>
+</section>
+</div>
+
+<div class="part">
+<section>
+<h3>Constraints</h3>
+<ul>
+<li><var>A, B, C, D</var> and <var>E</var> are integers between <var>1</var> and <var>123</var> (inclusive).</li>
+</ul>
+</section>
+</div>
+
+<hr />
+
+<div class="io-style">
+<div class="part">
+<section>
+<h3>Input</h3>
+<p>Input is given from Standard Input in the following format:</p>
+<pre><var>A</var>
+<var>B</var>
+<var>C</var>
+<var>D</var>
+<var>E</var>
+</pre>
+
+</section>
+</div>
+
+<div class="part">
+<section>
+<h3>Output</h3>
+<p>Print the earliest possible time for the last dish to be delivered, as an integer.</p>
+</section>
+</div>
+</div>
+
+<hr />
+
+<div class="part">
+<section>
+<h3>Sample Input 1</h3><pre>29
+20
+7
+35
+120
+</pre>
+
+</section>
+</div>
+
+<div class="part">
+<section>
+<h3>Sample Output 1</h3><pre>215
+</pre>
+
+<p>If we decide to order the dishes in the order ABC Don, ARC Curry, AGC Pasta, ATC Hanbagu, APC Ramen, the earliest possible time for each order is as follows:</p>
+<ul>
+<li>Order ABC Don at time <var>0</var>, which will be delivered at time <var>29</var>.</li>
+<li>Order ARC Curry at time <var>30</var>, which will be delivered at time <var>50</var>.</li>
+<li>Order AGC Pasta at time <var>50</var>, which will be delivered at time <var>57</var>.</li>
+<li>Order ATC Hanbagu at time <var>60</var>, which will be delivered at time <var>180</var>.</li>
+<li>Order APC Ramen at time <var>180</var>, which will be delivered at time <var>215</var>.</li>
+</ul>
+<p>There is no way to order the dishes in which the last dish will be delivered earlier than this.</p>
+</section>
+</div>
+
+<hr />
+
+<div class="part">
+<section>
+<h3>Sample Input 2</h3><pre>101
+86
+119
+108
+57
+</pre>
+
+</section>
+</div>
+
+<div class="part">
+<section>
+<h3>Sample Output 2</h3><pre>481
+</pre>
+
+<p>If we decide to order the dishes in the order AGC Pasta, ARC Curry, ATC Hanbagu, APC Ramen, ABC Don, the earliest possible time for each order is as follows:</p>
+<ul>
+<li>Order AGC Pasta at time <var>0</var>, which will be delivered at time <var>119</var>.</li>
+<li>Order ARC Curry at time <var>120</var>, which will be delivered at time <var>206</var>.</li>
+<li>Order ATC Hanbagu at time <var>210</var>, which will be delivered at time <var>267</var>.</li>
+<li>Order APC Ramen at time <var>270</var>, which will be delivered at time <var>378</var>.</li>
+<li>Order ABC Don at time <var>380</var>, which will be delivered at time <var>481</var>.</li>
+</ul>
+<p>There is no way to order the dishes in which the last dish will be delivered earlier than this.</p>
+</section>
+</div>
+
+<hr />
+
+<div class="part">
+<section>
+<h3>Sample Input 3</h3><pre>123
+123
+123
+123
+123
+</pre>
+
+</section>
+</div>
+
+<div class="part">
+<section>
+<h3>Sample Output 3</h3><pre>643
+</pre>
+
+<p>This is the largest valid case.</p></section>
+</div>
+</span>
+</span>
+
+		</div>
+
+		
+
+		
+	</div>
+</div>
+
+
+		
+			<hr>
+			
+			
+			
+<div class="a2a_kit a2a_kit_size_20 a2a_default_style pull-right" data-a2a-url="https://atcoder.jp/contests/abc123/tasks/abc123_b?lang=en" data-a2a-title="B - Five Dishes">
+	<a class="a2a_button_facebook"></a>
+	<a class="a2a_button_twitter"></a>
+	
+		<a class="a2a_button_telegram"></a>
+	
+	<a class="a2a_dd" href="https://www.addtoany.com/share"></a>
+</div>
+
+		
+		<script async src="//static.addtoany.com/menu/page.js"></script>
+		
+	</div> 
+	<hr>
+</div> 
+<div class="container" style="margin-bottom: 80px;">
+    <footer class="footer">
+		
+			<ul>
+				<li><a href='/contests/abc123/rules'>Rule</a></li>
+				<li><a href='/contests/abc123/glossary'>Glossary</a></li>
+				
+			</ul>
+		
+		<ul>
+			<li><a href='/tos'>Terms of service</a></li>
+			<li><a href='/privacy'>Privacy Policy</a></li>
+			<li><a href='/personal'>Information Protection Policy</a></li>
+			<li><a href='/company'>Company</a></li>
+			<li><a href='/faq'>FAQ</a></li>
+			<li><a href='/contact'>Contact</a></li>
+			
+		</ul>
+    <div class="text-center">
+        <small id="copyright">Copyright Since 2012 &copy;<a href="http://atcoder.co.jp">AtCoder Inc.</a> All rights reserved.</small>
+    </div>
+    </footer>
+</div>
+<p id="fixed-server-timer" class='contest-timer'></p>
+
+	<div id="scroll-page-top" style="display:none;"><span class="glyphicon glyphicon-arrow-up" aria-hidden="true"></span> Page Top</div>
+
+</body>
+</html>
+
+

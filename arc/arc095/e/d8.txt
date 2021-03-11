@@ -1,0 +1,6 @@
+5 4
+bbaa
+bbab
+bbba
+aaab
+aaba

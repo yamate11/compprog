@@ -1,0 +1,7 @@
+3
+13
+abacab?bacaba
+11
+abaca?acaba
+15
+??abacab???caba

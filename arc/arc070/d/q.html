@@ -1,0 +1,521 @@
+
+
+
+
+
+
+<!DOCTYPE html>
+
+<html>
+<head>
+	<title>D - No Need</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+	<meta http-equiv="Content-Language" content='ja'>
+	<meta name="viewport" content="width=device-width,initial-scale=1.0">
+	<meta name="format-detection" content="telephone=no">
+	<meta name="google-site-verification" content="nXGC_JxO0yoP1qBzMnYD_xgufO6leSLw1kyNo2HZltM" />
+
+	
+	<meta name="description" content="プログラミング初級者から上級者まで楽しめる、競技プログラミングコンテストサイト「AtCoder」。オンラインで毎週開催プログラミングコンテストを開催しています。競技プログラミングを用いて、客観的に自分のスキルを計ることのできるサービスです。">
+	<meta name="author" content="AtCoder Inc.">
+	<link rel="canonical" href="https://atcoder.jp/">
+
+	<meta property="og:site_name" content="AtCoder">
+	
+	<meta property="og:title" content="D - No Need" />
+	<meta property="og:description" content="プログラミング初級者から上級者まで楽しめる、競技プログラミングコンテストサイト「AtCoder」。オンラインで毎週開催プログラミングコンテストを開催しています。競技プログラミングを用いて、客観的に自分のスキルを計ることのできるサービスです。" />
+	<meta property="og:type" content="website" />
+	<meta property="og:url" content="https://atcoder.jp/contests/arc070/tasks/arc070_b" />
+	<meta property="og:image" content="https://img.atcoder.jp/assets/atcoder.png" />
+	<meta name="twitter:card" content="summary" />
+	<meta name="twitter:site" content="@atcoder" />
+	
+	<meta property="twitter:title" content="D - No Need" />
+
+	<link href="//fonts.googleapis.com/css?family=Lato:400,700" rel="stylesheet" type="text/css">
+	<link rel="stylesheet" type="text/css" href="/public/css/bootstrap.min.css?v=201908312052">
+	<link rel="stylesheet" type="text/css" href="/public/css/base.css?v=201908312052">
+	<link rel="shortcut icon" type="image/png" href="//img.atcoder.jp/assets/favicon.png">
+	<link rel="apple-touch-icon" href="//img.atcoder.jp/assets/atcoder.png">
+	<script src="/public/js/lib/jquery-1.9.1.min.js?v=201908312052"></script>
+	<script src="/public/js/lib/bootstrap.min.js?v=201908312052"></script>
+	<script src="//cdnjs.cloudflare.com/ajax/libs/js-cookie/2.1.4/js.cookie.min.js"></script>
+	<script src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/moment.min.js"></script>
+	<script src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/locale/ja.js"></script>
+	<script>
+		var LANG = "ja";
+		var userScreenName = "";
+		var csrfToken = "xb2QNGz/xQ7U522h6NKgRkgwn94yuoQQHAIZNjkJ7rs="
+	</script>
+	<script src="/public/js/utils.js?v=201908312052"></script>
+	
+	
+		<script src="/public/js/contest.js?v=201908312052"></script>
+		<link href="/public/css/contest.css?v=201908312052" rel="stylesheet" />
+		<script>
+			var contestScreenName = "arc070";
+			var remainingText = "残り時間";
+			var countDownText = "開始まであと";
+			var startTime = moment("2017-03-18T21:00:00+09:00");
+			var endTime = moment("2017-03-18T22:40:00+09:00");
+		</script>
+		<style></style>
+	
+	
+		<script type="text/x-mathjax-config">MathJax.Hub.Config({messageStyle:"none",tex2jax:{skipTags:["script","noscript","style","textarea","code"],inlineMath:[['\\(','\\)']]}});</script>
+		<script src="//cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+		<script src="/public/js/task.js?v=201908312052"></script>
+	
+	
+	
+	
+		<link href="//cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/css/select2.min.css" rel="stylesheet" />
+		<link href="//cdnjs.cloudflare.com/ajax/libs/select2-bootstrap-theme/0.1.0-beta.10/select2-bootstrap.min.css" rel="stylesheet" />
+		<script src="/public/js/lib/select2.min.js?v=201908312052"></script>
+	
+	
+		<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/codemirror/5.38.0/codemirror.min.css">
+		<script src="//cdnjs.cloudflare.com/ajax/libs/codemirror/5.38.0/codemirror.min.js"></script>
+		<script src="/public/js/codeMirror/merged.js?v=201908312052"></script>
+	
+	
+		<script src="//cdn.rawgit.com/google/code-prettify/master/loader/run_prettify.js"></script>
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	<script src="/public/js/base.js?v=201908312052"></script>
+	<script src="/public/js/ga.js?v=201908312052"></script>
+</head>
+
+<body>
+<div id="modal-contest-start" class="modal fade" tabindex="-1" role="dialog">
+	<div class="modal-dialog" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+				<h4 class="modal-title">コンテスト開始</h4>
+			</div>
+			<div class="modal-body">
+				<p>AtCoder Regular Contest 070が開始されました。</p>
+			</div>
+			<div class="modal-footer">
+				
+					<button type="button" class="btn btn-default" data-dismiss="modal">閉じる</button>
+				
+			</div>
+		</div>
+	</div>
+</div>
+<div id="modal-contest-end" class="modal fade" tabindex="-1" role="dialog">
+	<div class="modal-dialog" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+				<h4 class="modal-title">コンテスト終了</h4>
+			</div>
+			<div class="modal-body">
+				<p>AtCoder Regular Contest 070は終了しました。</p>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-default" data-dismiss="modal">閉じる</button>
+			</div>
+		</div>
+	</div>
+</div>
+<div id="main-div" class="float-container">
+	<nav class="navbar navbar-inverse navbar-fixed-top">
+		<div class="container-fluid">
+			<div class="navbar-header">
+				<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapse" aria-expanded="false">
+					<span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span>
+				</button>
+				<a class="navbar-brand" href="/"></a>
+			</div>
+			<div class="collapse navbar-collapse" id="navbar-collapse">
+				<ul class="nav navbar-nav">
+				
+					<li><a class="contest-title" href="/contests/arc070">AtCoder Regular Contest 070</a></li>
+				
+				</ul>
+				<ul class="nav navbar-nav navbar-right">
+					
+					<li class="dropdown">
+						<a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
+							<img src='//img.atcoder.jp/assets/flag-lang/ja.png'> 日本語 <span class="caret"></span>
+						</a>
+						<ul class="dropdown-menu">
+							<li><a href="/contests/arc070/tasks/arc070_b?lang=ja"><img src='//img.atcoder.jp/assets/flag-lang/ja.png'> 日本語</a></li>
+							<li><a href="/contests/arc070/tasks/arc070_b?lang=en"><img src='//img.atcoder.jp/assets/flag-lang/en.png'> English</a></li>
+						</ul>
+					</li>
+					
+					
+						<li><a href="/register?continue=https%3A%2F%2Fatcoder.jp%2Fcontests%2Farc070%2Ftasks%2Farc070_b">新規登録</a></li>
+						<li><a href="/login?continue=https%3A%2F%2Fatcoder.jp%2Fcontests%2Farc070%2Ftasks%2Farc070_b">ログイン</a></li>
+					
+				</ul>
+			</div>
+		</div>
+	</nav>
+	<form method="POST" name="form_logout" action="/logout?continue=https%3A%2F%2Fatcoder.jp%2Fcontests%2Farc070%2Ftasks%2Farc070_b">
+		<input type="hidden" name="csrf_token" value="xb2QNGz/xQ7U522h6NKgRkgwn94yuoQQHAIZNjkJ7rs=" />
+	</form>
+	<div id="main-container" class="container" style="padding-top:50px;">
+		
+
+<div class="row">
+	<div id="contest-nav-tabs" class="col-sm-12 mb-2 cnvtb-fixed">
+	<div>
+		<small class="contest-duration">コンテスト時間: <a href='http://www.timeanddate.com/worldclock/fixedtime.html?iso=20170318T2100&p1=248' target='blank'><time class='fixtime fixtime-full'>2017-03-18 21:00:00+0900</time></a> ~ <a href='http://www.timeanddate.com/worldclock/fixedtime.html?iso=20170318T2240&p1=248' target='blank'><time class='fixtime fixtime-full'>2017-03-18 22:40:00+0900</time></a> </small>
+		<small class="back-to-home pull-right"><a href='/'>AtCoderホームへ戻る</a></small>
+	</div>
+	<ul class="nav nav-tabs">
+		<li><a href='/contests/arc070'><span class="glyphicon glyphicon-home" aria-hidden="true"></span> トップ</a></li>
+		
+			<li class="active"><a href='/contests/arc070/tasks'><span class="glyphicon glyphicon-tasks" aria-hidden="true"></span> 問題</a></li>
+		
+
+		
+			<li><a href='/contests/arc070/clarifications'><span class="glyphicon glyphicon-question-sign" aria-hidden="true"></span> 質問 <span id="clar-badge" class="badge"></span></a></li>
+		
+
+		
+
+		
+			<li>
+				<a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false"><span class="glyphicon glyphicon-list" aria-hidden="true"></span> 提出一覧<span class="caret"></span></a>
+				<ul class="dropdown-menu">
+					<li><a href='/contests/arc070/submissions'><span class="glyphicon glyphicon-globe" aria-hidden="true"></span> すべての提出</a></li>
+					
+				</ul>
+			</li>
+		
+
+		
+			
+				
+					<li><a href='/contests/arc070/standings'><span class="glyphicon glyphicon-sort-by-attributes-alt" aria-hidden="true"></span> 順位表</a></li>
+				
+			
+		
+
+		
+
+		
+			
+				
+					<li><a href="https://atcoder.jp/img/arc070/editorial.pdf" target="_blank"><span class="glyphicon glyphicon-book" aria-hidden="true"></span> 解説</a></li>
+				
+			
+		
+		
+
+		<li class="pull-right"><a id="fix-cnvtb" href="javascript:void(0)"><span class="glyphicon glyphicon-pushpin" aria-hidden="true"></span></a></li>
+	</ul>
+</div>
+	<div class="col-sm-12">
+		<span class="h2">D - No Need</span>
+		<hr/>
+		<p>実行時間制限: 2 sec / メモリ制限: 256 MB</p>
+
+		<div id="task-statement">
+			
+<span class="lang">
+<span class="lang-ja">
+<p>配点 : <var>600</var> 点</p>
+
+<div class="part">
+<section>
+<h3>問題文</h3><p>シカのAtCoDeerくんは正整数が書かれたカードを <var>N</var> 枚持っています。<var>i(1≦i≦N)</var> 枚目に書かれている数は <var>a_i</var> です。
+AtCoDeerくんは大きい数が好きなので、カードに書かれた数の総和が <var>K</var> 以上になるようなカードの部分集合を<em>よい集合</em>と呼びます。</p>
+<p>そして、各カード <var>i</var> に対して、そのカードが<em>不必要</em>かどうかを次のように判定します。</p>
+<ul>
+<li>「カード <var>i</var> を含む任意の<em>よい集合</em>に対して、その集合からカード <var>i</var> を除いたものも<em>よい集合</em>」 ならカード <var>i</var> は<em>不必要</em></li>
+<li>それ以外の場合は、<em>不必要</em>でない</li>
+</ul>
+<p>不必要なカードの枚数を求めてください。ただし、それぞれの判定は独立に行われ、不必要だからと言ってカードが途中で捨てられたりすることはありません。</p>
+</section>
+</div>
+
+<div class="part">
+<section>
+<h3>制約</h3><ul>
+<li>入力は全て整数</li>
+<li><var>1≦N≦5000</var></li>
+<li><var>1≦K≦5000</var></li>
+<li><var>1≦a_i≦10^9 (1≦i≦N)</var></li>
+</ul>
+</section>
+</div>
+
+<div class="part">
+<section>
+<h3>部分点</h3><ul>
+<li><var>N,K≦400</var> を満たすデータセットに正解した場合は、部分点として <var>300</var> 点が与えられる。</li>
+</ul>
+</section>
+</div>
+
+<hr />
+
+<div class="io-style">
+<div class="part">
+<section>
+<h3>入力</h3><p>入力は以下の形式で標準入力から与えられる。</p>
+<pre><var>N</var> <var>K</var>
+<var>a_1</var> <var>a_2</var> ... <var>a_N</var>
+</pre>
+
+</section>
+</div>
+
+<div class="part">
+<section>
+<h3>出力</h3><p>不必要なカードの枚数を出力せよ。</p>
+</section>
+</div>
+</div>
+
+<hr />
+
+<div class="part">
+<section>
+<h3>入力例 1</h3><pre>3 6
+1 4 3
+</pre>
+
+</section>
+</div>
+
+<div class="part">
+<section>
+<h3>出力例 1</h3><pre>1
+</pre>
+
+<p>よい集合は {<var>2,3</var>} と {<var>1,2,3</var>} の二つです。</p>
+<p>カード <var>1</var> を含むよい集合は {<var>1,2,3</var>} しかなく、これから <var>1</var> を取り除いた {<var>2,3</var>} もよい集合なので、カード <var>1</var> は不必要です。</p>
+<p>また、よい集合である {<var>2,3</var>} から <var>2</var> を取り除いた集合 {<var>3</var>} はよい集合ではないため、カード <var>2</var> は不必要ではありません。</p>
+<p>カード <var>3</var> も同様に不必要ではないため、答えは <var>1</var> です。</p>
+</section>
+</div>
+
+<hr />
+
+<div class="part">
+<section>
+<h3>入力例 2</h3><pre>5 400
+3 1 4 1 5
+</pre>
+
+</section>
+</div>
+
+<div class="part">
+<section>
+<h3>出力例 2</h3><pre>5
+</pre>
+
+<p>この場合よい集合は存在しないため、全てのカードは不必要となります。</p>
+</section>
+</div>
+
+<hr />
+
+<div class="part">
+<section>
+<h3>入力例 3</h3><pre>6 20
+10 4 3 10 25 2
+</pre>
+
+</section>
+</div>
+
+<div class="part">
+<section>
+<h3>出力例 3</h3><pre>3
+</pre></section>
+</div>
+</span>
+<span class="lang-en">
+<p>Score : <var>600</var> points</p>
+
+<div class="part">
+<section>
+<h3>Problem Statement</h3><p>AtCoDeer the deer has <var>N</var> cards with positive integers written on them. The number on the <var>i</var>-th card <var>(1≤i≤N)</var> is <var>a_i</var>.
+Because he loves big numbers, he calls a subset of the cards <em>good</em> when the sum of the numbers written on the cards in the subset, is <var>K</var> or greater.</p>
+<p>Then, for each card <var>i</var>, he judges whether it is <em>unnecessary</em> or not, as follows:</p>
+<ul>
+<li>If, for any good subset of the cards containing card <var>i</var>, the set that can be obtained by eliminating card <var>i</var> from the subset is also good, card <var>i</var> is unnecessary.</li>
+<li>Otherwise, card <var>i</var> is NOT unnecessary.</li>
+</ul>
+<p>Find the number of the unnecessary cards. Here, he judges each card independently, and he does not throw away cards that turn out to be unnecessary.</p>
+</section>
+</div>
+
+<div class="part">
+<section>
+<h3>Constraints</h3><ul>
+<li>All input values are integers.</li>
+<li><var>1≤N≤5000</var></li>
+<li><var>1≤K≤5000</var></li>
+<li><var>1≤a_i≤10^9 (1≤i≤N)</var></li>
+</ul>
+</section>
+</div>
+
+<div class="part">
+<section>
+<h3>Partial Score</h3><ul>
+<li><var>300</var> points will be awarded for passing the test set satisfying <var>N,K≤400</var>.</li>
+</ul>
+</section>
+</div>
+
+<hr />
+
+<div class="io-style">
+<div class="part">
+<section>
+<h3>Input</h3><p>The input is given from Standard Input in the following format:</p>
+<pre><var>N</var> <var>K</var>
+<var>a_1</var> <var>a_2</var> ... <var>a_N</var>
+</pre>
+
+</section>
+</div>
+
+<div class="part">
+<section>
+<h3>Output</h3><p>Print the number of the unnecessary cards.</p>
+</section>
+</div>
+</div>
+
+<hr />
+
+<div class="part">
+<section>
+<h3>Sample Input 1</h3><pre>3 6
+1 4 3
+</pre>
+
+</section>
+</div>
+
+<div class="part">
+<section>
+<h3>Sample Output 1</h3><pre>1
+</pre>
+
+<p>There are two good sets: {<var>2,3</var>} and {<var>1,2,3</var>}.</p>
+<p>Card <var>1</var> is only contained in {<var>1,2,3</var>}, and this set without card <var>1</var>, {<var>2,3</var>}, is also good. Thus, card <var>1</var> is unnecessary.</p>
+<p>For card <var>2</var>, a good set {<var>2,3</var>} without card <var>2</var>, {<var>3</var>}, is not good. Thus, card <var>2</var> is NOT unnecessary.</p>
+<p>Neither is card <var>3</var> for a similar reason, hence the answer is <var>1</var>.</p>
+</section>
+</div>
+
+<hr />
+
+<div class="part">
+<section>
+<h3>Sample Input 2</h3><pre>5 400
+3 1 4 1 5
+</pre>
+
+</section>
+</div>
+
+<div class="part">
+<section>
+<h3>Sample Output 2</h3><pre>5
+</pre>
+
+<p>In this case, there is no good set. Therefore, all the cards are unnecessary.</p>
+</section>
+</div>
+
+<hr />
+
+<div class="part">
+<section>
+<h3>Sample Input 3</h3><pre>6 20
+10 4 3 10 25 2
+</pre>
+
+</section>
+</div>
+
+<div class="part">
+<section>
+<h3>Sample Output 3</h3><pre>3
+</pre></section>
+</div>
+</span>
+</span>
+
+		</div>
+
+		
+
+		
+	</div>
+</div>
+
+
+		
+			<hr>
+			
+			
+			
+<div class="a2a_kit a2a_kit_size_20 a2a_default_style pull-right" data-a2a-url="https://atcoder.jp/contests/arc070/tasks/arc070_b?lang=ja" data-a2a-title="D - No Need">
+	<a class="a2a_button_facebook"></a>
+	<a class="a2a_button_twitter"></a>
+	
+		<a class="a2a_button_hatena"></a>
+	
+	<a class="a2a_dd" href="https://www.addtoany.com/share"></a>
+</div>
+
+		
+		<script async src="//static.addtoany.com/menu/page.js"></script>
+		
+	</div> 
+	<hr>
+</div> 
+<div class="container" style="margin-bottom: 80px;">
+    <footer class="footer">
+		
+			<ul>
+				<li><a href='/contests/arc070/rules'>ルール</a></li>
+				<li><a href='/contests/arc070/glossary'>用語集</a></li>
+				
+			</ul>
+		
+		<ul>
+			<li><a href='/tos'>利用規約</a></li>
+			<li><a href='/privacy'>プライバシーポリシー</a></li>
+			<li><a href='/personal'>個人情報保護方針</a></li>
+			<li><a href='/company'>企業情報</a></li>
+			<li><a href='/faq'>よくある質問</a></li>
+			<li><a href='/contact'>お問い合わせ</a></li>
+			<li><a href='/documents/request'>資料請求</a></li>
+		</ul>
+    <div class="text-center">
+        <small id="copyright">Copyright Since 2012 &copy;<a href="http://atcoder.co.jp">AtCoder Inc.</a> All rights reserved.</small>
+    </div>
+    </footer>
+</div>
+<p id="fixed-server-timer" class='contest-timer'></p>
+
+	<div id="scroll-page-top" style="display:none;"><span class="glyphicon glyphicon-arrow-up" aria-hidden="true"></span> ページトップ</div>
+
+</body>
+</html>
+

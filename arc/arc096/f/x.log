@@ -1,0 +1,527 @@
+sizes of wt, val, num 3, 3, 3
+sizes of mWt, mVal, 6, 6
+kp returns
+judge: 2, 1 --> 1 ;; 1, 45, (45), 3, 10, (30)
+judge: 3, 2 --> 0 ;; 1, 10, (10), 1, 20, (20)
+judge: 3, 1 --> 0 ;; 1, 45, (45), 3, 20, (60)
+ord[0] = 2
+ord[1] = 1
+ord[2] = 3
+vecW[0] = 0
+vecW[1] = 45
+vecW[2] = 10
+vecW[3] = 20
+sort returns.
+kp(0) = 0
+    p == 2, count == 0, rem == 100
+    p == 1, count == 2, rem == 100
+    p == 3, count == 0, rem == 10
+  num = 6
+kp(1) = 10
+    p == 2, count == 0, rem == 90
+    p == 1, count == 2, rem == 90
+    p == 3, count == 0, rem == 0
+  num = 7
+kp(2) = 20
+    p == 2, count == 0, rem == 80
+    p == 1, count == 1, rem == 80
+    p == 3, count == 0, rem == 35
+  num = 5
+kp(3) = 30
+    p == 2, count == 0, rem == 70
+    p == 1, count == 1, rem == 70
+    p == 3, count == 0, rem == 25
+  num = 6
+kp(4) = 50
+    p == 2, count == 0, rem == 50
+    p == 1, count == 1, rem == 50
+    p == 3, count == 0, rem == 5
+  num = 7
+kp(5) = 65
+    p == 2, count == 0, rem == 35
+    p == 1, count == 0, rem == 35
+    p == 3, count == 0, rem == 35
+  num = 5
+kp(6) = 75
+    p == 2, count == 0, rem == 25
+    p == 1, count == 0, rem == 25
+    p == 3, count == 0, rem == 25
+  num = 6
+kp(7) = 95
+    p == 2, count == 0, rem == 5
+    p == 1, count == 0, rem == 5
+    p == 3, count == 0, rem == 5
+  num = 7
+sizes of wt, val, num 3, 3, 3
+sizes of mWt, mVal, 6, 6
+kp returns
+judge: 2, 1 --> 1 ;; 1, 45, (45), 3, 10, (30)
+judge: 3, 2 --> 0 ;; 1, 10, (10), 1, 20, (20)
+judge: 3, 1 --> 0 ;; 1, 45, (45), 3, 20, (60)
+ord[0] = 2
+ord[1] = 1
+ord[2] = 3
+vecW[0] = 0
+vecW[1] = 45
+vecW[2] = 10
+vecW[3] = 20
+sort returns.
+kp(0) = 0
+    p == 2, count == 7, rem == 100
+    p == 1, count == 0, rem == 30
+    p == 3, count == 1, rem == 30
+  num = 8
+kp(1) = 10
+    p == 2, count == 7, rem == 90
+    p == 1, count == 0, rem == 20
+    p == 3, count == 1, rem == 20
+  num = 9
+kp(2) = 20
+    p == 2, count == 7, rem == 80
+    p == 1, count == 0, rem == 10
+    p == 3, count == 0, rem == 10
+  num = 9
+kp(3) = 30
+    p == 2, count == 7, rem == 70
+    p == 1, count == 0, rem == 0
+    p == 3, count == 0, rem == 0
+  num = 10
+kp(4) = 50
+    p == 2, count == 5, rem == 50
+    p == 1, count == 0, rem == 0
+    p == 3, count == 0, rem == 0
+  num = 9
+kp(5) = 65
+    p == 2, count == 3, rem == 35
+    p == 1, count == 0, rem == 5
+    p == 3, count == 0, rem == 5
+  num = 8
+kp(6) = 75
+    p == 2, count == 2, rem == 25
+    p == 1, count == 0, rem == 5
+    p == 3, count == 0, rem == 5
+  num = 8
+kp(7) = 95
+    p == 2, count == 0, rem == 5
+    p == 1, count == 0, rem == 5
+    p == 3, count == 0, rem == 5
+  num = 7
+sizes of wt, val, num 5, 5, 5
+sizes of mWt, mVal, 15, 15
+kp returns
+judge: 2, 1 --> 0 ;; 1, 675, (675), 5, 159, (795)
+judge: 2, 1 --> 0 ;; 1, 675, (675), 5, 159, (795)
+judge: 3, 1 --> 1 ;; 3, 675, (2025), 5, 393, (1965)
+judge: 4, 3 --> 0 ;; 1, 393, (393), 3, 135, (405)
+judge: 4, 2 --> 1 ;; 1, 159, (159), 1, 135, (135)
+judge: 4, 1 --> 0 ;; 1, 675, (675), 5, 135, (675)
+judge: 5, 3 --> 0 ;; 1, 393, (393), 3, 147, (441)
+judge: 5, 2 --> 1 ;; 1, 159, (159), 1, 147, (147)
+judge: 5, 4 --> 0 ;; 1, 135, (135), 1, 147, (147)
+ord[0] = 3
+ord[1] = 1
+ord[2] = 4
+ord[3] = 5
+ord[4] = 2
+vecW[0] = 0
+vecW[1] = 675
+vecW[2] = 159
+vecW[3] = 393
+vecW[4] = 135
+vecW[5] = 147
+sort returns.
+kp(0) = 0
+    p == 3, count == 999995, rem == 1000000000
+    p == 1, count == 899262, rem == 607001965
+    p == 4, count == 0, rem == 115
+    p == 5, count == 0, rem == 115
+    p == 2, count == 0, rem == 115
+  num = 7496295
+kp(1) = 135
+    p == 3, count == 999995, rem == 999999865
+    p == 1, count == 899261, rem == 607001830
+    p == 4, count == 4, rem == 655
+    p == 5, count == 0, rem == 115
+    p == 2, count == 0, rem == 115
+  num = 7496295
+kp(2) = 270
+    p == 3, count == 999995, rem == 999999730
+    p == 1, count == 899261, rem == 607001695
+    p == 4, count == 3, rem == 520
+    p == 5, count == 0, rem == 115
+    p == 2, count == 0, rem == 115
+  num = 7496295
+kp(3) = 393
+    p == 3, count == 999995, rem == 999999607
+    p == 1, count == 899261, rem == 607001572
+    p == 4, count == 2, rem == 397
+    p == 5, count == 0, rem == 127
+    p == 2, count == 0, rem == 127
+  num = 7496295
+kp(4) = 528
+    p == 3, count == 999995, rem == 999999472
+    p == 1, count == 899261, rem == 607001437
+    p == 4, count == 1, rem == 262
+    p == 5, count == 0, rem == 127
+    p == 2, count == 0, rem == 127
+  num = 7496295
+kp(5) = 663
+    p == 3, count == 999995, rem == 999999337
+    p == 1, count == 899261, rem == 607001302
+    p == 4, count == 0, rem == 127
+    p == 5, count == 0, rem == 127
+    p == 2, count == 0, rem == 127
+  num = 7496295
+kp(6) = 786
+    p == 3, count == 999995, rem == 999999214
+    p == 1, count == 899261, rem == 607001179
+    p == 4, count == 0, rem == 4
+    p == 5, count == 0, rem == 4
+    p == 2, count == 0, rem == 4
+  num = 7496296
+kp(7) = 921
+    p == 3, count == 999995, rem == 999999079
+    p == 1, count == 899260, rem == 607001044
+    p == 4, count == 4, rem == 544
+    p == 5, count == 0, rem == 4
+    p == 2, count == 0, rem == 4
+  num = 7496296
+kp(8) = 1056
+    p == 3, count == 999995, rem == 999998944
+    p == 1, count == 899260, rem == 607000909
+    p == 4, count == 3, rem == 409
+    p == 5, count == 0, rem == 4
+    p == 2, count == 0, rem == 4
+  num = 7496296
+kp(9) = 1179
+    p == 3, count == 999995, rem == 999998821
+    p == 1, count == 899260, rem == 607000786
+    p == 4, count == 2, rem == 286
+    p == 5, count == 0, rem == 16
+    p == 2, count == 0, rem == 16
+  num = 7496296
+kp(10) = 1314
+    p == 3, count == 999995, rem == 999998686
+    p == 1, count == 899260, rem == 607000651
+    p == 4, count == 1, rem == 151
+    p == 5, count == 0, rem == 16
+    p == 2, count == 0, rem == 16
+  num = 7496296
+kp(11) = 1449
+    p == 3, count == 999995, rem == 999998551
+    p == 1, count == 899260, rem == 607000516
+    p == 4, count == 0, rem == 16
+    p == 5, count == 0, rem == 16
+    p == 2, count == 0, rem == 16
+  num = 7496296
+kp(12) = 1572
+    p == 3, count == 999995, rem == 999998428
+    p == 1, count == 899259, rem == 607000393
+    p == 4, count == 4, rem == 568
+    p == 5, count == 0, rem == 28
+    p == 2, count == 0, rem == 28
+  num = 7496296
+kp(13) = 1707
+    p == 3, count == 999995, rem == 999998293
+    p == 1, count == 899259, rem == 607000258
+    p == 4, count == 3, rem == 433
+    p == 5, count == 0, rem == 28
+    p == 2, count == 0, rem == 28
+  num = 7496296
+kp(14) = 1842
+    p == 3, count == 999995, rem == 999998158
+    p == 1, count == 899259, rem == 607000123
+    p == 4, count == 2, rem == 298
+    p == 5, count == 0, rem == 28
+    p == 2, count == 0, rem == 28
+  num = 7496296
+kp(15) = 1965
+    p == 3, count == 999995, rem == 999998035
+    p == 1, count == 899259, rem == 607000000
+    p == 4, count == 1, rem == 175
+    p == 5, count == 0, rem == 40
+    p == 2, count == 0, rem == 40
+  num = 7496296
+kp(16) = 2100
+    p == 3, count == 999995, rem == 999997900
+    p == 1, count == 899259, rem == 606999865
+    p == 4, count == 0, rem == 40
+    p == 5, count == 0, rem == 40
+    p == 2, count == 0, rem == 40
+  num = 7496296
+kp(17) = 2235
+    p == 3, count == 999995, rem == 999997765
+    p == 1, count == 899258, rem == 606999730
+    p == 4, count == 4, rem == 580
+    p == 5, count == 0, rem == 40
+    p == 2, count == 0, rem == 40
+  num = 7496296
+kp(18) = 2370
+    p == 3, count == 999995, rem == 999997630
+    p == 1, count == 899258, rem == 606999595
+    p == 4, count == 3, rem == 445
+    p == 5, count == 0, rem == 40
+    p == 2, count == 0, rem == 40
+  num = 7496296
+kp(19) = 2505
+    p == 3, count == 999995, rem == 999997495
+    p == 1, count == 899258, rem == 606999460
+    p == 4, count == 2, rem == 310
+    p == 5, count == 0, rem == 40
+    p == 2, count == 0, rem == 40
+  num = 7496296
+kp(20) = 2640
+    p == 3, count == 999995, rem == 999997360
+    p == 1, count == 899258, rem == 606999325
+    p == 4, count == 1, rem == 175
+    p == 5, count == 0, rem == 40
+    p == 2, count == 0, rem == 40
+  num = 7496296
+kp(21) = 2775
+    p == 3, count == 999995, rem == 999997225
+    p == 1, count == 899258, rem == 606999190
+    p == 4, count == 0, rem == 40
+    p == 5, count == 0, rem == 40
+    p == 2, count == 0, rem == 40
+  num = 7496296
+kp(22) = 2910
+    p == 3, count == 999995, rem == 999997090
+    p == 1, count == 899257, rem == 606999055
+    p == 4, count == 4, rem == 580
+    p == 5, count == 0, rem == 40
+    p == 2, count == 0, rem == 40
+  num = 7496296
+kp(23) = 3045
+    p == 3, count == 999995, rem == 999996955
+    p == 1, count == 899257, rem == 606998920
+    p == 4, count == 3, rem == 445
+    p == 5, count == 0, rem == 40
+    p == 2, count == 0, rem == 40
+  num = 7496296
+kp(24) = 3180
+    p == 3, count == 999995, rem == 999996820
+    p == 1, count == 899257, rem == 606998785
+    p == 4, count == 2, rem == 310
+    p == 5, count == 0, rem == 40
+    p == 2, count == 0, rem == 40
+  num = 7496296
+kp(25) = 3315
+    p == 3, count == 999995, rem == 999996685
+    p == 1, count == 899257, rem == 606998650
+    p == 4, count == 1, rem == 175
+    p == 5, count == 0, rem == 40
+    p == 2, count == 0, rem == 40
+  num = 7496296
+kp(26) = 3450
+    p == 3, count == 999995, rem == 999996550
+    p == 1, count == 899257, rem == 606998515
+    p == 4, count == 0, rem == 40
+    p == 5, count == 0, rem == 40
+    p == 2, count == 0, rem == 40
+  num = 7496296
+kp(27) = 3585
+    p == 3, count == 999995, rem == 999996415
+    p == 1, count == 899256, rem == 606998380
+    p == 4, count == 4, rem == 580
+    p == 5, count == 0, rem == 40
+    p == 2, count == 0, rem == 40
+  num = 7496296
+kp(28) = 3720
+    p == 3, count == 999995, rem == 999996280
+    p == 1, count == 899256, rem == 606998245
+    p == 4, count == 3, rem == 445
+    p == 5, count == 0, rem == 40
+    p == 2, count == 0, rem == 40
+  num = 7496296
+kp(29) = 3855
+    p == 3, count == 999995, rem == 999996145
+    p == 1, count == 899256, rem == 606998110
+    p == 4, count == 2, rem == 310
+    p == 5, count == 0, rem == 40
+    p == 2, count == 0, rem == 40
+  num = 7496296
+kp(30) = 3990
+    p == 3, count == 999995, rem == 999996010
+    p == 1, count == 899256, rem == 606997975
+    p == 4, count == 1, rem == 175
+    p == 5, count == 0, rem == 40
+    p == 2, count == 0, rem == 40
+  num = 7496296
+kp(31) = 4125
+    p == 3, count == 999995, rem == 999995875
+    p == 1, count == 899256, rem == 606997840
+    p == 4, count == 0, rem == 40
+    p == 5, count == 0, rem == 40
+    p == 2, count == 0, rem == 40
+  num = 7496296
+kp(32) = 4260
+    p == 3, count == 999995, rem == 999995740
+    p == 1, count == 899255, rem == 606997705
+    p == 4, count == 4, rem == 580
+    p == 5, count == 0, rem == 40
+    p == 2, count == 0, rem == 40
+  num = 7496296
+kp(33) = 4395
+    p == 3, count == 999995, rem == 999995605
+    p == 1, count == 899255, rem == 606997570
+    p == 4, count == 3, rem == 445
+    p == 5, count == 0, rem == 40
+    p == 2, count == 0, rem == 40
+  num = 7496296
+kp(34) = 4530
+    p == 3, count == 999995, rem == 999995470
+    p == 1, count == 899255, rem == 606997435
+    p == 4, count == 2, rem == 310
+    p == 5, count == 0, rem == 40
+    p == 2, count == 0, rem == 40
+  num = 7496296
+kp(35) = 4665
+    p == 3, count == 999995, rem == 999995335
+    p == 1, count == 899255, rem == 606997300
+    p == 4, count == 1, rem == 175
+    p == 5, count == 0, rem == 40
+    p == 2, count == 0, rem == 40
+  num = 7496296
+kp(36) = 4800
+    p == 3, count == 999995, rem == 999995200
+    p == 1, count == 899255, rem == 606997165
+    p == 4, count == 0, rem == 40
+    p == 5, count == 0, rem == 40
+    p == 2, count == 0, rem == 40
+  num = 7496296
+kp(37) = 4935
+    p == 3, count == 999995, rem == 999995065
+    p == 1, count == 899254, rem == 606997030
+    p == 4, count == 4, rem == 580
+    p == 5, count == 0, rem == 40
+    p == 2, count == 0, rem == 40
+  num = 7496296
+kp(38) = 5070
+    p == 3, count == 999995, rem == 999994930
+    p == 1, count == 899254, rem == 606996895
+    p == 4, count == 3, rem == 445
+    p == 5, count == 0, rem == 40
+    p == 2, count == 0, rem == 40
+  num = 7496296
+kp(39) = 5205
+    p == 3, count == 999995, rem == 999994795
+    p == 1, count == 899254, rem == 606996760
+    p == 4, count == 2, rem == 310
+    p == 5, count == 0, rem == 40
+    p == 2, count == 0, rem == 40
+  num = 7496296
+kp(40) = 5340
+    p == 3, count == 999995, rem == 999994660
+    p == 1, count == 899254, rem == 606996625
+    p == 4, count == 1, rem == 175
+    p == 5, count == 0, rem == 40
+    p == 2, count == 0, rem == 40
+  num = 7496296
+kp(41) = 5475
+    p == 3, count == 999995, rem == 999994525
+    p == 1, count == 899254, rem == 606996490
+    p == 4, count == 0, rem == 40
+    p == 5, count == 0, rem == 40
+    p == 2, count == 0, rem == 40
+  num = 7496296
+kp(42) = 5610
+    p == 3, count == 999995, rem == 999994390
+    p == 1, count == 899253, rem == 606996355
+    p == 4, count == 4, rem == 580
+    p == 5, count == 0, rem == 40
+    p == 2, count == 0, rem == 40
+  num = 7496296
+kp(43) = 5745
+    p == 3, count == 999995, rem == 999994255
+    p == 1, count == 899253, rem == 606996220
+    p == 4, count == 3, rem == 445
+    p == 5, count == 0, rem == 40
+    p == 2, count == 0, rem == 40
+  num = 7496296
+kp(44) = 5880
+    p == 3, count == 999995, rem == 999994120
+    p == 1, count == 899253, rem == 606996085
+    p == 4, count == 2, rem == 310
+    p == 5, count == 0, rem == 40
+    p == 2, count == 0, rem == 40
+  num = 7496296
+kp(45) = 6015
+    p == 3, count == 999995, rem == 999993985
+    p == 1, count == 899253, rem == 606995950
+    p == 4, count == 1, rem == 175
+    p == 5, count == 0, rem == 40
+    p == 2, count == 0, rem == 40
+  num = 7496296
+kp(46) = 6162
+    p == 3, count == 999995, rem == 999993838
+    p == 1, count == 899253, rem == 606995803
+    p == 4, count == 0, rem == 28
+    p == 5, count == 0, rem == 28
+    p == 2, count == 0, rem == 28
+  num = 7496296
+kp(47) = 6309
+    p == 3, count == 999995, rem == 999993691
+    p == 1, count == 899252, rem == 606995656
+    p == 4, count == 4, rem == 556
+    p == 5, count == 0, rem == 16
+    p == 2, count == 0, rem == 16
+  num = 7496296
+kp(48) = 6456
+    p == 3, count == 999995, rem == 999993544
+    p == 1, count == 899252, rem == 606995509
+    p == 4, count == 3, rem == 409
+    p == 5, count == 0, rem == 4
+    p == 2, count == 0, rem == 4
+  num = 7496296
+kp(49) = 6603
+    p == 3, count == 999995, rem == 999993397
+    p == 1, count == 899252, rem == 606995362
+    p == 4, count == 1, rem == 262
+    p == 5, count == 0, rem == 127
+    p == 2, count == 0, rem == 127
+  num = 7496295
+kp(50) = 6750
+    p == 3, count == 999995, rem == 999993250
+    p == 1, count == 899252, rem == 606995215
+    p == 4, count == 0, rem == 115
+    p == 5, count == 0, rem == 115
+    p == 2, count == 0, rem == 115
+  num = 7496295
+kp(51) = 6909
+    p == 3, count == 999995, rem == 999993091
+    p == 1, count == 899251, rem == 606995056
+    p == 4, count == 4, rem == 631
+    p == 5, count == 0, rem == 91
+    p == 2, count == 0, rem == 91
+  num = 7496295
+kp(52) = 7068
+    p == 3, count == 999995, rem == 999992932
+    p == 1, count == 899251, rem == 606994897
+    p == 4, count == 3, rem == 472
+    p == 5, count == 0, rem == 67
+    p == 2, count == 0, rem == 67
+  num = 7496295
+kp(53) = 7227
+    p == 3, count == 999995, rem == 999992773
+    p == 1, count == 899251, rem == 606994738
+    p == 4, count == 2, rem == 313
+    p == 5, count == 0, rem == 43
+    p == 2, count == 0, rem == 43
+  num = 7496295
+kp(54) = 7386
+    p == 3, count == 999995, rem == 999992614
+    p == 1, count == 899251, rem == 606994579
+    p == 4, count == 1, rem == 154
+    p == 5, count == 0, rem == 19
+    p == 2, count == 0, rem == 19
+  num = 7496295
+kp(55) = 7545
+    p == 3, count == 999995, rem == 999992455
+    p == 1, count == 899250, rem == 606994420
+    p == 4, count == 4, rem == 670
+    p == 5, count == 0, rem == 130
+    p == 2, count == 0, rem == 130
+  num = 7496294
+./d1.txt ... PASS /  0.009 sec
+./d2.txt ... PASS /  0.008 sec
+./d3.txt ... PASS /  0.032 sec

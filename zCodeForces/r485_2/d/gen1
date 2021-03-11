@@ -1,0 +1,32 @@
+#!/usr/bin/env python3
+
+from random import randrange
+
+def main():
+    n = 70000
+    m = 100000
+    s = 80
+    k = 100
+    print(n, m, k, s)
+    A = [randrange(1, k + 1) for i in range(n)]
+    print(' '.join(map(str, A)))
+    edge = [set() for _ in range(n)]
+    for x in range(2, n + 1):
+        p = randrange(1, x)
+        edge[p].add(x)
+        print(p, x)
+    for i in range(n - 1, m):
+        while True:
+            x = randrange(1, n + 1)
+            y = randrange(1, n + 1)
+            if x == y:
+                continue
+            if x > y:
+                x, y = y, x
+            if y in edge[x]:
+                continue
+            break
+        edge[x].add(y)
+        print(x, y)
+
+main()

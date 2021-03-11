@@ -1,0 +1,28 @@
+edge1 0 1 1 0
+edge2 1 4 1 -9
+edge2 1 5 1 -6
+edge1 0 2 1 0
+edge2 2 4 1 -27
+edge2 2 5 1 -18
+edge1 0 3 1 0
+edge2 3 4 1 -81
+edge2 3 5 1 -54
+edge3 4 6 1 9
+edge3 4 6 1 27
+edge3 4 6 1 81
+edge3 5 6 1 6
+edge3 5 6 1 18
+edge3 5 6 1 54
+flow vol= 1 accumulated cost= -72
+   4 -> 6
+   3 -> 4
+   0 -> 3
+flow vol= 1 accumulated cost= -84
+   5 -> 6
+   2 -> 5
+   0 -> 2
+flow vol= 1 accumulated cost= -72
+   5 -> 6
+   1 -> 5
+   0 -> 1
+72

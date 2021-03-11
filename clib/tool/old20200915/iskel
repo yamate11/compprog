@@ -1,0 +1,132 @@
+#!/usr/bin/env python3
+#
+# iskel  .. make skelton etc interactively
+
+import sys, re, os, argparse, requests, subprocess
+
+# Ask user to choose from options
+# prompt: prompt
+# options: list of str
+#   str can be any string, but it should contain exactly one upper case letter,
+#   which will be chosen by the user.
+# default: an option or None
+def userChoice(prompt, options, default):
+    def findKey(s):
+        for j in range(len(s)):
+            if s[j].isupper():
+                os = s[:j] + '[' + s[j] + ']' + s[j+1:] \
+                     if s[j] == default else s
+                return (s[j], os)
+        print(f'No upper letter found in option "s"', file=sys.stderr)
+        assert False
+
+    key = set()
+    optStrList = []
+    for s in options:
+        (k, os) = findKey(s)
+        key.add(k)
+        optStrList.append(os)
+    optStr = '/'.join(optStrList)
+
+    while True:
+        xx = input(f'{prompt} ({optStr})? ')
+        x = xx[0].upper() if xx else default
+        if x in key:
+            return x
+
+def prepare_q(qfile):
+    while True:
+        if os.path.exists(qfile):
+            resp = userChoice(f'{qfile} exists.',
+                              ['Use it', 'Download and overwrite', 'Retry'],
+                              'U')
+        else:
+            resp = userChoice(f'{qfile} does not exist.',
+                              ['Download', 'Retry'], 'D')
+        if resp == 'U':
+            return
+        elif resp == 'R':
+            continue
+        url = input('URL: ')
+        if not url:
+            continue
+        r = requests.get(url)
+        if r.status_code != 200:
+            print('Failed to get question file.', file=sys.stderr)
+            continue
+        r.encoding = 'utf-8'
+        with open(qfile, 'w', encoding='utf-8') as fp:
+            print(r.text, file=fp)
+        return
+
+def extract_eg():
+    if os.path.exists('d1.txt'):
+        resp = userChoice('d1.txt exists.  Overwrite?', ['Y', 'N'], 'N')
+        if resp == 'N':
+            return
+    qfile = 'q.html'
+    prepare_q(qfile)
+    cp = subprocess.run(['exteg', '-f', qfile])
+    if cp.returncode != 0:
+        print('exteg failed.', file=sys.stderr)
+        sys.exit(1)
+
+def make_makefile():
+    mf = 'Makefile'
+    if os.path.exists(mf):
+        resp = userChoice(f'{mf} exists.  Overwrite?', ['Y', 'N'], 'N')
+        if resp == 'N':
+            return
+    with open(mf, 'w', encoding='utf-8') as wfp:
+        print('''CXXCOMMONFLAGS = -std=gnu++1y -Wall -Wno-format-security -Wshadow
+BOOSTINCLIB = -I/opt/boost/gcc/include -L/opt/boost/gcc/lib
+ifdef DEBUG
+  CXXFLAGS = -g -O0 $(CXXCOMMONFLAGS) -DDEBUG=$(DEBUG)
+else
+  CXXFLAGS = -O2 $(CXXCOMMONFLAGS)
+endif
+# CXXFLAGS = -O2 $(CXXCOMMONFLAGS) $(BOOSTINCLIB)
+
+all: cans
+
+clean:
+	$(RM) cans.o cans cans.exe *~ *.stackdump core
+''', file=wfp)
+
+def make_skelton():
+    src = 'cans.cc'
+    if os.path.exists(src):
+        resp = userChoice(f'{src} exists.  Overwrite?', ['Y', 'N'], 'N')
+        if resp == 'N':
+            return
+    with open(src, 'w', encoding='utf-8') as wfp:
+        print('''#include <bits/stdc++.h>
+#include <cassert>
+typedef long long int ll;
+using namespace std;
+
+
+int main(int argc, char *argv[]) {
+  // C-style stdio functions should not be used.
+  ios_base::sync_with_stdio(false);
+  cin.tie(nullptr);
+  cout << setprecision(20);
+
+  return 0;
+}
+''', file=wfp)
+        
+
+def main():
+    global args
+    parser = argparse.ArgumentParser()
+#    parser.add_argument('-f', '--force', action='store_true',
+#                        help='force overwrite')
+#    parser.add_argument('file')
+    args = parser.parse_args()
+
+    extract_eg();
+    make_makefile();
+    make_skelton();
+
+main()

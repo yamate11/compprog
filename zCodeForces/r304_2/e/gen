@@ -1,0 +1,78 @@
+#!/usr/bin/env python3
+
+import argparse, sys
+from random import randrange, choice, shuffle
+
+def show_list(lst):
+    return ' '.join(map(str,lst))
+
+# Function generate() should yield test cases of type string repeatedly.
+# E.g.,
+
+def generate_seq():
+    for x in range(1, 10):
+        for cdir in ['N', 'E', 'S', 'W']:
+            yield f'{x}\n{cdir}\n'
+
+# or E.g.,
+
+def generate_random():
+    while True:
+        n = randrange(1,6)
+        m = randrange(n * (n - 1) // 2 + 1);
+        seen = [[0 for a in range(n)] for b in range(n)]
+        lst1 = [randrange(0, 10) for _ in range(n)]
+        lst2 = [randrange(0, 10) for _ in range(n)]
+        e = []
+        cnt = 0
+        while cnt < m:
+            x = randrange(n)
+            y = randrange(n)
+            if x == y: continue
+            if x > y:
+                x,y = y,x
+            if seen[x][y]:
+                continue
+            seen[x][y] = 1
+            e.append((x,y))
+            cnt += 1
+        case = f'''{n} {m}
+{show_list(lst1)}
+{show_list(lst2)}
+'''
+        for (x,y) in e:
+            case += f'{x + 1} {y + 1}\n'
+        yield case
+
+# generate = generate_seq
+generate = generate_random
+
+######################################################################
+# Hope that you need not edit the following code.
+
+end_mark = '^__=end=__^'
+end_file_mark = '^__=end_file=__^'
+
+def main():
+    ap = argparse.ArgumentParser();
+    ap.add_argument('-r', '--repeat', action='store_true',
+                    help='Repeatedly generates cases',)
+    args = ap.parse_args()
+
+    try:
+        if args.repeat:
+            for s in generate():
+                print(s.rstrip())
+                print(end_mark)
+            print(end_file_mark)
+        else:
+            for (i, s) in enumerate(generate()):
+                print(s.rstrip())
+                print(end_mark)
+                if (i == 4):
+                    break
+    except BrokenPipeError as e:
+        # print('caught: BrokenPipeError', file=sys.stderr)
+        pass
+
+main()

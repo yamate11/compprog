@@ -1,0 +1,561 @@
+
+
+
+
+
+
+<!DOCTYPE html>
+
+<html>
+<head>
+	<title>D - Rotation Sort</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+	<meta http-equiv="Content-Language" content='en'>
+	<meta name="viewport" content="width=device-width,initial-scale=1.0">
+	<meta name="format-detection" content="telephone=no">
+	<meta name="google-site-verification" content="nXGC_JxO0yoP1qBzMnYD_xgufO6leSLw1kyNo2HZltM" />
+
+	
+	<meta name="description" content="AtCoder is a programming contest site for anyone from beginners to experts. We hold weekly programming contests online.">
+	<meta name="author" content="AtCoder Inc.">
+	<link rel="canonical" href="https://atcoder.jp/">
+
+	<meta property="og:site_name" content="AtCoder">
+	
+	<meta property="og:title" content="D - Rotation Sort" />
+	<meta property="og:description" content="AtCoder is a programming contest site for anyone from beginners to experts. We hold weekly programming contests online." />
+	<meta property="og:type" content="website" />
+	<meta property="og:url" content="https://atcoder.jp/contests/agc032/tasks/agc032_d" />
+	<meta property="og:image" content="https://img.atcoder.jp/assets/atcoder.png" />
+	<meta name="twitter:card" content="summary" />
+	<meta name="twitter:site" content="@atcoder" />
+	
+	<meta property="twitter:title" content="D - Rotation Sort" />
+
+	<link href='//fonts.googleapis.com/css?family=Lato:400,700' rel='stylesheet' type='text/css'>
+	<link rel="stylesheet" type="text/css" href='/public/css/bootstrap.min.css?v=201904280200'>
+	<link rel="stylesheet" type="text/css" href='/public/css/base.css?v=201904280200'>
+	<link rel="shortcut icon" type="image/png" href="//img.atcoder.jp/assets/favicon.png">
+	<link rel="apple-touch-icon" href="//img.atcoder.jp/assets/atcoder.png">
+	<script src='/public/js/lib/jquery-1.9.1.min.js?v=201904280200'></script>
+	<script src='/public/js/lib/bootstrap.min.js?v=201904280200'></script>
+	<script src="//cdnjs.cloudflare.com/ajax/libs/js-cookie/2.1.4/js.cookie.min.js"></script>
+	<script src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/moment.min.js"></script>
+	<script src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/locale/ja.js"></script>
+	<script>
+		var LANG = "en";
+		var userScreenName = "";
+	</script>
+	<script src='/public/js/utils.js?v=201904280200'></script>
+	
+	
+		<script src='/public/js/contest.js?v=201904280200'></script>
+		<link href='/public/css/contest.css?v=201904280200' rel="stylesheet" />
+		<script>
+			var contestScreenName = "agc032";
+			var remainingText = "Remaining Time";
+			var countDownText = "Contest begins in";
+			var startTime = moment("2019-03-23T22:00:00+09:00");
+			var endTime = moment("2019-03-23T23:50:00+09:00");
+		</script>
+		<style></style>
+	
+	
+		<script type="text/x-mathjax-config">MathJax.Hub.Config({messageStyle:"none",tex2jax:{skipTags:["script","noscript","style","textarea","code"],inlineMath:[['\\(','\\)']]}});</script>
+		<script src="//cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+		<script src='/public/js/task.js?v=201904280200'></script>
+	
+	
+	
+	
+		<link href="//cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/css/select2.min.css" rel="stylesheet" />
+		<link href="//cdnjs.cloudflare.com/ajax/libs/select2-bootstrap-theme/0.1.0-beta.10/select2-bootstrap.min.css" rel="stylesheet" />
+		<script src='/public/js/lib/select2.min.js?v=201904280200'></script>
+	
+	
+		<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/codemirror/5.38.0/codemirror.min.css">
+		<script src="//cdnjs.cloudflare.com/ajax/libs/codemirror/5.38.0/codemirror.min.js"></script>
+		<script src='/public/js/codeMirror/merged.js?v=201904280200'></script>
+	
+	
+		<script src="//cdn.rawgit.com/google/code-prettify/master/loader/run_prettify.js"></script>
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	<script src='/public/js/base.js?v=201904280200'></script>
+	<script src='/public/js/ga.js?v=201904280200'></script>
+</head>
+
+<body>
+<div id="modal-contest-start" class="modal fade" tabindex="-1" role="dialog">
+	<div class="modal-dialog" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+				<h4 class="modal-title">Contest started</h4>
+			</div>
+			<div class="modal-body">
+				<p>AtCoder Grand Contest 032 has begun.</p>
+			</div>
+			<div class="modal-footer">
+				
+					<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+				
+			</div>
+		</div>
+	</div>
+</div>
+<div id="modal-contest-end" class="modal fade" tabindex="-1" role="dialog">
+	<div class="modal-dialog" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+				<h4 class="modal-title">Contest is over</h4>
+			</div>
+			<div class="modal-body">
+				<p>AtCoder Grand Contest 032 has ended.</p>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+			</div>
+		</div>
+	</div>
+</div>
+<div id="main-div" class="float-container">
+	<nav class="navbar navbar-inverse navbar-fixed-top">
+		<div class="container-fluid">
+			<div class="navbar-header">
+				<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapse" aria-expanded="false">
+					<span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span>
+				</button>
+				<a class="navbar-brand" href="/"></a>
+			</div>
+			<div class="collapse navbar-collapse" id="navbar-collapse">
+				<ul class="nav navbar-nav">
+				
+					<li><a class="contest-title" href='/contests/agc032'>AtCoder Grand Contest 032</a></li>
+				
+				</ul>
+				<ul class="nav navbar-nav navbar-right">
+					
+					<li class="dropdown">
+						<a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
+							<img src='//img.atcoder.jp/assets/flag-lang/en.png'> English <span class="caret"></span>
+						</a>
+						<ul class="dropdown-menu">
+							<li><a href='/contests/agc032/tasks/agc032_d?lang=ja'><img src='//img.atcoder.jp/assets/flag-lang/ja.png'> 日本語</a></li>
+							<li><a href='/contests/agc032/tasks/agc032_d?lang=en'><img src='//img.atcoder.jp/assets/flag-lang/en.png'> English</a></li>
+						</ul>
+					</li>
+					
+					
+						<li><a href="/register?continue=https%3A%2F%2Fatcoder.jp%2Fcontests%2Fagc032%2Ftasks%2Fagc032_d">Sign Up</a></li>
+						<li><a href="/login?continue=https%3A%2F%2Fatcoder.jp%2Fcontests%2Fagc032%2Ftasks%2Fagc032_d">Sign In</a></li>
+					
+				</ul>
+			</div>
+		</div>
+	</nav>
+	<form method="POST" name="form_logout" action='/logout?continue=https%3A%2F%2Fatcoder.jp%2Fcontests%2Fagc032%2Ftasks%2Fagc032_d'>
+		<input type="hidden" name="csrf_token" value='HS8qMUEEj//liKOSho79Av393sG3yWr81JX0td/U8HU=' />
+	</form>
+	<div id="main-container" class="container" style="padding-top:50px;">
+		
+
+<div class="row">
+	<div id="contest-nav-tabs" class="col-sm-12 mb-2 cnvtb-fixed">
+	<div>
+		<small class="contest-duration">Contest Duration: <a href='http://www.timeanddate.com/worldclock/fixedtime.html?iso=20190323T2200&p1=248' target='blank'><time class='fixtime fixtime-full'>2019-03-23 22:00:00+0900</time></a> ~ <a href='http://www.timeanddate.com/worldclock/fixedtime.html?iso=20190323T2350&p1=248' target='blank'><time class='fixtime fixtime-full'>2019-03-23 23:50:00+0900</time></a> (local time)</small>
+		<small class="back-to-home pull-right"><a href='/'>Back to Home</a></small>
+	</div>
+	<ul class="nav nav-tabs">
+		<li><a href='/contests/agc032'><span class="glyphicon glyphicon-home" aria-hidden="true"></span> Top</a></li>
+		
+			<li class="active"><a href='/contests/agc032/tasks'><span class="glyphicon glyphicon-tasks" aria-hidden="true"></span> Tasks</a></li>
+		
+
+		
+			<li><a href='/contests/agc032/clarifications'><span class="glyphicon glyphicon-question-sign" aria-hidden="true"></span> Clarifications <span id="clar-badge" class="badge"></span></a></li>
+		
+
+		
+
+		
+			<li>
+				<a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false"><span class="glyphicon glyphicon-list" aria-hidden="true"></span> Submissions<span class="caret"></span></a>
+				<ul class="dropdown-menu">
+					<li><a href='/contests/agc032/submissions'><span class="glyphicon glyphicon-globe" aria-hidden="true"></span> All Submissions</a></li>
+					
+				</ul>
+			</li>
+		
+
+		
+			<li><a href='/contests/agc032/standings'><span class="glyphicon glyphicon-sort-by-attributes-alt" aria-hidden="true"></span> Standings</a></li>
+		
+
+		
+
+		
+			<li><a href='https://img.atcoder.jp/agc032/editorial.pdf' target="_blank"><span class="glyphicon glyphicon-book" aria-hidden="true"></span> Editorial</a></li>
+		
+
+		<li class="pull-right"><a id="fix-cnvtb" href="javascript:void(0)"><span class="glyphicon glyphicon-pushpin" aria-hidden="true"></span></a></li>
+	</ul>
+</div>
+	<div class="col-sm-12">
+		<span class="h2">D - Rotation Sort</span>
+		<hr/>
+		<p>Time Limit: 2 sec / Memory Limit: 1024 MB</p>
+
+		<div id="task-statement">
+			<span class="lang">
+<span class="lang-ja">
+<p>配点 : <var>1000</var> 点</p>
+
+<div class="part">
+<section>
+<h3>問題文</h3><p><var>\{ 1, \ldots, N \}</var> の順列 <var>p = (p_1, \ldots, p_N)</var> が与えられます。
+あなたは、次の 2 種類の操作を好きな順序で繰り返し行うことができます。</p>
+<ul>
+<li>コスト <var>A</var> を支払う。 整数 <var>l</var> と <var>r</var> (<var>1 \leq l &lt; r \leq N</var>) を自由に選び、<var>(p_l, \ldots, p_r)</var> を左にひとつシフトする。 すなわち、<var>p_l, p_{l + 1}, \ldots, p_{r - 1}, p_r</var> をそれぞれ <var>p_{l + 1}, p_{l + 2}, \ldots, p_r, p_l</var> へ置き換える。</li>
+<li>コスト <var>B</var> を支払う。 整数 <var>l</var> と <var>r</var> (<var>1 \leq l &lt; r \leq N</var>) を自由に選び、<var>(p_l, \ldots, p_r)</var> を右にひとつシフトする。 すなわち、<var>p_l, p_{l + 1}, \ldots, p_{r - 1}, p_r</var> をそれぞれ <var>p_r, p_l, \ldots, p_{r - 2}, p_{r - 1}</var> へ置き換える。</li>
+</ul>
+<p><var>p</var> を昇順にソートするために必要な総コストの最小値を求めてください。</p>
+</section>
+</div>
+
+<div class="part">
+<section>
+<h3>制約</h3><ul>
+<li>入力はすべて整数である。</li>
+<li><var>1 \leq N \leq 5000</var></li>
+<li><var>1 \leq A, B \leq 10^9</var></li>
+<li><var>(p_1 \ldots, p_N)</var> は <var>\{ 1, \ldots, N \}</var> の順列である。</li>
+</ul>
+</section>
+</div>
+
+<hr />
+<div class="io-style">
+<div class="part">
+<section>
+<h3>入力</h3><p>入力は以下の形式で標準入力から与えられる。</p>
+<pre><var>N</var> <var>A</var> <var>B</var>
+<var>p_1</var> <var>\cdots</var> <var>p_N</var>
+</pre>
+
+</section>
+</div>
+
+<div class="part">
+<section>
+<h3>出力</h3><p><var>p</var> を昇順にソートするために必要な総コストの最小値を出力せよ。</p>
+</section>
+</div>
+</div>
+
+<hr />
+<div class="part">
+<section>
+<h3>入力例 1</h3><pre>3 20 30
+3 1 2
+</pre>
+
+</section>
+</div>
+
+<div class="part">
+<section>
+<h3>出力例 1</h3><pre>20
+</pre>
+
+<p><var>(p_1, p_2, p_3)</var> を左にひとつシフトすると、<var>p = (1, 2, 3)</var> となります。</p>
+</section>
+</div>
+
+<hr />
+<div class="part">
+<section>
+<h3>入力例 2</h3><pre>4 20 30
+4 2 3 1
+</pre>
+
+</section>
+</div>
+
+<div class="part">
+<section>
+<h3>出力例 2</h3><pre>50
+</pre>
+
+<p>例えば、次のように操作を行えばよいです。</p>
+<ul>
+<li><var>(p_1, p_2, p_3, p_4)</var> を左にひとつシフトする。 すると、<var>p = (2, 3, 1, 4)</var> となる。</li>
+<li><var>(p_1, p_2, p_3)</var> を右にひとつシフトする。 すると、<var>p = (1, 2, 3, 4)</var> となる。</li>
+</ul>
+<p>このとき、総コストは <var>20 + 30 = 50</var> です。</p>
+</section>
+</div>
+
+<hr />
+<div class="part">
+<section>
+<h3>入力例 3</h3><pre>1 10 10
+1
+</pre>
+
+</section>
+</div>
+
+<div class="part">
+<section>
+<h3>出力例 3</h3><pre>0
+</pre>
+
+</section>
+</div>
+
+<hr />
+<div class="part">
+<section>
+<h3>入力例 4</h3><pre>4 1000000000 1000000000
+4 3 2 1
+</pre>
+
+</section>
+</div>
+
+<div class="part">
+<section>
+<h3>出力例 4</h3><pre>3000000000
+</pre>
+
+</section>
+</div>
+
+<hr />
+<div class="part">
+<section>
+<h3>入力例 5</h3><pre>9 40 50
+5 3 4 7 6 1 2 9 8
+</pre>
+
+</section>
+</div>
+
+<div class="part">
+<section>
+<h3>出力例 5</h3><pre>220
+</pre></section>
+</div>
+</span>
+<span class="lang-en">
+<p>Score : <var>1000</var> points</p>
+
+<div class="part">
+<section>
+<h3>Problem Statement</h3><p>You are given a permutation <var>p = (p_1, \ldots, p_N)</var> of <var>\{ 1, \ldots, N \}</var>.
+You can perform the following two kinds of operations repeatedly in any order:</p>
+<ul>
+<li>Pay a cost <var>A</var>. Choose integers <var>l</var> and <var>r</var> (<var>1 \leq l &lt; r \leq N</var>), and shift <var>(p_l, \ldots, p_r)</var> to the left by one. That is, replace <var>p_l, p_{l + 1}, \ldots, p_{r - 1}, p_r</var> with <var>p_{l + 1}, p_{l + 2}, \ldots, p_r, p_l</var>, respectively.</li>
+<li>Pay a cost <var>B</var>. Choose integers <var>l</var> and <var>r</var> (<var>1 \leq l &lt; r \leq N</var>), and shift <var>(p_l, \ldots, p_r)</var> to the right by one.  That is, replace <var>p_l, p_{l + 1}, \ldots, p_{r - 1}, p_r</var> with <var>p_r, p_l, \ldots, p_{r - 2}, p_{r - 1}</var>, respectively.</li>
+</ul>
+<p>Find the minimum total cost required to sort <var>p</var> in ascending order.</p>
+</section>
+</div>
+
+<div class="part">
+<section>
+<h3>Constraints</h3><ul>
+<li>All values in input are integers.</li>
+<li><var>1 \leq N \leq 5000</var></li>
+<li><var>1 \leq A, B \leq 10^9</var></li>
+<li><var>(p_1 \ldots, p_N)</var> is a permutation of <var>\{ 1, \ldots, N \}</var>.</li>
+</ul>
+</section>
+</div>
+
+<hr />
+<div class="io-style">
+<div class="part">
+<section>
+<h3>Input</h3><p>Input is given from Standard Input in the following format:</p>
+<pre><var>N</var> <var>A</var> <var>B</var>
+<var>p_1</var> <var>\cdots</var> <var>p_N</var>
+</pre>
+
+</section>
+</div>
+
+<div class="part">
+<section>
+<h3>Output</h3><p>Print the minimum total cost required to sort <var>p</var> in ascending order.</p>
+</section>
+</div>
+</div>
+
+<hr />
+<div class="part">
+<section>
+<h3>Sample Input 1</h3><pre>3 20 30
+3 1 2
+</pre>
+
+</section>
+</div>
+
+<div class="part">
+<section>
+<h3>Sample Output 1</h3><pre>20
+</pre>
+
+<p>Shifting <var>(p_1, p_2, p_3)</var> to the left by one results in <var>p = (1, 2, 3)</var>.</p>
+</section>
+</div>
+
+<hr />
+<div class="part">
+<section>
+<h3>Sample Input 2</h3><pre>4 20 30
+4 2 3 1
+</pre>
+
+</section>
+</div>
+
+<div class="part">
+<section>
+<h3>Sample Output 2</h3><pre>50
+</pre>
+
+<p>One possible sequence of operations is as follows:</p>
+<ul>
+<li>Shift <var>(p_1, p_2, p_3, p_4)</var> to the left by one. Now we have <var>p = (2, 3, 1, 4)</var>.</li>
+<li>Shift <var>(p_1, p_2, p_3)</var> to the right by one. Now we have <var>p = (1, 2, 3, 4)</var>.</li>
+</ul>
+<p>Here, the total cost is <var>20 + 30 = 50</var>.</p>
+</section>
+</div>
+
+<hr />
+<div class="part">
+<section>
+<h3>Sample Input 3</h3><pre>1 10 10
+1
+</pre>
+
+</section>
+</div>
+
+<div class="part">
+<section>
+<h3>Sample Output 3</h3><pre>0
+</pre>
+
+</section>
+</div>
+
+<hr />
+<div class="part">
+<section>
+<h3>Sample Input 4</h3><pre>4 1000000000 1000000000
+4 3 2 1
+</pre>
+
+</section>
+</div>
+
+<div class="part">
+<section>
+<h3>Sample Output 4</h3><pre>3000000000
+</pre>
+
+</section>
+</div>
+
+<hr />
+<div class="part">
+<section>
+<h3>Sample Input 5</h3><pre>9 40 50
+5 3 4 7 6 1 2 9 8
+</pre>
+
+</section>
+</div>
+
+<div class="part">
+<section>
+<h3>Sample Output 5</h3><pre>220
+</pre></section>
+</div>
+</span>
+</span>
+
+		</div>
+
+		
+
+		
+	</div>
+</div>
+
+
+		
+			<hr>
+			
+			
+			
+<div class="a2a_kit a2a_kit_size_20 a2a_default_style pull-right" data-a2a-url="https://atcoder.jp/contests/agc032/tasks/agc032_d?lang=en" data-a2a-title="D - Rotation Sort">
+	<a class="a2a_button_facebook"></a>
+	<a class="a2a_button_twitter"></a>
+	
+		<a class="a2a_button_telegram"></a>
+	
+	<a class="a2a_dd" href="https://www.addtoany.com/share"></a>
+</div>
+
+		
+		<script async src="//static.addtoany.com/menu/page.js"></script>
+		
+	</div> 
+	<hr>
+</div> 
+<div class="container">
+    <footer class="footer">
+		
+			<ul>
+				<li><a href='/contests/agc032/rules'>Rule</a></li>
+				<li><a href='/contests/agc032/glossary'>Glossary</a></li>
+				
+			</ul>
+		
+		<ul>
+			<li><a href='/tos'>Terms of service</a></li>
+			<li><a href='/privacy'>Privacy Policy</a></li>
+			<li><a href='/personal'>Information Protection Policy</a></li>
+			<li><a href='/company'>Company</a></li>
+			<li><a href='/faq'>FAQ</a></li>
+			<li><a href='/contact'>Contact</a></li>
+			
+		</ul>
+    <div class="text-center">
+        <small id="copyright">Copyright Since 2012 &copy;<a href="http://atcoder.co.jp">AtCoder Inc.</a> All rights reserved.</small>
+    </div>
+    </footer>
+</div>
+<p id="fixed-server-timer" class='contest-timer'></p>
+
+	<div id="scroll-page-top" style="display:none;"><span class="glyphicon glyphicon-arrow-up" aria-hidden="true"></span> Page Top</div>
+
+</body>
+</html>
+
+

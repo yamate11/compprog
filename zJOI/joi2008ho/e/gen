@@ -1,0 +1,65 @@
+#!/usr/bin/env python3
+
+import argparse, sys
+from random import randrange, choice, shuffle
+
+def show_list(lst):
+    return ' '.join(map(str,lst))
+
+# Function generate() should yield test cases of type string repeatedly.
+# E.g.,
+
+def generate_seq():
+    for x in range(1, 10):
+        for cdir in ['N', 'E', 'S', 'W']:
+            yield f'{x}\n{cdir}\n'
+
+# or E.g.,
+
+def generate_random():
+    while True:
+        w = randrange(10, 100)
+        h = randrange(10, 100)
+        n = randrange(1, 100)
+        case = f'{w} {h}\n{n}\n'
+        for i in range(n):
+            x1 = randrange(0, w)
+            x2 = randrange(x1 + 1, w + 1)
+            y1 = randrange(0, h)
+            y2 = randrange(y1 + 1, h + 1)
+            lst = [x1, y1, x2, y2]
+            case += show_list(lst) + '\n'
+        yield case
+
+# generate = generate_seq
+generate = generate_random
+
+######################################################################
+# Hope that you need not edit the following code.
+
+end_mark = '^__=end=__^'
+end_file_mark = '^__=end_file=__^'
+
+def main():
+    ap = argparse.ArgumentParser();
+    ap.add_argument('-r', '--repeat', action='store_true',
+                    help='Repeatedly generates cases',)
+    args = ap.parse_args()
+
+    try:
+        if args.repeat:
+            for s in generate():
+                print(s.rstrip())
+                print(end_mark)
+            print(end_file_mark)
+        else:
+            for (i, s) in enumerate(generate()):
+                print(s.rstrip())
+                print(end_mark)
+                if (i == 4):
+                    break
+    except BrokenPipeError as e:
+        # print('caught: BrokenPipeError', file=sys.stderr)
+        pass
+
+main()

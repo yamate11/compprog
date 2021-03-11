@@ -1,0 +1,554 @@
+
+
+
+
+
+
+
+<!DOCTYPE html>
+
+<html>
+<head>
+	<title>C - Fountain Walk</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+	<meta http-equiv="Content-Language" content='en'>
+	<meta name="viewport" content="width=device-width,initial-scale=1.0">
+	<meta name="format-detection" content="telephone=no">
+	<meta name="google-site-verification" content="nXGC_JxO0yoP1qBzMnYD_xgufO6leSLw1kyNo2HZltM" />
+
+	
+	<meta name="description" content="AtCoder is a programming contest site for anyone from beginners to experts. We hold weekly programming contests online.">
+	<meta name="author" content="AtCoder Inc.">
+	<link rel="canonical" href="https://atcoder.jp/">
+
+	<meta property="og:site_name" content="AtCoder">
+	
+	<meta property="og:title" content="C - Fountain Walk" />
+	<meta property="og:description" content="AtCoder is a programming contest site for anyone from beginners to experts. We hold weekly programming contests online." />
+	<meta property="og:type" content="website" />
+	<meta property="og:url" content="https://atcoder.jp/contests/agc019/tasks/agc019_c" />
+	<meta property="og:image" content="https://img.atcoder.jp/assets/atcoder.png" />
+	<meta name="twitter:card" content="summary" />
+	<meta name="twitter:site" content="@atcoder" />
+	
+	<meta property="twitter:title" content="C - Fountain Walk" />
+
+	<link href='//fonts.googleapis.com/css?family=Lato:400,700' rel='stylesheet' type='text/css'>
+	<link rel="stylesheet" type="text/css" href='/public/css/bootstrap.min.css?v=201902100210'>
+	<link rel="stylesheet" type="text/css" href='/public/css/base.css?v=201902100210'>
+	<link rel="shortcut icon" type="image/png" href="//img.atcoder.jp/assets/favicon.png">
+	<link rel="apple-touch-icon" href="//img.atcoder.jp/assets/favicon.png">
+	<script src='/public/js/lib/jquery-1.9.1.min.js?v=201902100210'></script>
+	<script src='/public/js/lib/bootstrap.min.js?v=201902100210'></script>
+	<script src="//cdnjs.cloudflare.com/ajax/libs/js-cookie/2.1.4/js.cookie.min.js"></script>
+	<script src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/moment.min.js"></script>
+	<script src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/locale/ja.js"></script>
+	<script>
+		var LANG = "en";
+		var userScreenName = "";
+	</script>
+	<script src='/public/js/utils.js?v=201902100210'></script>
+	
+	
+		<script src='/public/js/contest.js?v=201902100210'></script>
+		<link href='/public/css/contest.css?v=201902100210' rel="stylesheet" />
+		<script>
+			var contestScreenName = "agc019";
+			var remainingText = "Remaining Time";
+			var countDownText = "Contest begins in";
+			var startTime = moment("2017-08-26T21:00:00+09:00");
+			var endTime = moment("2017-08-26T23:30:00+09:00");
+		</script>
+		<style></style>
+	
+	
+		<script type="text/x-mathjax-config">MathJax.Hub.Config({messageStyle:"none",tex2jax:{skipTags:["script","noscript","style","textarea","code"],inlineMath:[['\\(','\\)']]}});</script>
+		<script src="//cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+		<script src='/public/js/task.js?v=201902100210'></script>
+	
+	
+	
+	
+		<link href="//cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/css/select2.min.css" rel="stylesheet" />
+		<link href="//cdnjs.cloudflare.com/ajax/libs/select2-bootstrap-theme/0.1.0-beta.10/select2-bootstrap.min.css" rel="stylesheet" />
+		<script src='/public/js/lib/select2.min.js?v=201902100210'></script>
+	
+	
+		<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/codemirror/5.38.0/codemirror.min.css">
+		<script src="//cdnjs.cloudflare.com/ajax/libs/codemirror/5.38.0/codemirror.min.js"></script>
+		<script src='/public/js/codeMirror/merged.js?v=201902100210'></script>
+	
+	
+		<script src="//cdn.rawgit.com/google/code-prettify/master/loader/run_prettify.js"></script>
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	<script src='/public/js/base.js?v=201902100210'></script>
+	<script src='/public/js/ga.js?v=201902100210'></script>
+</head>
+
+<body>
+<div id="modal-contest-start" class="modal fade" tabindex="-1" role="dialog">
+	<div class="modal-dialog" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+				<h4 class="modal-title">Contest started</h4>
+			</div>
+			<div class="modal-body">
+				<p>AtCoder Grand Contest 019 has begun.</p>
+			</div>
+			<div class="modal-footer">
+				
+					<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+				
+			</div>
+		</div>
+	</div>
+</div>
+<div id="modal-contest-end" class="modal fade" tabindex="-1" role="dialog">
+	<div class="modal-dialog" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+				<h4 class="modal-title">Contest is over</h4>
+			</div>
+			<div class="modal-body">
+				<p>AtCoder Grand Contest 019 has ended.</p>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+			</div>
+		</div>
+	</div>
+</div>
+<div id="main-div" class="float-container">
+	<nav class="navbar navbar-inverse navbar-fixed-top">
+		<div class="container-fluid">
+			<div class="navbar-header">
+				<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapse" aria-expanded="false">
+					<span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span>
+				</button>
+				<a class="navbar-brand" href="/"></a>
+			</div>
+			<div class="collapse navbar-collapse" id="navbar-collapse">
+				<ul class="nav navbar-nav">
+				
+					<li><a class="contest-title" href='/contests/agc019'>AtCoder Grand Contest 019</a></li>
+				
+				</ul>
+				<ul class="nav navbar-nav navbar-right">
+					
+					<li class="dropdown">
+						<a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
+							<img src='//img.atcoder.jp/assets/flag-lang/en.png'> English <span class="caret"></span>
+						</a>
+						<ul class="dropdown-menu">
+							<li><a href='/contests/agc019/tasks/agc019_c?lang=ja'><img src='//img.atcoder.jp/assets/flag-lang/ja.png'> 日本語</a></li>
+							<li><a href='/contests/agc019/tasks/agc019_c?lang=en'><img src='//img.atcoder.jp/assets/flag-lang/en.png'> English</a></li>
+						</ul>
+					</li>
+					
+					
+						<li><a href='/register?continue=https%3A%2F%2Fatcoder.jp%2Fcontests%2Fagc019%2Ftasks%2Fagc019_c'>Sign Up</a></li>
+						<li><a href='/login?continue=https%3A%2F%2Fatcoder.jp%2Fcontests%2Fagc019%2Ftasks%2Fagc019_c'>Sign In</a></li>
+					
+				</ul>
+			</div>
+		</div>
+	</nav>
+	<form method="POST" name="form_logout" action='/logout?continue=https%3A%2F%2Fatcoder.jp%2Fcontests%2Fagc019%2Ftasks%2Fagc019_c'>
+		<input type="hidden" name="csrf_token" value='FSv3mO3zIJ7VV&#43;U1TNVGunxxkJLEvPNdLcGUT0fi0Ko=' />
+	</form>
+	<div id="main-container" class="container" style="padding-top:50px;">
+		
+
+<div class="row">
+	<div id="contest-nav-tabs" class="col-sm-12 mb-2 cnvtb-fixed">
+	<div>
+		<small class="contest-duration">Contest Duration: <a href='http://www.timeanddate.com/worldclock/fixedtime.html?iso=20170826T2100&p1=248' target='blank'><time class='fixtime fixtime-full'>2017-08-26 21:00:00+0900</time></a> ~ <a href='http://www.timeanddate.com/worldclock/fixedtime.html?iso=20170826T2330&p1=248' target='blank'><time class='fixtime fixtime-full'>2017-08-26 23:30:00+0900</time></a> (local time)</small>
+		<small class="back-to-home pull-right"><a href='/'>Back to Home</a></small>
+	</div>
+	<ul class="nav nav-tabs">
+		<li><a href='/contests/agc019'><span class="glyphicon glyphicon-home" aria-hidden="true"></span> Top</a></li>
+		
+			<li class="active"><a href='/contests/agc019/tasks'><span class="glyphicon glyphicon-tasks" aria-hidden="true"></span> Tasks</a></li>
+		
+
+		
+			<li><a href='/contests/agc019/clarifications'><span class="glyphicon glyphicon-question-sign" aria-hidden="true"></span> Clarifications <span id="clar-badge" class="badge"></span></a></li>
+		
+
+		
+
+		
+			<li>
+				<a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false"><span class="glyphicon glyphicon-list" aria-hidden="true"></span> Submissions<span class="caret"></span></a>
+				<ul class="dropdown-menu">
+					<li><a href='/contests/agc019/submissions'><span class="glyphicon glyphicon-globe" aria-hidden="true"></span> All Submissions</a></li>
+					
+				</ul>
+			</li>
+		
+
+		
+			<li><a href='/contests/agc019/standings'><span class="glyphicon glyphicon-sort-by-attributes-alt" aria-hidden="true"></span> Standings</a></li>
+		
+
+		
+
+		
+			<li><a href='https://atcoder.jp/img/agc019/editorial.pdf' target="_blank"><span class="glyphicon glyphicon-book" aria-hidden="true"></span> Editorial</a></li>
+		
+
+		<li class="pull-right"><a id="fix-cnvtb" href="javascript:void(0)"><span class="glyphicon glyphicon-pushpin" aria-hidden="true"></span></a></li>
+	</ul>
+</div>
+	<div class="col-sm-12">
+		<span class="h2">C - Fountain Walk</span>
+		<hr />
+		<p>Time Limit: 2 sec / Memory Limit: 256 MB</p>
+
+		<div id="task-statement">
+			<span class="lang">
+<span class="lang-ja">
+<p>配点 : <var>900</var> 点</p>
+
+<div class="part">
+<section>
+<h3>問題文</h3><p>都市ネバーモアには、<var>10^8</var> 本の東西方向の通りと <var>10^8</var> 本の南北方向の通りがあり、どちらにも <var>0</var> から <var>10^8-1</var> の番号が付けられています。隣接する二本の東西方向の通りの間の距離はちょうど <var>100</var> メートルで、隣接する二本の南北方向の通りの間の距離もちょうど <var>100</var> メートルです。</p>
+<p>すべての東西方向の通りは、すべての南北方向の通りと交わります。すべての交差点は、交差する南北方向の通りの番号を <var>x</var>、東西方向の通りの番号を <var>y</var> として組 <var>(x, y)</var> で表されます。</p>
+<p>この都市には <var>N</var> 個の噴水があり、交差点 <var>(X_i, Y_i)</var> に設置されています。
+通常の交差点と異なり、これらの交差点には交差点を中心とした半径 <var>10</var> メートルの円が噴水の外周として描かれており、その内部に道路はありません。</p>
+<p>下の図に、都市の一角の道路や噴水の光景の例を示します。</p>
+<div style="text-align: center;">
+<img alt="1f931bf0c98ec6f07e612b0282cdb094.png" src="https://img.atcoder.jp/agc019/1f931bf0c98ec6f07e612b0282cdb094.png" />
+</div>
+
+<p>市長たちは、同じ通りを歩いている間に噴水を二回以上見たくありません。ですから、どの東西方向の通りにも噴水は一つまでしか設置されていませんし、南北方向の通りについても同様です。</p>
+<p>市民が通行できるのは東西、南北方向の通りと噴水の外周です。交差点 <var>(x_1, y_1)</var> から <var>(x_2, y_2)</var> に移動するには、最短で何メートル歩く必要があるでしょうか？</p>
+</section>
+</div>
+
+<div class="part">
+<section>
+<h3>制約</h3><ul>
+<li><var>0 \leq x_1, y_1, x_2, y_2 &lt; 10^8</var></li>
+<li><var>1 \leq N \leq 200,000</var></li>
+<li><var>0 \leq X_i, Y_i &lt; 10^8</var></li>
+<li><var>i \neq j</var> のとき <var>X_i \neq X_j</var></li>
+<li><var>i \neq j</var> のとき <var>Y_i \neq Y_j</var></li>
+<li>交差点 <var>(x_1, y_1), (x_2, y_2)</var> は異なり、これらの位置に噴水は設置されていない。</li>
+<li>入力値はすべて整数である。</li>
+</ul>
+</section>
+</div>
+
+<hr />
+
+<div class="io-style">
+<div class="part">
+<section>
+<h3>入力</h3><p>入力は以下の形式で標準入力から与えられる。</p>
+<pre><var>x_1</var> <var>y_1</var> <var>x_2</var> <var>y_2</var>
+<var>N</var>
+<var>X_1</var> <var>Y_1</var>
+<var>X_2</var> <var>Y_2</var>
+<var>:</var>
+<var>X_N</var> <var>Y_N</var>
+</pre>
+
+</section>
+</div>
+
+<div class="part">
+<section>
+<h3>出力</h3><p>交差点 <var>(x_1, y_1)</var> から <var>(x_2, y_2)</var> に移動するために歩くべき最短距離をメートル単位で出力せよ。出力は、絶対誤差または相対誤差が <var>10^{-11}</var> を超えなければ正答とみなされる。</p>
+</section>
+</div>
+</div>
+
+<hr />
+
+<div class="part">
+<section>
+<h3>入力例 1</h3><pre>1 1 6 5
+3
+3 2
+5 3
+2 4
+</pre>
+
+</section>
+</div>
+
+<div class="part">
+<section>
+<h3>出力例 1</h3><pre>891.415926535897938
+</pre>
+
+<p>最短経路の一つを下の図に示します。スタート地点は青の点、ゴール地点は紫の点、途中経路は赤の線です。</p>
+<div style="text-align: center;">
+<img alt="c49e52b9b79003f61b8a6efa5dad8ba3.png" src="https://img.atcoder.jp/agc019/c49e52b9b79003f61b8a6efa5dad8ba3.png" />
+</div>
+
+</section>
+</div>
+
+<hr />
+
+<div class="part">
+<section>
+<h3>入力例 2</h3><pre>3 5 6 4
+3
+3 2
+5 3
+2 4
+</pre>
+
+</section>
+</div>
+
+<div class="part">
+<section>
+<h3>出力例 2</h3><pre>400.000000000000000
+</pre>
+
+<div style="text-align: center;">
+<img alt="f9090ab734c89424c413f3b583376990.png" src="https://img.atcoder.jp/agc019/f9090ab734c89424c413f3b583376990.png" />
+</div>
+
+</section>
+</div>
+
+<hr />
+
+<div class="part">
+<section>
+<h3>入力例 3</h3><pre>4 2 2 2
+3
+3 2
+5 3
+2 4
+</pre>
+
+</section>
+</div>
+
+<div class="part">
+<section>
+<h3>出力例 3</h3><pre>211.415926535897938
+</pre>
+
+<div style="text-align: center;">
+<img alt="4b76416161f27cad20333a9ac636e00f.png" src="https://img.atcoder.jp/agc019/4b76416161f27cad20333a9ac636e00f.png" />
+</div></section>
+</div>
+</span>
+<span class="lang-en">
+<p>Score : <var>900</var> points</p>
+
+<div class="part">
+<section>
+<h3>Problem Statement</h3><p>In the city of Nevermore, there are <var>10^8</var> streets and <var>10^8</var> avenues, both numbered from <var>0</var> to <var>10^8-1</var>.
+All streets run straight from west to east, and all avenues run straight from south to north.
+The distance between neighboring streets and between neighboring avenues is exactly <var>100</var> meters.</p>
+<p>Every street intersects every avenue. Every intersection can be described by pair <var>(x, y)</var>, where <var>x</var> is avenue ID and <var>y</var> is street ID.</p>
+<p>There are <var>N</var> fountains in the city, situated at intersections <var>(X_i, Y_i)</var>.
+Unlike normal intersections, there's a circle with radius <var>10</var> meters centered at the intersection, and there are no road parts inside this circle.</p>
+<p>The picture below shows an example of how a part of the city with roads and fountains may look like.</p>
+<div style="text-align: center;">
+<img alt="1f931bf0c98ec6f07e612b0282cdb094.png" src="https://img.atcoder.jp/agc019/1f931bf0c98ec6f07e612b0282cdb094.png" />
+</div>
+
+<p>City governors don't like encountering more than one fountain while moving along the same road.
+Therefore, every street contains at most one fountain on it, as well as every avenue.</p>
+<p>Citizens can move along streets, avenues and fountain perimeters.
+What is the shortest distance one needs to cover in order to get from intersection <var>(x_1, y_1)</var> to intersection <var>(x_2, y_2)</var>?</p>
+</section>
+</div>
+
+<div class="part">
+<section>
+<h3>Constraints</h3><ul>
+<li><var>0 \leq x_1, y_1, x_2, y_2 &lt; 10^8</var></li>
+<li><var>1 \leq N \leq 200,000</var></li>
+<li><var>0 \leq X_i, Y_i &lt; 10^8</var></li>
+<li><var>X_i \neq X_j</var> for <var>i \neq j</var></li>
+<li><var>Y_i \neq Y_j</var> for <var>i \neq j</var></li>
+<li>Intersections <var>(x_1, y_1)</var> and <var>(x_2, y_2)</var> are different and don't contain fountains.</li>
+<li>All input values are integers.</li>
+</ul>
+</section>
+</div>
+
+<hr />
+
+<div class="io-style">
+<div class="part">
+<section>
+<h3>Input</h3><p>Input is given from Standard Input in the following format:</p>
+<pre><var>x_1</var> <var>y_1</var> <var>x_2</var> <var>y_2</var>
+<var>N</var>
+<var>X_1</var> <var>Y_1</var>
+<var>X_2</var> <var>Y_2</var>
+<var>:</var>
+<var>X_N</var> <var>Y_N</var>
+</pre>
+
+</section>
+</div>
+
+<div class="part">
+<section>
+<h3>Output</h3><p>Print the shortest possible distance one needs to cover in order to get from intersection <var>(x_1, y_1)</var> to intersection <var>(x_2, y_2)</var>, in meters.
+Your answer will be considered correct if its absolute or relative error doesn't exceed <var>10^{-11}</var>.</p>
+</section>
+</div>
+</div>
+
+<hr />
+
+<div class="part">
+<section>
+<h3>Sample Input 1</h3><pre>1 1 6 5
+3
+3 2
+5 3
+2 4
+</pre>
+
+</section>
+</div>
+
+<div class="part">
+<section>
+<h3>Sample Output 1</h3><pre>891.415926535897938
+</pre>
+
+<p>One possible shortest path is shown on the picture below. The path starts at the blue point, finishes at the purple point and follows along the red line.</p>
+<div style="text-align: center;">
+<img alt="c49e52b9b79003f61b8a6efa5dad8ba3.png" src="https://img.atcoder.jp/agc019/c49e52b9b79003f61b8a6efa5dad8ba3.png" />
+</div>
+
+</section>
+</div>
+
+<hr />
+
+<div class="part">
+<section>
+<h3>Sample Input 2</h3><pre>3 5 6 4
+3
+3 2
+5 3
+2 4
+</pre>
+
+</section>
+</div>
+
+<div class="part">
+<section>
+<h3>Sample Output 2</h3><pre>400.000000000000000
+</pre>
+
+<div style="text-align: center;">
+<img alt="f9090ab734c89424c413f3b583376990.png" src="https://img.atcoder.jp/agc019/f9090ab734c89424c413f3b583376990.png" />
+</div>
+
+</section>
+</div>
+
+<hr />
+
+<div class="part">
+<section>
+<h3>Sample Input 3</h3><pre>4 2 2 2
+3
+3 2
+5 3
+2 4
+</pre>
+
+</section>
+</div>
+
+<div class="part">
+<section>
+<h3>Sample Output 3</h3><pre>211.415926535897938
+</pre>
+
+<div style="text-align: center;">
+<img alt="4b76416161f27cad20333a9ac636e00f.png" src="https://img.atcoder.jp/agc019/4b76416161f27cad20333a9ac636e00f.png" />
+</div></section>
+</div>
+</span>
+</span>
+
+		</div>
+
+		
+
+		
+	</div>
+</div>
+
+
+		
+			<hr>
+			
+			
+			
+<div class="a2a_kit a2a_kit_size_20 a2a_default_style pull-right" data-a2a-url="https://atcoder.jp/contests/agc019/tasks/agc019_c?lang=en" data-a2a-title="C - Fountain Walk">
+	<a class="a2a_button_facebook"></a>
+	<a class="a2a_button_twitter"></a>
+	<a class="a2a_button_google_plus"></a>
+	<a class="a2a_button_hatena"></a>
+	<a class="a2a_dd" href="https://www.addtoany.com/share"></a>
+</div>
+
+		
+		<script async src="//static.addtoany.com/menu/page.js"></script>
+		
+	</div> 
+	<hr>
+</div> 
+<div class="container">
+    <footer class="footer">
+		
+			<ul>
+				<li><a href='/contests/agc019/rules'>Rule</a></li>
+				<li><a href='/contests/agc019/glossary'>Glossary</a></li>
+				
+			</ul>
+		
+		<ul>
+			<li><a href='/tos'>Terms of service</a></li>
+			<li><a href='/privacy'>Privacy Policy</a></li>
+			<li><a href='/personal'>Information Protection Policy</a></li>
+			<li><a href='/company'>Company</a></li>
+			<li><a href='/faq'>FAQ</a></li>
+			<li><a href='/contact'>Contact</a></li>
+			
+		</ul>
+    <div class="text-center">
+        <small id="copyright">Copyright Since 2012 &copy;<a href="http://atcoder.co.jp">AtCoder Inc.</a> All rights reserved.</small>
+    </div>
+    </footer>
+</div>
+<p id="fixed-server-timer" class='contest-timer'></p>
+
+	<div id="scroll-page-top" style="display:none;"><span class="glyphicon glyphicon-arrow-up" aria-hidden="true"></span> Page Top</div>
+
+</body>
+</html>
+
+

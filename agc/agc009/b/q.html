@@ -1,0 +1,586 @@
+
+
+
+
+
+
+
+
+<!DOCTYPE html>
+<html>
+<head>
+	<title>B - Tournament</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+	<meta http-equiv="Content-Language" content="en">
+	<meta name="viewport" content="width=device-width,initial-scale=1.0">
+	<meta name="format-detection" content="telephone=no">
+	<meta name="google-site-verification" content="nXGC_JxO0yoP1qBzMnYD_xgufO6leSLw1kyNo2HZltM" />
+
+	
+	<meta name="description" content="AtCoder is a programming contest site for anyone from beginners to experts. We hold weekly programming contests online.">
+	<meta name="author" content="AtCoder Inc.">
+
+	<meta property="og:site_name" content="AtCoder">
+	
+	<meta property="og:title" content="B - Tournament" />
+	<meta property="og:description" content="AtCoder is a programming contest site for anyone from beginners to experts. We hold weekly programming contests online." />
+	<meta property="og:type" content="website" />
+	<meta property="og:url" content="https://atcoder.jp/contests/agc009/tasks/agc009_b" />
+	<meta property="og:image" content="https://img.atcoder.jp/assets/atcoder.png" />
+	<meta name="twitter:card" content="summary" />
+	<meta name="twitter:site" content="@atcoder" />
+	
+	<meta property="twitter:title" content="B - Tournament" />
+
+	<link href="//fonts.googleapis.com/css?family=Lato:400,700" rel="stylesheet" type="text/css">
+	<link rel="stylesheet" type="text/css" href="/public/css/bootstrap.min.css?v=201912112109">
+	<link rel="stylesheet" type="text/css" href="/public/css/base.css?v=201912112109">
+	<link rel="shortcut icon" type="image/png" href="//img.atcoder.jp/assets/favicon.png">
+	<link rel="apple-touch-icon" href="//img.atcoder.jp/assets/atcoder.png">
+	<script src="/public/js/lib/jquery-1.9.1.min.js?v=201912112109"></script>
+	<script src="/public/js/lib/bootstrap.min.js?v=201912112109"></script>
+	<script src="//cdnjs.cloudflare.com/ajax/libs/js-cookie/2.1.4/js.cookie.min.js"></script>
+	<script src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/moment.min.js"></script>
+	<script src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/locale/ja.js"></script>
+	<script>
+		var LANG = "en";
+		var userScreenName = "";
+		var csrfToken = "JRmqvE3nY6+X2mhhDDFdLJDNKMVYdpKQz1bvkSk7N10="
+	</script>
+	<script src="/public/js/utils.js?v=201912112109"></script>
+	
+	
+		<script src="/public/js/contest.js?v=201912112109"></script>
+		<link href="/public/css/contest.css?v=201912112109" rel="stylesheet" />
+		<script>
+			var contestScreenName = "agc009";
+			var remainingText = "Remaining Time";
+			var countDownText = "Contest begins in";
+			var startTime = moment("2017-01-22T21:00:00+09:00");
+			var endTime = moment("2017-01-22T23:00:00+09:00");
+		</script>
+		<style></style>
+	
+	
+		<script type="text/x-mathjax-config">MathJax.Hub.Config({messageStyle:"none",tex2jax:{skipTags:["script","noscript","style","textarea","code"],inlineMath:[['\\(','\\)']]},delayStartupUntil:"onload"});</script>
+		<script src="//cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+		<script>$(function(){$('var').each(function(){$(this).html('\\('+$(this).html()+'\\)');});});</script>
+	
+	
+		<link href="//cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/css/select2.min.css" rel="stylesheet" />
+		<link href="//cdnjs.cloudflare.com/ajax/libs/select2-bootstrap-theme/0.1.0-beta.10/select2-bootstrap.min.css" rel="stylesheet" />
+		<script src="/public/js/lib/select2.min.js?v=201912112109"></script>
+	
+	
+		<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/codemirror/5.38.0/codemirror.min.css">
+		<script src="//cdnjs.cloudflare.com/ajax/libs/codemirror/5.38.0/codemirror.min.js"></script>
+		<script src="/public/js/codeMirror/merged.js?v=201912112109"></script>
+	
+	
+		<script src="//cdn.rawgit.com/google/code-prettify/master/loader/run_prettify.js"></script>
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	<script src="/public/js/base.js?v=201912112109"></script>
+	<script src="/public/js/ga.js?v=201912112109"></script>
+</head>
+
+<body>
+<div id="modal-contest-start" class="modal fade" tabindex="-1" role="dialog">
+	<div class="modal-dialog" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+				<h4 class="modal-title">Contest started</h4>
+			</div>
+			<div class="modal-body">
+				<p>AtCoder Grand Contest 009 has begun.</p>
+			</div>
+			<div class="modal-footer">
+				
+					<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+				
+			</div>
+		</div>
+	</div>
+</div>
+<div id="modal-contest-end" class="modal fade" tabindex="-1" role="dialog">
+	<div class="modal-dialog" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+				<h4 class="modal-title">Contest is over</h4>
+			</div>
+			<div class="modal-body">
+				<p>AtCoder Grand Contest 009 has ended.</p>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+			</div>
+		</div>
+	</div>
+</div>
+<div id="main-div" class="float-container">
+
+
+	<nav class="navbar navbar-inverse navbar-fixed-top">
+		<div class="container-fluid">
+			<div class="navbar-header">
+				<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapse" aria-expanded="false">
+					<span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span>
+				</button>
+				<a class="navbar-brand" href="/home"></a>
+			</div>
+			<div class="collapse navbar-collapse" id="navbar-collapse">
+				<ul class="nav navbar-nav">
+				
+					<li><a class="contest-title" href="/contests/agc009">AtCoder Grand Contest 009</a></li>
+				
+				</ul>
+				<ul class="nav navbar-nav navbar-right">
+					
+					<li class="dropdown">
+						<a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
+							<img src='//img.atcoder.jp/assets/top/img/flag-lang/en.png'> English <span class="caret"></span>
+						</a>
+						<ul class="dropdown-menu">
+							<li><a href="/contests/agc009/tasks/agc009_b?lang=ja"><img src='//img.atcoder.jp/assets/top/img/flag-lang/ja.png'> 日本語</a></li>
+							<li><a href="/contests/agc009/tasks/agc009_b?lang=en"><img src='//img.atcoder.jp/assets/top/img/flag-lang/en.png'> English</a></li>
+						</ul>
+					</li>
+					
+					
+						<li><a href="/register?continue=https%3A%2F%2Fatcoder.jp%2Fcontests%2Fagc009%2Ftasks%2Fagc009_b">Sign Up</a></li>
+						<li><a href="/login?continue=https%3A%2F%2Fatcoder.jp%2Fcontests%2Fagc009%2Ftasks%2Fagc009_b">Sign In</a></li>
+					
+				</ul>
+			</div>
+		</div>
+	</nav>
+
+	<form method="POST" name="form_logout" action="/logout?continue=https%3A%2F%2Fatcoder.jp%2Fcontests%2Fagc009%2Ftasks%2Fagc009_b">
+		<input type="hidden" name="csrf_token" value="JRmqvE3nY6&#43;X2mhhDDFdLJDNKMVYdpKQz1bvkSk7N10=" />
+	</form>
+	<div id="main-container" class="container"
+		 	style="padding-top:50px;">
+		
+
+<div class="row">
+	<div id="contest-nav-tabs" class="col-sm-12 mb-2 cnvtb-fixed">
+	<div>
+		<small class="contest-duration">Contest Duration: <a href='http://www.timeanddate.com/worldclock/fixedtime.html?iso=20170122T2100&p1=248' target='blank'><time class='fixtime fixtime-full'>2017-01-22 21:00:00+0900</time></a> ~ <a href='http://www.timeanddate.com/worldclock/fixedtime.html?iso=20170122T2300&p1=248' target='blank'><time class='fixtime fixtime-full'>2017-01-22 23:00:00+0900</time></a> (local time)</small>
+		<small class="back-to-home pull-right"><a href="/home">Back to Home</a></small>
+	</div>
+	<ul class="nav nav-tabs">
+		<li><a href="/contests/agc009"><span class="glyphicon glyphicon-home" aria-hidden="true"></span> Top</a></li>
+		
+			<li class="active"><a href="/contests/agc009/tasks"><span class="glyphicon glyphicon-tasks" aria-hidden="true"></span> Tasks</a></li>
+		
+
+		
+			<li><a href="/contests/agc009/clarifications"><span class="glyphicon glyphicon-question-sign" aria-hidden="true"></span> Clarifications <span id="clar-badge" class="badge"></span></a></li>
+		
+
+		
+
+		
+			<li>
+				<a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false"><span class="glyphicon glyphicon-list" aria-hidden="true"></span> Results<span class="caret"></span></a>
+				<ul class="dropdown-menu">
+					<li><a href="/contests/agc009/submissions"><span class="glyphicon glyphicon-globe" aria-hidden="true"></span> All Submissions</a></li>
+					
+				</ul>
+			</li>
+		
+
+		
+			
+				
+					<li><a href="/contests/agc009/standings"><span class="glyphicon glyphicon-sort-by-attributes-alt" aria-hidden="true"></span> Standings</a></li>
+				
+			
+				
+					<li><a href="/contests/agc009/standings/virtual"><span class="glyphicon glyphicon-sort-by-attributes-alt" aria-hidden="true"></span> Virtual Standings</a></li>
+				
+			
+		
+
+		
+
+		
+			
+				
+					<li><a href="https://atcoder.jp/img/agc009/editorial.pdf" target="_blank"><span class="glyphicon glyphicon-book" aria-hidden="true"></span> Editorial</a></li>
+				
+			
+		
+		
+
+		<li class="pull-right"><a id="fix-cnvtb" href="javascript:void(0)"><span class="glyphicon glyphicon-pushpin" aria-hidden="true"></span></a></li>
+	</ul>
+</div>
+	<div class="col-sm-12">
+		<span class="h2">B - Tournament</span>
+		
+		<span id="task-lang-btn" class="pull-right"><span data-lang="ja"><img src='//img.atcoder.jp/assets/top/img/flag-lang/ja.png'></span> / <span data-lang="en"><img src='//img.atcoder.jp/assets/top/img/flag-lang/en.png'></span></span>
+		<script>
+			$('#task-lang-btn span').click(function() {
+				var ts = $('#task-statement span.lang');
+				if (ts.children('span').size() > 1) {
+					var l = $(this).data('lang');
+					ts.children('span').hide();
+					ts.children('span.lang-' + l).show();
+				}
+			});
+		</script>
+		<hr/>
+		<p>Time Limit: 2 sec / Memory Limit: 256 MB</p>
+
+		<div id="task-statement">
+			<span class="lang">
+<span class="lang-ja">
+<p>配点 : <var>800</var> 点</p>
+
+<div class="part">
+<section>
+<h3>問題文</h3><p><var>N</var> 人の人が大会に出場しました。この大会はトーナメント形式であり、<var>N-1</var> 回の試合が行われました。
+諸事情により、このトーナメントは全参加者に平等に組まれているとは限りません。
+すなわち、各人に対し、優勝するために必要なその人が勝者となるような試合数が等しいとは限りません。
+トーナメントの構造は、正式には問題文の末尾で定義されます。</p>
+<p>各試合では必ず片方の人が勝者、もう片方の人が敗者となり、最後まで負けなかった <var>1</var> 人が優勝となります。</p>
+<div style="text-align: center;">
+<img src="https://atcoder.jp/img/agc009/783f7be9c88350e31963edba8a958879.png" />
+<p>図: トーナメントの例</p>
+</div>
+
+<p>人には <var>1</var> から <var>N</var> までの番号がついており、<var>1</var> 番の人が優勝し、優勝者以外の人 <var>i(2 ≦ i ≦ N)</var> は人 <var>a_i</var> との試合で負けました。</p>
+<p>トーナメントの深さとは、すべての人に対する、その人が優勝するために必要な、その人が勝者となるような試合数の最大値です。</p>
+<p>トーナメントの深さとしてありうる最小の値を求めてください。</p>
+<p>トーナメントの構造の正式な定義は以下の通りです。<var>i</var> 回目の試合では、</p>
+<ul>
+<li>あらかじめ決められた、まだ試合をしていない <var>2</var> 人の人</li>
+<li>あらかじめ決められたまだ試合をしていない人 <var>1</var> 人と、あらかじめ決められた <var>j(j&lt;i)</var> に対する、<var>j</var> 回目の試合の勝者</li>
+<li>あらかじめ決められた <var>j,k(j,k&lt;i, j ≠ k)</var> に対する、<var>j</var> 回目の試合の勝者と <var>k</var> 回目の試合の勝者</li>
+</ul>
+<p>のうちのいずれかの <var>2</var> 人が試合を行います。このような構造であって、どのように試合結果を決めても、すでに一度試合に負けた人が再び試合をすることのないようなものをトーナメントと呼びます。</p>
+</section>
+</div>
+
+<div class="part">
+<section>
+<h3>制約</h3><ul>
+<li><var>2 ≦ N ≦ 10^5</var></li>
+<li><var>1 ≦ a_i ≦ N(2 ≦ i ≦ N)</var></li>
+<li>入力の試合結果と合致するようなトーナメントが存在する</li>
+</ul>
+</section>
+</div>
+
+<hr />
+
+<div class="io-style">
+<div class="part">
+<section>
+<h3>入力</h3><p>入力は以下の形式で標準入力から与えられる。</p>
+<pre><var>N</var>
+<var>a_2</var>
+:
+<var>a_N</var>
+</pre>
+
+</section>
+</div>
+
+<div class="part">
+<section>
+<h3>出力</h3><p>トーナメントの深さとしてありうる最小の値を出力せよ。</p>
+</section>
+</div>
+</div>
+
+<hr />
+
+<div class="part">
+<section>
+<h3>入力例 1</h3><pre>5
+1
+1
+2
+4
+</pre>
+
+</section>
+</div>
+
+<div class="part">
+<section>
+<h3>出力例 1</h3><pre>3
+</pre>
+
+<p>次のような試合結果が条件を満たします。</p>
+<ul>
+<li><var>1</var> 回目の試合では、人 <var>4</var> と 人 <var>5</var> が対戦し、人 <var>4</var> が勝つ</li>
+<li><var>2</var> 回目の試合では、人 <var>2</var> と 人 <var>4</var> が対戦し、人 <var>2</var> が勝つ</li>
+<li><var>3</var> 回目の試合では、人 <var>1</var> と 人 <var>3</var> が対戦し、人 <var>1</var> が勝つ</li>
+<li><var>4</var> 回目の試合では、人 <var>1</var> と 人 <var>2</var> が対戦し、人 <var>1</var> が勝つ</li>
+</ul>
+<div style="text-align: center;">
+<img alt="783f7be9c88350e31963edba8a958879.png" src="https://atcoder.jp/img/agc009/783f7be9c88350e31963edba8a958879.png" />
+</div>
+
+<p>このトーナメントは、人 <var>5</var> が優勝するためには <var>3</var> 回勝利する必要があるので、深さ <var>3</var> のトーナメントとなります。
+逆に、深さ <var>2</var> 以下の条件を満たすトーナメントは存在しないので、<var>3</var> を出力します。</p>
+</section>
+</div>
+
+<hr />
+
+<div class="part">
+<section>
+<h3>入力例 2</h3><pre>7
+1
+2
+1
+3
+1
+4
+</pre>
+
+</section>
+</div>
+
+<div class="part">
+<section>
+<h3>出力例 2</h3><pre>3
+</pre>
+
+</section>
+</div>
+
+<hr />
+
+<div class="part">
+<section>
+<h3>入力例 3</h3><pre>4
+4
+4
+1
+</pre>
+
+</section>
+</div>
+
+<div class="part">
+<section>
+<h3>出力例 3</h3><pre>3
+</pre></section>
+</div>
+</span>
+<span class="lang-en">
+<p>Score : <var>800</var> points</p>
+
+<div class="part">
+<section>
+<h3>Problem Statement</h3><p><var>N</var> contestants participated in a competition. The total of <var>N-1</var> matches were played in a knockout tournament.
+For some reasons, the tournament may not be "fair" for all the contestants.
+That is, the number of the matches that must be played in order to win the championship may be different for each contestant. The structure of the tournament is formally described at the end of this statement.</p>
+<p>After each match, there were always one winner and one loser. The last contestant standing was declared the champion.</p>
+<div style="text-align: center;">
+<img src="https://atcoder.jp/img/agc009/783f7be9c88350e31963edba8a958879.png" />
+<p>Figure: an example of a tournament</p>
+</div>
+
+<p>For convenience, the contestants were numbered <var>1</var> through <var>N</var>. The contestant numbered <var>1</var> was the champion, and the contestant numbered <var>i(2 ≦ i ≦ N)</var> was defeated in a match against the contestant numbered <var>a_i</var>.</p>
+<p>We will define the <em>depth</em> of the tournament as the maximum number of the matches that must be played in order to win the championship over all the contestants.</p>
+<p>Find the minimum possible depth of the tournament.</p>
+<p>The formal description of the structure of the tournament is as follows. In the <var>i</var>-th match, one of the following played against each other:</p>
+<ul>
+<li>Two predetermined contestants</li>
+<li>One predetermined contestant and the winner of the <var>j</var>-th match, where <var>j(j&lt;i)</var> was predetermined</li>
+<li>The winner of the <var>j</var>-th match and the winner of the <var>k</var>-th match, where <var>j</var> and <var>k</var> <var>(j,k&lt;i, j ≠ k)</var> were predetermined</li>
+</ul>
+<p>Such structure is valid structure of the tournament, if and only if no contestant who has already been defeated in a match will never play in a match, regardless of the outcome of the matches.</p>
+</section>
+</div>
+
+<div class="part">
+<section>
+<h3>Constraints</h3><ul>
+<li><var>2 ≦ N ≦ 10^5</var></li>
+<li><var>1 ≦ a_i ≦ N(2 ≦ i ≦ N)</var></li>
+<li>It is guaranteed that the input is consistent (that is, there exists at least one tournament that matches the given information).</li>
+</ul>
+</section>
+</div>
+
+<hr />
+
+<div class="io-style">
+<div class="part">
+<section>
+<h3>Input</h3><p>The input is given from Standard Input in the following format:</p>
+<pre><var>N</var>
+<var>a_2</var>
+:
+<var>a_N</var>
+</pre>
+
+</section>
+</div>
+
+<div class="part">
+<section>
+<h3>Output</h3><p>Print the minimum possible depth of the tournament.</p>
+</section>
+</div>
+</div>
+
+<hr />
+
+<div class="part">
+<section>
+<h3>Sample Input 1</h3><pre>5
+1
+1
+2
+4
+</pre>
+
+</section>
+</div>
+
+<div class="part">
+<section>
+<h3>Sample Output 1</h3><pre>3
+</pre>
+
+<p>The following tournament and the result of the matches are consistent with the given information:</p>
+<ul>
+<li>In the first match, contestants <var>4</var> and <var>5</var> played against each other, and contestant <var>4</var> won.</li>
+<li>In the second match, contestants <var>2</var> and <var>4</var> played against each other, and contestant <var>2</var> won.</li>
+<li>In the third match, contestants <var>1</var> and <var>3</var> played against each other, and contestant <var>1</var> won.</li>
+<li>In the fourth match, contestants <var>1</var> and <var>2</var> played against each other, and contestant <var>1</var> won.</li>
+</ul>
+<div style="text-align: center;">
+<img alt="783f7be9c88350e31963edba8a958879.png" src="https://atcoder.jp/img/agc009/783f7be9c88350e31963edba8a958879.png" />
+</div>
+
+<p>The depth of this tournament is <var>3</var>, since contestant <var>5</var> must play three matches in order to win the championship.
+There is no tournament with depth <var>2</var> or less that is consistent with the given information, thus the output should be <var>3</var>.</p>
+</section>
+</div>
+
+<hr />
+
+<div class="part">
+<section>
+<h3>Sample Input 2</h3><pre>7
+1
+2
+1
+3
+1
+4
+</pre>
+
+</section>
+</div>
+
+<div class="part">
+<section>
+<h3>Sample Output 2</h3><pre>3
+</pre>
+
+</section>
+</div>
+
+<hr />
+
+<div class="part">
+<section>
+<h3>Sample Input 3</h3><pre>4
+4
+4
+1
+</pre>
+
+</section>
+</div>
+
+<div class="part">
+<section>
+<h3>Sample Output 3</h3><pre>3
+</pre></section>
+</div>
+</span>
+</span>
+
+		</div>
+
+		
+
+		
+	</div>
+</div>
+
+
+
+
+		
+			<hr>
+			
+			
+			
+<div class="a2a_kit a2a_kit_size_20 a2a_default_style pull-right" data-a2a-url="https://atcoder.jp/contests/agc009/tasks/agc009_b?lang=en" data-a2a-title="B - Tournament">
+	<a class="a2a_button_facebook"></a>
+	<a class="a2a_button_twitter"></a>
+	
+		<a class="a2a_button_telegram"></a>
+	
+	<a class="a2a_dd" href="https://www.addtoany.com/share"></a>
+</div>
+
+		
+		<script async src="//static.addtoany.com/menu/page.js"></script>
+		
+	</div> 
+	<hr>
+</div> 
+
+	<div class="container" style="margin-bottom: 80px;">
+			<footer class="footer">
+			
+				<ul>
+					<li><a href="/contests/agc009/rules">Rule</a></li>
+					<li><a href="/contests/agc009/glossary">Glossary</a></li>
+					
+				</ul>
+			
+			<ul>
+				<li><a href="/tos">Terms of service</a></li>
+				<li><a href="/privacy">Privacy Policy</a></li>
+				<li><a href="/personal">Information Protection Policy</a></li>
+				<li><a href="/company">Company</a></li>
+				<li><a href="/faq">FAQ</a></li>
+				<li><a href="/contact">Contact</a></li>
+				
+			</ul>
+			<div class="text-center">
+					<small id="copyright">Copyright Since 2012 &copy;<a href="http://atcoder.co.jp">AtCoder Inc.</a> All rights reserved.</small>
+			</div>
+			</footer>
+	</div>
+	<p id="fixed-server-timer" class="contest-timer"></p>
+	<div id="scroll-page-top" style="display:none;"><span class="glyphicon glyphicon-arrow-up" aria-hidden="true"></span> Page Top</div>
+
+</body>
+</html>
+
+

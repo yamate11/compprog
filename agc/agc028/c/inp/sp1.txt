@@ -1,0 +1,50 @@
+
+n                 an Int
+(n Int)           same as above
+(s String)        a String
+(n listH)         a list of Integers until EOL
+(n listH Int)     same as above
+(s listH String)  a list of Strings until EOL
+(n listV)         a list of Integers until EOF
+(n listV T)       a list of Ts until EOF
+    where T = Int, String, (Int,String) etc, [Int] etc.
+(n listV T m)     a list of Ts with length m
+(n listV T @exp@) a list of Ts with length exp
+
+<A,B,C>           a line that consists of A, B and C
+A                 same as <A>
+
+
+E.g.
+
+----------------------------------------
+n m s
+u
+v
+* s is String
+
+==> <n,m,(s String)> u v
+----------------------------------------
+n m
+a_1 a_2 ... a_n
+b_1     c_1     d_1
+...
+b_{m-1} c_{m-1} d_{m-1}
+x
+* c's are Strings
+
+==> 
+<n,m> (as listH) (bcds listV (Int,String,Int) @m-1@) x
+or
+<(n Int), (m Int)> (as listH Int n) (bcds listV (Int,String,Int) @m-1@) <x>
+----------------------------------------
+n m
+a_1_1 a_1_2 ... a_1_m
+a_2_1 a_2_2 ... a_2_m
+...
+a_n_1 a_n_2 ... a_n_m
+
+==> <n,m> (ass listV [Int])
+----------------------------------------
+
+

@@ -1,0 +1,65 @@
+#!/usr/bin/env python3
+
+import os, sys, argparse, subprocess, re, shutil
+
+def fatal(*msg):
+    print('FATAL: ', *msg, file=sys.stderr)
+    sys.exit(1)
+
+def info(*msg, **opt):
+    print(*msg, **opt, file=sys.stderr, flush=True)
+
+def main():
+    parser = argparse.ArgumentParser()
+    # parser.add_argument('--force', '-f', action='store_true')
+    parser.add_argument('cname')
+    parser.add_argument('seq')
+    parser.add_argument('questions', nargs='*')
+    args = parser.parse_args()
+
+    cwd = os.getcwd()
+    mo = re.match(r'.*/zCodeForces$', cwd)
+    if not mo:
+        fatal("Working directory should be .../zCodeForces")
+    if not os.path.exists(args.cname):
+        os.mkdir(args.cname)
+    qs = args.questions if args.questions else "abcdefgh"
+    es = [q for q in qs if os.path.exists(f'{args.cname}/{q}')]
+    if es:
+        info('The following directories/files exists:')
+        info('  ', ', '.join([f'{args.cname}/{q}' for q in es]))
+        info('Abort.')
+        sys.exit(1)
+        # for q in es:
+        #     shutil.rmtree(f'{args.cname}/{q}')
+
+    def operate(c):
+        qdir = f'{args.cname}/{c}'
+        os.mkdir(qdir)
+        cmd = ['cfsample', '--outdir', qdir, args.seq, c.upper()]
+        rc = subprocess.run(cmd,
+            stdout=subprocess.PIPE, stderr=subprocess.STDOUT
+        )
+        print(rc.stdout, file=logfd, end='')
+        if rc.returncode != 0:
+            info('failed.')
+            # shutil.rmtree(qdir)
+            return False
+        shutil.copyfile('Makefile', f'{qdir}/Makefile')
+        shutil.copyfile('cans.cc', f'{qdir}/cans.cc')
+        info('done.')
+        return True
+
+    with open(f'{args.cname}/cfvirt.log', 'w') as logfd:
+        for c in qs:
+            info(c, end=' ... ')
+            res = operate(c)
+            if not res:
+                if len(c) == 1:
+                    res1 = operate(f'{c}1')
+                    if res1:
+                        operate(f'{c}2')
+                    
+
+
+main()

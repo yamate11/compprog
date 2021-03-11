@@ -1,0 +1,62 @@
+#!/usr/bin/env python3
+
+import argparse, subprocess, os, sys
+
+def die(msg):
+    print('ERROR: ' + msg)
+    sys.exit(1)
+
+def getCeFile(ceFile):
+    if ceFile: return ceFile
+    ceFile = 'dce.txt'
+    if os.path.exists(ceFile):
+        die(f'{ceFile} exits.  Consider --ce')
+    return ceFile
+
+def getNaive():
+    naive1 = './naive.py'
+    naive2 = './comp'
+    if os.path.exists(naive1):
+        if os.path.exists(naive2):
+            die(f'Both {naive1} and {naive2} exists.  Remove one of them.')
+        return naive1
+    elif os.path.exists(naive2):
+        return naive2
+    else:
+        die(f'None of {naive1} and {naive2} exists.')
+
+def myRun(cmd, inStr=None):
+    cp = subprocess.run(cmd, encoding='UTF-8',
+                        input=inStr, stdout=subprocess.PIPE)
+    if cp.returncode != 0:
+        die('Command failed: ' + ' '.join(cmd))
+    return cp.stdout
+
+def main():
+    ap = argparse.ArgumentParser(
+        # formatter_class=argparse.RawDescriptionHelpFormatter,
+        description='''Compares the output of ./cans and ./naive 
+        or ./naive.py, using the output of ./gen.py.'''
+    );
+    ap.add_argument('--ce', '-c', help='file name for counterexample',
+                    metavar = 'f')
+    ap.add_argument('repeat', type=int, nargs='?', default=1000000,
+                    help = 'repeat count')
+    args = ap.parse_args()
+
+    ceFile = getCeFile(args.ce)
+    naive = getNaive()
+    for i in range(args.repeat):
+        print(i, end=' ', file=sys.stderr, flush=True)
+        qStr = myRun(['./gen.py'])
+        aStr = myRun(['./cans'], inStr=qStr)
+        naiveStr = myRun(naive, inStr=qStr)
+        if (aStr.split('\n'))[0] != (naiveStr.split('\n'))[0]:
+            with open(ceFile, 'w') as fp:
+                print(qStr, file=fp)
+                print(f'\nA counter example was printed in {ceFile}',
+                      file=sys.stderr)
+                return
+    print(f'\nNo counter example found.', file=sys.stderr)
+
+main()

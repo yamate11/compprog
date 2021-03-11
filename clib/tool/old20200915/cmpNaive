@@ -1,0 +1,278 @@
+#!/usr/bin/env python3
+
+import argparse, subprocess, os, sys
+from threading import Timer
+sys.path.append('../../../clib/tool')
+from util import Util
+
+args = None
+end_mark = '^__=end=__^'
+end_file_mark = '^__=end_file=__^'
+
+
+def warn(msg):
+    print(msg, file=sys.stderr, flush=True)
+
+def die(msg):
+    warn('ERROR: ' + msg)
+    sys.exit(1)
+
+def ceFile(id): return f'd{id}.txt'
+def ceAFile(id): return f'do{id}.txt'
+
+def getCeID(ce):
+    def chk(p):
+        if os.path.exists(p): die(f'{p} exists.')
+
+    if ce:
+        chk(ceFile(ce))
+        chk(ceAFile(ce))
+        return ce
+    i = 1
+    while True:
+        ce = f'x{i}'
+        if not (os.path.exists(ceFile(ce)) or os.path.exists(ceAFile(ce))):
+            break
+        i += 1
+    return str(ce)
+
+def env_check():
+    if not os.environ['CMPNAIVE']:
+        die('Environment variable CMPNAIVE not defined.  Have you compiled ./cans with CMPNAIVE set?')
+
+def my_popen(cmd, show_stderr=False):
+    return subprocess.Popen(
+        cmd, encoding='UTF-8',
+        stdin=subprocess.PIPE, stdout=subprocess.PIPE,
+        stderr=None if show_stderr else subprocess.DEVNULL)
+
+
+def choose_from_cands(path, cands):
+    if path is None:
+        for p in cands:
+            if os.path.exists(p):
+                return p
+        die(f'Failed to found any of {cands}')
+    elif not os.path.exists(path):
+        die(f'Path {path} does not exists.')
+    else:
+        return path
+
+def read_until_end_mark(fp):
+    ret = ''
+    while True:
+        line = fp.readline()
+        if line == '':
+            raise MyUnexpEOF
+        if line.strip() == end_mark:
+            return ret
+        if line.strip() == end_file_mark:
+            if ret == '':
+                raise MyEOF
+            else:
+                raise ValueError
+        ret += line
+    return ret
+
+class MyEOF(Exception):
+    pass
+class MyUnexpEOF(Exception):
+    pass
+
+class Gen:
+
+    def __init__(self, path):
+        self.path = choose_from_cands(path, ['./gen', './gen.py'])
+        self.count = 0
+        self.timer = None
+
+    def __enter__(self):
+        self.proc = my_popen([self.path, '-r']).__enter__()
+        return self
+
+    def __exit__(self, exc_type, exc_value, traceback):
+        self.proc.__exit__(exc_type, exc_value, traceback)
+        if self.timer:
+            self.timer.cancel()
+            self.timer = None
+
+    def timeout(self):
+        self.timer = None
+
+    def get_question(self):
+        if not self.timer:
+            print(self.count, end = ' ', file=sys.stderr, flush=True)
+            self.timer = Timer(0.5, self.timeout)
+            self.timer.start()
+        self.count += 1
+        return read_until_end_mark(self.proc.stdout)
+
+def count_report():
+    print(rep_count, end = ' ', file=sys.stderr, flush=True)
+    use_timer()
+    
+def use_timer():
+    Timer(1.0, count_report).start()
+
+
+
+class InOut:
+    pass
+
+class IndepInOut(InOut):
+
+    def __init__(self, body_path, naive_path):
+        self.body = choose_from_cands(body_path, ['./cans', './cans.py'])
+        self.naive = choose_from_cands(naive_path, ['./naive', './naive.py'])
+
+    def __enter__(self):
+        return self
+
+    def __exit__(self, exc_type, exc_value, traceback):
+        pass
+
+    def prog(self):
+        return self.body
+
+    def run_naive(self, s_question):
+        (rc, results) = Util.run([self.naive], input=s_question)
+        if rc != 0:
+            return None
+        return results
+
+    def run_body(self, s_question):
+        (rc, results) = Util.run([self.body], input=s_question,
+                                 show_stderr=args.show_stderr)
+        if rc != 0:
+            return None
+        return results
+
+class ContiInOut(InOut):
+
+    def __init__(self, path):
+        self.path = choose_from_cands(path, ['./cans', './cans.py'])
+        self.living = False
+        
+    def __enter__(self):
+        self.proc = my_popen([self.path, 'cmpNaive'],
+                              show_stderr=args.show_stderr
+        ).__enter__()
+        self.living = True
+        return self
+
+    def __exit__(self, exc_type, exc_value, traceback):
+        if self.living:
+            print('Q', file=self.proc.stdin)
+        self.proc.__exit__(exc_type, exc_value, traceback)
+
+    def prog(self):
+        return self.path
+
+    def run_naive(self, s_question):
+        return self._send_question('N', 'naive', s_question)
+        
+    def run_body(self, s_question):
+        return self._send_question('B', 'body', s_question)
+        
+    def _send_question(self, mark, pstr, s_question):
+        print(mark, file=self.proc.stdin)
+        print(s_question, file=self.proc.stdin)
+        print(end_mark, file=self.proc.stdin, flush=True)
+        res = ''
+        while True:
+            rline = self.proc.stdout.readline()
+            if rline == '':
+                warn(f'\nTest Program ({pstr}) seems to die.')
+                self.living = False
+                return None
+            if rline.strip() == end_mark:
+                return res;
+            res += rline
+
+def get_Gen_object():
+    return Gen(args.gen)
+
+def get_IO_object():
+    if args.independent:
+        return IndepInOut(args.program, args.naive)
+    else:
+        return ContiInOut(args.program)
+
+def create_input_file(ceID, s_question):
+    with open(ceFile(ceID), 'w') as fp:
+        print(s_question, file=fp, end='')
+    warn(f'\nA counter example was stored with id = {ceID}')
+    warn(f'-- input ({ceFile(ceID)}) --\n{s_question}'.strip())
+
+def create_oracle_file(ceID, s_naive):
+    with open(ceAFile(ceID), 'w') as fp:
+        print(s_naive, file=fp, end='')
+
+def run_stest(prog, ceID):
+    warn(f'Running stest ...\n')
+    subprocess.run(['stest', '-p', prog, ceID])
+
+def main_loop():
+    global rep_count
+    ceID = getCeID(args.ce)
+    prec = Util.get_prec(args.double_one, not args.no_modify_precision)
+    with get_Gen_object() as gio, get_IO_object() as dio:
+        for i in range(args.repeat):
+            try:
+                s_question = gio.get_question()
+            except MyUnexpEOF as e:
+                die('Input generator seems to die.')
+            except MyEOF as e:
+                break
+            s_naive = dio.run_naive(s_question)
+            s_body = dio.run_body(s_question) if s_naive is not None else None
+            if s_naive is None or s_body is None or \
+               not Util.compare_answer(
+                   s_body, s_naive, prec=prec, ignoreSpace=args.ignore_space):
+                create_input_file(ceID, s_question)
+                if s_naive is None:
+                    warn(f'FATAL: naive program has died for id = {ceID}.')
+                else:
+                    create_oracle_file(ceID, s_naive)
+                    run_stest(dio.prog(), ceID)
+                return
+                
+        warn('\nNo problems were found.')
+                
+            
+def parse_args():
+    ap = argparse.ArgumentParser(
+        # formatter_class=argparse.RawDescriptionHelpFormatter,
+        description='''Compares the output of an executable such as ./cans 
+        and another such as ./naive, using the output of generator program,
+        such as ./gen.py.'''
+    );
+    ap.add_argument('-i', '--independent', action='store_true',
+                    help='test and compare programs are different.  If not specified, self-comparable test program is assumed.')
+    ap.add_argument('-p', '--program', metavar='PROG',
+                    help='program to test.')
+    ap.add_argument('-n', '--naive', metavar='NAIVE',
+                    help='program to compare.')
+    ap.add_argument('-g', '--gen', metavar='GEN',
+                    help='program to generate inputs')
+    ap.add_argument('-d', '--double-one', type=int, metavar='n',
+                    help='treats as double.')
+    ap.add_argument('--ce', '-c', help='ID for counterexample',
+                    metavar = 'ID')
+    ap.add_argument('--no-modify-precision', action='store_true',
+                    help='does not modify ./stest-double.')
+    ap.add_argument('--ignore-space', action='store_true',
+                    help='ignores space when comparing answers')
+    ap.add_argument('--show-stderr', action='store_true',
+                        help='how output to stderr')
+    ap.add_argument('repeat', type=int, nargs='?', default=1000000,
+                    help = 'repeat count')
+    return ap.parse_args()
+
+def main():
+    global args
+    args = parse_args()
+    env_check()
+    main_loop()
+
+main()

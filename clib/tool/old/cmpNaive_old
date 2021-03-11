@@ -1,0 +1,102 @@
+#!/usr/bin/env python3
+
+import argparse, subprocess, os, sys
+sys.path.append('../../clib/tool')
+from util import Util
+
+def die(msg):
+    print('ERROR: ' + msg)
+    sys.exit(1)
+
+def ceFile(id): return f'd{id}.txt'
+def ceAFile(id): return f'do{id}.txt'
+
+def getCeID(ce):
+    def chk(p):
+        if os.path.exists(p): die(f'{p} exists.')
+
+    if ce:
+        chk(ceFile(ce))
+        chk(ceAFile(ce))
+        return ce
+    i = 1
+    while True:
+        ce = f'x{i}'
+        if not (os.path.exists(ceFile(ce)) or os.path.exists(ceAFile(ce))):
+            break
+        i += 1
+    return str(ce)
+
+def getNaive():
+    naive1 = './naive.py'
+    naive2 = './naive'
+    if os.path.exists(naive1):
+        if os.path.exists(naive2):
+            die(f'Both {naive1} and {naive2} exists.  Remove one of them.')
+        return naive1
+    elif os.path.exists(naive2):
+        return naive2
+    else:
+        die(f'None of {naive1} and {naive2} exists.')
+
+# def myRun(cmd, inStr=None, show_stderr=False):
+#     adic = {'encoding': 'UTF-8', 'input': inStr,
+#             'stdout': subprocess.PIPE}
+#     if not show_stderr:
+#         adic['stderr'] = subprocess.DEVNULL
+#     cp = subprocess.run(cmd, **adic)
+#     if cp.returncode != 0:
+#         return 'Command failed: ' + ' '.join(cmd)
+#     return cp.stdout
+
+def main():
+    ap = argparse.ArgumentParser(
+        # formatter_class=argparse.RawDescriptionHelpFormatter,
+        description='''Compares the output of ./cans and ./naive 
+        or ./naive.py, using the output of ./gen.py i, where i is
+        0, 1, 2,....'''
+    );
+    ap.add_argument('--ce', '-c', help='ID for counterexample',
+                    metavar = 'ID')
+    ap.add_argument('-d', '--double-one', type=int, metavar='n',
+                    help='treats as double.  See below.')
+    ap.add_argument('-p', '--program', default='./cans', metavar='PROG',
+                    help='program to test.  Default is ./cans')
+    ap.add_argument('--no-modify-precision', action='store_true',
+                    help='does not modify ./stest-double.  See below.')
+    ap.add_argument('--ignore-space', action='store_true',
+                    help='ignores space when comparing answers')
+    ap.add_argument('--show-stderr', action='store_true',
+                        help='how output to stderr')
+    ap.add_argument('repeat', type=int, nargs='?', default=1000000,
+                    help = 'repeat count')
+    args = ap.parse_args()
+
+    ceID = getCeID(args.ce)
+    naive = getNaive()
+    prec = Util.get_prec(args.double_one, not args.no_modify_precision)
+    for i in range(args.repeat):
+        print(i, end=' ', file=sys.stderr, flush=True)
+        (rc, qStr) = Util.run(['./gen.py', str(i)])
+        if rc != 0: die('./gen.py aborted.')
+        (rc, naiveStr) = Util.run(naive, input=qStr)
+        if rc != 0:
+            die(f'{naive} aborted for the following input:\n{qStr}\n')
+        (rc, aStr) = Util.run([args.program], input=qStr,
+                              show_stderr=args.show_stderr)
+        if rc != 0 or \
+           not Util.compare_answer(aStr, naiveStr,
+                                   prec=prec, ignoreSpace=args.ignore_space):
+            with open(ceFile(ceID), 'w') as fp:
+                print(qStr, file=fp, end='')
+            with open(ceAFile(ceID), 'w') as fp:
+                print(naiveStr, file=fp, end='')
+            print(f'\nA counter example was stored with id = {ceID}',
+                  file=sys.stderr)
+            print(f'-- input ({ceFile(ceID)}) --\n{qStr}',end='')
+            print(f'Running stest ...')
+            subprocess.run(['stest', '-p', args.program, ceID])
+            return
+    print(f'\nNo counter example found.', file=sys.stderr)
+
+main()

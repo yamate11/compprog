@@ -1,0 +1,6 @@
+#!/usr/bin/env python3
+
+n = 500000
+s = '1' * n
+print(n)
+print(s)

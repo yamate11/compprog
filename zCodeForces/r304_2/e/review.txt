@@ -1,0 +1,16 @@
+Codeforces R.304(Div.2)-E. Soldier and Traveling
+2020/11/07
+解けず
+最大流
+
+無向グラフの各ノードiにA[i]個の点がある．
+各点が次ノードにとどまるか隣接ノードに移る．
+結果としてノードiの点の個数がB[i]個になることがあるか．
+ある場合には，移動方法も答える．
+ノード数<=100, 変数<=200
+
+最大流．
+source -> ('before', i)  : A[i]
+('after', i) -> sink     : B[i]
+('before', i) -> ('stay', i) -> ('after', i) : \infty
+('before', i) -> ('move', i, j) -> ('after', j) : \infty      (for i != j)

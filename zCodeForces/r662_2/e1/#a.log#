@@ -1,0 +1,221 @@
+i= 0 ord[i]= [3, 4, 2, 1, 0]
+i= 0 cur= [1, 1, 1, 1, 1]
+i= 1 ord[i]= [0, 2, 3, 4, 1]
+cpr in j= 3 k= 0 sj= abcd sk= zaza
+substr_hash.  idx= 0 drop= 3 len= 3
+(1)  103296217786803
+substr_hash.  idx= 1 drop= 0 len= 3
+(3)  100098690
+substr_hash.  idx= 0 drop= 3 len= 2
+(1)  100098666
+substr_hash.  idx= 1 drop= 0 len= 2
+(3)  97
+clen= 1
+dcj= b dck= z returns= 1
+cpr in j= 4 k= 0 sj= abcd sk= zaza
+substr_hash.  idx= 0 drop= 4 len= 3
+(1)  103296217786803
+substr_hash.  idx= 1 drop= 0 len= 3
+(3)  100098690
+substr_hash.  idx= 0 drop= 4 len= 2
+(1)  100098666
+substr_hash.  idx= 1 drop= 0 len= 2
+(3)  97
+clen= 1
+dcj= b dck= z returns= 1
+cpr in j= 2 k= 0 sj= abcd sk= zaza
+substr_hash.  idx= 0 drop= 2 len= 3
+(2)  100098666
+substr_hash.  idx= 1 drop= 0 len= 3
+(3)  100098690
+substr_hash.  idx= 0 drop= 2 len= 2
+(1)  100098666
+substr_hash.  idx= 1 drop= 0 len= 2
+(3)  97
+clen= 1
+
+
+dcj= b dck= z returns= 1
+cpr in j= 1 k= 0 sj= abcd sk= zaza
+substr_hash.  idx= 0 drop= 1 len= 3
+(3)  100098667
+substr_hash.  idx= 1 drop= 0 len= 3
+(3)  100098690
+substr_hash.  idx= 0 drop= 1 len= 2
+(2)  97
+substr_hash.  idx= 1 drop= 0 len= 2
+(3)  97
+clen= 2
+dcj= d dck= a returns= 0
+
+
+
+cpr in j= 1 k= 2 sj= abcd sk= zaza
+substr_hash.  idx= 0 drop= 1 len= 3
+(3)  100098667
+substr_hash.  idx= 1 drop= 2 len= 3
+(2)  125897265
+substr_hash.  idx= 0 drop= 1 len= 2
+(2)  97
+substr_hash.  idx= 1 drop= 2 len= 2
+(1)  125897265
+clen= 1
+dcj= c dck= a returns= 0
+cpr in j= 1 k= 3 sj= abcd sk= zaza
+substr_hash.  idx= 0 drop= 1 len= 3
+(3)  100098667
+substr_hash.  idx= 1 drop= 3 len= 3
+(1)  129918927233282
+substr_hash.  idx= 0 drop= 1 len= 2
+(2)  97
+substr_hash.  idx= 1 drop= 3 len= 2
+(1)  125897265
+clen= 1
+dcj= c dck= a returns= 0
+cpr in j= 1 k= 4 sj= abcd sk= zaza
+substr_hash.  idx= 0 drop= 1 len= 3
+(3)  100098667
+substr_hash.  idx= 1 drop= 4 len= 3
+(1)  129918927233282
+substr_hash.  idx= 0 drop= 1 len= 2
+(2)  97
+substr_hash.  idx= 1 drop= 4 len= 2
+(1)  125897265
+clen= 1
+dcj= c dck= a returns= 0
+cpr in j= 1 k= 1 sj= abcd sk= zaza
+substr_hash.  idx= 0 drop= 1 len= 3
+(3)  100098667
+substr_hash.  idx= 1 drop= 1 len= 3
+(3)  125897290
+substr_hash.  idx= 0 drop= 1 len= 2
+(2)  97
+substr_hash.  idx= 1 drop= 1 len= 2
+(2)  122
+clen= 1
+dcj= c dck= z returns= 1
+cpr in j= 0 k= 1 sj= abcd sk= zaza
+substr_hash.  idx= 0 drop= 0 len= 3
+(3)  101130611
+substr_hash.  idx= 1 drop= 1 len= 3
+(3)  125897290
+substr_hash.  idx= 0 drop= 0 len= 2
+(3)  98
+substr_hash.  idx= 1 drop= 1 len= 2
+(2)  122
+clen= 1
+dcj= c dck= z returns= 1
+i= 1 cur= [3, 3, 3, 3, 5]
+i= 2 ord[i]= [1, 3, 4, 5, 2, 0]
+cpr in j= 0 k= 1 sj= zaza sk= ataka
+substr_hash.  idx= 1 drop= 0 len= 3
+(3)  100098690
+substr_hash.  idx= 2 drop= 1 len= 3
+(3)  100098665
+substr_hash.  idx= 1 drop= 0 len= 2
+(3)  97
+substr_hash.  idx= 2 drop= 1 len= 2
+(2)  97
+clen= 2
+dcj= a dck= k returns= 1
+cpr in j= 2 k= 1 sj= zaza sk= ataka
+substr_hash.  idx= 1 drop= 2 len= 3
+(2)  125897265
+substr_hash.  idx= 2 drop= 1 len= 3
+(3)  100098665
+substr_hash.  idx= 1 drop= 2 len= 2
+(1)  125897265
+substr_hash.  idx= 2 drop= 1 len= 2
+(2)  97
+clen= 1
+dcj= a dck= a returns= 0
+cpr in j= 2 k= 3 sj= zaza sk= ataka
+substr_hash.  idx= 1 drop= 2 len= 3
+(2)  125897265
+substr_hash.  idx= 2 drop= 3 len= 3
+(1)  103296236361793
+substr_hash.  idx= 1 drop= 2 len= 2
+(1)  125897265
+substr_hash.  idx= 2 drop= 3 len= 2
+(1)  100098684
+clen= 1
+dcj= a dck= t returns= 1
+cpr in j= 3 k= 3 sj= zaza sk= ataka
+substr_hash.  idx= 1 drop= 3 len= 3
+(1)  129918927233282
+substr_hash.  idx= 2 drop= 3 len= 3
+(1)  103296236361793
+substr_hash.  idx= 1 drop= 3 len= 2
+(1)  125897265
+substr_hash.  idx= 2 drop= 3 len= 2
+(1)  100098684
+clen= 1
+dcj= a dck= t returns= 1
+cpr in j= 4 k= 3 sj= zaza sk= ataka
+substr_hash.  idx= 1 drop= 4 len= 3
+(1)  129918927233282
+substr_hash.  idx= 2 drop= 3 len= 3
+(1)  103296236361793
+substr_hash.  idx= 1 drop= 4 len= 2
+(1)  125897265
+substr_hash.  idx= 2 drop= 3 len= 2
+(1)  100098684
+clen= 1
+dcj= a dck= t returns= 1
+cpr in j= 1 k= 3 sj= zaza sk= ataka
+substr_hash.  idx= 1 drop= 1 len= 3
+(3)  125897290
+substr_hash.  idx= 2 drop= 3 len= 3
+(1)  103296236361793
+substr_hash.  idx= 1 drop= 1 len= 2
+(2)  122
+substr_hash.  idx= 2 drop= 3 len= 2
+(1)  100098684
+clen= 1
+dcj= z dck= t returns= 0
+cpr in j= 1 k= 4 sj= zaza sk= ataka
+substr_hash.  idx= 1 drop= 1 len= 3
+(3)  125897290
+substr_hash.  idx= 2 drop= 4 len= 3
+(1)  103296236361793
+substr_hash.  idx= 1 drop= 1 len= 2
+(2)  122
+substr_hash.  idx= 2 drop= 4 len= 2
+(1)  100098684
+clen= 1
+dcj= z dck= t returns= 0
+cpr in j= 1 k= 5 sj= zaza sk= ataka
+substr_hash.  idx= 1 drop= 1 len= 3
+(3)  125897290
+substr_hash.  idx= 2 drop= 5 len= 3
+(1)  103296236361793
+substr_hash.  idx= 1 drop= 1 len= 2
+(2)  122
+substr_hash.  idx= 2 drop= 5 len= 2
+(1)  100098684
+clen= 1
+dcj= z dck= t returns= 0
+cpr in j= 1 k= 2 sj= zaza sk= ataka
+substr_hash.  idx= 1 drop= 1 len= 3
+(3)  125897290
+substr_hash.  idx= 2 drop= 2 len= 3
+(2)  100098684
+substr_hash.  idx= 1 drop= 1 len= 2
+(2)  122
+substr_hash.  idx= 2 drop= 2 len= 2
+(1)  100098684
+clen= 1
+dcj= z dck= t returns= 0
+cpr in j= 1 k= 0 sj= zaza sk= ataka
+substr_hash.  idx= 1 drop= 1 len= 3
+(3)  125897290
+substr_hash.  idx= 2 drop= 0 len= 3
+(3)  119705601
+substr_hash.  idx= 1 drop= 1 len= 2
+(2)  122
+substr_hash.  idx= 2 drop= 0 len= 2
+(3)  116
+clen= 1
+dcj= z dck= a returns= 0
+i= 2 cur= [3, 12, 12, 12, 12, 12]
+63

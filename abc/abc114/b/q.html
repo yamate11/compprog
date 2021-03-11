@@ -1,0 +1,477 @@
+
+
+
+
+
+
+<!DOCTYPE html>
+
+<html>
+<head>
+	<title>B - 754</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+	<meta http-equiv="Content-Language" content='en'>
+	<meta name="viewport" content="width=device-width,initial-scale=1.0">
+	<meta name="format-detection" content="telephone=no">
+	<meta name="google-site-verification" content="nXGC_JxO0yoP1qBzMnYD_xgufO6leSLw1kyNo2HZltM" />
+
+	
+	<meta name="description" content="AtCoder is a programming contest site for anyone from beginners to experts. We hold weekly programming contests online.">
+	<meta name="author" content="AtCoder Inc.">
+
+	<meta property="og:site_name" content="AtCoder">
+	
+	<meta property="og:title" content="B - 754" />
+	<meta property="og:description" content="AtCoder is a programming contest site for anyone from beginners to experts. We hold weekly programming contests online." />
+	<meta property="og:type" content="website" />
+	<meta property="og:url" content="https://atcoder.jp/contests/abc114/tasks/abc114_b" />
+	<meta property="og:image" content="https://img.atcoder.jp/assets/atcoder.png" />
+	<meta name="twitter:card" content="summary" />
+	<meta name="twitter:site" content="@atcoder" />
+	
+	<meta property="twitter:title" content="B - 754" />
+
+	<link href="//fonts.googleapis.com/css?family=Lato:400,700" rel="stylesheet" type="text/css">
+	<link rel="stylesheet" type="text/css" href="/public/css/bootstrap.min.css?v=201912091420">
+	<link rel="stylesheet" type="text/css" href="/public/css/base.css?v=201912091420">
+	<link rel="shortcut icon" type="image/png" href="//img.atcoder.jp/assets/favicon.png">
+	<link rel="apple-touch-icon" href="//img.atcoder.jp/assets/atcoder.png">
+	<script src="/public/js/lib/jquery-1.9.1.min.js?v=201912091420"></script>
+	<script src="/public/js/lib/bootstrap.min.js?v=201912091420"></script>
+	<script src="//cdnjs.cloudflare.com/ajax/libs/js-cookie/2.1.4/js.cookie.min.js"></script>
+	<script src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/moment.min.js"></script>
+	<script src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/locale/ja.js"></script>
+	<script>
+		var LANG = "en";
+		var userScreenName = "";
+		var csrfToken = "KuVvZBHyy/rZADXVLk5LiwXjFuflLO6HGv6chaYFl0s="
+	</script>
+	<script src="/public/js/utils.js?v=201912091420"></script>
+	
+	
+		<script src="/public/js/contest.js?v=201912091420"></script>
+		<link href="/public/css/contest.css?v=201912091420" rel="stylesheet" />
+		<script>
+			var contestScreenName = "abc114";
+			var remainingText = "Remaining Time";
+			var countDownText = "Contest begins in";
+			var startTime = moment("2018-12-02T21:00:00+09:00");
+			var endTime = moment("2018-12-02T22:40:00+09:00");
+		</script>
+		<style></style>
+	
+	
+		<script type="text/x-mathjax-config">MathJax.Hub.Config({messageStyle:"none",tex2jax:{skipTags:["script","noscript","style","textarea","code"],inlineMath:[['\\(','\\)']]},delayStartupUntil:"onload"});</script>
+		<script src="//cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+		<script>$(function(){$('var').each(function(){$(this).html('\\('+$(this).html()+'\\)');});});</script>
+	
+	
+		<link href="//cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/css/select2.min.css" rel="stylesheet" />
+		<link href="//cdnjs.cloudflare.com/ajax/libs/select2-bootstrap-theme/0.1.0-beta.10/select2-bootstrap.min.css" rel="stylesheet" />
+		<script src="/public/js/lib/select2.min.js?v=201912091420"></script>
+	
+	
+		<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/codemirror/5.38.0/codemirror.min.css">
+		<script src="//cdnjs.cloudflare.com/ajax/libs/codemirror/5.38.0/codemirror.min.js"></script>
+		<script src="/public/js/codeMirror/merged.js?v=201912091420"></script>
+	
+	
+		<script src="//cdn.rawgit.com/google/code-prettify/master/loader/run_prettify.js"></script>
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	<script src="/public/js/base.js?v=201912091420"></script>
+	<script src="/public/js/ga.js?v=201912091420"></script>
+</head>
+
+<body>
+<div id="modal-contest-start" class="modal fade" tabindex="-1" role="dialog">
+	<div class="modal-dialog" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+				<h4 class="modal-title">Contest started</h4>
+			</div>
+			<div class="modal-body">
+				<p>AtCoder Beginner Contest 114 has begun.</p>
+			</div>
+			<div class="modal-footer">
+				
+					<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+				
+			</div>
+		</div>
+	</div>
+</div>
+<div id="modal-contest-end" class="modal fade" tabindex="-1" role="dialog">
+	<div class="modal-dialog" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+				<h4 class="modal-title">Contest is over</h4>
+			</div>
+			<div class="modal-body">
+				<p>AtCoder Beginner Contest 114 has ended.</p>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+			</div>
+		</div>
+	</div>
+</div>
+<div id="main-div" class="float-container">
+	<nav class="navbar navbar-inverse navbar-fixed-top">
+		<div class="container-fluid">
+			<div class="navbar-header">
+				<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapse" aria-expanded="false">
+					<span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span>
+				</button>
+				<a class="navbar-brand" href="/"></a>
+			</div>
+			<div class="collapse navbar-collapse" id="navbar-collapse">
+				<ul class="nav navbar-nav">
+				
+					<li><a class="contest-title" href="/contests/abc114">AtCoder Beginner Contest 114</a></li>
+				
+				</ul>
+				<ul class="nav navbar-nav navbar-right">
+					
+					<li class="dropdown">
+						<a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
+							<img src='//img.atcoder.jp/assets/flag-lang/en.png'> English <span class="caret"></span>
+						</a>
+						<ul class="dropdown-menu">
+							<li><a href="/contests/abc114/tasks/abc114_b?lang=ja"><img src='//img.atcoder.jp/assets/flag-lang/ja.png'> 日本語</a></li>
+							<li><a href="/contests/abc114/tasks/abc114_b?lang=en"><img src='//img.atcoder.jp/assets/flag-lang/en.png'> English</a></li>
+						</ul>
+					</li>
+					
+					
+						<li><a href="/register?continue=https%3A%2F%2Fatcoder.jp%2Fcontests%2Fabc114%2Ftasks%2Fabc114_b">Sign Up</a></li>
+						<li><a href="/login?continue=https%3A%2F%2Fatcoder.jp%2Fcontests%2Fabc114%2Ftasks%2Fabc114_b">Sign In</a></li>
+					
+				</ul>
+			</div>
+		</div>
+	</nav>
+	<form method="POST" name="form_logout" action="/logout?continue=https%3A%2F%2Fatcoder.jp%2Fcontests%2Fabc114%2Ftasks%2Fabc114_b">
+		<input type="hidden" name="csrf_token" value="KuVvZBHyy/rZADXVLk5LiwXjFuflLO6HGv6chaYFl0s=" />
+	</form>
+	<div id="main-container" class="container" style="padding-top:50px;">
+		
+
+<div class="row">
+	<div id="contest-nav-tabs" class="col-sm-12 mb-2 cnvtb-fixed">
+	<div>
+		<small class="contest-duration">Contest Duration: <a href='http://www.timeanddate.com/worldclock/fixedtime.html?iso=20181202T2100&p1=248' target='blank'><time class='fixtime fixtime-full'>2018-12-02 21:00:00+0900</time></a> ~ <a href='http://www.timeanddate.com/worldclock/fixedtime.html?iso=20181202T2240&p1=248' target='blank'><time class='fixtime fixtime-full'>2018-12-02 22:40:00+0900</time></a> (local time)</small>
+		<small class="back-to-home pull-right"><a href="/">Back to Home</a></small>
+	</div>
+	<ul class="nav nav-tabs">
+		<li><a href="/contests/abc114"><span class="glyphicon glyphicon-home" aria-hidden="true"></span> Top</a></li>
+		
+			<li class="active"><a href="/contests/abc114/tasks"><span class="glyphicon glyphicon-tasks" aria-hidden="true"></span> Tasks</a></li>
+		
+
+		
+			<li><a href="/contests/abc114/clarifications"><span class="glyphicon glyphicon-question-sign" aria-hidden="true"></span> Clarifications <span id="clar-badge" class="badge"></span></a></li>
+		
+
+		
+
+		
+			<li>
+				<a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false"><span class="glyphicon glyphicon-list" aria-hidden="true"></span> Results<span class="caret"></span></a>
+				<ul class="dropdown-menu">
+					<li><a href="/contests/abc114/submissions"><span class="glyphicon glyphicon-globe" aria-hidden="true"></span> All Submissions</a></li>
+					
+				</ul>
+			</li>
+		
+
+		
+			
+				
+					<li><a href="/contests/abc114/standings"><span class="glyphicon glyphicon-sort-by-attributes-alt" aria-hidden="true"></span> Standings</a></li>
+				
+			
+				
+					<li><a href="/contests/abc114/standings/virtual"><span class="glyphicon glyphicon-sort-by-attributes-alt" aria-hidden="true"></span> Virtual Standings</a></li>
+				
+			
+		
+
+		
+
+		
+			
+				
+					<li><a href="https://img.atcoder.jp/abc114/editorial.pdf" target="_blank"><span class="glyphicon glyphicon-book" aria-hidden="true"></span> Editorial</a></li>
+				
+			
+		
+		
+
+		<li class="pull-right"><a id="fix-cnvtb" href="javascript:void(0)"><span class="glyphicon glyphicon-pushpin" aria-hidden="true"></span></a></li>
+	</ul>
+</div>
+	<div class="col-sm-12">
+		<span class="h2">B - 754</span>
+		<hr/>
+		<p>Time Limit: 2 sec / Memory Limit: 1024 MB</p>
+
+		<div id="task-statement">
+			<span class="lang">
+<span class="lang-ja">
+<p>配点 : <var>200</var> 点</p>
+
+<div class="part">
+<section>
+<h3>問題文</h3><p>数字 <code>1</code>, <code>2</code>, <var>...</var>, <code>9</code> からなる文字列 <var>S</var> があります。
+ダックスフンドのルンルンは、<var>S</var> から連続する <var>3</var> 個の数字を取り出し、
+<var>1</var> つの整数 <var>X</var> としてご主人様の元に持っていきます。（数字の順番を変えることはできません。）</p>
+<p>ご主人様が大好きな数は <var>753</var> で、これに近い数ほど好きです。
+<var>X</var> と <var>753</var> の差（の絶対値）は最小でいくつになるでしょうか？</p>
+</section>
+</div>
+
+<div class="part">
+<section>
+<h3>制約</h3><ul>
+<li><var>S</var> は長さ <var>4</var> 以上 <var>10</var> 以下の文字列である。</li>
+<li><var>S</var> の各文字は <code>1</code>, <code>2</code>, <var>...</var>, <code>9</code> のいずれかである。</li>
+</ul>
+</section>
+</div>
+
+<hr />
+<div class="io-style">
+<div class="part">
+<section>
+<h3>入力</h3><p>入力は以下の形式で標準入力から与えられる。</p>
+<pre><var>S</var>
+</pre>
+
+</section>
+</div>
+
+<div class="part">
+<section>
+<h3>出力</h3><p><var>X</var> と <var>753</var> の差としてありうる最小値を出力せよ。</p>
+</section>
+</div>
+</div>
+
+<hr />
+<div class="part">
+<section>
+<h3>入力例 1</h3><pre>1234567876
+</pre>
+
+</section>
+</div>
+
+<div class="part">
+<section>
+<h3>出力例 1</h3><pre>34
+</pre>
+
+<p><var>7</var> 文字目から <var>9</var> 文字目までを取り出すと <var>X = 787</var> となり、これと <var>753</var> との差は <var>787 - 753 = 34</var> です。<var>X</var> をどこから取り出しても、差をより小さくすることはできません。</p>
+<p>なお、数字の順番を変えることはできません。例えば、<code>567</code> を取り出して <code>765</code> に並び変えてはいけません。</p>
+<p>また、<var>S</var> から連続していない <var>3</var> 文字を取り出すこともできません。例えば、<var>7</var> 文字目の <code>7</code>、<var>9</var> 文字目の <code>7</code> と <var>10</var> 文字目の <code>6</code> を取り出して <code>776</code> としてはいけません。</p>
+</section>
+</div>
+
+<hr />
+<div class="part">
+<section>
+<h3>入力例 2</h3><pre>35753
+</pre>
+
+</section>
+</div>
+
+<div class="part">
+<section>
+<h3>出力例 2</h3><pre>0
+</pre>
+
+<p><code>753</code> そのものを取り出すことができる場合、答えは <var>0</var> です。</p>
+</section>
+</div>
+
+<hr />
+<div class="part">
+<section>
+<h3>入力例 3</h3><pre>1111111111
+</pre>
+
+</section>
+</div>
+
+<div class="part">
+<section>
+<h3>出力例 3</h3><pre>642
+</pre>
+
+<p>どこから <var>3</var> 文字を取り出しても <var>X = 111</var> となり、差は <var>753 - 111 = 642</var> です。</p></section>
+</div>
+</span>
+<span class="lang-en">
+<p>Score : <var>200</var> points</p>
+
+<div class="part">
+<section>
+<h3>Problem Statement</h3><p>There is a string <var>S</var> consisting of digits <code>1</code>, <code>2</code>, <var>...</var>, <code>9</code>.
+Lunlun, the Dachshund, will take out three consecutive digits from <var>S</var>, treat them as a single integer <var>X</var> and bring it to her master. (She cannot rearrange the digits.)</p>
+<p>The master's favorite number is <var>753</var>. The closer to this number, the better.
+What is the minimum possible (absolute) difference between <var>X</var> and <var>753</var>?</p>
+</section>
+</div>
+
+<div class="part">
+<section>
+<h3>Constraints</h3><ul>
+<li><var>S</var> is a string of length between <var>4</var> and <var>10</var> (inclusive).</li>
+<li>Each character in <var>S</var> is <code>1</code>, <code>2</code>, <var>...</var>, or <code>9</code>.</li>
+</ul>
+</section>
+</div>
+
+<hr />
+<div class="io-style">
+<div class="part">
+<section>
+<h3>Input</h3><p>Input is given from Standard Input in the following format:</p>
+<pre><var>S</var>
+</pre>
+
+</section>
+</div>
+
+<div class="part">
+<section>
+<h3>Output</h3><p>Print the minimum possible difference between <var>X</var> and <var>753</var>.</p>
+</section>
+</div>
+</div>
+
+<hr />
+<div class="part">
+<section>
+<h3>Sample Input 1</h3><pre>1234567876
+</pre>
+
+</section>
+</div>
+
+<div class="part">
+<section>
+<h3>Sample Output 1</h3><pre>34
+</pre>
+
+<p>Taking out the seventh to ninth characters results in <var>X = 787</var>, and the difference between this and <var>753</var> is <var>787 - 753 = 34</var>. The difference cannot be made smaller, no matter where <var>X</var> is taken from.</p>
+<p>Note that the digits cannot be rearranged. For example, taking out <code>567</code> and rearranging it to <code>765</code> is not allowed.</p>
+<p>We cannot take out three digits that are not consecutive from <var>S</var>, either. For example, taking out the seventh digit <code>7</code>, the ninth digit <code>7</code> and the tenth digit <code>6</code> to obtain <code>776</code> is not allowed.</p>
+</section>
+</div>
+
+<hr />
+<div class="part">
+<section>
+<h3>Sample Input 2</h3><pre>35753
+</pre>
+
+</section>
+</div>
+
+<div class="part">
+<section>
+<h3>Sample Output 2</h3><pre>0
+</pre>
+
+<p>If <code>753</code> itself can be taken out, the answer is <var>0</var>.</p>
+</section>
+</div>
+
+<hr />
+<div class="part">
+<section>
+<h3>Sample Input 3</h3><pre>1111111111
+</pre>
+
+</section>
+</div>
+
+<div class="part">
+<section>
+<h3>Sample Output 3</h3><pre>642
+</pre>
+
+<p>No matter where <var>X</var> is taken from, <var>X = 111</var>, with the difference <var>753 - 111 = 642</var>.</p></section>
+</div>
+</span>
+</span>
+
+		</div>
+
+		
+
+		
+	</div>
+</div>
+
+
+		
+			<hr>
+			
+			
+			
+<div class="a2a_kit a2a_kit_size_20 a2a_default_style pull-right" data-a2a-url="https://atcoder.jp/contests/abc114/tasks/abc114_b?lang=en" data-a2a-title="B - 754">
+	<a class="a2a_button_facebook"></a>
+	<a class="a2a_button_twitter"></a>
+	
+		<a class="a2a_button_telegram"></a>
+	
+	<a class="a2a_dd" href="https://www.addtoany.com/share"></a>
+</div>
+
+		
+		<script async src="//static.addtoany.com/menu/page.js"></script>
+		
+	</div> 
+	<hr>
+</div> 
+<div class="container" style="margin-bottom: 80px;">
+    <footer class="footer">
+		
+			<ul>
+				<li><a href='/contests/abc114/rules'>Rule</a></li>
+				<li><a href='/contests/abc114/glossary'>Glossary</a></li>
+				
+			</ul>
+		
+		<ul>
+			<li><a href='/tos'>Terms of service</a></li>
+			<li><a href='/privacy'>Privacy Policy</a></li>
+			<li><a href='/personal'>Information Protection Policy</a></li>
+			<li><a href='/company'>Company</a></li>
+			<li><a href='/faq'>FAQ</a></li>
+			<li><a href='/contact'>Contact</a></li>
+			
+		</ul>
+    <div class="text-center">
+        <small id="copyright">Copyright Since 2012 &copy;<a href="http://atcoder.co.jp">AtCoder Inc.</a> All rights reserved.</small>
+    </div>
+    </footer>
+</div>
+<p id="fixed-server-timer" class='contest-timer'></p>
+</body>
+</html>
+
+

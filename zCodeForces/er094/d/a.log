@@ -1,0 +1,79 @@
+stage1 5
+i= 0 cnt_right= 6
+j= 1 cnt_right= 3
+i= 0 j= 1 d_left= 0 d_right= 0
+j= 1 cnt_left= 0
+j= 2 cnt_right= 1
+i= 0 j= 2 d_left= 0 d_right= 0
+j= 2 cnt_left= 1
+j= 3 cnt_right= 0
+i= 0 j= 3 d_left= 0 d_right= 0
+j= 3 cnt_left= 3
+j= 4 cnt_right= 0
+i= 0 j= 4 d_left= 0 d_right= 0
+j= 4 cnt_left= 6
+i= 1 cnt_right= 3
+j= 2 cnt_right= 1
+i= 1 j= 2 d_left= 0 d_right= 0
+j= 2 cnt_left= 0
+j= 3 cnt_right= 0
+i= 1 j= 3 d_left= 0 d_right= 0
+j= 3 cnt_left= 1
+j= 4 cnt_right= 0
+i= 1 j= 4 d_left= 0 d_right= 0
+j= 4 cnt_left= 3
+i= 2 cnt_right= 1
+j= 3 cnt_right= 0
+i= 2 j= 3 d_left= 0 d_right= 0
+j= 3 cnt_left= 0
+j= 4 cnt_right= 0
+i= 2 j= 4 d_left= 0 d_right= 0
+j= 4 cnt_left= 1
+i= 3 cnt_right= 0
+j= 4 cnt_right= 0
+i= 3 j= 4 d_left= 0 d_right= 0
+j= 4 cnt_left= 0
+i= 4 cnt_right= 0
+5
+stage1 3
+i= 0 cnt_right= 3
+j= 1 cnt_right= 1
+j= 1 cnt_left= 0
+j= 2 cnt_right= 0
+j= 2 cnt_left= 1
+j= 3 cnt_right= 0
+i= 0 j= 3 d_left= 1 d_right= 0
+j= 3 cnt_left= 1
+j= 4 cnt_right= 0
+j= 4 cnt_left= 1
+j= 5 cnt_right= 0
+j= 5 cnt_left= 3
+i= 1 cnt_right= 1
+j= 2 cnt_right= 0
+i= 1 j= 2 d_left= 0 d_right= 0
+j= 2 cnt_left= 0
+j= 3 cnt_right= 0
+j= 3 cnt_left= 0
+j= 4 cnt_right= 0
+j= 4 cnt_left= 0
+j= 5 cnt_right= 0
+i= 1 j= 5 d_left= 0 d_right= 0
+j= 5 cnt_left= 1
+i= 2 cnt_right= 0
+j= 3 cnt_right= 0
+j= 3 cnt_left= 0
+j= 4 cnt_right= 0
+j= 4 cnt_left= 0
+j= 5 cnt_right= 0
+i= 2 j= 5 d_left= 0 d_right= 0
+j= 5 cnt_left= 0
+i= 3 cnt_right= 0
+j= 4 cnt_right= 0
+j= 4 cnt_left= 0
+j= 5 cnt_right= 0
+j= 5 cnt_left= 0
+i= 4 cnt_right= 0
+j= 5 cnt_right= 0
+j= 5 cnt_left= 0
+i= 5 cnt_right= 0
+2

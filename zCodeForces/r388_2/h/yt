@@ -1,0 +1,18 @@
+#!/usr/bin/env python3 
+
+from bs4 import BeautifulSoup
+import bs4, sys
+
+def die(*msg):
+    print(*msg, file=sys.stderr)
+    sys.exit(1)
+
+
+
+def main():
+    with open('test.html', 'r', encoding='UTF-8') as fp:
+        cont = ''.join(fp.readlines())
+    soup = BeautifulSoup(cont, 'lxml')
+
+
+main()

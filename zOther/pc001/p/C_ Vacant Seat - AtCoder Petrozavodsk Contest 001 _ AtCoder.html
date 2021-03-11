@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>C: Vacant Seat
+ - AtCoder Petrozavodsk Contest 001 | AtCoder</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="
+">
+    <meta name="keyword" content="AtCoder,アットコーダー,あっとこーだー,プログラミングコンテスト
+">
+    <meta name="author" content="Atcoder" />
+    <meta name="copyright" content="Copyright (C) 2012 Atcoder" />
+    <meta name="format-detection" content="telephone=no" />
+
+    <link rel="stylesheet" type="text/css" href="/css/all.css?v=2">
+    <link rel="stylesheet" type="text/css" href="/css/print.css?v=1" media="print">
+        <!--[if lt IE 9]>
+      <script src="//html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+
+    <script src="/js/jquery.js"></script>
+    <link rel="shortcut icon" href="/img/favicon.ico">
+
+    <script type="text/javascript">
+
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-30554866-3']);
+  _gaq.push(['_setDomainName', 'atcoder.jp']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+
+</script>    
+    <!--[if lt IE 9]><style>.navbar-fixed-top{ position: relative!important; }</style><![endif]-->
+
+  </head>
+
+
+  <body>
+          <div class="navbar navbar-fixed-top">
+  <div class="navbar-inner">
+    <div class="container">
+      <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </a>
+              <a class="brand" href="/"><span class="contest-name">AtCoder Petrozavodsk Contest 001</span><span class="bland-small"><time>2018/02/03 14:00:00 +0000</time> ~ <time>2018/02/03 19:00:00 +0000</time></span></a>
+      
+      <div class="nav-collapse">
+                <ul class="nav">
+          <li class="divider-vertical"></li>
+          <li><a href="http://atcoder.jp" target="_blank"><span class="lang"><span class="lang-en">back to atcoder.jp</span><span class="lang-ja">AtCoderへ戻る</span></span></a></li>
+        </ul>
+                            <ul  id="nav-right-logined" class="nav pull-right" style="display:none;">
+            <li class="dropdown">
+              <a href="#" lang="ja" class="dropdown-toggle static-nav-language-selector-dropdown" data-toggle="dropdown" style="display:none;">
+                <i class="flag-ja"></i> 日本語 <b class="caret"></b>
+              </a>
+              <a href="#" lang="en" class="dropdown-toggle static-nav-language-selector-dropdown"  data-toggle="dropdown" style="display:none;">
+                <i class="flag-en"></i> English <b class="caret"></b>
+              </a>
+              <a href="#" lang="ko" class="dropdown-toggle static-nav-language-selector-dropdown"  data-toggle="dropdown" style="display:none;">
+                <i class="flag-ko"></i> 한국어 <b class="caret"></b>
+              </a>
+              <ul class="dropdown-menu">
+                <li> <a lang="ja" class="static-nav-language-selector" href="#"><i class="flag-ja"></i> 日本語</a></li>
+                <li> <a lang="en" class="static-nav-language-selector" href="#"><i class="flag-en"></i> English</a></li>
+                <li> <a lang="ko" class="static-nav-language-selector" href="#"><i class="flag-ko"></i> 한국어</a></li>
+              </ul>
+            </li>
+            <li class="divider-vertical"></li>
+            <li class="dropdown">
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="icon-cog icon-white"></i> <span id="nav-right-username"></span><b class="caret"></b></a>
+              <ul class="dropdown-menu">
+                <li><a href="/me"><span class="lang"><span class="lang-en">My Profile</span><span class="lang-ja">マイプロフィール</span></span></a></li>
+                                	<li><a href="/settings"><span class="lang"><span class="lang-en">Settings</span><span class="lang-ja">設定</span></span></a></li>
+                    <li><a href="/settings/password"><span class="lang"><span class="lang-en">Change password</span><span class="lang-ja">パスワードの変更</span></span></a></li>
+                	                	<li class="divider"></li>
+                                <li><a href="/logout"><span class="lang"><span class="lang-en">Sign out</span><span class="lang-ja">ログアウト</span></span></a></li>
+             </ul>
+            </li>
+          </ul>
+          <ul id="nav-right-not-login" class="nav pull-right" style="display:none;">
+            <li class="dropdown">
+              <a href="#" lang="ja" class="dropdown-toggle static-nav-language-selector-dropdown" data-toggle="dropdown" style="display:none;">
+                <i class="flag-ja"></i> 日本語 <b class="caret"></b>
+              </a>
+              <a href="#" lang="en" class="dropdown-toggle static-nav-language-selector-dropdown"  data-toggle="dropdown" style="display:none;">
+                <i class="flag-en"></i> English <b class="caret"></b>
+              </a>
+              <a href="#" lang="ko" class="dropdown-toggle static-nav-language-selector-dropdown"  data-toggle="dropdown" style="display:none;">
+                <i class="flag-ko"></i> 한국어 <b class="caret"></b>
+              </a>
+              <ul class="dropdown-menu">
+                <li> <a lang="ja" class="static-nav-language-selector" href="#"><i class="flag-ja"></i> 日本語</a></li>
+                <li> <a lang="en" class="static-nav-language-selector" href="#"><i class="flag-en"></i> English</a></li>
+                <li> <a lang="ko" class="static-nav-language-selector" href="#"><i class="flag-ko"></i> 한국어</a></li>
+              </ul>
+            </li>
+                        <li class="divider-vertical"></li>
+            <li><a href="/register"><span class="lang"><span class="lang-en">Sign up</span><span class="lang-ja">新規登録</span></span></a></li>
+                        <li class="divider-vertical"></li>
+            <li><a href="/login"><span class="lang"><span class="lang-en">Sign in</span><span class="lang-ja">ログイン</span></span></a></li>
+          </ul>
+      </div>
+    </div>
+  </div>
+</div>
+    <div class="modal hide fade" style="display:none;" id="modal-contest-end">
+  <div class="modal-header">
+    <a class="close" data-dismiss="modal">×</a>
+    <h3><span class="lang"><span class="lang-en">AtCoder Petrozavodsk Contest 001 has ended</span><span class="lang-ja">AtCoder Petrozavodsk Contest 001が終了しました</span></span></h3>
+  </div>
+  <div class="modal-body">
+    <p><span class="lang"><span class="lang-en">Contest has ended</span><span class="lang-ja">コンテスト終了です</span></span></p>
+  </div>
+  <div class="modal-footer">
+    <a href="#" class="btn" data-dismiss="modal"><span class="lang"><span class="lang-en">Close</span><span class="lang-ja">閉じる</span></span></a>
+  </div>
+</div>
+
+<div class="modal hide fade" style="display:none;" id="modal-contest-begin">
+  <div class="modal-header">
+    <a class="close" data-dismiss="modal">×</a>
+    <h3><span class="lang"><span class="lang-en">AtCoder Petrozavodsk Contest 001 is now opening</span><span class="lang-ja">AtCoder Petrozavodsk Contest 001の開催時間になりました</span></span></h3>
+  </div>
+  <div class="modal-body">
+    <p><span class="lang"><span class="lang-en">Contest has started</span><span class="lang-ja">問題一覧のページへ移動してください</span></span></p>
+  </div>
+  <div class="modal-footer">
+    <a href="/assignments" class="btn btn-primary"><span class="lang"><span class="lang-en">Go to the task list page</span><span class="lang-ja">問題一覧のページへ移動</span></span></a>
+  </div>
+</div>
+    
+    <div id="outer-inner" class="container">
+      <h1 class="site-title">
+          AtCoder Petrozavodsk Contest 001
+      </h1>
+                      <time style="display:none" id="contest-start-time">2018/02/03 14:00:00 +0000</time>
+        <time style="display:none" id="contest-end-time">2018/02/03 19:00:00 +0000</time>
+        <time style="display:none" id="server-current-time">2018/02/04 02:06:07 +0000</time>
+
+            
+      <ul class="nav nav-tabs">
+                            <li><a href="https://apc001.contest.atcoder.jp/"><i class="icon-home"></i> <span class="lang"><span class="lang-en">Home</span><span class="lang-ja">トップページ</span><span class="lang-ko">톱 페이지</span></span></a></li>
+                                          <li class="active"><a href="https://apc001.contest.atcoder.jp/assignments"><i class="icon-list-alt"></i> <span class="lang"><span class="lang-en">Tasks</span><span class="lang-ja">問題</span><span class="lang-ko">문제</span></span></a></li>
+                                          <li><a href="https://apc001.contest.atcoder.jp/submit"><i class="icon-upload"></i> <span class="lang"><span class="lang-en">Submit</span><span class="lang-ja">提出</span><span class="lang-ko">제출</span></span></a></li>
+                                          <li><a href="https://apc001.contest.atcoder.jp/clarifications"><i class="icon-question-sign"></i> <span class="lang"><span class="lang-en">Clarifications</span><span class="lang-ja">質問</span><span class="lang-ko">질문</span></span></a></li>
+                                          <li class="dropdown">
+            <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+              <b class="caret"></b><i class="icon-download-alt"></i> <span class="lang"><span class="lang-en">Results</span><span class="lang-ja">結果</span><span class="lang-ko">채점 결과</span></span>
+            </a>
+            <ul class="dropdown-menu">
+                              <li><a href="https://apc001.contest.atcoder.jp/submissions/all"><span class="lang"><span class="lang-en">All submissions</span><span class="lang-ja">すべての結果</span><span class="lang-ko">모든 결과</span></span></a></li>
+                              <li><a href="https://apc001.contest.atcoder.jp/submissions/me"><span class="lang"><span class="lang-en">My submissions</span><span class="lang-ja">自分の結果</span><span class="lang-ko">자신의 결과</span></span></a></li>
+                          </ul>
+          </li>
+                                          <li><a href="/standings"><i class="icon-user"></i> <span class="lang"><span class="lang-en">Standings</span><span class="lang-ja">順位表</span><span class="lang-ko">순위표</span></span></a></li>
+                                          <li><a href="/custom_test"><i class="icon-user"></i> <span class="lang"><span class="lang-en">Custom Test</span><span class="lang-ja">コードテスト</span></span></a></li>
+                                          <li><a href="/editorial"><i class="icon-user"></i> <span class="lang"><span class="lang-en">Editorial</span><span class="lang-ja">解説</span></span></a></li>
+                      </ul>
+        <div id="alert_box" class="alert alert-block" style="display:none">
+  <a class="close" data-dismiss="alert">×</a>
+  <h4 id="alert_box_heading" class="alert-heading" style="display:none"></h4>
+  <p id="alert_box_content"></p>
+</div>
+
+      <h2>C - Vacant Seat</h2>
+<hr />
+<p><span class="lang"><span class="lang-en">Time limit</span><span class="lang-ja">時間制限</span></span> : 2sec / <span class="lang"><span class="lang-en">Memory limit</span><span class="lang-ja">メモリ制限</span></span> : 256MB</p>
+
+<div id="task-statement">
+  <span class="lang">
+<span class="lang-ja">
+<p>配点 : <var>500</var> 点</p>
+
+<div class="part">
+<section>
+<h3>問題文</h3><p><font color="red"><strong>これはインタラクティブな問題です。</strong></font></p>
+<p><var>N</var> を <var>3</var> 以上の奇数とします。</p>
+<p><var>N</var> 個の席が円状に並んでいます。
+席には <var>0</var> から <var>N - 1</var> まで番号が振られています。
+各 <var>i</var> (<var>0 ≤ i ≤ N - 2</var>) について、席 <var>i</var> と席 <var>i + 1</var> は隣り合っています。
+また、席 <var>N - 1</var> と席 <var>0</var> は隣り合っています。</p>
+<p>各席の状態は「空席」「男性が座っている」「女性が座っている」のどれかです。
+ただし、同性どうしが隣り合う席に座っていることはありません。
+<var>N</var> が <var>3</var> 以上の奇数の場合、空席が少なくとも <var>1</var> つは存在することが示せます。</p>
+<p>あなたには <var>N</var> のみが与えられ、各席の状態は与えられません。
+あなたの目標は、どれか <var>1</var> つの空席の番号を当てることです。
+そのために、あなたは次のクエリを繰り返し送ることができます。</p>
+<ul>
+<li>整数 <var>i</var> (<var>0 ≤ i ≤ N - 1</var>) を選ぶ。 席 <var>i</var> が空席ならば、正答となる。 そうでなければ、席 <var>i</var> に座っている人の性別が知らされる。</li>
+</ul>
+<p>クエリを高々 <var>20</var> 回まで送ることで、どれか <var>1</var> つの空席の番号を当ててください。</p>
+</section>
+</div>
+
+<div class="part">
+<section>
+<h3>制約</h3><ul>
+<li><var>N</var> は奇数である。</li>
+<li><var>3 ≤ N ≤ 99,999</var></li>
+</ul>
+</section>
+</div>
+
+<div class="part">
+<section>
+<h3>入出力</h3><p>最初に、<var>N</var> が次の形式で標準入力から与えられる。</p>
+<pre><var>N</var>
+</pre>
+
+<p>次に、クエリを繰り返し送る。
+クエリは次の形式で標準出力へ出力する。
+行末には改行を出力せよ。</p>
+<pre><var>i</var>
+</pre>
+
+<p>これに対するクエリの答えは、次の形式で標準入力から与えられる。</p>
+<pre><var>s</var>
+</pre>
+
+<p><var>s</var> は <code>Vacant</code>, <code>Male</code>, <code>Female</code> のどれかである。
+これらはそれぞれ、席 <var>i</var> の状態が「空席」「男性が座っている」「女性が座っている」であることを表す。</p>
+</section>
+</div>
+
+<div class="part">
+<section>
+<h3>注意</h3><ul>
+<li>出力の度に標準出力を flush せよ。 そうしない場合、<code>TLE</code> の可能性がある。</li>
+<li><var>s</var> が <code>Vacant</code> の場合、すぐにプログラムを終了せよ。 そうしない場合、ジャッジ結果は不定である。</li>
+<li>クエリ回数が <var>20</var> を超えた場合、およびクエリの形式が正しくない場合、ジャッジ結果は不定である。</li>
+</ul>
+</section>
+</div>
+
+<hr />
+<div class="part">
+<section>
+<h3>入出力例 1</h3>
+<p>このサンプルでは、<var>N = 3</var> であり、席 <var>0</var>, <var>1</var>, <var>2</var> の状態はそれぞれ「男性が座っている」「女性が座っている」「空席」である。</p>
+<table class="table-striped table-bordered table-condensed">
+<thead>
+<tr><th width="200">Input</th><th width="200">Output</th></tr>
+</thead>
+<tbody>
+<tr><td>3</td><td></td></tr>
+<tr><td></td><td>0</td></tr>
+<tr><td>Male</td><td></td></tr>
+<tr><td></td><td>1</td></tr>
+<tr><td>Female</td><td></td></tr>
+<tr><td></td><td>2</td></tr>
+<tr><td>Vacant</td><td></td></tr>
+</tbody>
+</table>
+</section>
+</div>
+</span>
+<span class="lang-en">
+<p>Score : <var>500</var> points</p>
+
+<div class="part">
+<section>
+<h3>Problem Statement</h3><p><font color="red"><strong>This is an interactive task.</strong></font></p>
+<p>Let <var>N</var> be an odd number at least <var>3</var>.</p>
+<p>There are <var>N</var> seats arranged in a circle.
+The seats are numbered <var>0</var> through <var>N-1</var>.
+For each <var>i</var> (<var>0 ≤ i ≤ N - 2</var>), Seat <var>i</var> and Seat <var>i + 1</var> are adjacent.
+Also, Seat <var>N - 1</var> and Seat <var>0</var> are adjacent.</p>
+<p>Each seat is either vacant, or oppupied by a man or a woman.
+However, no two adjacent seats are occupied by two people of the same sex.
+It can be shown that there is at least one empty seat where <var>N</var> is an odd number at least <var>3</var>.</p>
+<p>You are given <var>N</var>, but the states of the seats are not given.
+Your objective is to correctly guess the ID number of any one of the empty seats.
+To do so, you can repeatedly send the following query:</p>
+<ul>
+<li>Choose an integer <var>i</var> (<var>0 ≤ i ≤ N - 1</var>). If Seat <var>i</var> is empty, the problem is solved. Otherwise, you are notified of the sex of the person in Seat <var>i</var>.</li>
+</ul>
+<p>Guess the ID number of an empty seat by sending at most <var>20</var> queries.</p>
+</section>
+</div>
+
+<div class="part">
+<section>
+<h3>Constraints</h3><ul>
+<li><var>N</var> is an odd number.</li>
+<li><var>3 ≤ N ≤ 99</var> <var>999</var></li>
+</ul>
+</section>
+</div>
+
+<div class="part">
+<section>
+<h3>Input and Output</h3><p>First, <var>N</var> is given from Standard Input in the following format:</p>
+<pre><var>N</var>
+</pre>
+
+<p>Then, you should send queries.
+A query should be printed to Standart Output in the following format.
+Print a newline at the end.</p>
+<pre><var>i</var>
+</pre>
+
+<p>The response to the query is given from Standard Input in the following format:</p>
+<pre><var>s</var>
+</pre>
+
+<p>Here, <var>s</var> is <code>Vacant</code>, <code>Male</code> or <code>Female</code>.
+Each of these means that Seat <var>i</var> is empty, occupied by a man and occupied by a woman, respectively.</p>
+</section>
+</div>
+
+<div class="part">
+<section>
+<h3>Notice</h3><ul>
+<li>Flush Standard Output each time you print something. Failure to do so may result in <code>TLE</code>.</li>
+<li>Immediately terminate the program when <var>s</var> is <code>Vacant</code>. Otherwise, the verdict is indeterminate.</li>
+<li>The verdict is indeterminate if more than <var>20</var> queries or ill-formatted queries are sent.</li>
+</ul>
+</section>
+</div>
+
+<hr />
+<div class="part">
+<section>
+<h3>Sample Input / Output 1</h3>
+<p>In this sample, <var>N = 3</var>, and Seat <var>0</var>, <var>1</var>, <var>2</var> are occupied by a man, occupied by a woman and vacant, respectively.</p>
+<table class="table-striped table-bordered table-condensed">
+<thead>
+<tr><th width="200">Input</th><th width="200">Output</th></tr>
+</thead>
+<tbody>
+<tr><td>3</td><td></td></tr>
+<tr><td></td><td>0</td></tr>
+<tr><td>Male</td><td></td></tr>
+<tr><td></td><td>1</td></tr>
+<tr><td>Female</td><td></td></tr>
+<tr><td></td><td>2</td></tr>
+<tr><td>Vacant</td><td></td></tr>
+</tbody>
+</table>
+</section>
+</div>
+</span>
+</span>
+
+</div>
+
+
+<hr/>
+<p><a class="btn btn-primary btn-large" href="/submit?task_id=3910"><span class="lang"><span class="lang-en">Submit</span><span class="lang-ja">提出する</span></span></a></p>
+
+<script>$(function(){document.queryCommandSupported("copy")&&($("h3+pre").before('<div class="div-sample-copy"><span class="btn-sample-copy" tabindex="0" data-toggle="tooltip" data-trigger="manual" title="Copied!">Copy</span></div>'),$(".btn-sample-copy").click(function(){window.getSelection().removeAllRanges();try{var e=document.createRange();e.selectNode($(this).parent().next("pre").get()[0]),window.getSelection().addRange(e),document.execCommand("copy"),$(this).tooltip("show");var t=this;setTimeout(function(){$(t).tooltip("hide")},800)}catch(o){console.log(o)}window.getSelection().removeAllRanges()}))});</script>
+
+    </div>
+
+    <footer>
+      <ul>
+  <li><a href="/tos"><span class="lang"><span class="lang-en">Terms of service</span><span class="lang-ja">利用規約</span></span></a></li>
+  <li><a href="/privacy"><span class="lang"><span class="lang-en">Privacy</span><span class="lang-ja">プライバシーポリシー</span></span></a></li>
+  <li><a href="/personal"><span class="lang"><span class="lang-en">Personal Information</span><span class="lang-ja">個人情報保護方針</span></span></a></li>
+  <li><a href="/tutorial"><span class="lang"><span class="lang-en">Tutorial</span><span class="lang-ja">チュートリアル</span></span></a></li>
+  <li><a href="/rules"><span class="lang"><span class="lang-en">Rules</span><span class="lang-ja">ルール</span></span></a></li>
+  <li><a href="/glossary"><span class="lang"><span class="lang-en">Glossary</span><span class="lang-ja">用語集</span></span></a></li>
+  <li><a href="/faq"><span class="lang"><span class="lang-en">FAQ</span><span class="lang-ja">よくある質問</span></span></a></li>
+</ul>
+<p id="copyright">&copy; 2017 AtCoder Inc. All rights reserved.</p>
+    </footer>
+
+    <p id="fixed-server-timer" style="display: none;"></p>
+
+        <script src="/js/bootstrap.min.js"></script>
+    <script src="/js/prettify.js"></script>
+    <script src="/js/lang-vb.js"></script>
+    <script src="/js/lang-hs.js"></script>
+    <script src="/js/varmath.js"></script>
+    <script src="/js/script.js?v=2"></script>
+  </body>
+</html>

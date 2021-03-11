@@ -1,0 +1,613 @@
+
+
+
+
+
+
+<!DOCTYPE html>
+
+<html>
+<head>
+	<title>F - Monochrome Cat</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+	<meta http-equiv="Content-Language" content='en'>
+	<meta name="viewport" content="width=device-width,initial-scale=1.0">
+	<meta name="format-detection" content="telephone=no">
+	<meta name="google-site-verification" content="nXGC_JxO0yoP1qBzMnYD_xgufO6leSLw1kyNo2HZltM" />
+
+	
+	<meta name="description" content="AtCoder is a programming contest site for anyone from beginners to experts. We hold weekly programming contests online.">
+	<meta name="author" content="AtCoder Inc.">
+	<link rel="canonical" href="https://atcoder.jp/">
+
+	<meta property="og:site_name" content="AtCoder">
+	
+	<meta property="og:title" content="F - Monochrome Cat" />
+	<meta property="og:description" content="AtCoder is a programming contest site for anyone from beginners to experts. We hold weekly programming contests online." />
+	<meta property="og:type" content="website" />
+	<meta property="og:url" content="https://atcoder.jp/contests/arc097/tasks/arc097_d" />
+	<meta property="og:image" content="https://img.atcoder.jp/assets/atcoder.png" />
+	<meta name="twitter:card" content="summary" />
+	<meta name="twitter:site" content="@atcoder" />
+	
+	<meta property="twitter:title" content="F - Monochrome Cat" />
+
+	<link href='//fonts.googleapis.com/css?family=Lato:400,700' rel='stylesheet' type='text/css'>
+	<link rel="stylesheet" type="text/css" href='/public/css/bootstrap.min.css?v=201904112306'>
+	<link rel="stylesheet" type="text/css" href='/public/css/base.css?v=201904112306'>
+	<link rel="shortcut icon" type="image/png" href="//img.atcoder.jp/assets/favicon.png">
+	<link rel="apple-touch-icon" href="//img.atcoder.jp/assets/atcoder.png">
+	<script src='/public/js/lib/jquery-1.9.1.min.js?v=201904112306'></script>
+	<script src='/public/js/lib/bootstrap.min.js?v=201904112306'></script>
+	<script src="//cdnjs.cloudflare.com/ajax/libs/js-cookie/2.1.4/js.cookie.min.js"></script>
+	<script src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/moment.min.js"></script>
+	<script src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/locale/ja.js"></script>
+	<script>
+		var LANG = "en";
+		var userScreenName = "";
+	</script>
+	<script src='/public/js/utils.js?v=201904112306'></script>
+	
+	
+		<script src='/public/js/contest.js?v=201904112306'></script>
+		<link href='/public/css/contest.css?v=201904112306' rel="stylesheet" />
+		<script>
+			var contestScreenName = "arc097";
+			var remainingText = "Remaining Time";
+			var countDownText = "Contest begins in";
+			var startTime = moment("2018-05-12T21:00:00+09:00");
+			var endTime = moment("2018-05-12T22:40:00+09:00");
+		</script>
+		<style></style>
+	
+	
+		<script type="text/x-mathjax-config">MathJax.Hub.Config({messageStyle:"none",tex2jax:{skipTags:["script","noscript","style","textarea","code"],inlineMath:[['\\(','\\)']]}});</script>
+		<script src="//cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+		<script src='/public/js/task.js?v=201904112306'></script>
+	
+	
+	
+	
+		<link href="//cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/css/select2.min.css" rel="stylesheet" />
+		<link href="//cdnjs.cloudflare.com/ajax/libs/select2-bootstrap-theme/0.1.0-beta.10/select2-bootstrap.min.css" rel="stylesheet" />
+		<script src='/public/js/lib/select2.min.js?v=201904112306'></script>
+	
+	
+		<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/codemirror/5.38.0/codemirror.min.css">
+		<script src="//cdnjs.cloudflare.com/ajax/libs/codemirror/5.38.0/codemirror.min.js"></script>
+		<script src='/public/js/codeMirror/merged.js?v=201904112306'></script>
+	
+	
+		<script src="//cdn.rawgit.com/google/code-prettify/master/loader/run_prettify.js"></script>
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	<script src='/public/js/base.js?v=201904112306'></script>
+	<script src='/public/js/ga.js?v=201904112306'></script>
+</head>
+
+<body>
+<div id="modal-contest-start" class="modal fade" tabindex="-1" role="dialog">
+	<div class="modal-dialog" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+				<h4 class="modal-title">Contest started</h4>
+			</div>
+			<div class="modal-body">
+				<p>AtCoder Regular Contest 097 has begun.</p>
+			</div>
+			<div class="modal-footer">
+				
+					<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+				
+			</div>
+		</div>
+	</div>
+</div>
+<div id="modal-contest-end" class="modal fade" tabindex="-1" role="dialog">
+	<div class="modal-dialog" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+				<h4 class="modal-title">Contest is over</h4>
+			</div>
+			<div class="modal-body">
+				<p>AtCoder Regular Contest 097 has ended.</p>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+			</div>
+		</div>
+	</div>
+</div>
+<div id="main-div" class="float-container">
+	<nav class="navbar navbar-inverse navbar-fixed-top">
+		<div class="container-fluid">
+			<div class="navbar-header">
+				<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapse" aria-expanded="false">
+					<span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span>
+				</button>
+				<a class="navbar-brand" href="/"></a>
+			</div>
+			<div class="collapse navbar-collapse" id="navbar-collapse">
+				<ul class="nav navbar-nav">
+				
+					<li><a class="contest-title" href='/contests/arc097'>AtCoder Regular Contest 097</a></li>
+				
+				</ul>
+				<ul class="nav navbar-nav navbar-right">
+					
+					<li class="dropdown">
+						<a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
+							<img src='//img.atcoder.jp/assets/flag-lang/en.png'> English <span class="caret"></span>
+						</a>
+						<ul class="dropdown-menu">
+							<li><a href='/contests/arc097/tasks/arc097_d?lang=ja'><img src='//img.atcoder.jp/assets/flag-lang/ja.png'> 日本語</a></li>
+							<li><a href='/contests/arc097/tasks/arc097_d?lang=en'><img src='//img.atcoder.jp/assets/flag-lang/en.png'> English</a></li>
+						</ul>
+					</li>
+					
+					
+						<li><a href="/register?continue=https%3A%2F%2Fatcoder.jp%2Fcontests%2Farc097%2Ftasks%2Farc097_d">Sign Up</a></li>
+						<li><a href="/login?continue=https%3A%2F%2Fatcoder.jp%2Fcontests%2Farc097%2Ftasks%2Farc097_d">Sign In</a></li>
+					
+				</ul>
+			</div>
+		</div>
+	</nav>
+	<form method="POST" name="form_logout" action='/logout?continue=https%3A%2F%2Fatcoder.jp%2Fcontests%2Farc097%2Ftasks%2Farc097_d'>
+		<input type="hidden" name="csrf_token" value='lTvjaTiroesR6IJxTbDJdmO8RR1r9iv2nAYS5SFA5f0=' />
+	</form>
+	<div id="main-container" class="container" style="padding-top:50px;">
+		
+
+<div class="row">
+	<div id="contest-nav-tabs" class="col-sm-12 mb-2 cnvtb-fixed">
+	<div>
+		<small class="contest-duration">Contest Duration: <a href='http://www.timeanddate.com/worldclock/fixedtime.html?iso=20180512T2100&p1=248' target='blank'><time class='fixtime fixtime-full'>2018-05-12 21:00:00+0900</time></a> ~ <a href='http://www.timeanddate.com/worldclock/fixedtime.html?iso=20180512T2240&p1=248' target='blank'><time class='fixtime fixtime-full'>2018-05-12 22:40:00+0900</time></a> (local time)</small>
+		<small class="back-to-home pull-right"><a href='/'>Back to Home</a></small>
+	</div>
+	<ul class="nav nav-tabs">
+		<li><a href='/contests/arc097'><span class="glyphicon glyphicon-home" aria-hidden="true"></span> Top</a></li>
+		
+			<li class="active"><a href='/contests/arc097/tasks'><span class="glyphicon glyphicon-tasks" aria-hidden="true"></span> Tasks</a></li>
+		
+
+		
+			<li><a href='/contests/arc097/clarifications'><span class="glyphicon glyphicon-question-sign" aria-hidden="true"></span> Clarifications <span id="clar-badge" class="badge"></span></a></li>
+		
+
+		
+
+		
+			<li>
+				<a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false"><span class="glyphicon glyphicon-list" aria-hidden="true"></span> Submissions<span class="caret"></span></a>
+				<ul class="dropdown-menu">
+					<li><a href='/contests/arc097/submissions'><span class="glyphicon glyphicon-globe" aria-hidden="true"></span> All Submissions</a></li>
+					
+				</ul>
+			</li>
+		
+
+		
+			<li><a href='/contests/arc097/standings'><span class="glyphicon glyphicon-sort-by-attributes-alt" aria-hidden="true"></span> Standings</a></li>
+		
+
+		
+
+		
+			<li><a href='https://img.atcoder.jp/arc097/editorial.pdf' target="_blank"><span class="glyphicon glyphicon-book" aria-hidden="true"></span> Editorial</a></li>
+		
+
+		<li class="pull-right"><a id="fix-cnvtb" href="javascript:void(0)"><span class="glyphicon glyphicon-pushpin" aria-hidden="true"></span></a></li>
+	</ul>
+</div>
+	<div class="col-sm-12">
+		<span class="h2">F - Monochrome Cat</span>
+		<hr/>
+		<p>Time Limit: 2 sec / Memory Limit: 1024 MB</p>
+
+		<div id="task-statement">
+			<span class="lang">
+<span class="lang-ja">
+<p>配点 : <var>800</var> 点</p>
+
+<div class="part">
+<section>
+<h3>問題文</h3><p>頂点に <var>1</var> から <var>N</var> の番号がついた <var>N</var> 頂点からなる木があります。
+<var>i</var> 番目の辺は頂点 <var>x_i</var> と <var>y_i</var> を結んでいます。
+各頂点は、白か黒のいずれかの色で塗られています。
+初期状態では、頂点 <var>i</var> の色は <var>c_i</var> で表されます。
+<var>c_i</var> <var>=</var> <code>W</code> のとき 頂点が白いことを、<var>c_i</var> <var>=</var> <code>B</code> のとき 頂点が黒いことを表します。</p>
+<p>この木の頂点の上を猫が移動していきます。
+具体的には、<var>1</var> 秒間に次の動作のどちらかを行なうことを繰り返します。</p>
+<ul>
+<li>現在いる頂点と隣接した頂点をひとつ選びその頂点に移動する。その後、移動先の頂点の色を反転する。</li>
+<li>現在いる頂点の色を反転する。</li>
+</ul>
+<p>猫の目標はすべての頂点を黒で塗ることです。どの頂点から動作をはじめても、どの頂点で動作を終えてもかまいません。
+最短何秒で目標を達成できるでしょうか?</p>
+</section>
+</div>
+
+<div class="part">
+<section>
+<h3>制約</h3><ul>
+<li><var>1</var> <var>≤</var> <var>N</var> <var>≤</var> <var>10^5</var></li>
+<li><var>1</var> <var>≤</var> <var>x_i,y_i</var> <var>≤</var> <var>N</var> (<var>1</var> <var>≤</var> <var>i</var> <var>≤</var> <var>N-1</var>)</li>
+<li>与えられるグラフは木</li>
+<li><var>c_i</var> <var>=</var> <code>W</code> または <var>c_i</var> <var>=</var> <code>B</code></li>
+</ul>
+</section>
+</div>
+
+<hr />
+
+<div class="io-style">
+<div class="part">
+<section>
+<h3>入力</h3><p>入力は以下の形式で標準入力から与えられる。</p>
+<pre><var>N</var>
+<var>x_1</var> <var>y_1</var>
+<var>x_2</var> <var>y_2</var>
+<var>:</var>
+<var>x_{N-1}</var> <var>y_{N-1}</var>
+<var>c_1c_2..c_N</var>
+</pre>
+
+</section>
+</div>
+
+<div class="part">
+<section>
+<h3>出力</h3><p>目標を達成するために必要な秒数の最小値を出力せよ。</p>
+</section>
+</div>
+</div>
+
+<hr />
+
+<div class="part">
+<section>
+<h3>入力例 1</h3><pre>5
+1 2
+2 3
+2 4
+4 5
+WBBWW
+</pre>
+
+</section>
+</div>
+
+<div class="part">
+<section>
+<h3>出力例 1</h3><pre>5
+</pre>
+
+<p>例えば、次のように行動すると <var>5</var> 秒で達成できます。</p>
+<ul>
+<li>頂点 <var>1</var> からはじめる。 頂点 <var>1</var> の色を黒に変更する。</li>
+<li>頂点 <var>2</var> に移動し、頂点 <var>2</var> の色を白に変更する。</li>
+<li>頂点 <var>2</var> の色を黒に変更する。</li>
+<li>頂点 <var>4</var> に移動し、頂点 <var>4</var> の色を黒に変更する。</li>
+<li>頂点 <var>5</var> に移動し、頂点 <var>5</var> の色を黒に変更する。</li>
+</ul>
+</section>
+</div>
+
+<hr />
+
+<div class="part">
+<section>
+<h3>入力例 2</h3><pre>6
+3 1
+4 5
+2 6
+6 1
+3 4
+WWBWBB
+</pre>
+
+</section>
+</div>
+
+<div class="part">
+<section>
+<h3>出力例 2</h3><pre>7
+</pre>
+
+</section>
+</div>
+
+<hr />
+
+<div class="part">
+<section>
+<h3>入力例 3</h3><pre>1
+B
+</pre>
+
+</section>
+</div>
+
+<div class="part">
+<section>
+<h3>出力例 3</h3><pre>0
+</pre>
+
+</section>
+</div>
+
+<hr />
+
+<div class="part">
+<section>
+<h3>入力例 4</h3><pre>20
+2 19
+5 13
+6 4
+15 6
+12 19
+13 19
+3 11
+8 3
+3 20
+16 13
+7 14
+3 17
+7 8
+10 20
+11 9
+8 18
+8 2
+10 1
+6 13
+WBWBWBBWWWBBWWBBBBBW
+</pre>
+
+</section>
+</div>
+
+<div class="part">
+<section>
+<h3>出力例 4</h3><pre>21
+</pre></section>
+</div>
+</span>
+<span class="lang-en">
+<p>Score : <var>800</var> points</p>
+
+<div class="part">
+<section>
+<h3>Problem Statement</h3><p>There is a tree with <var>N</var> vertices numbered <var>1</var> through <var>N</var>.
+The <var>i</var>-th edge connects Vertex <var>x_i</var> and <var>y_i</var>.
+Each vertex is painted white or black.
+The initial color of Vertex <var>i</var> is represented by a letter <var>c_i</var>.
+<var>c_i</var> <var>=</var> <code>W</code> represents the vertex is white; <var>c_i</var> <var>=</var> <code>B</code> represents the vertex is black.</p>
+<p>A cat will walk along this tree.
+More specifically, she performs one of the following in one second repeatedly:</p>
+<ul>
+<li>Choose a vertex that is adjacent to the vertex where she is currently, and move to that vertex. Then, invert the color of the destination vertex.</li>
+<li>Invert the color of the vertex where she is currently.</li>
+</ul>
+<p>The cat's objective is to paint all the vertices black. She may start and end performing actions at any vertex.
+At least how many seconds does it takes for the cat to achieve her objective?</p>
+</section>
+</div>
+
+<div class="part">
+<section>
+<h3>Constraints</h3><ul>
+<li><var>1</var> <var>≤</var> <var>N</var> <var>≤</var> <var>10^5</var></li>
+<li><var>1</var> <var>≤</var> <var>x_i,y_i</var> <var>≤</var> <var>N</var> (<var>1</var> <var>≤</var> <var>i</var> <var>≤</var> <var>N-1</var>)</li>
+<li>The given graph is a tree.</li>
+<li><var>c_i</var> <var>=</var> <code>W</code> or <var>c_i</var> <var>=</var> <code>B</code>.</li>
+</ul>
+</section>
+</div>
+
+<hr />
+
+<div class="io-style">
+<div class="part">
+<section>
+<h3>Input</h3><p>Input is given from Standard Input in the following format:</p>
+<pre><var>N</var>
+<var>x_1</var> <var>y_1</var>
+<var>x_2</var> <var>y_2</var>
+<var>:</var>
+<var>x_{N-1}</var> <var>y_{N-1}</var>
+<var>c_1c_2..c_N</var>
+</pre>
+
+</section>
+</div>
+
+<div class="part">
+<section>
+<h3>Output</h3><p>Print the minimum number of seconds required to achieve the objective.</p>
+</section>
+</div>
+</div>
+
+<hr />
+
+<div class="part">
+<section>
+<h3>Sample Input 1</h3><pre>5
+1 2
+2 3
+2 4
+4 5
+WBBWW
+</pre>
+
+</section>
+</div>
+
+<div class="part">
+<section>
+<h3>Sample Output 1</h3><pre>5
+</pre>
+
+<p>The objective can be achieved in five seconds, for example, as follows:</p>
+<ul>
+<li>Start at Vertex <var>1</var>. Change the color of Vertex <var>1</var> to black.</li>
+<li>Move to Vertex <var>2</var>, then change the color of Vertex <var>2</var> to white.</li>
+<li>Change the color of Vertex <var>2</var> to black.</li>
+<li>Move to Vertex <var>4</var>, then change the color of Vertex <var>4</var> to black.</li>
+<li>Move to Vertex <var>5</var>, then change the color of Vertex <var>5</var> to black.</li>
+</ul>
+</section>
+</div>
+
+<hr />
+
+<div class="part">
+<section>
+<h3>Sample Input 2</h3><pre>6
+3 1
+4 5
+2 6
+6 1
+3 4
+WWBWBB
+</pre>
+
+</section>
+</div>
+
+<div class="part">
+<section>
+<h3>Sample Output 2</h3><pre>7
+</pre>
+
+</section>
+</div>
+
+<hr />
+
+<div class="part">
+<section>
+<h3>Sample Input 3</h3><pre>1
+B
+</pre>
+
+</section>
+</div>
+
+<div class="part">
+<section>
+<h3>Sample Output 3</h3><pre>0
+</pre>
+
+</section>
+</div>
+
+<hr />
+
+<div class="part">
+<section>
+<h3>Sample Input 4</h3><pre>20
+2 19
+5 13
+6 4
+15 6
+12 19
+13 19
+3 11
+8 3
+3 20
+16 13
+7 14
+3 17
+7 8
+10 20
+11 9
+8 18
+8 2
+10 1
+6 13
+WBWBWBBWWWBBWWBBBBBW
+</pre>
+
+</section>
+</div>
+
+<div class="part">
+<section>
+<h3>Sample Output 4</h3><pre>21
+</pre></section>
+</div>
+</span>
+</span>
+
+		</div>
+
+		
+
+		
+	</div>
+</div>
+
+
+		
+			<hr>
+			
+			
+			
+<div class="a2a_kit a2a_kit_size_20 a2a_default_style pull-right" data-a2a-url="https://atcoder.jp/contests/arc097/tasks/arc097_d?lang=en" data-a2a-title="F - Monochrome Cat">
+	<a class="a2a_button_facebook"></a>
+	<a class="a2a_button_twitter"></a>
+	
+		<a class="a2a_button_telegram"></a>
+	
+	<a class="a2a_dd" href="https://www.addtoany.com/share"></a>
+</div>
+
+		
+		<script async src="//static.addtoany.com/menu/page.js"></script>
+		
+	</div> 
+	<hr>
+</div> 
+<div class="container">
+    <footer class="footer">
+		
+			<ul>
+				<li><a href='/contests/arc097/rules'>Rule</a></li>
+				<li><a href='/contests/arc097/glossary'>Glossary</a></li>
+				
+			</ul>
+		
+		<ul>
+			<li><a href='/tos'>Terms of service</a></li>
+			<li><a href='/privacy'>Privacy Policy</a></li>
+			<li><a href='/personal'>Information Protection Policy</a></li>
+			<li><a href='/company'>Company</a></li>
+			<li><a href='/faq'>FAQ</a></li>
+			<li><a href='/contact'>Contact</a></li>
+			
+		</ul>
+    <div class="text-center">
+        <small id="copyright">Copyright Since 2012 &copy;<a href="http://atcoder.co.jp">AtCoder Inc.</a> All rights reserved.</small>
+    </div>
+    </footer>
+</div>
+<p id="fixed-server-timer" class='contest-timer'></p>
+
+	<div id="scroll-page-top" style="display:none;"><span class="glyphicon glyphicon-arrow-up" aria-hidden="true"></span> Page Top</div>
+
+</body>
+</html>
+
+

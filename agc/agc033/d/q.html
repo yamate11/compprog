@@ -1,0 +1,470 @@
+
+
+
+
+
+
+<!DOCTYPE html>
+
+<html>
+<head>
+	<title>D - Complexity</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+	<meta http-equiv="Content-Language" content='en'>
+	<meta name="viewport" content="width=device-width,initial-scale=1.0">
+	<meta name="format-detection" content="telephone=no">
+	<meta name="google-site-verification" content="nXGC_JxO0yoP1qBzMnYD_xgufO6leSLw1kyNo2HZltM" />
+
+	
+	<meta name="description" content="AtCoder is a programming contest site for anyone from beginners to experts. We hold weekly programming contests online.">
+	<meta name="author" content="AtCoder Inc.">
+	<link rel="canonical" href="https://atcoder.jp/">
+
+	<meta property="og:site_name" content="AtCoder">
+	
+	<meta property="og:title" content="D - Complexity" />
+	<meta property="og:description" content="AtCoder is a programming contest site for anyone from beginners to experts. We hold weekly programming contests online." />
+	<meta property="og:type" content="website" />
+	<meta property="og:url" content="https://atcoder.jp/contests/agc033/tasks/agc033_d" />
+	<meta property="og:image" content="https://img.atcoder.jp/assets/atcoder.png" />
+	<meta name="twitter:card" content="summary" />
+	<meta name="twitter:site" content="@atcoder" />
+	
+	<meta property="twitter:title" content="D - Complexity" />
+
+	<link href='//fonts.googleapis.com/css?family=Lato:400,700' rel='stylesheet' type='text/css'>
+	<link rel="stylesheet" type="text/css" href='/public/css/bootstrap.min.css?v=201905042042'>
+	<link rel="stylesheet" type="text/css" href='/public/css/base.css?v=201905042042'>
+	<link rel="shortcut icon" type="image/png" href="//img.atcoder.jp/assets/favicon.png">
+	<link rel="apple-touch-icon" href="//img.atcoder.jp/assets/atcoder.png">
+	<script src='/public/js/lib/jquery-1.9.1.min.js?v=201905042042'></script>
+	<script src='/public/js/lib/bootstrap.min.js?v=201905042042'></script>
+	<script src="//cdnjs.cloudflare.com/ajax/libs/js-cookie/2.1.4/js.cookie.min.js"></script>
+	<script src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/moment.min.js"></script>
+	<script src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/locale/ja.js"></script>
+	<script>
+		var LANG = "en";
+		var userScreenName = "";
+	</script>
+	<script src='/public/js/utils.js?v=201905042042'></script>
+	
+	
+		<script src='/public/js/contest.js?v=201905042042'></script>
+		<link href='/public/css/contest.css?v=201905042042' rel="stylesheet" />
+		<script>
+			var contestScreenName = "agc033";
+			var remainingText = "Remaining Time";
+			var countDownText = "Contest begins in";
+			var startTime = moment("2019-05-04T21:00:00+09:00");
+			var endTime = moment("2019-05-04T23:30:00+09:00");
+		</script>
+		<style></style>
+	
+	
+		<script type="text/x-mathjax-config">MathJax.Hub.Config({messageStyle:"none",tex2jax:{skipTags:["script","noscript","style","textarea","code"],inlineMath:[['\\(','\\)']]}});</script>
+		<script src="//cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+		<script src='/public/js/task.js?v=201905042042'></script>
+	
+	
+	
+	
+		<link href="//cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/css/select2.min.css" rel="stylesheet" />
+		<link href="//cdnjs.cloudflare.com/ajax/libs/select2-bootstrap-theme/0.1.0-beta.10/select2-bootstrap.min.css" rel="stylesheet" />
+		<script src='/public/js/lib/select2.min.js?v=201905042042'></script>
+	
+	
+		<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/codemirror/5.38.0/codemirror.min.css">
+		<script src="//cdnjs.cloudflare.com/ajax/libs/codemirror/5.38.0/codemirror.min.js"></script>
+		<script src='/public/js/codeMirror/merged.js?v=201905042042'></script>
+	
+	
+		<script src="//cdn.rawgit.com/google/code-prettify/master/loader/run_prettify.js"></script>
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	<script src='/public/js/base.js?v=201905042042'></script>
+	<script src='/public/js/ga.js?v=201905042042'></script>
+</head>
+
+<body>
+<div id="modal-contest-start" class="modal fade" tabindex="-1" role="dialog">
+	<div class="modal-dialog" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+				<h4 class="modal-title">Contest started</h4>
+			</div>
+			<div class="modal-body">
+				<p>AtCoder Grand Contest 033 has begun.</p>
+			</div>
+			<div class="modal-footer">
+				
+					<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+				
+			</div>
+		</div>
+	</div>
+</div>
+<div id="modal-contest-end" class="modal fade" tabindex="-1" role="dialog">
+	<div class="modal-dialog" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+				<h4 class="modal-title">Contest is over</h4>
+			</div>
+			<div class="modal-body">
+				<p>AtCoder Grand Contest 033 has ended.</p>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+			</div>
+		</div>
+	</div>
+</div>
+<div id="main-div" class="float-container">
+	<nav class="navbar navbar-inverse navbar-fixed-top">
+		<div class="container-fluid">
+			<div class="navbar-header">
+				<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapse" aria-expanded="false">
+					<span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span>
+				</button>
+				<a class="navbar-brand" href="/"></a>
+			</div>
+			<div class="collapse navbar-collapse" id="navbar-collapse">
+				<ul class="nav navbar-nav">
+				
+					<li><a class="contest-title" href='/contests/agc033'>AtCoder Grand Contest 033</a></li>
+				
+				</ul>
+				<ul class="nav navbar-nav navbar-right">
+					
+					<li class="dropdown">
+						<a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
+							<img src='//img.atcoder.jp/assets/flag-lang/en.png'> English <span class="caret"></span>
+						</a>
+						<ul class="dropdown-menu">
+							<li><a href='/contests/agc033/tasks/agc033_d?lang=ja'><img src='//img.atcoder.jp/assets/flag-lang/ja.png'> 日本語</a></li>
+							<li><a href='/contests/agc033/tasks/agc033_d?lang=en'><img src='//img.atcoder.jp/assets/flag-lang/en.png'> English</a></li>
+						</ul>
+					</li>
+					
+					
+						<li><a href="/register?continue=https%3A%2F%2Fatcoder.jp%2Fcontests%2Fagc033%2Ftasks%2Fagc033_d">Sign Up</a></li>
+						<li><a href="/login?continue=https%3A%2F%2Fatcoder.jp%2Fcontests%2Fagc033%2Ftasks%2Fagc033_d">Sign In</a></li>
+					
+				</ul>
+			</div>
+		</div>
+	</nav>
+	<form method="POST" name="form_logout" action='/logout?continue=https%3A%2F%2Fatcoder.jp%2Fcontests%2Fagc033%2Ftasks%2Fagc033_d'>
+		<input type="hidden" name="csrf_token" value='uS/lv8mdc8hNZRjB9uifLWZKk&#43;dEhUd53&#43;ARdKjRLjA=' />
+	</form>
+	<div id="main-container" class="container" style="padding-top:50px;">
+		
+
+<div class="row">
+	<div id="contest-nav-tabs" class="col-sm-12 mb-2 cnvtb-fixed">
+	<div>
+		<small class="contest-duration">Contest Duration: <a href='http://www.timeanddate.com/worldclock/fixedtime.html?iso=20190504T2100&p1=248' target='blank'><time class='fixtime fixtime-full'>2019-05-04 21:00:00+0900</time></a> ~ <a href='http://www.timeanddate.com/worldclock/fixedtime.html?iso=20190504T2330&p1=248' target='blank'><time class='fixtime fixtime-full'>2019-05-04 23:30:00+0900</time></a> (local time)</small>
+		<small class="back-to-home pull-right"><a href='/'>Back to Home</a></small>
+	</div>
+	<ul class="nav nav-tabs">
+		<li><a href='/contests/agc033'><span class="glyphicon glyphicon-home" aria-hidden="true"></span> Top</a></li>
+		
+			<li class="active"><a href='/contests/agc033/tasks'><span class="glyphicon glyphicon-tasks" aria-hidden="true"></span> Tasks</a></li>
+		
+
+		
+			<li><a href='/contests/agc033/clarifications'><span class="glyphicon glyphicon-question-sign" aria-hidden="true"></span> Clarifications <span id="clar-badge" class="badge"></span></a></li>
+		
+
+		
+
+		
+			<li>
+				<a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false"><span class="glyphicon glyphicon-list" aria-hidden="true"></span> Submissions<span class="caret"></span></a>
+				<ul class="dropdown-menu">
+					<li><a href='/contests/agc033/submissions'><span class="glyphicon glyphicon-globe" aria-hidden="true"></span> All Submissions</a></li>
+					
+				</ul>
+			</li>
+		
+
+		
+			<li><a href='/contests/agc033/standings'><span class="glyphicon glyphicon-sort-by-attributes-alt" aria-hidden="true"></span> Standings</a></li>
+		
+
+		
+
+		
+			<li><a href='https://img.atcoder.jp/agc033/editorial.pdf' target="_blank"><span class="glyphicon glyphicon-book" aria-hidden="true"></span> Editorial</a></li>
+		
+
+		<li class="pull-right"><a id="fix-cnvtb" href="javascript:void(0)"><span class="glyphicon glyphicon-pushpin" aria-hidden="true"></span></a></li>
+	</ul>
+</div>
+	<div class="col-sm-12">
+		<span class="h2">D - Complexity</span>
+		<hr/>
+		<p>Time Limit: 5 sec / Memory Limit: 512 MB</p>
+
+		<div id="task-statement">
+			<span class="lang">
+<span class="lang-ja">
+<p>配点 : <var>1000</var> 点</p>
+
+<div class="part">
+<section>
+<h3>問題文</h3><p><strong>この問題のメモリ制限はいつもと異なります。注意してください。</strong></p>
+<p>各マスが白か黒で塗られている長方形状のマス目に対して、<strong> 複雑さ </strong> を以下のように定めます。</p>
+<ul>
+<li>すべてのマスが白、もしくはすべてのマスが黒のとき、複雑さは <var>0</var> である。</li>
+<li>そうでないとき、マス目のいずれかの辺に平行な直線でマス目を <var>2</var> つのマス目に分割し、それらのマス目の複雑さを <var>c_1</var>, <var>c_2</var> とする。
+  分割の仕方は複数ありうるが、それらにおける <var>\max(c_1, c_2)</var> の最小値を <var>m</var> として、このマス目の複雑さを <var>m+1</var> とする。</li>
+</ul>
+<p>実際に縦 <var>H</var> 行、横 <var>W</var> 列の白黒に塗られたマス目が与えられます。
+マス目の状態は <var>A_{11}</var> から <var>A_{HW}</var> の <var>HW</var> 個の文字で表されており、
+上から <var>i</var> 行目、左から <var>j</var> 列目にあるマスが黒色のとき <var>A_{ij}</var> は <code>#</code>、
+上から <var>i</var> 行目、左から <var>j</var> 列目にあるマスが白色のとき <var>A_{ij}</var> は <code>.</code> となっています。</p>
+<p>与えられたマス目の複雑さを求めてください。</p>
+</section>
+</div>
+
+<div class="part">
+<section>
+<h3>制約</h3><ul>
+<li><var>1 ≦ H,W ≦ 185</var></li>
+<li><var>A_{ij}</var> は <code>#</code> または <code>.</code></li>
+</ul>
+</section>
+</div>
+
+<hr />
+
+<div class="io-style">
+<div class="part">
+<section>
+<h3>入力</h3><p>入力は以下の形式で標準入力から与えられる。</p>
+<pre><var>H</var> <var>W</var>
+<var>A_{11}</var><var>A_{12}</var><var>...</var><var>A_{1W}</var>
+<var>:</var>
+<var>A_{H1}</var><var>A_{H2}</var><var>...</var><var>A_{HW}</var>
+</pre>
+</section>
+</div>
+
+<div class="part">
+<section>
+<h3>出力</h3><p>与えられたマス目の複雑さを出力せよ。</p>
+</section>
+</div>
+</div>
+
+<hr />
+
+<div class="part">
+<section>
+<h3>入力例 1</h3><pre>3 3
+...
+.##
+.##
+</pre>
+
+</section>
+</div>
+
+<div class="part">
+<section>
+<h3>出力例 1</h3><pre>2
+</pre>
+
+<p><var>1</var> 列目と <var>2</var> 列目の境目で <var>2</var> つのマス目に分割してみます。
+<var>1</var> 列目だけからなるマス目の複雑さは <var>0</var>、<var>2</var>,<var>3</var> 列目からなるマス目の複雑さは <var>1</var> なので、
+このマス目の複雑さは <var>2</var> 以下だと分かります。</p>
+</section>
+</div>
+
+<hr />
+
+<div class="part">
+<section>
+<h3>入力例 2</h3><pre>6 7
+.####.#
+#....#.
+#....#.
+#....#.
+.####.#
+#....##
+</pre>
+
+</section>
+</div>
+
+<div class="part">
+<section>
+<h3>出力例 2</h3><pre>4
+</pre></section>
+</div>
+</span>
+<span class="lang-en">
+<p>Score : <var>1000</var> points</p>
+
+<div class="part">
+<section>
+<h3>Problem Statement</h3><p><strong>Note the unusual memory limit.</strong></p>
+<p>For a rectangular grid where each square is painted white or black, we define its <strong>complexity</strong> as follows:</p>
+<ul>
+<li>If all the squares are black or all the squares are white, the complexity is <var>0</var>.</li>
+<li>Otherwise, divide the grid into two subgrids by a line parallel to one of the sides of the grid, and let <var>c_1</var> and <var>c_2</var> be the complexities of the subgrids. There can be multiple ways to perform the division, and let <var>m</var> be the minimum value of <var>\max(c_1, c_2)</var> in those divisions. The complexity of the grid is <var>m+1</var>.</li>
+</ul>
+<p>You are given a grid with <var>H</var> horizontal rows and <var>W</var> vertical columns where each square is painted white or black.
+<var>HW</var> characters from <var>A_{11}</var> to <var>A_{HW}</var> represent the colors of the squares.
+<var>A_{ij}</var> is <code>#</code> if the square at the <var>i</var>-th row from the top and the <var>j</var>-th column from the left is black, and <var>A_{ij}</var> is <code>.</code> if that square is white.</p>
+<p>Find the complexity of the given grid.</p>
+</section>
+</div>
+
+<div class="part">
+<section>
+<h3>Constraints</h3><ul>
+<li><var>1 \leq H,W \leq 185</var></li>
+<li><var>A_{ij}</var> is <code>#</code> or <code>.</code>.</li>
+</ul>
+</section>
+</div>
+
+<hr />
+
+<div class="io-style">
+<div class="part">
+<section>
+<h3>Input</h3><p>Input is given from Standard Input in the following format:</p>
+<pre><var>H</var> <var>W</var>
+<var>A_{11}</var><var>A_{12}</var><var>...</var><var>A_{1W}</var>
+<var>:</var>
+<var>A_{H1}</var><var>A_{H2}</var><var>...</var><var>A_{HW}</var>
+</pre>
+</section>
+</div>
+
+<div class="part">
+<section>
+<h3>Output</h3><p>Print the complexity of the given grid.</p>
+</section>
+</div>
+</div>
+
+<hr />
+
+<div class="part">
+<section>
+<h3>Sample Input 1</h3><pre>3 3
+...
+.##
+.##
+</pre>
+
+</section>
+</div>
+
+<div class="part">
+<section>
+<h3>Sample Output 1</h3><pre>2
+</pre>
+
+<p>Let us divide the grid by the boundary line between the first and second columns.
+The subgrid consisting of the first column has the complexity of <var>0</var>, and the subgrid consisting of the second and third columns has the complexity of <var>1</var>, so the whole grid has the complexity of at most <var>2</var>.</p>
+</section>
+</div>
+
+<hr />
+
+<div class="part">
+<section>
+<h3>Sample Input 2</h3><pre>6 7
+.####.#
+#....#.
+#....#.
+#....#.
+.####.#
+#....##
+</pre>
+
+</section>
+</div>
+
+<div class="part">
+<section>
+<h3>Sample Output 2</h3><pre>4
+</pre></section>
+</div>
+</span>
+</span>
+
+		</div>
+
+		
+
+		
+	</div>
+</div>
+
+
+		
+			<hr>
+			
+			
+			
+<div class="a2a_kit a2a_kit_size_20 a2a_default_style pull-right" data-a2a-url="https://atcoder.jp/contests/agc033/tasks/agc033_d?lang=en" data-a2a-title="D - Complexity">
+	<a class="a2a_button_facebook"></a>
+	<a class="a2a_button_twitter"></a>
+	
+		<a class="a2a_button_telegram"></a>
+	
+	<a class="a2a_dd" href="https://www.addtoany.com/share"></a>
+</div>
+
+		
+		<script async src="//static.addtoany.com/menu/page.js"></script>
+		
+	</div> 
+	<hr>
+</div> 
+<div class="container">
+    <footer class="footer">
+		
+			<ul>
+				<li><a href='/contests/agc033/rules'>Rule</a></li>
+				<li><a href='/contests/agc033/glossary'>Glossary</a></li>
+				
+			</ul>
+		
+		<ul>
+			<li><a href='/tos'>Terms of service</a></li>
+			<li><a href='/privacy'>Privacy Policy</a></li>
+			<li><a href='/personal'>Information Protection Policy</a></li>
+			<li><a href='/company'>Company</a></li>
+			<li><a href='/faq'>FAQ</a></li>
+			<li><a href='/contact'>Contact</a></li>
+			
+		</ul>
+    <div class="text-center">
+        <small id="copyright">Copyright Since 2012 &copy;<a href="http://atcoder.co.jp">AtCoder Inc.</a> All rights reserved.</small>
+    </div>
+    </footer>
+</div>
+<p id="fixed-server-timer" class='contest-timer'></p>
+
+	<div id="scroll-page-top" style="display:none;"><span class="glyphicon glyphicon-arrow-up" aria-hidden="true"></span> Page Top</div>
+
+</body>
+</html>
+
+

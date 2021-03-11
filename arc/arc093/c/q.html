@@ -1,0 +1,533 @@
+
+
+
+
+
+
+<!DOCTYPE html>
+
+<html>
+<head>
+	<title>C - Traveling Plan</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+	<meta http-equiv="Content-Language" content='en'>
+	<meta name="viewport" content="width=device-width,initial-scale=1.0">
+	<meta name="format-detection" content="telephone=no">
+	<meta name="google-site-verification" content="nXGC_JxO0yoP1qBzMnYD_xgufO6leSLw1kyNo2HZltM" />
+
+	
+	<meta name="description" content="AtCoder is a programming contest site for anyone from beginners to experts. We hold weekly programming contests online.">
+	<meta name="author" content="AtCoder Inc.">
+	<link rel="canonical" href="https://atcoder.jp/">
+
+	<meta property="og:site_name" content="AtCoder">
+	
+	<meta property="og:title" content="C - Traveling Plan" />
+	<meta property="og:description" content="AtCoder is a programming contest site for anyone from beginners to experts. We hold weekly programming contests online." />
+	<meta property="og:type" content="website" />
+	<meta property="og:url" content="https://atcoder.jp/contests/arc093/tasks/arc093_a" />
+	<meta property="og:image" content="https://img.atcoder.jp/assets/atcoder.png" />
+	<meta name="twitter:card" content="summary" />
+	<meta name="twitter:site" content="@atcoder" />
+	
+	<meta property="twitter:title" content="C - Traveling Plan" />
+
+	<link href="//fonts.googleapis.com/css?family=Lato:400,700" rel="stylesheet" type="text/css">
+	<link rel="stylesheet" type="text/css" href="/public/css/bootstrap.min.css?v=201907240424">
+	<link rel="stylesheet" type="text/css" href="/public/css/base.css?v=201907240424">
+	<link rel="shortcut icon" type="image/png" href="//img.atcoder.jp/assets/favicon.png">
+	<link rel="apple-touch-icon" href="//img.atcoder.jp/assets/atcoder.png">
+	<script src="/public/js/lib/jquery-1.9.1.min.js?v=201907240424"></script>
+	<script src="/public/js/lib/bootstrap.min.js?v=201907240424"></script>
+	<script src="//cdnjs.cloudflare.com/ajax/libs/js-cookie/2.1.4/js.cookie.min.js"></script>
+	<script src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/moment.min.js"></script>
+	<script src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/locale/ja.js"></script>
+	<script>
+		var LANG = "en";
+		var userScreenName = "";
+	</script>
+	<script src="/public/js/utils.js?v=201907240424"></script>
+	
+	
+		<script src="/public/js/contest.js?v=201907240424"></script>
+		<link href="/public/css/contest.css?v=201907240424" rel="stylesheet" />
+		<script>
+			var contestScreenName = "arc093";
+			var remainingText = "Remaining Time";
+			var countDownText = "Contest begins in";
+			var startTime = moment("2018-03-25T21:00:00+09:00");
+			var endTime = moment("2018-03-25T22:40:00+09:00");
+		</script>
+		<style></style>
+	
+	
+		<script type="text/x-mathjax-config">MathJax.Hub.Config({messageStyle:"none",tex2jax:{skipTags:["script","noscript","style","textarea","code"],inlineMath:[['\\(','\\)']]}});</script>
+		<script src="//cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+		<script src="/public/js/task.js?v=201907240424"></script>
+	
+	
+	
+	
+		<link href="//cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/css/select2.min.css" rel="stylesheet" />
+		<link href="//cdnjs.cloudflare.com/ajax/libs/select2-bootstrap-theme/0.1.0-beta.10/select2-bootstrap.min.css" rel="stylesheet" />
+		<script src="/public/js/lib/select2.min.js?v=201907240424"></script>
+	
+	
+		<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/codemirror/5.38.0/codemirror.min.css">
+		<script src="//cdnjs.cloudflare.com/ajax/libs/codemirror/5.38.0/codemirror.min.js"></script>
+		<script src="/public/js/codeMirror/merged.js?v=201907240424"></script>
+	
+	
+		<script src="//cdn.rawgit.com/google/code-prettify/master/loader/run_prettify.js"></script>
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	<script src="/public/js/base.js?v=201907240424"></script>
+	<script src="/public/js/ga.js?v=201907240424"></script>
+</head>
+
+<body>
+<div id="modal-contest-start" class="modal fade" tabindex="-1" role="dialog">
+	<div class="modal-dialog" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+				<h4 class="modal-title">Contest started</h4>
+			</div>
+			<div class="modal-body">
+				<p>AtCoder Regular Contest 093 has begun.</p>
+			</div>
+			<div class="modal-footer">
+				
+					<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+				
+			</div>
+		</div>
+	</div>
+</div>
+<div id="modal-contest-end" class="modal fade" tabindex="-1" role="dialog">
+	<div class="modal-dialog" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+				<h4 class="modal-title">Contest is over</h4>
+			</div>
+			<div class="modal-body">
+				<p>AtCoder Regular Contest 093 has ended.</p>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+			</div>
+		</div>
+	</div>
+</div>
+<div id="main-div" class="float-container">
+	<nav class="navbar navbar-inverse navbar-fixed-top">
+		<div class="container-fluid">
+			<div class="navbar-header">
+				<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapse" aria-expanded="false">
+					<span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span>
+				</button>
+				<a class="navbar-brand" href="/"></a>
+			</div>
+			<div class="collapse navbar-collapse" id="navbar-collapse">
+				<ul class="nav navbar-nav">
+				
+					<li><a class="contest-title" href="/contests/arc093">AtCoder Regular Contest 093</a></li>
+				
+				</ul>
+				<ul class="nav navbar-nav navbar-right">
+					
+					<li class="dropdown">
+						<a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
+							<img src='//img.atcoder.jp/assets/flag-lang/en.png'> English <span class="caret"></span>
+						</a>
+						<ul class="dropdown-menu">
+							<li><a href="/contests/arc093/tasks/arc093_a?lang=ja"><img src='//img.atcoder.jp/assets/flag-lang/ja.png'> 日本語</a></li>
+							<li><a href="/contests/arc093/tasks/arc093_a?lang=en"><img src='//img.atcoder.jp/assets/flag-lang/en.png'> English</a></li>
+						</ul>
+					</li>
+					
+					
+						<li><a href="/register?continue=https%3A%2F%2Fatcoder.jp%2Fcontests%2Farc093%2Ftasks%2Farc093_a">Sign Up</a></li>
+						<li><a href="/login?continue=https%3A%2F%2Fatcoder.jp%2Fcontests%2Farc093%2Ftasks%2Farc093_a">Sign In</a></li>
+					
+				</ul>
+			</div>
+		</div>
+	</nav>
+	<form method="POST" name="form_logout" action="/logout?continue=https%3A%2F%2Fatcoder.jp%2Fcontests%2Farc093%2Ftasks%2Farc093_a">
+		<input type="hidden" name="csrf_token" value="PaYDWAC8&#43;cfDmqiUbkDcRduU7RjTM4NQUcNBuzR78D0=" />
+	</form>
+	<div id="main-container" class="container" style="padding-top:50px;">
+		
+
+<div class="row">
+	<div id="contest-nav-tabs" class="col-sm-12 mb-2 cnvtb-fixed">
+	<div>
+		<small class="contest-duration">Contest Duration: <a href='http://www.timeanddate.com/worldclock/fixedtime.html?iso=20180325T2100&p1=248' target='blank'><time class='fixtime fixtime-full'>2018-03-25 21:00:00+0900</time></a> ~ <a href='http://www.timeanddate.com/worldclock/fixedtime.html?iso=20180325T2240&p1=248' target='blank'><time class='fixtime fixtime-full'>2018-03-25 22:40:00+0900</time></a> (local time)</small>
+		<small class="back-to-home pull-right"><a href='/'>Back to Home</a></small>
+	</div>
+	<ul class="nav nav-tabs">
+		<li><a href='/contests/arc093'><span class="glyphicon glyphicon-home" aria-hidden="true"></span> Top</a></li>
+		
+			<li class="active"><a href='/contests/arc093/tasks'><span class="glyphicon glyphicon-tasks" aria-hidden="true"></span> Tasks</a></li>
+		
+
+		
+			<li><a href='/contests/arc093/clarifications'><span class="glyphicon glyphicon-question-sign" aria-hidden="true"></span> Clarifications <span id="clar-badge" class="badge"></span></a></li>
+		
+
+		
+
+		
+			<li>
+				<a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false"><span class="glyphicon glyphicon-list" aria-hidden="true"></span> Submissions<span class="caret"></span></a>
+				<ul class="dropdown-menu">
+					<li><a href='/contests/arc093/submissions'><span class="glyphicon glyphicon-globe" aria-hidden="true"></span> All Submissions</a></li>
+					
+				</ul>
+			</li>
+		
+
+		
+			
+				
+					<li><a href='/contests/arc093/standings'><span class="glyphicon glyphicon-sort-by-attributes-alt" aria-hidden="true"></span> Standings</a></li>
+				
+			
+		
+
+		
+
+		
+			
+				
+					<li><a href="https://img.atcoder.jp/arc093/editorial.pdf" target="_blank"><span class="glyphicon glyphicon-book" aria-hidden="true"></span> Editorial</a></li>
+				
+			
+		
+		
+
+		<li class="pull-right"><a id="fix-cnvtb" href="javascript:void(0)"><span class="glyphicon glyphicon-pushpin" aria-hidden="true"></span></a></li>
+	</ul>
+</div>
+	<div class="col-sm-12">
+		<span class="h2">C - Traveling Plan</span>
+		<hr/>
+		<p>Time Limit: 2 sec / Memory Limit: 256 MB</p>
+
+		<div id="task-statement">
+			<span class="lang">
+<span class="lang-ja">
+<p>配点 : <var>300</var> 点</p>
+
+<div class="part">
+<section>
+<h3>問題文</h3><p><var>x</var> 軸上に <var>N</var> 個の観光スポットがあり、<var>1, 2, ..., N</var> の番号がついています。
+観光スポット <var>i</var> は座標 <var>A_i</var> の点にあります。
+また、<var>x</var> 軸上を座標 <var>a</var> の点から座標 <var>b</var> の点まで移動するには <var>|a - b|</var> 円かかります。</p>
+<p>あなたは <var>x</var> 軸上を旅行する計画を立てました。
+計画では、最初に座標 <var>0</var> の点を出発し、<var>N</var> 個の観光スポットを番号順に訪れ、最後に座標 <var>0</var> の点に戻ってくることになっています。</p>
+<p>ところが、旅行の直前に急用が入り、<var>N</var> 個すべての観光スポットを訪れる時間的余裕がなくなってしまいました。
+そこで、ある <var>i</var> を選び、観光スポット <var>i</var> を訪れるのを取りやめることにしました。
+それ以外の観光スポットは予定通り番号順に訪れます。
+また、最初に座標 <var>0</var> の点を出発し、最後に座標 <var>0</var> の点に戻ってくることについても、予定に変更はありません。</p>
+<p><var>i = 1, 2, ..., N</var> それぞれについて、観光スポット <var>i</var> を訪れるのを取りやめたときの、旅行中の移動にかかる金額の総和を求めてください。</p>
+</section>
+</div>
+
+<div class="part">
+<section>
+<h3>制約</h3><ul>
+<li><var>2 \leq N \leq 10^5</var></li>
+<li><var>-5000 \leq A_i \leq 5000</var> (<var>1 \leq i \leq N</var>)</li>
+<li>入力値はすべて整数である。</li>
+</ul>
+</section>
+</div>
+
+<hr />
+
+<div class="io-style">
+<div class="part">
+<section>
+<h3>入力</h3><p>入力は以下の形式で標準入力から与えられる。</p>
+<pre><var>N</var>
+<var>A_1</var> <var>A_2</var> <var>...</var> <var>A_N</var>
+</pre>
+
+</section>
+</div>
+
+<div class="part">
+<section>
+<h3>出力</h3><p><var>N</var> 行出力せよ。
+このうち <var>i</var> 行目には、観光スポット <var>i</var> を訪れるのを取りやめたときの、旅行中の移動にかかる金額の総和を出力せよ。</p>
+</section>
+</div>
+</div>
+
+<hr />
+
+<div class="part">
+<section>
+<h3>入力例 1</h3><pre>3
+3 5 -1
+</pre>
+
+</section>
+</div>
+
+<div class="part">
+<section>
+<h3>出力例 1</h3><pre>12
+8
+10
+</pre>
+
+<p>観光スポット <var>1, 2, 3</var> はそれぞれ座標 <var>3, 5, -1</var> の点にあります。
+各 <var>i</var> について、観光スポット <var>i</var> を訪れるのを取りやめた場合の移動経路および移動にかかる金額は以下のようになります。</p>
+<ul>
+<li><var>i = 1</var> のとき、移動経路は <var>0 \rightarrow 5 \rightarrow -1 \rightarrow 0</var> となり、移動にかかる金額は <var>5 + 6 + 1 = 12</var> 円となります。</li>
+<li><var>i = 2</var> のとき、移動経路は <var>0 \rightarrow 3 \rightarrow -1 \rightarrow 0</var> となり、移動にかかる金額は <var>3 + 4 + 1 = 8</var> 円となります。</li>
+<li><var>i = 3</var> のとき、移動経路は <var>0 \rightarrow 3 \rightarrow 5 \rightarrow 0</var> となり、移動にかかる金額は <var>3 + 2 + 5 = 10</var> 円となります。</li>
+</ul>
+</section>
+</div>
+
+<hr />
+
+<div class="part">
+<section>
+<h3>入力例 2</h3><pre>5
+1 1 1 2 0
+</pre>
+
+</section>
+</div>
+
+<div class="part">
+<section>
+<h3>出力例 2</h3><pre>4
+4
+4
+2
+4
+</pre>
+
+</section>
+</div>
+
+<hr />
+
+<div class="part">
+<section>
+<h3>入力例 3</h3><pre>6
+-679 -2409 -3258 3095 -3291 -4462
+</pre>
+
+</section>
+</div>
+
+<div class="part">
+<section>
+<h3>出力例 3</h3><pre>21630
+21630
+19932
+8924
+21630
+19288
+</pre></section>
+</div>
+</span>
+<span class="lang-en">
+<p>Score : <var>300</var> points</p>
+
+<div class="part">
+<section>
+<h3>Problem Statement</h3><p>There are <var>N</var> sightseeing spots on the <var>x</var>-axis, numbered <var>1, 2, ..., N</var>.
+Spot <var>i</var> is at the point with coordinate <var>A_i</var>.
+It costs <var>|a - b|</var> yen (the currency of Japan) to travel from a point with coordinate <var>a</var> to another point with coordinate <var>b</var> along the axis.</p>
+<p>You planned a trip along the axis.
+In this plan, you first depart from the point with coordinate <var>0</var>, then visit the <var>N</var> spots in the order they are numbered, and finally return to the point with coordinate <var>0</var>.</p>
+<p>However, something came up just before the trip, and you no longer have enough time to visit all the <var>N</var> spots, so you decided to choose some <var>i</var> and cancel the visit to Spot <var>i</var>.
+You will visit the remaining spots as planned in the order they are numbered.
+You will also depart from and return to the point with coordinate <var>0</var> at the beginning and the end, as planned.</p>
+<p>For each <var>i = 1, 2, ..., N</var>, find the total cost of travel during the trip when the visit to Spot <var>i</var> is canceled.</p>
+</section>
+</div>
+
+<div class="part">
+<section>
+<h3>Constraints</h3><ul>
+<li><var>2 \leq N \leq 10^5</var></li>
+<li><var>-5000 \leq A_i \leq 5000</var> (<var>1 \leq i \leq N</var>)</li>
+<li>All input values are integers.</li>
+</ul>
+</section>
+</div>
+
+<hr />
+
+<div class="io-style">
+<div class="part">
+<section>
+<h3>Input</h3><p>Input is given from Standard Input in the following format:</p>
+<pre><var>N</var>
+<var>A_1</var> <var>A_2</var> <var>...</var> <var>A_N</var>
+</pre>
+
+</section>
+</div>
+
+<div class="part">
+<section>
+<h3>Output</h3><p>Print <var>N</var> lines.
+In the <var>i</var>-th line, print the total cost of travel during the trip when the visit to Spot <var>i</var> is canceled.</p>
+</section>
+</div>
+</div>
+
+<hr />
+
+<div class="part">
+<section>
+<h3>Sample Input 1</h3><pre>3
+3 5 -1
+</pre>
+
+</section>
+</div>
+
+<div class="part">
+<section>
+<h3>Sample Output 1</h3><pre>12
+8
+10
+</pre>
+
+<p>Spot <var>1</var>, <var>2</var> and <var>3</var> are at the points with coordinates <var>3</var>, <var>5</var> and <var>-1</var>, respectively.
+For each <var>i</var>, the course of the trip and the total cost of travel when the visit to Spot <var>i</var> is canceled, are as follows:</p>
+<ul>
+<li>For <var>i = 1</var>, the course of the trip is <var>0 \rightarrow 5 \rightarrow -1 \rightarrow 0</var> and the total cost of travel is <var>5 + 6 + 1 = 12</var> yen.</li>
+<li>For <var>i = 2</var>, the course of the trip is <var>0 \rightarrow 3 \rightarrow -1 \rightarrow 0</var> and the total cost of travel is <var>3 + 4 + 1 = 8</var> yen.</li>
+<li>For <var>i = 3</var>, the course of the trip is <var>0 \rightarrow 3 \rightarrow 5 \rightarrow 0</var> and the total cost of travel is <var>3 + 2 + 5 = 10</var> yen.</li>
+</ul>
+</section>
+</div>
+
+<hr />
+
+<div class="part">
+<section>
+<h3>Sample Input 2</h3><pre>5
+1 1 1 2 0
+</pre>
+
+</section>
+</div>
+
+<div class="part">
+<section>
+<h3>Sample Output 2</h3><pre>4
+4
+4
+2
+4
+</pre>
+
+</section>
+</div>
+
+<hr />
+
+<div class="part">
+<section>
+<h3>Sample Input 3</h3><pre>6
+-679 -2409 -3258 3095 -3291 -4462
+</pre>
+
+</section>
+</div>
+
+<div class="part">
+<section>
+<h3>Sample Output 3</h3><pre>21630
+21630
+19932
+8924
+21630
+19288
+</pre></section>
+</div>
+</span>
+</span>
+
+		</div>
+
+		
+
+		
+	</div>
+</div>
+
+
+		
+			<hr>
+			
+			
+			
+<div class="a2a_kit a2a_kit_size_20 a2a_default_style pull-right" data-a2a-url="https://atcoder.jp/contests/arc093/tasks/arc093_a?lang=en" data-a2a-title="C - Traveling Plan">
+	<a class="a2a_button_facebook"></a>
+	<a class="a2a_button_twitter"></a>
+	
+		<a class="a2a_button_telegram"></a>
+	
+	<a class="a2a_dd" href="https://www.addtoany.com/share"></a>
+</div>
+
+		
+		<script async src="//static.addtoany.com/menu/page.js"></script>
+		
+	</div> 
+	<hr>
+</div> 
+<div class="container" style="margin-bottom: 80px;">
+    <footer class="footer">
+		
+			<ul>
+				<li><a href='/contests/arc093/rules'>Rule</a></li>
+				<li><a href='/contests/arc093/glossary'>Glossary</a></li>
+				
+			</ul>
+		
+		<ul>
+			<li><a href='/tos'>Terms of service</a></li>
+			<li><a href='/privacy'>Privacy Policy</a></li>
+			<li><a href='/personal'>Information Protection Policy</a></li>
+			<li><a href='/company'>Company</a></li>
+			<li><a href='/faq'>FAQ</a></li>
+			<li><a href='/contact'>Contact</a></li>
+			
+		</ul>
+    <div class="text-center">
+        <small id="copyright">Copyright Since 2012 &copy;<a href="http://atcoder.co.jp">AtCoder Inc.</a> All rights reserved.</small>
+    </div>
+    </footer>
+</div>
+<p id="fixed-server-timer" class='contest-timer'></p>
+
+	<div id="scroll-page-top" style="display:none;"><span class="glyphicon glyphicon-arrow-up" aria-hidden="true"></span> Page Top</div>
+
+</body>
+</html>
+
+

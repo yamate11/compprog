@@ -1,0 +1,82 @@
+que= [(42, 0), (41, 0), (37, 0), (21, 0), (40, 0), (36, 0), (20, 0), (32, 0), (16, 0), (0, 0)]
+  reverse dec(e)= CCC k= 2 dec(ret)= CCC
+  reverse dec(e)= CCC k= 3 dec(ret)= CCC
+que= [(41, 0), (37, 0), (21, 0), (40, 0), (36, 0), (20, 0), (32, 0), (16, 0), (0, 0)]
+  reverse dec(e)= BCC k= 2 dec(ret)= CBC
+  reverse dec(e)= BCC k= 3 dec(ret)= CCB
+que= [(37, 0), (21, 0), (40, 0), (36, 0), (20, 0), (32, 0), (16, 0), (0, 0), (38, 1), (26, 1)]
+  reverse dec(e)= BBC k= 2 dec(ret)= BBC
+  reverse dec(e)= BBC k= 3 dec(ret)= CBB
+que= [(21, 0), (40, 0), (36, 0), (20, 0), (32, 0), (16, 0), (0, 0), (38, 1), (26, 1), (22, 1)]
+  reverse dec(e)= BBB k= 2 dec(ret)= BBB
+  reverse dec(e)= BBB k= 3 dec(ret)= BBB
+que= [(40, 0), (36, 0), (20, 0), (32, 0), (16, 0), (0, 0), (38, 1), (26, 1), (22, 1)]
+  reverse dec(e)= ACC k= 2 dec(ret)= CAC
+  reverse dec(e)= ACC k= 3 dec(ret)= CCA
+que= [(36, 0), (20, 0), (32, 0), (16, 0), (0, 0), (38, 1), (26, 1), (22, 1), (34, 1), (10, 1)]
+  reverse dec(e)= ABC k= 2 dec(ret)= BAC
+  reverse dec(e)= ABC k= 3 dec(ret)= CBA
+que= [(20, 0), (32, 0), (16, 0), (0, 0), (38, 1), (26, 1), (22, 1), (34, 1), (10, 1), (33, 1), (6, 1)]
+  reverse dec(e)= ABB k= 2 dec(ret)= BAB
+  reverse dec(e)= ABB k= 3 dec(ret)= BBA
+que= [(32, 0), (16, 0), (0, 0), (38, 1), (26, 1), (22, 1), (34, 1), (10, 1), (33, 1), (6, 1), (17, 1), (5, 1)]
+  reverse dec(e)= AAC k= 2 dec(ret)= AAC
+  reverse dec(e)= AAC k= 3 dec(ret)= CAA
+que= [(16, 0), (0, 0), (38, 1), (26, 1), (22, 1), (34, 1), (10, 1), (33, 1), (6, 1), (17, 1), (5, 1), (2, 1)]
+  reverse dec(e)= AAB k= 2 dec(ret)= AAB
+  reverse dec(e)= AAB k= 3 dec(ret)= BAA
+que= [(0, 0), (38, 1), (26, 1), (22, 1), (34, 1), (10, 1), (33, 1), (6, 1), (17, 1), (5, 1), (2, 1), (1, 1)]
+  reverse dec(e)= AAA k= 2 dec(ret)= AAA
+  reverse dec(e)= AAA k= 3 dec(ret)= AAA
+que= [(38, 1), (26, 1), (22, 1), (34, 1), (10, 1), (33, 1), (6, 1), (17, 1), (5, 1), (2, 1), (1, 1)]
+  reverse dec(e)= CBC k= 2 dec(ret)= BCC
+  reverse dec(e)= CBC k= 3 dec(ret)= CBC
+que= [(26, 1), (22, 1), (34, 1), (10, 1), (33, 1), (6, 1), (17, 1), (5, 1), (2, 1), (1, 1)]
+  reverse dec(e)= CCB k= 2 dec(ret)= CCB
+  reverse dec(e)= CCB k= 3 dec(ret)= BCC
+que= [(22, 1), (34, 1), (10, 1), (33, 1), (6, 1), (17, 1), (5, 1), (2, 1), (1, 1)]
+  reverse dec(e)= CBB k= 2 dec(ret)= BCB
+  reverse dec(e)= CBB k= 3 dec(ret)= BBC
+que= [(34, 1), (10, 1), (33, 1), (6, 1), (17, 1), (5, 1), (2, 1), (1, 1), (25, 2)]
+  reverse dec(e)= CAC k= 2 dec(ret)= ACC
+  reverse dec(e)= CAC k= 3 dec(ret)= CAC
+que= [(10, 1), (33, 1), (6, 1), (17, 1), (5, 1), (2, 1), (1, 1), (25, 2)]
+  reverse dec(e)= CCA k= 2 dec(ret)= CCA
+  reverse dec(e)= CCA k= 3 dec(ret)= ACC
+que= [(33, 1), (6, 1), (17, 1), (5, 1), (2, 1), (1, 1), (25, 2)]
+  reverse dec(e)= BAC k= 2 dec(ret)= ABC
+  reverse dec(e)= BAC k= 3 dec(ret)= CAB
+que= [(6, 1), (17, 1), (5, 1), (2, 1), (1, 1), (25, 2), (18, 2)]
+  reverse dec(e)= CBA k= 2 dec(ret)= BCA
+  reverse dec(e)= CBA k= 3 dec(ret)= ABC
+que= [(17, 1), (5, 1), (2, 1), (1, 1), (25, 2), (18, 2), (9, 2)]
+  reverse dec(e)= BAB k= 2 dec(ret)= ABB
+  reverse dec(e)= BAB k= 3 dec(ret)= BAB
+que= [(5, 1), (2, 1), (1, 1), (25, 2), (18, 2), (9, 2)]
+  reverse dec(e)= BBA k= 2 dec(ret)= BBA
+  reverse dec(e)= BBA k= 3 dec(ret)= ABB
+que= [(2, 1), (1, 1), (25, 2), (18, 2), (9, 2)]
+  reverse dec(e)= CAA k= 2 dec(ret)= ACA
+  reverse dec(e)= CAA k= 3 dec(ret)= AAC
+que= [(1, 1), (25, 2), (18, 2), (9, 2), (8, 2)]
+  reverse dec(e)= BAA k= 2 dec(ret)= ABA
+  reverse dec(e)= BAA k= 3 dec(ret)= AAB
+que= [(25, 2), (18, 2), (9, 2), (8, 2), (4, 2)]
+  reverse dec(e)= BCB k= 2 dec(ret)= CBB
+  reverse dec(e)= BCB k= 3 dec(ret)= BCB
+que= [(18, 2), (9, 2), (8, 2), (4, 2)]
+  reverse dec(e)= CAB k= 2 dec(ret)= ACB
+  reverse dec(e)= CAB k= 3 dec(ret)= BAC
+que= [(9, 2), (8, 2), (4, 2), (24, 3)]
+  reverse dec(e)= BCA k= 2 dec(ret)= CBA
+  reverse dec(e)= BCA k= 3 dec(ret)= ACB
+que= [(8, 2), (4, 2), (24, 3)]
+  reverse dec(e)= ACA k= 2 dec(ret)= CAA
+  reverse dec(e)= ACA k= 3 dec(ret)= ACA
+que= [(4, 2), (24, 3)]
+  reverse dec(e)= ABA k= 2 dec(ret)= BAA
+  reverse dec(e)= ABA k= 3 dec(ret)= ABA
+que= [(24, 3)]
+  reverse dec(e)= ACB k= 2 dec(ret)= CAB
+  reverse dec(e)= ACB k= 3 dec(ret)= BCA
+e= 6

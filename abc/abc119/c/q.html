@@ -1,0 +1,535 @@
+
+
+
+
+
+
+<!DOCTYPE html>
+
+<html>
+<head>
+	<title>C - Synthetic Kadomatsu</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+	<meta http-equiv="Content-Language" content='en'>
+	<meta name="viewport" content="width=device-width,initial-scale=1.0">
+	<meta name="format-detection" content="telephone=no">
+	<meta name="google-site-verification" content="nXGC_JxO0yoP1qBzMnYD_xgufO6leSLw1kyNo2HZltM" />
+
+	
+	<meta name="description" content="AtCoder is a programming contest site for anyone from beginners to experts. We hold weekly programming contests online.">
+	<meta name="author" content="AtCoder Inc.">
+	<link rel="canonical" href="https://atcoder.jp/">
+
+	<meta property="og:site_name" content="AtCoder">
+	
+	<meta property="og:title" content="C - Synthetic Kadomatsu" />
+	<meta property="og:description" content="AtCoder is a programming contest site for anyone from beginners to experts. We hold weekly programming contests online." />
+	<meta property="og:type" content="website" />
+	<meta property="og:url" content="https://atcoder.jp/contests/abc119/tasks/abc119_c" />
+	<meta property="og:image" content="https://img.atcoder.jp/assets/atcoder.png" />
+	<meta name="twitter:card" content="summary" />
+	<meta name="twitter:site" content="@atcoder" />
+	
+	<meta property="twitter:title" content="C - Synthetic Kadomatsu" />
+
+	<link href='//fonts.googleapis.com/css?family=Lato:400,700' rel='stylesheet' type='text/css'>
+	<link rel="stylesheet" type="text/css" href='/public/css/bootstrap.min.css?v=201905311925'>
+	<link rel="stylesheet" type="text/css" href='/public/css/base.css?v=201905311925'>
+	<link rel="shortcut icon" type="image/png" href="//img.atcoder.jp/assets/favicon.png">
+	<link rel="apple-touch-icon" href="//img.atcoder.jp/assets/atcoder.png">
+	<script src='/public/js/lib/jquery-1.9.1.min.js?v=201905311925'></script>
+	<script src='/public/js/lib/bootstrap.min.js?v=201905311925'></script>
+	<script src="//cdnjs.cloudflare.com/ajax/libs/js-cookie/2.1.4/js.cookie.min.js"></script>
+	<script src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/moment.min.js"></script>
+	<script src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/locale/ja.js"></script>
+	<script>
+		var LANG = "en";
+		var userScreenName = "";
+	</script>
+	<script src='/public/js/utils.js?v=201905311925'></script>
+	
+	
+		<script src='/public/js/contest.js?v=201905311925'></script>
+		<link href='/public/css/contest.css?v=201905311925' rel="stylesheet" />
+		<script>
+			var contestScreenName = "abc119";
+			var remainingText = "Remaining Time";
+			var countDownText = "Contest begins in";
+			var startTime = moment("2019-02-24T21:00:00+09:00");
+			var endTime = moment("2019-02-24T22:40:00+09:00");
+		</script>
+		<style></style>
+	
+	
+		<script type="text/x-mathjax-config">MathJax.Hub.Config({messageStyle:"none",tex2jax:{skipTags:["script","noscript","style","textarea","code"],inlineMath:[['\\(','\\)']]}});</script>
+		<script src="//cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+		<script src='/public/js/task.js?v=201905311925'></script>
+	
+	
+	
+	
+		<link href="//cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/css/select2.min.css" rel="stylesheet" />
+		<link href="//cdnjs.cloudflare.com/ajax/libs/select2-bootstrap-theme/0.1.0-beta.10/select2-bootstrap.min.css" rel="stylesheet" />
+		<script src='/public/js/lib/select2.min.js?v=201905311925'></script>
+	
+	
+		<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/codemirror/5.38.0/codemirror.min.css">
+		<script src="//cdnjs.cloudflare.com/ajax/libs/codemirror/5.38.0/codemirror.min.js"></script>
+		<script src='/public/js/codeMirror/merged.js?v=201905311925'></script>
+	
+	
+		<script src="//cdn.rawgit.com/google/code-prettify/master/loader/run_prettify.js"></script>
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	<script src='/public/js/base.js?v=201905311925'></script>
+	<script src='/public/js/ga.js?v=201905311925'></script>
+</head>
+
+<body>
+<div id="modal-contest-start" class="modal fade" tabindex="-1" role="dialog">
+	<div class="modal-dialog" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+				<h4 class="modal-title">Contest started</h4>
+			</div>
+			<div class="modal-body">
+				<p>AtCoder Beginner Contest 119 has begun.</p>
+			</div>
+			<div class="modal-footer">
+				
+					<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+				
+			</div>
+		</div>
+	</div>
+</div>
+<div id="modal-contest-end" class="modal fade" tabindex="-1" role="dialog">
+	<div class="modal-dialog" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+				<h4 class="modal-title">Contest is over</h4>
+			</div>
+			<div class="modal-body">
+				<p>AtCoder Beginner Contest 119 has ended.</p>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+			</div>
+		</div>
+	</div>
+</div>
+<div id="main-div" class="float-container">
+	<nav class="navbar navbar-inverse navbar-fixed-top">
+		<div class="container-fluid">
+			<div class="navbar-header">
+				<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapse" aria-expanded="false">
+					<span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span>
+				</button>
+				<a class="navbar-brand" href="/"></a>
+			</div>
+			<div class="collapse navbar-collapse" id="navbar-collapse">
+				<ul class="nav navbar-nav">
+				
+					<li><a class="contest-title" href='/contests/abc119'>AtCoder Beginner Contest 119</a></li>
+				
+				</ul>
+				<ul class="nav navbar-nav navbar-right">
+					
+					<li class="dropdown">
+						<a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
+							<img src='//img.atcoder.jp/assets/flag-lang/en.png'> English <span class="caret"></span>
+						</a>
+						<ul class="dropdown-menu">
+							<li><a href='/contests/abc119/tasks/abc119_c?lang=ja'><img src='//img.atcoder.jp/assets/flag-lang/ja.png'> 日本語</a></li>
+							<li><a href='/contests/abc119/tasks/abc119_c?lang=en'><img src='//img.atcoder.jp/assets/flag-lang/en.png'> English</a></li>
+						</ul>
+					</li>
+					
+					
+						<li><a href="/register?continue=https%3A%2F%2Fatcoder.jp%2Fcontests%2Fabc119%2Ftasks%2Fabc119_c">Sign Up</a></li>
+						<li><a href="/login?continue=https%3A%2F%2Fatcoder.jp%2Fcontests%2Fabc119%2Ftasks%2Fabc119_c">Sign In</a></li>
+					
+				</ul>
+			</div>
+		</div>
+	</nav>
+	<form method="POST" name="form_logout" action='/logout?continue=https%3A%2F%2Fatcoder.jp%2Fcontests%2Fabc119%2Ftasks%2Fabc119_c'>
+		<input type="hidden" name="csrf_token" value='&#43;6&#43;HNk8lJPez2XvpmjaPoHAneXjT5sRWrNyDYKOk5iA=' />
+	</form>
+	<div id="main-container" class="container" style="padding-top:50px;">
+		
+
+<div class="row">
+	<div id="contest-nav-tabs" class="col-sm-12 mb-2 cnvtb-fixed">
+	<div>
+		<small class="contest-duration">Contest Duration: <a href='http://www.timeanddate.com/worldclock/fixedtime.html?iso=20190224T2100&p1=248' target='blank'><time class='fixtime fixtime-full'>2019-02-24 21:00:00+0900</time></a> ~ <a href='http://www.timeanddate.com/worldclock/fixedtime.html?iso=20190224T2240&p1=248' target='blank'><time class='fixtime fixtime-full'>2019-02-24 22:40:00+0900</time></a> (local time)</small>
+		<small class="back-to-home pull-right"><a href='/'>Back to Home</a></small>
+	</div>
+	<ul class="nav nav-tabs">
+		<li><a href='/contests/abc119'><span class="glyphicon glyphicon-home" aria-hidden="true"></span> Top</a></li>
+		
+			<li class="active"><a href='/contests/abc119/tasks'><span class="glyphicon glyphicon-tasks" aria-hidden="true"></span> Tasks</a></li>
+		
+
+		
+			<li><a href='/contests/abc119/clarifications'><span class="glyphicon glyphicon-question-sign" aria-hidden="true"></span> Clarifications <span id="clar-badge" class="badge"></span></a></li>
+		
+
+		
+
+		
+			<li>
+				<a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false"><span class="glyphicon glyphicon-list" aria-hidden="true"></span> Submissions<span class="caret"></span></a>
+				<ul class="dropdown-menu">
+					<li><a href='/contests/abc119/submissions'><span class="glyphicon glyphicon-globe" aria-hidden="true"></span> All Submissions</a></li>
+					
+				</ul>
+			</li>
+		
+
+		
+			<li><a href='/contests/abc119/standings'><span class="glyphicon glyphicon-sort-by-attributes-alt" aria-hidden="true"></span> Standings</a></li>
+		
+
+		
+
+		
+			<li><a href='https://img.atcoder.jp/abc119/editorial.pdf' target="_blank"><span class="glyphicon glyphicon-book" aria-hidden="true"></span> Editorial</a></li>
+		
+
+		<li class="pull-right"><a id="fix-cnvtb" href="javascript:void(0)"><span class="glyphicon glyphicon-pushpin" aria-hidden="true"></span></a></li>
+	</ul>
+</div>
+	<div class="col-sm-12">
+		<span class="h2">C - Synthetic Kadomatsu</span>
+		<hr/>
+		<p>Time Limit: 2 sec / Memory Limit: 1024 MB</p>
+
+		<div id="task-statement">
+			<span class="lang">
+<span class="lang-ja">
+<p>配点 : <var>300</var> 点</p>
+
+<div class="part">
+<section>
+<h3>問題文</h3><p>あなたは <var>N</var> 本の竹を持っています。これらの長さはそれぞれ <var>l_1, l_2, ..., l_N</var> です (単位: センチメートル)。</p>
+<p>あなたの目的は、これらの竹のうち何本か (全部でもよい) を使い、長さが <var>A, B, C</var> であるような <var>3</var> 本の竹を得ることです。そのために、以下の三種類の魔法を任意の順に何度でも使うことができます。</p>
+<ul>
+<li>延長魔法: <var>1</var> <em>MP</em> (マジックポイント) を消費し、<var>1</var> 本の竹を選んでその長さを <var>1</var> 増やす。</li>
+<li>短縮魔法: <var>1</var> MP を消費し、<var>1</var> 本の長さ <var>2</var> 以上の竹を選んでその長さを <var>1</var> 減らす。</li>
+<li>合成魔法: <var>10</var> MP を消費し、<var>2</var> 本の竹を選んで接続し <var>1</var> 本の竹とする。この新たな竹の長さは接続した <var>2</var> 本の竹の長さの合計に等しい。(以後、この竹に対してさらに魔法を使用することもできる。)</li>
+</ul>
+<p>目的を達成するには、最小でいくつの MP が必要でしょうか？</p>
+</section>
+</div>
+
+<div class="part">
+<section>
+<h3>制約</h3><ul>
+<li><var>3 \leq N \leq 8</var></li>
+<li><var>1 \leq C &lt; B &lt; A \leq 1000</var></li>
+<li><var>1 \leq l_i \leq 1000</var></li>
+<li>入力される値はすべて整数である。</li>
+</ul>
+</section>
+</div>
+
+<hr />
+<div class="io-style">
+<div class="part">
+<section>
+<h3>入力</h3><p>入力は以下の形式で標準入力から与えられる。</p>
+<pre><var>N</var> <var>A</var> <var>B</var> <var>C</var>
+<var>l_1</var>
+<var>l_2</var>
+<var>:</var>
+<var>l_N</var>
+</pre>
+
+</section>
+</div>
+
+<div class="part">
+<section>
+<h3>出力</h3><p>目的の達成に必要な MP の最小量を出力せよ。</p>
+</section>
+</div>
+</div>
+
+<hr />
+<div class="part">
+<section>
+<h3>入力例 1</h3><pre>5 100 90 80
+98
+40
+30
+21
+80
+</pre>
+
+</section>
+</div>
+
+<div class="part">
+<section>
+<h3>出力例 1</h3><pre>23
+</pre>
+
+<p>長さ <var>98, 40, 30, 21, 80</var> の <var>5</var> 本の竹から長さ <var>100, 90, 80</var> の <var>3</var> 本の竹を得ようとしています。長さ <var>80</var> の竹ははじめから持っており、長さ <var>100, 90</var> の竹は次のように魔法を使うと合計 <var>23</var> MP を消費することで得られ、これが最適です。</p>
+<ol>
+<li>長さ <var>98</var> の竹に延長魔法を <var>2</var> 回使い、長さ <var>100</var> の竹を得る。(消費 MP: <var>2</var>)</li>
+<li>長さ <var>40, 30</var> の竹に合成魔法を使い、長さ <var>70</var> の竹を得る。(消費 MP: <var>10</var>)</li>
+<li>長さ <var>21</var> の竹に短縮魔法を <var>1</var> 回使い、長さ <var>20</var> の竹を得る。(消費 MP: <var>1</var>)</li>
+<li>手順 2. で得た長さ <var>70</var> の竹と手順 3. で得た長さ <var>20</var> の竹に合成魔法を使い、長さ <var>90</var> の竹を得る。(消費 MP: <var>10</var>)</li>
+</ol>
+</section>
+</div>
+
+<hr />
+<div class="part">
+<section>
+<h3>入力例 2</h3><pre>8 100 90 80
+100
+100
+90
+90
+90
+80
+80
+80
+</pre>
+
+</section>
+</div>
+
+<div class="part">
+<section>
+<h3>出力例 2</h3><pre>0
+</pre>
+
+<p>欲しい長さの竹をすでにすべて持っている場合、必要な MP は <var>0</var> です。このように、必ずしもすべての竹を使う必要はありません。</p>
+</section>
+</div>
+
+<hr />
+<div class="part">
+<section>
+<h3>入力例 3</h3><pre>8 1000 800 100
+300
+333
+400
+444
+500
+555
+600
+666
+</pre>
+
+</section>
+</div>
+
+<div class="part">
+<section>
+<h3>出力例 3</h3><pre>243
+</pre></section>
+</div>
+</span>
+<span class="lang-en">
+<p>Score : <var>300</var> points</p>
+
+<div class="part">
+<section>
+<h3>Problem Statement</h3><p>You have <var>N</var> bamboos. The lengths (in centimeters) of these are <var>l_1, l_2, ..., l_N</var>, respectively.</p>
+<p>Your objective is to use some of these bamboos (possibly all) to obtain three bamboos of length <var>A, B, C</var>. For that, you can use the following three kinds of magics any number:</p>
+<ul>
+<li>Extension Magic: Consumes <var>1</var> <em>MP</em> (magic point). Choose one bamboo and increase its length by <var>1</var>.</li>
+<li>Shortening Magic: Consumes <var>1</var> MP. Choose one bamboo of length at least <var>2</var> and decrease its length by <var>1</var>.</li>
+<li>Composition Magic: Consumes <var>10</var> MP. Choose two bamboos and combine them into one bamboo. The length of this new bamboo is equal to the sum of the lengths of the two bamboos combined. (Afterwards, further magics can be used on this bamboo.)</li>
+</ul>
+<p>At least how much MP is needed to achieve the objective?</p>
+</section>
+</div>
+
+<div class="part">
+<section>
+<h3>Constraints</h3><ul>
+<li><var>3 \leq N \leq 8</var></li>
+<li><var>1 \leq C &lt; B &lt; A \leq 1000</var></li>
+<li><var>1 \leq l_i \leq 1000</var></li>
+<li>All values in input are integers.</li>
+</ul>
+</section>
+</div>
+
+<hr />
+<div class="io-style">
+<div class="part">
+<section>
+<h3>Input</h3><p>Input is given from Standard Input in the following format:</p>
+<pre><var>N</var> <var>A</var> <var>B</var> <var>C</var>
+<var>l_1</var>
+<var>l_2</var>
+<var>:</var>
+<var>l_N</var>
+</pre>
+
+</section>
+</div>
+
+<div class="part">
+<section>
+<h3>Output</h3><p>Print the minimum amount of MP needed to achieve the objective.</p>
+</section>
+</div>
+</div>
+
+<hr />
+<div class="part">
+<section>
+<h3>Sample Input 1</h3><pre>5 100 90 80
+98
+40
+30
+21
+80
+</pre>
+
+</section>
+</div>
+
+<div class="part">
+<section>
+<h3>Sample Output 1</h3><pre>23
+</pre>
+
+<p>We are obtaining three bamboos of lengths <var>100, 90, 80</var> from five bamboos <var>98, 40, 30, 21, 80</var>. We already have a bamboo of length <var>80</var>, and we can obtain bamboos of lengths <var>100, 90</var> by using the magics as follows at the total cost of <var>23</var> MP, which is optimal.</p>
+<ol>
+<li>Use Extension Magic twice on the bamboo of length <var>98</var> to obtain a bamboo of length <var>100</var>. (MP consumed: <var>2</var>)</li>
+<li>Use Composition Magic on the bamboos of lengths <var>40, 30</var> to obtain a bamboo of length <var>70</var>. (MP consumed: <var>10</var>)</li>
+<li>Use Shortening Magic once on the bamboo of length <var>21</var> to obtain a bamboo of length <var>20</var>. (MP consumed: <var>1</var>)</li>
+<li>Use Composition Magic on the bamboo of length <var>70</var> obtained in step 2 and the bamboo of length <var>20</var> obtained in step 3 to obtain a bamboo of length <var>90</var>. (MP consumed: <var>10</var>)</li>
+</ol>
+</section>
+</div>
+
+<hr />
+<div class="part">
+<section>
+<h3>Sample Input 2</h3><pre>8 100 90 80
+100
+100
+90
+90
+90
+80
+80
+80
+</pre>
+
+</section>
+</div>
+
+<div class="part">
+<section>
+<h3>Sample Output 2</h3><pre>0
+</pre>
+
+<p>If we already have all bamboos of the desired lengths, the amount of MP needed is <var>0</var>. As seen here, we do not necessarily need to use all the bamboos.</p>
+</section>
+</div>
+
+<hr />
+<div class="part">
+<section>
+<h3>Sample Input 3</h3><pre>8 1000 800 100
+300
+333
+400
+444
+500
+555
+600
+666
+</pre>
+
+</section>
+</div>
+
+<div class="part">
+<section>
+<h3>Sample Output 3</h3><pre>243
+</pre></section>
+</div>
+</span>
+</span>
+
+		</div>
+
+		
+
+		
+	</div>
+</div>
+
+
+		
+			<hr>
+			
+			
+			
+<div class="a2a_kit a2a_kit_size_20 a2a_default_style pull-right" data-a2a-url="https://atcoder.jp/contests/abc119/tasks/abc119_c?lang=en" data-a2a-title="C - Synthetic Kadomatsu">
+	<a class="a2a_button_facebook"></a>
+	<a class="a2a_button_twitter"></a>
+	
+		<a class="a2a_button_telegram"></a>
+	
+	<a class="a2a_dd" href="https://www.addtoany.com/share"></a>
+</div>
+
+		
+		<script async src="//static.addtoany.com/menu/page.js"></script>
+		
+	</div> 
+	<hr>
+</div> 
+<div class="container">
+    <footer class="footer">
+		
+			<ul>
+				<li><a href='/contests/abc119/rules'>Rule</a></li>
+				<li><a href='/contests/abc119/glossary'>Glossary</a></li>
+				
+			</ul>
+		
+		<ul>
+			<li><a href='/tos'>Terms of service</a></li>
+			<li><a href='/privacy'>Privacy Policy</a></li>
+			<li><a href='/personal'>Information Protection Policy</a></li>
+			<li><a href='/company'>Company</a></li>
+			<li><a href='/faq'>FAQ</a></li>
+			<li><a href='/contact'>Contact</a></li>
+			
+		</ul>
+    <div class="text-center">
+        <small id="copyright">Copyright Since 2012 &copy;<a href="http://atcoder.co.jp">AtCoder Inc.</a> All rights reserved.</small>
+    </div>
+    </footer>
+</div>
+<p id="fixed-server-timer" class='contest-timer'></p>
+
+	<div id="scroll-page-top" style="display:none;"><span class="glyphicon glyphicon-arrow-up" aria-hidden="true"></span> Page Top</div>
+
+</body>
+</html>
+
+

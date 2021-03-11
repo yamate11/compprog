@@ -1,0 +1,6 @@
+#!/bin/sh
+python3 q3.py < d3-1.txt
+python3 q3.py < d3-2.txt
+python3 q3.py < d3-3.txt
+python3 q3.py < d3-4.txt
+python3 q3.py < d3-5.txt

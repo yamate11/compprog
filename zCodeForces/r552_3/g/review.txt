@@ -1,0 +1,13 @@
+Codeforces Round 552(Div.3)-G Minimum Possible LCM
+2020/10/17
+解けず
+LCM
+
+整数 a_1,..,a_n が与えられる．
+min {LCM(a_i, a_j) | i < j} を与えるi,jを求める．
+a_i <= 1e7, n <= 1e6
+
+amax = max {a_i | i} として，求める最小値は，
+min { min{ LCM(a_i, a_j) | i < j, GCD(a_i, a_j) = g} | 1 <= g < amax }
+である．各 g ごとに調べる候補は amax / g なので，
+調和級数の和より，計算量は O(amax log amax)．

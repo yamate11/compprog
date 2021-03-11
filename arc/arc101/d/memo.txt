@@ -1,0 +1,4 @@
+(a_i | i < n) ... (0..n-1) の permutation
+
+
+b_i^j := 

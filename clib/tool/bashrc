@@ -1,0 +1,6 @@
+thisdir=/home/y-tanabe/WinHome/bytime/atCoder1710/clib/tool
+# thisdir=/home/y-tanabe/WinHome/lib/Dropbox/atCoder/clib/tool
+# thisdir=${HOME}/bytime/atCoder1710/clib/tool
+PATH=${PATH}:${thisdir}
+
+echo "You can use commands: qread, submit, stest, cmpNaive, libins"

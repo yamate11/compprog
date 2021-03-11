@@ -1,0 +1,734 @@
+
+
+
+
+
+
+
+
+<!DOCTYPE html>
+<html>
+<head>
+	<title>C - 最後の森</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+	<meta http-equiv="Content-Language" content="en">
+	<meta name="viewport" content="width=device-width,initial-scale=1.0">
+	<meta name="format-detection" content="telephone=no">
+	<meta name="google-site-verification" content="nXGC_JxO0yoP1qBzMnYD_xgufO6leSLw1kyNo2HZltM" />
+
+	
+	<meta name="description" content="AtCoder is a programming contest site for anyone from beginners to experts. We hold weekly programming contests online.">
+	<meta name="author" content="AtCoder Inc.">
+
+	<meta property="og:site_name" content="AtCoder">
+	
+	<meta property="og:title" content="C - 最後の森" />
+	<meta property="og:description" content="AtCoder is a programming contest site for anyone from beginners to experts. We hold weekly programming contests online." />
+	<meta property="og:type" content="website" />
+	<meta property="og:url" content="https://atcoder.jp/contests/arc019/tasks/arc019_3" />
+	<meta property="og:image" content="https://img.atcoder.jp/assets/atcoder.png" />
+	<meta name="twitter:card" content="summary" />
+	<meta name="twitter:site" content="@atcoder" />
+	
+	<meta property="twitter:title" content="C - 最後の森" />
+
+	<link href="//fonts.googleapis.com/css?family=Lato:400,700" rel="stylesheet" type="text/css">
+	<link rel="stylesheet" type="text/css" href="/public/css/bootstrap.min.css?v=202002080007">
+	<link rel="stylesheet" type="text/css" href="/public/css/base.css?v=202002080007">
+	<link rel="shortcut icon" type="image/png" href="//img.atcoder.jp/assets/favicon.png">
+	<link rel="apple-touch-icon" href="//img.atcoder.jp/assets/atcoder.png">
+	<script src="/public/js/lib/jquery-1.9.1.min.js?v=202002080007"></script>
+	<script src="/public/js/lib/bootstrap.min.js?v=202002080007"></script>
+	<script src="//cdnjs.cloudflare.com/ajax/libs/js-cookie/2.1.4/js.cookie.min.js"></script>
+	<script src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/moment.min.js"></script>
+	<script src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/locale/ja.js"></script>
+	<script>
+		var LANG = "en";
+		var userScreenName = "yamate11";
+		var csrfToken = "S5LF4QrRM7XZnVGOwCEs7mCB4+8W9urVMMa33Rn19f8="
+	</script>
+	<script src="/public/js/utils.js?v=202002080007"></script>
+	
+	
+		<script src="/public/js/contest.js?v=202002080007"></script>
+		<link href="/public/css/contest.css?v=202002080007" rel="stylesheet" />
+		<script>
+			var contestScreenName = "arc019";
+			var remainingText = "Remaining Time";
+			var countDownText = "Contest begins in";
+			var startTime = moment("2014-03-15T21:00:00+09:00");
+			var endTime = moment("2014-03-15T22:30:00+09:00");
+		</script>
+		<style></style>
+	
+	
+		<script type="text/x-mathjax-config">MathJax.Hub.Config({messageStyle:"none",tex2jax:{skipTags:["script","noscript","style","textarea","code"],inlineMath:[['\\(','\\)']]},delayStartupUntil:"onload"});</script>
+		<script src="//cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+		<script>$(function(){$('var').each(function(){$(this).html('\\('+$(this).html()+'\\)');});});</script>
+	
+	
+		<link href="//cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/css/select2.min.css" rel="stylesheet" />
+		<link href="//cdnjs.cloudflare.com/ajax/libs/select2-bootstrap-theme/0.1.0-beta.10/select2-bootstrap.min.css" rel="stylesheet" />
+		<script src="/public/js/lib/select2.min.js?v=202002080007"></script>
+	
+	
+		<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/codemirror/5.38.0/codemirror.min.css">
+		<script src="//cdnjs.cloudflare.com/ajax/libs/codemirror/5.38.0/codemirror.min.js"></script>
+		<script src="/public/js/codeMirror/merged.js?v=202002080007"></script>
+	
+	
+		<script src="//cdn.rawgit.com/google/code-prettify/master/loader/run_prettify.js"></script>
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	<script src="/public/js/base.js?v=202002080007"></script>
+	<script src="/public/js/ga.js?v=202002080007"></script>
+</head>
+
+<body>
+<div id="modal-contest-start" class="modal fade" tabindex="-1" role="dialog">
+	<div class="modal-dialog" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+				<h4 class="modal-title">Contest started</h4>
+			</div>
+			<div class="modal-body">
+				<p>AtCoder Regular Contest 019 has begun.</p>
+			</div>
+			<div class="modal-footer">
+				
+					<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+				
+			</div>
+		</div>
+	</div>
+</div>
+<div id="modal-contest-end" class="modal fade" tabindex="-1" role="dialog">
+	<div class="modal-dialog" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+				<h4 class="modal-title">Contest is over</h4>
+			</div>
+			<div class="modal-body">
+				<p>AtCoder Regular Contest 019 has ended.</p>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+			</div>
+		</div>
+	</div>
+</div>
+<div id="main-div" class="float-container">
+
+
+	<nav class="navbar navbar-inverse navbar-fixed-top">
+		<div class="container-fluid">
+			<div class="navbar-header">
+				<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapse" aria-expanded="false">
+					<span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span>
+				</button>
+				<a class="navbar-brand" href="/home"></a>
+			</div>
+			<div class="collapse navbar-collapse" id="navbar-collapse">
+				<ul class="nav navbar-nav">
+				
+					<li><a class="contest-title" href="/contests/arc019">AtCoder Regular Contest 019</a></li>
+				
+				</ul>
+				<ul class="nav navbar-nav navbar-right">
+					
+					<li class="dropdown">
+						<a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
+							<img src='//img.atcoder.jp/assets/top/img/flag-lang/en.png'> English <span class="caret"></span>
+						</a>
+						<ul class="dropdown-menu">
+							<li><a href="/contests/arc019/tasks/arc019_3?lang=ja"><img src='//img.atcoder.jp/assets/top/img/flag-lang/ja.png'> 日本語</a></li>
+							<li><a href="/contests/arc019/tasks/arc019_3?lang=en"><img src='//img.atcoder.jp/assets/top/img/flag-lang/en.png'> English</a></li>
+						</ul>
+					</li>
+					
+					
+						<li class="dropdown">
+							<a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
+								<span class="glyphicon glyphicon-cog" aria-hidden="true"></span> yamate11 (Guest) <span class="caret"></span>
+							</a>
+							<ul class="dropdown-menu">
+								<li><a href="/users/yamate11"><span class="glyphicon glyphicon-user" aria-hidden="true"></span> My Profile</a></li>
+								<li class="divider"></li>
+								<li><a href="/settings"><span class="glyphicon glyphicon-wrench" aria-hidden="true"></span> General Settings</a></li>
+								<li><a href="/settings/icon"><span class="glyphicon glyphicon-picture" aria-hidden="true"></span> Change Photo</a></li>
+								<li><a href="/settings/password"><span class="glyphicon glyphicon-lock" aria-hidden="true"></span> Change Password</a></li>
+								<li><a href="/settings/fav"><span class="glyphicon glyphicon-star" aria-hidden="true"></span> Manage Fav</a></li>
+								
+								
+								
+								<li class="divider"></li>
+								<li><a href="javascript:void(form_logout.submit())"><span class="glyphicon glyphicon-log-out" aria-hidden="true"></span> Sign Out</a></li>
+							</ul>
+						</li>
+					
+				</ul>
+			</div>
+		</div>
+	</nav>
+
+	<form method="POST" name="form_logout" action="/logout?continue=https%3A%2F%2Fatcoder.jp%2Fcontests%2Farc019%2Ftasks%2Farc019_3">
+		<input type="hidden" name="csrf_token" value="S5LF4QrRM7XZnVGOwCEs7mCB4&#43;8W9urVMMa33Rn19f8=" />
+	</form>
+	<div id="main-container" class="container"
+		 	style="padding-top:50px;">
+		
+
+<div class="row">
+	<div id="contest-nav-tabs" class="col-sm-12 mb-2 cnvtb-fixed">
+	<div>
+		<small class="contest-duration">
+			
+				Contest Duration:
+				<a href='http://www.timeanddate.com/worldclock/fixedtime.html?iso=20140315T2100&p1=248' target='blank'><time class='fixtime fixtime-full'>2014-03-15 21:00:00+0900</time></a> ~ <a href='http://www.timeanddate.com/worldclock/fixedtime.html?iso=20140315T2230&p1=248' target='blank'><time class='fixtime fixtime-full'>2014-03-15 22:30:00+0900</time></a> (local time)
+				(90 minutes)
+			
+		</small>
+		<small class="back-to-home pull-right"><a href="/home">Back to Home</a></small>
+	</div>
+	<ul class="nav nav-tabs">
+		<li><a href="/contests/arc019"><span class="glyphicon glyphicon-home" aria-hidden="true"></span> Top</a></li>
+		
+			<li class="active"><a href="/contests/arc019/tasks"><span class="glyphicon glyphicon-tasks" aria-hidden="true"></span> Tasks</a></li>
+		
+
+		
+			<li><a href="/contests/arc019/clarifications"><span class="glyphicon glyphicon-question-sign" aria-hidden="true"></span> Clarifications <span id="clar-badge" class="badge"></span></a></li>
+		
+
+		
+			<li><a href="/contests/arc019/submit?taskScreenName=arc019_3"><span class="glyphicon glyphicon-send" aria-hidden="true"></span> Submit</a></li>
+		
+
+		
+			<li>
+				<a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false"><span class="glyphicon glyphicon-list" aria-hidden="true"></span> Results<span class="caret"></span></a>
+				<ul class="dropdown-menu">
+					<li><a href="/contests/arc019/submissions"><span class="glyphicon glyphicon-globe" aria-hidden="true"></span> All Submissions</a></li>
+					
+						<li><a href="/contests/arc019/submissions/me"><span class="glyphicon glyphicon-user" aria-hidden="true"></span> My Submissions</a></li>
+						<li class="divider"></li>
+						<li><a href="/contests/arc019/score"><span class="glyphicon glyphicon-dashboard" aria-hidden="true"></span> My Score</a></li>
+					
+				</ul>
+			</li>
+		
+
+		
+			
+				
+					<li><a href="/contests/arc019/standings"><span class="glyphicon glyphicon-sort-by-attributes-alt" aria-hidden="true"></span> Standings</a></li>
+				
+			
+				
+					<li><a href="/contests/arc019/standings/virtual"><span class="glyphicon glyphicon-sort-by-attributes-alt" aria-hidden="true"></span> Virtual Standings</a></li>
+				
+			
+		
+
+		
+			<li><a href="/contests/arc019/custom_test"><span class="glyphicon glyphicon-wrench" aria-hidden="true"></span> Custom Test</a></li>
+		
+
+		
+			
+				
+					<li><a href="http://www.slideshare.net/chokudai/arc019" target="_blank"><span class="glyphicon glyphicon-book" aria-hidden="true"></span> Editorial</a></li>
+				
+			
+		
+		
+
+		<li class="pull-right"><a id="fix-cnvtb" href="javascript:void(0)"><span class="glyphicon glyphicon-pushpin" aria-hidden="true"></span></a></li>
+	</ul>
+</div>
+	<div class="col-sm-12">
+		<span class="h2">C - 最後の森</span>
+		
+		<span id="task-lang-btn" class="pull-right"><span data-lang="ja"><img src='//img.atcoder.jp/assets/top/img/flag-lang/ja.png'></span> / <span data-lang="en"><img src='//img.atcoder.jp/assets/top/img/flag-lang/en.png'></span></span>
+		<script>
+			$(function() {
+				var ts = $('#task-statement span.lang');
+				if (ts.children('span').size() <= 1) {
+					$('#task-lang-btn').hide();
+					ts.children('span').show();
+					return;
+				}
+				var REMEMBER_LB = 5;
+				var LS_KEY = 'task_lang';
+				var taskLang = getLS(LS_KEY) || '';
+				var changeTimes = 0;
+				if (taskLang == 'ja' || taskLang == 'en') {
+					changeTimes = REMEMBER_LB;
+				} else {
+					var changeTimes = parseInt(taskLang, 10);
+					if (isNaN(changeTimes)) {
+						changeTimes = 0;
+						delLS(LS_KEY);
+					}
+					changeTimes++;
+					taskLang = LANG;
+				}
+				ts.children('span.lang-' + taskLang).show();
+
+				$('#task-lang-btn span').click(function() {
+					var l = $(this).data('lang');
+					ts.children('span').hide();
+					ts.children('span.lang-' + l).show();
+					if (changeTimes < REMEMBER_LB) setLS(LS_KEY, changeTimes);
+					else setLS(LS_KEY, l);
+				});
+			});
+		</script>
+		<hr/>
+		<p>Time Limit: 2 sec / Memory Limit: 256 MB</p>
+
+		<div id="task-statement">
+			<div class="part"><section>
+<p>長い冒険もようやく終盤を迎え、あとは魔王の城に突入するのみとなった。</p>
+<p>魔王の城は「最後の森」と呼ばれる場所にある。最後の森は縦 <var>R</var> 行、横 <var>C</var> 列のマス目で構成されており、それぞれのマスは以下のいずれかである。</p>
+<ul>
+<li>平地……平地のマスは自由に通行できる。</li>
+<li>木……木のあるマスは通行できない。</li>
+<li>強敵のいるマス……凶暴な強敵のいるマスである。後述の条件を満たさなければ通行できない。</li>
+<li>プレイヤーの村……プレイヤーの初期位置である。このマスは自由に通行できる。</li>
+<li>ほこら……伝説の剣 <b>Link-Cut Sword</b> があるほこらである。このマスは自由に通行できる。</li>
+<li>魔王の城……魔王の城があるマスである。このマスは自由に通行できる。</li>
+</ul>
+<p>村のあるマス、ほこらのあるマス、魔王の城があるマスはちょうど <var>1</var> つずつである。</p>
+<p>以下、<var>i</var> 行 <var>j</var> 列 <var>(1 ≦ i ≦ R,1 ≦ j ≦ C)</var>にあるマスのことをマス <var>(i,j)</var> と呼ぶことにする。<var>2</var> つの異なるマス <var>(i,j),(k,l)</var> (<var>i</var> と <var>k</var> は<var>1 ≦ i,k ≦ R</var> を、<var>j</var> と <var>l</var> は <var>1 ≦ j,l ≦ C</var> を満たし、<var>(i,j) ≠ (k,l)</var> であるとする) が辺を共有しているとき、つまり以下の条件をみたす場合に隣接していると定義する。</p>
+<ul>
+<li><var>i = k</var> かつ <var>j</var> と <var>l</var> との差の絶対値が <var>1</var> である。</li>
+<li><var>j = l</var> かつ <var>i</var> と <var>k</var> との差の絶対値が <var>1</var> である。</li>
+</ul>
+<p>プレイヤーは最初村のあるマスにいる。プレイヤーは以下の動作を行うことができる。</p>
+<ul>
+<li>プレイヤーのいるマスと隣接しているマスに移動する。このとき移動先のマスが自由に通行できるマスでなければならない。</li>
+<li>プレイヤーのいるマスと隣接しているマスにいる強敵と戦闘を行う。戦闘を行った強敵は取り除かれ、以降そのマスは自由に通行可能になる。</li>
+</ul>
+<p>魔王との戦いでは高難易度のプログラミングスキルが要求されることだろう。魔王に対向するためには手持ちの装備（ライブラリ）を強化させなければならない。特に、ほこらにある伝説の剣を入手しなければ魔王に勝つことが出来ないだろう。そのためほこらに寄って伝説の剣を入手してから魔王の城に行きたい。伝説の剣を入手していない状態で魔王の城のあるマスを通行することは許される。</p>
+<p>また、最後の森に生息する強敵との戦いは大変なので、伝説の剣を入手する前後合わせて <var>K</var> 回以内の戦闘に抑えたい。</p>
+<p>最後の森には魔王が発する猛毒の霧が立ち込めているため、出来る限り移動にかかる時間を短くしなければならない。最後まで手強いゲームだ。そこでプログラムを用いて、上記の条件を満たす移動経路として考えられるものの中で、移動回数が最小となるものの移動回数が知る必要が出てきた。</p>
+</section></div>
+
+<hr>
+
+<div class="io-style part">
+<h3>入力</h3>
+<section>
+入力は以下の形式で標準入力から与えられる。
+<pre>
+<var>R</var> <var>C</var> <var>K</var>
+<var>s_{(1,1)} s_{(1,2)} </var> … <var>s_{(1,C)}</var>
+<var>s_{(2,1)} s_{(2,2)} </var> … <var>s_{(2,C)}</var>
+:
+<var>s_{(R,1)} s_{(R,2)} </var> … <var>s_{(R,C)}</var>
+</pre>
+
+<ol>
+<li><var>1</var> 行目には、<var>3</var> つの整数 <var>R,C,K</var>(<var>R</var> と <var>C</var> は <var>1 ≦ R,C ≦ 50</var> を、<var>K</var> は <var>0 ≦ K ≦ 100</var> をみたす) が空白を区切りとして与えられる。</li>
+<li><var>2</var> 行目から <var>R</var> 回、長さ <var>C</var> の文字列が <var>1</var> 行ずつ与えられる。各文字は <code>.</code>,<code>T</code>,<code>E</code>,<code>S</code>,<code>C</code>,<code>G</code> のいずれかであり，<var>i</var> 回目 <var>(1 ≦ i ≦ R)</var> に与えられられる文字列のうち <var>j</var> 文字目 <var>(1 ≦ j ≦ C)</var> について、
+<ul>
+<li>その文字が <code>.</code> なら、マス <var>(i,j)</var> が平地のマスであること</li>
+<li>その文字が <code>T</code> なら、マス <var>(i,j)</var> が木があるマスであること</li>
+<li>その文字が <code>E</code> なら、マス <var>(i,j)</var> が強敵のいるマスであること</li>
+<li>その文字が <code>S</code> なら、マス <var>(i,j)</var> が村のあるマスであること</li>
+<li>その文字が <code>C</code> なら、マス <var>(i,j)</var> がほこらのあるマスであること</li>
+<li>その文字が <code>G</code> なら、マス <var>(i,j)</var> が魔王の城があるマスであること</li>
+</ul>
+をあらわす。村のあるマス、ほこらのあるマス、魔王の城があるマスはちょうど <var>1</var> つずつである。</li>
+</ol>
+</section>
+</div>
+
+<div class="io-style part">
+<h3>出力</h3>
+<section>
+<p>移動回数の最小値を出力するプログラムを作成せよ。条件を満たす移動経路が存在しない場合は <code>-1</code> を出力せよ。</p>
+<p>なお、出力の最後には改行を入れること。</p>
+</section>
+</div>
+
+<hr>
+
+<div class="part">
+<h3>入力例 1</h3>
+<section>
+<pre class="prettyprint linenums">
+5 7 3
+GET..ET
+..T....
+.TEST..
+.E.T.ET
+...ETC.
+</pre>
+</section>
+</div>
+
+<div class="part">
+<h3>出力例 1</h3>
+<section>
+<pre class="prettyprint linenums">
+19
+</pre>
+<ul>
+<li>プレイヤーは最初にマス <var>(3,4)</var> にいる。例えば、以下のように移動する。</li>
+<ol>
+<li>マス <var>(3,4)</var> からマス <var>(3,6)</var> に移動する。</li>
+<ul>
+<li>移動を完了するには最小で <var>4</var> 回の移動動作を行う必要がある。</li>
+<li>移動完了時、合計移動回数は <var>4</var> 回、合計戦闘回数は <var>0</var> 回である。</li>
+</ul>
+<li>マス <var>(4,6)</var> にいる強敵と戦闘を行う。</li>
+<ul>
+<li>戦闘終了時、合計移動回数は <var>4</var> 回、合計戦闘回数は <var>1</var> 回である。</li>
+</ul>
+<li>マス <var>(3,6)</var> からほこらのあるマス <var>(5,6)</var> に移動する。</li>
+<ul>
+<li>移動を完了するには最小で <var>2</var> 回の移動動作を行う必要がある。</li>
+<li>移動完了時、合計移動回数は <var>6</var> 回、合計戦闘回数は <var>1</var> 回である。</li>
+</ul>
+<li>ほこらのあるマス <var>(5,6)</var> からマス <var>(3,4)</var> に移動する。</li>
+<ul>
+<li>移動を完了するには最小で <var>6</var> 回の移動動作を行う必要がある。</li>
+<li>移動完了時、合計移動回数は <var>12</var> 回、合計戦闘回数は <var>1</var> 回である。</li>
+</ul>
+<li>マス <var>(3,3)</var> にいる強敵と戦闘を行う。</li>
+<ul>
+<li>戦闘終了時、合計移動回数は <var>12</var> 回、合計戦闘回数は <var>2</var> 回である。</li>
+</ul>
+<li>マス <var>(3,4)</var> からマス <var>(4,3)</var> に移動する。</li>
+<ul>
+<li>移動を完了するには最小で <var>2</var> 回の移動動作を行う必要がある。</li>
+<li>移動完了時、合計移動回数は <var>14</var> 回、合計戦闘回数は <var>2</var> 回である。</li>
+</ul>
+<li>マス <var>(4,2)</var> にいる強敵と戦闘を行う。</li>
+<ul>
+<li>戦闘終了時、合計移動回数は <var>14</var> 回、合計戦闘回数は <var>3</var> 回である。</li>
+</ul>
+<li>マス <var>(4,3)</var> から魔王の城があるマス <var>(1,1)</var> に移動する。</li>
+<ul>
+<li>移動を完了するには最小で <var>5</var> 回の移動動作を行う必要がある。</li>
+<li>移動完了時、合計移動回数は <var>19</var> 回、合計戦闘回数は <var>3</var> 回である。</li>
+</ul>
+</ol>
+</ul>
+</section>
+</div>
+
+<hr>
+
+<div class="part">
+<h3>入力例 2</h3>
+<section>
+<pre class="prettyprint linenums">
+5 7 2
+GET..ET
+..T....
+.TEST..
+.E.T.ET
+...ETC.
+</pre>
+</section>
+</div>
+
+<div class="part">
+<h3>出力例 2</h3>
+<section>
+<pre class="prettyprint linenums">
+21
+</pre>
+<ul>
+<li>入力例 <var>1</var> のときと比べて戦闘可能な回数が少ないため、少し遠回りする必要がある。</li>
+</ul>
+</section>
+</div>
+
+<hr>
+
+<div class="part">
+<h3>入力例 3</h3>
+<section>
+<pre class="prettyprint linenums">
+5 7 1
+GET..ET
+..T....
+.TEST..
+.E.T.ET
+...ETC.
+</pre>
+</section>
+</div>
+
+<div class="part">
+<h3>出力例 3</h3>
+<section>
+<pre class="prettyprint linenums">
+-1
+</pre>
+<ul>
+<li>入力例 <var>3</var> において、条件を満たす経路は存在しない。</li>
+</ul>
+</section>
+</div>
+
+<hr>
+
+<div class="part">
+<h3>入力例 4</h3>
+<section>
+<pre class="prettyprint linenums">
+6 35 4
+T...TT.....TT...TTT...TTT..TTG.....
+..T..T.TTT.T..T..E..T..E...TTT.TTT.
+.TTT.T.....E.TTTTT.TTT.TTT.TTT.....
+.....T.TT.TT.TTTTT.TTT.TTT.TTTTTTT.
+.TTT.T.TT..T..T..S..T..TTT.TTTTTTT.
+.CTT.E.TTT.TT...TTT...TT.....E.....
+</pre>
+</section>
+</div>
+
+<div class="part">
+<h3>出力例 4</h3>
+<section>
+<pre class="prettyprint linenums">
+94
+</pre>
+</section>
+</div>
+
+		</div>
+
+		
+
+		
+		<hr/>
+		<form class="form-horizontal form-code-submit" action="/contests/arc019/submit" method="POST">
+			<input type="hidden" name="data.TaskScreenName" value="arc019_3" />
+			
+			<div class="form-group ">
+				<label class="control-label col-sm-2" for="select-lang">Language</label>
+				<div id="select-lang" class="col-sm-5" data-name="data.LanguageId">
+					<select class="form-control current" name="data.LanguageId">
+						
+							<option value="3003" data-mime="text/x-c&#43;&#43;src">C&#43;&#43;14 (GCC 5.4.1)</option>
+						
+							<option value="3001" data-mime="text/x-sh">Bash (GNU bash v4.3.11)</option>
+						
+							<option value="3002" data-mime="text/x-csrc">C (GCC 5.4.1)</option>
+						
+							<option value="3004" data-mime="text/x-csrc">C (Clang 3.8.0)</option>
+						
+							<option value="3029" data-mime="text/x-c&#43;&#43;src">C&#43;&#43; (GCC 5.4.1)</option>
+						
+							<option value="3030" data-mime="text/x-c&#43;&#43;src">C&#43;&#43; (Clang 3.8.0)</option>
+						
+							<option value="3005" data-mime="text/x-c&#43;&#43;src">C&#43;&#43;14 (Clang 3.8.0)</option>
+						
+							<option value="3006" data-mime="text/x-csharp">C# (Mono 4.6.2.0)</option>
+						
+							<option value="3007" data-mime="text/x-clojure">Clojure (1.8.0)</option>
+						
+							<option value="3008" data-mime="text/x-common-lisp">Common Lisp (SBCL 1.1.14)</option>
+						
+							<option value="3009" data-mime="text/x-d">D (DMD64 v2.070.1)</option>
+						
+							<option value="3010" data-mime="text/x-d">D (LDC 0.17.0)</option>
+						
+							<option value="3011" data-mime="text/x-d">D (GDC 4.9.4)</option>
+						
+							<option value="3012" data-mime="text/x-fortran">Fortran (gfortran v4.8.4)</option>
+						
+							<option value="3013" data-mime="text/x-go">Go (1.6)</option>
+						
+							<option value="3014" data-mime="text/x-haskell">Haskell (GHC 7.10.3)</option>
+						
+							<option value="3015" data-mime="text/x-java">Java7 (OpenJDK 1.7.0)</option>
+						
+							<option value="3016" data-mime="text/x-java">Java8 (OpenJDK 1.8.0)</option>
+						
+							<option value="3017" data-mime="text/javascript">JavaScript (node.js v5.12)</option>
+						
+							<option value="3018" data-mime="text/x-ocaml">OCaml (4.02.3)</option>
+						
+							<option value="3019" data-mime="text/x-pascal">Pascal (FPC 2.6.2)</option>
+						
+							<option value="3020" data-mime="text/x-perl">Perl (v5.18.2)</option>
+						
+							<option value="3021" data-mime="text/x-php">PHP (5.6.30)</option>
+						
+							<option value="3022" data-mime="text/x-python">Python2 (2.7.6)</option>
+						
+							<option value="3023" data-mime="text/x-python">Python3 (3.4.3)</option>
+						
+							<option value="3024" data-mime="text/x-ruby">Ruby (2.3.3)</option>
+						
+							<option value="3025" data-mime="text/x-scala">Scala (2.11.7)</option>
+						
+							<option value="3026" data-mime="text/x-scheme">Scheme (Gauche 0.9.3.3)</option>
+						
+							<option value="3027" data-mime="text/plain">Text (cat)</option>
+						
+							<option value="3028" data-mime="text/x-vb">Visual Basic (Mono 4.0.1)</option>
+						
+							<option value="3501" data-mime="text/x-objectivec">Objective-C (GCC 5.3.0)</option>
+						
+							<option value="3502" data-mime="text/x-objectivec">Objective-C (Clang3.8.0)</option>
+						
+							<option value="3503" data-mime="text/x-swift">Swift (swift-2.2-RELEASE)</option>
+						
+							<option value="3504" data-mime="text/x-rust">Rust (1.15.1)</option>
+						
+							<option value="3505" data-mime="text/x-sh">Sed (GNU sed 4.2.2)</option>
+						
+							<option value="3506" data-mime="text/x-sh">Awk (mawk 1.3.3)</option>
+						
+							<option value="3507" data-mime="text/x-brainfuck">Brainfuck (bf 20041219)</option>
+						
+							<option value="3508" data-mime="text/x-sml">Standard ML (MLton 20100608)</option>
+						
+							<option value="3509" data-mime="text/x-python">PyPy2 (5.6.0)</option>
+						
+							<option value="3510" data-mime="text/x-python">PyPy3 (2.4.0)</option>
+						
+							<option value="3511" data-mime="text/x-crystal">Crystal (0.20.5)</option>
+						
+							<option value="3512" data-mime="text/x-fsharp">F# (Mono 4.0)</option>
+						
+							<option value="3513" data-mime="text/x-unlambda">Unlambda (0.1.3)</option>
+						
+							<option value="3514" data-mime="text/x-lua">Lua (5.3.2)</option>
+						
+							<option value="3515" data-mime="text/x-lua">LuaJIT (2.0.4)</option>
+						
+							<option value="3516" data-mime="text/x-moonscript">MoonScript (0.5.0)</option>
+						
+							<option value="3517" data-mime="text/x-ceylon">Ceylon (1.2.1)</option>
+						
+							<option value="3518" data-mime="text/x-julia">Julia (0.5.0)</option>
+						
+							<option value="3519" data-mime="text/x-octave">Octave (4.0.2)</option>
+						
+							<option value="3520" data-mime="text/x-nim">Nim (0.13.0)</option>
+						
+							<option value="3521" data-mime="text/typescript">TypeScript (2.1.6)</option>
+						
+							<option value="3522" data-mime="text/x-perl">Perl6 (rakudo-star 2016.01)</option>
+						
+							<option value="3523" data-mime="text/x-kotlin">Kotlin (1.0.0)</option>
+						
+							<option value="3524" data-mime="text/x-php">PHP7 (7.0.15)</option>
+						
+					</select>
+					<span class="error"></span>
+				</div>
+			</div>
+			<script>var currentLang = getLS('defaultLang');</script>
+			
+			
+<div class="form-group">
+	<label class="control-label col-sm-2" for="sourceCode">Source Code</label>
+	<div class="col-sm-7" id="sourceCode">
+		<div class="div-editor">
+			<textarea class="form-control editor" name="sourceCode"></textarea>
+		</div>
+		<textarea class="form-control plain-textarea" style="display:none;"></textarea>
+		<p>
+			<span class="gray">※ at most 512 KiB</span><br>
+			<span class="gray">※ Your source code will be saved as Main.<i>extension</i>.</span>
+		</p>
+	</div>
+	<div class="col-sm-3 editor-buttons">
+		<p><button id="btn-open-file" type="button" class="btn btn-default btn-sm">
+			<span class="glyphicon glyphicon-folder-open" aria-hidden="true"></span> &nbsp; Open File
+		</button></p>
+		<p><button type="button" class="btn btn-default btn-sm btn-toggle-editor" data-toggle="button" aria-pressed="false" autocomplete="off">
+			Toggle Editor
+		</button></p>
+		<p><button type="button" class="btn btn-default btn-sm btn-auto-height" data-toggle="button" aria-pressed="false" autocomplete="off">
+			Auto Height
+		</button></p>
+	</div>
+	<input id="input-open-file" type="file" style="display:none;">
+</div>
+
+			<input type="hidden" name="csrf_token" value="S5LF4QrRM7XZnVGOwCEs7mCB4&#43;8W9urVMMa33Rn19f8=" />
+			<div class="form-group">
+				<label class="control-label col-sm-2" for="submit"></label>
+				<div class="col-sm-5">
+					<button type="submit" class="btn btn-primary" id="submit">Submit</button>
+				</div>
+			</div>
+		</form>
+		
+	</div>
+</div>
+
+
+
+
+		
+			<hr>
+			
+			
+			
+<div class="a2a_kit a2a_kit_size_20 a2a_default_style pull-right" data-a2a-url="https://atcoder.jp/contests/arc019/tasks/arc019_3?lang=en" data-a2a-title="C - 最後の森">
+	<a class="a2a_button_facebook"></a>
+	<a class="a2a_button_twitter"></a>
+	
+		<a class="a2a_button_telegram"></a>
+	
+	<a class="a2a_dd" href="https://www.addtoany.com/share"></a>
+</div>
+
+		
+		<script async src="//static.addtoany.com/menu/page.js"></script>
+		
+	</div> 
+	<hr>
+</div> 
+
+	<div class="container" style="margin-bottom: 80px;">
+			<footer class="footer">
+			
+				<ul>
+					<li><a href="/contests/arc019/rules">Rule</a></li>
+					<li><a href="/contests/arc019/glossary">Glossary</a></li>
+					
+				</ul>
+			
+			<ul>
+				<li><a href="/tos">Terms of service</a></li>
+				<li><a href="/privacy">Privacy Policy</a></li>
+				<li><a href="/personal">Information Protection Policy</a></li>
+				<li><a href="/company">Company</a></li>
+				<li><a href="/faq">FAQ</a></li>
+				<li><a href="/contact">Contact</a></li>
+				
+			</ul>
+			<div class="text-center">
+					<small id="copyright">Copyright Since 2012 &copy;<a href="http://atcoder.co.jp">AtCoder Inc.</a> All rights reserved.</small>
+			</div>
+			</footer>
+	</div>
+	<p id="fixed-server-timer" class="contest-timer"></p>
+	<div id="scroll-page-top" style="display:none;"><span class="glyphicon glyphicon-arrow-up" aria-hidden="true"></span> Page Top</div>
+
+</body>
+</html>
+

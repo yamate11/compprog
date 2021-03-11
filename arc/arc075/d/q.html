@@ -1,0 +1,507 @@
+
+
+
+
+
+
+<!DOCTYPE html>
+
+<html>
+<head>
+	<title>D - Widespread</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+	<meta http-equiv="Content-Language" content='en'>
+	<meta name="viewport" content="width=device-width,initial-scale=1.0">
+	<meta name="format-detection" content="telephone=no">
+	<meta name="google-site-verification" content="nXGC_JxO0yoP1qBzMnYD_xgufO6leSLw1kyNo2HZltM" />
+
+	
+	<meta name="description" content="AtCoder is a programming contest site for anyone from beginners to experts. We hold weekly programming contests online.">
+	<meta name="author" content="AtCoder Inc.">
+	<link rel="canonical" href="https://atcoder.jp/">
+
+	<meta property="og:site_name" content="AtCoder">
+	
+	<meta property="og:title" content="D - Widespread" />
+	<meta property="og:description" content="AtCoder is a programming contest site for anyone from beginners to experts. We hold weekly programming contests online." />
+	<meta property="og:type" content="website" />
+	<meta property="og:url" content="https://atcoder.jp/contests/arc075/tasks/arc075_b" />
+	<meta property="og:image" content="https://img.atcoder.jp/assets/atcoder.png" />
+	<meta name="twitter:card" content="summary" />
+	<meta name="twitter:site" content="@atcoder" />
+	
+	<meta property="twitter:title" content="D - Widespread" />
+
+	<link href='//fonts.googleapis.com/css?family=Lato:400,700' rel='stylesheet' type='text/css'>
+	<link rel="stylesheet" type="text/css" href='/public/css/bootstrap.min.css?v=201904040021'>
+	<link rel="stylesheet" type="text/css" href='/public/css/base.css?v=201904040021'>
+	<link rel="shortcut icon" type="image/png" href="//img.atcoder.jp/assets/favicon.png">
+	<link rel="apple-touch-icon" href="//img.atcoder.jp/assets/atcoder.png">
+	<script src='/public/js/lib/jquery-1.9.1.min.js?v=201904040021'></script>
+	<script src='/public/js/lib/bootstrap.min.js?v=201904040021'></script>
+	<script src="//cdnjs.cloudflare.com/ajax/libs/js-cookie/2.1.4/js.cookie.min.js"></script>
+	<script src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/moment.min.js"></script>
+	<script src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/locale/ja.js"></script>
+	<script>
+		var LANG = "en";
+		var userScreenName = "";
+	</script>
+	<script src='/public/js/utils.js?v=201904040021'></script>
+	
+	
+		<script src='/public/js/contest.js?v=201904040021'></script>
+		<link href='/public/css/contest.css?v=201904040021' rel="stylesheet" />
+		<script>
+			var contestScreenName = "arc075";
+			var remainingText = "Remaining Time";
+			var countDownText = "Contest begins in";
+			var startTime = moment("2017-06-03T21:00:00+09:00");
+			var endTime = moment("2017-06-03T22:40:00+09:00");
+		</script>
+		<style></style>
+	
+	
+		<script type="text/x-mathjax-config">MathJax.Hub.Config({messageStyle:"none",tex2jax:{skipTags:["script","noscript","style","textarea","code"],inlineMath:[['\\(','\\)']]}});</script>
+		<script src="//cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+		<script src='/public/js/task.js?v=201904040021'></script>
+	
+	
+	
+	
+		<link href="//cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/css/select2.min.css" rel="stylesheet" />
+		<link href="//cdnjs.cloudflare.com/ajax/libs/select2-bootstrap-theme/0.1.0-beta.10/select2-bootstrap.min.css" rel="stylesheet" />
+		<script src='/public/js/lib/select2.min.js?v=201904040021'></script>
+	
+	
+		<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/codemirror/5.38.0/codemirror.min.css">
+		<script src="//cdnjs.cloudflare.com/ajax/libs/codemirror/5.38.0/codemirror.min.js"></script>
+		<script src='/public/js/codeMirror/merged.js?v=201904040021'></script>
+	
+	
+		<script src="//cdn.rawgit.com/google/code-prettify/master/loader/run_prettify.js"></script>
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	<script src='/public/js/base.js?v=201904040021'></script>
+	<script src='/public/js/ga.js?v=201904040021'></script>
+</head>
+
+<body>
+<div id="modal-contest-start" class="modal fade" tabindex="-1" role="dialog">
+	<div class="modal-dialog" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+				<h4 class="modal-title">Contest started</h4>
+			</div>
+			<div class="modal-body">
+				<p>AtCoder Regular Contest 075 has begun.</p>
+			</div>
+			<div class="modal-footer">
+				
+					<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+				
+			</div>
+		</div>
+	</div>
+</div>
+<div id="modal-contest-end" class="modal fade" tabindex="-1" role="dialog">
+	<div class="modal-dialog" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+				<h4 class="modal-title">Contest is over</h4>
+			</div>
+			<div class="modal-body">
+				<p>AtCoder Regular Contest 075 has ended.</p>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+			</div>
+		</div>
+	</div>
+</div>
+<div id="main-div" class="float-container">
+	<nav class="navbar navbar-inverse navbar-fixed-top">
+		<div class="container-fluid">
+			<div class="navbar-header">
+				<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapse" aria-expanded="false">
+					<span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span>
+				</button>
+				<a class="navbar-brand" href="/"></a>
+			</div>
+			<div class="collapse navbar-collapse" id="navbar-collapse">
+				<ul class="nav navbar-nav">
+				
+					<li><a class="contest-title" href='/contests/arc075'>AtCoder Regular Contest 075</a></li>
+				
+				</ul>
+				<ul class="nav navbar-nav navbar-right">
+					
+					<li class="dropdown">
+						<a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
+							<img src='//img.atcoder.jp/assets/flag-lang/en.png'> English <span class="caret"></span>
+						</a>
+						<ul class="dropdown-menu">
+							<li><a href='/contests/arc075/tasks/arc075_b?lang=ja'><img src='//img.atcoder.jp/assets/flag-lang/ja.png'> 日本語</a></li>
+							<li><a href='/contests/arc075/tasks/arc075_b?lang=en'><img src='//img.atcoder.jp/assets/flag-lang/en.png'> English</a></li>
+						</ul>
+					</li>
+					
+					
+						<li><a href="/register?continue=https%3A%2F%2Fatcoder.jp%2Fcontests%2Farc075%2Ftasks%2Farc075_b">Sign Up</a></li>
+						<li><a href="/login?continue=https%3A%2F%2Fatcoder.jp%2Fcontests%2Farc075%2Ftasks%2Farc075_b">Sign In</a></li>
+					
+				</ul>
+			</div>
+		</div>
+	</nav>
+	<form method="POST" name="form_logout" action='/logout?continue=https%3A%2F%2Fatcoder.jp%2Fcontests%2Farc075%2Ftasks%2Farc075_b'>
+		<input type="hidden" name="csrf_token" value='BOnmIV&#43;Gez9DwnnwQSut2sW21KHQoVGAC8EZmJKb5F0=' />
+	</form>
+	<div id="main-container" class="container" style="padding-top:50px;">
+		
+
+<div class="row">
+	<div id="contest-nav-tabs" class="col-sm-12 mb-2 cnvtb-fixed">
+	<div>
+		<small class="contest-duration">Contest Duration: <a href='http://www.timeanddate.com/worldclock/fixedtime.html?iso=20170603T2100&p1=248' target='blank'><time class='fixtime fixtime-full'>2017-06-03 21:00:00+0900</time></a> ~ <a href='http://www.timeanddate.com/worldclock/fixedtime.html?iso=20170603T2240&p1=248' target='blank'><time class='fixtime fixtime-full'>2017-06-03 22:40:00+0900</time></a> (local time)</small>
+		<small class="back-to-home pull-right"><a href='/'>Back to Home</a></small>
+	</div>
+	<ul class="nav nav-tabs">
+		<li><a href='/contests/arc075'><span class="glyphicon glyphicon-home" aria-hidden="true"></span> Top</a></li>
+		
+			<li class="active"><a href='/contests/arc075/tasks'><span class="glyphicon glyphicon-tasks" aria-hidden="true"></span> Tasks</a></li>
+		
+
+		
+			<li><a href='/contests/arc075/clarifications'><span class="glyphicon glyphicon-question-sign" aria-hidden="true"></span> Clarifications <span id="clar-badge" class="badge"></span></a></li>
+		
+
+		
+
+		
+			<li>
+				<a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false"><span class="glyphicon glyphicon-list" aria-hidden="true"></span> Submissions<span class="caret"></span></a>
+				<ul class="dropdown-menu">
+					<li><a href='/contests/arc075/submissions'><span class="glyphicon glyphicon-globe" aria-hidden="true"></span> All Submissions</a></li>
+					
+				</ul>
+			</li>
+		
+
+		
+			<li><a href='/contests/arc075/standings'><span class="glyphicon glyphicon-sort-by-attributes-alt" aria-hidden="true"></span> Standings</a></li>
+		
+
+		
+
+		
+			<li><a href='https://atcoder.jp/img/arc075/editorial.pdf' target="_blank"><span class="glyphicon glyphicon-book" aria-hidden="true"></span> Editorial</a></li>
+		
+
+		<li class="pull-right"><a id="fix-cnvtb" href="javascript:void(0)"><span class="glyphicon glyphicon-pushpin" aria-hidden="true"></span></a></li>
+	</ul>
+</div>
+	<div class="col-sm-12">
+		<span class="h2">D - Widespread</span>
+		<hr/>
+		<p>Time Limit: 2 sec / Memory Limit: 256 MB</p>
+
+		<div id="task-statement">
+			<span class="lang">
+<span class="lang-ja">
+<p>配点 : <var>400</var> 点</p>
+
+<div class="part">
+<section>
+<h3>問題文</h3><p>あなたが散歩していると、突然 <var>N</var> 体の魔物が出現しました。それぞれの魔物は <em>体力</em> という値を持ち、<var>i</var> 体目の魔物の出現時の体力は <var>h_i</var> です。体力が <var>0</var> 以下となった魔物は直ちに消滅します。</p>
+<p>幸い、あなたは熟練の魔法使いであり、爆発を引き起こして魔物を攻撃できます。一回の爆発では、以下のように魔物の体力を減らすことができます。</p>
+<ul>
+<li>生存している魔物を一体選び、その魔物を中心に爆発を引き起こす。爆発の中心となる魔物の体力は <var>A</var> 減り、その他の魔物の体力はそれぞれ <var>B</var> 減る。ここで、<var>A</var> と <var>B</var> はあらかじめ定まった値であり、<var>A &gt; B</var> である。</li>
+</ul>
+<p>すべての魔物を消し去るためには、最小で何回の爆発を引き起こす必要があるでしょうか？</p>
+</section>
+</div>
+
+<div class="part">
+<section>
+<h3>制約</h3><ul>
+<li>入力値はすべて整数である。</li>
+<li><var>1 ≤ N ≤ 10^5</var></li>
+<li><var>1 ≤ B &lt; A ≤ 10^9</var></li>
+<li><var>1 ≤ h_i ≤ 10^9</var></li>
+</ul>
+</section>
+</div>
+
+<hr />
+<div class="io-style">
+<div class="part">
+<section>
+<h3>入力</h3><p>入力は以下の形式で標準入力から与えられる。</p>
+<pre><var>N</var> <var>A</var> <var>B</var>
+<var>h_1</var>
+<var>h_2</var>
+<var>:</var>
+<var>h_N</var>
+</pre>
+
+</section>
+</div>
+
+<div class="part">
+<section>
+<h3>出力</h3><p>すべての魔物を消し去るために必要な最小の爆発の回数を出力せよ。</p>
+</section>
+</div>
+</div>
+
+<hr />
+<div class="part">
+<section>
+<h3>入力例 1</h3><pre>4 5 3
+8
+7
+4
+2
+</pre>
+
+</section>
+</div>
+
+<div class="part">
+<section>
+<h3>出力例 1</h3><pre>2
+</pre>
+
+<p>以下のようにして、<var>2</var> 回の爆発ですべての魔物を消し去ることができます。</p>
+<ul>
+<li>まず、体力が <var>8</var> の魔物を中心に爆発を引き起こす。<var>4</var> 体の魔物の体力はそれぞれ <var>3</var>, <var>4</var>, <var>1</var>, <var>-1</var> となり、最後の魔物は消滅する。</li>
+<li>次に、残りの体力が <var>4</var> の魔物を中心に爆発を引き起こす。残っていた <var>3</var> 体の魔物の体力はそれぞれ <var>0</var>, <var>-1</var>, <var>-2</var> となり、すべての魔物が消滅する。</li>
+</ul>
+</section>
+</div>
+
+<hr />
+<div class="part">
+<section>
+<h3>入力例 2</h3><pre>2 10 4
+20
+20
+</pre>
+
+</section>
+</div>
+
+<div class="part">
+<section>
+<h3>出力例 2</h3><pre>4
+</pre>
+
+<p>それぞれの魔物を中心に <var>2</var> 回ずつ、合計で <var>4</var> 回の爆発を引き起こす必要があります。</p>
+</section>
+</div>
+
+<hr />
+<div class="part">
+<section>
+<h3>入力例 3</h3><pre>5 2 1
+900000000
+900000000
+1000000000
+1000000000
+1000000000
+</pre>
+
+</section>
+</div>
+
+<div class="part">
+<section>
+<h3>出力例 3</h3><pre>800000000
+</pre></section>
+</div>
+</span>
+<span class="lang-en">
+<p>Score : <var>400</var> points</p>
+
+<div class="part">
+<section>
+<h3>Problem Statement</h3><p>You are going out for a walk, when you suddenly encounter <var>N</var> monsters. Each monster has a parameter called <em>health</em>, and the health of the <var>i</var>-th monster is <var>h_i</var> at the moment of encounter. A monster will vanish immediately when its health drops to <var>0</var> or below.</p>
+<p>Fortunately, you are a skilled magician, capable of causing explosions that damage monsters. In one explosion, you can damage monsters as follows:</p>
+<ul>
+<li>Select an alive monster, and cause an explosion centered at that monster. The health of the monster at the center of the explosion will decrease by <var>A</var>, and the health of each of the other monsters will decrease by <var>B</var>. Here, <var>A</var> and <var>B</var> are predetermined parameters, and <var>A &gt; B</var> holds.</li>
+</ul>
+<p>At least how many explosions do you need to cause in order to vanish all the monsters?</p>
+</section>
+</div>
+
+<div class="part">
+<section>
+<h3>Constraints</h3><ul>
+<li>All input values are integers.</li>
+<li><var>1 ≤ N ≤ 10^5</var></li>
+<li><var>1 ≤ B &lt; A ≤ 10^9</var></li>
+<li><var>1 ≤ h_i ≤ 10^9</var></li>
+</ul>
+</section>
+</div>
+
+<hr />
+<div class="io-style">
+<div class="part">
+<section>
+<h3>Input</h3><p>Input is given from Standard Input in the following format:</p>
+<pre><var>N</var> <var>A</var> <var>B</var>
+<var>h_1</var>
+<var>h_2</var>
+<var>:</var>
+<var>h_N</var>
+</pre>
+
+</section>
+</div>
+
+<div class="part">
+<section>
+<h3>Output</h3><p>Print the minimum number of explosions that needs to be caused in order to vanish all the monsters.</p>
+</section>
+</div>
+</div>
+
+<hr />
+<div class="part">
+<section>
+<h3>Sample Input 1</h3><pre>4 5 3
+8
+7
+4
+2
+</pre>
+
+</section>
+</div>
+
+<div class="part">
+<section>
+<h3>Sample Output 1</h3><pre>2
+</pre>
+
+<p>You can vanish all the monsters in two explosion, as follows:</p>
+<ul>
+<li>First, cause an explosion centered at the monster with <var>8</var> health. The healths of the four monsters become <var>3</var>, <var>4</var>, <var>1</var> and <var>-1</var>, respectively, and the last monster vanishes.</li>
+<li>Second, cause an explosion centered at the monster with <var>4</var> health remaining. The healths of the three remaining monsters become <var>0</var>, <var>-1</var> and <var>-2</var>, respectively, and all the monsters are now vanished.</li>
+</ul>
+</section>
+</div>
+
+<hr />
+<div class="part">
+<section>
+<h3>Sample Input 2</h3><pre>2 10 4
+20
+20
+</pre>
+
+</section>
+</div>
+
+<div class="part">
+<section>
+<h3>Sample Output 2</h3><pre>4
+</pre>
+
+<p>You need to cause two explosions centered at each monster, for a total of four.</p>
+</section>
+</div>
+
+<hr />
+<div class="part">
+<section>
+<h3>Sample Input 3</h3><pre>5 2 1
+900000000
+900000000
+1000000000
+1000000000
+1000000000
+</pre>
+
+</section>
+</div>
+
+<div class="part">
+<section>
+<h3>Sample Output 3</h3><pre>800000000
+</pre></section>
+</div>
+</span>
+</span>
+
+		</div>
+
+		
+
+		
+	</div>
+</div>
+
+
+		
+			<hr>
+			
+			
+			
+<div class="a2a_kit a2a_kit_size_20 a2a_default_style pull-right" data-a2a-url="https://atcoder.jp/contests/arc075/tasks/arc075_b?lang=en" data-a2a-title="D - Widespread">
+	<a class="a2a_button_facebook"></a>
+	<a class="a2a_button_twitter"></a>
+	
+		<a class="a2a_button_telegram"></a>
+	
+	<a class="a2a_dd" href="https://www.addtoany.com/share"></a>
+</div>
+
+		
+		<script async src="//static.addtoany.com/menu/page.js"></script>
+		
+	</div> 
+	<hr>
+</div> 
+<div class="container">
+    <footer class="footer">
+		
+			<ul>
+				<li><a href='/contests/arc075/rules'>Rule</a></li>
+				<li><a href='/contests/arc075/glossary'>Glossary</a></li>
+				
+			</ul>
+		
+		<ul>
+			<li><a href='/tos'>Terms of service</a></li>
+			<li><a href='/privacy'>Privacy Policy</a></li>
+			<li><a href='/personal'>Information Protection Policy</a></li>
+			<li><a href='/company'>Company</a></li>
+			<li><a href='/faq'>FAQ</a></li>
+			<li><a href='/contact'>Contact</a></li>
+			
+		</ul>
+    <div class="text-center">
+        <small id="copyright">Copyright Since 2012 &copy;<a href="http://atcoder.co.jp">AtCoder Inc.</a> All rights reserved.</small>
+    </div>
+    </footer>
+</div>
+<p id="fixed-server-timer" class='contest-timer'></p>
+
+	<div id="scroll-page-top" style="display:none;"><span class="glyphicon glyphicon-arrow-up" aria-hidden="true"></span> Page Top</div>
+
+</body>
+</html>
+
+

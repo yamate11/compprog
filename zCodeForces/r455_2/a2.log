@@ -1,0 +1,1 @@
+b'Traceback (most recent call last):\n  File "/home/y-tanabe/WinHome/bytime/atCoder1710/clib/tool/cfsample", line 3, in <module>\n    import sys, os, re, requests, argparse, bs4\nModuleNotFoundError: No module named \'requests\'\n'

@@ -1,0 +1,22 @@
+vXMax = [0, -1000000000, 7, -3]
+vXMin = [0, 1000000000, -7, -8]
+vYMax = [-6, -1000000000, -6, 7]
+vYMin = [-6, 1000000000, -10, 3]
+addCand(0, 1, 7, _)
+  addCandSub(-5E+08)
+  addCandSub(-1E+09)
+  addCandSub(7)
+addCand(0, 1, -8, _)
+  addCandSub(5E+08)
+  addCandSub(1E+09)
+  addCandSub(-8)
+addCand(2, 3, -6, _)
+  addCandSub(6.5)
+  addCandSub(13)
+  addCandSub(0)
+addCand(2, 3, -6, _)
+  addCandSub(6.5)
+  addCandSub(9)
+  addCandSub(4)
+t = [7, 5e+08, 6.5, 13, 0, 6.5, 9, 4]
+97.5

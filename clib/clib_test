@@ -1,0 +1,32 @@
+#!/usr/bin/env python3
+
+import sys
+from subprocess import run, DEVNULL
+
+withArgs = {}
+withArgs['rollingHash'] = ['10']
+withArgs['cmpNaive'] = ['skip']
+withArgs['interactive'] = ['skip']
+
+def diag(*msg, end='\n'):
+    print(*msg, file=sys.stderr, end=end, flush=True)
+
+def main():
+    failed = []
+    for c in sys.argv[1:]:
+        diag(f'Running {c} ... ', end='')
+        cmd = [f'./{c}'] + withArgs.get(c, [])
+        rc = run(cmd, stdout=DEVNULL, stderr=DEVNULL)
+        if rc.returncode != 0:
+            failed.append(c)
+            diag('NG')
+        else:
+            diag('OK')
+    if len(failed) == 0:
+        diag('\nAll tests passed.')
+    else:
+        diag('\n******')
+        diag('FAILED: Following commands failed: ' + ', '.join(failed))
+        diag('******')
+
+main()

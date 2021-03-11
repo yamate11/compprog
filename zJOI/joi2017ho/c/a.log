@@ -1,0 +1,36 @@
+amin= 5 amax= 28
+
+sub; diff= 11 start= 0
+i= 0 bder= 0
+return false; i= 0 j= 2
+sub; diff= 11 start= 7
+i= 7 bder= 0
+return false; i= 7 j= 1
+diff= 11 b0= 0 b1= 0
+
+sub; diff= 17 start= 0
+i= 0 bder= 0
+return false; i= 0 j= 2
+
+sub; diff= 17 start= 7
+i= 6 bder= 0
+return false; i= 6 j= 1
+diff= 17 b0= 0 b1= 0
+
+sub; diff= 20 start= 0
+i= 1 bder= 1
+return false; i= 5 j= 3
+sub; diff= 20 start= 7
+i= 2 bder= 1
+diff= 20 b0= 0 b1= 1
+
+sub; diff= 18 start= 0
+i= 1 bder= 1
+i= 2 bder= 0
+return false; i= 3 j= 1
+sub; diff= 18 start= 7
+i= 4 bder= 4
+i= 2 bder= 0
+diff= 18 b0= 0 b1= 1
+
+18

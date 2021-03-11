@@ -1,0 +1,16 @@
+#!/usr/bin/env python3
+
+import sys
+
+P = 200003
+p = 2
+
+def pow(m):
+    ans = 1
+    for i in range(m):
+        ans = (ans * p) % P
+    return ans
+
+print(pow(98601), pow(100001), pow(136883))
+print(pow(197202), pow(198602), pow(200002), pow(235484), pow(236884), pow(273766))
+

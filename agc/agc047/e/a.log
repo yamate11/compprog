@@ -1,0 +1,45 @@
+k=3 vec[10] = 8 
+and vec[13] = 0 vec[16] = 0 vec[21] = 0 
+and vec[13] = 0 vec[29] = 0 vec[34] = 0 
+and vec[13] = 0 vec[41] = 1 vec[46] = 0 
+and vec[13] = 0 vec[52] = 1 vec[57] = 0 
+and vec[13] = 0 vec[66] = 1 vec[71] = 0 
+and vec[13] = 0 vec[79] = 1 vec[84] = 0 
+and vec[13] = 0 vec[91] = 1 vec[96] = 0 
+and vec[13] = 0 vec[102] = 1 vec[107] = 0 
+s vec[63] = 0 
+t vec[110] = 0 
+k=2 vec[9] = 4 
+and vec[113] = 0 vec[116] = 0 vec[121] = 0 
+and vec[113] = 0 vec[129] = 0 vec[134] = 0 
+and vec[113] = 0 vec[141] = 1 vec[146] = 0 
+and vec[113] = 0 vec[152] = 1 vec[157] = 0 
+and vec[113] = 0 vec[165] = 0 vec[170] = 0 
+and vec[113] = 0 vec[178] = 1 vec[183] = 0 
+and vec[113] = 0 vec[190] = 1 vec[195] = 0 
+and vec[113] = 0 vec[201] = 1 vec[206] = 0 
+s vec[162] = 0 
+t vec[209] = 0 
+k=1 vec[8] = 2 
+and vec[212] = 1 vec[215] = 0 vec[220] = 0 
+and vec[212] = 1 vec[228] = 0 vec[233] = 0 
+and vec[212] = 1 vec[240] = 1 vec[245] = 1 
+and vec[212] = 1 vec[251] = 1 vec[256] = 1 
+and vec[212] = 1 vec[263] = 0 vec[268] = 0 
+and vec[212] = 1 vec[276] = 0 vec[281] = 0 
+and vec[212] = 1 vec[288] = 1 vec[293] = 1 
+and vec[212] = 1 vec[299] = 0 vec[304] = 0 
+s vec[260] = 6 
+t vec[307] = 2 
+k=0 vec[7] = 1 
+and vec[310] = 0 vec[313] = 0 vec[318] = 0 
+and vec[310] = 0 vec[326] = 0 vec[331] = 0 
+and vec[310] = 0 vec[338] = 1 vec[343] = 0 
+and vec[310] = 0 vec[349] = 1 vec[354] = 0 
+and vec[310] = 0 vec[360] = 0 vec[365] = 0 
+and vec[310] = 0 vec[373] = 0 vec[378] = 0 
+and vec[310] = 0 vec[385] = 0 vec[390] = 0 
+and vec[310] = 0 vec[396] = 1 vec[401] = 0 
+s vec[357] = 6 
+t vec[404] = 2 
+6

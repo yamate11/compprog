@@ -1,0 +1,9 @@
+#!/usr/bin/env python3
+
+import sys
+import time
+
+while True:
+    a = sys.stdin.readline().strip()
+    if a == '': time.sleep(1e9)
+    print(a, flush=True)

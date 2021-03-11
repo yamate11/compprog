@@ -1,0 +1,515 @@
+
+
+
+
+
+
+
+<!DOCTYPE html>
+
+<html>
+<head>
+	<title>F - Pass</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+	<meta http-equiv="Content-Language" content='en'>
+	<meta name="viewport" content="width=device-width,initial-scale=1.0">
+	<meta name="format-detection" content="telephone=no">
+	<meta name="google-site-verification" content="nXGC_JxO0yoP1qBzMnYD_xgufO6leSLw1kyNo2HZltM" />
+
+	
+	<meta name="description" content="AtCoder is a programming contest site for anyone from beginners to experts. We hold weekly programming contests online.">
+	<meta name="author" content="AtCoder Inc.">
+	<link rel="canonical" href="https://atcoder.jp/">
+
+	<meta property="og:site_name" content="AtCoder">
+	
+	<meta property="og:title" content="F - Pass" />
+	<meta property="og:description" content="AtCoder is a programming contest site for anyone from beginners to experts. We hold weekly programming contests online." />
+	<meta property="og:type" content="website" />
+	<meta property="og:url" content="https://atcoder.jp/contests/yahoo-procon2019-qual/tasks/yahoo_procon2019_qual_f" />
+	<meta property="og:image" content="https://img.atcoder.jp/assets/atcoder.png" />
+	<meta name="twitter:card" content="summary" />
+	<meta name="twitter:site" content="@atcoder" />
+	
+	<meta property="twitter:title" content="F - Pass" />
+
+	<link href='//fonts.googleapis.com/css?family=Lato:400,700' rel='stylesheet' type='text/css'>
+	<link rel="stylesheet" type="text/css" href='/public/css/bootstrap.min.css?v=201902082153'>
+	<link rel="stylesheet" type="text/css" href='/public/css/base.css?v=201902082153'>
+	<link rel="shortcut icon" type="image/png" href="//img.atcoder.jp/assets/favicon.png">
+	<link rel="apple-touch-icon" href="//img.atcoder.jp/assets/favicon.png">
+	<script src='/public/js/lib/jquery-1.9.1.min.js?v=201902082153'></script>
+	<script src='/public/js/lib/bootstrap.min.js?v=201902082153'></script>
+	<script src="//cdnjs.cloudflare.com/ajax/libs/js-cookie/2.1.4/js.cookie.min.js"></script>
+	<script src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/moment.min.js"></script>
+	<script src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/locale/ja.js"></script>
+	<script>
+		var LANG = "en";
+		var userScreenName = "";
+	</script>
+	<script src='/public/js/utils.js?v=201902082153'></script>
+	
+	
+		<script src='/public/js/contest.js?v=201902082153'></script>
+		<link href='/public/css/contest.css?v=201902082153' rel="stylesheet" />
+		<script>
+			var contestScreenName = "yahoo-procon2019-qual";
+			var remainingText = "Remaining Time";
+			var countDownText = "Contest begins in";
+			var startTime = moment("2019-02-09T21:00:00+09:00");
+			var endTime = moment("2019-02-09T23:00:00+09:00");
+		</script>
+		<style>html body {
+    background-color: #eaeaea !important;
+    background-image:  none !important;
+}
+
+#contest-statement section ol li {
+    margin-top: -2ex;
+    margin-bottom: 3ex;
+    font-size: small;
+}
+
+.navbar-inner {
+    background-color: #e62e2e !important;
+    background-image: none !important;
+}
+
+.caret {
+    color: #fff !important;
+    opacity: 1 !important;
+}
+
+.bland-small {
+    color: #fff !important;
+}
+
+.navbar .divider-vertical {
+    background-color: #fff !important;
+    border-right: none;
+}
+
+.navbar .nav > li > a {
+    color: #fff !important;
+}
+
+.insert-participant-box {
+    background-color: #fff !important;
+    text-align: -webkit-center !important;
+    padding: 0 0 0 0;
+}
+
+.insert-participant-box h1{
+    font-size: 280%;
+}</style>
+	
+	
+		<script type="text/x-mathjax-config">MathJax.Hub.Config({messageStyle:"none",tex2jax:{skipTags:["script","noscript","style","textarea","code"],inlineMath:[['\\(','\\)']]}});</script>
+		<script src="//cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+		<script src='/public/js/task.js?v=201902082153'></script>
+	
+	
+	
+	
+		<link href="//cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/css/select2.min.css" rel="stylesheet" />
+		<link href="//cdnjs.cloudflare.com/ajax/libs/select2-bootstrap-theme/0.1.0-beta.10/select2-bootstrap.min.css" rel="stylesheet" />
+		<script src='/public/js/lib/select2.min.js?v=201902082153'></script>
+	
+	
+		<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/codemirror/5.38.0/codemirror.min.css">
+		<script src="//cdnjs.cloudflare.com/ajax/libs/codemirror/5.38.0/codemirror.min.js"></script>
+		<script src='/public/js/codeMirror/merged.js?v=201902082153'></script>
+	
+	
+		<script src="//cdn.rawgit.com/google/code-prettify/master/loader/run_prettify.js"></script>
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	<script src='/public/js/base.js?v=201902082153'></script>
+	<script src='/public/js/ga.js?v=201902082153'></script>
+</head>
+
+<body>
+<div id="modal-contest-start" class="modal fade" tabindex="-1" role="dialog">
+	<div class="modal-dialog" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+				<h4 class="modal-title">Contest started</h4>
+			</div>
+			<div class="modal-body">
+				<p>Yahoo Programming Contest 2019 has begun.</p>
+			</div>
+			<div class="modal-footer">
+				
+					<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+				
+			</div>
+		</div>
+	</div>
+</div>
+<div id="modal-contest-end" class="modal fade" tabindex="-1" role="dialog">
+	<div class="modal-dialog" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+				<h4 class="modal-title">Contest is over</h4>
+			</div>
+			<div class="modal-body">
+				<p>Yahoo Programming Contest 2019 has ended.</p>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+			</div>
+		</div>
+	</div>
+</div>
+<div id="main-div" class="float-container">
+	<nav class="navbar navbar-inverse navbar-fixed-top">
+		<div class="container-fluid">
+			<div class="navbar-header">
+				<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapse" aria-expanded="false">
+					<span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span>
+				</button>
+				<a class="navbar-brand" href="/"></a>
+			</div>
+			<div class="collapse navbar-collapse" id="navbar-collapse">
+				<ul class="nav navbar-nav">
+				
+					<li><a class="contest-title" href='/contests/yahoo-procon2019-qual'>Yahoo Programming Contest 2019</a></li>
+				
+				</ul>
+				<ul class="nav navbar-nav navbar-right">
+					
+					<li class="dropdown">
+						<a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
+							<img src='//img.atcoder.jp/assets/flag-lang/en.png'> English <span class="caret"></span>
+						</a>
+						<ul class="dropdown-menu">
+							<li><a href='/contests/yahoo-procon2019-qual/tasks/yahoo_procon2019_qual_f?lang=ja'><img src='//img.atcoder.jp/assets/flag-lang/ja.png'> 日本語</a></li>
+							<li><a href='/contests/yahoo-procon2019-qual/tasks/yahoo_procon2019_qual_f?lang=en'><img src='//img.atcoder.jp/assets/flag-lang/en.png'> English</a></li>
+						</ul>
+					</li>
+					
+					
+						<li><a href='/register?continue=https%3A%2F%2Fatcoder.jp%2Fcontests%2Fyahoo-procon2019-qual%2Ftasks%2Fyahoo_procon2019_qual_f'>Sign Up</a></li>
+						<li><a href='/login?continue=https%3A%2F%2Fatcoder.jp%2Fcontests%2Fyahoo-procon2019-qual%2Ftasks%2Fyahoo_procon2019_qual_f'>Sign In</a></li>
+					
+				</ul>
+			</div>
+		</div>
+	</nav>
+	<form method="POST" name="form_logout" action='/logout?continue=https%3A%2F%2Fatcoder.jp%2Fcontests%2Fyahoo-procon2019-qual%2Ftasks%2Fyahoo_procon2019_qual_f'>
+		<input type="hidden" name="csrf_token" value='bompOLEE9d0PBy9qmbCN9GYoqxb40V8vMaMq8n3lcc0=' />
+	</form>
+	<div id="main-container" class="container" style="padding-top:50px;">
+		
+
+<div class="row">
+	<div id="contest-nav-tabs" class="col-sm-12 mb-2 cnvtb-fixed">
+	<div>
+		<small class="contest-duration">Contest Duration: <a href='http://www.timeanddate.com/worldclock/fixedtime.html?iso=20190209T2100&p1=248' target='blank'><time class='fixtime fixtime-full'>2019-02-09 21:00:00+0900</time></a> ~ <a href='http://www.timeanddate.com/worldclock/fixedtime.html?iso=20190209T2300&p1=248' target='blank'><time class='fixtime fixtime-full'>2019-02-09 23:00:00+0900</time></a> (local time)</small>
+		
+	</div>
+	<ul class="nav nav-tabs">
+		<li><a href='/contests/yahoo-procon2019-qual'><span class="glyphicon glyphicon-home" aria-hidden="true"></span> Top</a></li>
+		
+			<li class="active"><a href='/contests/yahoo-procon2019-qual/tasks'><span class="glyphicon glyphicon-tasks" aria-hidden="true"></span> Tasks</a></li>
+		
+
+		
+			<li><a href='/contests/yahoo-procon2019-qual/clarifications'><span class="glyphicon glyphicon-question-sign" aria-hidden="true"></span> Clarifications <span id="clar-badge" class="badge"></span></a></li>
+		
+
+		
+
+		
+			<li>
+				<a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false"><span class="glyphicon glyphicon-list" aria-hidden="true"></span> Submissions<span class="caret"></span></a>
+				<ul class="dropdown-menu">
+					<li><a href='/contests/yahoo-procon2019-qual/submissions'><span class="glyphicon glyphicon-globe" aria-hidden="true"></span> All Submissions</a></li>
+					
+				</ul>
+			</li>
+		
+
+		
+			<li><a href='/contests/yahoo-procon2019-qual/standings'><span class="glyphicon glyphicon-sort-by-attributes-alt" aria-hidden="true"></span> Standings</a></li>
+		
+
+		
+
+		
+			<li><a href='https://img.atcoder.jp/yahoo-procon2019-qual/editorial.pdf' target="_blank"><span class="glyphicon glyphicon-book" aria-hidden="true"></span> Editorial</a></li>
+		
+
+		<li class="pull-right"><a id="fix-cnvtb" href="javascript:void(0)"><span class="glyphicon glyphicon-pushpin" aria-hidden="true"></span></a></li>
+	</ul>
+</div>
+	<div class="col-sm-12">
+		<span class="h2">F - Pass</span>
+		<hr />
+		<p>Time Limit: 2 sec / Memory Limit: 1024 MB</p>
+
+		<div id="task-statement">
+			<span class="lang">
+<span class="lang-ja">
+<p>配点 : <var>900</var> 点</p>
+
+<div class="part">
+<section>
+<h3>問題文</h3><p><var>N</var> 人のすぬけ君が <var>1</var> 列に並んでいます。
+長さ <var>N</var> の文字列 <var>S</var> が与えられ、前から <var>i</var> 人目のすぬけ君は <var>S</var> の <var>i</var> 文字目が <code>0</code> のとき赤いボールを <var>2</var> つ、<code>1</code> 
+のとき赤いボールと青いボールを <var>1</var> つずつ、<code>2</code> のとき青いボールを <var>2</var> つ持っています。</p>
+<p>高橋君は最初、空の列を持っています。以下の操作を <var>2N</var> 回繰り返してできる列としてありうるものの個数を <var>998244353</var> で割った
+あまりを求めてください。</p>
+<ul>
+<li>ボールを <var>1</var> つ以上持っているすぬけ君は全員同時に、自分が持っているボールの中から <var>1</var> つを選び、前のすぬけ君に渡す。ただし、先頭のすぬけ君は、高橋君に渡す。</li>
+<li>高橋君は、先頭のすぬけ君から受け取ったボールを、列の末尾に並べる。</li>
+</ul>
+</section>
+</div>
+
+<div class="part">
+<section>
+<h3>制約</h3><ul>
+<li><var>1 \leq |S| \leq 2000</var></li>
+<li><var>S</var> は <code>0</code>,<code>1</code>,<code>2</code> からなる</li>
+</ul>
+<p>整数 <var>N</var> は入力では与えられず、文字列 <var>S</var> の長さとして間接的に与えられることに注意せよ。</p>
+</section>
+</div>
+
+<hr />
+
+<div class="io-style">
+<div class="part">
+<section>
+<h3>入力</h3><p>入力は以下の形式で標準入力から与えられる。</p>
+<pre><var>S</var>
+</pre>
+
+</section>
+</div>
+
+<div class="part">
+<section>
+<h3>出力</h3><p>操作を <var>2N</var> 回繰り返してできる列としてありうるものの個数を <var>998244353</var> で割ったあまりを出力せよ。</p>
+</section>
+</div>
+</div>
+
+<hr />
+
+<div class="part">
+<section>
+<h3>入力例 1</h3><pre>02
+</pre>
+
+</section>
+</div>
+
+<div class="part">
+<section>
+<h3>出力例 1</h3><pre>3
+</pre>
+
+<p>前から <var>i</var> 個目に並んだボールの色が赤のとき <code>r</code> を、青のとき <code>b</code> を <var>i</var> 文字目の文字とした長さ <var>2N</var> の文字列で列を表すことにすれば、
+<code>rrbb</code>,<code>rbrb</code>,<code>rbbr</code> が条件を満たします。</p>
+</section>
+</div>
+
+<hr />
+
+<div class="part">
+<section>
+<h3>入力例 2</h3><pre>1210
+</pre>
+
+</section>
+</div>
+
+<div class="part">
+<section>
+<h3>出力例 2</h3><pre>55
+</pre>
+
+</section>
+</div>
+
+<hr />
+
+<div class="part">
+<section>
+<h3>入力例 3</h3><pre>12001021211100201020
+</pre>
+
+</section>
+</div>
+
+<div class="part">
+<section>
+<h3>出力例 3</h3><pre>543589959
+</pre></section>
+</div>
+</span>
+<span class="lang-en">
+<p>Score : <var>900</var> points</p>
+
+<div class="part">
+<section>
+<h3>Problem Statement</h3><p>There are <var>N</var> Snukes lining up in a row.
+You are given a string <var>S</var> of length <var>N</var>. The <var>i</var>-th Snuke from the front has two red balls if the <var>i</var>-th character in <var>S</var> is <code>0</code>; one red ball and one blue ball if the <var>i</var>-th character in <var>S</var> is <code>1</code>; two blue balls if the <var>i</var>-th character in <var>S</var> is <code>2</code>.</p>
+<p>Takahashi has a sequence that is initially empty. Find the number of the possible sequences he may have after repeating the following procedure <var>2N</var> times, modulo <var>998244353</var>:</p>
+<ul>
+<li>Each Snuke who has one or more balls simultaneously chooses one of his balls and hand it to the Snuke in front of him, or hand it to Takahashi if he is the first Snuke in the row.</li>
+<li>Takahashi receives the ball and put it to the end of his sequence.</li>
+</ul>
+</section>
+</div>
+
+<div class="part">
+<section>
+<h3>Constraints</h3><ul>
+<li><var>1 \leq |S| \leq 2000</var></li>
+<li><var>S</var> consists of <code>0</code>,<code>1</code> and <code>2</code>.</li>
+</ul>
+<p>Note that the integer <var>N</var> is not directly given in input; it is given indirectly as the length of the string <var>S</var>.</p>
+</section>
+</div>
+
+<hr />
+
+<div class="io-style">
+<div class="part">
+<section>
+<h3>Input</h3><p>Input is given from Standard Input in the following format:</p>
+<pre><var>S</var>
+</pre>
+
+</section>
+</div>
+
+<div class="part">
+<section>
+<h3>Output</h3><p>Print the number of the possible sequences Takahashi may have after repeating the procedure <var>2N</var> times, modulo <var>998244353</var>.</p>
+</section>
+</div>
+</div>
+
+<hr />
+
+<div class="part">
+<section>
+<h3>Sample Input 1</h3><pre>02
+</pre>
+
+</section>
+</div>
+
+<div class="part">
+<section>
+<h3>Sample Output 1</h3><pre>3
+</pre>
+
+<p>There are three sequences that Takahashi may have: <code>rrbb</code>, <code>rbrb</code> and <code>rbbr</code>, where <code>r</code> and <code>b</code> stand for red and blue balls, respectively.</p>
+</section>
+</div>
+
+<hr />
+
+<div class="part">
+<section>
+<h3>Sample Input 2</h3><pre>1210
+</pre>
+
+</section>
+</div>
+
+<div class="part">
+<section>
+<h3>Sample Output 2</h3><pre>55
+</pre>
+
+</section>
+</div>
+
+<hr />
+
+<div class="part">
+<section>
+<h3>Sample Input 3</h3><pre>12001021211100201020
+</pre>
+
+</section>
+</div>
+
+<div class="part">
+<section>
+<h3>Sample Output 3</h3><pre>543589959
+</pre></section>
+</div>
+</span>
+</span>
+
+		</div>
+
+		
+
+		
+	</div>
+</div>
+
+
+		
+			<hr>
+			
+			
+			<div class="pull-right">
+	<a class="share-button" target="_blank" onclick="share_button('facebook','\/contests\/yahoo-procon2019-qual\/tasks\/yahoo_procon2019_qual_f?lang=en','F - Pass',600,400)" style="background-image:url(//img.atcoder.jp/assets/share/facebook.png);"></a>
+	<a class="share-button" target="_blank" onclick="share_button('twitter','\/contests\/yahoo-procon2019-qual\/tasks\/yahoo_procon2019_qual_f?lang=en','F - Pass',512,256)" style="background-image:url(//img.atcoder.jp/assets/share/twitter.png);"></a>
+	<a class="share-button" target="_blank" onclick="share_button('google_plus','\/contests\/yahoo-procon2019-qual\/tasks\/yahoo_procon2019_qual_f?lang=en','F - Pass',512,450)" style="background-image:url(//img.atcoder.jp/assets/share/google.png);"></a>
+	<a class="share-button" target="_blank" onclick="share_button('hatena','\/contests\/yahoo-procon2019-qual\/tasks\/yahoo_procon2019_qual_f?lang=en','F - Pass',512,360)" style="background-image:url(//img.atcoder.jp/assets/share/hatena.png);"></a>
+</div>
+		
+		
+	</div> 
+	<hr>
+</div> 
+<div class="container">
+    <footer class="footer">
+		
+			<ul>
+				<li><a href='/contests/yahoo-procon2019-qual/rules'>Rule</a></li>
+				<li><a href='/contests/yahoo-procon2019-qual/glossary'>Glossary</a></li>
+				
+			</ul>
+		
+		<ul>
+			<li><a href='/tos'>Terms of service</a></li>
+			<li><a href='/privacy'>Privacy Policy</a></li>
+			<li><a href='/personal'>Information Protection Policy</a></li>
+			<li><a href='/company'>Company</a></li>
+			<li><a href='/faq'>FAQ</a></li>
+			<li><a href='/contact'>Contact</a></li>
+			
+		</ul>
+    <div class="text-center">
+        <small id="copyright">Copyright Since 2012 &copy;<a href="http://atcoder.co.jp">AtCoder Inc.</a> All rights reserved.</small>
+    </div>
+    </footer>
+</div>
+<p id="fixed-server-timer" class='contest-timer'></p>
+
+	<div id="scroll-page-top" style="display:none;"><span class="glyphicon glyphicon-arrow-up" aria-hidden="true"></span> Page Top</div>
+
+</body>
+</html>
+

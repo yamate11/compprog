@@ -1,0 +1,7 @@
+#!/usr/bin/env python3
+
+N, M = map(int, input().strip().split(' '));
+for i in range(M):
+    input()
+input()
+print('OK')

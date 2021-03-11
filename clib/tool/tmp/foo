@@ -1,0 +1,22 @@
+#!/usr/bin/env python3
+
+class MyException(Exception):
+    pass
+
+def foo():
+    def bar(x):
+        if x < 0:
+            raise MyException('mymsg')
+        print(f'Put {x}')
+
+    try:
+        bar('xx')
+        bar(3)
+        bar(-5)
+    except MyException:
+        print(f'caught')
+
+def main():
+    foo()
+
+main()

@@ -1,0 +1,251 @@
+#!/usr/bin/env python3
+
+import requests, sys, argparse, os, re, pickle, datetime
+from bs4 import BeautifulSoup
+from urllib.parse import unquote
+
+args = None
+sess = None
+fKeep = None
+contestName = None
+
+topDir = f'{os.environ["HOME"]}/WinHome/bytime/atCoder1710'
+cookiesFile = f'{topDir}/.cookies'
+
+def abort(msg):
+    print(msg, file=sys.stderr)
+    sys.exit(1)
+
+def getPage(url):
+    r = sess.get(url)
+    if r.status_code != requests.codes.ok:
+        abort(f'Failed to get page {url}')
+    r.encoding = 'UTF-8'
+    return r.text
+
+def doLogin():
+    url = 'https://atcoder.jp/login?continue=https%3A%2F%2Fatcoder.jp%2Fhome'
+    loginPage = getPage(url)
+    soup = BeautifulSoup(loginPage, 'lxml')
+    sch = soup.find_all(attrs={'name': 'csrf_token'})
+    if not sch:
+        abort(f'find_all: no csrf_token')
+    csrf_token = sch[0]['value']
+    dict = {'username': 'yamate11', 'password': 'picture19river',
+            'csrf_token': csrf_token};
+    r = sess.post(url, data=dict);
+    if r.status_code != requests.codes.ok:
+        abort(f'post: status_code: {r.status_code}')
+    with open(cookiesFile, 'wb') as wfp:
+        pickle.dump(sess.cookies, wfp)
+
+def login():
+    lim = datetime.datetime.now().timestamp() - 3600*24*7
+    if not os.path.exists(cookiesFile) or os.stat(cookiesFile).st_mtime < lim:
+        return doLogin()
+    with open(cookiesFile, 'rb') as fp:
+        sess.cookies.update(pickle.load(fp))
+
+def conflictFiles(qdict):
+    files = []
+    for d in qdict:
+        if not os.path.isdir(d): continue
+        for f in os.listdir(d):
+            if f in ['q.html', 'Makefile', 'cans.cc'] \
+               or (f[0] == 'd' and f[-4:] == '.txt'):
+                files.append(f'{d}/{f}')
+    return files
+
+def quest():
+    qlist = 'qlist.html'
+    if not os.path.exists(qlist):
+        url = f'https://atcoder.jp/contests/{contestName}/tasks'
+        page = getPage(url)
+        with open(qlist, 'w', encoding='UTF-8') as wfp:
+            print(page, file=wfp, end='')
+    with open(qlist, 'r', encoding='UTF-8') as fp:
+        soup = BeautifulSoup(fp, 'lxml')
+    qdict = {}
+    for row in soup.table.find_all('tr')[1:]:
+        qdict[row.a.string.lower()] = row.a.attrs['href']
+    if args.all_questions:
+        return qdict
+    retv = {}
+    for x in args.quest:
+        xx = x.lower()
+        if xx not in qdict: abort(f'Unknown question {x}')
+        retv[xx] = qdict[xx]
+    return retv
+
+# We assume that samples are in <h3> tags....
+def extractEg(qid, page):
+    def sub(tag, exp, dic):
+        if not tag.string: return
+        mo = re.search(exp, tag.string)
+        if not mo: return
+        while tag:
+            tag = tag.next_sibling
+            if tag.name == 'pre': break
+            if 'find_all' in dir(tag) and tag.find_all('pre'):
+                tag = tag.pre
+                break
+        if not tag:
+            print("Warning: Failed to find pre tag.", file=sys.stderr)
+            return
+        dic[mo[1]] = tag.string.strip() if tag.string else ''
+
+    soup = BeautifulSoup(page, 'lxml')
+    ins = {}
+    outs = {}
+    for tag in soup.find_all('h3'):
+        sub(tag, r'(?:Sample\s*Input|入力例)\s*(\d+)', ins)
+        sub(tag, r'(?:Sample\s*Output|出力例)\s*(\d+)', outs)
+    for i in ins:
+        if i not in outs: continue
+        infile  = f'{qid}/d{i}.txt'
+        outfile = f'{qid}/do{i}.txt'
+        if fKeep and (os.path.exists(infile) or os.path.exists(outfile)):
+            continue
+        with open(infile, 'w') as wfp:
+            if ins[i]:
+                print(ins[i], file=wfp)
+        with open(outfile, 'w') as wfp:
+            if outs[i]:
+                print(outs[i], file=wfp)
+
+def makeMakefile(path):
+    with open(path, 'w', encoding='UTF-8') as wfp:
+        print('''
+# CXX = g++
+# CXXCOMMONFLAGS = -std=gnu++1y -Wall -Wno-format-security -Wshadow
+
+CXX = g++-9
+WARNINGS = -Wall -Wno-format-security -Wshadow -fconcepts
+BOOSTINCLIB = -I/home/y-tanabe/lib/boost_1_73_0
+CXXCOMMONFLAGS = -std=gnu++17 $(WARNINGS) $(BOOSTINCLIB)
+
+ifdef CMPNAIVE
+  CMPNAIVEFLAGS = -DCMPNAIVE=1
+else
+  CMPNAIVEFLAGS = 
+endif
+
+ifdef DEBUG
+  DEBUGFLAGS = -g -O0 -D_GLIBCXX_DEBUG -DDEBUG=1
+else
+  DEBUGFLAGS = -O2
+endif
+
+ifeq ($(DEBUG), 2)
+  DEBUGFLAGS = -g -O0 -D_GLIBCXX_DEBUG -DDEBUG=1 -DDEBUG_LIB=1
+endif
+
+CXXFLAGS = $(DEBUGFLAGS) $(CMPNAIVEFLAGS) $(CXXCOMMONFLAGS) 
+
+all: cans
+
+clean:
+	$(RM) cans.o cans cans.exe *~ *.stackdump core
+''', file=wfp)
+
+def makeSource(path):
+    with open(path, 'w', encoding='UTF-8') as wfp:
+        print('''#include <bits/stdc++.h>
+#include <cassert>
+typedef long long int ll;
+using namespace std;
+
+// @@ !! LIM()
+
+int main(/* int argc, char *argv[] */) {
+  ios_base::sync_with_stdio(false);
+  cin.tie(nullptr);
+  cout << setprecision(20);
+
+  return 0;
+}
+''', file=wfp)
+
+def doQuest(qid, url):
+    if not os.path.exists(qid):
+        os.mkdir(qid)
+    p = f'{qid}/q.html'
+    if not (fKeep and os.path.exists(p)):
+        page = getPage(url)
+        with open(p, 'w', encoding='UTF-8') as wfp:
+            print(page, end='', file=wfp)
+    with open(p, 'r', encoding='UTF-8') as fp:
+        page = fp.read()
+        # It may seem that in the case of
+        # "not (fKeep and os.apth.exists(p)" you do not need to read again,
+        # but this code forces translation from \r\n to \n.
+    extractEg(qid, page)
+
+    p = f'{qid}/Makefile'
+    if not (fKeep and os.path.exists(p)):
+        makeMakefile(p)
+
+    p = f'{qid}/cans.cc'
+    if not (fKeep and os.path.exists(p)):
+        makeSource(p)
+
+def getContestName(name):
+    cnFile = ".contestName"
+    if name:
+        with open(cnFile, 'w') as wfp:
+            print(name, file=wfp)
+        return name
+    if os.path.exists(cnFile):
+        with open(cnFile, 'r') as fp:
+            return fp.readline().strip()
+    return os.path.basename(os.getcwd())
+
+def main():
+    global args, fKeep, sess, contestName
+    parser = argparse.ArgumentParser(
+        description='''Reads AtCoder questions, extracts input/output examples,
+        makes a makefile and cans.cc.
+'''
+    )
+    parser.add_argument(
+        '-e', '--existing', type=str,
+        choices=['keep', 'overwrite', 'k', 'o'],
+        help="If 'k' or 'keep' is specified, files are untouched; "
+             "for 'o' or 'overwrite', files are overwritten."
+    )
+    parser.add_argument(
+        '-c', '--contest', type=str,
+        help='''Contest identifier, such as abc147 or tdpc.
+        If not specified, it is taken from the most recently specified name,
+        which has been saved into ./.contestName, or the directory name.
+        ''')
+    parser.add_argument(
+        '-a', '--all_questions', action='store_true',
+        help='All questions will be retrieved.')
+    parser.add_argument(
+        'quest', type=str, nargs='*',
+        help='question identifier such as a or f')
+    args = parser.parse_args()
+
+    if not args.quest and not args.all_questions:
+        abort('No question is specified.')
+    contestName = getContestName(args.contest)
+
+    sess = requests.Session()
+    login()
+    qdict = quest()
+
+    if args.existing:
+        fKeep = args.existing[0] == 'k'
+    else:
+        files = conflictFiles(qdict)
+        if files:
+            abort('You need to specify --existing '
+                  + 'because the following files exist: '
+                  + ' '.join(files))
+        fKeep = True   # We really do not need it, but just in case.
+
+    for q in qdict:
+        doQuest(q, f'https://atcoder.jp{qdict[q]}')
+
+main()

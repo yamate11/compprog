@@ -1,0 +1,554 @@
+
+
+
+
+
+
+<!DOCTYPE html>
+
+<html>
+<head>
+	<title>C - Snuke the Wizard</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+	<meta http-equiv="Content-Language" content='en'>
+	<meta name="viewport" content="width=device-width,initial-scale=1.0">
+	<meta name="format-detection" content="telephone=no">
+	<meta name="google-site-verification" content="nXGC_JxO0yoP1qBzMnYD_xgufO6leSLw1kyNo2HZltM" />
+
+	
+	<meta name="description" content="AtCoder is a programming contest site for anyone from beginners to experts. We hold weekly programming contests online.">
+	<meta name="author" content="AtCoder Inc.">
+	<link rel="canonical" href="https://atcoder.jp/">
+
+	<meta property="og:site_name" content="AtCoder">
+	
+	<meta property="og:title" content="C - Snuke the Wizard" />
+	<meta property="og:description" content="AtCoder is a programming contest site for anyone from beginners to experts. We hold weekly programming contests online." />
+	<meta property="og:type" content="website" />
+	<meta property="og:url" content="https://atcoder.jp/contests/exawizards2019/tasks/exawizards2019_c" />
+	<meta property="og:image" content="https://img.atcoder.jp/assets/atcoder.png" />
+	<meta name="twitter:card" content="summary" />
+	<meta name="twitter:site" content="@atcoder" />
+	
+	<meta property="twitter:title" content="C - Snuke the Wizard" />
+
+	<link href='//fonts.googleapis.com/css?family=Lato:400,700' rel='stylesheet' type='text/css'>
+	<link rel="stylesheet" type="text/css" href='/public/css/bootstrap.min.css?v=201903302024'>
+	<link rel="stylesheet" type="text/css" href='/public/css/base.css?v=201903302024'>
+	<link rel="shortcut icon" type="image/png" href="//img.atcoder.jp/assets/favicon.png">
+	<link rel="apple-touch-icon" href="//img.atcoder.jp/assets/atcoder.png">
+	<script src='/public/js/lib/jquery-1.9.1.min.js?v=201903302024'></script>
+	<script src='/public/js/lib/bootstrap.min.js?v=201903302024'></script>
+	<script src="//cdnjs.cloudflare.com/ajax/libs/js-cookie/2.1.4/js.cookie.min.js"></script>
+	<script src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/moment.min.js"></script>
+	<script src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/locale/ja.js"></script>
+	<script>
+		var LANG = "en";
+		var userScreenName = "";
+	</script>
+	<script src='/public/js/utils.js?v=201903302024'></script>
+	
+	
+		<script src='/public/js/contest.js?v=201903302024'></script>
+		<link href='/public/css/contest.css?v=201903302024' rel="stylesheet" />
+		<script>
+			var contestScreenName = "exawizards2019";
+			var remainingText = "Remaining Time";
+			var countDownText = "Contest begins in";
+			var startTime = moment("2019-03-30T21:00:00+09:00");
+			var endTime = moment("2019-03-30T23:00:00+09:00");
+		</script>
+		<style>.insert-participant-box {
+    background-color: #fff !important;
+    text-align: -webkit-center !important;
+}
+</style>
+	
+	
+		<script type="text/x-mathjax-config">MathJax.Hub.Config({messageStyle:"none",tex2jax:{skipTags:["script","noscript","style","textarea","code"],inlineMath:[['\\(','\\)']]}});</script>
+		<script src="//cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+		<script src='/public/js/task.js?v=201903302024'></script>
+	
+	
+	
+	
+		<link href="//cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/css/select2.min.css" rel="stylesheet" />
+		<link href="//cdnjs.cloudflare.com/ajax/libs/select2-bootstrap-theme/0.1.0-beta.10/select2-bootstrap.min.css" rel="stylesheet" />
+		<script src='/public/js/lib/select2.min.js?v=201903302024'></script>
+	
+	
+		<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/codemirror/5.38.0/codemirror.min.css">
+		<script src="//cdnjs.cloudflare.com/ajax/libs/codemirror/5.38.0/codemirror.min.js"></script>
+		<script src='/public/js/codeMirror/merged.js?v=201903302024'></script>
+	
+	
+		<script src="//cdn.rawgit.com/google/code-prettify/master/loader/run_prettify.js"></script>
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	<script src='/public/js/base.js?v=201903302024'></script>
+	<script src='/public/js/ga.js?v=201903302024'></script>
+</head>
+
+<body>
+<div id="modal-contest-start" class="modal fade" tabindex="-1" role="dialog">
+	<div class="modal-dialog" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+				<h4 class="modal-title">Contest started</h4>
+			</div>
+			<div class="modal-body">
+				<p>ExaWizards 2019 has begun.</p>
+			</div>
+			<div class="modal-footer">
+				
+					<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+				
+			</div>
+		</div>
+	</div>
+</div>
+<div id="modal-contest-end" class="modal fade" tabindex="-1" role="dialog">
+	<div class="modal-dialog" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+				<h4 class="modal-title">Contest is over</h4>
+			</div>
+			<div class="modal-body">
+				<p>ExaWizards 2019 has ended.</p>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+			</div>
+		</div>
+	</div>
+</div>
+<div id="main-div" class="float-container">
+	<nav class="navbar navbar-inverse navbar-fixed-top">
+		<div class="container-fluid">
+			<div class="navbar-header">
+				<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapse" aria-expanded="false">
+					<span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span>
+				</button>
+				<a class="navbar-brand" href="/"></a>
+			</div>
+			<div class="collapse navbar-collapse" id="navbar-collapse">
+				<ul class="nav navbar-nav">
+				
+					<li><a class="contest-title" href='/contests/exawizards2019'>ExaWizards 2019</a></li>
+				
+				</ul>
+				<ul class="nav navbar-nav navbar-right">
+					
+					<li class="dropdown">
+						<a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
+							<img src='//img.atcoder.jp/assets/flag-lang/en.png'> English <span class="caret"></span>
+						</a>
+						<ul class="dropdown-menu">
+							<li><a href='/contests/exawizards2019/tasks/exawizards2019_c?lang=ja'><img src='//img.atcoder.jp/assets/flag-lang/ja.png'> 日本語</a></li>
+							<li><a href='/contests/exawizards2019/tasks/exawizards2019_c?lang=en'><img src='//img.atcoder.jp/assets/flag-lang/en.png'> English</a></li>
+						</ul>
+					</li>
+					
+					
+						<li><a href="/register?continue=https%3A%2F%2Fatcoder.jp%2Fcontests%2Fexawizards2019%2Ftasks%2Fexawizards2019_c">Sign Up</a></li>
+						<li><a href="/login?continue=https%3A%2F%2Fatcoder.jp%2Fcontests%2Fexawizards2019%2Ftasks%2Fexawizards2019_c">Sign In</a></li>
+					
+				</ul>
+			</div>
+		</div>
+	</nav>
+	<form method="POST" name="form_logout" action='/logout?continue=https%3A%2F%2Fatcoder.jp%2Fcontests%2Fexawizards2019%2Ftasks%2Fexawizards2019_c'>
+		<input type="hidden" name="csrf_token" value='Ok&#43;GgzqjwHeUEW0hn2&#43;athNzqYHWLkiMQ&#43;La7soEJio=' />
+	</form>
+	<div id="main-container" class="container" style="padding-top:50px;">
+		
+
+<div class="row">
+	<div id="contest-nav-tabs" class="col-sm-12 mb-2 cnvtb-fixed">
+	<div>
+		<small class="contest-duration">Contest Duration: <a href='http://www.timeanddate.com/worldclock/fixedtime.html?iso=20190330T2100&p1=248' target='blank'><time class='fixtime fixtime-full'>2019-03-30 21:00:00+0900</time></a> ~ <a href='http://www.timeanddate.com/worldclock/fixedtime.html?iso=20190330T2300&p1=248' target='blank'><time class='fixtime fixtime-full'>2019-03-30 23:00:00+0900</time></a> (local time)</small>
+		
+	</div>
+	<ul class="nav nav-tabs">
+		<li><a href='/contests/exawizards2019'><span class="glyphicon glyphicon-home" aria-hidden="true"></span> Top</a></li>
+		
+			<li class="active"><a href='/contests/exawizards2019/tasks'><span class="glyphicon glyphicon-tasks" aria-hidden="true"></span> Tasks</a></li>
+		
+
+		
+			<li><a href='/contests/exawizards2019/clarifications'><span class="glyphicon glyphicon-question-sign" aria-hidden="true"></span> Clarifications <span id="clar-badge" class="badge"></span></a></li>
+		
+
+		
+
+		
+			<li>
+				<a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false"><span class="glyphicon glyphicon-list" aria-hidden="true"></span> Submissions<span class="caret"></span></a>
+				<ul class="dropdown-menu">
+					<li><a href='/contests/exawizards2019/submissions'><span class="glyphicon glyphicon-globe" aria-hidden="true"></span> All Submissions</a></li>
+					
+				</ul>
+			</li>
+		
+
+		
+			<li><a href='/contests/exawizards2019/standings'><span class="glyphicon glyphicon-sort-by-attributes-alt" aria-hidden="true"></span> Standings</a></li>
+		
+
+		
+
+		
+			<li><a href='https://img.atcoder.jp/exawizards2019/editorial.pdf' target="_blank"><span class="glyphicon glyphicon-book" aria-hidden="true"></span> Editorial</a></li>
+		
+
+		<li class="pull-right"><a id="fix-cnvtb" href="javascript:void(0)"><span class="glyphicon glyphicon-pushpin" aria-hidden="true"></span></a></li>
+	</ul>
+</div>
+	<div class="col-sm-12">
+		<span class="h2">C - Snuke the Wizard</span>
+		<hr/>
+		<p>Time Limit: 2 sec / Memory Limit: 1024 MB</p>
+
+		<div id="task-statement">
+			<span class="lang">
+<span class="lang-ja">
+<p>配点 : <var>500</var> 点</p>
+
+<div class="part">
+<section>
+<h3>問題文</h3><p>左から右に向かって <var>1</var> から <var>N</var> の番号がついた <var>N</var> 個のマスがあります。
+各マスには文字が書かれており、マス <var>i</var> には文字 <var>s_i</var> が書かれています。また、各マスにははじめ <var>1</var> 体のゴーレムがいます。</p>
+<p>すぬけ君は <var>Q</var> 回呪文を唱え、ゴーレムたちを移動させました。</p>
+<p><var>i</var> 番目の呪文は文字 <var>t_i</var> と <var>d_i</var> からなり、<var>d_i</var> は <code>L</code> か <code>R</code> のいずれかです。
+すぬけ君がこの呪文を唱えると、<var>t_i</var> が書かれた全てのマスについて、そのマスにいる全てのゴーレムが隣接するマスに移動します。移動する方向は <var>d_i</var> が <code>L</code> ならば左、<code>R</code> ならば右です。</p>
+<p>ただし、マス <var>1</var> から左に移動しようとしたゴーレムと、マス <var>N</var> から右に移動しようとしたゴーレムは消滅します。</p>
+<p><var>Q</var> 回の呪文詠唱後に消滅していないゴーレムの総数を求めてください。</p>
+</section>
+</div>
+
+<div class="part">
+<section>
+<h3>制約</h3><ul>
+<li><var>1 \leq N,Q \leq 2 \times 10^{5}</var></li>
+<li><var>|s| = N</var></li>
+<li><var>s_i,t_i</var> は英大文字</li>
+<li><var>d_i</var> は <code>L</code> または <code>R</code></li>
+</ul>
+</section>
+</div>
+
+<hr />
+<div class="io-style">
+<div class="part">
+<section>
+<h3>入力</h3><p>入力は以下の形式で標準入力から与えられる。</p>
+<pre><var>N</var> <var>Q</var>
+<var>s</var>
+<var>t_1</var> <var>d_1</var>
+<var>\vdots</var>
+<var>t_{Q}</var> <var>d_Q</var>
+</pre>
+
+</section>
+</div>
+
+<div class="part">
+<section>
+<h3>出力</h3><p>答えを出力せよ。</p>
+</section>
+</div>
+</div>
+
+<hr />
+<div class="part">
+<section>
+<h3>入力例 1</h3><pre>3 4
+ABC
+A L
+B L
+B R
+A R
+</pre>
+
+</section>
+</div>
+
+<div class="part">
+<section>
+<h3>出力例 1</h3><pre>2
+</pre>
+
+<ul>
+<li>はじめ、各マスに <var>1</var> 体のゴーレムがいます。</li>
+<li><var>1</var> 番目の呪文では、マス <var>1</var> にいるゴーレムが左に移動しようとし、消滅します。</li>
+<li><var>2</var> 番目の呪文では、マス <var>2</var> にいるゴーレムが左に移動します。</li>
+<li><var>3</var> 番目の呪文では、移動するゴーレムはいません。</li>
+<li><var>4</var> 番目の呪文では、マス <var>1</var> にいるゴーレムが右に移動します。</li>
+<li><var>4</var> 回の呪文詠唱後、マス <var>2</var> に <var>1</var> 体、マス <var>3</var> に <var>1</var> 体のゴーレムがいるため、消滅していないゴーレムは <var>2</var> 体です。</li>
+</ul>
+</section>
+</div>
+
+<hr />
+<div class="part">
+<section>
+<h3>入力例 2</h3><pre>8 3
+AABCBDBA
+A L
+B R
+A R
+</pre>
+
+</section>
+</div>
+
+<div class="part">
+<section>
+<h3>出力例 2</h3><pre>5
+</pre>
+
+<ul>
+<li><var>3</var> 回の呪文詠唱後、マス <var>2</var> に <var>1</var> 体、マス <var>4</var> に <var>2</var> 体、マス <var>6</var> に <var>2</var> 体のゴーレムがいるため、消滅していないゴーレムは <var>5</var> 体です。</li>
+<li><var>1</var> つの呪文で複数のゴーレムが移動しうることに注意してください。</li>
+</ul>
+</section>
+</div>
+
+<hr />
+<div class="part">
+<section>
+<h3>入力例 3</h3><pre>10 15
+SNCZWRCEWB
+B R
+R R
+E R
+W R
+Z L
+S R
+Q L
+W L
+B R
+C L
+A L
+N L
+E R
+Z L
+S L
+</pre>
+
+</section>
+</div>
+
+<div class="part">
+<section>
+<h3>出力例 3</h3><pre>3
+</pre></section>
+</div>
+</span>
+<span class="lang-en">
+<p>Score : <var>500</var> points</p>
+
+<div class="part">
+<section>
+<h3>Problem Statement</h3>
+<p>There are <var>N</var> squares numbered <var>1</var> to <var>N</var> from left to right.
+Each square has a character written on it, and Square <var>i</var> has a letter <var>s_i</var>. Besides, there is initially one golem on each square.</p>
+<p>Snuke cast <var>Q</var> spells to move the golems.</p>
+<p>The <var>i</var>-th spell consisted of two characters <var>t_i</var> and <var>d_i</var>, where <var>d_i</var> is <code>L</code> or <code>R</code>.
+When Snuke cast this spell, for each square with the character <var>t_i</var>, all golems on that square moved to the square adjacent to the left if <var>d_i</var> is <code>L</code>, and moved to the square adjacent to the right if <var>d_i</var> is <code>R</code>.</p>
+<p>However, when a golem tried to move left from Square <var>1</var> or move right from Square <var>N</var>, it disappeared.</p>
+<p>Find the number of golems remaining after Snuke cast the <var>Q</var> spells.</p>
+</section>
+</div>
+
+<div class="part">
+<section>
+<h3>Constraints</h3><ul>
+<li><var>1 \leq N,Q \leq 2 \times 10^{5}</var></li>
+<li><var>|s| = N</var></li>
+<li><var>s_i</var> and <var>t_i</var> are uppercase English letters.</li>
+<li><var>d_i</var> is <code>L</code> or <code>R</code>.</li>
+</ul>
+</section>
+</div>
+
+<hr />
+<div class="io-style">
+<div class="part">
+<section>
+<h3>Input</h3><p>Input is given from Standard Input in the following format:</p>
+<pre><var>N</var> <var>Q</var>
+<var>s</var>
+<var>t_1</var> <var>d_1</var>
+<var>\vdots</var>
+<var>t_{Q}</var> <var>d_Q</var>
+</pre>
+
+</section>
+</div>
+
+<div class="part">
+<section>
+<h3>Output</h3><p>Print the answer.</p>
+</section>
+</div>
+</div>
+
+<hr />
+<div class="part">
+<section>
+<h3>Sample Input 1</h3><pre>3 4
+ABC
+A L
+B L
+B R
+A R
+</pre>
+
+</section>
+</div>
+
+<div class="part">
+<section>
+<h3>Sample Output 1</h3><pre>2
+</pre>
+
+<ul>
+<li>Initially, there is one golem on each square.</li>
+<li>In the first spell, the golem on Square <var>1</var> tries to move left and disappears.</li>
+<li>In the second spell, the golem on Square <var>2</var> moves left.</li>
+<li>In the third spell, no golem moves.</li>
+<li>In the fourth spell, the golem on Square <var>1</var> moves right.</li>
+<li>After the four spells are cast, there is one golem on Square <var>2</var> and one golem on Square <var>3</var>, for a total of two golems remaining.</li>
+</ul>
+</section>
+</div>
+
+<hr />
+<div class="part">
+<section>
+<h3>Sample Input 2</h3><pre>8 3
+AABCBDBA
+A L
+B R
+A R
+</pre>
+
+</section>
+</div>
+
+<div class="part">
+<section>
+<h3>Sample Output 2</h3><pre>5
+</pre>
+
+<ul>
+<li>After the three spells are cast, there is one golem on Square <var>2</var>, two golems on Square <var>4</var> and two golems on Square <var>6</var>, for a total of five golems remaining.</li>
+<li>Note that a single spell may move multiple golems.</li>
+</ul>
+</section>
+</div>
+
+<hr />
+<div class="part">
+<section>
+<h3>Sample Input 3</h3><pre>10 15
+SNCZWRCEWB
+B R
+R R
+E R
+W R
+Z L
+S R
+Q L
+W L
+B R
+C L
+A L
+N L
+E R
+Z L
+S L
+</pre>
+
+</section>
+</div>
+
+<div class="part">
+<section>
+<h3>Sample Output 3</h3><pre>3
+</pre></section>
+</div>
+</span>
+</span>
+
+		</div>
+
+		
+
+		
+	</div>
+</div>
+
+
+		
+			<hr>
+			
+			
+			
+<div class="a2a_kit a2a_kit_size_20 a2a_default_style pull-right" data-a2a-url="https://atcoder.jp/contests/exawizards2019/tasks/exawizards2019_c?lang=en" data-a2a-title="C - Snuke the Wizard">
+	<a class="a2a_button_facebook"></a>
+	<a class="a2a_button_twitter"></a>
+	
+		<a class="a2a_button_telegram"></a>
+	
+	<a class="a2a_dd" href="https://www.addtoany.com/share"></a>
+</div>
+
+		
+		<script async src="//static.addtoany.com/menu/page.js"></script>
+		
+	</div> 
+	<hr>
+</div> 
+<div class="container">
+    <footer class="footer">
+		
+			<ul>
+				<li><a href='/contests/exawizards2019/rules'>Rule</a></li>
+				<li><a href='/contests/exawizards2019/glossary'>Glossary</a></li>
+				
+			</ul>
+		
+		<ul>
+			<li><a href='/tos'>Terms of service</a></li>
+			<li><a href='/privacy'>Privacy Policy</a></li>
+			<li><a href='/personal'>Information Protection Policy</a></li>
+			<li><a href='/company'>Company</a></li>
+			<li><a href='/faq'>FAQ</a></li>
+			<li><a href='/contact'>Contact</a></li>
+			
+		</ul>
+    <div class="text-center">
+        <small id="copyright">Copyright Since 2012 &copy;<a href="http://atcoder.co.jp">AtCoder Inc.</a> All rights reserved.</small>
+    </div>
+    </footer>
+</div>
+<p id="fixed-server-timer" class='contest-timer'></p>
+
+	<div id="scroll-page-top" style="display:none;"><span class="glyphicon glyphicon-arrow-up" aria-hidden="true"></span> Page Top</div>
+
+</body>
+</html>
+
+

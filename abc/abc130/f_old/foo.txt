@@ -1,0 +1,146 @@
+#include <bits/stdc++.h>
+#include <cassert>
+typedef long long int ll;
+using namespace std;
+
+// See debug.cc for usage etc
+#define DEBUG 1
+
+template <class... Args>
+string dbgFormat(const char* fmt, Args... args) {
+  size_t len = snprintf(nullptr, 0, fmt, args...);
+  char buf[len + 1];
+  snprintf(buf, len + 1, fmt, args...);
+  return string(buf);
+}
+
+#if DEBUG
+  #define DLOG(...)        cerr << dbgFormat(__VA_ARGS__) << endl
+  #define DCALL(func, ...) func(__VA_ARGS__)
+#else
+  #define DLOG(...)
+  #define DCALL(func, ...)
+#endif
+
+// Returns a const char* representation of a container, such as a vector.
+// Works for a container whose iterator has begin() and end()
+// E.g.
+//       vector<ll> v = {1, 2, 3};
+//       DLOG("v = %s", toString(v).c_str());    // You need c_str()  
+string toString(auto v) {
+  stringstream ss;
+  ss << "[";
+  for (auto it = v.begin(); it != v.end(); it++) {
+    if (it != v.begin())  ss << ", ";
+    // if the value_type is not printable, modify the following line.
+    ss << *it;
+    // e.g., if it is a pair, use "ss << pairToString(*it)"
+  }
+  ss << "]";
+  return ss.str();
+}
+
+string pairToString(auto p) {
+  stringstream ss;
+  ss << "(" << p.first << ":" << p.second << ")";
+  return ss.str();
+}
+
+
+// Converts a container that has top(), pop() and empty() into a vector.
+// Unfortunately, container_type need to be fixed.  In below, it is ll.
+vector<ll> toVector(auto q)
+{
+  vector<ll> v;
+  while (!q.empty()) {
+    v.push_back(q.top());
+    q.pop();
+  }
+  return v;
+}
+
+#define CR 0
+#define CL 1
+#define CU 2
+#define CD 3
+
+constexpr ll maxN = 1e5;
+constexpr ll limR = 1e9;
+ll N;
+vector<ll> x(maxN), y(maxN);
+vector<int> d(maxN);
+vector<ll> vXMax(4), vXMin(4), vYMax(4), vYMin(4);
+vector<double> tCand;
+
+int cidx(char c) {
+  if (c == 'R') return CR;
+  if (c == 'L') return CL;
+  if (c == 'U') return CU;
+  if (c == 'D') return CD;
+  assert(0);
+}
+
+void addCandSub(double t) {
+  DLOG("  addCandSub(%G)", t);
+  if (-0.001 < t && t < limR) tCand.push_back(t);
+}
+
+void addCand(int dirP, int dirM, ll st, auto vMaxMin) {
+  DLOG("addCand(%d, %d, %lld, _)", dirP, dirM, st);
+  addCandSub((vMaxMin.at(dirM) - vMaxMin.at(dirP)) / 2.0);
+  addCandSub(vMaxMin.at(dirM) - st);
+  addCandSub(st - vMaxMin.at(dirP));
+}
+
+double theValSub(double t, auto f, auto v,
+		 int dir1, int dir2, int dir3, int dir4) {
+  return f(f(f(v.at(dir1) + t, v.at(dir2) - t), v.at(dir3)), v.at(dir4));
+}
+
+double maxD(double x, double y) { return max(x, y); }
+double minD(double x, double y) { return min(x, y); }
+
+double theVal(double t) {
+  return 
+    (theValSub(t, maxD, vXMax, CR, CL, CU, CD) - 
+     theValSub(t, minD, vXMin, CR, CL, CU, CD)) *
+    (theValSub(t, maxD, vYMax, CU, CD, CR, CL) - 
+     theValSub(t, minD, vYMin, CU, CD, CR, CL));
+}
+
+int main() {
+#if !DEBUG
+  ios_base::sync_with_stdio(false);
+#endif
+
+  cin >> N;
+  for (ll i = 0; i < N; i++) {
+    string s;
+    cin >> x.at(i) >> y.at(i) >> s;
+    d.at(i) = cidx(s.at(0));
+  }
+  for (int dir = 0; dir < 4; dir++) {
+    vXMax.at(dir) = -limR;
+    vXMin.at(dir) = limR;
+    vYMax.at(dir) = -limR;
+    vYMin.at(dir) = limR;
+  }
+  for (ll i = 0; i < N; i++) {
+    int dir = d.at(i);
+    vXMax.at(dir) = max(vXMax.at(dir), x.at(i));
+    vXMin.at(dir) = min(vXMin.at(dir), x.at(i));
+    vYMax.at(dir) = max(vYMax.at(dir), y.at(i));
+    vYMin.at(dir) = min(vYMin.at(dir), y.at(i));
+  }
+  addCand(CR, CL, max(vXMax.at(CU), vXMax.at(CD)), vXMax);
+  addCand(CR, CL, min(vXMin.at(CU), vXMin.at(CD)), vXMin);
+  addCand(CU, CD, max(vYMax.at(CR), vYMax.at(CL)), vYMax);
+  addCand(CU, CD, min(vYMin.at(CR), vYMin.at(CL)), vYMin);
+  DLOG("t = %s", toString(tCand).c_str());
+  double answer = theVal(0.0);
+  for (double t : tCand)  answer = min(theVal(t), answer);
+  cout << answer << endl;
+
+  return 0;
+}
+

@@ -1,0 +1,55 @@
+#!/usr/bin/env python3
+
+import re, sys
+from subprocess import run, PIPE, STDOUT
+
+def warn(*msg):
+    print(*msg, file=sys.stderr, flush=True)
+
+def run_test(s_cmd, pattern):
+    print(s_cmd, file=sys.stderr, end=" ... ", flush=True)
+    cp = run(s_cmd.split(), encoding='UTF-8', stdout=PIPE, stderr=STDOUT)
+    mo = re.search(pattern, cp.stdout, flags=re.M|re.S)
+    if not mo:
+        warn(f'''
+*** FAILED: cmd = {s_cmd} ***
+pattern = {pattern}
+results:
+{cp.stdout}''')
+    else:
+        warn('OK')
+
+run_test('cmpNaive -p ./cans1 5000', 'No problems were found')
+run_test('cmpNaive -p ./cans2', 'naive program has died')
+run_test('cmpNaive -p ./cans3', r'naive program has timed out.*^30$')
+run_test('cmpNaive -p ./cans4', r'body program has died.*^50$')
+run_test('cmpNaive -p ./cans5', r'body program has timed out.*^68$')
+run_test('cmpNaive -p ./cans6', r'results differ.*input.*^14$.*dexp')
+run_test('cmpNaive -j -p ./cans11 5000', 'No problems were found')
+run_test('cmpNaive -j -p ./cans15', r'body program has timed out.*^34$')
+run_test('cmpNaive -j -p ./cans16', r'returns NG.*input.*^91$.*dact')
+run_test('cmpNaive -i -p ./cans1 -n ./naive1 300',
+         'No problems were found')
+run_test('cmpNaive -i -p ./cans1 -n ./naive2',
+         r'naive program has died.')
+run_test('cmpNaive -i -p ./cans1 -n ./naive3',
+         r'naive program has timed out.*^30$')
+run_test('cmpNaive -i -p ./cans4 -n ./naive1',
+         r'body program has died.*^50$')
+run_test('cmpNaive -i -p ./cans5 -n ./naive1',
+         r'body program has timed out.*^68$')
+run_test('cmpNaive -i -p ./cans6 -n ./naive1',
+         'results differ.*input.*^14$.*dexp')
+run_test('cmpNaive -i -j -p ./cans11 -n ./naive11 300',
+         'No problems were found')
+run_test('cmpNaive -i -j -p ./cans15 -n ./naive11',
+         r'body program has timed out.*^34$')
+run_test('cmpNaive -i -j -p ./cans16 -n ./naive11',
+         r'returns NG.*input.*^91$.*dact')
+
+
+
+
+
+
+

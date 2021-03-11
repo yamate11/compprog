@@ -1,0 +1,10 @@
+#!/usr/bin/env python3
+
+from random import randrange
+
+def main():
+    n = 5
+    k = 50
+    lst = [randrange(10) 
+
+main()

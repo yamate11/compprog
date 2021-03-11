@@ -1,0 +1,108 @@
+repeat= 1
+i= 0 sum= 1
+i= 1 sum= 3
+3
+repeat= 10
+i= 0 sum= 1
+i= 1 sum= 3
+i= 2 sum= 6
+i= 3 sum= 10
+i= 4 sum= 15
+i= 5 sum= 21
+i= 6 sum= 28
+i= 7 sum= 36
+i= 8 sum= 45
+i= 9 sum= 45
+i= 10 sum= 46
+46
+repeat= 33
+i= 0 sum= 3
+i= 1 sum= 9
+i= 2 sum= 18
+i= 3 sum= 20
+i= 4 sum= 25
+i= 5 sum= 33
+i= 6 sum= 34
+i= 7 sum= 38
+i= 8 sum= 45
+i= 9 sum= 45
+i= 10 sum= 48
+i= 11 sum= 54
+i= 12 sum= 63
+i= 13 sum= 65
+i= 14 sum= 70
+i= 15 sum= 78
+i= 16 sum= 79
+i= 17 sum= 83
+i= 18 sum= 90
+i= 19 sum= 90
+150
+repeat= 73
+i= 0 sum= 4
+i= 1 sum= 12
+i= 2 sum= 14
+i= 3 sum= 20
+i= 4 sum= 20
+i= 5 sum= 24
+i= 6 sum= 32
+i= 7 sum= 34
+i= 8 sum= 40
+i= 9 sum= 40
+i= 10 sum= 44
+i= 11 sum= 52
+i= 12 sum= 54
+i= 13 sum= 60
+i= 14 sum= 60
+i= 15 sum= 64
+i= 16 sum= 72
+i= 17 sum= 74
+i= 18 sum= 80
+i= 19 sum= 80
+254
+repeat= 746630
+i= 0 sum= 7
+i= 1 sum= 11
+i= 2 sum= 12
+i= 3 sum= 20
+i= 4 sum= 25
+i= 5 sum= 27
+i= 6 sum= 36
+i= 7 sum= 42
+i= 8 sum= 45
+i= 9 sum= 45
+i= 10 sum= 52
+i= 11 sum= 56
+i= 12 sum= 57
+i= 13 sum= 65
+i= 14 sum= 70
+i= 15 sum= 72
+i= 16 sum= 81
+i= 17 sum= 87
+i= 18 sum= 90
+i= 19 sum= 90
+3583818
+repeat= 0
+i= 0 sum= 4
+4
+repeat= 94947139798665
+i= 0 sum= 3
+i= 1 sum= 9
+i= 2 sum= 18
+i= 3 sum= 20
+i= 4 sum= 25
+i= 5 sum= 33
+i= 6 sum= 34
+i= 7 sum= 38
+i= 8 sum= 45
+i= 9 sum= 45
+i= 10 sum= 48
+i= 11 sum= 54
+i= 12 sum= 63
+i= 13 sum= 65
+i= 14 sum= 70
+i= 15 sum= 78
+i= 16 sum= 79
+i= 17 sum= 83
+i= 18 sum= 90
+i= 19 sum= 90
+398777987154403

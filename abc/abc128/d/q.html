@@ -1,0 +1,527 @@
+
+
+
+
+
+
+<!DOCTYPE html>
+
+<html>
+<head>
+	<title>D - equeue</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+	<meta http-equiv="Content-Language" content='en'>
+	<meta name="viewport" content="width=device-width,initial-scale=1.0">
+	<meta name="format-detection" content="telephone=no">
+	<meta name="google-site-verification" content="nXGC_JxO0yoP1qBzMnYD_xgufO6leSLw1kyNo2HZltM" />
+
+	
+	<meta name="description" content="AtCoder is a programming contest site for anyone from beginners to experts. We hold weekly programming contests online.">
+	<meta name="author" content="AtCoder Inc.">
+	<link rel="canonical" href="https://atcoder.jp/">
+
+	<meta property="og:site_name" content="AtCoder">
+	
+	<meta property="og:title" content="D - equeue" />
+	<meta property="og:description" content="AtCoder is a programming contest site for anyone from beginners to experts. We hold weekly programming contests online." />
+	<meta property="og:type" content="website" />
+	<meta property="og:url" content="https://atcoder.jp/contests/abc128/tasks/abc128_d" />
+	<meta property="og:image" content="https://img.atcoder.jp/assets/atcoder.png" />
+	<meta name="twitter:card" content="summary" />
+	<meta name="twitter:site" content="@atcoder" />
+	
+	<meta property="twitter:title" content="D - equeue" />
+
+	<link href='//fonts.googleapis.com/css?family=Lato:400,700' rel='stylesheet' type='text/css'>
+	<link rel="stylesheet" type="text/css" href='/public/css/bootstrap.min.css?v=201905260955'>
+	<link rel="stylesheet" type="text/css" href='/public/css/base.css?v=201905260955'>
+	<link rel="shortcut icon" type="image/png" href="//img.atcoder.jp/assets/favicon.png">
+	<link rel="apple-touch-icon" href="//img.atcoder.jp/assets/atcoder.png">
+	<script src='/public/js/lib/jquery-1.9.1.min.js?v=201905260955'></script>
+	<script src='/public/js/lib/bootstrap.min.js?v=201905260955'></script>
+	<script src="//cdnjs.cloudflare.com/ajax/libs/js-cookie/2.1.4/js.cookie.min.js"></script>
+	<script src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/moment.min.js"></script>
+	<script src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/locale/ja.js"></script>
+	<script>
+		var LANG = "en";
+		var userScreenName = "";
+	</script>
+	<script src='/public/js/utils.js?v=201905260955'></script>
+	
+	
+		<script src='/public/js/contest.js?v=201905260955'></script>
+		<link href='/public/css/contest.css?v=201905260955' rel="stylesheet" />
+		<script>
+			var contestScreenName = "abc128";
+			var remainingText = "Remaining Time";
+			var countDownText = "Contest begins in";
+			var startTime = moment("2019-05-26T21:00:00+09:00");
+			var endTime = moment("2019-05-26T22:40:00+09:00");
+		</script>
+		<style></style>
+	
+	
+		<script type="text/x-mathjax-config">MathJax.Hub.Config({messageStyle:"none",tex2jax:{skipTags:["script","noscript","style","textarea","code"],inlineMath:[['\\(','\\)']]}});</script>
+		<script src="//cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+		<script src='/public/js/task.js?v=201905260955'></script>
+	
+	
+	
+	
+		<link href="//cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/css/select2.min.css" rel="stylesheet" />
+		<link href="//cdnjs.cloudflare.com/ajax/libs/select2-bootstrap-theme/0.1.0-beta.10/select2-bootstrap.min.css" rel="stylesheet" />
+		<script src='/public/js/lib/select2.min.js?v=201905260955'></script>
+	
+	
+		<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/codemirror/5.38.0/codemirror.min.css">
+		<script src="//cdnjs.cloudflare.com/ajax/libs/codemirror/5.38.0/codemirror.min.js"></script>
+		<script src='/public/js/codeMirror/merged.js?v=201905260955'></script>
+	
+	
+		<script src="//cdn.rawgit.com/google/code-prettify/master/loader/run_prettify.js"></script>
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	<script src='/public/js/base.js?v=201905260955'></script>
+	<script src='/public/js/ga.js?v=201905260955'></script>
+</head>
+
+<body>
+<div id="modal-contest-start" class="modal fade" tabindex="-1" role="dialog">
+	<div class="modal-dialog" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+				<h4 class="modal-title">Contest started</h4>
+			</div>
+			<div class="modal-body">
+				<p>AtCoder Beginner Contest 128 has begun.</p>
+			</div>
+			<div class="modal-footer">
+				
+					<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+				
+			</div>
+		</div>
+	</div>
+</div>
+<div id="modal-contest-end" class="modal fade" tabindex="-1" role="dialog">
+	<div class="modal-dialog" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+				<h4 class="modal-title">Contest is over</h4>
+			</div>
+			<div class="modal-body">
+				<p>AtCoder Beginner Contest 128 has ended.</p>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+			</div>
+		</div>
+	</div>
+</div>
+<div id="main-div" class="float-container">
+	<nav class="navbar navbar-inverse navbar-fixed-top">
+		<div class="container-fluid">
+			<div class="navbar-header">
+				<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapse" aria-expanded="false">
+					<span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span>
+				</button>
+				<a class="navbar-brand" href="/"></a>
+			</div>
+			<div class="collapse navbar-collapse" id="navbar-collapse">
+				<ul class="nav navbar-nav">
+				
+					<li><a class="contest-title" href='/contests/abc128'>AtCoder Beginner Contest 128</a></li>
+				
+				</ul>
+				<ul class="nav navbar-nav navbar-right">
+					
+					<li class="dropdown">
+						<a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
+							<img src='//img.atcoder.jp/assets/flag-lang/en.png'> English <span class="caret"></span>
+						</a>
+						<ul class="dropdown-menu">
+							<li><a href='/contests/abc128/tasks/abc128_d?lang=ja'><img src='//img.atcoder.jp/assets/flag-lang/ja.png'> 日本語</a></li>
+							<li><a href='/contests/abc128/tasks/abc128_d?lang=en'><img src='//img.atcoder.jp/assets/flag-lang/en.png'> English</a></li>
+						</ul>
+					</li>
+					
+					
+						<li><a href="/register?continue=https%3A%2F%2Fatcoder.jp%2Fcontests%2Fabc128%2Ftasks%2Fabc128_d">Sign Up</a></li>
+						<li><a href="/login?continue=https%3A%2F%2Fatcoder.jp%2Fcontests%2Fabc128%2Ftasks%2Fabc128_d">Sign In</a></li>
+					
+				</ul>
+			</div>
+		</div>
+	</nav>
+	<form method="POST" name="form_logout" action='/logout?continue=https%3A%2F%2Fatcoder.jp%2Fcontests%2Fabc128%2Ftasks%2Fabc128_d'>
+		<input type="hidden" name="csrf_token" value='hZPv687bzRveMyFCmKoUGT/MlnHjRGcplPd&#43;uKqO1VY=' />
+	</form>
+	<div id="main-container" class="container" style="padding-top:50px;">
+		
+
+<div class="row">
+	<div id="contest-nav-tabs" class="col-sm-12 mb-2 cnvtb-fixed">
+	<div>
+		<small class="contest-duration">Contest Duration: <a href='http://www.timeanddate.com/worldclock/fixedtime.html?iso=20190526T2100&p1=248' target='blank'><time class='fixtime fixtime-full'>2019-05-26 21:00:00+0900</time></a> ~ <a href='http://www.timeanddate.com/worldclock/fixedtime.html?iso=20190526T2240&p1=248' target='blank'><time class='fixtime fixtime-full'>2019-05-26 22:40:00+0900</time></a> (local time)</small>
+		<small class="back-to-home pull-right"><a href='/'>Back to Home</a></small>
+	</div>
+	<ul class="nav nav-tabs">
+		<li><a href='/contests/abc128'><span class="glyphicon glyphicon-home" aria-hidden="true"></span> Top</a></li>
+		
+			<li class="active"><a href='/contests/abc128/tasks'><span class="glyphicon glyphicon-tasks" aria-hidden="true"></span> Tasks</a></li>
+		
+
+		
+			<li><a href='/contests/abc128/clarifications'><span class="glyphicon glyphicon-question-sign" aria-hidden="true"></span> Clarifications <span id="clar-badge" class="badge"></span></a></li>
+		
+
+		
+
+		
+			<li>
+				<a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false"><span class="glyphicon glyphicon-list" aria-hidden="true"></span> Submissions<span class="caret"></span></a>
+				<ul class="dropdown-menu">
+					<li><a href='/contests/abc128/submissions'><span class="glyphicon glyphicon-globe" aria-hidden="true"></span> All Submissions</a></li>
+					
+				</ul>
+			</li>
+		
+
+		
+			<li><a href='/contests/abc128/standings'><span class="glyphicon glyphicon-sort-by-attributes-alt" aria-hidden="true"></span> Standings</a></li>
+		
+
+		
+
+		
+			<li><a href='https://img.atcoder.jp/abc128/editorial.pdf' target="_blank"><span class="glyphicon glyphicon-book" aria-hidden="true"></span> Editorial</a></li>
+		
+
+		<li class="pull-right"><a id="fix-cnvtb" href="javascript:void(0)"><span class="glyphicon glyphicon-pushpin" aria-hidden="true"></span></a></li>
+	</ul>
+</div>
+	<div class="col-sm-12">
+		<span class="h2">D - equeue</span>
+		<hr/>
+		<p>Time Limit: 2 sec / Memory Limit: 1024 MB</p>
+
+		<div id="task-statement">
+			<span class="lang">
+<span class="lang-ja">
+<p>配点 : <var>400</var> 点</p>
+
+<div class="part">
+<section>
+<h3>問題文</h3><p>あなたは誕生日プレゼントとして友人から dequeue <var>D</var> を貰いました。</p>
+<p><var>D</var> は左右に長い筒であり、<var>N</var> 個の宝石が一列に詰められています。</p>
+<p>宝石の価値は左から順に <var>V_1, V_2, ..., V_N</var> です。負の価値の宝石が詰められている場合もあります。</p>
+<p>はじめ、あなたは <var>1</var> つも宝石を持っていません。</p>
+<p>あなたは、<var>D</var> に対して以下の <var>4</var> 種類の操作から <var>1</var> つを選んで実行することを <var>K</var> 回まで行うことができます。</p>
+<ul>
+<li>
+<p>操作 A: <var>D</var> に詰められた宝石のうち、左端の宝石を取り出して手に入れる。<var>D</var> が空の場合、この操作を行えない。</p>
+</li>
+<li>
+<p>操作 B: <var>D</var> に詰められた宝石のうち、右端の宝石を取り出して手に入れる。<var>D</var> が空の場合、この操作を行えない。</p>
+</li>
+<li>
+<p>操作 C: 持っている宝石を <var>1</var> つ選んで <var>D</var> の左端に詰める。宝石を持っていない場合、この操作を行えない。</p>
+</li>
+<li>
+<p>操作 D: 持っている宝石を <var>1</var> つ選んで <var>D</var> の右端に詰める。宝石を持っていない場合、この操作を行えない。</p>
+</li>
+</ul>
+<p>操作終了後に持っている宝石の価値の合計の最大値を求めてください。</p>
+</section>
+</div>
+
+<div class="part">
+<section>
+<h3>制約</h3><ul>
+<li>入力は全て整数である。</li>
+<li><var>1 \leq N \leq 50</var></li>
+<li><var>1 \leq K \leq 100</var></li>
+<li><var>-10^7 \leq V_i \leq 10^7</var></li>
+</ul>
+</section>
+</div>
+
+<hr />
+
+<div class="io-style">
+<div class="part">
+<section>
+<h3>入力</h3><p>入力は以下の形式で標準入力から与えられる。</p>
+<pre><var>N</var> <var>K</var>
+<var>V_1</var> <var>V_2</var> <var>...</var> <var>V_N</var>
+</pre>
+
+</section>
+</div>
+
+<div class="part">
+<section>
+<h3>出力</h3><p>操作終了後に持っている宝石の価値の合計の最大値を出力せよ。</p>
+</section>
+</div>
+</div>
+
+<hr />
+
+<div class="part">
+<section>
+<h3>入力例 1</h3><pre>6 4
+-10 8 2 1 2 6
+</pre>
+
+</section>
+</div>
+
+<div class="part">
+<section>
+<h3>出力例 1</h3><pre>14
+</pre>
+
+<p>以下の順に操作を行うことで、価値 <var>8, 6</var> の宝石をそれぞれ <var>1</var> 個ずつ手に入れることができ、このときの合計価値 <var>14</var> が最大です。</p>
+<ul>
+<li>操作 A を行い、<var>D</var> の左端から価値 <var>-10</var> の宝石を取り出します。</li>
+<li>操作 B を行い、<var>D</var> の右端から価値 <var>6</var> の宝石を取り出します。</li>
+<li>操作 A を行い、<var>D</var> の左端から価値 <var>8</var> の宝石を取り出します。</li>
+<li>操作 D を行い、<var>D</var> の右端に価値 <var>-10</var> の宝石を詰めます。</li>
+</ul>
+</section>
+</div>
+
+<hr />
+
+<div class="part">
+<section>
+<h3>入力例 2</h3><pre>6 4
+-6 -100 50 -2 -5 -3
+</pre>
+
+</section>
+</div>
+
+<div class="part">
+<section>
+<h3>出力例 2</h3><pre>44
+</pre>
+
+</section>
+</div>
+
+<hr />
+
+<div class="part">
+<section>
+<h3>入力例 3</h3><pre>6 3
+-6 -100 50 -2 -5 -3
+</pre>
+
+</section>
+</div>
+
+<div class="part">
+<section>
+<h3>出力例 3</h3><pre>0
+</pre>
+
+<p>操作を行わないのが最適です。</p></section>
+</div>
+</span>
+<span class="lang-en">
+<p>Score : <var>400</var> points</p>
+
+<div class="part">
+<section>
+<h3>Problem Statement</h3><p>Your friend gave you a dequeue <var>D</var> as a birthday present.</p>
+<p><var>D</var> is a horizontal cylinder that contains a row of <var>N</var> jewels.</p>
+<p>The <em>values</em> of the jewels are <var>V_1, V_2, ..., V_N</var> from left to right. There may be jewels with negative values.</p>
+<p>In the beginning, you have no jewel in your hands.</p>
+<p>You can perform at most <var>K</var> operations on <var>D</var>, chosen from the following, at most <var>K</var> times (possibly zero):</p>
+<ul>
+<li>
+<p>Operation A: Take out the leftmost jewel contained in <var>D</var> and have it in your hand. You cannot do this operation when <var>D</var> is empty.</p>
+</li>
+<li>
+<p>Operation B: Take out the rightmost jewel contained in <var>D</var> and have it in your hand. You cannot do this operation when <var>D</var> is empty.</p>
+</li>
+<li>
+<p>Operation C: Choose a jewel in your hands and insert it to the left end of <var>D</var>. You cannot do this operation when you have no jewel in your hand.</p>
+</li>
+<li>
+<p>Operation D: Choose a jewel in your hands and insert it to the right end of <var>D</var>. You cannot do this operation when you have no jewel in your hand.</p>
+</li>
+</ul>
+<p>Find the maximum possible sum of the values of jewels in your hands after the operations.</p>
+</section>
+</div>
+
+<div class="part">
+<section>
+<h3>Constraints</h3><ul>
+<li>All values in input are integers.</li>
+<li><var>1 \leq N \leq 50</var></li>
+<li><var>1 \leq K \leq 100</var></li>
+<li><var>-10^7 \leq V_i \leq 10^7</var></li>
+</ul>
+</section>
+</div>
+
+<hr />
+
+<div class="io-style">
+<div class="part">
+<section>
+<h3>Input</h3><p>Input is given from Standard Input in the following format:</p>
+<pre><var>N</var> <var>K</var>
+<var>V_1</var> <var>V_2</var> <var>...</var> <var>V_N</var>
+</pre>
+
+</section>
+</div>
+
+<div class="part">
+<section>
+<h3>Output</h3><p>Print the maximum possible sum of the values of jewels in your hands after the operations.</p>
+</section>
+</div>
+</div>
+
+<hr />
+
+<div class="part">
+<section>
+<h3>Sample Input 1</h3><pre>6 4
+-10 8 2 1 2 6
+</pre>
+
+</section>
+</div>
+
+<div class="part">
+<section>
+<h3>Sample Output 1</h3><pre>14
+</pre>
+
+<p>After the following sequence of operations, you have two jewels of values <var>8</var> and <var>6</var> in your hands for a total of <var>14</var>, which is the maximum result.</p>
+<ul>
+<li>Do operation A. You take out the jewel of value <var>-10</var> from the left end of <var>D</var>.</li>
+<li>Do operation B. You take out the jewel of value <var>6</var> from the right end of <var>D</var>.</li>
+<li>Do operation A. You take out the jewel of value <var>8</var> from the left end of <var>D</var>.</li>
+<li>Do operation D. You insert the jewel of value <var>-10</var> to the right end of <var>D</var>.</li>
+</ul>
+</section>
+</div>
+
+<hr />
+
+<div class="part">
+<section>
+<h3>Sample Input 2</h3><pre>6 4
+-6 -100 50 -2 -5 -3
+</pre>
+
+</section>
+</div>
+
+<div class="part">
+<section>
+<h3>Sample Output 2</h3><pre>44
+</pre>
+
+</section>
+</div>
+
+<hr />
+
+<div class="part">
+<section>
+<h3>Sample Input 3</h3><pre>6 3
+-6 -100 50 -2 -5 -3
+</pre>
+
+</section>
+</div>
+
+<div class="part">
+<section>
+<h3>Sample Output 3</h3><pre>0
+</pre>
+
+<p>It is optimal to do no operation.</p></section>
+</div>
+</span>
+</span>
+
+		</div>
+
+		
+
+		
+	</div>
+</div>
+
+
+		
+			<hr>
+			
+			
+			
+<div class="a2a_kit a2a_kit_size_20 a2a_default_style pull-right" data-a2a-url="https://atcoder.jp/contests/abc128/tasks/abc128_d?lang=en" data-a2a-title="D - equeue">
+	<a class="a2a_button_facebook"></a>
+	<a class="a2a_button_twitter"></a>
+	
+		<a class="a2a_button_telegram"></a>
+	
+	<a class="a2a_dd" href="https://www.addtoany.com/share"></a>
+</div>
+
+		
+		<script async src="//static.addtoany.com/menu/page.js"></script>
+		
+	</div> 
+	<hr>
+</div> 
+<div class="container">
+    <footer class="footer">
+		
+			<ul>
+				<li><a href='/contests/abc128/rules'>Rule</a></li>
+				<li><a href='/contests/abc128/glossary'>Glossary</a></li>
+				
+			</ul>
+		
+		<ul>
+			<li><a href='/tos'>Terms of service</a></li>
+			<li><a href='/privacy'>Privacy Policy</a></li>
+			<li><a href='/personal'>Information Protection Policy</a></li>
+			<li><a href='/company'>Company</a></li>
+			<li><a href='/faq'>FAQ</a></li>
+			<li><a href='/contact'>Contact</a></li>
+			
+		</ul>
+    <div class="text-center">
+        <small id="copyright">Copyright Since 2012 &copy;<a href="http://atcoder.co.jp">AtCoder Inc.</a> All rights reserved.</small>
+    </div>
+    </footer>
+</div>
+<p id="fixed-server-timer" class='contest-timer'></p>
+
+	<div id="scroll-page-top" style="display:none;"><span class="glyphicon glyphicon-arrow-up" aria-hidden="true"></span> Page Top</div>
+
+</body>
+</html>
+
+

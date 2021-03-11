@@ -1,0 +1,119 @@
+#!/usr/bin/env python3
+
+# stest -- test with samples
+
+import subprocess, sys, os, re, time, argparse
+from util import Util, UtilError
+
+fDoubleErr = './stest-double'
+
+def mapMaybes(f, xs):
+    return filter(lambda y: y is not None, map(f, xs))
+
+def testFiles(ids, dir):
+    def iofiles(id):
+        ipath = f'{dir}/d{id}.txt'
+        if not os.path.exists(ipath):
+            print(f'FATAL: {ipath} not found', file=sys.stderr)
+            sys.exit(1)
+        c_apath = f'{dir}/do{id}.txt'
+        apath = c_apath if os.path.exists(c_apath) else None
+        opath = '/dev/null' if apath is None else f'{dir}/d_tmp_{id}.txt'
+        return (ipath, apath, opath)
+
+    def getID(name):
+        mo = re.match(r'd([^_o].*)\.txt$', name)
+        return mo.group(1) if mo else None
+
+    if not ids:
+        ids = mapMaybes(getID, os.listdir(dir))
+    return mapMaybes(iofiles, ids)
+
+def main():
+    args = commandLineArgs()
+    retCode = 0
+    diffRes = []
+    prec = Util.get_prec(args.double_one, not args.no_modify_precision)
+    lab_double = '' if prec is None else ' (double)'
+    for (ipath, apath, opath) in testFiles(args.id, '.'):
+        with  open(ipath, 'r', encoding='utf-8') as fp, \
+              open(opath, 'w', encoding='utf-8') as wfp:
+            time0 = time.time()
+            adic = {'encoding': 'utf-8', 'stdin': fp, 'stdout': wfp}
+            if not args.show_stderr:
+                adic['stderr'] = subprocess.DEVNULL
+            cp = subprocess.run(args.program.split(), **adic)
+            time1 = time.time()
+            elapsed = f'{time1 - time0 : .3f} sec';
+        if cp.returncode != 0:
+            print(f'{ipath} ... FAIL (Non-zero returncode)')
+            retCode = 1
+            continue
+        if apath is None:
+            print(f'{ipath} ... No Oracle / {elapsed}')
+            continue
+        with open(apath) as afp, open(opath) as ofp:
+            sa = afp.read()
+            so = ofp.read()
+        match = Util.compare_answer(sa, so, prec=prec,
+                                    ignoreSpace=args.ignore_space)
+        if not match:
+            diffRes.append((apath, opath));
+            print(f'{ipath} ... FAIL (Different results.  See {opath})')
+            retCode = 1
+            continue
+        os.unlink(opath)
+        print(f'{ipath} ... PASS{lab_double} / {elapsed}')
+
+    if diffRes:
+        if not args.no_show_wrong_answer:
+            for (apath, opath) in diffRes:
+                Util.print_answer(apath)
+                Util.print_answer(opath)
+    sys.exit(retCode)
+
+def commandLineArgs():
+    parser = argparse.ArgumentParser(
+        prog='stest',
+        formatter_class=argparse.RawDescriptionHelpFormatter,
+        epilog='''\
+Runs test inputs.
+
+Test inputs should be in the current directory, with name dID.txt
+where ID should be a number.  If a file named doID.txt exists, it is
+regarded as the expected results.  In this case, a temporary file
+d_tmp_ID.txt is created for the output from the program, and it is
+compared with the expected results.  If they are identical, the
+temporary file will be removed.  If no expected result file is there,
+the output from the program goes to /dev/null.
+
+When "-d n" ("--double-one n") is specified, or text file ./.double-prec
+exists, it is assumed that the answer is a double.  When 
+either the absolute error or the relative error is less than 10**(-n),
+the answer is regarded as correct.  The "n" is written into ./.double-prec
+unless --no-modify-err-precision is specified.  The contents n of 
+./double-prec should be a positive integer and it is treated as if "-d n" 
+is specified.
+
+IDs can be specified as command line arguments.  If no arguments are
+given, all test input files in the current directory will be tried.\
+''',
+    )
+    parser.add_argument('-ns', '--no-show-wrong-answer', action='store_true',
+                        help='does not show wrong answer')
+    parser.add_argument('-d', '--double-one', type=int, metavar='n',
+                        help='treats as double.  See below.')
+    parser.add_argument('-p', '--program', default='./cans', metavar='PROG',
+                        help='program to test.  Default is ./cans')
+    parser.add_argument('--no-modify-precision', action='store_true',
+                        help='does not modify ./stest-double.  See below.')
+    parser.add_argument('--ignore-space', action='store_true',
+                        help='ignores space when comparing answers')
+    parser.add_argument('--show-stderr', action='store_true',
+                        help='how output to stderr')
+    parser.add_argument('id', nargs='*', help = 'test ID')
+    return parser.parse_args()
+    
+
+main()
+

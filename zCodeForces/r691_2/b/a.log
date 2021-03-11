@@ -1,0 +1,4316 @@
+i= 1
+sim n= 0 x= 1 y= 0
+x= 1 y= 0 ex[base+x][base+y]= 0
+cnt= 1
+sim n= 0 x= -1 y= 0
+x= -1 y= 0 ex[base+x][base+y]= 0
+cnt= 2
+sim n= 0 x= 0 y= 1
+x= 0 y= 1 ex[base+x][base+y]= 0
+cnt= 3
+sim n= 0 x= 0 y= -1
+x= 0 y= -1 ex[base+x][base+y]= 0
+cnt= 4
+i= 2
+sim n= 1 x= 1 y= 0
+sim n= 0 x= 1 y= 1
+x= 1 y= 1 ex[base+x][base+y]= 0
+cnt= 1
+sim n= 0 x= 1 y= -1
+x= 1 y= -1 ex[base+x][base+y]= 0
+cnt= 2
+sim n= 1 x= -1 y= 0
+sim n= 0 x= -1 y= 1
+x= -1 y= 1 ex[base+x][base+y]= 0
+cnt= 3
+sim n= 0 x= -1 y= -1
+x= -1 y= -1 ex[base+x][base+y]= 0
+cnt= 4
+sim n= 1 x= 0 y= 1
+sim n= 0 x= 1 y= 1
+x= 1 y= 1 ex[base+x][base+y]= 1
+sim n= 0 x= -1 y= 1
+x= -1 y= 1 ex[base+x][base+y]= 1
+sim n= 1 x= 0 y= -1
+sim n= 0 x= 1 y= -1
+x= 1 y= -1 ex[base+x][base+y]= 1
+sim n= 0 x= -1 y= -1
+x= -1 y= -1 ex[base+x][base+y]= 1
+i= 3
+sim n= 2 x= 1 y= 0
+sim n= 1 x= 1 y= 1
+sim n= 0 x= 2 y= 1
+x= 2 y= 1 ex[base+x][base+y]= 0
+cnt= 1
+sim n= 0 x= 0 y= 1
+x= 0 y= 1 ex[base+x][base+y]= 0
+cnt= 2
+sim n= 1 x= 1 y= -1
+sim n= 0 x= 2 y= -1
+x= 2 y= -1 ex[base+x][base+y]= 0
+cnt= 3
+sim n= 0 x= 0 y= -1
+x= 0 y= -1 ex[base+x][base+y]= 0
+cnt= 4
+sim n= 2 x= -1 y= 0
+sim n= 1 x= -1 y= 1
+sim n= 0 x= 0 y= 1
+x= 0 y= 1 ex[base+x][base+y]= 1
+sim n= 0 x= -2 y= 1
+x= -2 y= 1 ex[base+x][base+y]= 0
+cnt= 5
+sim n= 1 x= -1 y= -1
+sim n= 0 x= 0 y= -1
+x= 0 y= -1 ex[base+x][base+y]= 1
+sim n= 0 x= -2 y= -1
+x= -2 y= -1 ex[base+x][base+y]= 0
+cnt= 6
+sim n= 2 x= 0 y= 1
+sim n= 1 x= 1 y= 1
+sim n= 0 x= 1 y= 2
+x= 1 y= 2 ex[base+x][base+y]= 0
+cnt= 7
+sim n= 0 x= 1 y= 0
+x= 1 y= 0 ex[base+x][base+y]= 0
+cnt= 8
+sim n= 1 x= -1 y= 1
+sim n= 0 x= -1 y= 2
+x= -1 y= 2 ex[base+x][base+y]= 0
+cnt= 9
+sim n= 0 x= -1 y= 0
+x= -1 y= 0 ex[base+x][base+y]= 0
+cnt= 10
+sim n= 2 x= 0 y= -1
+sim n= 1 x= 1 y= -1
+sim n= 0 x= 1 y= 0
+x= 1 y= 0 ex[base+x][base+y]= 1
+sim n= 0 x= 1 y= -2
+x= 1 y= -2 ex[base+x][base+y]= 0
+cnt= 11
+sim n= 1 x= -1 y= -1
+sim n= 0 x= -1 y= 0
+x= -1 y= 0 ex[base+x][base+y]= 1
+sim n= 0 x= -1 y= -2
+x= -1 y= -2 ex[base+x][base+y]= 0
+cnt= 12
+i= 4
+sim n= 3 x= 1 y= 0
+sim n= 2 x= 1 y= 1
+sim n= 1 x= 2 y= 1
+sim n= 0 x= 2 y= 2
+x= 2 y= 2 ex[base+x][base+y]= 0
+cnt= 1
+sim n= 0 x= 2 y= 0
+x= 2 y= 0 ex[base+x][base+y]= 0
+cnt= 2
+sim n= 1 x= 0 y= 1
+sim n= 0 x= 0 y= 2
+x= 0 y= 2 ex[base+x][base+y]= 0
+cnt= 3
+sim n= 0 x= 0 y= 0
+x= 0 y= 0 ex[base+x][base+y]= 0
+cnt= 4
+sim n= 2 x= 1 y= -1
+sim n= 1 x= 2 y= -1
+sim n= 0 x= 2 y= 0
+x= 2 y= 0 ex[base+x][base+y]= 1
+sim n= 0 x= 2 y= -2
+x= 2 y= -2 ex[base+x][base+y]= 0
+cnt= 5
+sim n= 1 x= 0 y= -1
+sim n= 0 x= 0 y= 0
+x= 0 y= 0 ex[base+x][base+y]= 1
+sim n= 0 x= 0 y= -2
+x= 0 y= -2 ex[base+x][base+y]= 0
+cnt= 6
+sim n= 3 x= -1 y= 0
+sim n= 2 x= -1 y= 1
+sim n= 1 x= 0 y= 1
+sim n= 0 x= 0 y= 2
+x= 0 y= 2 ex[base+x][base+y]= 1
+sim n= 0 x= 0 y= 0
+x= 0 y= 0 ex[base+x][base+y]= 1
+sim n= 1 x= -2 y= 1
+sim n= 0 x= -2 y= 2
+x= -2 y= 2 ex[base+x][base+y]= 0
+cnt= 7
+sim n= 0 x= -2 y= 0
+x= -2 y= 0 ex[base+x][base+y]= 0
+cnt= 8
+sim n= 2 x= -1 y= -1
+sim n= 1 x= 0 y= -1
+sim n= 0 x= 0 y= 0
+x= 0 y= 0 ex[base+x][base+y]= 1
+sim n= 0 x= 0 y= -2
+x= 0 y= -2 ex[base+x][base+y]= 1
+sim n= 1 x= -2 y= -1
+sim n= 0 x= -2 y= 0
+x= -2 y= 0 ex[base+x][base+y]= 1
+sim n= 0 x= -2 y= -2
+x= -2 y= -2 ex[base+x][base+y]= 0
+cnt= 9
+sim n= 3 x= 0 y= 1
+sim n= 2 x= 1 y= 1
+sim n= 1 x= 1 y= 2
+sim n= 0 x= 2 y= 2
+x= 2 y= 2 ex[base+x][base+y]= 1
+sim n= 0 x= 0 y= 2
+x= 0 y= 2 ex[base+x][base+y]= 1
+sim n= 1 x= 1 y= 0
+sim n= 0 x= 2 y= 0
+x= 2 y= 0 ex[base+x][base+y]= 1
+sim n= 0 x= 0 y= 0
+x= 0 y= 0 ex[base+x][base+y]= 1
+sim n= 2 x= -1 y= 1
+sim n= 1 x= -1 y= 2
+sim n= 0 x= 0 y= 2
+x= 0 y= 2 ex[base+x][base+y]= 1
+sim n= 0 x= -2 y= 2
+x= -2 y= 2 ex[base+x][base+y]= 1
+sim n= 1 x= -1 y= 0
+sim n= 0 x= 0 y= 0
+x= 0 y= 0 ex[base+x][base+y]= 1
+sim n= 0 x= -2 y= 0
+x= -2 y= 0 ex[base+x][base+y]= 1
+sim n= 3 x= 0 y= -1
+sim n= 2 x= 1 y= -1
+sim n= 1 x= 1 y= 0
+sim n= 0 x= 2 y= 0
+x= 2 y= 0 ex[base+x][base+y]= 1
+sim n= 0 x= 0 y= 0
+x= 0 y= 0 ex[base+x][base+y]= 1
+sim n= 1 x= 1 y= -2
+sim n= 0 x= 2 y= -2
+x= 2 y= -2 ex[base+x][base+y]= 1
+sim n= 0 x= 0 y= -2
+x= 0 y= -2 ex[base+x][base+y]= 1
+sim n= 2 x= -1 y= -1
+sim n= 1 x= -1 y= 0
+sim n= 0 x= 0 y= 0
+x= 0 y= 0 ex[base+x][base+y]= 1
+sim n= 0 x= -2 y= 0
+x= -2 y= 0 ex[base+x][base+y]= 1
+sim n= 1 x= -1 y= -2
+sim n= 0 x= 0 y= -2
+x= 0 y= -2 ex[base+x][base+y]= 1
+sim n= 0 x= -2 y= -2
+x= -2 y= -2 ex[base+x][base+y]= 1
+i= 5
+sim n= 4 x= 1 y= 0
+sim n= 3 x= 1 y= 1
+sim n= 2 x= 2 y= 1
+sim n= 1 x= 2 y= 2
+sim n= 0 x= 3 y= 2
+x= 3 y= 2 ex[base+x][base+y]= 0
+cnt= 1
+sim n= 0 x= 1 y= 2
+x= 1 y= 2 ex[base+x][base+y]= 0
+cnt= 2
+sim n= 1 x= 2 y= 0
+sim n= 0 x= 3 y= 0
+x= 3 y= 0 ex[base+x][base+y]= 0
+cnt= 3
+sim n= 0 x= 1 y= 0
+x= 1 y= 0 ex[base+x][base+y]= 0
+cnt= 4
+sim n= 2 x= 0 y= 1
+sim n= 1 x= 0 y= 2
+sim n= 0 x= 1 y= 2
+x= 1 y= 2 ex[base+x][base+y]= 1
+sim n= 0 x= -1 y= 2
+x= -1 y= 2 ex[base+x][base+y]= 0
+cnt= 5
+sim n= 1 x= 0 y= 0
+sim n= 0 x= 1 y= 0
+x= 1 y= 0 ex[base+x][base+y]= 1
+sim n= 0 x= -1 y= 0
+x= -1 y= 0 ex[base+x][base+y]= 0
+cnt= 6
+sim n= 3 x= 1 y= -1
+sim n= 2 x= 2 y= -1
+sim n= 1 x= 2 y= 0
+sim n= 0 x= 3 y= 0
+x= 3 y= 0 ex[base+x][base+y]= 1
+sim n= 0 x= 1 y= 0
+x= 1 y= 0 ex[base+x][base+y]= 1
+sim n= 1 x= 2 y= -2
+sim n= 0 x= 3 y= -2
+x= 3 y= -2 ex[base+x][base+y]= 0
+cnt= 7
+sim n= 0 x= 1 y= -2
+x= 1 y= -2 ex[base+x][base+y]= 0
+cnt= 8
+sim n= 2 x= 0 y= -1
+sim n= 1 x= 0 y= 0
+sim n= 0 x= 1 y= 0
+x= 1 y= 0 ex[base+x][base+y]= 1
+sim n= 0 x= -1 y= 0
+x= -1 y= 0 ex[base+x][base+y]= 1
+sim n= 1 x= 0 y= -2
+sim n= 0 x= 1 y= -2
+x= 1 y= -2 ex[base+x][base+y]= 1
+sim n= 0 x= -1 y= -2
+x= -1 y= -2 ex[base+x][base+y]= 0
+cnt= 9
+sim n= 4 x= -1 y= 0
+sim n= 3 x= -1 y= 1
+sim n= 2 x= 0 y= 1
+sim n= 1 x= 0 y= 2
+sim n= 0 x= 1 y= 2
+x= 1 y= 2 ex[base+x][base+y]= 1
+sim n= 0 x= -1 y= 2
+x= -1 y= 2 ex[base+x][base+y]= 1
+sim n= 1 x= 0 y= 0
+sim n= 0 x= 1 y= 0
+x= 1 y= 0 ex[base+x][base+y]= 1
+sim n= 0 x= -1 y= 0
+x= -1 y= 0 ex[base+x][base+y]= 1
+sim n= 2 x= -2 y= 1
+sim n= 1 x= -2 y= 2
+sim n= 0 x= -1 y= 2
+x= -1 y= 2 ex[base+x][base+y]= 1
+sim n= 0 x= -3 y= 2
+x= -3 y= 2 ex[base+x][base+y]= 0
+cnt= 10
+sim n= 1 x= -2 y= 0
+sim n= 0 x= -1 y= 0
+x= -1 y= 0 ex[base+x][base+y]= 1
+sim n= 0 x= -3 y= 0
+x= -3 y= 0 ex[base+x][base+y]= 0
+cnt= 11
+sim n= 3 x= -1 y= -1
+sim n= 2 x= 0 y= -1
+sim n= 1 x= 0 y= 0
+sim n= 0 x= 1 y= 0
+x= 1 y= 0 ex[base+x][base+y]= 1
+sim n= 0 x= -1 y= 0
+x= -1 y= 0 ex[base+x][base+y]= 1
+sim n= 1 x= 0 y= -2
+sim n= 0 x= 1 y= -2
+x= 1 y= -2 ex[base+x][base+y]= 1
+sim n= 0 x= -1 y= -2
+x= -1 y= -2 ex[base+x][base+y]= 1
+sim n= 2 x= -2 y= -1
+sim n= 1 x= -2 y= 0
+sim n= 0 x= -1 y= 0
+x= -1 y= 0 ex[base+x][base+y]= 1
+sim n= 0 x= -3 y= 0
+x= -3 y= 0 ex[base+x][base+y]= 1
+sim n= 1 x= -2 y= -2
+sim n= 0 x= -1 y= -2
+x= -1 y= -2 ex[base+x][base+y]= 1
+sim n= 0 x= -3 y= -2
+x= -3 y= -2 ex[base+x][base+y]= 0
+cnt= 12
+sim n= 4 x= 0 y= 1
+sim n= 3 x= 1 y= 1
+sim n= 2 x= 1 y= 2
+sim n= 1 x= 2 y= 2
+sim n= 0 x= 2 y= 3
+x= 2 y= 3 ex[base+x][base+y]= 0
+cnt= 13
+sim n= 0 x= 2 y= 1
+x= 2 y= 1 ex[base+x][base+y]= 0
+cnt= 14
+sim n= 1 x= 0 y= 2
+sim n= 0 x= 0 y= 3
+x= 0 y= 3 ex[base+x][base+y]= 0
+cnt= 15
+sim n= 0 x= 0 y= 1
+x= 0 y= 1 ex[base+x][base+y]= 0
+cnt= 16
+sim n= 2 x= 1 y= 0
+sim n= 1 x= 2 y= 0
+sim n= 0 x= 2 y= 1
+x= 2 y= 1 ex[base+x][base+y]= 1
+sim n= 0 x= 2 y= -1
+x= 2 y= -1 ex[base+x][base+y]= 0
+cnt= 17
+sim n= 1 x= 0 y= 0
+sim n= 0 x= 0 y= 1
+x= 0 y= 1 ex[base+x][base+y]= 1
+sim n= 0 x= 0 y= -1
+x= 0 y= -1 ex[base+x][base+y]= 0
+cnt= 18
+sim n= 3 x= -1 y= 1
+sim n= 2 x= -1 y= 2
+sim n= 1 x= 0 y= 2
+sim n= 0 x= 0 y= 3
+x= 0 y= 3 ex[base+x][base+y]= 1
+sim n= 0 x= 0 y= 1
+x= 0 y= 1 ex[base+x][base+y]= 1
+sim n= 1 x= -2 y= 2
+sim n= 0 x= -2 y= 3
+x= -2 y= 3 ex[base+x][base+y]= 0
+cnt= 19
+sim n= 0 x= -2 y= 1
+x= -2 y= 1 ex[base+x][base+y]= 0
+cnt= 20
+sim n= 2 x= -1 y= 0
+sim n= 1 x= 0 y= 0
+sim n= 0 x= 0 y= 1
+x= 0 y= 1 ex[base+x][base+y]= 1
+sim n= 0 x= 0 y= -1
+x= 0 y= -1 ex[base+x][base+y]= 1
+sim n= 1 x= -2 y= 0
+sim n= 0 x= -2 y= 1
+x= -2 y= 1 ex[base+x][base+y]= 1
+sim n= 0 x= -2 y= -1
+x= -2 y= -1 ex[base+x][base+y]= 0
+cnt= 21
+sim n= 4 x= 0 y= -1
+sim n= 3 x= 1 y= -1
+sim n= 2 x= 1 y= 0
+sim n= 1 x= 2 y= 0
+sim n= 0 x= 2 y= 1
+x= 2 y= 1 ex[base+x][base+y]= 1
+sim n= 0 x= 2 y= -1
+x= 2 y= -1 ex[base+x][base+y]= 1
+sim n= 1 x= 0 y= 0
+sim n= 0 x= 0 y= 1
+x= 0 y= 1 ex[base+x][base+y]= 1
+sim n= 0 x= 0 y= -1
+x= 0 y= -1 ex[base+x][base+y]= 1
+sim n= 2 x= 1 y= -2
+sim n= 1 x= 2 y= -2
+sim n= 0 x= 2 y= -1
+x= 2 y= -1 ex[base+x][base+y]= 1
+sim n= 0 x= 2 y= -3
+x= 2 y= -3 ex[base+x][base+y]= 0
+cnt= 22
+sim n= 1 x= 0 y= -2
+sim n= 0 x= 0 y= -1
+x= 0 y= -1 ex[base+x][base+y]= 1
+sim n= 0 x= 0 y= -3
+x= 0 y= -3 ex[base+x][base+y]= 0
+cnt= 23
+sim n= 3 x= -1 y= -1
+sim n= 2 x= -1 y= 0
+sim n= 1 x= 0 y= 0
+sim n= 0 x= 0 y= 1
+x= 0 y= 1 ex[base+x][base+y]= 1
+sim n= 0 x= 0 y= -1
+x= 0 y= -1 ex[base+x][base+y]= 1
+sim n= 1 x= -2 y= 0
+sim n= 0 x= -2 y= 1
+x= -2 y= 1 ex[base+x][base+y]= 1
+sim n= 0 x= -2 y= -1
+x= -2 y= -1 ex[base+x][base+y]= 1
+sim n= 2 x= -1 y= -2
+sim n= 1 x= 0 y= -2
+sim n= 0 x= 0 y= -1
+x= 0 y= -1 ex[base+x][base+y]= 1
+sim n= 0 x= 0 y= -3
+x= 0 y= -3 ex[base+x][base+y]= 1
+sim n= 1 x= -2 y= -2
+sim n= 0 x= -2 y= -1
+x= -2 y= -1 ex[base+x][base+y]= 1
+sim n= 0 x= -2 y= -3
+x= -2 y= -3 ex[base+x][base+y]= 0
+cnt= 24
+i= 6
+sim n= 5 x= 1 y= 0
+sim n= 4 x= 1 y= 1
+sim n= 3 x= 2 y= 1
+sim n= 2 x= 2 y= 2
+sim n= 1 x= 3 y= 2
+sim n= 0 x= 3 y= 3
+x= 3 y= 3 ex[base+x][base+y]= 0
+cnt= 1
+sim n= 0 x= 3 y= 1
+x= 3 y= 1 ex[base+x][base+y]= 0
+cnt= 2
+sim n= 1 x= 1 y= 2
+sim n= 0 x= 1 y= 3
+x= 1 y= 3 ex[base+x][base+y]= 0
+cnt= 3
+sim n= 0 x= 1 y= 1
+x= 1 y= 1 ex[base+x][base+y]= 0
+cnt= 4
+sim n= 2 x= 2 y= 0
+sim n= 1 x= 3 y= 0
+sim n= 0 x= 3 y= 1
+x= 3 y= 1 ex[base+x][base+y]= 1
+sim n= 0 x= 3 y= -1
+x= 3 y= -1 ex[base+x][base+y]= 0
+cnt= 5
+sim n= 1 x= 1 y= 0
+sim n= 0 x= 1 y= 1
+x= 1 y= 1 ex[base+x][base+y]= 1
+sim n= 0 x= 1 y= -1
+x= 1 y= -1 ex[base+x][base+y]= 0
+cnt= 6
+sim n= 3 x= 0 y= 1
+sim n= 2 x= 0 y= 2
+sim n= 1 x= 1 y= 2
+sim n= 0 x= 1 y= 3
+x= 1 y= 3 ex[base+x][base+y]= 1
+sim n= 0 x= 1 y= 1
+x= 1 y= 1 ex[base+x][base+y]= 1
+sim n= 1 x= -1 y= 2
+sim n= 0 x= -1 y= 3
+x= -1 y= 3 ex[base+x][base+y]= 0
+cnt= 7
+sim n= 0 x= -1 y= 1
+x= -1 y= 1 ex[base+x][base+y]= 0
+cnt= 8
+sim n= 2 x= 0 y= 0
+sim n= 1 x= 1 y= 0
+sim n= 0 x= 1 y= 1
+x= 1 y= 1 ex[base+x][base+y]= 1
+sim n= 0 x= 1 y= -1
+x= 1 y= -1 ex[base+x][base+y]= 1
+sim n= 1 x= -1 y= 0
+sim n= 0 x= -1 y= 1
+x= -1 y= 1 ex[base+x][base+y]= 1
+sim n= 0 x= -1 y= -1
+x= -1 y= -1 ex[base+x][base+y]= 0
+cnt= 9
+sim n= 4 x= 1 y= -1
+sim n= 3 x= 2 y= -1
+sim n= 2 x= 2 y= 0
+sim n= 1 x= 3 y= 0
+sim n= 0 x= 3 y= 1
+x= 3 y= 1 ex[base+x][base+y]= 1
+sim n= 0 x= 3 y= -1
+x= 3 y= -1 ex[base+x][base+y]= 1
+sim n= 1 x= 1 y= 0
+sim n= 0 x= 1 y= 1
+x= 1 y= 1 ex[base+x][base+y]= 1
+sim n= 0 x= 1 y= -1
+x= 1 y= -1 ex[base+x][base+y]= 1
+sim n= 2 x= 2 y= -2
+sim n= 1 x= 3 y= -2
+sim n= 0 x= 3 y= -1
+x= 3 y= -1 ex[base+x][base+y]= 1
+sim n= 0 x= 3 y= -3
+x= 3 y= -3 ex[base+x][base+y]= 0
+cnt= 10
+sim n= 1 x= 1 y= -2
+sim n= 0 x= 1 y= -1
+x= 1 y= -1 ex[base+x][base+y]= 1
+sim n= 0 x= 1 y= -3
+x= 1 y= -3 ex[base+x][base+y]= 0
+cnt= 11
+sim n= 3 x= 0 y= -1
+sim n= 2 x= 0 y= 0
+sim n= 1 x= 1 y= 0
+sim n= 0 x= 1 y= 1
+x= 1 y= 1 ex[base+x][base+y]= 1
+sim n= 0 x= 1 y= -1
+x= 1 y= -1 ex[base+x][base+y]= 1
+sim n= 1 x= -1 y= 0
+sim n= 0 x= -1 y= 1
+x= -1 y= 1 ex[base+x][base+y]= 1
+sim n= 0 x= -1 y= -1
+x= -1 y= -1 ex[base+x][base+y]= 1
+sim n= 2 x= 0 y= -2
+sim n= 1 x= 1 y= -2
+sim n= 0 x= 1 y= -1
+x= 1 y= -1 ex[base+x][base+y]= 1
+sim n= 0 x= 1 y= -3
+x= 1 y= -3 ex[base+x][base+y]= 1
+sim n= 1 x= -1 y= -2
+sim n= 0 x= -1 y= -1
+x= -1 y= -1 ex[base+x][base+y]= 1
+sim n= 0 x= -1 y= -3
+x= -1 y= -3 ex[base+x][base+y]= 0
+cnt= 12
+sim n= 5 x= -1 y= 0
+sim n= 4 x= -1 y= 1
+sim n= 3 x= 0 y= 1
+sim n= 2 x= 0 y= 2
+sim n= 1 x= 1 y= 2
+sim n= 0 x= 1 y= 3
+x= 1 y= 3 ex[base+x][base+y]= 1
+sim n= 0 x= 1 y= 1
+x= 1 y= 1 ex[base+x][base+y]= 1
+sim n= 1 x= -1 y= 2
+sim n= 0 x= -1 y= 3
+x= -1 y= 3 ex[base+x][base+y]= 1
+sim n= 0 x= -1 y= 1
+x= -1 y= 1 ex[base+x][base+y]= 1
+sim n= 2 x= 0 y= 0
+sim n= 1 x= 1 y= 0
+sim n= 0 x= 1 y= 1
+x= 1 y= 1 ex[base+x][base+y]= 1
+sim n= 0 x= 1 y= -1
+x= 1 y= -1 ex[base+x][base+y]= 1
+sim n= 1 x= -1 y= 0
+sim n= 0 x= -1 y= 1
+x= -1 y= 1 ex[base+x][base+y]= 1
+sim n= 0 x= -1 y= -1
+x= -1 y= -1 ex[base+x][base+y]= 1
+sim n= 3 x= -2 y= 1
+sim n= 2 x= -2 y= 2
+sim n= 1 x= -1 y= 2
+sim n= 0 x= -1 y= 3
+x= -1 y= 3 ex[base+x][base+y]= 1
+sim n= 0 x= -1 y= 1
+x= -1 y= 1 ex[base+x][base+y]= 1
+sim n= 1 x= -3 y= 2
+sim n= 0 x= -3 y= 3
+x= -3 y= 3 ex[base+x][base+y]= 0
+cnt= 13
+sim n= 0 x= -3 y= 1
+x= -3 y= 1 ex[base+x][base+y]= 0
+cnt= 14
+sim n= 2 x= -2 y= 0
+sim n= 1 x= -1 y= 0
+sim n= 0 x= -1 y= 1
+x= -1 y= 1 ex[base+x][base+y]= 1
+sim n= 0 x= -1 y= -1
+x= -1 y= -1 ex[base+x][base+y]= 1
+sim n= 1 x= -3 y= 0
+sim n= 0 x= -3 y= 1
+x= -3 y= 1 ex[base+x][base+y]= 1
+sim n= 0 x= -3 y= -1
+x= -3 y= -1 ex[base+x][base+y]= 0
+cnt= 15
+sim n= 4 x= -1 y= -1
+sim n= 3 x= 0 y= -1
+sim n= 2 x= 0 y= 0
+sim n= 1 x= 1 y= 0
+sim n= 0 x= 1 y= 1
+x= 1 y= 1 ex[base+x][base+y]= 1
+sim n= 0 x= 1 y= -1
+x= 1 y= -1 ex[base+x][base+y]= 1
+sim n= 1 x= -1 y= 0
+sim n= 0 x= -1 y= 1
+x= -1 y= 1 ex[base+x][base+y]= 1
+sim n= 0 x= -1 y= -1
+x= -1 y= -1 ex[base+x][base+y]= 1
+sim n= 2 x= 0 y= -2
+sim n= 1 x= 1 y= -2
+sim n= 0 x= 1 y= -1
+x= 1 y= -1 ex[base+x][base+y]= 1
+sim n= 0 x= 1 y= -3
+x= 1 y= -3 ex[base+x][base+y]= 1
+sim n= 1 x= -1 y= -2
+sim n= 0 x= -1 y= -1
+x= -1 y= -1 ex[base+x][base+y]= 1
+sim n= 0 x= -1 y= -3
+x= -1 y= -3 ex[base+x][base+y]= 1
+sim n= 3 x= -2 y= -1
+sim n= 2 x= -2 y= 0
+sim n= 1 x= -1 y= 0
+sim n= 0 x= -1 y= 1
+x= -1 y= 1 ex[base+x][base+y]= 1
+sim n= 0 x= -1 y= -1
+x= -1 y= -1 ex[base+x][base+y]= 1
+sim n= 1 x= -3 y= 0
+sim n= 0 x= -3 y= 1
+x= -3 y= 1 ex[base+x][base+y]= 1
+sim n= 0 x= -3 y= -1
+x= -3 y= -1 ex[base+x][base+y]= 1
+sim n= 2 x= -2 y= -2
+sim n= 1 x= -1 y= -2
+sim n= 0 x= -1 y= -1
+x= -1 y= -1 ex[base+x][base+y]= 1
+sim n= 0 x= -1 y= -3
+x= -1 y= -3 ex[base+x][base+y]= 1
+sim n= 1 x= -3 y= -2
+sim n= 0 x= -3 y= -1
+x= -3 y= -1 ex[base+x][base+y]= 1
+sim n= 0 x= -3 y= -3
+x= -3 y= -3 ex[base+x][base+y]= 0
+cnt= 16
+sim n= 5 x= 0 y= 1
+sim n= 4 x= 1 y= 1
+sim n= 3 x= 1 y= 2
+sim n= 2 x= 2 y= 2
+sim n= 1 x= 2 y= 3
+sim n= 0 x= 3 y= 3
+x= 3 y= 3 ex[base+x][base+y]= 1
+sim n= 0 x= 1 y= 3
+x= 1 y= 3 ex[base+x][base+y]= 1
+sim n= 1 x= 2 y= 1
+sim n= 0 x= 3 y= 1
+x= 3 y= 1 ex[base+x][base+y]= 1
+sim n= 0 x= 1 y= 1
+x= 1 y= 1 ex[base+x][base+y]= 1
+sim n= 2 x= 0 y= 2
+sim n= 1 x= 0 y= 3
+sim n= 0 x= 1 y= 3
+x= 1 y= 3 ex[base+x][base+y]= 1
+sim n= 0 x= -1 y= 3
+x= -1 y= 3 ex[base+x][base+y]= 1
+sim n= 1 x= 0 y= 1
+sim n= 0 x= 1 y= 1
+x= 1 y= 1 ex[base+x][base+y]= 1
+sim n= 0 x= -1 y= 1
+x= -1 y= 1 ex[base+x][base+y]= 1
+sim n= 3 x= 1 y= 0
+sim n= 2 x= 2 y= 0
+sim n= 1 x= 2 y= 1
+sim n= 0 x= 3 y= 1
+x= 3 y= 1 ex[base+x][base+y]= 1
+sim n= 0 x= 1 y= 1
+x= 1 y= 1 ex[base+x][base+y]= 1
+sim n= 1 x= 2 y= -1
+sim n= 0 x= 3 y= -1
+x= 3 y= -1 ex[base+x][base+y]= 1
+sim n= 0 x= 1 y= -1
+x= 1 y= -1 ex[base+x][base+y]= 1
+sim n= 2 x= 0 y= 0
+sim n= 1 x= 0 y= 1
+sim n= 0 x= 1 y= 1
+x= 1 y= 1 ex[base+x][base+y]= 1
+sim n= 0 x= -1 y= 1
+x= -1 y= 1 ex[base+x][base+y]= 1
+sim n= 1 x= 0 y= -1
+sim n= 0 x= 1 y= -1
+x= 1 y= -1 ex[base+x][base+y]= 1
+sim n= 0 x= -1 y= -1
+x= -1 y= -1 ex[base+x][base+y]= 1
+sim n= 4 x= -1 y= 1
+sim n= 3 x= -1 y= 2
+sim n= 2 x= 0 y= 2
+sim n= 1 x= 0 y= 3
+sim n= 0 x= 1 y= 3
+x= 1 y= 3 ex[base+x][base+y]= 1
+sim n= 0 x= -1 y= 3
+x= -1 y= 3 ex[base+x][base+y]= 1
+sim n= 1 x= 0 y= 1
+sim n= 0 x= 1 y= 1
+x= 1 y= 1 ex[base+x][base+y]= 1
+sim n= 0 x= -1 y= 1
+x= -1 y= 1 ex[base+x][base+y]= 1
+sim n= 2 x= -2 y= 2
+sim n= 1 x= -2 y= 3
+sim n= 0 x= -1 y= 3
+x= -1 y= 3 ex[base+x][base+y]= 1
+sim n= 0 x= -3 y= 3
+x= -3 y= 3 ex[base+x][base+y]= 1
+sim n= 1 x= -2 y= 1
+sim n= 0 x= -1 y= 1
+x= -1 y= 1 ex[base+x][base+y]= 1
+sim n= 0 x= -3 y= 1
+x= -3 y= 1 ex[base+x][base+y]= 1
+sim n= 3 x= -1 y= 0
+sim n= 2 x= 0 y= 0
+sim n= 1 x= 0 y= 1
+sim n= 0 x= 1 y= 1
+x= 1 y= 1 ex[base+x][base+y]= 1
+sim n= 0 x= -1 y= 1
+x= -1 y= 1 ex[base+x][base+y]= 1
+sim n= 1 x= 0 y= -1
+sim n= 0 x= 1 y= -1
+x= 1 y= -1 ex[base+x][base+y]= 1
+sim n= 0 x= -1 y= -1
+x= -1 y= -1 ex[base+x][base+y]= 1
+sim n= 2 x= -2 y= 0
+sim n= 1 x= -2 y= 1
+sim n= 0 x= -1 y= 1
+x= -1 y= 1 ex[base+x][base+y]= 1
+sim n= 0 x= -3 y= 1
+x= -3 y= 1 ex[base+x][base+y]= 1
+sim n= 1 x= -2 y= -1
+sim n= 0 x= -1 y= -1
+x= -1 y= -1 ex[base+x][base+y]= 1
+sim n= 0 x= -3 y= -1
+x= -3 y= -1 ex[base+x][base+y]= 1
+sim n= 5 x= 0 y= -1
+sim n= 4 x= 1 y= -1
+sim n= 3 x= 1 y= 0
+sim n= 2 x= 2 y= 0
+sim n= 1 x= 2 y= 1
+sim n= 0 x= 3 y= 1
+x= 3 y= 1 ex[base+x][base+y]= 1
+sim n= 0 x= 1 y= 1
+x= 1 y= 1 ex[base+x][base+y]= 1
+sim n= 1 x= 2 y= -1
+sim n= 0 x= 3 y= -1
+x= 3 y= -1 ex[base+x][base+y]= 1
+sim n= 0 x= 1 y= -1
+x= 1 y= -1 ex[base+x][base+y]= 1
+sim n= 2 x= 0 y= 0
+sim n= 1 x= 0 y= 1
+sim n= 0 x= 1 y= 1
+x= 1 y= 1 ex[base+x][base+y]= 1
+sim n= 0 x= -1 y= 1
+x= -1 y= 1 ex[base+x][base+y]= 1
+sim n= 1 x= 0 y= -1
+sim n= 0 x= 1 y= -1
+x= 1 y= -1 ex[base+x][base+y]= 1
+sim n= 0 x= -1 y= -1
+x= -1 y= -1 ex[base+x][base+y]= 1
+sim n= 3 x= 1 y= -2
+sim n= 2 x= 2 y= -2
+sim n= 1 x= 2 y= -1
+sim n= 0 x= 3 y= -1
+x= 3 y= -1 ex[base+x][base+y]= 1
+sim n= 0 x= 1 y= -1
+x= 1 y= -1 ex[base+x][base+y]= 1
+sim n= 1 x= 2 y= -3
+sim n= 0 x= 3 y= -3
+x= 3 y= -3 ex[base+x][base+y]= 1
+sim n= 0 x= 1 y= -3
+x= 1 y= -3 ex[base+x][base+y]= 1
+sim n= 2 x= 0 y= -2
+sim n= 1 x= 0 y= -1
+sim n= 0 x= 1 y= -1
+x= 1 y= -1 ex[base+x][base+y]= 1
+sim n= 0 x= -1 y= -1
+x= -1 y= -1 ex[base+x][base+y]= 1
+sim n= 1 x= 0 y= -3
+sim n= 0 x= 1 y= -3
+x= 1 y= -3 ex[base+x][base+y]= 1
+sim n= 0 x= -1 y= -3
+x= -1 y= -3 ex[base+x][base+y]= 1
+sim n= 4 x= -1 y= -1
+sim n= 3 x= -1 y= 0
+sim n= 2 x= 0 y= 0
+sim n= 1 x= 0 y= 1
+sim n= 0 x= 1 y= 1
+x= 1 y= 1 ex[base+x][base+y]= 1
+sim n= 0 x= -1 y= 1
+x= -1 y= 1 ex[base+x][base+y]= 1
+sim n= 1 x= 0 y= -1
+sim n= 0 x= 1 y= -1
+x= 1 y= -1 ex[base+x][base+y]= 1
+sim n= 0 x= -1 y= -1
+x= -1 y= -1 ex[base+x][base+y]= 1
+sim n= 2 x= -2 y= 0
+sim n= 1 x= -2 y= 1
+sim n= 0 x= -1 y= 1
+x= -1 y= 1 ex[base+x][base+y]= 1
+sim n= 0 x= -3 y= 1
+x= -3 y= 1 ex[base+x][base+y]= 1
+sim n= 1 x= -2 y= -1
+sim n= 0 x= -1 y= -1
+x= -1 y= -1 ex[base+x][base+y]= 1
+sim n= 0 x= -3 y= -1
+x= -3 y= -1 ex[base+x][base+y]= 1
+sim n= 3 x= -1 y= -2
+sim n= 2 x= 0 y= -2
+sim n= 1 x= 0 y= -1
+sim n= 0 x= 1 y= -1
+x= 1 y= -1 ex[base+x][base+y]= 1
+sim n= 0 x= -1 y= -1
+x= -1 y= -1 ex[base+x][base+y]= 1
+sim n= 1 x= 0 y= -3
+sim n= 0 x= 1 y= -3
+x= 1 y= -3 ex[base+x][base+y]= 1
+sim n= 0 x= -1 y= -3
+x= -1 y= -3 ex[base+x][base+y]= 1
+sim n= 2 x= -2 y= -2
+sim n= 1 x= -2 y= -1
+sim n= 0 x= -1 y= -1
+x= -1 y= -1 ex[base+x][base+y]= 1
+sim n= 0 x= -3 y= -1
+x= -3 y= -1 ex[base+x][base+y]= 1
+sim n= 1 x= -2 y= -3
+sim n= 0 x= -1 y= -3
+x= -1 y= -3 ex[base+x][base+y]= 1
+sim n= 0 x= -3 y= -3
+x= -3 y= -3 ex[base+x][base+y]= 1
+i= 7
+sim n= 6 x= 1 y= 0
+sim n= 5 x= 1 y= 1
+sim n= 4 x= 2 y= 1
+sim n= 3 x= 2 y= 2
+sim n= 2 x= 3 y= 2
+sim n= 1 x= 3 y= 3
+sim n= 0 x= 4 y= 3
+x= 4 y= 3 ex[base+x][base+y]= 0
+cnt= 1
+sim n= 0 x= 2 y= 3
+x= 2 y= 3 ex[base+x][base+y]= 0
+cnt= 2
+sim n= 1 x= 3 y= 1
+sim n= 0 x= 4 y= 1
+x= 4 y= 1 ex[base+x][base+y]= 0
+cnt= 3
+sim n= 0 x= 2 y= 1
+x= 2 y= 1 ex[base+x][base+y]= 0
+cnt= 4
+sim n= 2 x= 1 y= 2
+sim n= 1 x= 1 y= 3
+sim n= 0 x= 2 y= 3
+x= 2 y= 3 ex[base+x][base+y]= 1
+sim n= 0 x= 0 y= 3
+x= 0 y= 3 ex[base+x][base+y]= 0
+cnt= 5
+sim n= 1 x= 1 y= 1
+sim n= 0 x= 2 y= 1
+x= 2 y= 1 ex[base+x][base+y]= 1
+sim n= 0 x= 0 y= 1
+x= 0 y= 1 ex[base+x][base+y]= 0
+cnt= 6
+sim n= 3 x= 2 y= 0
+sim n= 2 x= 3 y= 0
+sim n= 1 x= 3 y= 1
+sim n= 0 x= 4 y= 1
+x= 4 y= 1 ex[base+x][base+y]= 1
+sim n= 0 x= 2 y= 1
+x= 2 y= 1 ex[base+x][base+y]= 1
+sim n= 1 x= 3 y= -1
+sim n= 0 x= 4 y= -1
+x= 4 y= -1 ex[base+x][base+y]= 0
+cnt= 7
+sim n= 0 x= 2 y= -1
+x= 2 y= -1 ex[base+x][base+y]= 0
+cnt= 8
+sim n= 2 x= 1 y= 0
+sim n= 1 x= 1 y= 1
+sim n= 0 x= 2 y= 1
+x= 2 y= 1 ex[base+x][base+y]= 1
+sim n= 0 x= 0 y= 1
+x= 0 y= 1 ex[base+x][base+y]= 1
+sim n= 1 x= 1 y= -1
+sim n= 0 x= 2 y= -1
+x= 2 y= -1 ex[base+x][base+y]= 1
+sim n= 0 x= 0 y= -1
+x= 0 y= -1 ex[base+x][base+y]= 0
+cnt= 9
+sim n= 4 x= 0 y= 1
+sim n= 3 x= 0 y= 2
+sim n= 2 x= 1 y= 2
+sim n= 1 x= 1 y= 3
+sim n= 0 x= 2 y= 3
+x= 2 y= 3 ex[base+x][base+y]= 1
+sim n= 0 x= 0 y= 3
+x= 0 y= 3 ex[base+x][base+y]= 1
+sim n= 1 x= 1 y= 1
+sim n= 0 x= 2 y= 1
+x= 2 y= 1 ex[base+x][base+y]= 1
+sim n= 0 x= 0 y= 1
+x= 0 y= 1 ex[base+x][base+y]= 1
+sim n= 2 x= -1 y= 2
+sim n= 1 x= -1 y= 3
+sim n= 0 x= 0 y= 3
+x= 0 y= 3 ex[base+x][base+y]= 1
+sim n= 0 x= -2 y= 3
+x= -2 y= 3 ex[base+x][base+y]= 0
+cnt= 10
+sim n= 1 x= -1 y= 1
+sim n= 0 x= 0 y= 1
+x= 0 y= 1 ex[base+x][base+y]= 1
+sim n= 0 x= -2 y= 1
+x= -2 y= 1 ex[base+x][base+y]= 0
+cnt= 11
+sim n= 3 x= 0 y= 0
+sim n= 2 x= 1 y= 0
+sim n= 1 x= 1 y= 1
+sim n= 0 x= 2 y= 1
+x= 2 y= 1 ex[base+x][base+y]= 1
+sim n= 0 x= 0 y= 1
+x= 0 y= 1 ex[base+x][base+y]= 1
+sim n= 1 x= 1 y= -1
+sim n= 0 x= 2 y= -1
+x= 2 y= -1 ex[base+x][base+y]= 1
+sim n= 0 x= 0 y= -1
+x= 0 y= -1 ex[base+x][base+y]= 1
+sim n= 2 x= -1 y= 0
+sim n= 1 x= -1 y= 1
+sim n= 0 x= 0 y= 1
+x= 0 y= 1 ex[base+x][base+y]= 1
+sim n= 0 x= -2 y= 1
+x= -2 y= 1 ex[base+x][base+y]= 1
+sim n= 1 x= -1 y= -1
+sim n= 0 x= 0 y= -1
+x= 0 y= -1 ex[base+x][base+y]= 1
+sim n= 0 x= -2 y= -1
+x= -2 y= -1 ex[base+x][base+y]= 0
+cnt= 12
+sim n= 5 x= 1 y= -1
+sim n= 4 x= 2 y= -1
+sim n= 3 x= 2 y= 0
+sim n= 2 x= 3 y= 0
+sim n= 1 x= 3 y= 1
+sim n= 0 x= 4 y= 1
+x= 4 y= 1 ex[base+x][base+y]= 1
+sim n= 0 x= 2 y= 1
+x= 2 y= 1 ex[base+x][base+y]= 1
+sim n= 1 x= 3 y= -1
+sim n= 0 x= 4 y= -1
+x= 4 y= -1 ex[base+x][base+y]= 1
+sim n= 0 x= 2 y= -1
+x= 2 y= -1 ex[base+x][base+y]= 1
+sim n= 2 x= 1 y= 0
+sim n= 1 x= 1 y= 1
+sim n= 0 x= 2 y= 1
+x= 2 y= 1 ex[base+x][base+y]= 1
+sim n= 0 x= 0 y= 1
+x= 0 y= 1 ex[base+x][base+y]= 1
+sim n= 1 x= 1 y= -1
+sim n= 0 x= 2 y= -1
+x= 2 y= -1 ex[base+x][base+y]= 1
+sim n= 0 x= 0 y= -1
+x= 0 y= -1 ex[base+x][base+y]= 1
+sim n= 3 x= 2 y= -2
+sim n= 2 x= 3 y= -2
+sim n= 1 x= 3 y= -1
+sim n= 0 x= 4 y= -1
+x= 4 y= -1 ex[base+x][base+y]= 1
+sim n= 0 x= 2 y= -1
+x= 2 y= -1 ex[base+x][base+y]= 1
+sim n= 1 x= 3 y= -3
+sim n= 0 x= 4 y= -3
+x= 4 y= -3 ex[base+x][base+y]= 0
+cnt= 13
+sim n= 0 x= 2 y= -3
+x= 2 y= -3 ex[base+x][base+y]= 0
+cnt= 14
+sim n= 2 x= 1 y= -2
+sim n= 1 x= 1 y= -1
+sim n= 0 x= 2 y= -1
+x= 2 y= -1 ex[base+x][base+y]= 1
+sim n= 0 x= 0 y= -1
+x= 0 y= -1 ex[base+x][base+y]= 1
+sim n= 1 x= 1 y= -3
+sim n= 0 x= 2 y= -3
+x= 2 y= -3 ex[base+x][base+y]= 1
+sim n= 0 x= 0 y= -3
+x= 0 y= -3 ex[base+x][base+y]= 0
+cnt= 15
+sim n= 4 x= 0 y= -1
+sim n= 3 x= 0 y= 0
+sim n= 2 x= 1 y= 0
+sim n= 1 x= 1 y= 1
+sim n= 0 x= 2 y= 1
+x= 2 y= 1 ex[base+x][base+y]= 1
+sim n= 0 x= 0 y= 1
+x= 0 y= 1 ex[base+x][base+y]= 1
+sim n= 1 x= 1 y= -1
+sim n= 0 x= 2 y= -1
+x= 2 y= -1 ex[base+x][base+y]= 1
+sim n= 0 x= 0 y= -1
+x= 0 y= -1 ex[base+x][base+y]= 1
+sim n= 2 x= -1 y= 0
+sim n= 1 x= -1 y= 1
+sim n= 0 x= 0 y= 1
+x= 0 y= 1 ex[base+x][base+y]= 1
+sim n= 0 x= -2 y= 1
+x= -2 y= 1 ex[base+x][base+y]= 1
+sim n= 1 x= -1 y= -1
+sim n= 0 x= 0 y= -1
+x= 0 y= -1 ex[base+x][base+y]= 1
+sim n= 0 x= -2 y= -1
+x= -2 y= -1 ex[base+x][base+y]= 1
+sim n= 3 x= 0 y= -2
+sim n= 2 x= 1 y= -2
+sim n= 1 x= 1 y= -1
+sim n= 0 x= 2 y= -1
+x= 2 y= -1 ex[base+x][base+y]= 1
+sim n= 0 x= 0 y= -1
+x= 0 y= -1 ex[base+x][base+y]= 1
+sim n= 1 x= 1 y= -3
+sim n= 0 x= 2 y= -3
+x= 2 y= -3 ex[base+x][base+y]= 1
+sim n= 0 x= 0 y= -3
+x= 0 y= -3 ex[base+x][base+y]= 1
+sim n= 2 x= -1 y= -2
+sim n= 1 x= -1 y= -1
+sim n= 0 x= 0 y= -1
+x= 0 y= -1 ex[base+x][base+y]= 1
+sim n= 0 x= -2 y= -1
+x= -2 y= -1 ex[base+x][base+y]= 1
+sim n= 1 x= -1 y= -3
+sim n= 0 x= 0 y= -3
+x= 0 y= -3 ex[base+x][base+y]= 1
+sim n= 0 x= -2 y= -3
+x= -2 y= -3 ex[base+x][base+y]= 0
+cnt= 16
+sim n= 6 x= -1 y= 0
+sim n= 5 x= -1 y= 1
+sim n= 4 x= 0 y= 1
+sim n= 3 x= 0 y= 2
+sim n= 2 x= 1 y= 2
+sim n= 1 x= 1 y= 3
+sim n= 0 x= 2 y= 3
+x= 2 y= 3 ex[base+x][base+y]= 1
+sim n= 0 x= 0 y= 3
+x= 0 y= 3 ex[base+x][base+y]= 1
+sim n= 1 x= 1 y= 1
+sim n= 0 x= 2 y= 1
+x= 2 y= 1 ex[base+x][base+y]= 1
+sim n= 0 x= 0 y= 1
+x= 0 y= 1 ex[base+x][base+y]= 1
+sim n= 2 x= -1 y= 2
+sim n= 1 x= -1 y= 3
+sim n= 0 x= 0 y= 3
+x= 0 y= 3 ex[base+x][base+y]= 1
+sim n= 0 x= -2 y= 3
+x= -2 y= 3 ex[base+x][base+y]= 1
+sim n= 1 x= -1 y= 1
+sim n= 0 x= 0 y= 1
+x= 0 y= 1 ex[base+x][base+y]= 1
+sim n= 0 x= -2 y= 1
+x= -2 y= 1 ex[base+x][base+y]= 1
+sim n= 3 x= 0 y= 0
+sim n= 2 x= 1 y= 0
+sim n= 1 x= 1 y= 1
+sim n= 0 x= 2 y= 1
+x= 2 y= 1 ex[base+x][base+y]= 1
+sim n= 0 x= 0 y= 1
+x= 0 y= 1 ex[base+x][base+y]= 1
+sim n= 1 x= 1 y= -1
+sim n= 0 x= 2 y= -1
+x= 2 y= -1 ex[base+x][base+y]= 1
+sim n= 0 x= 0 y= -1
+x= 0 y= -1 ex[base+x][base+y]= 1
+sim n= 2 x= -1 y= 0
+sim n= 1 x= -1 y= 1
+sim n= 0 x= 0 y= 1
+x= 0 y= 1 ex[base+x][base+y]= 1
+sim n= 0 x= -2 y= 1
+x= -2 y= 1 ex[base+x][base+y]= 1
+sim n= 1 x= -1 y= -1
+sim n= 0 x= 0 y= -1
+x= 0 y= -1 ex[base+x][base+y]= 1
+sim n= 0 x= -2 y= -1
+x= -2 y= -1 ex[base+x][base+y]= 1
+sim n= 4 x= -2 y= 1
+sim n= 3 x= -2 y= 2
+sim n= 2 x= -1 y= 2
+sim n= 1 x= -1 y= 3
+sim n= 0 x= 0 y= 3
+x= 0 y= 3 ex[base+x][base+y]= 1
+sim n= 0 x= -2 y= 3
+x= -2 y= 3 ex[base+x][base+y]= 1
+sim n= 1 x= -1 y= 1
+sim n= 0 x= 0 y= 1
+x= 0 y= 1 ex[base+x][base+y]= 1
+sim n= 0 x= -2 y= 1
+x= -2 y= 1 ex[base+x][base+y]= 1
+sim n= 2 x= -3 y= 2
+sim n= 1 x= -3 y= 3
+sim n= 0 x= -2 y= 3
+x= -2 y= 3 ex[base+x][base+y]= 1
+sim n= 0 x= -4 y= 3
+x= -4 y= 3 ex[base+x][base+y]= 0
+cnt= 17
+sim n= 1 x= -3 y= 1
+sim n= 0 x= -2 y= 1
+x= -2 y= 1 ex[base+x][base+y]= 1
+sim n= 0 x= -4 y= 1
+x= -4 y= 1 ex[base+x][base+y]= 0
+cnt= 18
+sim n= 3 x= -2 y= 0
+sim n= 2 x= -1 y= 0
+sim n= 1 x= -1 y= 1
+sim n= 0 x= 0 y= 1
+x= 0 y= 1 ex[base+x][base+y]= 1
+sim n= 0 x= -2 y= 1
+x= -2 y= 1 ex[base+x][base+y]= 1
+sim n= 1 x= -1 y= -1
+sim n= 0 x= 0 y= -1
+x= 0 y= -1 ex[base+x][base+y]= 1
+sim n= 0 x= -2 y= -1
+x= -2 y= -1 ex[base+x][base+y]= 1
+sim n= 2 x= -3 y= 0
+sim n= 1 x= -3 y= 1
+sim n= 0 x= -2 y= 1
+x= -2 y= 1 ex[base+x][base+y]= 1
+sim n= 0 x= -4 y= 1
+x= -4 y= 1 ex[base+x][base+y]= 1
+sim n= 1 x= -3 y= -1
+sim n= 0 x= -2 y= -1
+x= -2 y= -1 ex[base+x][base+y]= 1
+sim n= 0 x= -4 y= -1
+x= -4 y= -1 ex[base+x][base+y]= 0
+cnt= 19
+sim n= 5 x= -1 y= -1
+sim n= 4 x= 0 y= -1
+sim n= 3 x= 0 y= 0
+sim n= 2 x= 1 y= 0
+sim n= 1 x= 1 y= 1
+sim n= 0 x= 2 y= 1
+x= 2 y= 1 ex[base+x][base+y]= 1
+sim n= 0 x= 0 y= 1
+x= 0 y= 1 ex[base+x][base+y]= 1
+sim n= 1 x= 1 y= -1
+sim n= 0 x= 2 y= -1
+x= 2 y= -1 ex[base+x][base+y]= 1
+sim n= 0 x= 0 y= -1
+x= 0 y= -1 ex[base+x][base+y]= 1
+sim n= 2 x= -1 y= 0
+sim n= 1 x= -1 y= 1
+sim n= 0 x= 0 y= 1
+x= 0 y= 1 ex[base+x][base+y]= 1
+sim n= 0 x= -2 y= 1
+x= -2 y= 1 ex[base+x][base+y]= 1
+sim n= 1 x= -1 y= -1
+sim n= 0 x= 0 y= -1
+x= 0 y= -1 ex[base+x][base+y]= 1
+sim n= 0 x= -2 y= -1
+x= -2 y= -1 ex[base+x][base+y]= 1
+sim n= 3 x= 0 y= -2
+sim n= 2 x= 1 y= -2
+sim n= 1 x= 1 y= -1
+sim n= 0 x= 2 y= -1
+x= 2 y= -1 ex[base+x][base+y]= 1
+sim n= 0 x= 0 y= -1
+x= 0 y= -1 ex[base+x][base+y]= 1
+sim n= 1 x= 1 y= -3
+sim n= 0 x= 2 y= -3
+x= 2 y= -3 ex[base+x][base+y]= 1
+sim n= 0 x= 0 y= -3
+x= 0 y= -3 ex[base+x][base+y]= 1
+sim n= 2 x= -1 y= -2
+sim n= 1 x= -1 y= -1
+sim n= 0 x= 0 y= -1
+x= 0 y= -1 ex[base+x][base+y]= 1
+sim n= 0 x= -2 y= -1
+x= -2 y= -1 ex[base+x][base+y]= 1
+sim n= 1 x= -1 y= -3
+sim n= 0 x= 0 y= -3
+x= 0 y= -3 ex[base+x][base+y]= 1
+sim n= 0 x= -2 y= -3
+x= -2 y= -3 ex[base+x][base+y]= 1
+sim n= 4 x= -2 y= -1
+sim n= 3 x= -2 y= 0
+sim n= 2 x= -1 y= 0
+sim n= 1 x= -1 y= 1
+sim n= 0 x= 0 y= 1
+x= 0 y= 1 ex[base+x][base+y]= 1
+sim n= 0 x= -2 y= 1
+x= -2 y= 1 ex[base+x][base+y]= 1
+sim n= 1 x= -1 y= -1
+sim n= 0 x= 0 y= -1
+x= 0 y= -1 ex[base+x][base+y]= 1
+sim n= 0 x= -2 y= -1
+x= -2 y= -1 ex[base+x][base+y]= 1
+sim n= 2 x= -3 y= 0
+sim n= 1 x= -3 y= 1
+sim n= 0 x= -2 y= 1
+x= -2 y= 1 ex[base+x][base+y]= 1
+sim n= 0 x= -4 y= 1
+x= -4 y= 1 ex[base+x][base+y]= 1
+sim n= 1 x= -3 y= -1
+sim n= 0 x= -2 y= -1
+x= -2 y= -1 ex[base+x][base+y]= 1
+sim n= 0 x= -4 y= -1
+x= -4 y= -1 ex[base+x][base+y]= 1
+sim n= 3 x= -2 y= -2
+sim n= 2 x= -1 y= -2
+sim n= 1 x= -1 y= -1
+sim n= 0 x= 0 y= -1
+x= 0 y= -1 ex[base+x][base+y]= 1
+sim n= 0 x= -2 y= -1
+x= -2 y= -1 ex[base+x][base+y]= 1
+sim n= 1 x= -1 y= -3
+sim n= 0 x= 0 y= -3
+x= 0 y= -3 ex[base+x][base+y]= 1
+sim n= 0 x= -2 y= -3
+x= -2 y= -3 ex[base+x][base+y]= 1
+sim n= 2 x= -3 y= -2
+sim n= 1 x= -3 y= -1
+sim n= 0 x= -2 y= -1
+x= -2 y= -1 ex[base+x][base+y]= 1
+sim n= 0 x= -4 y= -1
+x= -4 y= -1 ex[base+x][base+y]= 1
+sim n= 1 x= -3 y= -3
+sim n= 0 x= -2 y= -3
+x= -2 y= -3 ex[base+x][base+y]= 1
+sim n= 0 x= -4 y= -3
+x= -4 y= -3 ex[base+x][base+y]= 0
+cnt= 20
+sim n= 6 x= 0 y= 1
+sim n= 5 x= 1 y= 1
+sim n= 4 x= 1 y= 2
+sim n= 3 x= 2 y= 2
+sim n= 2 x= 2 y= 3
+sim n= 1 x= 3 y= 3
+sim n= 0 x= 3 y= 4
+x= 3 y= 4 ex[base+x][base+y]= 0
+cnt= 21
+sim n= 0 x= 3 y= 2
+x= 3 y= 2 ex[base+x][base+y]= 0
+cnt= 22
+sim n= 1 x= 1 y= 3
+sim n= 0 x= 1 y= 4
+x= 1 y= 4 ex[base+x][base+y]= 0
+cnt= 23
+sim n= 0 x= 1 y= 2
+x= 1 y= 2 ex[base+x][base+y]= 0
+cnt= 24
+sim n= 2 x= 2 y= 1
+sim n= 1 x= 3 y= 1
+sim n= 0 x= 3 y= 2
+x= 3 y= 2 ex[base+x][base+y]= 1
+sim n= 0 x= 3 y= 0
+x= 3 y= 0 ex[base+x][base+y]= 0
+cnt= 25
+sim n= 1 x= 1 y= 1
+sim n= 0 x= 1 y= 2
+x= 1 y= 2 ex[base+x][base+y]= 1
+sim n= 0 x= 1 y= 0
+x= 1 y= 0 ex[base+x][base+y]= 0
+cnt= 26
+sim n= 3 x= 0 y= 2
+sim n= 2 x= 0 y= 3
+sim n= 1 x= 1 y= 3
+sim n= 0 x= 1 y= 4
+x= 1 y= 4 ex[base+x][base+y]= 1
+sim n= 0 x= 1 y= 2
+x= 1 y= 2 ex[base+x][base+y]= 1
+sim n= 1 x= -1 y= 3
+sim n= 0 x= -1 y= 4
+x= -1 y= 4 ex[base+x][base+y]= 0
+cnt= 27
+sim n= 0 x= -1 y= 2
+x= -1 y= 2 ex[base+x][base+y]= 0
+cnt= 28
+sim n= 2 x= 0 y= 1
+sim n= 1 x= 1 y= 1
+sim n= 0 x= 1 y= 2
+x= 1 y= 2 ex[base+x][base+y]= 1
+sim n= 0 x= 1 y= 0
+x= 1 y= 0 ex[base+x][base+y]= 1
+sim n= 1 x= -1 y= 1
+sim n= 0 x= -1 y= 2
+x= -1 y= 2 ex[base+x][base+y]= 1
+sim n= 0 x= -1 y= 0
+x= -1 y= 0 ex[base+x][base+y]= 0
+cnt= 29
+sim n= 4 x= 1 y= 0
+sim n= 3 x= 2 y= 0
+sim n= 2 x= 2 y= 1
+sim n= 1 x= 3 y= 1
+sim n= 0 x= 3 y= 2
+x= 3 y= 2 ex[base+x][base+y]= 1
+sim n= 0 x= 3 y= 0
+x= 3 y= 0 ex[base+x][base+y]= 1
+sim n= 1 x= 1 y= 1
+sim n= 0 x= 1 y= 2
+x= 1 y= 2 ex[base+x][base+y]= 1
+sim n= 0 x= 1 y= 0
+x= 1 y= 0 ex[base+x][base+y]= 1
+sim n= 2 x= 2 y= -1
+sim n= 1 x= 3 y= -1
+sim n= 0 x= 3 y= 0
+x= 3 y= 0 ex[base+x][base+y]= 1
+sim n= 0 x= 3 y= -2
+x= 3 y= -2 ex[base+x][base+y]= 0
+cnt= 30
+sim n= 1 x= 1 y= -1
+sim n= 0 x= 1 y= 0
+x= 1 y= 0 ex[base+x][base+y]= 1
+sim n= 0 x= 1 y= -2
+x= 1 y= -2 ex[base+x][base+y]= 0
+cnt= 31
+sim n= 3 x= 0 y= 0
+sim n= 2 x= 0 y= 1
+sim n= 1 x= 1 y= 1
+sim n= 0 x= 1 y= 2
+x= 1 y= 2 ex[base+x][base+y]= 1
+sim n= 0 x= 1 y= 0
+x= 1 y= 0 ex[base+x][base+y]= 1
+sim n= 1 x= -1 y= 1
+sim n= 0 x= -1 y= 2
+x= -1 y= 2 ex[base+x][base+y]= 1
+sim n= 0 x= -1 y= 0
+x= -1 y= 0 ex[base+x][base+y]= 1
+sim n= 2 x= 0 y= -1
+sim n= 1 x= 1 y= -1
+sim n= 0 x= 1 y= 0
+x= 1 y= 0 ex[base+x][base+y]= 1
+sim n= 0 x= 1 y= -2
+x= 1 y= -2 ex[base+x][base+y]= 1
+sim n= 1 x= -1 y= -1
+sim n= 0 x= -1 y= 0
+x= -1 y= 0 ex[base+x][base+y]= 1
+sim n= 0 x= -1 y= -2
+x= -1 y= -2 ex[base+x][base+y]= 0
+cnt= 32
+sim n= 5 x= -1 y= 1
+sim n= 4 x= -1 y= 2
+sim n= 3 x= 0 y= 2
+sim n= 2 x= 0 y= 3
+sim n= 1 x= 1 y= 3
+sim n= 0 x= 1 y= 4
+x= 1 y= 4 ex[base+x][base+y]= 1
+sim n= 0 x= 1 y= 2
+x= 1 y= 2 ex[base+x][base+y]= 1
+sim n= 1 x= -1 y= 3
+sim n= 0 x= -1 y= 4
+x= -1 y= 4 ex[base+x][base+y]= 1
+sim n= 0 x= -1 y= 2
+x= -1 y= 2 ex[base+x][base+y]= 1
+sim n= 2 x= 0 y= 1
+sim n= 1 x= 1 y= 1
+sim n= 0 x= 1 y= 2
+x= 1 y= 2 ex[base+x][base+y]= 1
+sim n= 0 x= 1 y= 0
+x= 1 y= 0 ex[base+x][base+y]= 1
+sim n= 1 x= -1 y= 1
+sim n= 0 x= -1 y= 2
+x= -1 y= 2 ex[base+x][base+y]= 1
+sim n= 0 x= -1 y= 0
+x= -1 y= 0 ex[base+x][base+y]= 1
+sim n= 3 x= -2 y= 2
+sim n= 2 x= -2 y= 3
+sim n= 1 x= -1 y= 3
+sim n= 0 x= -1 y= 4
+x= -1 y= 4 ex[base+x][base+y]= 1
+sim n= 0 x= -1 y= 2
+x= -1 y= 2 ex[base+x][base+y]= 1
+sim n= 1 x= -3 y= 3
+sim n= 0 x= -3 y= 4
+x= -3 y= 4 ex[base+x][base+y]= 0
+cnt= 33
+sim n= 0 x= -3 y= 2
+x= -3 y= 2 ex[base+x][base+y]= 0
+cnt= 34
+sim n= 2 x= -2 y= 1
+sim n= 1 x= -1 y= 1
+sim n= 0 x= -1 y= 2
+x= -1 y= 2 ex[base+x][base+y]= 1
+sim n= 0 x= -1 y= 0
+x= -1 y= 0 ex[base+x][base+y]= 1
+sim n= 1 x= -3 y= 1
+sim n= 0 x= -3 y= 2
+x= -3 y= 2 ex[base+x][base+y]= 1
+sim n= 0 x= -3 y= 0
+x= -3 y= 0 ex[base+x][base+y]= 0
+cnt= 35
+sim n= 4 x= -1 y= 0
+sim n= 3 x= 0 y= 0
+sim n= 2 x= 0 y= 1
+sim n= 1 x= 1 y= 1
+sim n= 0 x= 1 y= 2
+x= 1 y= 2 ex[base+x][base+y]= 1
+sim n= 0 x= 1 y= 0
+x= 1 y= 0 ex[base+x][base+y]= 1
+sim n= 1 x= -1 y= 1
+sim n= 0 x= -1 y= 2
+x= -1 y= 2 ex[base+x][base+y]= 1
+sim n= 0 x= -1 y= 0
+x= -1 y= 0 ex[base+x][base+y]= 1
+sim n= 2 x= 0 y= -1
+sim n= 1 x= 1 y= -1
+sim n= 0 x= 1 y= 0
+x= 1 y= 0 ex[base+x][base+y]= 1
+sim n= 0 x= 1 y= -2
+x= 1 y= -2 ex[base+x][base+y]= 1
+sim n= 1 x= -1 y= -1
+sim n= 0 x= -1 y= 0
+x= -1 y= 0 ex[base+x][base+y]= 1
+sim n= 0 x= -1 y= -2
+x= -1 y= -2 ex[base+x][base+y]= 1
+sim n= 3 x= -2 y= 0
+sim n= 2 x= -2 y= 1
+sim n= 1 x= -1 y= 1
+sim n= 0 x= -1 y= 2
+x= -1 y= 2 ex[base+x][base+y]= 1
+sim n= 0 x= -1 y= 0
+x= -1 y= 0 ex[base+x][base+y]= 1
+sim n= 1 x= -3 y= 1
+sim n= 0 x= -3 y= 2
+x= -3 y= 2 ex[base+x][base+y]= 1
+sim n= 0 x= -3 y= 0
+x= -3 y= 0 ex[base+x][base+y]= 1
+sim n= 2 x= -2 y= -1
+sim n= 1 x= -1 y= -1
+sim n= 0 x= -1 y= 0
+x= -1 y= 0 ex[base+x][base+y]= 1
+sim n= 0 x= -1 y= -2
+x= -1 y= -2 ex[base+x][base+y]= 1
+sim n= 1 x= -3 y= -1
+sim n= 0 x= -3 y= 0
+x= -3 y= 0 ex[base+x][base+y]= 1
+sim n= 0 x= -3 y= -2
+x= -3 y= -2 ex[base+x][base+y]= 0
+cnt= 36
+sim n= 6 x= 0 y= -1
+sim n= 5 x= 1 y= -1
+sim n= 4 x= 1 y= 0
+sim n= 3 x= 2 y= 0
+sim n= 2 x= 2 y= 1
+sim n= 1 x= 3 y= 1
+sim n= 0 x= 3 y= 2
+x= 3 y= 2 ex[base+x][base+y]= 1
+sim n= 0 x= 3 y= 0
+x= 3 y= 0 ex[base+x][base+y]= 1
+sim n= 1 x= 1 y= 1
+sim n= 0 x= 1 y= 2
+x= 1 y= 2 ex[base+x][base+y]= 1
+sim n= 0 x= 1 y= 0
+x= 1 y= 0 ex[base+x][base+y]= 1
+sim n= 2 x= 2 y= -1
+sim n= 1 x= 3 y= -1
+sim n= 0 x= 3 y= 0
+x= 3 y= 0 ex[base+x][base+y]= 1
+sim n= 0 x= 3 y= -2
+x= 3 y= -2 ex[base+x][base+y]= 1
+sim n= 1 x= 1 y= -1
+sim n= 0 x= 1 y= 0
+x= 1 y= 0 ex[base+x][base+y]= 1
+sim n= 0 x= 1 y= -2
+x= 1 y= -2 ex[base+x][base+y]= 1
+sim n= 3 x= 0 y= 0
+sim n= 2 x= 0 y= 1
+sim n= 1 x= 1 y= 1
+sim n= 0 x= 1 y= 2
+x= 1 y= 2 ex[base+x][base+y]= 1
+sim n= 0 x= 1 y= 0
+x= 1 y= 0 ex[base+x][base+y]= 1
+sim n= 1 x= -1 y= 1
+sim n= 0 x= -1 y= 2
+x= -1 y= 2 ex[base+x][base+y]= 1
+sim n= 0 x= -1 y= 0
+x= -1 y= 0 ex[base+x][base+y]= 1
+sim n= 2 x= 0 y= -1
+sim n= 1 x= 1 y= -1
+sim n= 0 x= 1 y= 0
+x= 1 y= 0 ex[base+x][base+y]= 1
+sim n= 0 x= 1 y= -2
+x= 1 y= -2 ex[base+x][base+y]= 1
+sim n= 1 x= -1 y= -1
+sim n= 0 x= -1 y= 0
+x= -1 y= 0 ex[base+x][base+y]= 1
+sim n= 0 x= -1 y= -2
+x= -1 y= -2 ex[base+x][base+y]= 1
+sim n= 4 x= 1 y= -2
+sim n= 3 x= 2 y= -2
+sim n= 2 x= 2 y= -1
+sim n= 1 x= 3 y= -1
+sim n= 0 x= 3 y= 0
+x= 3 y= 0 ex[base+x][base+y]= 1
+sim n= 0 x= 3 y= -2
+x= 3 y= -2 ex[base+x][base+y]= 1
+sim n= 1 x= 1 y= -1
+sim n= 0 x= 1 y= 0
+x= 1 y= 0 ex[base+x][base+y]= 1
+sim n= 0 x= 1 y= -2
+x= 1 y= -2 ex[base+x][base+y]= 1
+sim n= 2 x= 2 y= -3
+sim n= 1 x= 3 y= -3
+sim n= 0 x= 3 y= -2
+x= 3 y= -2 ex[base+x][base+y]= 1
+sim n= 0 x= 3 y= -4
+x= 3 y= -4 ex[base+x][base+y]= 0
+cnt= 37
+sim n= 1 x= 1 y= -3
+sim n= 0 x= 1 y= -2
+x= 1 y= -2 ex[base+x][base+y]= 1
+sim n= 0 x= 1 y= -4
+x= 1 y= -4 ex[base+x][base+y]= 0
+cnt= 38
+sim n= 3 x= 0 y= -2
+sim n= 2 x= 0 y= -1
+sim n= 1 x= 1 y= -1
+sim n= 0 x= 1 y= 0
+x= 1 y= 0 ex[base+x][base+y]= 1
+sim n= 0 x= 1 y= -2
+x= 1 y= -2 ex[base+x][base+y]= 1
+sim n= 1 x= -1 y= -1
+sim n= 0 x= -1 y= 0
+x= -1 y= 0 ex[base+x][base+y]= 1
+sim n= 0 x= -1 y= -2
+x= -1 y= -2 ex[base+x][base+y]= 1
+sim n= 2 x= 0 y= -3
+sim n= 1 x= 1 y= -3
+sim n= 0 x= 1 y= -2
+x= 1 y= -2 ex[base+x][base+y]= 1
+sim n= 0 x= 1 y= -4
+x= 1 y= -4 ex[base+x][base+y]= 1
+sim n= 1 x= -1 y= -3
+sim n= 0 x= -1 y= -2
+x= -1 y= -2 ex[base+x][base+y]= 1
+sim n= 0 x= -1 y= -4
+x= -1 y= -4 ex[base+x][base+y]= 0
+cnt= 39
+sim n= 5 x= -1 y= -1
+sim n= 4 x= -1 y= 0
+sim n= 3 x= 0 y= 0
+sim n= 2 x= 0 y= 1
+sim n= 1 x= 1 y= 1
+sim n= 0 x= 1 y= 2
+x= 1 y= 2 ex[base+x][base+y]= 1
+sim n= 0 x= 1 y= 0
+x= 1 y= 0 ex[base+x][base+y]= 1
+sim n= 1 x= -1 y= 1
+sim n= 0 x= -1 y= 2
+x= -1 y= 2 ex[base+x][base+y]= 1
+sim n= 0 x= -1 y= 0
+x= -1 y= 0 ex[base+x][base+y]= 1
+sim n= 2 x= 0 y= -1
+sim n= 1 x= 1 y= -1
+sim n= 0 x= 1 y= 0
+x= 1 y= 0 ex[base+x][base+y]= 1
+sim n= 0 x= 1 y= -2
+x= 1 y= -2 ex[base+x][base+y]= 1
+sim n= 1 x= -1 y= -1
+sim n= 0 x= -1 y= 0
+x= -1 y= 0 ex[base+x][base+y]= 1
+sim n= 0 x= -1 y= -2
+x= -1 y= -2 ex[base+x][base+y]= 1
+sim n= 3 x= -2 y= 0
+sim n= 2 x= -2 y= 1
+sim n= 1 x= -1 y= 1
+sim n= 0 x= -1 y= 2
+x= -1 y= 2 ex[base+x][base+y]= 1
+sim n= 0 x= -1 y= 0
+x= -1 y= 0 ex[base+x][base+y]= 1
+sim n= 1 x= -3 y= 1
+sim n= 0 x= -3 y= 2
+x= -3 y= 2 ex[base+x][base+y]= 1
+sim n= 0 x= -3 y= 0
+x= -3 y= 0 ex[base+x][base+y]= 1
+sim n= 2 x= -2 y= -1
+sim n= 1 x= -1 y= -1
+sim n= 0 x= -1 y= 0
+x= -1 y= 0 ex[base+x][base+y]= 1
+sim n= 0 x= -1 y= -2
+x= -1 y= -2 ex[base+x][base+y]= 1
+sim n= 1 x= -3 y= -1
+sim n= 0 x= -3 y= 0
+x= -3 y= 0 ex[base+x][base+y]= 1
+sim n= 0 x= -3 y= -2
+x= -3 y= -2 ex[base+x][base+y]= 1
+sim n= 4 x= -1 y= -2
+sim n= 3 x= 0 y= -2
+sim n= 2 x= 0 y= -1
+sim n= 1 x= 1 y= -1
+sim n= 0 x= 1 y= 0
+x= 1 y= 0 ex[base+x][base+y]= 1
+sim n= 0 x= 1 y= -2
+x= 1 y= -2 ex[base+x][base+y]= 1
+sim n= 1 x= -1 y= -1
+sim n= 0 x= -1 y= 0
+x= -1 y= 0 ex[base+x][base+y]= 1
+sim n= 0 x= -1 y= -2
+x= -1 y= -2 ex[base+x][base+y]= 1
+sim n= 2 x= 0 y= -3
+sim n= 1 x= 1 y= -3
+sim n= 0 x= 1 y= -2
+x= 1 y= -2 ex[base+x][base+y]= 1
+sim n= 0 x= 1 y= -4
+x= 1 y= -4 ex[base+x][base+y]= 1
+sim n= 1 x= -1 y= -3
+sim n= 0 x= -1 y= -2
+x= -1 y= -2 ex[base+x][base+y]= 1
+sim n= 0 x= -1 y= -4
+x= -1 y= -4 ex[base+x][base+y]= 1
+sim n= 3 x= -2 y= -2
+sim n= 2 x= -2 y= -1
+sim n= 1 x= -1 y= -1
+sim n= 0 x= -1 y= 0
+x= -1 y= 0 ex[base+x][base+y]= 1
+sim n= 0 x= -1 y= -2
+x= -1 y= -2 ex[base+x][base+y]= 1
+sim n= 1 x= -3 y= -1
+sim n= 0 x= -3 y= 0
+x= -3 y= 0 ex[base+x][base+y]= 1
+sim n= 0 x= -3 y= -2
+x= -3 y= -2 ex[base+x][base+y]= 1
+sim n= 2 x= -2 y= -3
+sim n= 1 x= -1 y= -3
+sim n= 0 x= -1 y= -2
+x= -1 y= -2 ex[base+x][base+y]= 1
+sim n= 0 x= -1 y= -4
+x= -1 y= -4 ex[base+x][base+y]= 1
+sim n= 1 x= -3 y= -3
+sim n= 0 x= -3 y= -2
+x= -3 y= -2 ex[base+x][base+y]= 1
+sim n= 0 x= -3 y= -4
+x= -3 y= -4 ex[base+x][base+y]= 0
+cnt= 40
+i= 8
+sim n= 7 x= 1 y= 0
+sim n= 6 x= 1 y= 1
+sim n= 5 x= 2 y= 1
+sim n= 4 x= 2 y= 2
+sim n= 3 x= 3 y= 2
+sim n= 2 x= 3 y= 3
+sim n= 1 x= 4 y= 3
+sim n= 0 x= 4 y= 4
+x= 4 y= 4 ex[base+x][base+y]= 0
+cnt= 1
+sim n= 0 x= 4 y= 2
+x= 4 y= 2 ex[base+x][base+y]= 0
+cnt= 2
+sim n= 1 x= 2 y= 3
+sim n= 0 x= 2 y= 4
+x= 2 y= 4 ex[base+x][base+y]= 0
+cnt= 3
+sim n= 0 x= 2 y= 2
+x= 2 y= 2 ex[base+x][base+y]= 0
+cnt= 4
+sim n= 2 x= 3 y= 1
+sim n= 1 x= 4 y= 1
+sim n= 0 x= 4 y= 2
+x= 4 y= 2 ex[base+x][base+y]= 1
+sim n= 0 x= 4 y= 0
+x= 4 y= 0 ex[base+x][base+y]= 0
+cnt= 5
+sim n= 1 x= 2 y= 1
+sim n= 0 x= 2 y= 2
+x= 2 y= 2 ex[base+x][base+y]= 1
+sim n= 0 x= 2 y= 0
+x= 2 y= 0 ex[base+x][base+y]= 0
+cnt= 6
+sim n= 3 x= 1 y= 2
+sim n= 2 x= 1 y= 3
+sim n= 1 x= 2 y= 3
+sim n= 0 x= 2 y= 4
+x= 2 y= 4 ex[base+x][base+y]= 1
+sim n= 0 x= 2 y= 2
+x= 2 y= 2 ex[base+x][base+y]= 1
+sim n= 1 x= 0 y= 3
+sim n= 0 x= 0 y= 4
+x= 0 y= 4 ex[base+x][base+y]= 0
+cnt= 7
+sim n= 0 x= 0 y= 2
+x= 0 y= 2 ex[base+x][base+y]= 0
+cnt= 8
+sim n= 2 x= 1 y= 1
+sim n= 1 x= 2 y= 1
+sim n= 0 x= 2 y= 2
+x= 2 y= 2 ex[base+x][base+y]= 1
+sim n= 0 x= 2 y= 0
+x= 2 y= 0 ex[base+x][base+y]= 1
+sim n= 1 x= 0 y= 1
+sim n= 0 x= 0 y= 2
+x= 0 y= 2 ex[base+x][base+y]= 1
+sim n= 0 x= 0 y= 0
+x= 0 y= 0 ex[base+x][base+y]= 0
+cnt= 9
+sim n= 4 x= 2 y= 0
+sim n= 3 x= 3 y= 0
+sim n= 2 x= 3 y= 1
+sim n= 1 x= 4 y= 1
+sim n= 0 x= 4 y= 2
+x= 4 y= 2 ex[base+x][base+y]= 1
+sim n= 0 x= 4 y= 0
+x= 4 y= 0 ex[base+x][base+y]= 1
+sim n= 1 x= 2 y= 1
+sim n= 0 x= 2 y= 2
+x= 2 y= 2 ex[base+x][base+y]= 1
+sim n= 0 x= 2 y= 0
+x= 2 y= 0 ex[base+x][base+y]= 1
+sim n= 2 x= 3 y= -1
+sim n= 1 x= 4 y= -1
+sim n= 0 x= 4 y= 0
+x= 4 y= 0 ex[base+x][base+y]= 1
+sim n= 0 x= 4 y= -2
+x= 4 y= -2 ex[base+x][base+y]= 0
+cnt= 10
+sim n= 1 x= 2 y= -1
+sim n= 0 x= 2 y= 0
+x= 2 y= 0 ex[base+x][base+y]= 1
+sim n= 0 x= 2 y= -2
+x= 2 y= -2 ex[base+x][base+y]= 0
+cnt= 11
+sim n= 3 x= 1 y= 0
+sim n= 2 x= 1 y= 1
+sim n= 1 x= 2 y= 1
+sim n= 0 x= 2 y= 2
+x= 2 y= 2 ex[base+x][base+y]= 1
+sim n= 0 x= 2 y= 0
+x= 2 y= 0 ex[base+x][base+y]= 1
+sim n= 1 x= 0 y= 1
+sim n= 0 x= 0 y= 2
+x= 0 y= 2 ex[base+x][base+y]= 1
+sim n= 0 x= 0 y= 0
+x= 0 y= 0 ex[base+x][base+y]= 1
+sim n= 2 x= 1 y= -1
+sim n= 1 x= 2 y= -1
+sim n= 0 x= 2 y= 0
+x= 2 y= 0 ex[base+x][base+y]= 1
+sim n= 0 x= 2 y= -2
+x= 2 y= -2 ex[base+x][base+y]= 1
+sim n= 1 x= 0 y= -1
+sim n= 0 x= 0 y= 0
+x= 0 y= 0 ex[base+x][base+y]= 1
+sim n= 0 x= 0 y= -2
+x= 0 y= -2 ex[base+x][base+y]= 0
+cnt= 12
+sim n= 5 x= 0 y= 1
+sim n= 4 x= 0 y= 2
+sim n= 3 x= 1 y= 2
+sim n= 2 x= 1 y= 3
+sim n= 1 x= 2 y= 3
+sim n= 0 x= 2 y= 4
+x= 2 y= 4 ex[base+x][base+y]= 1
+sim n= 0 x= 2 y= 2
+x= 2 y= 2 ex[base+x][base+y]= 1
+sim n= 1 x= 0 y= 3
+sim n= 0 x= 0 y= 4
+x= 0 y= 4 ex[base+x][base+y]= 1
+sim n= 0 x= 0 y= 2
+x= 0 y= 2 ex[base+x][base+y]= 1
+sim n= 2 x= 1 y= 1
+sim n= 1 x= 2 y= 1
+sim n= 0 x= 2 y= 2
+x= 2 y= 2 ex[base+x][base+y]= 1
+sim n= 0 x= 2 y= 0
+x= 2 y= 0 ex[base+x][base+y]= 1
+sim n= 1 x= 0 y= 1
+sim n= 0 x= 0 y= 2
+x= 0 y= 2 ex[base+x][base+y]= 1
+sim n= 0 x= 0 y= 0
+x= 0 y= 0 ex[base+x][base+y]= 1
+sim n= 3 x= -1 y= 2
+sim n= 2 x= -1 y= 3
+sim n= 1 x= 0 y= 3
+sim n= 0 x= 0 y= 4
+x= 0 y= 4 ex[base+x][base+y]= 1
+sim n= 0 x= 0 y= 2
+x= 0 y= 2 ex[base+x][base+y]= 1
+sim n= 1 x= -2 y= 3
+sim n= 0 x= -2 y= 4
+x= -2 y= 4 ex[base+x][base+y]= 0
+cnt= 13
+sim n= 0 x= -2 y= 2
+x= -2 y= 2 ex[base+x][base+y]= 0
+cnt= 14
+sim n= 2 x= -1 y= 1
+sim n= 1 x= 0 y= 1
+sim n= 0 x= 0 y= 2
+x= 0 y= 2 ex[base+x][base+y]= 1
+sim n= 0 x= 0 y= 0
+x= 0 y= 0 ex[base+x][base+y]= 1
+sim n= 1 x= -2 y= 1
+sim n= 0 x= -2 y= 2
+x= -2 y= 2 ex[base+x][base+y]= 1
+sim n= 0 x= -2 y= 0
+x= -2 y= 0 ex[base+x][base+y]= 0
+cnt= 15
+sim n= 4 x= 0 y= 0
+sim n= 3 x= 1 y= 0
+sim n= 2 x= 1 y= 1
+sim n= 1 x= 2 y= 1
+sim n= 0 x= 2 y= 2
+x= 2 y= 2 ex[base+x][base+y]= 1
+sim n= 0 x= 2 y= 0
+x= 2 y= 0 ex[base+x][base+y]= 1
+sim n= 1 x= 0 y= 1
+sim n= 0 x= 0 y= 2
+x= 0 y= 2 ex[base+x][base+y]= 1
+sim n= 0 x= 0 y= 0
+x= 0 y= 0 ex[base+x][base+y]= 1
+sim n= 2 x= 1 y= -1
+sim n= 1 x= 2 y= -1
+sim n= 0 x= 2 y= 0
+x= 2 y= 0 ex[base+x][base+y]= 1
+sim n= 0 x= 2 y= -2
+x= 2 y= -2 ex[base+x][base+y]= 1
+sim n= 1 x= 0 y= -1
+sim n= 0 x= 0 y= 0
+x= 0 y= 0 ex[base+x][base+y]= 1
+sim n= 0 x= 0 y= -2
+x= 0 y= -2 ex[base+x][base+y]= 1
+sim n= 3 x= -1 y= 0
+sim n= 2 x= -1 y= 1
+sim n= 1 x= 0 y= 1
+sim n= 0 x= 0 y= 2
+x= 0 y= 2 ex[base+x][base+y]= 1
+sim n= 0 x= 0 y= 0
+x= 0 y= 0 ex[base+x][base+y]= 1
+sim n= 1 x= -2 y= 1
+sim n= 0 x= -2 y= 2
+x= -2 y= 2 ex[base+x][base+y]= 1
+sim n= 0 x= -2 y= 0
+x= -2 y= 0 ex[base+x][base+y]= 1
+sim n= 2 x= -1 y= -1
+sim n= 1 x= 0 y= -1
+sim n= 0 x= 0 y= 0
+x= 0 y= 0 ex[base+x][base+y]= 1
+sim n= 0 x= 0 y= -2
+x= 0 y= -2 ex[base+x][base+y]= 1
+sim n= 1 x= -2 y= -1
+sim n= 0 x= -2 y= 0
+x= -2 y= 0 ex[base+x][base+y]= 1
+sim n= 0 x= -2 y= -2
+x= -2 y= -2 ex[base+x][base+y]= 0
+cnt= 16
+sim n= 6 x= 1 y= -1
+sim n= 5 x= 2 y= -1
+sim n= 4 x= 2 y= 0
+sim n= 3 x= 3 y= 0
+sim n= 2 x= 3 y= 1
+sim n= 1 x= 4 y= 1
+sim n= 0 x= 4 y= 2
+x= 4 y= 2 ex[base+x][base+y]= 1
+sim n= 0 x= 4 y= 0
+x= 4 y= 0 ex[base+x][base+y]= 1
+sim n= 1 x= 2 y= 1
+sim n= 0 x= 2 y= 2
+x= 2 y= 2 ex[base+x][base+y]= 1
+sim n= 0 x= 2 y= 0
+x= 2 y= 0 ex[base+x][base+y]= 1
+sim n= 2 x= 3 y= -1
+sim n= 1 x= 4 y= -1
+sim n= 0 x= 4 y= 0
+x= 4 y= 0 ex[base+x][base+y]= 1
+sim n= 0 x= 4 y= -2
+x= 4 y= -2 ex[base+x][base+y]= 1
+sim n= 1 x= 2 y= -1
+sim n= 0 x= 2 y= 0
+x= 2 y= 0 ex[base+x][base+y]= 1
+sim n= 0 x= 2 y= -2
+x= 2 y= -2 ex[base+x][base+y]= 1
+sim n= 3 x= 1 y= 0
+sim n= 2 x= 1 y= 1
+sim n= 1 x= 2 y= 1
+sim n= 0 x= 2 y= 2
+x= 2 y= 2 ex[base+x][base+y]= 1
+sim n= 0 x= 2 y= 0
+x= 2 y= 0 ex[base+x][base+y]= 1
+sim n= 1 x= 0 y= 1
+sim n= 0 x= 0 y= 2
+x= 0 y= 2 ex[base+x][base+y]= 1
+sim n= 0 x= 0 y= 0
+x= 0 y= 0 ex[base+x][base+y]= 1
+sim n= 2 x= 1 y= -1
+sim n= 1 x= 2 y= -1
+sim n= 0 x= 2 y= 0
+x= 2 y= 0 ex[base+x][base+y]= 1
+sim n= 0 x= 2 y= -2
+x= 2 y= -2 ex[base+x][base+y]= 1
+sim n= 1 x= 0 y= -1
+sim n= 0 x= 0 y= 0
+x= 0 y= 0 ex[base+x][base+y]= 1
+sim n= 0 x= 0 y= -2
+x= 0 y= -2 ex[base+x][base+y]= 1
+sim n= 4 x= 2 y= -2
+sim n= 3 x= 3 y= -2
+sim n= 2 x= 3 y= -1
+sim n= 1 x= 4 y= -1
+sim n= 0 x= 4 y= 0
+x= 4 y= 0 ex[base+x][base+y]= 1
+sim n= 0 x= 4 y= -2
+x= 4 y= -2 ex[base+x][base+y]= 1
+sim n= 1 x= 2 y= -1
+sim n= 0 x= 2 y= 0
+x= 2 y= 0 ex[base+x][base+y]= 1
+sim n= 0 x= 2 y= -2
+x= 2 y= -2 ex[base+x][base+y]= 1
+sim n= 2 x= 3 y= -3
+sim n= 1 x= 4 y= -3
+sim n= 0 x= 4 y= -2
+x= 4 y= -2 ex[base+x][base+y]= 1
+sim n= 0 x= 4 y= -4
+x= 4 y= -4 ex[base+x][base+y]= 0
+cnt= 17
+sim n= 1 x= 2 y= -3
+sim n= 0 x= 2 y= -2
+x= 2 y= -2 ex[base+x][base+y]= 1
+sim n= 0 x= 2 y= -4
+x= 2 y= -4 ex[base+x][base+y]= 0
+cnt= 18
+sim n= 3 x= 1 y= -2
+sim n= 2 x= 1 y= -1
+sim n= 1 x= 2 y= -1
+sim n= 0 x= 2 y= 0
+x= 2 y= 0 ex[base+x][base+y]= 1
+sim n= 0 x= 2 y= -2
+x= 2 y= -2 ex[base+x][base+y]= 1
+sim n= 1 x= 0 y= -1
+sim n= 0 x= 0 y= 0
+x= 0 y= 0 ex[base+x][base+y]= 1
+sim n= 0 x= 0 y= -2
+x= 0 y= -2 ex[base+x][base+y]= 1
+sim n= 2 x= 1 y= -3
+sim n= 1 x= 2 y= -3
+sim n= 0 x= 2 y= -2
+x= 2 y= -2 ex[base+x][base+y]= 1
+sim n= 0 x= 2 y= -4
+x= 2 y= -4 ex[base+x][base+y]= 1
+sim n= 1 x= 0 y= -3
+sim n= 0 x= 0 y= -2
+x= 0 y= -2 ex[base+x][base+y]= 1
+sim n= 0 x= 0 y= -4
+x= 0 y= -4 ex[base+x][base+y]= 0
+cnt= 19
+sim n= 5 x= 0 y= -1
+sim n= 4 x= 0 y= 0
+sim n= 3 x= 1 y= 0
+sim n= 2 x= 1 y= 1
+sim n= 1 x= 2 y= 1
+sim n= 0 x= 2 y= 2
+x= 2 y= 2 ex[base+x][base+y]= 1
+sim n= 0 x= 2 y= 0
+x= 2 y= 0 ex[base+x][base+y]= 1
+sim n= 1 x= 0 y= 1
+sim n= 0 x= 0 y= 2
+x= 0 y= 2 ex[base+x][base+y]= 1
+sim n= 0 x= 0 y= 0
+x= 0 y= 0 ex[base+x][base+y]= 1
+sim n= 2 x= 1 y= -1
+sim n= 1 x= 2 y= -1
+sim n= 0 x= 2 y= 0
+x= 2 y= 0 ex[base+x][base+y]= 1
+sim n= 0 x= 2 y= -2
+x= 2 y= -2 ex[base+x][base+y]= 1
+sim n= 1 x= 0 y= -1
+sim n= 0 x= 0 y= 0
+x= 0 y= 0 ex[base+x][base+y]= 1
+sim n= 0 x= 0 y= -2
+x= 0 y= -2 ex[base+x][base+y]= 1
+sim n= 3 x= -1 y= 0
+sim n= 2 x= -1 y= 1
+sim n= 1 x= 0 y= 1
+sim n= 0 x= 0 y= 2
+x= 0 y= 2 ex[base+x][base+y]= 1
+sim n= 0 x= 0 y= 0
+x= 0 y= 0 ex[base+x][base+y]= 1
+sim n= 1 x= -2 y= 1
+sim n= 0 x= -2 y= 2
+x= -2 y= 2 ex[base+x][base+y]= 1
+sim n= 0 x= -2 y= 0
+x= -2 y= 0 ex[base+x][base+y]= 1
+sim n= 2 x= -1 y= -1
+sim n= 1 x= 0 y= -1
+sim n= 0 x= 0 y= 0
+x= 0 y= 0 ex[base+x][base+y]= 1
+sim n= 0 x= 0 y= -2
+x= 0 y= -2 ex[base+x][base+y]= 1
+sim n= 1 x= -2 y= -1
+sim n= 0 x= -2 y= 0
+x= -2 y= 0 ex[base+x][base+y]= 1
+sim n= 0 x= -2 y= -2
+x= -2 y= -2 ex[base+x][base+y]= 1
+sim n= 4 x= 0 y= -2
+sim n= 3 x= 1 y= -2
+sim n= 2 x= 1 y= -1
+sim n= 1 x= 2 y= -1
+sim n= 0 x= 2 y= 0
+x= 2 y= 0 ex[base+x][base+y]= 1
+sim n= 0 x= 2 y= -2
+x= 2 y= -2 ex[base+x][base+y]= 1
+sim n= 1 x= 0 y= -1
+sim n= 0 x= 0 y= 0
+x= 0 y= 0 ex[base+x][base+y]= 1
+sim n= 0 x= 0 y= -2
+x= 0 y= -2 ex[base+x][base+y]= 1
+sim n= 2 x= 1 y= -3
+sim n= 1 x= 2 y= -3
+sim n= 0 x= 2 y= -2
+x= 2 y= -2 ex[base+x][base+y]= 1
+sim n= 0 x= 2 y= -4
+x= 2 y= -4 ex[base+x][base+y]= 1
+sim n= 1 x= 0 y= -3
+sim n= 0 x= 0 y= -2
+x= 0 y= -2 ex[base+x][base+y]= 1
+sim n= 0 x= 0 y= -4
+x= 0 y= -4 ex[base+x][base+y]= 1
+sim n= 3 x= -1 y= -2
+sim n= 2 x= -1 y= -1
+sim n= 1 x= 0 y= -1
+sim n= 0 x= 0 y= 0
+x= 0 y= 0 ex[base+x][base+y]= 1
+sim n= 0 x= 0 y= -2
+x= 0 y= -2 ex[base+x][base+y]= 1
+sim n= 1 x= -2 y= -1
+sim n= 0 x= -2 y= 0
+x= -2 y= 0 ex[base+x][base+y]= 1
+sim n= 0 x= -2 y= -2
+x= -2 y= -2 ex[base+x][base+y]= 1
+sim n= 2 x= -1 y= -3
+sim n= 1 x= 0 y= -3
+sim n= 0 x= 0 y= -2
+x= 0 y= -2 ex[base+x][base+y]= 1
+sim n= 0 x= 0 y= -4
+x= 0 y= -4 ex[base+x][base+y]= 1
+sim n= 1 x= -2 y= -3
+sim n= 0 x= -2 y= -2
+x= -2 y= -2 ex[base+x][base+y]= 1
+sim n= 0 x= -2 y= -4
+x= -2 y= -4 ex[base+x][base+y]= 0
+cnt= 20
+sim n= 7 x= -1 y= 0
+sim n= 6 x= -1 y= 1
+sim n= 5 x= 0 y= 1
+sim n= 4 x= 0 y= 2
+sim n= 3 x= 1 y= 2
+sim n= 2 x= 1 y= 3
+sim n= 1 x= 2 y= 3
+sim n= 0 x= 2 y= 4
+x= 2 y= 4 ex[base+x][base+y]= 1
+sim n= 0 x= 2 y= 2
+x= 2 y= 2 ex[base+x][base+y]= 1
+sim n= 1 x= 0 y= 3
+sim n= 0 x= 0 y= 4
+x= 0 y= 4 ex[base+x][base+y]= 1
+sim n= 0 x= 0 y= 2
+x= 0 y= 2 ex[base+x][base+y]= 1
+sim n= 2 x= 1 y= 1
+sim n= 1 x= 2 y= 1
+sim n= 0 x= 2 y= 2
+x= 2 y= 2 ex[base+x][base+y]= 1
+sim n= 0 x= 2 y= 0
+x= 2 y= 0 ex[base+x][base+y]= 1
+sim n= 1 x= 0 y= 1
+sim n= 0 x= 0 y= 2
+x= 0 y= 2 ex[base+x][base+y]= 1
+sim n= 0 x= 0 y= 0
+x= 0 y= 0 ex[base+x][base+y]= 1
+sim n= 3 x= -1 y= 2
+sim n= 2 x= -1 y= 3
+sim n= 1 x= 0 y= 3
+sim n= 0 x= 0 y= 4
+x= 0 y= 4 ex[base+x][base+y]= 1
+sim n= 0 x= 0 y= 2
+x= 0 y= 2 ex[base+x][base+y]= 1
+sim n= 1 x= -2 y= 3
+sim n= 0 x= -2 y= 4
+x= -2 y= 4 ex[base+x][base+y]= 1
+sim n= 0 x= -2 y= 2
+x= -2 y= 2 ex[base+x][base+y]= 1
+sim n= 2 x= -1 y= 1
+sim n= 1 x= 0 y= 1
+sim n= 0 x= 0 y= 2
+x= 0 y= 2 ex[base+x][base+y]= 1
+sim n= 0 x= 0 y= 0
+x= 0 y= 0 ex[base+x][base+y]= 1
+sim n= 1 x= -2 y= 1
+sim n= 0 x= -2 y= 2
+x= -2 y= 2 ex[base+x][base+y]= 1
+sim n= 0 x= -2 y= 0
+x= -2 y= 0 ex[base+x][base+y]= 1
+sim n= 4 x= 0 y= 0
+sim n= 3 x= 1 y= 0
+sim n= 2 x= 1 y= 1
+sim n= 1 x= 2 y= 1
+sim n= 0 x= 2 y= 2
+x= 2 y= 2 ex[base+x][base+y]= 1
+sim n= 0 x= 2 y= 0
+x= 2 y= 0 ex[base+x][base+y]= 1
+sim n= 1 x= 0 y= 1
+sim n= 0 x= 0 y= 2
+x= 0 y= 2 ex[base+x][base+y]= 1
+sim n= 0 x= 0 y= 0
+x= 0 y= 0 ex[base+x][base+y]= 1
+sim n= 2 x= 1 y= -1
+sim n= 1 x= 2 y= -1
+sim n= 0 x= 2 y= 0
+x= 2 y= 0 ex[base+x][base+y]= 1
+sim n= 0 x= 2 y= -2
+x= 2 y= -2 ex[base+x][base+y]= 1
+sim n= 1 x= 0 y= -1
+sim n= 0 x= 0 y= 0
+x= 0 y= 0 ex[base+x][base+y]= 1
+sim n= 0 x= 0 y= -2
+x= 0 y= -2 ex[base+x][base+y]= 1
+sim n= 3 x= -1 y= 0
+sim n= 2 x= -1 y= 1
+sim n= 1 x= 0 y= 1
+sim n= 0 x= 0 y= 2
+x= 0 y= 2 ex[base+x][base+y]= 1
+sim n= 0 x= 0 y= 0
+x= 0 y= 0 ex[base+x][base+y]= 1
+sim n= 1 x= -2 y= 1
+sim n= 0 x= -2 y= 2
+x= -2 y= 2 ex[base+x][base+y]= 1
+sim n= 0 x= -2 y= 0
+x= -2 y= 0 ex[base+x][base+y]= 1
+sim n= 2 x= -1 y= -1
+sim n= 1 x= 0 y= -1
+sim n= 0 x= 0 y= 0
+x= 0 y= 0 ex[base+x][base+y]= 1
+sim n= 0 x= 0 y= -2
+x= 0 y= -2 ex[base+x][base+y]= 1
+sim n= 1 x= -2 y= -1
+sim n= 0 x= -2 y= 0
+x= -2 y= 0 ex[base+x][base+y]= 1
+sim n= 0 x= -2 y= -2
+x= -2 y= -2 ex[base+x][base+y]= 1
+sim n= 5 x= -2 y= 1
+sim n= 4 x= -2 y= 2
+sim n= 3 x= -1 y= 2
+sim n= 2 x= -1 y= 3
+sim n= 1 x= 0 y= 3
+sim n= 0 x= 0 y= 4
+x= 0 y= 4 ex[base+x][base+y]= 1
+sim n= 0 x= 0 y= 2
+x= 0 y= 2 ex[base+x][base+y]= 1
+sim n= 1 x= -2 y= 3
+sim n= 0 x= -2 y= 4
+x= -2 y= 4 ex[base+x][base+y]= 1
+sim n= 0 x= -2 y= 2
+x= -2 y= 2 ex[base+x][base+y]= 1
+sim n= 2 x= -1 y= 1
+sim n= 1 x= 0 y= 1
+sim n= 0 x= 0 y= 2
+x= 0 y= 2 ex[base+x][base+y]= 1
+sim n= 0 x= 0 y= 0
+x= 0 y= 0 ex[base+x][base+y]= 1
+sim n= 1 x= -2 y= 1
+sim n= 0 x= -2 y= 2
+x= -2 y= 2 ex[base+x][base+y]= 1
+sim n= 0 x= -2 y= 0
+x= -2 y= 0 ex[base+x][base+y]= 1
+sim n= 3 x= -3 y= 2
+sim n= 2 x= -3 y= 3
+sim n= 1 x= -2 y= 3
+sim n= 0 x= -2 y= 4
+x= -2 y= 4 ex[base+x][base+y]= 1
+sim n= 0 x= -2 y= 2
+x= -2 y= 2 ex[base+x][base+y]= 1
+sim n= 1 x= -4 y= 3
+sim n= 0 x= -4 y= 4
+x= -4 y= 4 ex[base+x][base+y]= 0
+cnt= 21
+sim n= 0 x= -4 y= 2
+x= -4 y= 2 ex[base+x][base+y]= 0
+cnt= 22
+sim n= 2 x= -3 y= 1
+sim n= 1 x= -2 y= 1
+sim n= 0 x= -2 y= 2
+x= -2 y= 2 ex[base+x][base+y]= 1
+sim n= 0 x= -2 y= 0
+x= -2 y= 0 ex[base+x][base+y]= 1
+sim n= 1 x= -4 y= 1
+sim n= 0 x= -4 y= 2
+x= -4 y= 2 ex[base+x][base+y]= 1
+sim n= 0 x= -4 y= 0
+x= -4 y= 0 ex[base+x][base+y]= 0
+cnt= 23
+sim n= 4 x= -2 y= 0
+sim n= 3 x= -1 y= 0
+sim n= 2 x= -1 y= 1
+sim n= 1 x= 0 y= 1
+sim n= 0 x= 0 y= 2
+x= 0 y= 2 ex[base+x][base+y]= 1
+sim n= 0 x= 0 y= 0
+x= 0 y= 0 ex[base+x][base+y]= 1
+sim n= 1 x= -2 y= 1
+sim n= 0 x= -2 y= 2
+x= -2 y= 2 ex[base+x][base+y]= 1
+sim n= 0 x= -2 y= 0
+x= -2 y= 0 ex[base+x][base+y]= 1
+sim n= 2 x= -1 y= -1
+sim n= 1 x= 0 y= -1
+sim n= 0 x= 0 y= 0
+x= 0 y= 0 ex[base+x][base+y]= 1
+sim n= 0 x= 0 y= -2
+x= 0 y= -2 ex[base+x][base+y]= 1
+sim n= 1 x= -2 y= -1
+sim n= 0 x= -2 y= 0
+x= -2 y= 0 ex[base+x][base+y]= 1
+sim n= 0 x= -2 y= -2
+x= -2 y= -2 ex[base+x][base+y]= 1
+sim n= 3 x= -3 y= 0
+sim n= 2 x= -3 y= 1
+sim n= 1 x= -2 y= 1
+sim n= 0 x= -2 y= 2
+x= -2 y= 2 ex[base+x][base+y]= 1
+sim n= 0 x= -2 y= 0
+x= -2 y= 0 ex[base+x][base+y]= 1
+sim n= 1 x= -4 y= 1
+sim n= 0 x= -4 y= 2
+x= -4 y= 2 ex[base+x][base+y]= 1
+sim n= 0 x= -4 y= 0
+x= -4 y= 0 ex[base+x][base+y]= 1
+sim n= 2 x= -3 y= -1
+sim n= 1 x= -2 y= -1
+sim n= 0 x= -2 y= 0
+x= -2 y= 0 ex[base+x][base+y]= 1
+sim n= 0 x= -2 y= -2
+x= -2 y= -2 ex[base+x][base+y]= 1
+sim n= 1 x= -4 y= -1
+sim n= 0 x= -4 y= 0
+x= -4 y= 0 ex[base+x][base+y]= 1
+sim n= 0 x= -4 y= -2
+x= -4 y= -2 ex[base+x][base+y]= 0
+cnt= 24
+sim n= 6 x= -1 y= -1
+sim n= 5 x= 0 y= -1
+sim n= 4 x= 0 y= 0
+sim n= 3 x= 1 y= 0
+sim n= 2 x= 1 y= 1
+sim n= 1 x= 2 y= 1
+sim n= 0 x= 2 y= 2
+x= 2 y= 2 ex[base+x][base+y]= 1
+sim n= 0 x= 2 y= 0
+x= 2 y= 0 ex[base+x][base+y]= 1
+sim n= 1 x= 0 y= 1
+sim n= 0 x= 0 y= 2
+x= 0 y= 2 ex[base+x][base+y]= 1
+sim n= 0 x= 0 y= 0
+x= 0 y= 0 ex[base+x][base+y]= 1
+sim n= 2 x= 1 y= -1
+sim n= 1 x= 2 y= -1
+sim n= 0 x= 2 y= 0
+x= 2 y= 0 ex[base+x][base+y]= 1
+sim n= 0 x= 2 y= -2
+x= 2 y= -2 ex[base+x][base+y]= 1
+sim n= 1 x= 0 y= -1
+sim n= 0 x= 0 y= 0
+x= 0 y= 0 ex[base+x][base+y]= 1
+sim n= 0 x= 0 y= -2
+x= 0 y= -2 ex[base+x][base+y]= 1
+sim n= 3 x= -1 y= 0
+sim n= 2 x= -1 y= 1
+sim n= 1 x= 0 y= 1
+sim n= 0 x= 0 y= 2
+x= 0 y= 2 ex[base+x][base+y]= 1
+sim n= 0 x= 0 y= 0
+x= 0 y= 0 ex[base+x][base+y]= 1
+sim n= 1 x= -2 y= 1
+sim n= 0 x= -2 y= 2
+x= -2 y= 2 ex[base+x][base+y]= 1
+sim n= 0 x= -2 y= 0
+x= -2 y= 0 ex[base+x][base+y]= 1
+sim n= 2 x= -1 y= -1
+sim n= 1 x= 0 y= -1
+sim n= 0 x= 0 y= 0
+x= 0 y= 0 ex[base+x][base+y]= 1
+sim n= 0 x= 0 y= -2
+x= 0 y= -2 ex[base+x][base+y]= 1
+sim n= 1 x= -2 y= -1
+sim n= 0 x= -2 y= 0
+x= -2 y= 0 ex[base+x][base+y]= 1
+sim n= 0 x= -2 y= -2
+x= -2 y= -2 ex[base+x][base+y]= 1
+sim n= 4 x= 0 y= -2
+sim n= 3 x= 1 y= -2
+sim n= 2 x= 1 y= -1
+sim n= 1 x= 2 y= -1
+sim n= 0 x= 2 y= 0
+x= 2 y= 0 ex[base+x][base+y]= 1
+sim n= 0 x= 2 y= -2
+x= 2 y= -2 ex[base+x][base+y]= 1
+sim n= 1 x= 0 y= -1
+sim n= 0 x= 0 y= 0
+x= 0 y= 0 ex[base+x][base+y]= 1
+sim n= 0 x= 0 y= -2
+x= 0 y= -2 ex[base+x][base+y]= 1
+sim n= 2 x= 1 y= -3
+sim n= 1 x= 2 y= -3
+sim n= 0 x= 2 y= -2
+x= 2 y= -2 ex[base+x][base+y]= 1
+sim n= 0 x= 2 y= -4
+x= 2 y= -4 ex[base+x][base+y]= 1
+sim n= 1 x= 0 y= -3
+sim n= 0 x= 0 y= -2
+x= 0 y= -2 ex[base+x][base+y]= 1
+sim n= 0 x= 0 y= -4
+x= 0 y= -4 ex[base+x][base+y]= 1
+sim n= 3 x= -1 y= -2
+sim n= 2 x= -1 y= -1
+sim n= 1 x= 0 y= -1
+sim n= 0 x= 0 y= 0
+x= 0 y= 0 ex[base+x][base+y]= 1
+sim n= 0 x= 0 y= -2
+x= 0 y= -2 ex[base+x][base+y]= 1
+sim n= 1 x= -2 y= -1
+sim n= 0 x= -2 y= 0
+x= -2 y= 0 ex[base+x][base+y]= 1
+sim n= 0 x= -2 y= -2
+x= -2 y= -2 ex[base+x][base+y]= 1
+sim n= 2 x= -1 y= -3
+sim n= 1 x= 0 y= -3
+sim n= 0 x= 0 y= -2
+x= 0 y= -2 ex[base+x][base+y]= 1
+sim n= 0 x= 0 y= -4
+x= 0 y= -4 ex[base+x][base+y]= 1
+sim n= 1 x= -2 y= -3
+sim n= 0 x= -2 y= -2
+x= -2 y= -2 ex[base+x][base+y]= 1
+sim n= 0 x= -2 y= -4
+x= -2 y= -4 ex[base+x][base+y]= 1
+sim n= 5 x= -2 y= -1
+sim n= 4 x= -2 y= 0
+sim n= 3 x= -1 y= 0
+sim n= 2 x= -1 y= 1
+sim n= 1 x= 0 y= 1
+sim n= 0 x= 0 y= 2
+x= 0 y= 2 ex[base+x][base+y]= 1
+sim n= 0 x= 0 y= 0
+x= 0 y= 0 ex[base+x][base+y]= 1
+sim n= 1 x= -2 y= 1
+sim n= 0 x= -2 y= 2
+x= -2 y= 2 ex[base+x][base+y]= 1
+sim n= 0 x= -2 y= 0
+x= -2 y= 0 ex[base+x][base+y]= 1
+sim n= 2 x= -1 y= -1
+sim n= 1 x= 0 y= -1
+sim n= 0 x= 0 y= 0
+x= 0 y= 0 ex[base+x][base+y]= 1
+sim n= 0 x= 0 y= -2
+x= 0 y= -2 ex[base+x][base+y]= 1
+sim n= 1 x= -2 y= -1
+sim n= 0 x= -2 y= 0
+x= -2 y= 0 ex[base+x][base+y]= 1
+sim n= 0 x= -2 y= -2
+x= -2 y= -2 ex[base+x][base+y]= 1
+sim n= 3 x= -3 y= 0
+sim n= 2 x= -3 y= 1
+sim n= 1 x= -2 y= 1
+sim n= 0 x= -2 y= 2
+x= -2 y= 2 ex[base+x][base+y]= 1
+sim n= 0 x= -2 y= 0
+x= -2 y= 0 ex[base+x][base+y]= 1
+sim n= 1 x= -4 y= 1
+sim n= 0 x= -4 y= 2
+x= -4 y= 2 ex[base+x][base+y]= 1
+sim n= 0 x= -4 y= 0
+x= -4 y= 0 ex[base+x][base+y]= 1
+sim n= 2 x= -3 y= -1
+sim n= 1 x= -2 y= -1
+sim n= 0 x= -2 y= 0
+x= -2 y= 0 ex[base+x][base+y]= 1
+sim n= 0 x= -2 y= -2
+x= -2 y= -2 ex[base+x][base+y]= 1
+sim n= 1 x= -4 y= -1
+sim n= 0 x= -4 y= 0
+x= -4 y= 0 ex[base+x][base+y]= 1
+sim n= 0 x= -4 y= -2
+x= -4 y= -2 ex[base+x][base+y]= 1
+sim n= 4 x= -2 y= -2
+sim n= 3 x= -1 y= -2
+sim n= 2 x= -1 y= -1
+sim n= 1 x= 0 y= -1
+sim n= 0 x= 0 y= 0
+x= 0 y= 0 ex[base+x][base+y]= 1
+sim n= 0 x= 0 y= -2
+x= 0 y= -2 ex[base+x][base+y]= 1
+sim n= 1 x= -2 y= -1
+sim n= 0 x= -2 y= 0
+x= -2 y= 0 ex[base+x][base+y]= 1
+sim n= 0 x= -2 y= -2
+x= -2 y= -2 ex[base+x][base+y]= 1
+sim n= 2 x= -1 y= -3
+sim n= 1 x= 0 y= -3
+sim n= 0 x= 0 y= -2
+x= 0 y= -2 ex[base+x][base+y]= 1
+sim n= 0 x= 0 y= -4
+x= 0 y= -4 ex[base+x][base+y]= 1
+sim n= 1 x= -2 y= -3
+sim n= 0 x= -2 y= -2
+x= -2 y= -2 ex[base+x][base+y]= 1
+sim n= 0 x= -2 y= -4
+x= -2 y= -4 ex[base+x][base+y]= 1
+sim n= 3 x= -3 y= -2
+sim n= 2 x= -3 y= -1
+sim n= 1 x= -2 y= -1
+sim n= 0 x= -2 y= 0
+x= -2 y= 0 ex[base+x][base+y]= 1
+sim n= 0 x= -2 y= -2
+x= -2 y= -2 ex[base+x][base+y]= 1
+sim n= 1 x= -4 y= -1
+sim n= 0 x= -4 y= 0
+x= -4 y= 0 ex[base+x][base+y]= 1
+sim n= 0 x= -4 y= -2
+x= -4 y= -2 ex[base+x][base+y]= 1
+sim n= 2 x= -3 y= -3
+sim n= 1 x= -2 y= -3
+sim n= 0 x= -2 y= -2
+x= -2 y= -2 ex[base+x][base+y]= 1
+sim n= 0 x= -2 y= -4
+x= -2 y= -4 ex[base+x][base+y]= 1
+sim n= 1 x= -4 y= -3
+sim n= 0 x= -4 y= -2
+x= -4 y= -2 ex[base+x][base+y]= 1
+sim n= 0 x= -4 y= -4
+x= -4 y= -4 ex[base+x][base+y]= 0
+cnt= 25
+sim n= 7 x= 0 y= 1
+sim n= 6 x= 1 y= 1
+sim n= 5 x= 1 y= 2
+sim n= 4 x= 2 y= 2
+sim n= 3 x= 2 y= 3
+sim n= 2 x= 3 y= 3
+sim n= 1 x= 3 y= 4
+sim n= 0 x= 4 y= 4
+x= 4 y= 4 ex[base+x][base+y]= 1
+sim n= 0 x= 2 y= 4
+x= 2 y= 4 ex[base+x][base+y]= 1
+sim n= 1 x= 3 y= 2
+sim n= 0 x= 4 y= 2
+x= 4 y= 2 ex[base+x][base+y]= 1
+sim n= 0 x= 2 y= 2
+x= 2 y= 2 ex[base+x][base+y]= 1
+sim n= 2 x= 1 y= 3
+sim n= 1 x= 1 y= 4
+sim n= 0 x= 2 y= 4
+x= 2 y= 4 ex[base+x][base+y]= 1
+sim n= 0 x= 0 y= 4
+x= 0 y= 4 ex[base+x][base+y]= 1
+sim n= 1 x= 1 y= 2
+sim n= 0 x= 2 y= 2
+x= 2 y= 2 ex[base+x][base+y]= 1
+sim n= 0 x= 0 y= 2
+x= 0 y= 2 ex[base+x][base+y]= 1
+sim n= 3 x= 2 y= 1
+sim n= 2 x= 3 y= 1
+sim n= 1 x= 3 y= 2
+sim n= 0 x= 4 y= 2
+x= 4 y= 2 ex[base+x][base+y]= 1
+sim n= 0 x= 2 y= 2
+x= 2 y= 2 ex[base+x][base+y]= 1
+sim n= 1 x= 3 y= 0
+sim n= 0 x= 4 y= 0
+x= 4 y= 0 ex[base+x][base+y]= 1
+sim n= 0 x= 2 y= 0
+x= 2 y= 0 ex[base+x][base+y]= 1
+sim n= 2 x= 1 y= 1
+sim n= 1 x= 1 y= 2
+sim n= 0 x= 2 y= 2
+x= 2 y= 2 ex[base+x][base+y]= 1
+sim n= 0 x= 0 y= 2
+x= 0 y= 2 ex[base+x][base+y]= 1
+sim n= 1 x= 1 y= 0
+sim n= 0 x= 2 y= 0
+x= 2 y= 0 ex[base+x][base+y]= 1
+sim n= 0 x= 0 y= 0
+x= 0 y= 0 ex[base+x][base+y]= 1
+sim n= 4 x= 0 y= 2
+sim n= 3 x= 0 y= 3
+sim n= 2 x= 1 y= 3
+sim n= 1 x= 1 y= 4
+sim n= 0 x= 2 y= 4
+x= 2 y= 4 ex[base+x][base+y]= 1
+sim n= 0 x= 0 y= 4
+x= 0 y= 4 ex[base+x][base+y]= 1
+sim n= 1 x= 1 y= 2
+sim n= 0 x= 2 y= 2
+x= 2 y= 2 ex[base+x][base+y]= 1
+sim n= 0 x= 0 y= 2
+x= 0 y= 2 ex[base+x][base+y]= 1
+sim n= 2 x= -1 y= 3
+sim n= 1 x= -1 y= 4
+sim n= 0 x= 0 y= 4
+x= 0 y= 4 ex[base+x][base+y]= 1
+sim n= 0 x= -2 y= 4
+x= -2 y= 4 ex[base+x][base+y]= 1
+sim n= 1 x= -1 y= 2
+sim n= 0 x= 0 y= 2
+x= 0 y= 2 ex[base+x][base+y]= 1
+sim n= 0 x= -2 y= 2
+x= -2 y= 2 ex[base+x][base+y]= 1
+sim n= 3 x= 0 y= 1
+sim n= 2 x= 1 y= 1
+sim n= 1 x= 1 y= 2
+sim n= 0 x= 2 y= 2
+x= 2 y= 2 ex[base+x][base+y]= 1
+sim n= 0 x= 0 y= 2
+x= 0 y= 2 ex[base+x][base+y]= 1
+sim n= 1 x= 1 y= 0
+sim n= 0 x= 2 y= 0
+x= 2 y= 0 ex[base+x][base+y]= 1
+sim n= 0 x= 0 y= 0
+x= 0 y= 0 ex[base+x][base+y]= 1
+sim n= 2 x= -1 y= 1
+sim n= 1 x= -1 y= 2
+sim n= 0 x= 0 y= 2
+x= 0 y= 2 ex[base+x][base+y]= 1
+sim n= 0 x= -2 y= 2
+x= -2 y= 2 ex[base+x][base+y]= 1
+sim n= 1 x= -1 y= 0
+sim n= 0 x= 0 y= 0
+x= 0 y= 0 ex[base+x][base+y]= 1
+sim n= 0 x= -2 y= 0
+x= -2 y= 0 ex[base+x][base+y]= 1
+sim n= 5 x= 1 y= 0
+sim n= 4 x= 2 y= 0
+sim n= 3 x= 2 y= 1
+sim n= 2 x= 3 y= 1
+sim n= 1 x= 3 y= 2
+sim n= 0 x= 4 y= 2
+x= 4 y= 2 ex[base+x][base+y]= 1
+sim n= 0 x= 2 y= 2
+x= 2 y= 2 ex[base+x][base+y]= 1
+sim n= 1 x= 3 y= 0
+sim n= 0 x= 4 y= 0
+x= 4 y= 0 ex[base+x][base+y]= 1
+sim n= 0 x= 2 y= 0
+x= 2 y= 0 ex[base+x][base+y]= 1
+sim n= 2 x= 1 y= 1
+sim n= 1 x= 1 y= 2
+sim n= 0 x= 2 y= 2
+x= 2 y= 2 ex[base+x][base+y]= 1
+sim n= 0 x= 0 y= 2
+x= 0 y= 2 ex[base+x][base+y]= 1
+sim n= 1 x= 1 y= 0
+sim n= 0 x= 2 y= 0
+x= 2 y= 0 ex[base+x][base+y]= 1
+sim n= 0 x= 0 y= 0
+x= 0 y= 0 ex[base+x][base+y]= 1
+sim n= 3 x= 2 y= -1
+sim n= 2 x= 3 y= -1
+sim n= 1 x= 3 y= 0
+sim n= 0 x= 4 y= 0
+x= 4 y= 0 ex[base+x][base+y]= 1
+sim n= 0 x= 2 y= 0
+x= 2 y= 0 ex[base+x][base+y]= 1
+sim n= 1 x= 3 y= -2
+sim n= 0 x= 4 y= -2
+x= 4 y= -2 ex[base+x][base+y]= 1
+sim n= 0 x= 2 y= -2
+x= 2 y= -2 ex[base+x][base+y]= 1
+sim n= 2 x= 1 y= -1
+sim n= 1 x= 1 y= 0
+sim n= 0 x= 2 y= 0
+x= 2 y= 0 ex[base+x][base+y]= 1
+sim n= 0 x= 0 y= 0
+x= 0 y= 0 ex[base+x][base+y]= 1
+sim n= 1 x= 1 y= -2
+sim n= 0 x= 2 y= -2
+x= 2 y= -2 ex[base+x][base+y]= 1
+sim n= 0 x= 0 y= -2
+x= 0 y= -2 ex[base+x][base+y]= 1
+sim n= 4 x= 0 y= 0
+sim n= 3 x= 0 y= 1
+sim n= 2 x= 1 y= 1
+sim n= 1 x= 1 y= 2
+sim n= 0 x= 2 y= 2
+x= 2 y= 2 ex[base+x][base+y]= 1
+sim n= 0 x= 0 y= 2
+x= 0 y= 2 ex[base+x][base+y]= 1
+sim n= 1 x= 1 y= 0
+sim n= 0 x= 2 y= 0
+x= 2 y= 0 ex[base+x][base+y]= 1
+sim n= 0 x= 0 y= 0
+x= 0 y= 0 ex[base+x][base+y]= 1
+sim n= 2 x= -1 y= 1
+sim n= 1 x= -1 y= 2
+sim n= 0 x= 0 y= 2
+x= 0 y= 2 ex[base+x][base+y]= 1
+sim n= 0 x= -2 y= 2
+x= -2 y= 2 ex[base+x][base+y]= 1
+sim n= 1 x= -1 y= 0
+sim n= 0 x= 0 y= 0
+x= 0 y= 0 ex[base+x][base+y]= 1
+sim n= 0 x= -2 y= 0
+x= -2 y= 0 ex[base+x][base+y]= 1
+sim n= 3 x= 0 y= -1
+sim n= 2 x= 1 y= -1
+sim n= 1 x= 1 y= 0
+sim n= 0 x= 2 y= 0
+x= 2 y= 0 ex[base+x][base+y]= 1
+sim n= 0 x= 0 y= 0
+x= 0 y= 0 ex[base+x][base+y]= 1
+sim n= 1 x= 1 y= -2
+sim n= 0 x= 2 y= -2
+x= 2 y= -2 ex[base+x][base+y]= 1
+sim n= 0 x= 0 y= -2
+x= 0 y= -2 ex[base+x][base+y]= 1
+sim n= 2 x= -1 y= -1
+sim n= 1 x= -1 y= 0
+sim n= 0 x= 0 y= 0
+x= 0 y= 0 ex[base+x][base+y]= 1
+sim n= 0 x= -2 y= 0
+x= -2 y= 0 ex[base+x][base+y]= 1
+sim n= 1 x= -1 y= -2
+sim n= 0 x= 0 y= -2
+x= 0 y= -2 ex[base+x][base+y]= 1
+sim n= 0 x= -2 y= -2
+x= -2 y= -2 ex[base+x][base+y]= 1
+sim n= 6 x= -1 y= 1
+sim n= 5 x= -1 y= 2
+sim n= 4 x= 0 y= 2
+sim n= 3 x= 0 y= 3
+sim n= 2 x= 1 y= 3
+sim n= 1 x= 1 y= 4
+sim n= 0 x= 2 y= 4
+x= 2 y= 4 ex[base+x][base+y]= 1
+sim n= 0 x= 0 y= 4
+x= 0 y= 4 ex[base+x][base+y]= 1
+sim n= 1 x= 1 y= 2
+sim n= 0 x= 2 y= 2
+x= 2 y= 2 ex[base+x][base+y]= 1
+sim n= 0 x= 0 y= 2
+x= 0 y= 2 ex[base+x][base+y]= 1
+sim n= 2 x= -1 y= 3
+sim n= 1 x= -1 y= 4
+sim n= 0 x= 0 y= 4
+x= 0 y= 4 ex[base+x][base+y]= 1
+sim n= 0 x= -2 y= 4
+x= -2 y= 4 ex[base+x][base+y]= 1
+sim n= 1 x= -1 y= 2
+sim n= 0 x= 0 y= 2
+x= 0 y= 2 ex[base+x][base+y]= 1
+sim n= 0 x= -2 y= 2
+x= -2 y= 2 ex[base+x][base+y]= 1
+sim n= 3 x= 0 y= 1
+sim n= 2 x= 1 y= 1
+sim n= 1 x= 1 y= 2
+sim n= 0 x= 2 y= 2
+x= 2 y= 2 ex[base+x][base+y]= 1
+sim n= 0 x= 0 y= 2
+x= 0 y= 2 ex[base+x][base+y]= 1
+sim n= 1 x= 1 y= 0
+sim n= 0 x= 2 y= 0
+x= 2 y= 0 ex[base+x][base+y]= 1
+sim n= 0 x= 0 y= 0
+x= 0 y= 0 ex[base+x][base+y]= 1
+sim n= 2 x= -1 y= 1
+sim n= 1 x= -1 y= 2
+sim n= 0 x= 0 y= 2
+x= 0 y= 2 ex[base+x][base+y]= 1
+sim n= 0 x= -2 y= 2
+x= -2 y= 2 ex[base+x][base+y]= 1
+sim n= 1 x= -1 y= 0
+sim n= 0 x= 0 y= 0
+x= 0 y= 0 ex[base+x][base+y]= 1
+sim n= 0 x= -2 y= 0
+x= -2 y= 0 ex[base+x][base+y]= 1
+sim n= 4 x= -2 y= 2
+sim n= 3 x= -2 y= 3
+sim n= 2 x= -1 y= 3
+sim n= 1 x= -1 y= 4
+sim n= 0 x= 0 y= 4
+x= 0 y= 4 ex[base+x][base+y]= 1
+sim n= 0 x= -2 y= 4
+x= -2 y= 4 ex[base+x][base+y]= 1
+sim n= 1 x= -1 y= 2
+sim n= 0 x= 0 y= 2
+x= 0 y= 2 ex[base+x][base+y]= 1
+sim n= 0 x= -2 y= 2
+x= -2 y= 2 ex[base+x][base+y]= 1
+sim n= 2 x= -3 y= 3
+sim n= 1 x= -3 y= 4
+sim n= 0 x= -2 y= 4
+x= -2 y= 4 ex[base+x][base+y]= 1
+sim n= 0 x= -4 y= 4
+x= -4 y= 4 ex[base+x][base+y]= 1
+sim n= 1 x= -3 y= 2
+sim n= 0 x= -2 y= 2
+x= -2 y= 2 ex[base+x][base+y]= 1
+sim n= 0 x= -4 y= 2
+x= -4 y= 2 ex[base+x][base+y]= 1
+sim n= 3 x= -2 y= 1
+sim n= 2 x= -1 y= 1
+sim n= 1 x= -1 y= 2
+sim n= 0 x= 0 y= 2
+x= 0 y= 2 ex[base+x][base+y]= 1
+sim n= 0 x= -2 y= 2
+x= -2 y= 2 ex[base+x][base+y]= 1
+sim n= 1 x= -1 y= 0
+sim n= 0 x= 0 y= 0
+x= 0 y= 0 ex[base+x][base+y]= 1
+sim n= 0 x= -2 y= 0
+x= -2 y= 0 ex[base+x][base+y]= 1
+sim n= 2 x= -3 y= 1
+sim n= 1 x= -3 y= 2
+sim n= 0 x= -2 y= 2
+x= -2 y= 2 ex[base+x][base+y]= 1
+sim n= 0 x= -4 y= 2
+x= -4 y= 2 ex[base+x][base+y]= 1
+sim n= 1 x= -3 y= 0
+sim n= 0 x= -2 y= 0
+x= -2 y= 0 ex[base+x][base+y]= 1
+sim n= 0 x= -4 y= 0
+x= -4 y= 0 ex[base+x][base+y]= 1
+sim n= 5 x= -1 y= 0
+sim n= 4 x= 0 y= 0
+sim n= 3 x= 0 y= 1
+sim n= 2 x= 1 y= 1
+sim n= 1 x= 1 y= 2
+sim n= 0 x= 2 y= 2
+x= 2 y= 2 ex[base+x][base+y]= 1
+sim n= 0 x= 0 y= 2
+x= 0 y= 2 ex[base+x][base+y]= 1
+sim n= 1 x= 1 y= 0
+sim n= 0 x= 2 y= 0
+x= 2 y= 0 ex[base+x][base+y]= 1
+sim n= 0 x= 0 y= 0
+x= 0 y= 0 ex[base+x][base+y]= 1
+sim n= 2 x= -1 y= 1
+sim n= 1 x= -1 y= 2
+sim n= 0 x= 0 y= 2
+x= 0 y= 2 ex[base+x][base+y]= 1
+sim n= 0 x= -2 y= 2
+x= -2 y= 2 ex[base+x][base+y]= 1
+sim n= 1 x= -1 y= 0
+sim n= 0 x= 0 y= 0
+x= 0 y= 0 ex[base+x][base+y]= 1
+sim n= 0 x= -2 y= 0
+x= -2 y= 0 ex[base+x][base+y]= 1
+sim n= 3 x= 0 y= -1
+sim n= 2 x= 1 y= -1
+sim n= 1 x= 1 y= 0
+sim n= 0 x= 2 y= 0
+x= 2 y= 0 ex[base+x][base+y]= 1
+sim n= 0 x= 0 y= 0
+x= 0 y= 0 ex[base+x][base+y]= 1
+sim n= 1 x= 1 y= -2
+sim n= 0 x= 2 y= -2
+x= 2 y= -2 ex[base+x][base+y]= 1
+sim n= 0 x= 0 y= -2
+x= 0 y= -2 ex[base+x][base+y]= 1
+sim n= 2 x= -1 y= -1
+sim n= 1 x= -1 y= 0
+sim n= 0 x= 0 y= 0
+x= 0 y= 0 ex[base+x][base+y]= 1
+sim n= 0 x= -2 y= 0
+x= -2 y= 0 ex[base+x][base+y]= 1
+sim n= 1 x= -1 y= -2
+sim n= 0 x= 0 y= -2
+x= 0 y= -2 ex[base+x][base+y]= 1
+sim n= 0 x= -2 y= -2
+x= -2 y= -2 ex[base+x][base+y]= 1
+sim n= 4 x= -2 y= 0
+sim n= 3 x= -2 y= 1
+sim n= 2 x= -1 y= 1
+sim n= 1 x= -1 y= 2
+sim n= 0 x= 0 y= 2
+x= 0 y= 2 ex[base+x][base+y]= 1
+sim n= 0 x= -2 y= 2
+x= -2 y= 2 ex[base+x][base+y]= 1
+sim n= 1 x= -1 y= 0
+sim n= 0 x= 0 y= 0
+x= 0 y= 0 ex[base+x][base+y]= 1
+sim n= 0 x= -2 y= 0
+x= -2 y= 0 ex[base+x][base+y]= 1
+sim n= 2 x= -3 y= 1
+sim n= 1 x= -3 y= 2
+sim n= 0 x= -2 y= 2
+x= -2 y= 2 ex[base+x][base+y]= 1
+sim n= 0 x= -4 y= 2
+x= -4 y= 2 ex[base+x][base+y]= 1
+sim n= 1 x= -3 y= 0
+sim n= 0 x= -2 y= 0
+x= -2 y= 0 ex[base+x][base+y]= 1
+sim n= 0 x= -4 y= 0
+x= -4 y= 0 ex[base+x][base+y]= 1
+sim n= 3 x= -2 y= -1
+sim n= 2 x= -1 y= -1
+sim n= 1 x= -1 y= 0
+sim n= 0 x= 0 y= 0
+x= 0 y= 0 ex[base+x][base+y]= 1
+sim n= 0 x= -2 y= 0
+x= -2 y= 0 ex[base+x][base+y]= 1
+sim n= 1 x= -1 y= -2
+sim n= 0 x= 0 y= -2
+x= 0 y= -2 ex[base+x][base+y]= 1
+sim n= 0 x= -2 y= -2
+x= -2 y= -2 ex[base+x][base+y]= 1
+sim n= 2 x= -3 y= -1
+sim n= 1 x= -3 y= 0
+sim n= 0 x= -2 y= 0
+x= -2 y= 0 ex[base+x][base+y]= 1
+sim n= 0 x= -4 y= 0
+x= -4 y= 0 ex[base+x][base+y]= 1
+sim n= 1 x= -3 y= -2
+sim n= 0 x= -2 y= -2
+x= -2 y= -2 ex[base+x][base+y]= 1
+sim n= 0 x= -4 y= -2
+x= -4 y= -2 ex[base+x][base+y]= 1
+sim n= 7 x= 0 y= -1
+sim n= 6 x= 1 y= -1
+sim n= 5 x= 1 y= 0
+sim n= 4 x= 2 y= 0
+sim n= 3 x= 2 y= 1
+sim n= 2 x= 3 y= 1
+sim n= 1 x= 3 y= 2
+sim n= 0 x= 4 y= 2
+x= 4 y= 2 ex[base+x][base+y]= 1
+sim n= 0 x= 2 y= 2
+x= 2 y= 2 ex[base+x][base+y]= 1
+sim n= 1 x= 3 y= 0
+sim n= 0 x= 4 y= 0
+x= 4 y= 0 ex[base+x][base+y]= 1
+sim n= 0 x= 2 y= 0
+x= 2 y= 0 ex[base+x][base+y]= 1
+sim n= 2 x= 1 y= 1
+sim n= 1 x= 1 y= 2
+sim n= 0 x= 2 y= 2
+x= 2 y= 2 ex[base+x][base+y]= 1
+sim n= 0 x= 0 y= 2
+x= 0 y= 2 ex[base+x][base+y]= 1
+sim n= 1 x= 1 y= 0
+sim n= 0 x= 2 y= 0
+x= 2 y= 0 ex[base+x][base+y]= 1
+sim n= 0 x= 0 y= 0
+x= 0 y= 0 ex[base+x][base+y]= 1
+sim n= 3 x= 2 y= -1
+sim n= 2 x= 3 y= -1
+sim n= 1 x= 3 y= 0
+sim n= 0 x= 4 y= 0
+x= 4 y= 0 ex[base+x][base+y]= 1
+sim n= 0 x= 2 y= 0
+x= 2 y= 0 ex[base+x][base+y]= 1
+sim n= 1 x= 3 y= -2
+sim n= 0 x= 4 y= -2
+x= 4 y= -2 ex[base+x][base+y]= 1
+sim n= 0 x= 2 y= -2
+x= 2 y= -2 ex[base+x][base+y]= 1
+sim n= 2 x= 1 y= -1
+sim n= 1 x= 1 y= 0
+sim n= 0 x= 2 y= 0
+x= 2 y= 0 ex[base+x][base+y]= 1
+sim n= 0 x= 0 y= 0
+x= 0 y= 0 ex[base+x][base+y]= 1
+sim n= 1 x= 1 y= -2
+sim n= 0 x= 2 y= -2
+x= 2 y= -2 ex[base+x][base+y]= 1
+sim n= 0 x= 0 y= -2
+x= 0 y= -2 ex[base+x][base+y]= 1
+sim n= 4 x= 0 y= 0
+sim n= 3 x= 0 y= 1
+sim n= 2 x= 1 y= 1
+sim n= 1 x= 1 y= 2
+sim n= 0 x= 2 y= 2
+x= 2 y= 2 ex[base+x][base+y]= 1
+sim n= 0 x= 0 y= 2
+x= 0 y= 2 ex[base+x][base+y]= 1
+sim n= 1 x= 1 y= 0
+sim n= 0 x= 2 y= 0
+x= 2 y= 0 ex[base+x][base+y]= 1
+sim n= 0 x= 0 y= 0
+x= 0 y= 0 ex[base+x][base+y]= 1
+sim n= 2 x= -1 y= 1
+sim n= 1 x= -1 y= 2
+sim n= 0 x= 0 y= 2
+x= 0 y= 2 ex[base+x][base+y]= 1
+sim n= 0 x= -2 y= 2
+x= -2 y= 2 ex[base+x][base+y]= 1
+sim n= 1 x= -1 y= 0
+sim n= 0 x= 0 y= 0
+x= 0 y= 0 ex[base+x][base+y]= 1
+sim n= 0 x= -2 y= 0
+x= -2 y= 0 ex[base+x][base+y]= 1
+sim n= 3 x= 0 y= -1
+sim n= 2 x= 1 y= -1
+sim n= 1 x= 1 y= 0
+sim n= 0 x= 2 y= 0
+x= 2 y= 0 ex[base+x][base+y]= 1
+sim n= 0 x= 0 y= 0
+x= 0 y= 0 ex[base+x][base+y]= 1
+sim n= 1 x= 1 y= -2
+sim n= 0 x= 2 y= -2
+x= 2 y= -2 ex[base+x][base+y]= 1
+sim n= 0 x= 0 y= -2
+x= 0 y= -2 ex[base+x][base+y]= 1
+sim n= 2 x= -1 y= -1
+sim n= 1 x= -1 y= 0
+sim n= 0 x= 0 y= 0
+x= 0 y= 0 ex[base+x][base+y]= 1
+sim n= 0 x= -2 y= 0
+x= -2 y= 0 ex[base+x][base+y]= 1
+sim n= 1 x= -1 y= -2
+sim n= 0 x= 0 y= -2
+x= 0 y= -2 ex[base+x][base+y]= 1
+sim n= 0 x= -2 y= -2
+x= -2 y= -2 ex[base+x][base+y]= 1
+sim n= 5 x= 1 y= -2
+sim n= 4 x= 2 y= -2
+sim n= 3 x= 2 y= -1
+sim n= 2 x= 3 y= -1
+sim n= 1 x= 3 y= 0
+sim n= 0 x= 4 y= 0
+x= 4 y= 0 ex[base+x][base+y]= 1
+sim n= 0 x= 2 y= 0
+x= 2 y= 0 ex[base+x][base+y]= 1
+sim n= 1 x= 3 y= -2
+sim n= 0 x= 4 y= -2
+x= 4 y= -2 ex[base+x][base+y]= 1
+sim n= 0 x= 2 y= -2
+x= 2 y= -2 ex[base+x][base+y]= 1
+sim n= 2 x= 1 y= -1
+sim n= 1 x= 1 y= 0
+sim n= 0 x= 2 y= 0
+x= 2 y= 0 ex[base+x][base+y]= 1
+sim n= 0 x= 0 y= 0
+x= 0 y= 0 ex[base+x][base+y]= 1
+sim n= 1 x= 1 y= -2
+sim n= 0 x= 2 y= -2
+x= 2 y= -2 ex[base+x][base+y]= 1
+sim n= 0 x= 0 y= -2
+x= 0 y= -2 ex[base+x][base+y]= 1
+sim n= 3 x= 2 y= -3
+sim n= 2 x= 3 y= -3
+sim n= 1 x= 3 y= -2
+sim n= 0 x= 4 y= -2
+x= 4 y= -2 ex[base+x][base+y]= 1
+sim n= 0 x= 2 y= -2
+x= 2 y= -2 ex[base+x][base+y]= 1
+sim n= 1 x= 3 y= -4
+sim n= 0 x= 4 y= -4
+x= 4 y= -4 ex[base+x][base+y]= 1
+sim n= 0 x= 2 y= -4
+x= 2 y= -4 ex[base+x][base+y]= 1
+sim n= 2 x= 1 y= -3
+sim n= 1 x= 1 y= -2
+sim n= 0 x= 2 y= -2
+x= 2 y= -2 ex[base+x][base+y]= 1
+sim n= 0 x= 0 y= -2
+x= 0 y= -2 ex[base+x][base+y]= 1
+sim n= 1 x= 1 y= -4
+sim n= 0 x= 2 y= -4
+x= 2 y= -4 ex[base+x][base+y]= 1
+sim n= 0 x= 0 y= -4
+x= 0 y= -4 ex[base+x][base+y]= 1
+sim n= 4 x= 0 y= -2
+sim n= 3 x= 0 y= -1
+sim n= 2 x= 1 y= -1
+sim n= 1 x= 1 y= 0
+sim n= 0 x= 2 y= 0
+x= 2 y= 0 ex[base+x][base+y]= 1
+sim n= 0 x= 0 y= 0
+x= 0 y= 0 ex[base+x][base+y]= 1
+sim n= 1 x= 1 y= -2
+sim n= 0 x= 2 y= -2
+x= 2 y= -2 ex[base+x][base+y]= 1
+sim n= 0 x= 0 y= -2
+x= 0 y= -2 ex[base+x][base+y]= 1
+sim n= 2 x= -1 y= -1
+sim n= 1 x= -1 y= 0
+sim n= 0 x= 0 y= 0
+x= 0 y= 0 ex[base+x][base+y]= 1
+sim n= 0 x= -2 y= 0
+x= -2 y= 0 ex[base+x][base+y]= 1
+sim n= 1 x= -1 y= -2
+sim n= 0 x= 0 y= -2
+x= 0 y= -2 ex[base+x][base+y]= 1
+sim n= 0 x= -2 y= -2
+x= -2 y= -2 ex[base+x][base+y]= 1
+sim n= 3 x= 0 y= -3
+sim n= 2 x= 1 y= -3
+sim n= 1 x= 1 y= -2
+sim n= 0 x= 2 y= -2
+x= 2 y= -2 ex[base+x][base+y]= 1
+sim n= 0 x= 0 y= -2
+x= 0 y= -2 ex[base+x][base+y]= 1
+sim n= 1 x= 1 y= -4
+sim n= 0 x= 2 y= -4
+x= 2 y= -4 ex[base+x][base+y]= 1
+sim n= 0 x= 0 y= -4
+x= 0 y= -4 ex[base+x][base+y]= 1
+sim n= 2 x= -1 y= -3
+sim n= 1 x= -1 y= -2
+sim n= 0 x= 0 y= -2
+x= 0 y= -2 ex[base+x][base+y]= 1
+sim n= 0 x= -2 y= -2
+x= -2 y= -2 ex[base+x][base+y]= 1
+sim n= 1 x= -1 y= -4
+sim n= 0 x= 0 y= -4
+x= 0 y= -4 ex[base+x][base+y]= 1
+sim n= 0 x= -2 y= -4
+x= -2 y= -4 ex[base+x][base+y]= 1
+sim n= 6 x= -1 y= -1
+sim n= 5 x= -1 y= 0
+sim n= 4 x= 0 y= 0
+sim n= 3 x= 0 y= 1
+sim n= 2 x= 1 y= 1
+sim n= 1 x= 1 y= 2
+sim n= 0 x= 2 y= 2
+x= 2 y= 2 ex[base+x][base+y]= 1
+sim n= 0 x= 0 y= 2
+x= 0 y= 2 ex[base+x][base+y]= 1
+sim n= 1 x= 1 y= 0
+sim n= 0 x= 2 y= 0
+x= 2 y= 0 ex[base+x][base+y]= 1
+sim n= 0 x= 0 y= 0
+x= 0 y= 0 ex[base+x][base+y]= 1
+sim n= 2 x= -1 y= 1
+sim n= 1 x= -1 y= 2
+sim n= 0 x= 0 y= 2
+x= 0 y= 2 ex[base+x][base+y]= 1
+sim n= 0 x= -2 y= 2
+x= -2 y= 2 ex[base+x][base+y]= 1
+sim n= 1 x= -1 y= 0
+sim n= 0 x= 0 y= 0
+x= 0 y= 0 ex[base+x][base+y]= 1
+sim n= 0 x= -2 y= 0
+x= -2 y= 0 ex[base+x][base+y]= 1
+sim n= 3 x= 0 y= -1
+sim n= 2 x= 1 y= -1
+sim n= 1 x= 1 y= 0
+sim n= 0 x= 2 y= 0
+x= 2 y= 0 ex[base+x][base+y]= 1
+sim n= 0 x= 0 y= 0
+x= 0 y= 0 ex[base+x][base+y]= 1
+sim n= 1 x= 1 y= -2
+sim n= 0 x= 2 y= -2
+x= 2 y= -2 ex[base+x][base+y]= 1
+sim n= 0 x= 0 y= -2
+x= 0 y= -2 ex[base+x][base+y]= 1
+sim n= 2 x= -1 y= -1
+sim n= 1 x= -1 y= 0
+sim n= 0 x= 0 y= 0
+x= 0 y= 0 ex[base+x][base+y]= 1
+sim n= 0 x= -2 y= 0
+x= -2 y= 0 ex[base+x][base+y]= 1
+sim n= 1 x= -1 y= -2
+sim n= 0 x= 0 y= -2
+x= 0 y= -2 ex[base+x][base+y]= 1
+sim n= 0 x= -2 y= -2
+x= -2 y= -2 ex[base+x][base+y]= 1
+sim n= 4 x= -2 y= 0
+sim n= 3 x= -2 y= 1
+sim n= 2 x= -1 y= 1
+sim n= 1 x= -1 y= 2
+sim n= 0 x= 0 y= 2
+x= 0 y= 2 ex[base+x][base+y]= 1
+sim n= 0 x= -2 y= 2
+x= -2 y= 2 ex[base+x][base+y]= 1
+sim n= 1 x= -1 y= 0
+sim n= 0 x= 0 y= 0
+x= 0 y= 0 ex[base+x][base+y]= 1
+sim n= 0 x= -2 y= 0
+x= -2 y= 0 ex[base+x][base+y]= 1
+sim n= 2 x= -3 y= 1
+sim n= 1 x= -3 y= 2
+sim n= 0 x= -2 y= 2
+x= -2 y= 2 ex[base+x][base+y]= 1
+sim n= 0 x= -4 y= 2
+x= -4 y= 2 ex[base+x][base+y]= 1
+sim n= 1 x= -3 y= 0
+sim n= 0 x= -2 y= 0
+x= -2 y= 0 ex[base+x][base+y]= 1
+sim n= 0 x= -4 y= 0
+x= -4 y= 0 ex[base+x][base+y]= 1
+sim n= 3 x= -2 y= -1
+sim n= 2 x= -1 y= -1
+sim n= 1 x= -1 y= 0
+sim n= 0 x= 0 y= 0
+x= 0 y= 0 ex[base+x][base+y]= 1
+sim n= 0 x= -2 y= 0
+x= -2 y= 0 ex[base+x][base+y]= 1
+sim n= 1 x= -1 y= -2
+sim n= 0 x= 0 y= -2
+x= 0 y= -2 ex[base+x][base+y]= 1
+sim n= 0 x= -2 y= -2
+x= -2 y= -2 ex[base+x][base+y]= 1
+sim n= 2 x= -3 y= -1
+sim n= 1 x= -3 y= 0
+sim n= 0 x= -2 y= 0
+x= -2 y= 0 ex[base+x][base+y]= 1
+sim n= 0 x= -4 y= 0
+x= -4 y= 0 ex[base+x][base+y]= 1
+sim n= 1 x= -3 y= -2
+sim n= 0 x= -2 y= -2
+x= -2 y= -2 ex[base+x][base+y]= 1
+sim n= 0 x= -4 y= -2
+x= -4 y= -2 ex[base+x][base+y]= 1
+sim n= 5 x= -1 y= -2
+sim n= 4 x= 0 y= -2
+sim n= 3 x= 0 y= -1
+sim n= 2 x= 1 y= -1
+sim n= 1 x= 1 y= 0
+sim n= 0 x= 2 y= 0
+x= 2 y= 0 ex[base+x][base+y]= 1
+sim n= 0 x= 0 y= 0
+x= 0 y= 0 ex[base+x][base+y]= 1
+sim n= 1 x= 1 y= -2
+sim n= 0 x= 2 y= -2
+x= 2 y= -2 ex[base+x][base+y]= 1
+sim n= 0 x= 0 y= -2
+x= 0 y= -2 ex[base+x][base+y]= 1
+sim n= 2 x= -1 y= -1
+sim n= 1 x= -1 y= 0
+sim n= 0 x= 0 y= 0
+x= 0 y= 0 ex[base+x][base+y]= 1
+sim n= 0 x= -2 y= 0
+x= -2 y= 0 ex[base+x][base+y]= 1
+sim n= 1 x= -1 y= -2
+sim n= 0 x= 0 y= -2
+x= 0 y= -2 ex[base+x][base+y]= 1
+sim n= 0 x= -2 y= -2
+x= -2 y= -2 ex[base+x][base+y]= 1
+sim n= 3 x= 0 y= -3
+sim n= 2 x= 1 y= -3
+sim n= 1 x= 1 y= -2
+sim n= 0 x= 2 y= -2
+x= 2 y= -2 ex[base+x][base+y]= 1
+sim n= 0 x= 0 y= -2
+x= 0 y= -2 ex[base+x][base+y]= 1
+sim n= 1 x= 1 y= -4
+sim n= 0 x= 2 y= -4
+x= 2 y= -4 ex[base+x][base+y]= 1
+sim n= 0 x= 0 y= -4
+x= 0 y= -4 ex[base+x][base+y]= 1
+sim n= 2 x= -1 y= -3
+sim n= 1 x= -1 y= -2
+sim n= 0 x= 0 y= -2
+x= 0 y= -2 ex[base+x][base+y]= 1
+sim n= 0 x= -2 y= -2
+x= -2 y= -2 ex[base+x][base+y]= 1
+sim n= 1 x= -1 y= -4
+sim n= 0 x= 0 y= -4
+x= 0 y= -4 ex[base+x][base+y]= 1
+sim n= 0 x= -2 y= -4
+x= -2 y= -4 ex[base+x][base+y]= 1
+sim n= 4 x= -2 y= -2
+sim n= 3 x= -2 y= -1
+sim n= 2 x= -1 y= -1
+sim n= 1 x= -1 y= 0
+sim n= 0 x= 0 y= 0
+x= 0 y= 0 ex[base+x][base+y]= 1
+sim n= 0 x= -2 y= 0
+x= -2 y= 0 ex[base+x][base+y]= 1
+sim n= 1 x= -1 y= -2
+sim n= 0 x= 0 y= -2
+x= 0 y= -2 ex[base+x][base+y]= 1
+sim n= 0 x= -2 y= -2
+x= -2 y= -2 ex[base+x][base+y]= 1
+sim n= 2 x= -3 y= -1
+sim n= 1 x= -3 y= 0
+sim n= 0 x= -2 y= 0
+x= -2 y= 0 ex[base+x][base+y]= 1
+sim n= 0 x= -4 y= 0
+x= -4 y= 0 ex[base+x][base+y]= 1
+sim n= 1 x= -3 y= -2
+sim n= 0 x= -2 y= -2
+x= -2 y= -2 ex[base+x][base+y]= 1
+sim n= 0 x= -4 y= -2
+x= -4 y= -2 ex[base+x][base+y]= 1
+sim n= 3 x= -2 y= -3
+sim n= 2 x= -1 y= -3
+sim n= 1 x= -1 y= -2
+sim n= 0 x= 0 y= -2
+x= 0 y= -2 ex[base+x][base+y]= 1
+sim n= 0 x= -2 y= -2
+x= -2 y= -2 ex[base+x][base+y]= 1
+sim n= 1 x= -1 y= -4
+sim n= 0 x= 0 y= -4
+x= 0 y= -4 ex[base+x][base+y]= 1
+sim n= 0 x= -2 y= -4
+x= -2 y= -4 ex[base+x][base+y]= 1
+sim n= 2 x= -3 y= -3
+sim n= 1 x= -3 y= -2
+sim n= 0 x= -2 y= -2
+x= -2 y= -2 ex[base+x][base+y]= 1
+sim n= 0 x= -4 y= -2
+x= -4 y= -2 ex[base+x][base+y]= 1
+sim n= 1 x= -3 y= -4
+sim n= 0 x= -2 y= -4
+x= -2 y= -4 ex[base+x][base+y]= 1
+sim n= 0 x= -4 y= -4
+x= -4 y= -4 ex[base+x][base+y]= 1
+i= 9
+sim n= 8 x= 1 y= 0
+sim n= 7 x= 1 y= 1
+sim n= 6 x= 2 y= 1
+sim n= 5 x= 2 y= 2
+sim n= 4 x= 3 y= 2
+sim n= 3 x= 3 y= 3
+sim n= 2 x= 4 y= 3
+sim n= 1 x= 4 y= 4
+sim n= 0 x= 5 y= 4
+x= 5 y= 4 ex[base+x][base+y]= 0
+cnt= 1
+sim n= 0 x= 3 y= 4
+x= 3 y= 4 ex[base+x][base+y]= 0
+cnt= 2
+sim n= 1 x= 4 y= 2
+sim n= 0 x= 5 y= 2
+x= 5 y= 2 ex[base+x][base+y]= 0
+cnt= 3
+sim n= 0 x= 3 y= 2
+x= 3 y= 2 ex[base+x][base+y]= 0
+cnt= 4
+sim n= 2 x= 2 y= 3
+sim n= 1 x= 2 y= 4
+sim n= 0 x= 3 y= 4
+x= 3 y= 4 ex[base+x][base+y]= 1
+sim n= 0 x= 1 y= 4
+x= 1 y= 4 ex[base+x][base+y]= 0
+cnt= 5
+sim n= 1 x= 2 y= 2
+sim n= 0 x= 3 y= 2
+x= 3 y= 2 ex[base+x][base+y]= 1
+sim n= 0 x= 1 y= 2
+x= 1 y= 2 ex[base+x][base+y]= 0
+cnt= 6
+sim n= 3 x= 3 y= 1
+sim n= 2 x= 4 y= 1
+sim n= 1 x= 4 y= 2
+sim n= 0 x= 5 y= 2
+x= 5 y= 2 ex[base+x][base+y]= 1
+sim n= 0 x= 3 y= 2
+x= 3 y= 2 ex[base+x][base+y]= 1
+sim n= 1 x= 4 y= 0
+sim n= 0 x= 5 y= 0
+x= 5 y= 0 ex[base+x][base+y]= 0
+cnt= 7
+sim n= 0 x= 3 y= 0
+x= 3 y= 0 ex[base+x][base+y]= 0
+cnt= 8
+sim n= 2 x= 2 y= 1
+sim n= 1 x= 2 y= 2
+sim n= 0 x= 3 y= 2
+x= 3 y= 2 ex[base+x][base+y]= 1
+sim n= 0 x= 1 y= 2
+x= 1 y= 2 ex[base+x][base+y]= 1
+sim n= 1 x= 2 y= 0
+sim n= 0 x= 3 y= 0
+x= 3 y= 0 ex[base+x][base+y]= 1
+sim n= 0 x= 1 y= 0
+x= 1 y= 0 ex[base+x][base+y]= 0
+cnt= 9
+sim n= 4 x= 1 y= 2
+sim n= 3 x= 1 y= 3
+sim n= 2 x= 2 y= 3
+sim n= 1 x= 2 y= 4
+sim n= 0 x= 3 y= 4
+x= 3 y= 4 ex[base+x][base+y]= 1
+sim n= 0 x= 1 y= 4
+x= 1 y= 4 ex[base+x][base+y]= 1
+sim n= 1 x= 2 y= 2
+sim n= 0 x= 3 y= 2
+x= 3 y= 2 ex[base+x][base+y]= 1
+sim n= 0 x= 1 y= 2
+x= 1 y= 2 ex[base+x][base+y]= 1
+sim n= 2 x= 0 y= 3
+sim n= 1 x= 0 y= 4
+sim n= 0 x= 1 y= 4
+x= 1 y= 4 ex[base+x][base+y]= 1
+sim n= 0 x= -1 y= 4
+x= -1 y= 4 ex[base+x][base+y]= 0
+cnt= 10
+sim n= 1 x= 0 y= 2
+sim n= 0 x= 1 y= 2
+x= 1 y= 2 ex[base+x][base+y]= 1
+sim n= 0 x= -1 y= 2
+x= -1 y= 2 ex[base+x][base+y]= 0
+cnt= 11
+sim n= 3 x= 1 y= 1
+sim n= 2 x= 2 y= 1
+sim n= 1 x= 2 y= 2
+sim n= 0 x= 3 y= 2
+x= 3 y= 2 ex[base+x][base+y]= 1
+sim n= 0 x= 1 y= 2
+x= 1 y= 2 ex[base+x][base+y]= 1
+sim n= 1 x= 2 y= 0
+sim n= 0 x= 3 y= 0
+x= 3 y= 0 ex[base+x][base+y]= 1
+sim n= 0 x= 1 y= 0
+x= 1 y= 0 ex[base+x][base+y]= 1
+sim n= 2 x= 0 y= 1
+sim n= 1 x= 0 y= 2
+sim n= 0 x= 1 y= 2
+x= 1 y= 2 ex[base+x][base+y]= 1
+sim n= 0 x= -1 y= 2
+x= -1 y= 2 ex[base+x][base+y]= 1
+sim n= 1 x= 0 y= 0
+sim n= 0 x= 1 y= 0
+x= 1 y= 0 ex[base+x][base+y]= 1
+sim n= 0 x= -1 y= 0
+x= -1 y= 0 ex[base+x][base+y]= 0
+cnt= 12
+sim n= 5 x= 2 y= 0
+sim n= 4 x= 3 y= 0
+sim n= 3 x= 3 y= 1
+sim n= 2 x= 4 y= 1
+sim n= 1 x= 4 y= 2
+sim n= 0 x= 5 y= 2
+x= 5 y= 2 ex[base+x][base+y]= 1
+sim n= 0 x= 3 y= 2
+x= 3 y= 2 ex[base+x][base+y]= 1
+sim n= 1 x= 4 y= 0
+sim n= 0 x= 5 y= 0
+x= 5 y= 0 ex[base+x][base+y]= 1
+sim n= 0 x= 3 y= 0
+x= 3 y= 0 ex[base+x][base+y]= 1
+sim n= 2 x= 2 y= 1
+sim n= 1 x= 2 y= 2
+sim n= 0 x= 3 y= 2
+x= 3 y= 2 ex[base+x][base+y]= 1
+sim n= 0 x= 1 y= 2
+x= 1 y= 2 ex[base+x][base+y]= 1
+sim n= 1 x= 2 y= 0
+sim n= 0 x= 3 y= 0
+x= 3 y= 0 ex[base+x][base+y]= 1
+sim n= 0 x= 1 y= 0
+x= 1 y= 0 ex[base+x][base+y]= 1
+sim n= 3 x= 3 y= -1
+sim n= 2 x= 4 y= -1
+sim n= 1 x= 4 y= 0
+sim n= 0 x= 5 y= 0
+x= 5 y= 0 ex[base+x][base+y]= 1
+sim n= 0 x= 3 y= 0
+x= 3 y= 0 ex[base+x][base+y]= 1
+sim n= 1 x= 4 y= -2
+sim n= 0 x= 5 y= -2
+x= 5 y= -2 ex[base+x][base+y]= 0
+cnt= 13
+sim n= 0 x= 3 y= -2
+x= 3 y= -2 ex[base+x][base+y]= 0
+cnt= 14
+sim n= 2 x= 2 y= -1
+sim n= 1 x= 2 y= 0
+sim n= 0 x= 3 y= 0
+x= 3 y= 0 ex[base+x][base+y]= 1
+sim n= 0 x= 1 y= 0
+x= 1 y= 0 ex[base+x][base+y]= 1
+sim n= 1 x= 2 y= -2
+sim n= 0 x= 3 y= -2
+x= 3 y= -2 ex[base+x][base+y]= 1
+sim n= 0 x= 1 y= -2
+x= 1 y= -2 ex[base+x][base+y]= 0
+cnt= 15
+sim n= 4 x= 1 y= 0
+sim n= 3 x= 1 y= 1
+sim n= 2 x= 2 y= 1
+sim n= 1 x= 2 y= 2
+sim n= 0 x= 3 y= 2
+x= 3 y= 2 ex[base+x][base+y]= 1
+sim n= 0 x= 1 y= 2
+x= 1 y= 2 ex[base+x][base+y]= 1
+sim n= 1 x= 2 y= 0
+sim n= 0 x= 3 y= 0
+x= 3 y= 0 ex[base+x][base+y]= 1
+sim n= 0 x= 1 y= 0
+x= 1 y= 0 ex[base+x][base+y]= 1
+sim n= 2 x= 0 y= 1
+sim n= 1 x= 0 y= 2
+sim n= 0 x= 1 y= 2
+x= 1 y= 2 ex[base+x][base+y]= 1
+sim n= 0 x= -1 y= 2
+x= -1 y= 2 ex[base+x][base+y]= 1
+sim n= 1 x= 0 y= 0
+sim n= 0 x= 1 y= 0
+x= 1 y= 0 ex[base+x][base+y]= 1
+sim n= 0 x= -1 y= 0
+x= -1 y= 0 ex[base+x][base+y]= 1
+sim n= 3 x= 1 y= -1
+sim n= 2 x= 2 y= -1
+sim n= 1 x= 2 y= 0
+sim n= 0 x= 3 y= 0
+x= 3 y= 0 ex[base+x][base+y]= 1
+sim n= 0 x= 1 y= 0
+x= 1 y= 0 ex[base+x][base+y]= 1
+sim n= 1 x= 2 y= -2
+sim n= 0 x= 3 y= -2
+x= 3 y= -2 ex[base+x][base+y]= 1
+sim n= 0 x= 1 y= -2
+x= 1 y= -2 ex[base+x][base+y]= 1
+sim n= 2 x= 0 y= -1
+sim n= 1 x= 0 y= 0
+sim n= 0 x= 1 y= 0
+x= 1 y= 0 ex[base+x][base+y]= 1
+sim n= 0 x= -1 y= 0
+x= -1 y= 0 ex[base+x][base+y]= 1
+sim n= 1 x= 0 y= -2
+sim n= 0 x= 1 y= -2
+x= 1 y= -2 ex[base+x][base+y]= 1
+sim n= 0 x= -1 y= -2
+x= -1 y= -2 ex[base+x][base+y]= 0
+cnt= 16
+sim n= 6 x= 0 y= 1
+sim n= 5 x= 0 y= 2
+sim n= 4 x= 1 y= 2
+sim n= 3 x= 1 y= 3
+sim n= 2 x= 2 y= 3
+sim n= 1 x= 2 y= 4
+sim n= 0 x= 3 y= 4
+x= 3 y= 4 ex[base+x][base+y]= 1
+sim n= 0 x= 1 y= 4
+x= 1 y= 4 ex[base+x][base+y]= 1
+sim n= 1 x= 2 y= 2
+sim n= 0 x= 3 y= 2
+x= 3 y= 2 ex[base+x][base+y]= 1
+sim n= 0 x= 1 y= 2
+x= 1 y= 2 ex[base+x][base+y]= 1
+sim n= 2 x= 0 y= 3
+sim n= 1 x= 0 y= 4
+sim n= 0 x= 1 y= 4
+x= 1 y= 4 ex[base+x][base+y]= 1
+sim n= 0 x= -1 y= 4
+x= -1 y= 4 ex[base+x][base+y]= 1
+sim n= 1 x= 0 y= 2
+sim n= 0 x= 1 y= 2
+x= 1 y= 2 ex[base+x][base+y]= 1
+sim n= 0 x= -1 y= 2
+x= -1 y= 2 ex[base+x][base+y]= 1
+sim n= 3 x= 1 y= 1
+sim n= 2 x= 2 y= 1
+sim n= 1 x= 2 y= 2
+sim n= 0 x= 3 y= 2
+x= 3 y= 2 ex[base+x][base+y]= 1
+sim n= 0 x= 1 y= 2
+x= 1 y= 2 ex[base+x][base+y]= 1
+sim n= 1 x= 2 y= 0
+sim n= 0 x= 3 y= 0
+x= 3 y= 0 ex[base+x][base+y]= 1
+sim n= 0 x= 1 y= 0
+x= 1 y= 0 ex[base+x][base+y]= 1
+sim n= 2 x= 0 y= 1
+sim n= 1 x= 0 y= 2
+sim n= 0 x= 1 y= 2
+x= 1 y= 2 ex[base+x][base+y]= 1
+sim n= 0 x= -1 y= 2
+x= -1 y= 2 ex[base+x][base+y]= 1
+sim n= 1 x= 0 y= 0
+sim n= 0 x= 1 y= 0
+x= 1 y= 0 ex[base+x][base+y]= 1
+sim n= 0 x= -1 y= 0
+x= -1 y= 0 ex[base+x][base+y]= 1
+sim n= 4 x= -1 y= 2
+sim n= 3 x= -1 y= 3
+sim n= 2 x= 0 y= 3
+sim n= 1 x= 0 y= 4
+sim n= 0 x= 1 y= 4
+x= 1 y= 4 ex[base+x][base+y]= 1
+sim n= 0 x= -1 y= 4
+x= -1 y= 4 ex[base+x][base+y]= 1
+sim n= 1 x= 0 y= 2
+sim n= 0 x= 1 y= 2
+x= 1 y= 2 ex[base+x][base+y]= 1
+sim n= 0 x= -1 y= 2
+x= -1 y= 2 ex[base+x][base+y]= 1
+sim n= 2 x= -2 y= 3
+sim n= 1 x= -2 y= 4
+sim n= 0 x= -1 y= 4
+x= -1 y= 4 ex[base+x][base+y]= 1
+sim n= 0 x= -3 y= 4
+x= -3 y= 4 ex[base+x][base+y]= 0
+cnt= 17
+sim n= 1 x= -2 y= 2
+sim n= 0 x= -1 y= 2
+x= -1 y= 2 ex[base+x][base+y]= 1
+sim n= 0 x= -3 y= 2
+x= -3 y= 2 ex[base+x][base+y]= 0
+cnt= 18
+sim n= 3 x= -1 y= 1
+sim n= 2 x= 0 y= 1
+sim n= 1 x= 0 y= 2
+sim n= 0 x= 1 y= 2
+x= 1 y= 2 ex[base+x][base+y]= 1
+sim n= 0 x= -1 y= 2
+x= -1 y= 2 ex[base+x][base+y]= 1
+sim n= 1 x= 0 y= 0
+sim n= 0 x= 1 y= 0
+x= 1 y= 0 ex[base+x][base+y]= 1
+sim n= 0 x= -1 y= 0
+x= -1 y= 0 ex[base+x][base+y]= 1
+sim n= 2 x= -2 y= 1
+sim n= 1 x= -2 y= 2
+sim n= 0 x= -1 y= 2
+x= -1 y= 2 ex[base+x][base+y]= 1
+sim n= 0 x= -3 y= 2
+x= -3 y= 2 ex[base+x][base+y]= 1
+sim n= 1 x= -2 y= 0
+sim n= 0 x= -1 y= 0
+x= -1 y= 0 ex[base+x][base+y]= 1
+sim n= 0 x= -3 y= 0
+x= -3 y= 0 ex[base+x][base+y]= 0
+cnt= 19
+sim n= 5 x= 0 y= 0
+sim n= 4 x= 1 y= 0
+sim n= 3 x= 1 y= 1
+sim n= 2 x= 2 y= 1
+sim n= 1 x= 2 y= 2
+sim n= 0 x= 3 y= 2
+x= 3 y= 2 ex[base+x][base+y]= 1
+sim n= 0 x= 1 y= 2
+x= 1 y= 2 ex[base+x][base+y]= 1
+sim n= 1 x= 2 y= 0
+sim n= 0 x= 3 y= 0
+x= 3 y= 0 ex[base+x][base+y]= 1
+sim n= 0 x= 1 y= 0
+x= 1 y= 0 ex[base+x][base+y]= 1
+sim n= 2 x= 0 y= 1
+sim n= 1 x= 0 y= 2
+sim n= 0 x= 1 y= 2
+x= 1 y= 2 ex[base+x][base+y]= 1
+sim n= 0 x= -1 y= 2
+x= -1 y= 2 ex[base+x][base+y]= 1
+sim n= 1 x= 0 y= 0
+sim n= 0 x= 1 y= 0
+x= 1 y= 0 ex[base+x][base+y]= 1
+sim n= 0 x= -1 y= 0
+x= -1 y= 0 ex[base+x][base+y]= 1
+sim n= 3 x= 1 y= -1
+sim n= 2 x= 2 y= -1
+sim n= 1 x= 2 y= 0
+sim n= 0 x= 3 y= 0
+x= 3 y= 0 ex[base+x][base+y]= 1
+sim n= 0 x= 1 y= 0
+x= 1 y= 0 ex[base+x][base+y]= 1
+sim n= 1 x= 2 y= -2
+sim n= 0 x= 3 y= -2
+x= 3 y= -2 ex[base+x][base+y]= 1
+sim n= 0 x= 1 y= -2
+x= 1 y= -2 ex[base+x][base+y]= 1
+sim n= 2 x= 0 y= -1
+sim n= 1 x= 0 y= 0
+sim n= 0 x= 1 y= 0
+x= 1 y= 0 ex[base+x][base+y]= 1
+sim n= 0 x= -1 y= 0
+x= -1 y= 0 ex[base+x][base+y]= 1
+sim n= 1 x= 0 y= -2
+sim n= 0 x= 1 y= -2
+x= 1 y= -2 ex[base+x][base+y]= 1
+sim n= 0 x= -1 y= -2
+x= -1 y= -2 ex[base+x][base+y]= 1
+sim n= 4 x= -1 y= 0
+sim n= 3 x= -1 y= 1
+sim n= 2 x= 0 y= 1
+sim n= 1 x= 0 y= 2
+sim n= 0 x= 1 y= 2
+x= 1 y= 2 ex[base+x][base+y]= 1
+sim n= 0 x= -1 y= 2
+x= -1 y= 2 ex[base+x][base+y]= 1
+sim n= 1 x= 0 y= 0
+sim n= 0 x= 1 y= 0
+x= 1 y= 0 ex[base+x][base+y]= 1
+sim n= 0 x= -1 y= 0
+x= -1 y= 0 ex[base+x][base+y]= 1
+sim n= 2 x= -2 y= 1
+sim n= 1 x= -2 y= 2
+sim n= 0 x= -1 y= 2
+x= -1 y= 2 ex[base+x][base+y]= 1
+sim n= 0 x= -3 y= 2
+x= -3 y= 2 ex[base+x][base+y]= 1
+sim n= 1 x= -2 y= 0
+sim n= 0 x= -1 y= 0
+x= -1 y= 0 ex[base+x][base+y]= 1
+sim n= 0 x= -3 y= 0
+x= -3 y= 0 ex[base+x][base+y]= 1
+sim n= 3 x= -1 y= -1
+sim n= 2 x= 0 y= -1
+sim n= 1 x= 0 y= 0
+sim n= 0 x= 1 y= 0
+x= 1 y= 0 ex[base+x][base+y]= 1
+sim n= 0 x= -1 y= 0
+x= -1 y= 0 ex[base+x][base+y]= 1
+sim n= 1 x= 0 y= -2
+sim n= 0 x= 1 y= -2
+x= 1 y= -2 ex[base+x][base+y]= 1
+sim n= 0 x= -1 y= -2
+x= -1 y= -2 ex[base+x][base+y]= 1
+sim n= 2 x= -2 y= -1
+sim n= 1 x= -2 y= 0
+sim n= 0 x= -1 y= 0
+x= -1 y= 0 ex[base+x][base+y]= 1
+sim n= 0 x= -3 y= 0
+x= -3 y= 0 ex[base+x][base+y]= 1
+sim n= 1 x= -2 y= -2
+sim n= 0 x= -1 y= -2
+x= -1 y= -2 ex[base+x][base+y]= 1
+sim n= 0 x= -3 y= -2
+x= -3 y= -2 ex[base+x][base+y]= 0
+cnt= 20
+sim n= 7 x= 1 y= -1
+sim n= 6 x= 2 y= -1
+sim n= 5 x= 2 y= 0
+sim n= 4 x= 3 y= 0
+sim n= 3 x= 3 y= 1
+sim n= 2 x= 4 y= 1
+sim n= 1 x= 4 y= 2
+sim n= 0 x= 5 y= 2
+x= 5 y= 2 ex[base+x][base+y]= 1
+sim n= 0 x= 3 y= 2
+x= 3 y= 2 ex[base+x][base+y]= 1
+sim n= 1 x= 4 y= 0
+sim n= 0 x= 5 y= 0
+x= 5 y= 0 ex[base+x][base+y]= 1
+sim n= 0 x= 3 y= 0
+x= 3 y= 0 ex[base+x][base+y]= 1
+sim n= 2 x= 2 y= 1
+sim n= 1 x= 2 y= 2
+sim n= 0 x= 3 y= 2
+x= 3 y= 2 ex[base+x][base+y]= 1
+sim n= 0 x= 1 y= 2
+x= 1 y= 2 ex[base+x][base+y]= 1
+sim n= 1 x= 2 y= 0
+sim n= 0 x= 3 y= 0
+x= 3 y= 0 ex[base+x][base+y]= 1
+sim n= 0 x= 1 y= 0
+x= 1 y= 0 ex[base+x][base+y]= 1
+sim n= 3 x= 3 y= -1
+sim n= 2 x= 4 y= -1
+sim n= 1 x= 4 y= 0
+sim n= 0 x= 5 y= 0
+x= 5 y= 0 ex[base+x][base+y]= 1
+sim n= 0 x= 3 y= 0
+x= 3 y= 0 ex[base+x][base+y]= 1
+sim n= 1 x= 4 y= -2
+sim n= 0 x= 5 y= -2
+x= 5 y= -2 ex[base+x][base+y]= 1
+sim n= 0 x= 3 y= -2
+x= 3 y= -2 ex[base+x][base+y]= 1
+sim n= 2 x= 2 y= -1
+sim n= 1 x= 2 y= 0
+sim n= 0 x= 3 y= 0
+x= 3 y= 0 ex[base+x][base+y]= 1
+sim n= 0 x= 1 y= 0
+x= 1 y= 0 ex[base+x][base+y]= 1
+sim n= 1 x= 2 y= -2
+sim n= 0 x= 3 y= -2
+x= 3 y= -2 ex[base+x][base+y]= 1
+sim n= 0 x= 1 y= -2
+x= 1 y= -2 ex[base+x][base+y]= 1
+sim n= 4 x= 1 y= 0
+sim n= 3 x= 1 y= 1
+sim n= 2 x= 2 y= 1
+sim n= 1 x= 2 y= 2
+sim n= 0 x= 3 y= 2
+x= 3 y= 2 ex[base+x][base+y]= 1
+sim n= 0 x= 1 y= 2
+x= 1 y= 2 ex[base+x][base+y]= 1
+sim n= 1 x= 2 y= 0
+sim n= 0 x= 3 y= 0
+x= 3 y= 0 ex[base+x][base+y]= 1
+sim n= 0 x= 1 y= 0
+x= 1 y= 0 ex[base+x][base+y]= 1
+sim n= 2 x= 0 y= 1
+sim n= 1 x= 0 y= 2
+sim n= 0 x= 1 y= 2
+x= 1 y= 2 ex[base+x][base+y]= 1
+sim n= 0 x= -1 y= 2
+x= -1 y= 2 ex[base+x][base+y]= 1
+sim n= 1 x= 0 y= 0
+sim n= 0 x= 1 y= 0
+x= 1 y= 0 ex[base+x][base+y]= 1
+sim n= 0 x= -1 y= 0
+x= -1 y= 0 ex[base+x][base+y]= 1
+sim n= 3 x= 1 y= -1
+sim n= 2 x= 2 y= -1
+sim n= 1 x= 2 y= 0
+sim n= 0 x= 3 y= 0
+x= 3 y= 0 ex[base+x][base+y]= 1
+sim n= 0 x= 1 y= 0
+x= 1 y= 0 ex[base+x][base+y]= 1
+sim n= 1 x= 2 y= -2
+sim n= 0 x= 3 y= -2
+x= 3 y= -2 ex[base+x][base+y]= 1
+sim n= 0 x= 1 y= -2
+x= 1 y= -2 ex[base+x][base+y]= 1
+sim n= 2 x= 0 y= -1
+sim n= 1 x= 0 y= 0
+sim n= 0 x= 1 y= 0
+x= 1 y= 0 ex[base+x][base+y]= 1
+sim n= 0 x= -1 y= 0
+x= -1 y= 0 ex[base+x][base+y]= 1
+sim n= 1 x= 0 y= -2
+sim n= 0 x= 1 y= -2
+x= 1 y= -2 ex[base+x][base+y]= 1
+sim n= 0 x= -1 y= -2
+x= -1 y= -2 ex[base+x][base+y]= 1
+sim n= 5 x= 2 y= -2
+sim n= 4 x= 3 y= -2
+sim n= 3 x= 3 y= -1
+sim n= 2 x= 4 y= -1
+sim n= 1 x= 4 y= 0
+sim n= 0 x= 5 y= 0
+x= 5 y= 0 ex[base+x][base+y]= 1
+sim n= 0 x= 3 y= 0
+x= 3 y= 0 ex[base+x][base+y]= 1
+sim n= 1 x= 4 y= -2
+sim n= 0 x= 5 y= -2
+x= 5 y= -2 ex[base+x][base+y]= 1
+sim n= 0 x= 3 y= -2
+x= 3 y= -2 ex[base+x][base+y]= 1
+sim n= 2 x= 2 y= -1
+sim n= 1 x= 2 y= 0
+sim n= 0 x= 3 y= 0
+x= 3 y= 0 ex[base+x][base+y]= 1
+sim n= 0 x= 1 y= 0
+x= 1 y= 0 ex[base+x][base+y]= 1
+sim n= 1 x= 2 y= -2
+sim n= 0 x= 3 y= -2
+x= 3 y= -2 ex[base+x][base+y]= 1
+sim n= 0 x= 1 y= -2
+x= 1 y= -2 ex[base+x][base+y]= 1
+sim n= 3 x= 3 y= -3
+sim n= 2 x= 4 y= -3
+sim n= 1 x= 4 y= -2
+sim n= 0 x= 5 y= -2
+x= 5 y= -2 ex[base+x][base+y]= 1
+sim n= 0 x= 3 y= -2
+x= 3 y= -2 ex[base+x][base+y]= 1
+sim n= 1 x= 4 y= -4
+sim n= 0 x= 5 y= -4
+x= 5 y= -4 ex[base+x][base+y]= 0
+cnt= 21
+sim n= 0 x= 3 y= -4
+x= 3 y= -4 ex[base+x][base+y]= 0
+cnt= 22
+sim n= 2 x= 2 y= -3
+sim n= 1 x= 2 y= -2
+sim n= 0 x= 3 y= -2
+x= 3 y= -2 ex[base+x][base+y]= 1
+sim n= 0 x= 1 y= -2
+x= 1 y= -2 ex[base+x][base+y]= 1
+sim n= 1 x= 2 y= -4
+sim n= 0 x= 3 y= -4
+x= 3 y= -4 ex[base+x][base+y]= 1
+sim n= 0 x= 1 y= -4
+x= 1 y= -4 ex[base+x][base+y]= 0
+cnt= 23
+sim n= 4 x= 1 y= -2
+sim n= 3 x= 1 y= -1
+sim n= 2 x= 2 y= -1
+sim n= 1 x= 2 y= 0
+sim n= 0 x= 3 y= 0
+x= 3 y= 0 ex[base+x][base+y]= 1
+sim n= 0 x= 1 y= 0
+x= 1 y= 0 ex[base+x][base+y]= 1
+sim n= 1 x= 2 y= -2
+sim n= 0 x= 3 y= -2
+x= 3 y= -2 ex[base+x][base+y]= 1
+sim n= 0 x= 1 y= -2
+x= 1 y= -2 ex[base+x][base+y]= 1
+sim n= 2 x= 0 y= -1
+sim n= 1 x= 0 y= 0
+sim n= 0 x= 1 y= 0
+x= 1 y= 0 ex[base+x][base+y]= 1
+sim n= 0 x= -1 y= 0
+x= -1 y= 0 ex[base+x][base+y]= 1
+sim n= 1 x= 0 y= -2
+sim n= 0 x= 1 y= -2
+x= 1 y= -2 ex[base+x][base+y]= 1
+sim n= 0 x= -1 y= -2
+x= -1 y= -2 ex[base+x][base+y]= 1
+sim n= 3 x= 1 y= -3
+sim n= 2 x= 2 y= -3
+sim n= 1 x= 2 y= -2
+sim n= 0 x= 3 y= -2
+x= 3 y= -2 ex[base+x][base+y]= 1
+sim n= 0 x= 1 y= -2
+x= 1 y= -2 ex[base+x][base+y]= 1
+sim n= 1 x= 2 y= -4
+sim n= 0 x= 3 y= -4
+x= 3 y= -4 ex[base+x][base+y]= 1
+sim n= 0 x= 1 y= -4
+x= 1 y= -4 ex[base+x][base+y]= 1
+sim n= 2 x= 0 y= -3
+sim n= 1 x= 0 y= -2
+sim n= 0 x= 1 y= -2
+x= 1 y= -2 ex[base+x][base+y]= 1
+sim n= 0 x= -1 y= -2
+x= -1 y= -2 ex[base+x][base+y]= 1
+sim n= 1 x= 0 y= -4
+sim n= 0 x= 1 y= -4
+x= 1 y= -4 ex[base+x][base+y]= 1
+sim n= 0 x= -1 y= -4
+x= -1 y= -4 ex[base+x][base+y]= 0
+cnt= 24
+sim n= 6 x= 0 y= -1
+sim n= 5 x= 0 y= 0
+sim n= 4 x= 1 y= 0
+sim n= 3 x= 1 y= 1
+sim n= 2 x= 2 y= 1
+sim n= 1 x= 2 y= 2
+sim n= 0 x= 3 y= 2
+x= 3 y= 2 ex[base+x][base+y]= 1
+sim n= 0 x= 1 y= 2
+x= 1 y= 2 ex[base+x][base+y]= 1
+sim n= 1 x= 2 y= 0
+sim n= 0 x= 3 y= 0
+x= 3 y= 0 ex[base+x][base+y]= 1
+sim n= 0 x= 1 y= 0
+x= 1 y= 0 ex[base+x][base+y]= 1
+sim n= 2 x= 0 y= 1
+sim n= 1 x= 0 y= 2
+sim n= 0 x= 1 y= 2
+x= 1 y= 2 ex[base+x][base+y]= 1
+sim n= 0 x= -1 y= 2
+x= -1 y= 2 ex[base+x][base+y]= 1
+sim n= 1 x= 0 y= 0
+sim n= 0 x= 1 y= 0
+x= 1 y= 0 ex[base+x][base+y]= 1
+sim n= 0 x= -1 y= 0
+x= -1 y= 0 ex[base+x][base+y]= 1
+sim n= 3 x= 1 y= -1
+sim n= 2 x= 2 y= -1
+sim n= 1 x= 2 y= 0
+sim n= 0 x= 3 y= 0
+x= 3 y= 0 ex[base+x][base+y]= 1
+sim n= 0 x= 1 y= 0
+x= 1 y= 0 ex[base+x][base+y]= 1
+sim n= 1 x= 2 y= -2
+sim n= 0 x= 3 y= -2
+x= 3 y= -2 ex[base+x][base+y]= 1
+sim n= 0 x= 1 y= -2
+x= 1 y= -2 ex[base+x][base+y]= 1
+sim n= 2 x= 0 y= -1
+sim n= 1 x= 0 y= 0
+sim n= 0 x= 1 y= 0
+x= 1 y= 0 ex[base+x][base+y]= 1
+sim n= 0 x= -1 y= 0
+x= -1 y= 0 ex[base+x][base+y]= 1
+sim n= 1 x= 0 y= -2
+sim n= 0 x= 1 y= -2
+x= 1 y= -2 ex[base+x][base+y]= 1
+sim n= 0 x= -1 y= -2
+x= -1 y= -2 ex[base+x][base+y]= 1
+sim n= 4 x= -1 y= 0
+sim n= 3 x= -1 y= 1
+sim n= 2 x= 0 y= 1
+sim n= 1 x= 0 y= 2
+sim n= 0 x= 1 y= 2
+x= 1 y= 2 ex[base+x][base+y]= 1
+sim n= 0 x= -1 y= 2
+x= -1 y= 2 ex[base+x][base+y]= 1
+sim n= 1 x= 0 y= 0
+sim n= 0 x= 1 y= 0
+x= 1 y= 0 ex[base+x][base+y]= 1
+sim n= 0 x= -1 y= 0
+x= -1 y= 0 ex[base+x][base+y]= 1
+sim n= 2 x= -2 y= 1
+sim n= 1 x= -2 y= 2
+sim n= 0 x= -1 y= 2
+x= -1 y= 2 ex[base+x][base+y]= 1
+sim n= 0 x= -3 y= 2
+x= -3 y= 2 ex[base+x][base+y]= 1
+sim n= 1 x= -2 y= 0
+sim n= 0 x= -1 y= 0
+x= -1 y= 0 ex[base+x][base+y]= 1
+sim n= 0 x= -3 y= 0
+x= -3 y= 0 ex[base+x][base+y]= 1
+sim n= 3 x= -1 y= -1
+sim n= 2 x= 0 y= -1
+sim n= 1 x= 0 y= 0
+sim n= 0 x= 1 y= 0
+x= 1 y= 0 ex[base+x][base+y]= 1
+sim n= 0 x= -1 y= 0
+x= -1 y= 0 ex[base+x][base+y]= 1
+sim n= 1 x= 0 y= -2
+sim n= 0 x= 1 y= -2
+x= 1 y= -2 ex[base+x][base+y]= 1
+sim n= 0 x= -1 y= -2
+x= -1 y= -2 ex[base+x][base+y]= 1
+sim n= 2 x= -2 y= -1
+sim n= 1 x= -2 y= 0
+sim n= 0 x= -1 y= 0
+x= -1 y= 0 ex[base+x][base+y]= 1
+sim n= 0 x= -3 y= 0
+x= -3 y= 0 ex[base+x][base+y]= 1
+sim n= 1 x= -2 y= -2
+sim n= 0 x= -1 y= -2
+x= -1 y= -2 ex[base+x][base+y]= 1
+sim n= 0 x= -3 y= -2
+x= -3 y= -2 ex[base+x][base+y]= 1
+sim n= 5 x= 0 y= -2
+sim n= 4 x= 1 y= -2
+sim n= 3 x= 1 y= -1
+sim n= 2 x= 2 y= -1
+sim n= 1 x= 2 y= 0
+sim n= 0 x= 3 y= 0
+x= 3 y= 0 ex[base+x][base+y]= 1
+sim n= 0 x= 1 y= 0
+x= 1 y= 0 ex[base+x][base+y]= 1
+sim n= 1 x= 2 y= -2
+sim n= 0 x= 3 y= -2
+x= 3 y= -2 ex[base+x][base+y]= 1
+sim n= 0 x= 1 y= -2
+x= 1 y= -2 ex[base+x][base+y]= 1
+sim n= 2 x= 0 y= -1
+sim n= 1 x= 0 y= 0
+sim n= 0 x= 1 y= 0
+x= 1 y= 0 ex[base+x][base+y]= 1
+sim n= 0 x= -1 y= 0
+x= -1 y= 0 ex[base+x][base+y]= 1
+sim n= 1 x= 0 y= -2
+sim n= 0 x= 1 y= -2
+x= 1 y= -2 ex[base+x][base+y]= 1
+sim n= 0 x= -1 y= -2
+x= -1 y= -2 ex[base+x][base+y]= 1
+sim n= 3 x= 1 y= -3
+sim n= 2 x= 2 y= -3
+sim n= 1 x= 2 y= -2
+sim n= 0 x= 3 y= -2
+x= 3 y= -2 ex[base+x][base+y]= 1
+sim n= 0 x= 1 y= -2
+x= 1 y= -2 ex[base+x][base+y]= 1
+sim n= 1 x= 2 y= -4
+sim n= 0 x= 3 y= -4
+x= 3 y= -4 ex[base+x][base+y]= 1
+sim n= 0 x= 1 y= -4
+x= 1 y= -4 ex[base+x][base+y]= 1
+sim n= 2 x= 0 y= -3
+sim n= 1 x= 0 y= -2
+sim n= 0 x= 1 y= -2
+x= 1 y= -2 ex[base+x][base+y]= 1
+sim n= 0 x= -1 y= -2
+x= -1 y= -2 ex[base+x][base+y]= 1
+sim n= 1 x= 0 y= -4
+sim n= 0 x= 1 y= -4
+x= 1 y= -4 ex[base+x][base+y]= 1
+sim n= 0 x= -1 y= -4
+x= -1 y= -4 ex[base+x][base+y]= 1
+sim n= 4 x= -1 y= -2
+sim n= 3 x= -1 y= -1
+sim n= 2 x= 0 y= -1
+sim n= 1 x= 0 y= 0
+sim n= 0 x= 1 y= 0
+x= 1 y= 0 ex[base+x][base+y]= 1
+sim n= 0 x= -1 y= 0
+x= -1 y= 0 ex[base+x][base+y]= 1
+sim n= 1 x= 0 y= -2
+sim n= 0 x= 1 y= -2
+x= 1 y= -2 ex[base+x][base+y]= 1
+sim n= 0 x= -1 y= -2
+x= -1 y= -2 ex[base+x][base+y]= 1
+sim n= 2 x= -2 y= -1
+sim n= 1 x= -2 y= 0
+sim n= 0 x= -1 y= 0
+x= -1 y= 0 ex[base+x][base+y]= 1
+sim n= 0 x= -3 y= 0
+x= -3 y= 0 ex[base+x][base+y]= 1
+sim n= 1 x= -2 y= -2
+sim n= 0 x= -1 y= -2
+x= -1 y= -2 ex[base+x][base+y]= 1
+sim n= 0 x= -3 y= -2
+x= -3 y= -2 ex[base+x][base+y]= 1
+sim n= 3 x= -1 y= -3
+sim n= 2 x= 0 y= -3
+sim n= 1 x= 0 y= -2
+sim n= 0 x= 1 y= -2
+x= 1 y= -2 ex[base+x][base+y]= 1
+sim n= 0 x= -1 y= -2
+x= -1 y= -2 ex[base+x][base+y]= 1
+sim n= 1 x= 0 y= -4
+sim n= 0 x= 1 y= -4
+x= 1 y= -4 ex[base+x][base+y]= 1
+sim n= 0 x= -1 y= -4
+x= -1 y= -4 ex[base+x][base+y]= 1
+sim n= 2 x= -2 y= -3
+sim n= 1 x= -2 y= -2
+sim n= 0 x= -1 y= -2
+x= -1 y= -2 ex[base+x][base+y]= 1
+sim n= 0 x= -3 y= -2
+x= -3 y= -2 ex[base+x][base+y]= 1
+sim n= 1 x= -2 y= -4
+sim n= 0 x= -1 y= -4
+x= -1 y= -4 ex[base+x][base+y]= 1
+sim n= 0 x= -3 y= -4
+x= -3 y= -4 ex[base+x][base+y]= 0
+cnt= 25
+sim n= 8 x= -1 y= 0
+sim n= 7 x= -1 y= 1
+sim n= 6 x= 0 y= 1
+sim n= 5 x= 0 y= 2
+sim n= 4 x= 1 y= 2
+sim n= 3 x= 1 y= 3
+sim n= 2 x= 2 y= 3
+sim n= 1 x= 2 y= 4
+sim n= 0 x= 3 y= 4
+x= 3 y= 4 ex[base+x][base+y]= 1
+sim n= 0 x= 1 y= 4
+x= 1 y= 4 ex[base+x][base+y]= 1
+sim n= 1 x= 2 y= 2
+sim n= 0 x= 3 y= 2
+x= 3 y= 2 ex[base+x][base+y]= 1
+sim n= 0 x= 1 y= 2
+x= 1 y= 2 ex[base+x][base+y]= 1
+sim n= 2 x= 0 y= 3
+sim n= 1 x= 0 y= 4
+sim n= 0 x= 1 y= 4
+x= 1 y= 4 ex[base+x][base+y]= 1
+sim n= 0 x= -1 y= 4
+x= -1 y= 4 ex[base+x][base+y]= 1
+sim n= 1 x= 0 y= 2
+sim n= 0 x= 1 y= 2
+x= 1 y= 2 ex[base+x][base+y]= 1
+sim n= 0 x= -1 y= 2
+x= -1 y= 2 ex[base+x][base+y]= 1
+sim n= 3 x= 1 y= 1
+sim n= 2 x= 2 y= 1
+sim n= 1 x= 2 y= 2
+sim n= 0 x= 3 y= 2
+x= 3 y= 2 ex[base+x][base+y]= 1
+sim n= 0 x= 1 y= 2
+x= 1 y= 2 ex[base+x][base+y]= 1
+sim n= 1 x= 2 y= 0
+sim n= 0 x= 3 y= 0
+x= 3 y= 0 ex[base+x][base+y]= 1
+sim n= 0 x= 1 y= 0
+x= 1 y= 0 ex[base+x][base+y]= 1
+sim n= 2 x= 0 y= 1
+sim n= 1 x= 0 y= 2
+sim n= 0 x= 1 y= 2
+x= 1 y= 2 ex[base+x][base+y]= 1
+sim n= 0 x= -1 y= 2
+x= -1 y= 2 ex[base+x][base+y]= 1
+sim n= 1 x= 0 y= 0
+sim n= 0 x= 1 y= 0
+x= 1 y= 0 ex[base+x][base+y]= 1
+sim n= 0 x= -1 y= 0
+x= -1 y= 0 ex[base+x][base+y]= 1
+sim n= 4 x= -1 y= 2
+sim n= 3 x= -1 y= 3
+sim n= 2 x= 0 y= 3
+sim n= 1 x= 0 y= 4
+sim n= 0 x= 1 y= 4
+x= 1 y= 4 ex[base+x][base+y]= 1
+sim n= 0 x= -1 y= 4
+x= -1 y= 4 ex[base+x][base+y]= 1
+sim n= 1 x= 0 y= 2
+sim n= 0 x= 1 y= 2
+x= 1 y= 2 ex[base+x][base+y]= 1
+sim n= 0 x= -1 y= 2
+x= -1 y= 2 ex[base+x][base+y]= 1
+sim n= 2 x= -2 y= 3
+sim n= 1 x= -2 y= 4
+sim n= 0 x= -1 y= 4
+x= -1 y= 4 ex[base+x][base+y]= 1
+sim n= 0 x= -3 y= 4
+x= -3 y= 4 ex[base+x][base+y]= 1
+sim n= 1 x= -2 y= 2
+sim n= 0 x= -1 y= 2
+x= -1 y= 2 ex[base+x][base+y]= 1
+sim n= 0 x= -3 y= 2
+x= -3 y= 2 ex[base+x][base+y]= 1
+sim n= 3 x= -1 y= 1
+sim n= 2 x= 0 y= 1
+sim n= 1 x= 0 y= 2
+sim n= 0 x= 1 y= 2
+x= 1 y= 2 ex[base+x][base+y]= 1
+sim n= 0 x= -1 y= 2
+x= -1 y= 2 ex[base+x][base+y]= 1
+sim n= 1 x= 0 y= 0
+sim n= 0 x= 1 y= 0
+x= 1 y= 0 ex[base+x][base+y]= 1
+sim n= 0 x= -1 y= 0
+x= -1 y= 0 ex[base+x][base+y]= 1
+sim n= 2 x= -2 y= 1
+sim n= 1 x= -2 y= 2
+sim n= 0 x= -1 y= 2
+x= -1 y= 2 ex[base+x][base+y]= 1
+sim n= 0 x= -3 y= 2
+x= -3 y= 2 ex[base+x][base+y]= 1
+sim n= 1 x= -2 y= 0
+sim n= 0 x= -1 y= 0
+x= -1 y= 0 ex[base+x][base+y]= 1
+sim n= 0 x= -3 y= 0
+x= -3 y= 0 ex[base+x][base+y]= 1
+sim n= 5 x= 0 y= 0
+sim n= 4 x= 1 y= 0
+sim n= 3 x= 1 y= 1
+sim n= 2 x= 2 y= 1
+sim n= 1 x= 2 y= 2
+sim n= 0 x= 3 y= 2
+x= 3 y= 2 ex[base+x][base+y]= 1
+sim n= 0 x= 1 y= 2
+x= 1 y= 2 ex[base+x][base+y]= 1
+sim n= 1 x= 2 y= 0
+sim n= 0 x= 3 y= 0
+x= 3 y= 0 ex[base+x][base+y]= 1
+sim n= 0 x= 1 y= 0
+x= 1 y= 0 ex[base+x][base+y]= 1
+sim n= 2 x= 0 y= 1
+sim n= 1 x= 0 y= 2
+sim n= 0 x= 1 y= 2
+x= 1 y= 2 ex[base+x][base+y]= 1
+sim n= 0 x= -1 y= 2
+x= -1 y= 2 ex[base+x][base+y]= 1
+sim n= 1 x= 0 y= 0
+sim n= 0 x= 1 y= 0
+x= 1 y= 0 ex[base+x][base+y]= 1
+sim n= 0 x= -1 y= 0
+x= -1 y= 0 ex[base+x][base+y]= 1
+sim n= 3 x= 1 y= -1
+sim n= 2 x= 2 y= -1
+sim n= 1 x= 2 y= 0
+sim n= 0 x= 3 y= 0
+x= 3 y= 0 ex[base+x][base+y]= 1
+sim n= 0 x= 1 y= 0
+x= 1 y= 0 ex[base+x][base+y]= 1
+sim n= 1 x= 2 y= -2
+sim n= 0 x= 3 y= -2
+x= 3 y= -2 ex[base+x][base+y]= 1
+sim n= 0 x= 1 y= -2
+x= 1 y= -2 ex[base+x][base+y]= 1
+sim n= 2 x= 0 y= -1
+sim n= 1 x= 0 y= 0
+sim n= 0 x= 1 y= 0
+x= 1 y= 0 ex[base+x][base+y]= 1
+sim n= 0 x= -1 y= 0
+x= -1 y= 0 ex[base+x][base+y]= 1
+sim n= 1 x= 0 y= -2
+sim n= 0 x= 1 y= -2
+x= 1 y= -2 ex[base+x][base+y]= 1
+sim n= 0 x= -1 y= -2
+x= -1 y= -2 ex[base+x][base+y]= 1
+sim n= 4 x= -1 y= 0
+sim n= 3 x= -1 y= 1
+sim n= 2 x= 0 y= 1
+sim n= 1 x= 0 y= 2
+sim n= 0 x= 1 y= 2
+x= 1 y= 2 ex[base+x][base+y]= 1
+sim n= 0 x= -1 y= 2
+x= -1 y= 2 ex[base+x][base+y]= 1
+sim n= 1 x= 0 y= 0
+sim n= 0 x= 1 y= 0
+x= 1 y= 0 ex[base+x][base+y]= 1
+sim n= 0 x= -1 y= 0
+x= -1 y= 0 ex[base+x][base+y]= 1
+sim n= 2 x= -2 y= 1
+sim n= 1 x= -2 y= 2
+sim n= 0 x= -1 y= 2
+x= -1 y= 2 ex[base+x][base+y]= 1
+sim n= 0 x= -3 y= 2
+x= -3 y= 2 ex[base+x][base+y]= 1
+sim n= 1 x= -2 y= 0
+sim n= 0 x= -1 y= 0
+x= -1 y= 0 ex[base+x][base+y]= 1
+sim n= 0 x= -3 y= 0
+x= -3 y= 0 ex[base+x][base+y]= 1
+sim n= 3 x= -1 y= -1
+sim n= 2 x= 0 y= -1
+sim n= 1 x= 0 y= 0
+sim n= 0 x= 1 y= 0
+x= 1 y= 0 ex[base+x][base+y]= 1
+sim n= 0 x= -1 y= 0
+x= -1 y= 0 ex[base+x][base+y]= 1
+sim n= 1 x= 0 y= -2
+sim n= 0 x= 1 y= -2
+x= 1 y= -2 ex[base+x][base+y]= 1
+sim n= 0 x= -1 y= -2
+x= -1 y= -2 ex[base+x][base+y]= 1
+sim n= 2 x= -2 y= -1
+sim n= 1 x= -2 y= 0
+sim n= 0 x= -1 y= 0
+x= -1 y= 0 ex[base+x][base+y]= 1
+sim n= 0 x= -3 y= 0
+x= -3 y= 0 ex[base+x][base+y]= 1
+sim n= 1 x= -2 y= -2
+sim n= 0 x= -1 y= -2
+x= -1 y= -2 ex[base+x][base+y]= 1
+sim n= 0 x= -3 y= -2
+x= -3 y= -2 ex[base+x][base+y]= 1
+sim n= 6 x= -2 y= 1
+sim n= 5 x= -2 y= 2
+sim n= 4 x= -1 y= 2
+sim n= 3 x= -1 y= 3
+sim n= 2 x= 0 y= 3
+sim n= 1 x= 0 y= 4
+sim n= 0 x= 1 y= 4
+x= 1 y= 4 ex[base+x][base+y]= 1
+sim n= 0 x= -1 y= 4
+x= -1 y= 4 ex[base+x][base+y]= 1
+sim n= 1 x= 0 y= 2
+sim n= 0 x= 1 y= 2
+x= 1 y= 2 ex[base+x][base+y]= 1
+sim n= 0 x= -1 y= 2
+x= -1 y= 2 ex[base+x][base+y]= 1
+sim n= 2 x= -2 y= 3
+sim n= 1 x= -2 y= 4
+sim n= 0 x= -1 y= 4
+x= -1 y= 4 ex[base+x][base+y]= 1
+sim n= 0 x= -3 y= 4
+x= -3 y= 4 ex[base+x][base+y]= 1
+sim n= 1 x= -2 y= 2
+sim n= 0 x= -1 y= 2
+x= -1 y= 2 ex[base+x][base+y]= 1
+sim n= 0 x= -3 y= 2
+x= -3 y= 2 ex[base+x][base+y]= 1
+sim n= 3 x= -1 y= 1
+sim n= 2 x= 0 y= 1
+sim n= 1 x= 0 y= 2
+sim n= 0 x= 1 y= 2
+x= 1 y= 2 ex[base+x][base+y]= 1
+sim n= 0 x= -1 y= 2
+x= -1 y= 2 ex[base+x][base+y]= 1
+sim n= 1 x= 0 y= 0
+sim n= 0 x= 1 y= 0
+x= 1 y= 0 ex[base+x][base+y]= 1
+sim n= 0 x= -1 y= 0
+x= -1 y= 0 ex[base+x][base+y]= 1
+sim n= 2 x= -2 y= 1
+sim n= 1 x= -2 y= 2
+sim n= 0 x= -1 y= 2
+x= -1 y= 2 ex[base+x][base+y]= 1
+sim n= 0 x= -3 y= 2
+x= -3 y= 2 ex[base+x][base+y]= 1
+sim n= 1 x= -2 y= 0
+sim n= 0 x= -1 y= 0
+x= -1 y= 0 ex[base+x][base+y]= 1
+sim n= 0 x= -3 y= 0
+x= -3 y= 0 ex[base+x][base+y]= 1
+sim n= 4 x= -3 y= 2
+sim n= 3 x= -3 y= 3
+sim n= 2 x= -2 y= 3
+sim n= 1 x= -2 y= 4
+sim n= 0 x= -1 y= 4
+x= -1 y= 4 ex[base+x][base+y]= 1
+sim n= 0 x= -3 y= 4
+x= -3 y= 4 ex[base+x][base+y]= 1
+sim n= 1 x= -2 y= 2
+sim n= 0 x= -1 y= 2
+x= -1 y= 2 ex[base+x][base+y]= 1
+sim n= 0 x= -3 y= 2
+x= -3 y= 2 ex[base+x][base+y]= 1
+sim n= 2 x= -4 y= 3
+sim n= 1 x= -4 y= 4
+sim n= 0 x= -3 y= 4
+x= -3 y= 4 ex[base+x][base+y]= 1
+sim n= 0 x= -5 y= 4
+x= -5 y= 4 ex[base+x][base+y]= 0
+cnt= 26
+sim n= 1 x= -4 y= 2
+sim n= 0 x= -3 y= 2
+x= -3 y= 2 ex[base+x][base+y]= 1
+sim n= 0 x= -5 y= 2
+x= -5 y= 2 ex[base+x][base+y]= 0
+cnt= 27
+sim n= 3 x= -3 y= 1
+sim n= 2 x= -2 y= 1
+sim n= 1 x= -2 y= 2
+sim n= 0 x= -1 y= 2
+x= -1 y= 2 ex[base+x][base+y]= 1
+sim n= 0 x= -3 y= 2
+x= -3 y= 2 ex[base+x][base+y]= 1
+sim n= 1 x= -2 y= 0
+sim n= 0 x= -1 y= 0
+x= -1 y= 0 ex[base+x][base+y]= 1
+sim n= 0 x= -3 y= 0
+x= -3 y= 0 ex[base+x][base+y]= 1
+sim n= 2 x= -4 y= 1
+sim n= 1 x= -4 y= 2
+sim n= 0 x= -3 y= 2
+x= -3 y= 2 ex[base+x][base+y]= 1
+sim n= 0 x= -5 y= 2
+x= -5 y= 2 ex[base+x][base+y]= 1
+sim n= 1 x= -4 y= 0
+sim n= 0 x= -3 y= 0
+x= -3 y= 0 ex[base+x][base+y]= 1
+sim n= 0 x= -5 y= 0
+x= -5 y= 0 ex[base+x][base+y]= 0
+cnt= 28
+sim n= 5 x= -2 y= 0
+sim n= 4 x= -1 y= 0
+sim n= 3 x= -1 y= 1
+sim n= 2 x= 0 y= 1
+sim n= 1 x= 0 y= 2
+sim n= 0 x= 1 y= 2
+x= 1 y= 2 ex[base+x][base+y]= 1
+sim n= 0 x= -1 y= 2
+x= -1 y= 2 ex[base+x][base+y]= 1
+sim n= 1 x= 0 y= 0
+sim n= 0 x= 1 y= 0
+x= 1 y= 0 ex[base+x][base+y]= 1
+sim n= 0 x= -1 y= 0
+x= -1 y= 0 ex[base+x][base+y]= 1
+sim n= 2 x= -2 y= 1
+sim n= 1 x= -2 y= 2
+sim n= 0 x= -1 y= 2
+x= -1 y= 2 ex[base+x][base+y]= 1
+sim n= 0 x= -3 y= 2
+x= -3 y= 2 ex[base+x][base+y]= 1
+sim n= 1 x= -2 y= 0
+sim n= 0 x= -1 y= 0
+x= -1 y= 0 ex[base+x][base+y]= 1
+sim n= 0 x= -3 y= 0
+x= -3 y= 0 ex[base+x][base+y]= 1
+sim n= 3 x= -1 y= -1
+sim n= 2 x= 0 y= -1
+sim n= 1 x= 0 y= 0
+sim n= 0 x= 1 y= 0
+x= 1 y= 0 ex[base+x][base+y]= 1
+sim n= 0 x= -1 y= 0
+x= -1 y= 0 ex[base+x][base+y]= 1
+sim n= 1 x= 0 y= -2
+sim n= 0 x= 1 y= -2
+x= 1 y= -2 ex[base+x][base+y]= 1
+sim n= 0 x= -1 y= -2
+x= -1 y= -2 ex[base+x][base+y]= 1
+sim n= 2 x= -2 y= -1
+sim n= 1 x= -2 y= 0
+sim n= 0 x= -1 y= 0
+x= -1 y= 0 ex[base+x][base+y]= 1
+sim n= 0 x= -3 y= 0
+x= -3 y= 0 ex[base+x][base+y]= 1
+sim n= 1 x= -2 y= -2
+sim n= 0 x= -1 y= -2
+x= -1 y= -2 ex[base+x][base+y]= 1
+sim n= 0 x= -3 y= -2
+x= -3 y= -2 ex[base+x][base+y]= 1
+sim n= 4 x= -3 y= 0
+sim n= 3 x= -3 y= 1
+sim n= 2 x= -2 y= 1
+sim n= 1 x= -2 y= 2
+sim n= 0 x= -1 y= 2
+x= -1 y= 2 ex[base+x][base+y]= 1
+sim n= 0 x= -3 y= 2
+x= -3 y= 2 ex[base+x][base+y]= 1
+sim n= 1 x= -2 y= 0
+sim n= 0 x= -1 y= 0
+x= -1 y= 0 ex[base+x][base+y]= 1
+sim n= 0 x= -3 y= 0
+x= -3 y= 

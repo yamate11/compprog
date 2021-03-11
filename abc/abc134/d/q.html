@@ -1,0 +1,482 @@
+
+
+
+
+
+
+<!DOCTYPE html>
+
+<html>
+<head>
+	<title>D - Preparing Boxes</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+	<meta http-equiv="Content-Language" content='en'>
+	<meta name="viewport" content="width=device-width,initial-scale=1.0">
+	<meta name="format-detection" content="telephone=no">
+	<meta name="google-site-verification" content="nXGC_JxO0yoP1qBzMnYD_xgufO6leSLw1kyNo2HZltM" />
+
+	
+	<meta name="description" content="AtCoder is a programming contest site for anyone from beginners to experts. We hold weekly programming contests online.">
+	<meta name="author" content="AtCoder Inc.">
+	<link rel="canonical" href="https://atcoder.jp/">
+
+	<meta property="og:site_name" content="AtCoder">
+	
+	<meta property="og:title" content="D - Preparing Boxes" />
+	<meta property="og:description" content="AtCoder is a programming contest site for anyone from beginners to experts. We hold weekly programming contests online." />
+	<meta property="og:type" content="website" />
+	<meta property="og:url" content="https://atcoder.jp/contests/abc134/tasks/abc134_d" />
+	<meta property="og:image" content="https://img.atcoder.jp/assets/atcoder.png" />
+	<meta name="twitter:card" content="summary" />
+	<meta name="twitter:site" content="@atcoder" />
+	
+	<meta property="twitter:title" content="D - Preparing Boxes" />
+
+	<link href="//fonts.googleapis.com/css?family=Lato:400,700" rel="stylesheet" type="text/css">
+	<link rel="stylesheet" type="text/css" href="/public/css/bootstrap.min.css?v=201907192113">
+	<link rel="stylesheet" type="text/css" href="/public/css/base.css?v=201907192113">
+	<link rel="shortcut icon" type="image/png" href="//img.atcoder.jp/assets/favicon.png">
+	<link rel="apple-touch-icon" href="//img.atcoder.jp/assets/atcoder.png">
+	<script src="/public/js/lib/jquery-1.9.1.min.js?v=201907192113"></script>
+	<script src="/public/js/lib/bootstrap.min.js?v=201907192113"></script>
+	<script src="//cdnjs.cloudflare.com/ajax/libs/js-cookie/2.1.4/js.cookie.min.js"></script>
+	<script src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/moment.min.js"></script>
+	<script src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/locale/ja.js"></script>
+	<script>
+		var LANG = "en";
+		var userScreenName = "";
+	</script>
+	<script src="/public/js/utils.js?v=201907192113"></script>
+	
+	
+		<script src="/public/js/contest.js?v=201907192113"></script>
+		<link href="/public/css/contest.css?v=201907192113" rel="stylesheet" />
+		<script>
+			var contestScreenName = "abc134";
+			var remainingText = "Remaining Time";
+			var countDownText = "Contest begins in";
+			var startTime = moment("2019-07-20T21:00:00+09:00");
+			var endTime = moment("2019-07-20T22:40:00+09:00");
+		</script>
+		<style></style>
+	
+	
+		<script type="text/x-mathjax-config">MathJax.Hub.Config({messageStyle:"none",tex2jax:{skipTags:["script","noscript","style","textarea","code"],inlineMath:[['\\(','\\)']]}});</script>
+		<script src="//cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+		<script src="/public/js/task.js?v=201907192113"></script>
+	
+	
+	
+	
+		<link href="//cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/css/select2.min.css" rel="stylesheet" />
+		<link href="//cdnjs.cloudflare.com/ajax/libs/select2-bootstrap-theme/0.1.0-beta.10/select2-bootstrap.min.css" rel="stylesheet" />
+		<script src="/public/js/lib/select2.min.js?v=201907192113"></script>
+	
+	
+		<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/codemirror/5.38.0/codemirror.min.css">
+		<script src="//cdnjs.cloudflare.com/ajax/libs/codemirror/5.38.0/codemirror.min.js"></script>
+		<script src="/public/js/codeMirror/merged.js?v=201907192113"></script>
+	
+	
+		<script src="//cdn.rawgit.com/google/code-prettify/master/loader/run_prettify.js"></script>
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	<script src="/public/js/base.js?v=201907192113"></script>
+	<script src="/public/js/ga.js?v=201907192113"></script>
+</head>
+
+<body>
+<div id="modal-contest-start" class="modal fade" tabindex="-1" role="dialog">
+	<div class="modal-dialog" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+				<h4 class="modal-title">Contest started</h4>
+			</div>
+			<div class="modal-body">
+				<p>AtCoder Beginner Contest 134 has begun.</p>
+			</div>
+			<div class="modal-footer">
+				
+					<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+				
+			</div>
+		</div>
+	</div>
+</div>
+<div id="modal-contest-end" class="modal fade" tabindex="-1" role="dialog">
+	<div class="modal-dialog" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+				<h4 class="modal-title">Contest is over</h4>
+			</div>
+			<div class="modal-body">
+				<p>AtCoder Beginner Contest 134 has ended.</p>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+			</div>
+		</div>
+	</div>
+</div>
+<div id="main-div" class="float-container">
+	<nav class="navbar navbar-inverse navbar-fixed-top">
+		<div class="container-fluid">
+			<div class="navbar-header">
+				<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapse" aria-expanded="false">
+					<span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span>
+				</button>
+				<a class="navbar-brand" href="/"></a>
+			</div>
+			<div class="collapse navbar-collapse" id="navbar-collapse">
+				<ul class="nav navbar-nav">
+				
+					<li><a class="contest-title" href="/contests/abc134">AtCoder Beginner Contest 134</a></li>
+				
+				</ul>
+				<ul class="nav navbar-nav navbar-right">
+					
+					<li class="dropdown">
+						<a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
+							<img src='//img.atcoder.jp/assets/flag-lang/en.png'> English <span class="caret"></span>
+						</a>
+						<ul class="dropdown-menu">
+							<li><a href="/contests/abc134/tasks/abc134_d?lang=ja"><img src='//img.atcoder.jp/assets/flag-lang/ja.png'> 日本語</a></li>
+							<li><a href="/contests/abc134/tasks/abc134_d?lang=en"><img src='//img.atcoder.jp/assets/flag-lang/en.png'> English</a></li>
+						</ul>
+					</li>
+					
+					
+						<li><a href="/register?continue=https%3A%2F%2Fatcoder.jp%2Fcontests%2Fabc134%2Ftasks%2Fabc134_d">Sign Up</a></li>
+						<li><a href="/login?continue=https%3A%2F%2Fatcoder.jp%2Fcontests%2Fabc134%2Ftasks%2Fabc134_d">Sign In</a></li>
+					
+				</ul>
+			</div>
+		</div>
+	</nav>
+	<form method="POST" name="form_logout" action="/logout?continue=https%3A%2F%2Fatcoder.jp%2Fcontests%2Fabc134%2Ftasks%2Fabc134_d">
+		<input type="hidden" name="csrf_token" value="K4o1VNzLYOxk0WZiHXg4KOeOb&#43;pmb1pBopIk7nWuyCo=" />
+	</form>
+	<div id="main-container" class="container" style="padding-top:50px;">
+		
+
+<div class="row">
+	<div id="contest-nav-tabs" class="col-sm-12 mb-2 cnvtb-fixed">
+	<div>
+		<small class="contest-duration">Contest Duration: <a href='http://www.timeanddate.com/worldclock/fixedtime.html?iso=20190720T2100&p1=248' target='blank'><time class='fixtime fixtime-full'>2019-07-20 21:00:00+0900</time></a> ~ <a href='http://www.timeanddate.com/worldclock/fixedtime.html?iso=20190720T2240&p1=248' target='blank'><time class='fixtime fixtime-full'>2019-07-20 22:40:00+0900</time></a> (local time)</small>
+		<small class="back-to-home pull-right"><a href='/'>Back to Home</a></small>
+	</div>
+	<ul class="nav nav-tabs">
+		<li><a href='/contests/abc134'><span class="glyphicon glyphicon-home" aria-hidden="true"></span> Top</a></li>
+		
+			<li class="active"><a href='/contests/abc134/tasks'><span class="glyphicon glyphicon-tasks" aria-hidden="true"></span> Tasks</a></li>
+		
+
+		
+			<li><a href='/contests/abc134/clarifications'><span class="glyphicon glyphicon-question-sign" aria-hidden="true"></span> Clarifications <span id="clar-badge" class="badge"></span></a></li>
+		
+
+		
+
+		
+			<li>
+				<a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false"><span class="glyphicon glyphicon-list" aria-hidden="true"></span> Submissions<span class="caret"></span></a>
+				<ul class="dropdown-menu">
+					<li><a href='/contests/abc134/submissions'><span class="glyphicon glyphicon-globe" aria-hidden="true"></span> All Submissions</a></li>
+					
+				</ul>
+			</li>
+		
+
+		
+			
+				
+					<li><a href='/contests/abc134/standings'><span class="glyphicon glyphicon-sort-by-attributes-alt" aria-hidden="true"></span> Standings</a></li>
+				
+			
+		
+
+		
+
+		
+		
+			<li><a href="https://codeforces.com/blog/entry/68520" target="_blank"><span class="glyphicon glyphicon-comment" aria-hidden="true"></span> Discuss</a></li>
+		
+
+		<li class="pull-right"><a id="fix-cnvtb" href="javascript:void(0)"><span class="glyphicon glyphicon-pushpin" aria-hidden="true"></span></a></li>
+	</ul>
+</div>
+	<div class="col-sm-12">
+		<span class="h2">D - Preparing Boxes</span>
+		<hr/>
+		<p>Time Limit: 2 sec / Memory Limit: 1024 MB</p>
+
+		<div id="task-statement">
+			<span class="lang">
+<span class="lang-ja">
+<p>配点 : <var>400</var> 点</p>
+
+<div class="part">
+<section>
+<h3>問題文</h3><p><var>N</var> 個の空の箱が横一列に並んでいます。
+左から <var>i</var> <var>\ (1 \leq i \leq N)</var> 番目の箱には整数 <var>i</var> が書かれています。</p>
+<p>すぬけさんは、それぞれの箱に対してボールを <var>1</var> 個入れるか何も入れないかを選ぶことができます。</p>
+<p>ここで、以下の条件を満たすようなボールの入れ方を、いいボールの入れ方と定めます。</p>
+<ul>
+<li><var>1</var> 以上 <var>N</var> 以下の任意の整数 <var>i</var> について、<var>i</var> の倍数が書かれた箱に入っているボールの個数の和を <var>2</var> で割った余りが <var>a_i</var> である。</li>
+</ul>
+<p>いいボールの入れ方は存在するでしょうか。存在するならば <var>1</var> つ求めてください。</p>
+</section>
+</div>
+
+<div class="part">
+<section>
+<h3>制約</h3><ul>
+<li>入力は全て整数である。</li>
+<li><var>1 \leq N \leq 2 \times 10^5</var></li>
+<li><var>a_i</var> は <var>0</var> または <var>1</var> である。</li>
+</ul>
+</section>
+</div>
+
+<hr />
+
+<div class="io-style">
+<div class="part">
+<section>
+<h3>入力</h3><p>入力は以下の形式で標準入力から与えられる。</p>
+<pre><var>N</var>
+<var>a_1</var> <var>a_2</var> ... <var>a_N</var>
+</pre>
+
+</section>
+</div>
+
+<div class="part">
+<section>
+<h3>出力</h3><p>いいボールの入れ方が存在しないなら <code>-1</code> を出力せよ。</p>
+<p>存在するならば、そのような入れ方のうちの <var>1</var> つを以下の形式で出力せよ。</p>
+<pre><var>M</var>
+<var>b_1</var> <var>b_2</var> <var>...</var> <var>b_M</var>
+</pre>
+
+<p>ここで <var>M</var> はボールを入れる箱の個数を表し、<var>b_1,\ b_2,\ ...,\ b_M</var> はボールを入れる箱に書かれた整数を任意の順番に並べたものである。</p>
+</section>
+</div>
+</div>
+
+<hr />
+
+<div class="part">
+<section>
+<h3>入力例 1</h3><pre>3
+1 0 0
+</pre>
+
+</section>
+</div>
+
+<div class="part">
+<section>
+<h3>出力例 1</h3><pre>1
+1
+</pre>
+
+<p><var>1</var> が書かれた箱だけにボールを入れることを考えます。</p>
+<ul>
+<li><var>1</var> の倍数が書かれた箱は、<var>1</var> が書かれた箱、<var>2</var> が書かれた箱、<var>3</var> が書かれた箱の <var>3</var> 個です。これらの箱に入っているボールの個数の和は <var>1</var> です。</li>
+<li><var>2</var> の倍数が書かれた箱は、<var>2</var> が書かれた箱の <var>1</var> 個だけです。これらの箱に入っているボールの個数の和は <var>0</var> です。</li>
+<li><var>3</var> の倍数が書かれた箱は、<var>3</var> が書かれた箱の <var>1</var> 個だけです。これらの箱に入っているボールの個数の和は <var>0</var> です。</li>
+</ul>
+<p>以上より、<var>1</var> が書かれた箱だけにボールを入れるのは、与えられた条件を満たすいいボールの入れ方です。</p>
+</section>
+</div>
+
+<hr />
+
+<div class="part">
+<section>
+<h3>入力例 2</h3><pre>5
+0 0 0 0 0
+</pre>
+
+</section>
+</div>
+
+<div class="part">
+<section>
+<h3>出力例 2</h3><pre>0
+</pre>
+
+<p>ボールを <var>1</var> つも入れない入れ方が、いい入れ方になる場合もあります。</p></section>
+</div>
+</span>
+<span class="lang-en">
+<p>Score : <var>400</var> points</p>
+
+<div class="part">
+<section>
+<h3>Problem Statement</h3><p>There are <var>N</var> empty boxes arranged in a row from left to right.
+The integer <var>i</var> is written on the <var>i</var>-th box from the left <var>(1 \leq i \leq N)</var>.</p>
+<p>For each of these boxes, Snuke can choose either to put a ball in it or to put nothing in it.</p>
+<p>We say a set of choices to put a ball or not in the boxes is good when the following condition is satisfied:</p>
+<ul>
+<li>For every integer <var>i</var> between <var>1</var> and <var>N</var> (inclusive), the total number of balls contained in the boxes with multiples of <var>i</var> written on them is congruent to <var>a_i</var> modulo <var>2</var>.</li>
+</ul>
+<p>Does there exist a good set of choices? If the answer is yes, find one good set of choices.</p>
+</section>
+</div>
+
+<div class="part">
+<section>
+<h3>Constraints</h3><ul>
+<li>All values in input are integers.</li>
+<li><var>1 \leq N \leq 2 \times 10^5</var></li>
+<li><var>a_i</var> is <var>0</var> or <var>1</var>.</li>
+</ul>
+</section>
+</div>
+
+<hr />
+
+<div class="io-style">
+<div class="part">
+<section>
+<h3>Input</h3><p>Input is given from Standard Input in the following format:</p>
+<pre><var>N</var>
+<var>a_1</var> <var>a_2</var> <var>...</var> <var>a_N</var>
+</pre>
+
+</section>
+</div>
+
+<div class="part">
+<section>
+<h3>Output</h3><p>If a good set of choices does not exist, print <code>-1</code>.</p>
+<p>If a good set of choices exists, print one such set of choices in the following format:</p>
+<pre><var>M</var>
+<var>b_1</var> <var>b_2</var> <var>...</var> <var>b_M</var>
+</pre>
+
+<p>where <var>M</var> denotes the number of boxes that will contain a ball, and <var>b_1,\ b_2,\ ...,\ b_M</var> are the integers written on these boxes, in any order.</p>
+</section>
+</div>
+</div>
+
+<hr />
+
+<div class="part">
+<section>
+<h3>Sample Input 1</h3><pre>3
+1 0 0
+</pre>
+
+</section>
+</div>
+
+<div class="part">
+<section>
+<h3>Sample Output 1</h3><pre>1
+1
+</pre>
+
+<p>Consider putting a ball only in the box with <var>1</var> written on it.</p>
+<ul>
+<li>There are three boxes with multiples of <var>1</var> written on them: the boxes with <var>1</var>, <var>2</var>, and <var>3</var>. The total number of balls contained in these boxes is <var>1</var>.</li>
+<li>There is only one box with a multiple of <var>2</var> written on it: the box with <var>2</var>. The total number of balls contained in these boxes is <var>0</var>.</li>
+<li>There is only one box with a multiple of <var>3</var> written on it: the box with <var>3</var>. The total number of balls contained in these boxes is <var>0</var>.</li>
+</ul>
+<p>Thus, the condition is satisfied, so this set of choices is good.</p>
+</section>
+</div>
+
+<hr />
+
+<div class="part">
+<section>
+<h3>Sample Input 2</h3><pre>5
+0 0 0 0 0
+</pre>
+
+</section>
+</div>
+
+<div class="part">
+<section>
+<h3>Sample Output 2</h3><pre>0
+</pre>
+
+<p>Putting nothing in the boxes can be a good set of choices.</p></section>
+</div>
+</span>
+</span>
+
+		</div>
+
+		
+
+		
+	</div>
+</div>
+
+
+		
+			<hr>
+			
+			
+			
+<div class="a2a_kit a2a_kit_size_20 a2a_default_style pull-right" data-a2a-url="https://atcoder.jp/contests/abc134/tasks/abc134_d?lang=en" data-a2a-title="D - Preparing Boxes">
+	<a class="a2a_button_facebook"></a>
+	<a class="a2a_button_twitter"></a>
+	
+		<a class="a2a_button_telegram"></a>
+	
+	<a class="a2a_dd" href="https://www.addtoany.com/share"></a>
+</div>
+
+		
+		<script async src="//static.addtoany.com/menu/page.js"></script>
+		
+	</div> 
+	<hr>
+</div> 
+<div class="container">
+    <footer class="footer">
+		
+			<ul>
+				<li><a href='/contests/abc134/rules'>Rule</a></li>
+				<li><a href='/contests/abc134/glossary'>Glossary</a></li>
+				
+			</ul>
+		
+		<ul>
+			<li><a href='/tos'>Terms of service</a></li>
+			<li><a href='/privacy'>Privacy Policy</a></li>
+			<li><a href='/personal'>Information Protection Policy</a></li>
+			<li><a href='/company'>Company</a></li>
+			<li><a href='/faq'>FAQ</a></li>
+			<li><a href='/contact'>Contact</a></li>
+			
+		</ul>
+    <div class="text-center">
+        <small id="copyright">Copyright Since 2012 &copy;<a href="http://atcoder.co.jp">AtCoder Inc.</a> All rights reserved.</small>
+    </div>
+    </footer>
+</div>
+<p id="fixed-server-timer" class='contest-timer'></p>
+
+	<div id="scroll-page-top" style="display:none;"><span class="glyphicon glyphicon-arrow-up" aria-hidden="true"></span> Page Top</div>
+
+</body>
+</html>
+
+

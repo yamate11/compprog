@@ -1,0 +1,19 @@
+#!/usr/bin/env python3
+
+from random import randrange
+
+n = 100000
+lim = 1000000000
+
+x0 = randrange(-lim, lim + 1)
+y0 = randrange(-lim, lim + 1)
+v = randrange(0, lim + 1)
+T = randrange(0, lim + 1)
+
+print(x0, y0, v, T)
+print(n)
+for i in range(n):
+    x = randrange(-lim, lim + 1)
+    y = randrange(-lim, lim + 1)
+    r = randrange(0, lim + 1)
+    print(x, y, r)

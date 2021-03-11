@@ -1,0 +1,42 @@
+#!/usr/bin/env python3
+
+from random import randrange, choice
+
+alph = "abcdefghijklmnopqrstuvwxyz"
+
+def main():
+    bag = set()
+    cnt = 0
+    n = 200000
+    for s in alph:
+        bag.add(s)
+        cnt += 1
+    for s in alph:
+        for t in alph:
+            bag.add(s+t)
+            cnt += 1
+    for s in alph:
+        for t in alph:
+            for u in alph:
+                bag.add(s+t+u)
+                cnt += 1
+    for s in alph:
+        for t in alph:
+            for u in alph:
+                for w in alph:
+                    bag.add(s+t+u+w)
+                    cnt += 1
+                    if cnt >= n:
+                        break
+                if cnt >= n:
+                    break
+            if cnt >= n:
+                break
+        if cnt >= n:
+            break
+    print(cnt)
+    for s in bag:
+        print(s)
+    
+
+main()

@@ -1,0 +1,149 @@
+#!/usr/bin/env python3
+
+import requests, sys, argparse, os, re, pickle, subprocess, datetime
+from bs4 import BeautifulSoup
+from urllib.parse import unquote
+
+args = None
+sess = None
+fKeep = None
+
+topDir = f'{os.environ["HOME"]}/WinHome/bytime/atCoder1710'
+cookiesFile = f'{topDir}/.cookies'
+
+def abort(msg):
+    print(msg, file=sys.stderr)
+    sys.exit(1)
+
+def diag(msg):
+    print(msg, file=sys.stderr)
+
+def getPage(url):
+    r = sess.get(url)
+    if r.status_code != requests.codes.ok:
+        abort(f'Failed to get page {url}')
+    r.encoding = 'UTF-8'
+    return r.text
+
+def doLogin():
+    url = 'https://atcoder.jp/login?continue=https%3A%2F%2Fatcoder.jp%2Fhome'
+    loginPage = getPage(url)
+    soup = BeautifulSoup(loginPage, 'lxml')
+    sch = soup.find_all(attrs={'name': 'csrf_token'})
+    if not sch:
+        abort(f'find_all: no csrf_token')
+    csrf_token = sch[0]['value']
+    dict = {'username': 'yamate11', 'password': 'picture19river',
+            'csrf_token': csrf_token};
+    r = sess.post(url, data=dict);
+    if r.status_code != requests.codes.ok:
+        abort(f'post: status_code: {r.status_code}')
+    with open(cookiesFile, 'wb') as wfp:
+        pickle.dump(sess.cookies, wfp)
+
+def login():
+    lim = datetime.datetime.now().timestamp() - 3600*24*7
+    if not os.path.exists(cookiesFile) or os.stat(cookiesFile).st_mtime < lim:
+        return doLogin()
+    with open(cookiesFile, 'rb') as fp:
+        sess.cookies.update(pickle.load(fp))
+
+def get_submit_form(soup):
+    for ftag in soup.find_all('form'):
+        if ftag.find_all(attrs={'name': 'data.TaskScreenName'}):
+            ops = ftag.find_all('option');
+            if 'value' in ops[0].attrs:
+                top_op = ops[0].attrs['value']
+            elif 'value' in ops[1].attrs:
+                top_op = ops[1].attrs['value']
+            else:
+                abort('Failed to get the first language option.');
+            if top_op == '3003':
+                jv = 'jv3'
+            elif top_op == '4001':
+                jv = 'jv4'
+            elif top_op == '4101':
+                jv = 'jv41'
+            else:
+                abort('Unknown judge version')
+            return (ftag, jv)
+    abort('Failed to find submit form.')
+
+def check_code(prog):
+    # diag('Building ...')
+    # cp = subprocess.run(['make'])
+    # if cp.returncode != 0:
+    #     abort('Build failed.')
+    # diag('Build done.')
+    diag('Performing stest ...')
+    cp = subprocess.run(['stest', '-p', prog])
+    if cp.returncode != 0:
+        abort('stest failed.  Use --no-check to force submitting.')
+    diag('stest done.')
+
+def get_lang_info(srcName, jv):
+    mo = re.match(r'(?:./)*((.*)\.([^\.]+))$', srcName)
+    if not mo:
+        abort(f'Failed to parse source name {srcName}')
+    if not mo[3]:
+        abort(f'No extension in source name {srcName}')
+    li = {'cc': {'prog': './' + mo[2],
+                 'jv3': '3003', 'jv4': '4003', 'jv41': '4101'},
+          'py': {'prog': './' + mo[1],
+                 'jv3': '3023', 'jv4': '4006', 'jv41': '4006'},
+          'rs': {'prog': 'cargo run --quiet',
+                 'jv3': '3504', 'jv4': '4050', 'jv41': '4050'},
+    }
+    if mo[3] not in li:
+        abort(f'Extension {mo[1]} is not supported.')
+    return (li[mo[3]]['prog'], li[mo[3]][jv])
+
+def main():
+    global args, fKeep, sess
+    parser = argparse.ArgumentParser()
+    parser.add_argument(
+        '--no-check', action='store_true',
+        help = 'submit the source without checking')
+    parser.add_argument('-s', '--source', default='cans.cc', 
+                        help='file to submit.  Default is cans.cc')
+    args = parser.parse_args()
+
+    with open('q.html', 'r', encoding='UTF-8') as fp:
+        soup = BeautifulSoup(fp, 'lxml')
+    (ftag, jv) = get_submit_form(soup)
+    (prog, langID) = get_lang_info(args.source, jv)
+
+    if not args.no_check:
+        check_code(prog)
+
+    diag('Submitting ...')
+    with open(args.source, 'r', encoding='UTF-8') as fp:
+        code = fp.read()
+
+    action = ftag.attrs['action']
+    scr_sub = ftag.find_all('input', attrs={'name': 'data.TaskScreenName'})
+    scr = scr_sub[0].attrs['value']
+
+    sess = requests.Session()
+    login()
+    for c in sess.cookies:
+        mo = re.search(r'csrf_token%3A(.+?)%00', c.value)
+        if mo: break
+    if not mo: abort('Failed to retrieve csrf_token.')
+    csrf_token = unquote(mo[1])
+
+    payload = {'data.TaskScreenName': scr,
+               'data.LanguageId': langID,
+               'sourceCode': code,
+               'csrf_token': csrf_token}
+    url = f'https://atcoder.jp{action}'
+    r = sess.post(url, data=payload)
+    if r.status_code != requests.codes.ok:
+        r.encoding = 'UTF-8'
+        with open('z.log', 'w', encoding='UTF-8') as wfp:
+            print(r.text, file=wfp)
+        abort(f'Failed to submit.  status_code = {r.status_code}.  '
+              'Response is stored in z.log')
+    diag('Done.')
+
+main()

@@ -1,0 +1,36 @@
+#!/usr/bin/env python3
+
+import sys, re, os, argparse
+
+def mkName(t, num):
+    prefix = 'd' if t == '入' else 'do'
+    return f'{prefix}{num}.txt'
+
+def main():
+    global args
+    parser = argparse.ArgumentParser()
+    parser.add_argument('-f', '--force', action='store_true',
+                        help='force overwrite')
+    parser.add_argument('file')
+    args = parser.parse_args()
+    ids = []
+    with open(args.file) as fp:
+        fcont = fp.read()
+    parsed = re.findall(r'<h\d+>\s*(入|出)力例\s*(\d+).*?<pre>\s*(.*?)</pre>',
+                        fcont, re.DOTALL)
+    outlist = [(mkName(t,num), cont) for (t,num,cont) in parsed]
+
+    for (ofname,_) in outlist:
+        if not args.force and os.path.exists(ofname):
+            print('File ' + ofname + ' exists.  Consider -f.  Abort.\n',
+                  file=sys.stderr)
+            sys.exit(1)
+
+    for (ofname, cont) in outlist:
+        with open(ofname, 'w') as wfp:
+            for line in cont.splitlines():
+                print(line.rstrip(), file=wfp)
+
+    print(' '.join([num for (t,num,_) in parsed if t == '入']))
+
+main()

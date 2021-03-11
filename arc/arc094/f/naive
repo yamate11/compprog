@@ -1,0 +1,35 @@
+#!/usr/bin/env python
+
+
+
+def main():
+    sel = {x : {y : None for y in 'abc'} for x in 'abc'}
+    for x in 'abc':
+        for y in 'abc':
+            if x != y:
+                for z in 'abc':
+                    if x != z and y != z:
+                        sel[x][y] = z
+
+    S = input().strip()
+    n = len(S)
+    queue = [S]
+    cnt = 1
+    done = set()
+    done.add(S)
+    while queue:
+        t = queue.pop()
+        for i in range(n-1):
+            z = sel[t[i]][t[i+1]]
+            if z is None:
+                continue
+            u = t[:i] + z + z + t[i+2:]
+            if u in done:
+                continue
+            cnt += 1
+            done.add(u)
+            queue.append(u)
+    print(cnt)
+        
+
+main()

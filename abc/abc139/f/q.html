@@ -1,0 +1,900 @@
+
+
+
+
+
+
+<!DOCTYPE html>
+
+<html>
+<head>
+	<title>F - Engines</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+	<meta http-equiv="Content-Language" content='ja'>
+	<meta name="viewport" content="width=device-width,initial-scale=1.0">
+	<meta name="format-detection" content="telephone=no">
+	<meta name="google-site-verification" content="nXGC_JxO0yoP1qBzMnYD_xgufO6leSLw1kyNo2HZltM" />
+
+	
+	<meta name="description" content="プログラミング初級者から上級者まで楽しめる、競技プログラミングコンテストサイト「AtCoder」。オンラインで毎週開催プログラミングコンテストを開催しています。競技プログラミングを用いて、客観的に自分のスキルを計ることのできるサービスです。">
+	<meta name="author" content="AtCoder Inc.">
+	<link rel="canonical" href="https://atcoder.jp/">
+
+	<meta property="og:site_name" content="AtCoder">
+	
+	<meta property="og:title" content="F - Engines" />
+	<meta property="og:description" content="プログラミング初級者から上級者まで楽しめる、競技プログラミングコンテストサイト「AtCoder」。オンラインで毎週開催プログラミングコンテストを開催しています。競技プログラミングを用いて、客観的に自分のスキルを計ることのできるサービスです。" />
+	<meta property="og:type" content="website" />
+	<meta property="og:url" content="https://atcoder.jp/contests/abc139/tasks/abc139_f" />
+	<meta property="og:image" content="https://img.atcoder.jp/assets/atcoder.png" />
+	<meta name="twitter:card" content="summary" />
+	<meta name="twitter:site" content="@atcoder" />
+	
+	<meta property="twitter:title" content="F - Engines" />
+
+	<link href="//fonts.googleapis.com/css?family=Lato:400,700" rel="stylesheet" type="text/css">
+	<link rel="stylesheet" type="text/css" href="/public/css/bootstrap.min.css?v=201908312052">
+	<link rel="stylesheet" type="text/css" href="/public/css/base.css?v=201908312052">
+	<link rel="shortcut icon" type="image/png" href="//img.atcoder.jp/assets/favicon.png">
+	<link rel="apple-touch-icon" href="//img.atcoder.jp/assets/atcoder.png">
+	<script src="/public/js/lib/jquery-1.9.1.min.js?v=201908312052"></script>
+	<script src="/public/js/lib/bootstrap.min.js?v=201908312052"></script>
+	<script src="//cdnjs.cloudflare.com/ajax/libs/js-cookie/2.1.4/js.cookie.min.js"></script>
+	<script src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/moment.min.js"></script>
+	<script src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/locale/ja.js"></script>
+	<script>
+		var LANG = "ja";
+		var userScreenName = "yamate11";
+		var csrfToken = "38vJ9sQ0W3QHUv9zSo+n8h3SM4A20s2Ym4rJFeDLKys="
+	</script>
+	<script src="/public/js/utils.js?v=201908312052"></script>
+	
+	
+		<script src="/public/js/contest.js?v=201908312052"></script>
+		<link href="/public/css/contest.css?v=201908312052" rel="stylesheet" />
+		<script>
+			var contestScreenName = "abc139";
+			var remainingText = "残り時間";
+			var countDownText = "開始まであと";
+			var startTime = moment("2019-09-01T21:00:00+09:00");
+			var endTime = moment("2019-09-01T22:40:00+09:00");
+		</script>
+		<style></style>
+	
+	
+		<script type="text/x-mathjax-config">MathJax.Hub.Config({messageStyle:"none",tex2jax:{skipTags:["script","noscript","style","textarea","code"],inlineMath:[['\\(','\\)']]}});</script>
+		<script src="//cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+		<script src="/public/js/task.js?v=201908312052"></script>
+	
+	
+	
+	
+		<link href="//cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/css/select2.min.css" rel="stylesheet" />
+		<link href="//cdnjs.cloudflare.com/ajax/libs/select2-bootstrap-theme/0.1.0-beta.10/select2-bootstrap.min.css" rel="stylesheet" />
+		<script src="/public/js/lib/select2.min.js?v=201908312052"></script>
+	
+	
+		<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/codemirror/5.38.0/codemirror.min.css">
+		<script src="//cdnjs.cloudflare.com/ajax/libs/codemirror/5.38.0/codemirror.min.js"></script>
+		<script src="/public/js/codeMirror/merged.js?v=201908312052"></script>
+	
+	
+		<script src="//cdn.rawgit.com/google/code-prettify/master/loader/run_prettify.js"></script>
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	<script src="/public/js/base.js?v=201908312052"></script>
+	<script src="/public/js/ga.js?v=201908312052"></script>
+</head>
+
+<body>
+<div id="modal-contest-start" class="modal fade" tabindex="-1" role="dialog">
+	<div class="modal-dialog" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+				<h4 class="modal-title">コンテスト開始</h4>
+			</div>
+			<div class="modal-body">
+				<p>AtCoder Beginner Contest 139が開始されました。</p>
+			</div>
+			<div class="modal-footer">
+				
+					<a class="btn btn-primary" href='/contests/abc139/tasks'>問題一覧ページへ移動</a>
+				
+			</div>
+		</div>
+	</div>
+</div>
+<div id="modal-contest-end" class="modal fade" tabindex="-1" role="dialog">
+	<div class="modal-dialog" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+				<h4 class="modal-title">コンテスト終了</h4>
+			</div>
+			<div class="modal-body">
+				<p>AtCoder Beginner Contest 139は終了しました。</p>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-default" data-dismiss="modal">閉じる</button>
+			</div>
+		</div>
+	</div>
+</div>
+<div id="main-div" class="float-container">
+	<nav class="navbar navbar-inverse navbar-fixed-top">
+		<div class="container-fluid">
+			<div class="navbar-header">
+				<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapse" aria-expanded="false">
+					<span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span>
+				</button>
+				<a class="navbar-brand" href="/"></a>
+			</div>
+			<div class="collapse navbar-collapse" id="navbar-collapse">
+				<ul class="nav navbar-nav">
+				
+					<li><a class="contest-title" href="/contests/abc139">AtCoder Beginner Contest 139</a></li>
+				
+				</ul>
+				<ul class="nav navbar-nav navbar-right">
+					
+					<li class="dropdown">
+						<a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
+							<img src='//img.atcoder.jp/assets/flag-lang/ja.png'> 日本語 <span class="caret"></span>
+						</a>
+						<ul class="dropdown-menu">
+							<li><a href="/contests/abc139/tasks/abc139_f?lang=ja"><img src='//img.atcoder.jp/assets/flag-lang/ja.png'> 日本語</a></li>
+							<li><a href="/contests/abc139/tasks/abc139_f?lang=en"><img src='//img.atcoder.jp/assets/flag-lang/en.png'> English</a></li>
+						</ul>
+					</li>
+					
+					
+						<li class="dropdown">
+							<a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
+								<span class="glyphicon glyphicon-cog" aria-hidden="true"></span> yamate11 (Contestant) <span class="caret"></span>
+							</a>
+							<ul class="dropdown-menu">
+								<li><a href="/users/yamate11"><span class="glyphicon glyphicon-user" aria-hidden="true"></span> マイプロフィール</a></li>
+								<li class="divider"></li>
+								<li><a href="/settings"><span class="glyphicon glyphicon-wrench" aria-hidden="true"></span> 基本設定</a></li>
+								<li><a href="/settings/icon"><span class="glyphicon glyphicon-picture" aria-hidden="true"></span> アイコン設定</a></li>
+								<li><a href="/settings/password"><span class="glyphicon glyphicon-lock" aria-hidden="true"></span> パスワードの変更</a></li>
+								<li><a href="/settings/fav"><span class="glyphicon glyphicon-star" aria-hidden="true"></span> お気に入り管理</a></li>
+								
+								
+								
+								<li class="divider"></li>
+								<li><a href="javascript:void(form_logout.submit())"><span class="glyphicon glyphicon-log-out" aria-hidden="true"></span> ログアウト</a></li>
+							</ul>
+						</li>
+					
+				</ul>
+			</div>
+		</div>
+	</nav>
+	<form method="POST" name="form_logout" action="/logout?continue=https%3A%2F%2Fatcoder.jp%2Fcontests%2Fabc139%2Ftasks%2Fabc139_f">
+		<input type="hidden" name="csrf_token" value="38vJ9sQ0W3QHUv9zSo&#43;n8h3SM4A20s2Ym4rJFeDLKys=" />
+	</form>
+	<div id="main-container" class="container" style="padding-top:50px;">
+		
+
+<div class="row">
+	<div id="contest-nav-tabs" class="col-sm-12 mb-2 cnvtb-fixed">
+	<div>
+		<small class="contest-duration">コンテスト時間: <a href='http://www.timeanddate.com/worldclock/fixedtime.html?iso=20190901T2100&p1=248' target='blank'><time class='fixtime fixtime-full'>2019-09-01 21:00:00+0900</time></a> ~ <a href='http://www.timeanddate.com/worldclock/fixedtime.html?iso=20190901T2240&p1=248' target='blank'><time class='fixtime fixtime-full'>2019-09-01 22:40:00+0900</time></a> </small>
+		<small class="back-to-home pull-right"><a href='/'>AtCoderホームへ戻る</a></small>
+	</div>
+	<ul class="nav nav-tabs">
+		<li><a href='/contests/abc139'><span class="glyphicon glyphicon-home" aria-hidden="true"></span> トップ</a></li>
+		
+			<li class="active"><a href='/contests/abc139/tasks'><span class="glyphicon glyphicon-tasks" aria-hidden="true"></span> 問題</a></li>
+		
+
+		
+			<li><a href='/contests/abc139/clarifications'><span class="glyphicon glyphicon-question-sign" aria-hidden="true"></span> 質問 <span id="clar-badge" class="badge"></span></a></li>
+		
+
+		
+			<li><a href='/contests/abc139/submit?taskScreenName=abc139_f'><span class="glyphicon glyphicon-send" aria-hidden="true"></span> 提出</a></li>
+		
+
+		
+			<li>
+				<a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false"><span class="glyphicon glyphicon-list" aria-hidden="true"></span> 提出一覧<span class="caret"></span></a>
+				<ul class="dropdown-menu">
+					
+					<li><a href='/contests/abc139/submissions/me'><span class="glyphicon glyphicon-user" aria-hidden="true"></span> 自分の提出</a></li>
+				</ul>
+			</li>
+		
+
+		
+			
+				
+					<li><a href='/contests/abc139/standings'><span class="glyphicon glyphicon-sort-by-attributes-alt" aria-hidden="true"></span> 順位表</a></li>
+				
+			
+		
+
+		
+			<li><a href='/contests/abc139/custom_test'><span class="glyphicon glyphicon-wrench" aria-hidden="true"></span> コードテスト</a></li>
+		
+
+		
+		
+
+		<li class="pull-right"><a id="fix-cnvtb" href="javascript:void(0)"><span class="glyphicon glyphicon-pushpin" aria-hidden="true"></span></a></li>
+	</ul>
+</div>
+	<div class="col-sm-12">
+		<span class="h2">F - Engines</span>
+		<hr/>
+		<p>実行時間制限: 2 sec / メモリ制限: 1024 MB</p>
+
+		<div id="task-statement">
+			<span class="lang">
+<span class="lang-ja">
+<p>﻿配点: <var>600</var> 点</p>
+
+<div class="part">
+<section>
+<h3>問題文</h3>
+<p>E869120 君は最初、<var>2</var> 次元平面上の原点 <var>(0, 0)</var> に立っています。  </p>
+<p>彼は <var>N</var> 個のエンジンを持っています。エンジンの使い方と機能は以下のようになります。</p>
+<ul>
+<li><var>i</var> 個目のエンジンを使うと、E869120 君のいる場所の X 座標が <var>x_i</var>、Y 座標が <var>y_i</var> 変化する。つまり、E869120 君が座標 <var>(X, Y)</var> にいるときに <var>i</var> 個目のエンジンを使うと、座標 <var>(X + x_i, Y + y_i)</var> に移動する。</li>
+<li>エンジンはどのような順番で使ってもよいが、各エンジンは <var>1</var> 回までしか使えない。ただし、使わないエンジンがあってもよい。</li>
+</ul>
+<p>彼は、原点から最も遠い場所に行きたいです。<br />
+最後に到達する地点の座標を <var>(X, Y)</var> として、原点からの距離 <var>\sqrt{X^2 + Y^2}</var> の最大値を求めてください。  </p>
+</section>
+</div>
+
+<div class="part">
+<section>
+<h3>制約</h3>
+<ul>
+<li><var>1 \leq N \leq 100</var></li>
+<li><var>-1 \ 000 \ 000 \leq x_i \leq 1 \ 000 \ 000</var></li>
+<li><var>-1 \ 000 \ 000 \leq y_i \leq 1 \ 000 \ 000</var></li>
+<li>入力はすべて整数</li>
+</ul>
+</section>
+</div>
+
+<hr />
+<div class="io-style">
+<div class="part">
+<section>
+<h3>入力</h3>
+<p>入力は以下の形式で標準入力から与えられる。  </p>
+<pre><var>N</var>
+<var>x_1</var> <var>y_1</var>
+<var>x_2</var> <var>y_2</var>
+ <var>:</var> <var>:</var>
+<var>x_N</var> <var>y_N</var>
+</pre>
+
+</section>
+</div>
+
+<div class="part">
+<section>
+<h3>出力</h3>
+<p>最後に到達する地点の、原点からの距離の最大値を実数値として出力せよ。<br />
+ただし、実際の答えとの相対誤差または絶対誤差が <var>10^{-10}</var> 以内であれば正解とみなす。  </p>
+</section>
+</div>
+</div>
+
+<hr />
+<div class="part">
+<section>
+<h3>入力例 1</h3><pre>3
+0 10
+5 -5
+-5 -5
+</pre>
+
+</section>
+</div>
+
+<div class="part">
+<section>
+<h3>出力例 1</h3><pre>10.000000000000000000000000000000000000000000000000
+</pre>
+
+<p>うまくエンジンを使うと、最後に到達する地点の、原点からの距離を <var>10</var> にすることができます。<br />
+これには次の <var>3</var> 通りの方法があります。  </p>
+<ul>
+<li>エンジン <var>1</var> を使って <var>(0, 10)</var> に移動する</li>
+<li>エンジン <var>2</var> を使って <var>(5, -5)</var> に移動し、その後エンジン <var>3</var> を使って <var>(0, -10)</var> に移動する</li>
+<li>エンジン <var>3</var> を使って <var>(-5, -5)</var> に移動し、その後エンジン <var>2</var> を使って <var>(0, -10)</var> に移動する</li>
+</ul>
+<p>距離を <var>10</var> より大きくする方法はないので、最大値は <var>10</var> となります。</p>
+</section>
+</div>
+
+<hr />
+<div class="part">
+<section>
+<h3>入力例 2</h3><pre>5
+1 1
+1 0
+0 1
+-1 0
+0 -1
+</pre>
+
+</section>
+</div>
+
+<div class="part">
+<section>
+<h3>出力例 2</h3><pre>2.828427124746190097603377448419396157139343750753
+</pre>
+
+<p>最後に到達する地点の、原点からの距離の最大値は <var>2 \sqrt{2} = 2.82842...</var> となります。<br />
+これを達成する方法として、次のようなものが挙げられます。  </p>
+<ul>
+<li>エンジン <var>1</var> を使って <var>(1, 1)</var> に移動し、その後エンジン <var>2</var> を使って <var>(2, 1)</var> に移動し、最後にエンジン <var>3</var> を使って <var>(2, 2)</var> に移動する</li>
+</ul>
+</section>
+</div>
+
+<hr />
+<div class="part">
+<section>
+<h3>入力例 3</h3><pre>5
+1 1
+2 2
+3 3
+4 4
+5 5
+</pre>
+
+</section>
+</div>
+
+<div class="part">
+<section>
+<h3>出力例 3</h3><pre>21.213203435596425732025330863145471178545078130654
+</pre>
+
+<p>エンジン <var>1 \rightarrow 2 \rightarrow 3 \rightarrow 4 \rightarrow 5</var> の順で全部使うと、最終的に <var>(15, 15)</var> にたどり着き、原点からの距離は <var>15 \sqrt{2} = 21.2132...</var> となります。</p>
+</section>
+</div>
+
+<hr />
+<div class="part">
+<section>
+<h3>入力例 4</h3><pre>3
+0 0
+0 1
+1 0
+</pre>
+
+</section>
+</div>
+
+<div class="part">
+<section>
+<h3>出力例 4</h3><pre>1.414213562373095048801688724209698078569671875376
+</pre>
+
+<p><var>(x_i, y_i) = (0, 0)</var> である、何の意味も持たないエンジンがある可能性もあります。  </p>
+</section>
+</div>
+
+<hr />
+<div class="part">
+<section>
+<h3>入力例 5</h3><pre>1
+90447 91000
+</pre>
+
+</section>
+</div>
+
+<div class="part">
+<section>
+<h3>出力例 5</h3><pre>128303.000000000000000000000000000000000000000000000000
+</pre>
+
+<p><var>1</var> 個しかエンジンがない場合もあることにご注意ください。  </p>
+</section>
+</div>
+
+<hr />
+<div class="part">
+<section>
+<h3>入力例 6</h3><pre>2
+96000 -72000
+-72000 54000
+</pre>
+
+</section>
+</div>
+
+<div class="part">
+<section>
+<h3>出力例 6</h3><pre>120000.000000000000000000000000000000000000000000000000
+</pre>
+
+<p><var>2</var> 個しかエンジンがない場合もあります。  </p>
+</section>
+</div>
+
+<hr />
+<div class="part">
+<section>
+<h3>入力例 7</h3><pre>10
+1 2
+3 4
+5 6
+7 8
+9 10
+11 12
+13 14
+15 16
+17 18
+19 20
+</pre>
+
+</section>
+</div>
+
+<div class="part">
+<section>
+<h3>出力例 7</h3><pre>148.660687473185055226120082139313966514489855137208
+</pre></section>
+</div>
+</span>
+<span class="lang-en">
+<p>Score: <var>600</var> points</p>
+
+<div class="part">
+<section>
+<h3>Problem Statement</h3>
+<p>E869120 is initially standing at the origin <var>(0, 0)</var> in a two-dimensional plane.</p>
+<p>He has <var>N</var> engines, which can be used as follows:</p>
+<ul>
+<li>When E869120 uses the <var>i</var>-th engine, his <var>X</var>- and <var>Y</var>-coordinate change by <var>x_i</var> and <var>y_i</var>, respectively. In other words, if E869120 uses the <var>i</var>-th engine from coordinates <var>(X, Y)</var>, he will move to the coordinates <var>(X + x_i, Y + y_i)</var>.</li>
+<li>E869120 can use these engines in any order, but each engine can be used at most once. He may also choose not to use some of the engines.</li>
+</ul>
+<p>He wants to go as far as possible from the origin.
+Let <var>(X, Y)</var> be his final coordinates. Find the maximum possible value of <var>\sqrt{X^2 + Y^2}</var>, the distance from the origin.</p>
+</section>
+</div>
+
+<div class="part">
+<section>
+<h3>Constraints</h3>
+<ul>
+<li><var>1 \leq N \leq 100</var></li>
+<li><var>-1 \ 000 \ 000 \leq x_i \leq 1 \ 000 \ 000</var></li>
+<li><var>-1 \ 000 \ 000 \leq y_i \leq 1 \ 000 \ 000</var></li>
+<li>All values in input are integers.</li>
+</ul>
+</section>
+</div>
+
+<hr />
+<div class="io-style">
+<div class="part">
+<section>
+<h3>Input</h3>
+<p>Input is given from Standard Input in the following format:</p>
+<pre><var>N</var>
+<var>x_1</var> <var>y_1</var>
+<var>x_2</var> <var>y_2</var>
+ <var>:</var> <var>:</var>
+<var>x_N</var> <var>y_N</var>
+</pre>
+
+</section>
+</div>
+
+<div class="part">
+<section>
+<h3>Output</h3>
+<p>Print the maximum possible final distance from the origin, as a real value.
+Your output is considered correct when the relative or absolute error from the true answer is at most <var>10^{-10}</var>.</p>
+</section>
+</div>
+</div>
+
+<hr />
+<div class="part">
+<section>
+<h3>Sample Input 1</h3><pre>3
+0 10
+5 -5
+-5 -5
+</pre>
+
+</section>
+</div>
+
+<div class="part">
+<section>
+<h3>Sample Output 1</h3><pre>10.000000000000000000000000000000000000000000000000
+</pre>
+
+<p>The final distance from the origin can be <var>10</var> if we use the engines in one of the following three ways:</p>
+<ul>
+<li>Use Engine <var>1</var> to move to <var>(0, 10)</var>.</li>
+<li>Use Engine <var>2</var> to move to <var>(5, -5)</var>, and then use Engine <var>3</var> to move to <var>(0, -10)</var>.</li>
+<li>Use Engine <var>3</var> to move to <var>(-5, -5)</var>, and then use Engine <var>2</var> to move to <var>(0, -10)</var>.</li>
+</ul>
+<p>The distance cannot be greater than <var>10</var>, so the maximum possible distance is <var>10</var>.</p>
+</section>
+</div>
+
+<hr />
+<div class="part">
+<section>
+<h3>Sample Input 2</h3><pre>5
+1 1
+1 0
+0 1
+-1 0
+0 -1
+</pre>
+
+</section>
+</div>
+
+<div class="part">
+<section>
+<h3>Sample Output 2</h3><pre>2.828427124746190097603377448419396157139343750753
+</pre>
+
+<p>The maximum possible final distance is <var>2 \sqrt{2} = 2.82842...</var>.
+One of the ways to achieve it is:</p>
+<ul>
+<li>Use Engine <var>1</var> to move to <var>(1, 1)</var>, and then use Engine <var>2</var> to move to <var>(2, 1)</var>, and finally use Engine <var>3</var> to move to <var>(2, 2)</var>.</li>
+</ul>
+</section>
+</div>
+
+<hr />
+<div class="part">
+<section>
+<h3>Sample Input 3</h3><pre>5
+1 1
+2 2
+3 3
+4 4
+5 5
+</pre>
+
+</section>
+</div>
+
+<div class="part">
+<section>
+<h3>Sample Output 3</h3><pre>21.213203435596425732025330863145471178545078130654
+</pre>
+
+<p>If we use all the engines in the order <var>1 \rightarrow 2 \rightarrow 3 \rightarrow 4 \rightarrow 5</var>, we will end up at <var>(15, 15)</var>, with the distance <var>15 \sqrt{2} = 21.2132...</var> from the origin.</p>
+</section>
+</div>
+
+<hr />
+<div class="part">
+<section>
+<h3>Sample Input 4</h3><pre>3
+0 0
+0 1
+1 0
+</pre>
+
+</section>
+</div>
+
+<div class="part">
+<section>
+<h3>Sample Output 4</h3><pre>1.414213562373095048801688724209698078569671875376
+</pre>
+
+<p>There can be useless engines with <var>(x_i, y_i) = (0, 0)</var>.</p>
+</section>
+</div>
+
+<hr />
+<div class="part">
+<section>
+<h3>Sample Input 5</h3><pre>1
+90447 91000
+</pre>
+
+</section>
+</div>
+
+<div class="part">
+<section>
+<h3>Sample Output 5</h3><pre>128303.000000000000000000000000000000000000000000000000
+</pre>
+
+<p>Note that there can be only one engine.</p>
+</section>
+</div>
+
+<hr />
+<div class="part">
+<section>
+<h3>Sample Input 6</h3><pre>2
+96000 -72000
+-72000 54000
+</pre>
+
+</section>
+</div>
+
+<div class="part">
+<section>
+<h3>Sample Output 6</h3><pre>120000.000000000000000000000000000000000000000000000000
+</pre>
+
+<p>There can be only two engines, too.</p>
+</section>
+</div>
+
+<hr />
+<div class="part">
+<section>
+<h3>Sample Input 7</h3><pre>10
+1 2
+3 4
+5 6
+7 8
+9 10
+11 12
+13 14
+15 16
+17 18
+19 20
+</pre>
+
+</section>
+</div>
+
+<div class="part">
+<section>
+<h3>Sample Output 7</h3><pre>148.660687473185055226120082139313966514489855137208
+</pre></section>
+</div>
+</span>
+</span>
+
+		</div>
+
+		
+
+		
+		<hr/>
+		<form class="form-horizontal" action='/contests/abc139/submit' method="POST">
+			<input type="hidden" name="data.TaskScreenName" value='abc139_f' />
+			
+			<div class="form-group ">
+				<label class="control-label col-sm-2" for="select-lang">言語</label>
+				<div id="select-lang" class="col-sm-5" data-name='data.LanguageId'>
+					<select class="form-control current" name='data.LanguageId'>
+						
+							<option value='3003' data-mime='text/x-c&#43;&#43;src'>C&#43;&#43;14 (GCC 5.4.1)</option>
+						
+							<option value='3001' data-mime='text/x-sh'>Bash (GNU bash v4.3.11)</option>
+						
+							<option value='3002' data-mime='text/x-csrc'>C (GCC 5.4.1)</option>
+						
+							<option value='3004' data-mime='text/x-csrc'>C (Clang 3.8.0)</option>
+						
+							<option value='3005' data-mime='text/x-c&#43;&#43;src'>C&#43;&#43;14 (Clang 3.8.0)</option>
+						
+							<option value='3006' data-mime='text/x-csharp'>C# (Mono 4.6.2.0)</option>
+						
+							<option value='3007' data-mime='text/x-clojure'>Clojure (1.8.0)</option>
+						
+							<option value='3008' data-mime='text/x-common-lisp'>Common Lisp (SBCL 1.1.14)</option>
+						
+							<option value='3009' data-mime='text/x-d'>D (DMD64 v2.070.1)</option>
+						
+							<option value='3010' data-mime='text/x-d'>D (LDC 0.17.0)</option>
+						
+							<option value='3011' data-mime='text/x-d'>D (GDC 4.9.4)</option>
+						
+							<option value='3012' data-mime='text/x-fortran'>Fortran (gfortran v4.8.4)</option>
+						
+							<option value='3013' data-mime='text/x-go'>Go (1.6)</option>
+						
+							<option value='3014' data-mime='text/x-haskell'>Haskell (GHC 7.10.3)</option>
+						
+							<option value='3015' data-mime='text/x-java'>Java7 (OpenJDK 1.7.0)</option>
+						
+							<option value='3016' data-mime='text/x-java'>Java8 (OpenJDK 1.8.0)</option>
+						
+							<option value='3017' data-mime='text/javascript'>JavaScript (node.js v5.12)</option>
+						
+							<option value='3018' data-mime='text/x-ocaml'>OCaml (4.02.3)</option>
+						
+							<option value='3019' data-mime='text/x-pascal'>Pascal (FPC 2.6.2)</option>
+						
+							<option value='3020' data-mime='text/x-perl'>Perl (v5.18.2)</option>
+						
+							<option value='3021' data-mime='text/x-php'>PHP (5.6.30)</option>
+						
+							<option value='3022' data-mime='text/x-python'>Python2 (2.7.6)</option>
+						
+							<option value='3023' data-mime='text/x-python'>Python3 (3.4.3)</option>
+						
+							<option value='3024' data-mime='text/x-ruby'>Ruby (2.3.3)</option>
+						
+							<option value='3025' data-mime='text/x-scala'>Scala (2.11.7)</option>
+						
+							<option value='3026' data-mime='text/x-scheme'>Scheme (Gauche 0.9.3.3)</option>
+						
+							<option value='3027' data-mime='text/plain'>Text (cat)</option>
+						
+							<option value='3028' data-mime='text/x-vb'>Visual Basic (Mono 4.0.1)</option>
+						
+							<option value='3029' data-mime='text/x-c&#43;&#43;src'>C&#43;&#43; (GCC 5.4.1)</option>
+						
+							<option value='3030' data-mime='text/x-c&#43;&#43;src'>C&#43;&#43; (Clang 3.8.0)</option>
+						
+							<option value='3501' data-mime='text/x-objectivec'>Objective-C (GCC 5.3.0)</option>
+						
+							<option value='3502' data-mime='text/x-objectivec'>Objective-C (Clang3.8.0)</option>
+						
+							<option value='3503' data-mime='text/x-swift'>Swift (swift-2.2-RELEASE)</option>
+						
+							<option value='3504' data-mime='text/x-rust'>Rust (1.15.1)</option>
+						
+							<option value='3505' data-mime='text/x-sh'>Sed (GNU sed 4.2.2)</option>
+						
+							<option value='3506' data-mime='text/x-sh'>Awk (mawk 1.3.3)</option>
+						
+							<option value='3507' data-mime='text/x-brainfuck'>Brainfuck (bf 20041219)</option>
+						
+							<option value='3508' data-mime='text/x-sml'>Standard ML (MLton 20100608)</option>
+						
+							<option value='3509' data-mime='text/x-python'>PyPy2 (5.6.0)</option>
+						
+							<option value='3510' data-mime='text/x-python'>PyPy3 (2.4.0)</option>
+						
+							<option value='3511' data-mime='text/x-crystal'>Crystal (0.20.5)</option>
+						
+							<option value='3512' data-mime='text/x-fsharp'>F# (Mono 4.0)</option>
+						
+							<option value='3513' data-mime='text/x-unlambda'>Unlambda (0.1.3)</option>
+						
+							<option value='3514' data-mime='text/x-lua'>Lua (5.3.2)</option>
+						
+							<option value='3515' data-mime='text/x-lua'>LuaJIT (2.0.4)</option>
+						
+							<option value='3516' data-mime='text/x-moonscript'>MoonScript (0.5.0)</option>
+						
+							<option value='3517' data-mime='text/x-ceylon'>Ceylon (1.2.1)</option>
+						
+							<option value='3518' data-mime='text/x-julia'>Julia (0.5.0)</option>
+						
+							<option value='3519' data-mime='text/x-octave'>Octave (4.0.2)</option>
+						
+							<option value='3520' data-mime='text/x-nim'>Nim (0.13.0)</option>
+						
+							<option value='3521' data-mime='text/typescript'>TypeScript (2.1.6)</option>
+						
+							<option value='3522' data-mime='text/x-perl'>Perl6 (rakudo-star 2016.01)</option>
+						
+							<option value='3523' data-mime='text/x-kotlin'>Kotlin (1.0.0)</option>
+						
+							<option value='3524' data-mime='text/x-php'>PHP7 (7.0.15)</option>
+						
+							<option value='3525' data-mime='text/x-cobol'>COBOL - Fixed (OpenCOBOL 1.1.0)</option>
+						
+							<option value='3526' data-mime='text/x-cobol'>COBOL - Free (OpenCOBOL 1.1.0)</option>
+						
+					</select>
+					<span class="error"></span>
+				</div>
+			</div>
+			<script>var currentLang = getLS('defaultLang');</script>
+			
+			
+<div class="form-group">
+	<label class="control-label col-sm-2" for="sourceCode">ソースコード</label>
+	<div class="col-sm-7" id="sourceCode">
+		<div class="div-editor">
+			<textarea class="form-control editor" name="sourceCode"></textarea>
+		</div>
+		<textarea class="form-control plain-textarea" style="display:none;"></textarea>
+		<p>
+			<span class="gray">※ 512 KiB まで</span><br>
+			<span class="gray">※ ソースコードは「Main.<i>拡張子</i>」で保存されます</span>
+		</p>
+	</div>
+	<div class="col-sm-3 editor-buttons">
+		<p><button id="btn-open-file" type="button" class="btn btn-default btn-sm">
+			<span class="glyphicon glyphicon-folder-open" aria-hidden="true"></span> &nbsp; ファイルを開く
+		</button></p>
+		<p><button type="button" class="btn btn-default btn-sm btn-toggle-editor" data-toggle="button" aria-pressed="false" autocomplete="off">
+			エディタ切り替え
+		</button></p>
+		<p><button type="button" class="btn btn-default btn-sm btn-auto-height" data-toggle="button" aria-pressed="false" autocomplete="off">
+			高さ自動調節
+		</button></p>
+	</div>
+	<input id="input-open-file" type="file" style="display:none;">
+</div>
+
+			<input type="hidden" name="csrf_token" value='38vJ9sQ0W3QHUv9zSo&#43;n8h3SM4A20s2Ym4rJFeDLKys=' />
+			<div class="form-group">
+				<label class="control-label col-sm-2" for="submit"></label>
+				<div class="col-sm-5">
+					<button type="submit" class="btn btn-primary" id="submit">提出</button>
+				</div>
+			</div>
+		</form>
+		
+	</div>
+</div>
+
+
+		
+			<hr>
+			
+			
+			
+<div class="a2a_kit a2a_kit_size_20 a2a_default_style pull-right" data-a2a-url="https://atcoder.jp/contests/abc139/tasks/abc139_f?lang=ja" data-a2a-title="F - Engines">
+	<a class="a2a_button_facebook"></a>
+	<a class="a2a_button_twitter"></a>
+	
+		<a class="a2a_button_hatena"></a>
+	
+	<a class="a2a_dd" href="https://www.addtoany.com/share"></a>
+</div>
+
+		
+		<script async src="//static.addtoany.com/menu/page.js"></script>
+		
+	</div> 
+	<hr>
+</div> 
+<div class="container" style="margin-bottom: 80px;">
+    <footer class="footer">
+		
+			<ul>
+				<li><a href='/contests/abc139/rules'>ルール</a></li>
+				<li><a href='/contests/abc139/glossary'>用語集</a></li>
+				
+			</ul>
+		
+		<ul>
+			<li><a href='/tos'>利用規約</a></li>
+			<li><a href='/privacy'>プライバシーポリシー</a></li>
+			<li><a href='/personal'>個人情報保護方針</a></li>
+			<li><a href='/company'>企業情報</a></li>
+			<li><a href='/faq'>よくある質問</a></li>
+			<li><a href='/contact'>お問い合わせ</a></li>
+			<li><a href='/documents/request'>資料請求</a></li>
+		</ul>
+    <div class="text-center">
+        <small id="copyright">Copyright Since 2012 &copy;<a href="http://atcoder.co.jp">AtCoder Inc.</a> All rights reserved.</small>
+    </div>
+    </footer>
+</div>
+<p id="fixed-server-timer" class='contest-timer'></p>
+
+	<div id="scroll-page-top" style="display:none;"><span class="glyphicon glyphicon-arrow-up" aria-hidden="true"></span> ページトップ</div>
+
+</body>
+</html>
+

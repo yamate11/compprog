@@ -1,0 +1,68 @@
+n m
+s
+t
+---> (n,m,s,t)
+
+
+n
+a1 a2 ... an
+---> (n, [a1,a2,...,an])
+
+n
+a1 b1
+a2 b2
+..
+an bn
+---> (n, [(a1,b1), ..., (an,bn)])
+
+n k
+a1 b1
+a2 b2
+..
+ak bk
+---> (n, k, [(a1,b1),...,(ak,bk)])
+
+n
+x1 y1 h1
+...
+xn yn hn
+---> (n, [(x1,y1,h1),...,(xn,yn,hn)])
+
+
+n m
+a1 b1
+..
+an bn
+u1 v1
+..
+um vm
+---> (n, m, [(a1,b1)..(um,vm)])
+
+
+n m
+x1 x2 ... xn
+y1 y2 ... ym
+---> (n, m, [x1,..,xn], [y1,...,ym])
+
+n m
+p1 p2 ... pn
+x1 y1
+x2 y2
+..
+xm ym
+---> (n, m, [p1,...,pn], [(x1,y1),...,(xm,ym)])
+
+n
+c11..c1n
+..
+cn1..cnn   c: char
+---> (n, ["c11..c1n", ..., "cn1..cnn"])
+
+
+n
+s (String)
+---> (n, s)
+
+s (String)
+k
+---> (s, k)

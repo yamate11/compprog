@@ -1,0 +1,60 @@
+#include <bits/stdc++.h>
+#include <cassert>
+typedef long long int ll;
+using namespace std;
+
+// @@ !! LIM()
+
+int main(int argc, char *argv[]) {
+  ios_base::sync_with_stdio(false);
+  cin.tie(nullptr);
+  cout << setprecision(20);
+
+  auto solve = [&](ll n, ll x, ll y, auto& bs) -> vector<ll> {
+    ll hit = x;
+    ll blow = y - x;
+    ll out = n - y;
+    vector cnt(n+2, 0LL);
+    for (ll b : bs) cnt.at(b)++;
+    using StA = pair<ll, ll>;
+    vector<StA> nums;
+    for (ll i = 1; i <= n+1; i++) {
+      if (cnt.at(i) > 0) nums.emplace_back(cnt.at(i), i);
+    }
+    sort(nums.begin(), nums.end(), greater<ll>());
+    vector<ll> ret;
+    if (nums.size() == 1) {
+      if (blow > 0) return ret;
+      ll t0 = nums.at(0).second;
+      ll t1 = t0 == 1 ? 2 : 1;
+      for (ll i = 0; i < n; i++) ret.push_back(i < x ? t0 : t1);
+      return ret;
+    }else if (nums.size() == 2) {
+      ll p = nums.at(0);
+      ll q = nums.at(1);
+      if (p - (n - y) > q) return ret;
+
+    
+  };
+
+  ll T; cin >> T;
+  for (ll t = 0; t < T; t++) {
+    ll n, x, y; cin >> n >> x >> y;
+    vector<ll> bs(n);
+    for (ll i = 0; i < n; i++) cin >> bs.at(i);
+    auto v = solve(n, x, y, bs);
+    if (v.size() == 0) {
+      cout << "NO\n";
+    }else {
+      cout << "YES\n";
+      for (ll i = 0; i < n; i++) {
+	if (i > 0) cout << " ";
+	cout << v.at(i);
+      }
+      cout << "\n";
+    }
+  }
+
+  return 0;
+}
+

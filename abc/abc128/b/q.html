@@ -1,0 +1,514 @@
+
+
+
+
+
+
+<!DOCTYPE html>
+
+<html>
+<head>
+	<title>B - Guidebook</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+	<meta http-equiv="Content-Language" content='en'>
+	<meta name="viewport" content="width=device-width,initial-scale=1.0">
+	<meta name="format-detection" content="telephone=no">
+	<meta name="google-site-verification" content="nXGC_JxO0yoP1qBzMnYD_xgufO6leSLw1kyNo2HZltM" />
+
+	
+	<meta name="description" content="AtCoder is a programming contest site for anyone from beginners to experts. We hold weekly programming contests online.">
+	<meta name="author" content="AtCoder Inc.">
+	<link rel="canonical" href="https://atcoder.jp/">
+
+	<meta property="og:site_name" content="AtCoder">
+	
+	<meta property="og:title" content="B - Guidebook" />
+	<meta property="og:description" content="AtCoder is a programming contest site for anyone from beginners to experts. We hold weekly programming contests online." />
+	<meta property="og:type" content="website" />
+	<meta property="og:url" content="https://atcoder.jp/contests/abc128/tasks/abc128_b" />
+	<meta property="og:image" content="https://img.atcoder.jp/assets/atcoder.png" />
+	<meta name="twitter:card" content="summary" />
+	<meta name="twitter:site" content="@atcoder" />
+	
+	<meta property="twitter:title" content="B - Guidebook" />
+
+	<link href='//fonts.googleapis.com/css?family=Lato:400,700' rel='stylesheet' type='text/css'>
+	<link rel="stylesheet" type="text/css" href='/public/css/bootstrap.min.css?v=201905261002'>
+	<link rel="stylesheet" type="text/css" href='/public/css/base.css?v=201905261002'>
+	<link rel="shortcut icon" type="image/png" href="//img.atcoder.jp/assets/favicon.png">
+	<link rel="apple-touch-icon" href="//img.atcoder.jp/assets/atcoder.png">
+	<script src='/public/js/lib/jquery-1.9.1.min.js?v=201905261002'></script>
+	<script src='/public/js/lib/bootstrap.min.js?v=201905261002'></script>
+	<script src="//cdnjs.cloudflare.com/ajax/libs/js-cookie/2.1.4/js.cookie.min.js"></script>
+	<script src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/moment.min.js"></script>
+	<script src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/locale/ja.js"></script>
+	<script>
+		var LANG = "en";
+		var userScreenName = "";
+	</script>
+	<script src='/public/js/utils.js?v=201905261002'></script>
+	
+	
+		<script src='/public/js/contest.js?v=201905261002'></script>
+		<link href='/public/css/contest.css?v=201905261002' rel="stylesheet" />
+		<script>
+			var contestScreenName = "abc128";
+			var remainingText = "Remaining Time";
+			var countDownText = "Contest begins in";
+			var startTime = moment("2019-05-26T21:00:00+09:00");
+			var endTime = moment("2019-05-26T22:40:00+09:00");
+		</script>
+		<style></style>
+	
+	
+		<script type="text/x-mathjax-config">MathJax.Hub.Config({messageStyle:"none",tex2jax:{skipTags:["script","noscript","style","textarea","code"],inlineMath:[['\\(','\\)']]}});</script>
+		<script src="//cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+		<script src='/public/js/task.js?v=201905261002'></script>
+	
+	
+	
+	
+		<link href="//cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/css/select2.min.css" rel="stylesheet" />
+		<link href="//cdnjs.cloudflare.com/ajax/libs/select2-bootstrap-theme/0.1.0-beta.10/select2-bootstrap.min.css" rel="stylesheet" />
+		<script src='/public/js/lib/select2.min.js?v=201905261002'></script>
+	
+	
+		<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/codemirror/5.38.0/codemirror.min.css">
+		<script src="//cdnjs.cloudflare.com/ajax/libs/codemirror/5.38.0/codemirror.min.js"></script>
+		<script src='/public/js/codeMirror/merged.js?v=201905261002'></script>
+	
+	
+		<script src="//cdn.rawgit.com/google/code-prettify/master/loader/run_prettify.js"></script>
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	<script src='/public/js/base.js?v=201905261002'></script>
+	<script src='/public/js/ga.js?v=201905261002'></script>
+</head>
+
+<body>
+<div id="modal-contest-start" class="modal fade" tabindex="-1" role="dialog">
+	<div class="modal-dialog" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+				<h4 class="modal-title">Contest started</h4>
+			</div>
+			<div class="modal-body">
+				<p>AtCoder Beginner Contest 128 has begun.</p>
+			</div>
+			<div class="modal-footer">
+				
+					<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+				
+			</div>
+		</div>
+	</div>
+</div>
+<div id="modal-contest-end" class="modal fade" tabindex="-1" role="dialog">
+	<div class="modal-dialog" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+				<h4 class="modal-title">Contest is over</h4>
+			</div>
+			<div class="modal-body">
+				<p>AtCoder Beginner Contest 128 has ended.</p>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+			</div>
+		</div>
+	</div>
+</div>
+<div id="main-div" class="float-container">
+	<nav class="navbar navbar-inverse navbar-fixed-top">
+		<div class="container-fluid">
+			<div class="navbar-header">
+				<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapse" aria-expanded="false">
+					<span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span>
+				</button>
+				<a class="navbar-brand" href="/"></a>
+			</div>
+			<div class="collapse navbar-collapse" id="navbar-collapse">
+				<ul class="nav navbar-nav">
+				
+					<li><a class="contest-title" href='/contests/abc128'>AtCoder Beginner Contest 128</a></li>
+				
+				</ul>
+				<ul class="nav navbar-nav navbar-right">
+					
+					<li class="dropdown">
+						<a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
+							<img src='//img.atcoder.jp/assets/flag-lang/en.png'> English <span class="caret"></span>
+						</a>
+						<ul class="dropdown-menu">
+							<li><a href='/contests/abc128/tasks/abc128_b?lang=ja'><img src='//img.atcoder.jp/assets/flag-lang/ja.png'> 日本語</a></li>
+							<li><a href='/contests/abc128/tasks/abc128_b?lang=en'><img src='//img.atcoder.jp/assets/flag-lang/en.png'> English</a></li>
+						</ul>
+					</li>
+					
+					
+						<li><a href="/register?continue=https%3A%2F%2Fatcoder.jp%2Fcontests%2Fabc128%2Ftasks%2Fabc128_b">Sign Up</a></li>
+						<li><a href="/login?continue=https%3A%2F%2Fatcoder.jp%2Fcontests%2Fabc128%2Ftasks%2Fabc128_b">Sign In</a></li>
+					
+				</ul>
+			</div>
+		</div>
+	</nav>
+	<form method="POST" name="form_logout" action='/logout?continue=https%3A%2F%2Fatcoder.jp%2Fcontests%2Fabc128%2Ftasks%2Fabc128_b'>
+		<input type="hidden" name="csrf_token" value='YjLM1IkG8IE5ogqW&#43;UuMWeQzp/8F/U27Wx7wOaGlGzU=' />
+	</form>
+	<div id="main-container" class="container" style="padding-top:50px;">
+		
+
+<div class="row">
+	<div id="contest-nav-tabs" class="col-sm-12 mb-2 cnvtb-fixed">
+	<div>
+		<small class="contest-duration">Contest Duration: <a href='http://www.timeanddate.com/worldclock/fixedtime.html?iso=20190526T2100&p1=248' target='blank'><time class='fixtime fixtime-full'>2019-05-26 21:00:00+0900</time></a> ~ <a href='http://www.timeanddate.com/worldclock/fixedtime.html?iso=20190526T2240&p1=248' target='blank'><time class='fixtime fixtime-full'>2019-05-26 22:40:00+0900</time></a> (local time)</small>
+		<small class="back-to-home pull-right"><a href='/'>Back to Home</a></small>
+	</div>
+	<ul class="nav nav-tabs">
+		<li><a href='/contests/abc128'><span class="glyphicon glyphicon-home" aria-hidden="true"></span> Top</a></li>
+		
+			<li class="active"><a href='/contests/abc128/tasks'><span class="glyphicon glyphicon-tasks" aria-hidden="true"></span> Tasks</a></li>
+		
+
+		
+			<li><a href='/contests/abc128/clarifications'><span class="glyphicon glyphicon-question-sign" aria-hidden="true"></span> Clarifications <span id="clar-badge" class="badge"></span></a></li>
+		
+
+		
+
+		
+			<li>
+				<a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false"><span class="glyphicon glyphicon-list" aria-hidden="true"></span> Submissions<span class="caret"></span></a>
+				<ul class="dropdown-menu">
+					<li><a href='/contests/abc128/submissions'><span class="glyphicon glyphicon-globe" aria-hidden="true"></span> All Submissions</a></li>
+					
+				</ul>
+			</li>
+		
+
+		
+			<li><a href='/contests/abc128/standings'><span class="glyphicon glyphicon-sort-by-attributes-alt" aria-hidden="true"></span> Standings</a></li>
+		
+
+		
+
+		
+			<li><a href='https://img.atcoder.jp/abc128/editorial.pdf' target="_blank"><span class="glyphicon glyphicon-book" aria-hidden="true"></span> Editorial</a></li>
+		
+
+		<li class="pull-right"><a id="fix-cnvtb" href="javascript:void(0)"><span class="glyphicon glyphicon-pushpin" aria-hidden="true"></span></a></li>
+	</ul>
+</div>
+	<div class="col-sm-12">
+		<span class="h2">B - Guidebook</span>
+		<hr/>
+		<p>Time Limit: 2 sec / Memory Limit: 1024 MB</p>
+
+		<div id="task-statement">
+			<span class="lang">
+<span class="lang-ja">
+<p>配点 : <var>200</var> 点</p>
+
+<div class="part">
+<section>
+<h3>問題文</h3><p>あなたは美味しいレストランを紹介する本を書くことにしました。
+あなたは <var>N</var> 個のレストラン、レストラン <var>1</var>、レストラン <var>2</var>、<var>…</var>、レストラン <var>N</var> を紹介しようとしています。レストラン <var>i</var> は <var>S_i</var> 市にあり、あなたは <var>100</var> 点満点中 <var>P_i</var> 点と評価しています。
+異なる <var>2</var> 個のレストランに同じ点数がついていることはありません。</p>
+<p>この本では、次のような順でレストランを紹介しようとしています。</p>
+<ul>
+<li>市名が辞書順で早いものから紹介していく。</li>
+<li>同じ市に複数レストランがある場合は、点数が高いものから紹介していく。</li>
+</ul>
+<p>この本で紹介される順にレストランの番号を出力してください。</p>
+</section>
+</div>
+
+<div class="part">
+<section>
+<h3>制約</h3><ul>
+<li><var>1 ≤ N ≤ 100</var></li>
+<li><var>S</var> は英小文字のみからなる長さ <var>1</var> 以上 <var>10</var> 以下の文字列</li>
+<li><var>0 ≤ P_i ≤ 100</var></li>
+<li><var>P_i</var> は整数</li>
+<li><var>P_i ≠ P_j</var> <var>(1 ≤ i &lt; j ≤ N)</var></li>
+</ul>
+</section>
+</div>
+
+<hr />
+
+<div class="io-style">
+<div class="part">
+<section>
+<h3>入力</h3><p>入力は以下の形式で標準入力から与えられる。</p>
+<pre><var>N</var>
+<var>S_1</var> <var>P_1</var>
+<var>:</var>
+<var>S_N</var> <var>P_N</var>
+</pre>
+
+</section>
+</div>
+
+<div class="part">
+<section>
+<h3>出力</h3><p><var>N</var> 行出力せよ。<var>i</var> 行目 (<var>1 ≤ i ≤ N</var>) には、<var>i</var> 番目に紹介されるレストランの番号を出力せよ。</p>
+</section>
+</div>
+</div>
+
+<hr />
+
+<div class="part">
+<section>
+<h3>入力例 1</h3><pre>6
+khabarovsk 20
+moscow 10
+kazan 50
+kazan 35
+moscow 60
+khabarovsk 40
+</pre>
+
+</section>
+</div>
+
+<div class="part">
+<section>
+<h3>出力例 1</h3><pre>3
+4
+6
+1
+5
+2
+</pre>
+
+<p><var>3</var> 種類の市名は辞書順で <code>kazan</code> <var>&lt;</var> <code>khabarovsk</code> <var>&lt;</var> <code>moscow</code> です。
+それぞれの市について、点数が高いレストランから順に紹介されていきます。よって、レストランは <var>3,4,6,1,5,2</var> の順に紹介されていきます。</p>
+</section>
+</div>
+
+<hr />
+
+<div class="part">
+<section>
+<h3>入力例 2</h3><pre>10
+yakutsk 10
+yakutsk 20
+yakutsk 30
+yakutsk 40
+yakutsk 50
+yakutsk 60
+yakutsk 70
+yakutsk 80
+yakutsk 90
+yakutsk 100
+</pre>
+
+</section>
+</div>
+
+<div class="part">
+<section>
+<h3>出力例 2</h3><pre>10
+9
+8
+7
+6
+5
+4
+3
+2
+1
+</pre></section>
+</div>
+</span>
+<span class="lang-en">
+<p>Score : <var>200</var> points</p>
+
+<div class="part">
+<section>
+<h3>Problem Statement</h3><p>You have decided to write a book introducing good restaurants.
+There are <var>N</var> restaurants that you want to introduce: Restaurant <var>1</var>, Restaurant <var>2</var>, <var>...</var>, Restaurant <var>N</var>. Restaurant <var>i</var> is in city <var>S_i</var>, and your assessment score of that restaurant on a <var>100</var>-point scale is <var>P_i</var>.
+No two restaurants have the same score.</p>
+<p>You want to introduce the restaurants in the following order:</p>
+<ul>
+<li>The restaurants are arranged in lexicographical order of the names of their cities.</li>
+<li>If there are multiple restaurants in the same city, they are arranged in descending order of score.</li>
+</ul>
+<p>Print the identification numbers of the restaurants in the order they are introduced in the book.</p>
+</section>
+</div>
+
+<div class="part">
+<section>
+<h3>Constraints</h3><ul>
+<li><var>1 ≤ N ≤ 100</var></li>
+<li><var>S</var> is a string of length between <var>1</var> and <var>10</var> (inclusive) consisting of lowercase English letters.</li>
+<li><var>0 ≤ P_i ≤ 100</var></li>
+<li><var>P_i</var> is an integer.</li>
+<li><var>P_i ≠ P_j</var> <var>(1 ≤ i &lt; j ≤ N)</var></li>
+</ul>
+</section>
+</div>
+
+<hr />
+
+<div class="io-style">
+<div class="part">
+<section>
+<h3>Input</h3><p>Input is given from Standard Input in the following format:</p>
+<pre><var>N</var>
+<var>S_1</var> <var>P_1</var>
+<var>:</var>
+<var>S_N</var> <var>P_N</var>
+</pre>
+
+</section>
+</div>
+
+<div class="part">
+<section>
+<h3>Output</h3><p>Print <var>N</var> lines. The <var>i</var>-th line (<var>1 ≤ i ≤ N</var>) should contain the identification number of the restaurant that is introduced <var>i</var>-th in the book.</p>
+</section>
+</div>
+</div>
+
+<hr />
+
+<div class="part">
+<section>
+<h3>Sample Input 1</h3><pre>6
+khabarovsk 20
+moscow 10
+kazan 50
+kazan 35
+moscow 60
+khabarovsk 40
+</pre>
+
+</section>
+</div>
+
+<div class="part">
+<section>
+<h3>Sample Output 1</h3><pre>3
+4
+6
+1
+5
+2
+</pre>
+
+<p>The lexicographical order of the names of the three cities is <code>kazan</code> <var>&lt;</var> <code>khabarovsk</code> <var>&lt;</var> <code>moscow</code>. For each of these cities, the restaurants in it are introduced in descending order of score. Thus, the restaurants are introduced in the order <var>3,4,6,1,5,2</var>.</p>
+</section>
+</div>
+
+<hr />
+
+<div class="part">
+<section>
+<h3>Sample Input 2</h3><pre>10
+yakutsk 10
+yakutsk 20
+yakutsk 30
+yakutsk 40
+yakutsk 50
+yakutsk 60
+yakutsk 70
+yakutsk 80
+yakutsk 90
+yakutsk 100
+</pre>
+
+</section>
+</div>
+
+<div class="part">
+<section>
+<h3>Sample Output 2</h3><pre>10
+9
+8
+7
+6
+5
+4
+3
+2
+1
+</pre></section>
+</div>
+</span>
+</span>
+
+		</div>
+
+		
+
+		
+	</div>
+</div>
+
+
+		
+			<hr>
+			
+			
+			
+<div class="a2a_kit a2a_kit_size_20 a2a_default_style pull-right" data-a2a-url="https://atcoder.jp/contests/abc128/tasks/abc128_b?lang=en" data-a2a-title="B - Guidebook">
+	<a class="a2a_button_facebook"></a>
+	<a class="a2a_button_twitter"></a>
+	
+		<a class="a2a_button_telegram"></a>
+	
+	<a class="a2a_dd" href="https://www.addtoany.com/share"></a>
+</div>
+
+		
+		<script async src="//static.addtoany.com/menu/page.js"></script>
+		
+	</div> 
+	<hr>
+</div> 
+<div class="container">
+    <footer class="footer">
+		
+			<ul>
+				<li><a href='/contests/abc128/rules'>Rule</a></li>
+				<li><a href='/contests/abc128/glossary'>Glossary</a></li>
+				
+			</ul>
+		
+		<ul>
+			<li><a href='/tos'>Terms of service</a></li>
+			<li><a href='/privacy'>Privacy Policy</a></li>
+			<li><a href='/personal'>Information Protection Policy</a></li>
+			<li><a href='/company'>Company</a></li>
+			<li><a href='/faq'>FAQ</a></li>
+			<li><a href='/contact'>Contact</a></li>
+			
+		</ul>
+    <div class="text-center">
+        <small id="copyright">Copyright Since 2012 &copy;<a href="http://atcoder.co.jp">AtCoder Inc.</a> All rights reserved.</small>
+    </div>
+    </footer>
+</div>
+<p id="fixed-server-timer" class='contest-timer'></p>
+
+	<div id="scroll-page-top" style="display:none;"><span class="glyphicon glyphicon-arrow-up" aria-hidden="true"></span> Page Top</div>
+
+</body>
+</html>
+
+
