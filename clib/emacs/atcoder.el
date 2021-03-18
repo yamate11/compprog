@@ -10,7 +10,7 @@
         "f:mex" "f:shortVector"
 	))
 
-(setq atcoder-topdir "/home/y-tanabe/WinHome/bytime/atCoder1710")
+(setq atcoder-topdir "/home/y-tanabe/proj/compprog")
 (setq atcoder-insertion-mark "@@ !! LIM")
 
 (defun atcoder-fn-insert-library (arg)

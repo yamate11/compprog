@@ -34,6 +34,7 @@ def main():
         #     shutil.rmtree(f'{args.cname}/{q}')
 
     def operate(c):
+        info(c, end=' ... ')
         qdir = f'{args.cname}/{c}'
         os.mkdir(qdir)
         cmd = ['cfsample', '--outdir', qdir, args.seq, c.upper()]
@@ -43,7 +44,7 @@ def main():
         print(rc.stdout, file=logfd, end='')
         if rc.returncode != 0:
             info('failed.')
-            # shutil.rmtree(qdir)
+            shutil.rmtree(qdir)
             return False
         shutil.copyfile('Makefile', f'{qdir}/Makefile')
         shutil.copyfile('cans.cc', f'{qdir}/cans.cc')
@@ -52,7 +53,6 @@ def main():
 
     with open(f'{args.cname}/cfvirt.log', 'w') as logfd:
         for c in qs:
-            info(c, end=' ... ')
             res = operate(c)
             if not res:
                 if len(c) == 1:

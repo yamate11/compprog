@@ -1,0 +1,12 @@
+10 1897
+4 6 10 3 9 8 3 2 5 1
+c
+cbacacb
+abbbaaac
+baca
+aaca
+accbbbcc
+cacabaa
+caaa
+acbabbabb
+bacabbca

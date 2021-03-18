@@ -1,0 +1,4 @@
+2 1015
+6 6
+baccbbc
+baacb

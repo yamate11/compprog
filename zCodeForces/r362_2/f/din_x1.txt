@@ -1,0 +1,12 @@
+10 1453
+3 10 8 4 3 4 7 7 5 10
+
+c
+cbcccbcac
+bba
+cacbbaa
+ab
+bccc
+ccccacc
+cab
+bcbc

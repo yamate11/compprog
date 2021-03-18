@@ -193,29 +193,33 @@ string dbgFormat(const char* fmt, Args... args) {
 }
 
 template <class Head>
-void dbgLog(Head&& head) {
-  cerr << head << endl;
+void dbgLog(bool with_nl, Head&& head) {
+  cerr << head;
+  if (with_nl) cerr << endl;
 }
 
 template <class Head, class... Tail>
-void dbgLog(Head&& head, Tail&&... tail)
+void dbgLog(bool with_nl, Head&& head, Tail&&... tail)
 {
   cerr << head << " ";
-  dbgLog(forward<Tail>(tail)...);
+  dbgLog(with_nl, forward<Tail>(tail)...);
 }
 
 #if DEBUG
-  #define DLOG(...)        dbgLog(__VA_ARGS__)
+  #define DLOG(...)        dbgLog(true, __VA_ARGS__)
+  #define DLOGNNL(...)     dbgLog(false, __VA_ARGS__)
   #define DFMT(...)        cerr << dbgFormat(__VA_ARGS__) << endl
   #define DCALL(func, ...) func(__VA_ARGS__)
 #else
   #define DLOG(...)
+  #define DLOGNNL(...)
   #define DFMT(...)
   #define DCALL(func, ...)
 #endif
 
 #if DEBUG_LIB
-  #define DLOG_LIB(...)        dbgLog(__VA_ARGS__)
+  #define DLOG_LIB(...)        dbgLog(true, __VA_ARGS__)
+  #define DLOGNNL_LIB(...)     dbgLog(false, __VA_ARGS__)
   #define DFMT_LIB(...)        cerr << dbgFormat(__VA_ARGS__) << endl
   #define DCALL_LIB(func, ...) func(__VA_ARGS__)
 #else
@@ -223,6 +227,23 @@ void dbgLog(Head&& head, Tail&&... tail)
   #define DFMT_LIB(...)
   #define DCALL_LIB(func, ...)
 #endif
+
+#define DUP1(E1)       #E1 "=", E1
+#define DUP2(E1,E2)    DUP1(E1), DUP1(E2)
+#define DUP3(E1,...)   DUP1(E1), DUP2(__VA_ARGS__)
+#define DUP4(E1,...)   DUP1(E1), DUP3(__VA_ARGS__)
+#define DUP5(E1,...)   DUP1(E1), DUP4(__VA_ARGS__)
+#define DUP6(E1,...)   DUP1(E1), DUP5(__VA_ARGS__)
+#define DUP7(E1,...)   DUP1(E1), DUP6(__VA_ARGS__)
+#define DUP8(E1,...)   DUP1(E1), DUP7(__VA_ARGS__)
+#define DUP9(E1,...)   DUP1(E1), DUP8(__VA_ARGS__)
+#define DUP10(E1,...)   DUP1(E1), DUP9(__VA_ARGS__)
+#define DUP11(E1,...)   DUP1(E1), DUP10(__VA_ARGS__)
+#define DUP12(E1,...)   DUP1(E1), DUP11(__VA_ARGS__)
+#define GET_MACRO(_1,_2,_3,_4,_5,_6,_7,_8,_9,_10,_11,_12,NAME,...) NAME
+#define DUP(...)          GET_MACRO(__VA_ARGS__, DUP12, DUP11, DUP10, DUP9, DUP8, DUP7, DUP6, DUP5, DUP4, DUP3, DUP2, DUP1)(__VA_ARGS__)
+#define DLOGK(...)        DLOG(DUP(__VA_ARGS__))
+#define DLOGKL(lab, ...)  DLOG(lab, DUP(__VA_ARGS__))
 
 // ---- end debug.cc
 // @@ !! LIM  -- end mark --
@@ -232,111 +253,108 @@ int main(/* int argc, char *argv[] */) {
   cin.tie(nullptr);
   cout << setprecision(20);
 
-  ll n, l; cin >> n >> l;
-  vector<ll> A(n);
-  for (ll i = 0; i < n; i++) cin >> A[i];
-  ll totlen = 0;
-  vector<string> S(n);
-  for (ll i = 0; i < n; i++) {
+  ll N, L; cin >> N >> L;
+  vector<ll> A(N);
+  for (ll i = 0; i < N; i++) cin >> A[i];
+  vector<string> S(N);
+  vector<ll> accsz(N + 1);
+  for (ll i = 0; i < N; i++) {
     cin >> S[i];
-    totlen += (ll)S[i].size();
+    accsz[i + 1] = accsz[i] + S[i].size();
   }
-  vector conn(n, vector(n, -1LL));
-  vector<vector<ll>> bonus(n);
-  for (ll i = 0; i < n; i++) bonus[i] = vector<ll>(S[i].size());
-  for (ll i = 0; i < n; i++) {
-    ll si = S[i].size();;
-    for (ll j = 0; j < n; j++) {
-      ll sj = S[j].size();
-      if (j != i) {
-	for (ll k = 0; k <= si - sj; k++) {
-	  if (S[i].substr(k, sj) == S[j]) {
-	    // A[i] += A[j];
-	    for (ll p = 0; p < k + (ll)S[j].size(); p++) {
-	      bonus[i][p] += A[j];
-	    }
-	  }
-	}
+  ll totlen = accsz[N];
+  /*
+  vector<ll> revas(totlen);
+  {
+    ll j = 0;
+    for (ll i = 0; ; i++) {
+      if (accsz[j + 1] == i) {
+        j = j + 1;
+        if (j == L) break;
       }
-      for (ll k = max(1LL, si - sj + 1); k < si; k++) {
-	if (S[i].substr(k) == S[j].substr(0, si - k)) {
-	  conn[i][j] = (ll)S[i].size() - k;
-	  break;
-	}
-      }
-      if (conn[i][j] == -1) conn[i][j] = 0;
+      revas[i] = j;
     }
   }
-  DLOG("A=", A);
-  DLOG("conn=", conn);
-  vector tbl(totlen + 1, vector(n, -1LL));
-  for (ll i = 0; i < n; i++) {
-    updMax(tbl[S[i].size()][i], A[i] + bonus[i][0]);
-  }
-  for (ll i = 1; i < totlen; i++) {
-    for (ll j = 0; j < n; j++) {
-      ll cv = tbl[i][j];
-      if (cv == -1) continue;
-      for (ll k = 0; k < n; k++) {
-	ll np = i - conn[j][k] + (ll)S[k].size();
-	if (np <= totlen) {
-	  updMax(tbl[np][k], cv + A[k] + bonus[k][conn[j][k]]);
-	}
+  */
+  auto enc = [&](ll i, ll p) -> ll { return accsz[i] + p; };
+  /*
+  auto dec = [&](ll e) -> pair<ll, ll> {
+    ll i = revas[e];
+    return {i, e - i};
+  };
+  */
+
+  auto pt = vector(totlen + 1, 0LL);
+  auto nxt = vector(totlen + 1, vector<ll>());
+  for (ll i = 0; i < N; i++) {
+    ll szi = S[i].size();
+    pt[enc(i, szi - 1)] = A[i];
+    nxt[totlen].push_back(enc(i, 0));
+    for (ll j = 0; j < szi - 1; j++) {
+      nxt[enc(i, j)].push_back(enc(i, j + 1));
+    }
+    for (ll j = 0; j < N; j++) {
+      nxt[enc(i, szi - 1)].push_back(enc(j, 0));
+    }
+    for (ll j = 0; j < N; j++) {
+      // if (i == j) continue;
+      ll szj = S[j].size();
+      for (ll p = 0; p < szi; p++) {
+        if (S[i].substr(p, szj) == S[j] && i != j) {
+          pt[enc(i, p + szj - 1)] += A[j];
+        }
+        if (szi - p < szj && S[i].substr(p) == S[j].substr(0, szi - p)) {
+          nxt[enc(i, szi - 1)].push_back(enc(j, szi - p));
+        }
       }
     }
   }
-  for (ll j = 0; j < n; j++) {
-    for (ll i = 1; i <= totlen; i++) updMax(tbl[i][j], tbl[i-1][j]);
+  DLOGK(pt);
+  DLOGK(nxt);
+
+  ll M = 64 - __builtin_clzll(L);
+  using tbl_t = vector<vector<ll>>;
+  auto empty_tbl = vector(totlen + 1, vector(totlen + 1, -1LL));
+  auto tbl = vector<tbl_t>(M);
+  
+  tbl[0] = empty_tbl;
+  for (ll e = 0; e < totlen + 1; e++) {
+    for (ll f : nxt[e]) tbl[0][e][f] = pt[f];
   }
 
-  using sta = tuple<ll, ll, ll>;
-  vector<sta> cycle(n);
-  for (ll i = 0; i < n; i++) {
-    double density = 0;
-    ll length = -1;
-    ll value = -1;
-    ll residue = -1;
-    auto regist = [&](ll len, ll val, ll res) -> void {
-      DLOG("regist: len=", len, "val=", val, "res=", res);
-      double newDen = double(val) / double(len);
-      if (density < newDen || (density == newDen && residue > res)) {
-	density = newDen;
-	length = len;
-	value = val;
-	residue = res;
-	DLOG("  updated", density, length, value, residue);
+  auto tmult = [&](const auto vec1, const auto vec2) -> tbl_t {
+    auto res = empty_tbl;
+    for (ll e = 0; e < totlen + 1; e++) {
+      for (ll f = 0; f < totlen + 1; f++) {
+        for (ll g = 0; g < totlen + 1; g++) {
+          ll x = vec1[e][g];
+          ll y = vec2[g][f];
+          if (x >= 0 && y >= 0) updMax(res[e][f], x + y);
+        }
       }
-    };
-    vector<bool> onStack(n);
-    auto dfs = [&](auto rF, ll p, ll len, ll val) -> void {
-      ll c = conn[p][i] ;
-      DLOG("registering, i=", i, "p=", p);
-      regist(len - c, val - (bonus[i][0] - bonus[i][c]), c);
-      for (ll j = 0; j < n; j++) {
-	if (j == i) continue;
-	if (conn[p][j] == 0) continue;
-	if (onStack[j]) continue;
-	onStack[j] = true;
-	rF(rF, j, len + (ll)S[j].size() - conn[p][j],
-	   val + A[j] + bonus[j][conn[p][j]]);
-	onStack[j] = false;
-      }
-    };
-    dfs(dfs, i, S[i].size(), A[i] + bonus[i][0]);
-    cycle[i] = {length, value, residue};
-  }
-  ll ans = 0;
-  DLOG("tbl=", tbl);
-  DLOG("cycle=", cycle);
-  for (ll i = 1; i <= totlen; i++) {
-    for (ll j = 0; j < n; j++) {
-      if (tbl[i][j] == -1) continue;
-      auto [len, val, res] = cycle[j];
-      ll nc = (l - (i - S[j].size()) - res) / len;
-      ans = max(ans, tbl[i][j] - A[j] + nc * val);
     }
+    return res;
+  };
+
+  for (ll i = 1; i < M; i++) tbl[i] = tmult(tbl[i-1], tbl[i-1]);
+
+#if DEBUG
+  for (ll i = 0; i < M; i++) {
+    DLOGK(i);
+    DLOGK(tbl[i]);
   }
-  cout << ans << endl;
+#endif
+
+  auto calc = [&](auto rF, ll x) -> tbl_t {
+    auto ret = empty_tbl;
+    ll shift = 63 - __builtin_clzll(x);
+    ll msb = 1LL << shift;
+    if (msb == x) return tbl[shift];
+    return tmult(tbl[shift], rF(rF, x & ~msb));
+  };
+  auto res = calc(calc, L);
+  auto it = max_element(res[totlen].begin(), res[totlen].end());
+  cout << *it << endl;
 
   return 0;
 }
