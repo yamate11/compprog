@@ -267,6 +267,7 @@ int main(int argc, char *argv[] ) {
   }
 
   {
+    cerr << "IN\n";
     int lim = 1e5;
     uniform_int_distribution<int> dist(-lim, lim);
     auto hash_elem = [&](int x) -> u64 { return x + lim; };
@@ -288,6 +289,7 @@ int main(int argc, char *argv[] ) {
         }
       }
     }
+    cerr << "OUT\n";
   }
 
 

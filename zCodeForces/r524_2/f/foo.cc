@@ -53,7 +53,7 @@ struct RollingHash {
     int n = s.size();
     vector<u64> ret(n+1);
     for (int i = 0; i < n; i++) {
-      ret[i+1] = calc_mod(mul(ret[i], base) + s[i]);
+      ret[i+1] = calc_mod(mul(ret[i], base) + hash_char(s[i]));
     }
     return ret;
   }
@@ -76,7 +76,7 @@ struct RollingHash {
     return calc_mod(calc_mod(mul(hash1, base_power(len2))) + hash2);
   }
 
-  u64 hash_char(char c) { return c; }
+  u64 hash_char(char c) { return (unsigned char)c; }
 
   /*
   int reg(string s) {
@@ -115,7 +115,7 @@ int main(/* int argc, char *argv[] */) {
   cout << s.size() << endl;
 
   RollingHash rh;
-  cout << rh.hash_char(-127) << endl;
+  cout << rh.hash_char(-128) << endl;
 
   return 0;
 }
