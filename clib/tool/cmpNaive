@@ -245,9 +245,9 @@ def get_IO_object():
     else:
         return ContiInOut(args.program)
 
-def run_stest(prog, ceID):
-    warn(f'Running stest ...\n')
-    subprocess.run(['stest', '-p', prog, ceID])
+# def run_stest(prog, ceID):
+#     warn(f'Running stest ...\n')
+#     subprocess.run(['stest', '-p', prog, ceID])
 
 def run_prgms(dio, s_question, prec):
     (s_body, mt_body) = dio.run_body(s_question)
@@ -268,7 +268,7 @@ def run_prgms(dio, s_question, prec):
         if s_naive is None:
             return (f'naive program has {mt}.', None, None)
         elif not Util.compare_answer(s_body, s_naive, prec=prec,
-                                     ignoreSpace=args.ignore_space):
+                                     ignoreSpace=not args.no_ignore_space):
             return ('results differ.', s_body, s_naive)
         else:
             return (None, None, None)
@@ -334,8 +334,8 @@ def parse_args():
                     dest='ec_only', help='ok if exit code is zero.')
     ap.add_argument('--no-modify-precision', action='store_true',
                     help='does not modify ./stest-double.')
-    ap.add_argument('--ignore-space', action='store_true',
-                    help='ignores space when comparing answers')
+    ap.add_argument('--no-ignore-space', action='store_true',
+                    help='Spaces matter when comparing answers')
     ap.add_argument('--show-stderr', action='store_true',
                         help='how output to stderr')
     ap.add_argument('--timeout', default=1.0, type=float,

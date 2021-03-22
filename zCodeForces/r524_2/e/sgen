@@ -1,0 +1,9 @@
+#!/usr/bin/env python3
+
+n = 250
+m = 250
+print(n, m)
+for i in range(n):
+    x = 'a' * m
+    print(x)
+    

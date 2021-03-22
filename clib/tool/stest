@@ -58,7 +58,7 @@ def main():
             sa = afp.read()
             so = ofp.read()
         match = Util.compare_answer(sa, so, prec=prec,
-                                    ignoreSpace=args.ignore_space)
+                                    ignoreSpace=not args.no_ignore_space)
         if not match:
             diffRes.append((apath, opath));
             print(f'{ipath} ... FAIL (Different results.  See {opath})')
@@ -109,8 +109,8 @@ given, all test input files in the current directory will be tried.\
                         help='program to test.  Default is ./cans')
     parser.add_argument('--no-modify-precision', action='store_true',
                         help='does not modify ./stest-double.  See below.')
-    parser.add_argument('--ignore-space', action='store_true',
-                        help='ignores space when comparing answers')
+    parser.add_argument('--no-ignore-space', action='store_true',
+                        help='Spaces matter when comparing answers.')
     parser.add_argument('--show-stderr', action='store_true',
                         help='how output to stderr')
     parser.add_argument('id', nargs='*', help = 'test ID')

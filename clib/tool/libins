@@ -4,7 +4,7 @@ import sys, os, argparse, re, json
 
 magic = '@@ !!'
 markpat = magic + r'\s*LIM(?:\s*\((.*)\))?';
-topDir = f'{os.environ["HOME"]}/WinHome/bytime/atCoder1710'
+topDir = f'{os.environ["HOME"]}/proj/compprog'
 depCache = f'{topDir}/clib/.lib_depend'
 dcAtime = 0
 

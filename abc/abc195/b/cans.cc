@@ -25,7 +25,7 @@ int main(/* int argc, char *argv[] */) {
   if (vmin < 0) {
     cout << "UNSATISFIABLE\n";
   }else {
-    cout << vmin << " " << vmax << "\n";
+    cout << vmin << " " << vmax << " \n";
   }
     
 

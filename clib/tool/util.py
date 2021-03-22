@@ -72,12 +72,9 @@ each line is compared with ignoring space.
 
         if prec is None:
             if ignoreSpace:
-                list1 = ans1.strip().split('\n')
-                list2 = ans2.strip().split('\n')
-                if len(list1) != len(list2): return False
-                for (i, a) in enumerate(list1):
-                    if list2[i] != a: return False
-                return True
+                list1 = ans1.split()
+                list2 = ans2.split()
+                return list1 == list2
             else:
                 return ans1 == ans2
         else:
