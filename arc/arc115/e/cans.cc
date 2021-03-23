@@ -7,7 +7,7 @@ using namespace std;
 
 #define CONSTANT_MOD 998244353
 
-// @@ !! LIM(cmpNaive debug mod)
+// @@ !! LIM(cmpNaive debug mod debug)
 // --> cmpNaive f:<< debug f:gcd f:intDiv mod
 // ---- inserted library file cmpNaive.cc
 
@@ -579,11 +579,11 @@ int naive(istream& cin, ostream& cout) {
   vector<ll> A(N);
   for (ll i = 0; i < N; i++) cin >> A[i];
 
-  auto cur = vector<ll>(1);
+  auto cur = vector<Fp>(1);
   cur[0] = 1;
   for (ll i = 0; i < N; i++) {
     auto prev = move(cur);
-    cur = vector(A[i] + 1, 0LL);
+    cur = vector(A[i] + 1, Fp(0));
     for (ll j = 1; j <= A[i]; j++) {
       for (ll k = 0; k < (ll)prev.size(); k++) {
         if (k == j) continue;
@@ -592,6 +592,9 @@ int naive(istream& cin, ostream& cout) {
     }
     DLOGK(i, cur);
   }
+  Fp s = 0;
+  for (ll j = 1; j <= A[N-1]; j++) s += cur[j];
+  cout << s << endl;
 
   return 0;
 }
@@ -600,30 +603,40 @@ int body(istream& cin, ostream& cout) {
   vector<ll> A(N);
   for (ll i = 0; i < N; i++) cin >> A[i];
 
-  vector<ll> D(0), E(1), P(1), Q(2);
+  vector<ll> P(1), Q(2);
+  vector<Fp> D(0), E(1), sEP(2);
   P[0] = A[0];
   Q[1] = P[0];
+  sEP[0] = sEP[1] = 0;
   Fp sum = A[0];
   Fp xVal = 1;
-  Fp xi = 0;
+  DLOGK(D, E, P, Q, sEP, sum, xVal);
   for (ll i = 1; i < N; i++) {
-    ll szD = D.size();
-    ll szP = P.size();
+    ll sgn = (i % 2 == 0) ? 1 : -1;
     if (A[i-1] < A[i]) {
       P.push_back(A[i] - A[i-1]);
-      Q.push_back(Q[szP] + P[szP]);
-      xVal = sum - xVal;
-      xi += E[szD] * P[szP];
-      if (i % 2 == 0) sum = xVal + Q[szP] + xi;
-      else            sum = xVal + Q[szP] - xi;
+      Q.push_back(A[i]);
+      D.push_back(sgn * (xVal - sgn * E.back()));
+      E.push_back(E.back() + D.back());
+      sEP.push_back(sEP.back() + E.back() * P.back());
     }else {
-      auto it = lower_bound(Q.begin(), Q.end(), A[i]);
+      auto it = upper_bound(Q.begin(), Q.end(), A[i] - 1);
       it--;
       ll j = it - Q.begin();
-      xi * Q[j]
+      P[j] = A[i] - Q[j];
+      Q[j + 1] = A[i];
+      sEP[j + 1] = sEP[j] + E[j] * P[j];
+      D.resize(j);
+      E.resize(j + 1);
+      P.resize(j + 1);
+      Q.resize(j + 2);
+      sEP.resize(j + 2);
     }
+    xVal = sum - xVal;
+    sum = xVal * Q.back() + sgn * sEP.back();
+    DLOGK(i, D, E, P, Q, sEP, sum, xVal);
   }
-
+  cout << sum << endl;
 
   return 0;
 }

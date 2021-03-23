@@ -244,29 +244,66 @@ int main(/* int argc, char *argv[] */) {
   auto solve = [&]() -> vector<ll> {
     ll n, m; cin >> n >> m;
     ll maxdd = (m + 1) / 2;
+    vector<ll> K(m);          // number of available persons for a day
+    vector<vector<ll>> F(m);  // list of available persons
+    vector<ll> numAD(n);      // number of available days for a person
     vector<vector<ll>> aD(n); // list of available days
-    vector uniq(n, vector<ll>());
+    vector<ll> uniqCnt(n);
     for (ll i = 0; i < m; i++) {
-      ll k;
-      cin >> k;
-      for (ll j = 0; j < k; j++) {
+      cin >> K[i];
+      for (ll j = 0; j < K[i]; j++) {
         ll f; cin >> f; f--;
+        F[i].push_back(f);
+        numAD[f]++;
         aD[f].push_back(i);
-        if (k == 1) uniq[f].push_back(i);
       }
+      if (K[i] == 1) uniqCnt[F[i][0]]++;
     }
+    if (any_of(uniqCnt.begin(), uniqCnt.end(),
+               [&](ll x){ return x > maxdd; })) return {};
     vector<ll> assign(m, -1);
-    for (ll pid = 0; pid < n; pid++) {
-      ll cnt = 0;
-      for (ll d : uniq[pid]) {
-        if (cnt++ == maxdd) return {};
-        assign[d] = pid;
+    vector<pair<ll, ll>> uci;
+    for (ll i = 0; i < n; i++) uci.emplace_back(numAD[i], i);
+    sort(uci.begin(), uci.end());
+    DLOGK(uci);
+    bool overdone = false;
+    for (ll i = 0; i < n; i++) {
+      auto [nad, pid] = uci[i];
+      if (nad <= maxdd || overdone || i+1 == n) {
+        for (ll d : aD[pid]) {
+          if (assign[d] >= 0) continue;
+          assign[d] = pid;
+        }
+      }else {
+        auto [nad2, pid2] = uci[i + 1];
+        DLOGK(pid, pid2);
+        vector<bool> tv1(m), tv2(m);
+        for (ll d : aD[pid]) tv1[d] = true;
+        for (ll d : aD[pid2]) tv2[d] = true;
+        ll cnt1 = 0, cnt2 = 0;
+        for (ll d = 0; d < m; d++) {
+          if (assign[d] >= 0) continue;
+          if (tv1[d] && !tv2[d]) {
+            assign[d] = pid;
+            cnt1++;
+          }else if (tv2[d] && !tv1[d]) {
+            assign[d] = pid2;
+            cnt2++;
+          }
+        }
+        for (ll d = 0; d < m; d++) {
+          if (assign[d] >= 0) continue;
+          if (tv1[d] && cnt1 < maxdd) {
+            assign[d] = pid;
+            cnt1++;
+          }else if (tv2[d] && cnt2 < maxdd) {
+            assign[d] = pid2;
+            cnt2++;
+          }
+        }
+        i++;
       }
-      for (ll d : aD[pid]) {
-        if (assign[d] >= 0) continue;
-        if (cnt++ == maxdd) break;
-        assign[d] = pid;
-      }
+      DLOGK(i, assign);
     }
     return assign;
   };
