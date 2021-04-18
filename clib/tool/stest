@@ -3,7 +3,8 @@
 # stest -- test with samples
 
 import subprocess, sys, os, re, time, argparse
-from util import Util, UtilError, warn, die
+import util
+from util import UtilError, warn, die
 
 fDoubleErr = './stest-double'
 
@@ -11,18 +12,18 @@ def testFiles(ids, dir):
     if not ids:
         ids = []
         for f in os.listdir(dir):
-            id = Util.id_in_fname(f)
+            id = util.id_in_fname(f)
             if id is not None and id not in ids:
                 ids.append(id)
         ids.sort()
     ret = []
     for id in ids:
-        ipath = f'{dir}/{Util.in_file(id)}'
+        ipath = f'{dir}/{util.in_file(id)}'
         if not os.path.exists(ipath):
             die(f'FATAL: {ipath} not found.')
-        c_apath = f'{dir}/{Util.exp_file(id)}'
+        c_apath = f'{dir}/{util.exp_file(id)}'
         if os.path.exists(c_apath):
-            (apath, opath) = (c_apath, f'{dir}/{Util.act_file(id)}')
+            (apath, opath) = (c_apath, f'{dir}/{util.act_file(id)}')
         else:
             (apath, opath) = (None, '/dev/null')
         ret.append((ipath, apath, opath))
@@ -32,7 +33,7 @@ def main():
     args = commandLineArgs()
     retCode = 0
     diffRes = []
-    prec = Util.get_prec(args.double_one, not args.no_modify_precision)
+    prec = util.get_prec(args.double_one, not args.no_modify_precision)
     lab_double = '' if prec is None else ' (double)'
     for (ipath, apath, opath) in testFiles(args.id, '.'):
         with  open(ipath, 'r', encoding='utf-8') as fp, \
@@ -57,7 +58,7 @@ def main():
         with open(apath) as afp, open(opath) as ofp:
             sa = afp.read()
             so = ofp.read()
-        match = Util.compare_answer(sa, so, prec=prec,
+        match = util.compare_answer(sa, so, prec=prec,
                                     ignoreSpace=not args.no_ignore_space)
         if not match:
             diffRes.append((apath, opath));
@@ -70,8 +71,8 @@ def main():
     if diffRes:
         if not args.no_show_wrong_answer:
             for (apath, opath) in diffRes:
-                Util.print_answer(apath)
-                Util.print_answer(opath)
+                util.print_answer(apath)
+                util.print_answer(opath)
     sys.exit(retCode)
 
 def commandLineArgs():

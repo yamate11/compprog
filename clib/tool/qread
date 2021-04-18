@@ -1,54 +1,20 @@
 #!/usr/bin/env python3
 
-import requests, sys, argparse, os, re, pickle, datetime
+import sys, argparse, os, re
 from bs4 import BeautifulSoup
-from urllib.parse import unquote
-from util import Util, warn, die
+import util
+from util import warn, die, getPage
 
 args = None
-sess = None
 fKeep = None
 contestName = None
-
-topDir = f'{os.environ["HOME"]}/WinHome/bytime/atCoder1710'
-cookiesFile = f'{topDir}/.cookies'
-
-def getPage(url):
-    r = sess.get(url)
-    if r.status_code != requests.codes.ok:
-        die(f'Failed to get page {url}')
-    r.encoding = 'UTF-8'
-    return r.text
-
-def doLogin():
-    url = 'https://atcoder.jp/login?continue=https%3A%2F%2Fatcoder.jp%2Fhome'
-    loginPage = getPage(url)
-    soup = BeautifulSoup(loginPage, 'lxml')
-    sch = soup.find_all(attrs={'name': 'csrf_token'})
-    if not sch:
-        die(f'find_all: no csrf_token')
-    csrf_token = sch[0]['value']
-    dict = {'username': 'yamate11', 'password': 'picture19river',
-            'csrf_token': csrf_token};
-    r = sess.post(url, data=dict);
-    if r.status_code != requests.codes.ok:
-        die(f'post: status_code: {r.status_code}')
-    with open(cookiesFile, 'wb') as wfp:
-        pickle.dump(sess.cookies, wfp)
-
-def login():
-    lim = datetime.datetime.now().timestamp() - 3600*24*7
-    if not os.path.exists(cookiesFile) or os.stat(cookiesFile).st_mtime < lim:
-        return doLogin()
-    with open(cookiesFile, 'rb') as fp:
-        sess.cookies.update(pickle.load(fp))
 
 def conflictFiles(qdict):
     files = []
     for d in qdict:
         if not os.path.isdir(d): continue
         for f in os.listdir(d):
-            if f in ['q.html', 'Makefile', 'cans.cc'] or Util.id_in_fname(f):
+            if f in ['q.html', 'Makefile', 'cans.cc'] or util.id_in_fname(f):
                 files.append(f'{d}/{f}')
     return files
 
@@ -98,8 +64,8 @@ def extractEg(qid, page):
         sub(tag, r'(?:Sample\s*Output|出力例)\s*(\d+)', outs)
     for i in ins:
         if i not in outs: continue
-        infile  = f'{qid}/{Util.in_file(i)}'
-        outfile = f'{qid}/{Util.exp_file(i)}'
+        infile  = f'{qid}/{util.in_file(i)}'
+        outfile = f'{qid}/{util.exp_file(i)}'
         if fKeep and (os.path.exists(infile) or os.path.exists(outfile)):
             continue
         with open(infile, 'w') as wfp:
@@ -200,7 +166,29 @@ def getContestName(name):
     return os.path.basename(os.getcwd())
 
 def main():
-    global args, fKeep, sess, contestName
+    global args, fKeep, contestName
+    args = parseArgs()
+
+    if not args.quest and not args.all_questions:
+        die('No question is specified.')
+    contestName = getContestName(args.contest)
+
+    qdict = quest()
+
+    if args.existing:
+        fKeep = args.existing[0] == 'k'
+    else:
+        files = conflictFiles(qdict)
+        if files:
+            die('You need to specify --existing '
+                + 'because the following files exist: '
+                + ' '.join(files))
+        fKeep = True   # We really do not need it, but just in case.
+
+    for q in qdict:
+        doQuest(q, f'https://atcoder.jp{qdict[q]}')
+
+def parseArgs():
     parser = argparse.ArgumentParser(
         description='''Reads AtCoder questions, extracts input/output examples,
         makes a makefile and cans.cc.
@@ -224,27 +212,6 @@ def main():
     parser.add_argument(
         'quest', type=str, nargs='*',
         help='question identifier such as a or f')
-    args = parser.parse_args()
-
-    if not args.quest and not args.all_questions:
-        die('No question is specified.')
-    contestName = getContestName(args.contest)
-
-    sess = requests.Session()
-    login()
-    qdict = quest()
-
-    if args.existing:
-        fKeep = args.existing[0] == 'k'
-    else:
-        files = conflictFiles(qdict)
-        if files:
-            die('You need to specify --existing '
-                + 'because the following files exist: '
-                + ' '.join(files))
-        fKeep = True   # We really do not need it, but just in case.
-
-    for q in qdict:
-        doQuest(q, f'https://atcoder.jp{qdict[q]}')
+    return parser.parse_args()
 
 main()

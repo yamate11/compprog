@@ -3,7 +3,8 @@
 import argparse, subprocess, os, sys, queue, time
 from threading import Timer, Thread, Lock
 sys.path.append('/home/y-tanabe/WinHome/bytime/atCoder1710/clib/tool')
-from util import Util, warn, die, debug
+from util import warn, die, debug
+import util
 
 args = None
 end_mark = '^__=end=__^'
@@ -18,14 +19,14 @@ def getCeID(ce):
         if os.path.exists(p): die(f'{p} exists.')
 
     if ce:
-        chk(Util.in_file(ce))
-        chk(Util.exp_file(ce))
+        chk(util.in_file(ce))
+        chk(util.exp_file(ce))
         return ce
     i = 1
     while True:
         ce = f'x{i}'
-        if not (os.path.exists(Util.in_file(ce))
-                or os.path.exists(Util.exp_file(ce))):
+        if not (os.path.exists(util.in_file(ce))
+                or os.path.exists(util.exp_file(ce))):
             break
         i += 1
     return str(ce)
@@ -159,7 +160,7 @@ class IndepInOut(InOut):
 
     def run_either(self, s_question, cmd, ss):
         try:
-            (rc, results) = Util.run(cmd, input=s_question,
+            (rc, results) = util.run(cmd, input=s_question,
                                      show_stderr=ss, timeout=args.timeout)
             if rc != 0:
                 return (None, 'died')
@@ -267,7 +268,7 @@ def run_prgms(dio, s_question, prec):
         (s_naive, mt) = dio.run_naive(s_question)
         if s_naive is None:
             return (f'naive program has {mt}.', None, None)
-        elif not Util.compare_answer(s_body, s_naive, prec=prec,
+        elif not util.compare_answer(s_body, s_naive, prec=prec,
                                      ignoreSpace=not args.no_ignore_space):
             return ('results differ.', s_body, s_naive)
         else:
@@ -276,7 +277,7 @@ def run_prgms(dio, s_question, prec):
 def main_loop():
     global rep_count
     ceID = getCeID(args.ce)
-    prec = Util.get_prec(args.double_one, not args.no_modify_precision)
+    prec = util.get_prec(args.double_one, not args.no_modify_precision)
     with get_Gen_object() as gio, get_IO_object() as dio:
         for i in range(args.repeat):
             try:
@@ -288,19 +289,19 @@ def main_loop():
             (msg, s_body, s_naive) = run_prgms(dio, s_question, prec)
             if msg is not None:
                 warn(f'\nFATAL: id = {ceID}: {msg}')
-                warn(f'-- input ({Util.in_file(ceID)}) --')
+                warn(f'-- input ({util.in_file(ceID)}) --')
                 warn(s_question.strip())
-                with open(Util.in_file(ceID), 'w') as fp:
+                with open(util.in_file(ceID), 'w') as fp:
                     print(s_question, file=fp, end='')
                 if s_naive is not None:
                     if not args.judge:
-                        with open(Util.exp_file(ceID), 'w') as fp:
+                        with open(util.exp_file(ceID), 'w') as fp:
                             print(s_naive, file=fp, end='')
-                        Util.print_answer(Util.exp_file(ceID))
+                        util.print_answer(util.exp_file(ceID))
                     if s_body is not None:
-                        with open(Util.act_file(ceID), 'w') as ofp:
+                        with open(util.act_file(ceID), 'w') as ofp:
                             print(s_body, file=ofp, end='')
-                        Util.print_answer(Util.act_file(ceID))
+                        util.print_answer(util.act_file(ceID))
                 return
     warn('\nNo problems were found.')
                 
