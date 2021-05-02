@@ -26,7 +26,7 @@ endif
 
 CXXFLAGS = $(DEBUGFLAGS) $(CMPNAIVEFLAGS) $(CXXCOMMONFLAGS) 
 
-all: cans
+all: cans dynSegTree
 
 clean:
 	$(RM) cans.o cans cans.exe *~ *.stackdump core

@@ -2,38 +2,479 @@
 #include <cassert>
 typedef long long int ll;
 using namespace std;
+// #include <atcoder/all>
+// using namespace atcoder;
 
-// @@ !! LIM(mod)
-// --> f:gcd mod
-// ---- inserted function gcd from util.cc
-// g = eGCD(a, b, s, t)  --->  sa + tb = g
-ll eGCD(ll a, ll b, ll& s, ll& t) {
-  if (a == 0) {
-    s = 0;
-    t = 1;
-    return b;
+// @@ !! LIM(polynomial mod debug)
+// --> f:<< polynomial f:gcd f:intDiv mod debug
+// ---- inserted function << from util.cc
+template <typename T1, typename T2>
+ostream& operator<< (ostream& os, const pair<T1,T2>& p) {
+  os << "(" << p.first << ", " << p.second << ")";
+  return os;
+}
+
+template <typename T1, typename T2, typename T3>
+ostream& operator<< (ostream& os, const tuple<T1,T2,T3>& t) {
+  os << "(" << get<0>(t) << ", " << get<1>(t)
+     << ", " << get<2>(t) << ")";
+  return os;
+}
+
+template <typename T1, typename T2, typename T3, typename T4>
+ostream& operator<< (ostream& os, const tuple<T1,T2,T3,T4>& t) {
+  os << "(" << get<0>(t) << ", " << get<1>(t)
+     << ", " << get<2>(t) << ", " << get<3>(t) << ")";
+  return os;
+}
+
+template <typename T>
+ostream& operator<< (ostream& os, const vector<T>& v) {
+  os << '[';
+  for (auto it = v.begin(); it != v.end(); it++) {
+    if (it != v.begin()) os << ", ";
+    os << *it;
   }
-  ll u = 0;
-  ll g = eGCD(b % a, a, t, u);
-  s = u - (b / a) * t;
-  return g;
+  os << ']';
+
+  return os;
 }
 
-// gcd(0, x) = x, gcd(-x, y) = gcd(x, y)
-ll gcd(ll a, ll b) {
-  ll dummy1 = 0;
-  ll dummy2 = 0;
-  return eGCD(abs(a), abs(b), dummy1, dummy2);
+template <typename T, typename C>
+ostream& operator<< (ostream& os, const set<T, C>& v) {
+  os << '{';
+  for (auto it = v.begin(); it != v.end(); it++) {
+    if (it != v.begin()) os << ", ";
+    os << *it;
+  }
+  os << '}';
+
+  return os;
 }
+
+template <typename T, typename C>
+ostream& operator<< (ostream& os, const unordered_set<T, C>& v) {
+  os << '{';
+  for (auto it = v.begin(); it != v.end(); it++) {
+    if (it != v.begin()) os << ", ";
+    os << *it;
+  }
+  os << '}';
+
+  return os;
+}
+
+template <typename T, typename C>
+ostream& operator<< (ostream& os, const multiset<T, C>& v) {
+  os << '{';
+  for (auto it = v.begin(); it != v.end(); it++) {
+    if (it != v.begin()) os << ", ";
+    os << *it;
+  }
+  os << '}';
+
+  return os;
+}
+
+template <typename T1, typename T2, typename C>
+ostream& operator<< (ostream& os, const map<T1, T2, C>& mp) {
+  os << '[';
+  for (auto it = mp.begin(); it != mp.end(); it++) {
+    if (it != mp.begin()) os << ", ";
+    os << it->first << ": " << it->second;
+  }
+  os << ']';
+
+  return os;
+}
+
+template <typename T1, typename T2, typename C>
+ostream& operator<< (ostream& os, const unordered_map<T1, T2, C>& mp) {
+  os << '[';
+  for (auto it = mp.begin(); it != mp.end(); it++) {
+    if (it != mp.begin()) os << ", ";
+    os << it->first << ": " << it->second;
+  }
+  os << ']';
+
+  return os;
+}
+
+template <typename T, typename T2>
+ostream& operator<< (ostream& os, const queue<T, T2>& orig) {
+  queue<T, T2> que(orig);
+  bool first = true;
+  os << '[';
+  while (!que.empty()) {
+    T x = que.front(); que.pop();
+    if (!first) os << ", ";
+    os << x;
+    first = false;
+  }
+  return os << ']';
+}
+
+template <typename T, typename T2>
+ostream& operator<< (ostream& os, const deque<T, T2>& orig) {
+  deque<T, T2> que(orig);
+  bool first = true;
+  os << '[';
+  while (!que.empty()) {
+    T x = que.front(); que.pop_front();
+    if (!first) os << ", ";
+    os << x;
+    first = false;
+  }
+  return os << ']';
+}
+
+template <typename T, typename T2, typename T3>
+ostream& operator<< (ostream& os, const priority_queue<T, T2, T3>& orig) {
+  priority_queue<T, T2, T3> pq(orig);
+  bool first = true;
+  os << '[';
+  while (!pq.empty()) {
+    T x = pq.top(); pq.pop();
+    if (!first) os << ", ";
+    os << x;
+    first = false;
+  }
+  return os << ']';
+}
+
+template <typename T>
+ostream& operator<< (ostream& os, const stack<T>& st) {
+  stack<T> tmp(st);
+  os << '[';
+  bool first = true;
+  while (!tmp.empty()) {
+    T& t = tmp.top();
+    if (first) first = false;
+    else os << ", ";
+    os << t;
+    tmp.pop();
+  }
+  os << ']';
+  return os;
+}
+
+#if __cplusplus >= 201703L
+template <typename T>
+ostream& operator<< (ostream& os, const optional<T>& t) {
+  if (t.has_value()) os << "v(" << t.value() << ")";
+  else               os << "nullopt";
+  return os;
+}
+#endif
+
+ostream& operator<< (ostream& os, int8_t x) {
+  os << (int32_t)x;
+  return os;
+}
+
+// ---- end <<
+// ---- inserted library file polynomial.cc
+
+template<typename T>
+struct Polynomial {
+  vector<T> coef;
+
+  int degree() const { return coef.size() - 1; }
+
+  Polynomial() : coef({(T)0}) {}
+  Polynomial(T t) : coef({t}) {}
+
+  Polynomial(const vector<T> coef_) : coef(coef_) { adj_degree(); }
+  Polynomial(vector<T>&& coef_) : coef(move(coef_)) { adj_degree(); }
+  Polynomial(initializer_list<T> init) : coef(init) { adj_degree(); }
+
+  Polynomial(const Polynomial& o) : coef(o.coef) {}
+  Polynomial(Polynomial&& o) : coef(move(o.coef)) {}
+  Polynomial& operator =(const Polynomial& o) {
+    coef = o.coef;
+    return *this;
+  }
+  Polynomial& operator =(Polynomial&& o) {
+    coef = move(o.coef);
+    return *this;
+  }
+  Polynomial& operator =(T t) {
+    coef.resize(1);
+    coef[0] = t;
+    return *this;
+  }
+
+  void adj_degree() {
+    while (coef.size() > 1 && coef.back() == (T)0) coef.pop_back();
+  }
+
+  Polynomial& operator +=(const Polynomial& o) {
+    int deg = max(degree(), o.degree());
+    if ((int)coef.size() < deg + 1) { coef.resize(deg + 1); }
+    for (int i = 0; i <= o.degree(); i++) { coef[i] += o.coef[i]; }
+    adj_degree();
+    return *this;
+  }
+
+  Polynomial& operator -=(const Polynomial& o) {
+    int deg = max(degree(), o.degree());
+    if ((int)coef.size() < deg + 1) { coef.resize(deg + 1); }
+    for (int i = 0; i <= o.degree(); i++) { coef[i] -= o.coef[i]; }
+    adj_degree();
+    return *this;
+  }
+
+  Polynomial& operator *=(const Polynomial& o) {
+    int old_degree = degree();
+    int degree = old_degree + o.degree();
+    auto prev = move(coef);
+    coef = vector<T>(degree + 1);
+    for (int i = 0; i <= degree; i++) {
+      for (int j = max(0, i - o.degree()); j <= min(i, old_degree); j++) {
+        coef[i] += prev[j] * o.coef[i - j];
+      }
+    }
+    return *this;
+  }
+  
+  Polynomial operator +(const Polynomial& o) const {
+    return Polynomial(*this) += o;
+  }
+  Polynomial operator -(const Polynomial& o) const {
+    return Polynomial(*this) -= o;
+  }
+  Polynomial operator *(const Polynomial& o) const {
+    return Polynomial(*this) *= o;
+  }
+  Polynomial operator -() const {
+    return Polynomial() -= *this;
+  }
+
+  bool operator ==(const Polynomial& o) const { return coef == o.coef; }
+  bool operator !=(const Polynomial& o) const { return coef != o.coef; }
+
+  static Polynomial get_X() {
+    return Polynomial({(T)0, (T)1});
+  }
+
+  pair<Polynomial, T> _divide_linear(T c) const {
+    vector<T> new_coef(coef.size() - 1);
+    ll i = coef.size() - 1;
+    ll x = coef[i];
+    while (--i >= 0) {
+      new_coef[i] = x;
+      x = coef[i] + x * c;
+    }
+    return {Polynomial(new_coef), x};    
+  }
+
+  // T must be a field
+  pair<Polynomial, Polynomial> divmod(Polynomial q) const {
+    int this_deg = degree();
+    int q_deg = q.degree();
+    if (q_deg == 0) {
+      return { *this * ((T)1 / q.coef[0]), Polynomial((T)0) };
+    }
+    if (q_deg == 1) {
+      assert(((q.coef[0] / q.coef[1]) * q.coef[1] == q.coef[0],
+              "T must be a field for divmod"));
+      auto [d, m] = _divide_linear(-q.coef[0] / q.coef[1]);
+      return {d, Polynomial(m)};
+    }
+    int div_deg = this_deg - q_deg;
+    if (div_deg < 0) {
+      return { Polynomial((T)0), *this };
+    }
+    int mod_deg = q_deg - 1;
+    vector<T> div_coef(div_deg + 1);
+    vector<T> mod_coef(coef);
+    // DLOGK(div_deg, mod_deg);
+    // DLOGK(div_coef, mod_coef);
+    for (int i = 0; i <= div_deg; i++) {
+      T c = mod_coef[this_deg - i] / q.coef[q_deg];
+      div_coef[div_deg - i] = c;
+      for (int j = 0; j <= q_deg; j++) {
+        mod_coef[this_deg - i - j] -= c * q.coef[q_deg - j];
+      }
+      assert(mod_coef[this_deg - i] == (T)0 && "T must be a field for divmod");
+      // DLOGK(i, div_coef, mod_coef);
+    }
+    mod_coef.resize(mod_deg + 1);
+    return { Polynomial(div_coef), Polynomial(mod_coef) };
+  }
+
+};
+
+template<typename T>
+Polynomial<T> operator +(T t, const Polynomial<T>& p) {
+  return Polynomial<T>(t) + p;
+}
+template<typename T>
+Polynomial<T> operator -(T t, const Polynomial<T>& p) {
+  return Polynomial(t) - p;
+}
+template<typename T>
+Polynomial<T> operator *(T t, const Polynomial<T>& p) {
+  return Polynomial(t) * p;
+}
+template<typename T>
+Polynomial<T> operator +(const Polynomial<T>& p, T t) {
+  return p + Polynomial<T>(t);
+}
+template<typename T>
+Polynomial<T> operator -(const Polynomial<T>& p, T t) {
+  return p - Polynomial(t);
+}
+template<typename T>
+Polynomial<T> operator *(const Polynomial<T>& p, T t) {
+  return p * Polynomial(t);
+}
+
+template<typename T>
+ostream& operator<< (ostream& os, const Polynomial<T>& p) {
+  os << p.coef;
+  return os;
+}
+
+// ---- end polynomial.cc
+// ---- inserted function gcd from util.cc
+
+tuple<ll, ll, ll> mut_div(ll a, ll b, ll c, bool eff_c = true) {
+  // auto [g, s, t] = mut_div(a, b, c, eff_c)
+  //    If eff_c is true (default),
+  //        g == gcd(|a|, |b|) and as + bt == c, if such s,t exists
+  //        (g, s, t) == (-1, -1, -1)            otherwise
+  //    If eff_c is false,                                 
+  //        g == gcd(|a|, |b|) and as + bt == g           
+  //    N.b.  gcd(0, t) == gcd(t, 0) == t.
+  if (a == 0) {
+    if (eff_c) {
+      if (c % b != 0) return {-1, -1, -1};
+      else            return {abs(b), 0, c / b};
+    }else {
+      if (b < 0) return {-b, 0, -1};
+      else       return { b, 0,  1};
+    }
+  }else {
+    auto [g, t, u] = mut_div(b % a, a, c, eff_c);
+    // DLOGK(b%a, a, c, g, t, u);
+    if (g == -1) return {-1, -1, -1};
+    return {g, u - (b / a) * t, t};
+  }
+}
+
+// auto [g, s, t] = eGCD(a, b)  --->  sa + tb == g == gcd(|a|, |b|)
+//    N.b.  gcd(0, t) == gcd(t, 0) == t.
+tuple<ll, ll, ll> eGCD(ll a, ll b) { return mut_div(a, b, 0, false); }
+
+pair<ll, ll> crt_sub(ll a1, ll x1, ll a2, ll x2) {
+  // DLOGKL("crt_sub", a1, x1, a2, x2);
+  a1 = a1 % x1;
+  a2 = a2 % x2;
+  auto [g, s, t] = mut_div(x1, -x2, a2 - a1);
+  // DLOGK(g, s, t);
+  if (g == -1) return {-1, -1};
+  ll z = x1 / g * x2;
+  // DLOGK(z);
+  s = s % (x2 / g);
+  ll r = (x1 * s + a1) % z;
+  // DLOGK(r);
+  if (r < 0) r += z;
+  // DLOGK(r);
+  return {r, z};
+};
+
+// Chinese Remainder Theorem
+//
+//    r = crt(a1, x1, a2, x2)
+//    ==>   r = a1 (mod x1);  r = a2 (mod x2);  0 <= r < lcm(x1, x2)
+//    If no such r exists, returns -1
+//    Note: x1 and x2 should >= 1.  a1 and a2 can be negative or zero.
+//
+//    r = crt(as, xs)
+//    ==>   for all i. r = as[i] (mod xs[i]); 0 <= r < lcm(xs)
+//    If no such r exists, returns -1
+//    Note: xs[i] should >= 1.  as[i] can be negative or zero.
+//          It should hold: len(xs) == len(as) > 0
+
+ll crt(ll a1, ll x1, ll a2, ll x2) { return crt_sub(a1, x1, a2, x2).first; }
+
+ll crt(vector<ll> as, vector<ll> xs) {
+  // DLOGKL("crt", as, xs);
+  assert(xs.size() == as.size() && xs.size() > 0);
+  ll r = as[0];
+  ll z = xs[0];
+  for (size_t i = 1; i < xs.size(); i++) {
+    // DLOGK(i, r, z, as[i], xs[i]);
+    tie(r, z) = crt_sub(r, z, as[i], xs[i]);
+    // DLOGK(r, z);
+    if (r == -1) return -1;
+  }
+  return r;
+}
+
 // ---- end gcd
+// ---- inserted function intDiv from util.cc
+// imod, divFloor, divCeil
+
+// imod(x, y) : remainder of x for y
+// for y > 0:
+//   imod(x, y)  = r where x = dy + r, 0 <= r < y
+//   imod(x, -y) = r where x = dy + r, 0 >= r > y
+// Thus, imod( 10,  7) =  3
+//       imod(-10,  7) =  4
+//       imod( 10, -7) = -4
+//       imod(-10, -7) = -3
+ll imod(ll x, ll y) {
+  ll v = x % y;
+  if ((x >= 0) == (y >= 0)) return v;
+  else                      return v == 0 ? 0 : v + y;
+}
+
+// Integer Division; regardless pos/neg
+ll divFloor(ll x, ll y) {
+  if (x > 0) {
+    if (y > 0) return x / y;
+    else       return (x - y - 1) / y;
+  }else {
+    if (y > 0) return (x - y + 1) / y;
+    else       return x / y;
+  }
+}
+
+ll divCeil(ll x, ll y) {
+  if (x > 0) {
+    if (y > 0) return (x + y - 1) / y;
+    else       return x / y;
+  }else {
+    if (y > 0) return x / y;
+    else       return (x + y + 1) / y;
+  }
+}
+//   Just a note.  For d \in Z and t \in R,
+//       d < t <=> d < ceil(t),     d <= t <=> d <= floor(t),
+//       d > t <=> d > floor(t),    d >= t <=> d >= ceil(t).
+
+// ---- end intDiv
 // ---- inserted library file mod.cc
 
-ll MOD = 1e9 + 7;
-// ll MOD = 998244353;
+/*
+  You may want to put something like:
+#define CONSTANT_MOD (1e9 + 7)
+#define CONSTANT_MOD 998244353
+  in the header part (outside of library paste area)
+ */
 
 struct Fp {
+#if defined(CONSTANT_MOD)
+  static const ll MOD = CONSTANT_MOD;
+#else
+  static ll MOD;
+#endif
+
   ll val;
 
+  /*
   ll _calc_from_ll(ll t = 0) {
     if      (t >= MOD)  return t % MOD;
     else if (t >= 0)    return t;
@@ -44,12 +485,13 @@ struct Fp {
       else        return v + MOD;
     }
   }
+  */
 
-  Fp(ll t = 0) : val(_calc_from_ll(t)) {}
+  Fp(ll t = 0) : val(imod(t, MOD)) {}
   Fp(const Fp& t) : val(t.val) {}
   Fp& operator =(const Fp& t) { val = t.val; return *this; }
-  Fp& operator =(ll t) { val = _calc_from_ll(t); return *this; }
-  Fp& operator =(int t) { val = _calc_from_ll(t); return *this; }
+  Fp& operator =(ll t) { val = imod(t, MOD); return *this; }
+  Fp& operator =(int t) { val = imod(t, MOD); return *this; }
 
   Fp& operator +=(const Fp& t) {
     val += t.val;
@@ -73,9 +515,7 @@ struct Fp {
       cerr << "inv() is called for zero." << endl;
       exit(1);
     }
-    ll u = 0;
-    ll v = 0;
-    eGCD(val, MOD, u, v);
+    auto [g, u, v] = eGCD(val, MOD);
     return Fp(u);
   }
 
@@ -145,52 +585,116 @@ public:
   }
 };
 
+#if !defined(CONSTANT_MOD)
+ll Fp::MOD = 1e9 + 7;
+// ll Fp::MOD = 998'244'353;
+// WARNING: You should not uncomment here.  Instead, write
+//    OUT OF LIBRARY PASTE AREA, such as in main():
+//                     Fp::MOD = 998'244'353;
+//    or whatever.  Or more preferably, use CONSTANT_MOD.
+#endif
+
 // ---- end mod.cc
+// ---- inserted library file debug.cc
+template <class... Args>
+string dbgFormat(const char* fmt, Args... args) {
+  size_t len = snprintf(nullptr, 0, fmt, args...);
+  char buf[len + 1];
+  snprintf(buf, len + 1, fmt, args...);
+  return string(buf);
+}
+
+template <class Head>
+void dbgLog(bool with_nl, Head&& head) {
+  cerr << head;
+  if (with_nl) cerr << endl;
+}
+
+template <class Head, class... Tail>
+void dbgLog(bool with_nl, Head&& head, Tail&&... tail)
+{
+  cerr << head << " ";
+  dbgLog(with_nl, forward<Tail>(tail)...);
+}
+
+#if DEBUG
+  #define DLOG(...)        dbgLog(true, __VA_ARGS__)
+  #define DLOGNNL(...)     dbgLog(false, __VA_ARGS__)
+  #define DFMT(...)        cerr << dbgFormat(__VA_ARGS__) << endl
+  #define DCALL(func, ...) func(__VA_ARGS__)
+#else
+  #define DLOG(...)
+  #define DLOGNNL(...)
+  #define DFMT(...)
+  #define DCALL(func, ...)
+#endif
+
+#if DEBUG_LIB
+  #define DLOG_LIB(...)        dbgLog(true, __VA_ARGS__)
+  #define DLOGNNL_LIB(...)     dbgLog(false, __VA_ARGS__)
+  #define DFMT_LIB(...)        cerr << dbgFormat(__VA_ARGS__) << endl
+  #define DCALL_LIB(func, ...) func(__VA_ARGS__)
+#else
+  #define DLOG_LIB(...)
+  #define DFMT_LIB(...)
+  #define DCALL_LIB(func, ...)
+#endif
+
+#define DUP1(E1)       #E1 "=", E1
+#define DUP2(E1,E2)    DUP1(E1), DUP1(E2)
+#define DUP3(E1,...)   DUP1(E1), DUP2(__VA_ARGS__)
+#define DUP4(E1,...)   DUP1(E1), DUP3(__VA_ARGS__)
+#define DUP5(E1,...)   DUP1(E1), DUP4(__VA_ARGS__)
+#define DUP6(E1,...)   DUP1(E1), DUP5(__VA_ARGS__)
+#define DUP7(E1,...)   DUP1(E1), DUP6(__VA_ARGS__)
+#define DUP8(E1,...)   DUP1(E1), DUP7(__VA_ARGS__)
+#define DUP9(E1,...)   DUP1(E1), DUP8(__VA_ARGS__)
+#define DUP10(E1,...)   DUP1(E1), DUP9(__VA_ARGS__)
+#define DUP11(E1,...)   DUP1(E1), DUP10(__VA_ARGS__)
+#define DUP12(E1,...)   DUP1(E1), DUP11(__VA_ARGS__)
+#define GET_MACRO(_1,_2,_3,_4,_5,_6,_7,_8,_9,_10,_11,_12,NAME,...) NAME
+#define DUP(...)          GET_MACRO(__VA_ARGS__, DUP12, DUP11, DUP10, DUP9, DUP8, DUP7, DUP6, DUP5, DUP4, DUP3, DUP2, DUP1)(__VA_ARGS__)
+#define DLOGK(...)        DLOG(DUP(__VA_ARGS__))
+#define DLOGKL(lab, ...)  DLOG(lab, DUP(__VA_ARGS__))
+
+// ---- end debug.cc
 // @@ !! LIM  -- end mark --
 
-int main(int argc, char *argv[]) {
+int main(/* int argc, char *argv[] */) {
   ios_base::sync_with_stdio(false);
   cin.tie(nullptr);
   cout << setprecision(20);
 
   ll p; cin >> p;
-  MOD = p;
-  vector<Fp> r(p), f(p+1), ans(p);
-  vector<ll> a(p);
-  for (ll i = 0; i < p; i++) {
-    ll z; cin >> z;
-    a.at(i) = z;
-  }
-  Comb cb(p-1);
-  r.at(0) = cb.fact(p-1) * ((p - 1) % 2 == 0 ? 1 : -1);
-  for (ll k = 1; k <= p - 1; k++) {
-    r.at(k) = r.at(k-1) * k / (k - 1 - (p - 1));
-  }
-  f.at(0) = 1;
-  for (ll i = 0; i < p; i++) {
-    vector<Fp> g(f);
-    for (ll j = p-1; j >= 0; j--) f.at(j+1) = f.at(j);
-    f.at(0) = 0;
-    for (ll j = p-1; j >= 0; j--) f.at(j) -= i * g.at(j);
-  }
-  for (ll k = 0; k < p; k++) {
-    if (a.at(k) == 0) continue;
-    vector<Fp> fk(p);
-    fk.at(p-1) = f.at(p);
-    assert(fk.at(p-1) == Fp(1));
-    for (ll j = p-2; j >= 0; j--) {
-      fk.at(j) = fk.at(j+1) * k + f.at(j+1);
-    }
-    assert(fk.at(0) * k + f.at(0) == Fp(0));
-    for (ll j = p-1; j >= 0; j--) {
-      ans.at(j) += fk.at(j) / r.at(k);
-    }
+  Fp::MOD = p;
+  vector<Fp> A(p);
+  for (ll i = 0; i < p; i++) cin >> A[i];
+  Comb cb(p - 1);
+  auto X = Polynomial<Fp>::get_X();
+  Polynomial<Fp> prod = Fp(1);
+  for (ll i = 0; i <= p-1; i++) prod *= X - Fp(i);
+  Polynomial<Fp> f;
+  for (ll i = 0; i <= p-1; i++) {
+    if (A[i] == Fp(0)) continue;
+    Fp c = cb.fact(i) * cb.fact(p-1 - i);
+    if ((p-1 - i) % 2 == 1) c = -c;
+    /*
+    auto [g, rem] = prod.divmod(X - Fp(i));
+    assert(rem == Polynomial<Fp>(Fp(0)));
+    */
+    auto [g, rem] = prod._divide_linear(Fp(i));
+    assert(rem == Fp(0));
+    g = (A[i] / c) * g;
+
+    DLOGK(i, g);
+    f += g;
   }
   for (ll i = 0; i < p; i++) {
-    if (i > 0) cout << " ";
-    cout << ans.at(i);
+    if (i <= f.degree()) cout << f.coef[i] << " ";
+    else cout << 0 << " ";
   }
   cout << endl;
+
   return 0;
 }
 

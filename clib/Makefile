@@ -1,8 +1,8 @@
 EXES = LinTr UnionFind binsearch bit board cht cmpNaive coordCompr \
        cumsum2d debug dijkstra dinic doubling fft fix ftwo geometry \
        guessPoly ipoint intervalSet matrix minCostFlow misc mod \
-       perm rerror rollingHash scc segTree sieve strSearch \
-       suffixArray tree trie util interactive
+       perm rerror rollingHash scc segTree dynSegTree sieve strSearch \
+       suffixArray tree trie util interactive polynomial
 
 CXX = g++-9
 CXXCOMMONFLAGS = -std=gnu++17 -Wall -Wno-format-security -Wshadow -fconcepts -DCMPNAIVE

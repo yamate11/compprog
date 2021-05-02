@@ -1,5 +1,6 @@
 import os, subprocess, sys, re, requests, pickle, datetime
 from urllib.parse import unquote
+from bs4 import BeautifulSoup
 
 topDir = '/home/y-tanabe/proj/compprog'
 

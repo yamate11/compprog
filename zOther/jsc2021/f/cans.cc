@@ -5,8 +5,8 @@ using namespace std;
 // #include <atcoder/all>
 // using namespace atcoder;
 
-// @@ !! LIM(segTree)
-// --> f:<< segTree
+// @@ !! LIM(f:<< debug)
+// --> f:<< debug
 // ---- inserted function << from util.cc
 template <typename T1, typename T2>
 ostream& operator<< (ostream& os, const pair<T1,T2>& p) {
@@ -173,290 +173,279 @@ ostream& operator<< (ostream& os, int8_t x) {
 }
 
 // ---- end <<
-// ---- inserted library file segTree.cc
+// ---- inserted library file debug.cc
+template <class... Args>
+string dbgFormat(const char* fmt, Args... args) {
+  size_t len = snprintf(nullptr, 0, fmt, args...);
+  char buf[len + 1];
+  snprintf(buf, len + 1, fmt, args...);
+  return string(buf);
+}
 
-// It seems that we should keep the size power of two,
-// considering the binary search.
+template <class Head>
+void dbgLog(bool with_nl, Head&& head) {
+  cerr << head;
+  if (with_nl) cerr << endl;
+}
 
-template <typename DAT, typename OP,
-	  typename Fadd, typename Fcomp, typename Fappl> 
-struct SegTree {
-  int size;	     // power of two; >= 2
-  int height;        // size = 1 << height;
-  vector<DAT> node;  // vector of size 2*size.
-                     // 0                 : unused
-                     // 1    ... size-1   : interval
-                     // size ... 2*size-1 : leaf
-  vector<OP> susp;   // vector of size size.
-                     // suspended operation FOR CHILDREN
-                     // (already applied to this node)
+template <class Head, class... Tail>
+void dbgLog(bool with_nl, Head&& head, Tail&&... tail)
+{
+  cerr << head << " ";
+  dbgLog(with_nl, forward<Tail>(tail)...);
+}
+
+#if DEBUG
+  #define DLOG(...)        dbgLog(true, __VA_ARGS__)
+  #define DLOGNNL(...)     dbgLog(false, __VA_ARGS__)
+  #define DFMT(...)        cerr << dbgFormat(__VA_ARGS__) << endl
+  #define DCALL(func, ...) func(__VA_ARGS__)
+#else
+  #define DLOG(...)
+  #define DLOGNNL(...)
+  #define DFMT(...)
+  #define DCALL(func, ...)
+#endif
+
+#if DEBUG_LIB
+  #define DLOG_LIB(...)        dbgLog(true, __VA_ARGS__)
+  #define DLOGNNL_LIB(...)     dbgLog(false, __VA_ARGS__)
+  #define DFMT_LIB(...)        cerr << dbgFormat(__VA_ARGS__) << endl
+  #define DCALL_LIB(func, ...) func(__VA_ARGS__)
+#else
+  #define DLOG_LIB(...)
+  #define DFMT_LIB(...)
+  #define DCALL_LIB(func, ...)
+#endif
+
+#define DUP1(E1)       #E1 "=", E1
+#define DUP2(E1,E2)    DUP1(E1), DUP1(E2)
+#define DUP3(E1,...)   DUP1(E1), DUP2(__VA_ARGS__)
+#define DUP4(E1,...)   DUP1(E1), DUP3(__VA_ARGS__)
+#define DUP5(E1,...)   DUP1(E1), DUP4(__VA_ARGS__)
+#define DUP6(E1,...)   DUP1(E1), DUP5(__VA_ARGS__)
+#define DUP7(E1,...)   DUP1(E1), DUP6(__VA_ARGS__)
+#define DUP8(E1,...)   DUP1(E1), DUP7(__VA_ARGS__)
+#define DUP9(E1,...)   DUP1(E1), DUP8(__VA_ARGS__)
+#define DUP10(E1,...)   DUP1(E1), DUP9(__VA_ARGS__)
+#define DUP11(E1,...)   DUP1(E1), DUP10(__VA_ARGS__)
+#define DUP12(E1,...)   DUP1(E1), DUP11(__VA_ARGS__)
+#define GET_MACRO(_1,_2,_3,_4,_5,_6,_7,_8,_9,_10,_11,_12,NAME,...) NAME
+#define DUP(...)          GET_MACRO(__VA_ARGS__, DUP12, DUP11, DUP10, DUP9, DUP8, DUP7, DUP6, DUP5, DUP4, DUP3, DUP2, DUP1)(__VA_ARGS__)
+#define DLOGK(...)        DLOG(DUP(__VA_ARGS__))
+#define DLOGKL(lab, ...)  DLOG(lab, DUP(__VA_ARGS__))
+
+// ---- end debug.cc
+// @@ !! LIM  -- end mark --
+
+template<typename DAT, typename OP> 
+struct Node {
+  // ll lo;
+  // ll hi;
+  DAT val;
+  OP op;
+  Node<DAT, OP> *lo_node;
+  Node<DAT, OP> *hi_node;
+  Node(/*ll lo_, ll hi_,*/ DAT val_, OP op_)
+    : /*lo(lo_), hi(hi_),*/ val(val_), op(op_) {}
+
+};
+
+template<typename DAT, typename OP,
+         typename Fadd, typename Fcomp, typename Fappl>
+struct DynSegTree {
+  /*int size;*/
+  int tot_lo;
+  int tot_hi;
+  int height;
+  Node<DAT, OP>* node;
   DAT unit_dat;
   OP unit_op;
   Fadd add;
   Fcomp comp;
   Fappl appl;
-  bool range_update;
-    
-  SegTree(DAT unit_dat_, OP unit_op_, Fadd add_, Fcomp comp_, Fappl appl_,
-	  bool range_update_)
-    // , vector<DAT> initdat) 
-    : unit_dat(unit_dat_), unit_op(unit_op_), add(add_), comp(comp_),
-      appl(appl_), range_update(range_update_) {}
 
-  void set_data(vector<DAT> initdat) {
-    if (initdat.size() <= 0) {
-      cerr << "the size of initial vector must be >= 1" << endl;
-      abort();
+  DynSegTree(ll lo, ll hi, DAT unit_dat_, OP unit_op_,
+             Fadd add_, Fcomp comp_, Fappl appl_)
+    : tot_lo(lo), tot_hi(hi),
+      unit_dat(unit_dat_), unit_op(unit_op_), add(add_), comp(comp_),
+      appl(appl_) {
+    node = new Node<DAT, OP>(/*lo_, hi_,*/ unit_dat, unit_op);
+  }
+
+  DAT node_query(Node<DAT, OP>* nd, ll lo, ll hi, ll left, ll right) {
+    if (!nd) return unit_dat;
+    if (hi <= left || right <= lo) return unit_dat;
+    if (left <= lo && hi <= right) {
+      return appl(hi - lo, nd->op, nd->val);
     }
-    if (initdat.size() == 1) {
-      height = 0;
+    ll mid = (lo + hi) / 2;
+    push(nd);
+    DAT val1 = node_query(nd->lo_node, lo, mid, left, right);
+    DAT val2 = node_query(nd->hi_node, mid, hi, left, right);
+    return appl(hi - lo, nd->op, add(val1, val2));
+  }
+
+  DAT query(ll left, ll right) {
+    return node_query(node, tot_lo, tot_hi, left, right);
+  }
+
+  void push(Node<DAT, OP>* nd) {
+    if (!nd->lo_node) {
+      nd->lo_node = new Node<DAT, OP>(unit_dat, nd->op);
     }else {
-      height = sizeof(int) * 8 - __builtin_clz(initdat.size() - 1);
+      nd->lo_node->op = comp(nd->op, nd->lo_node->op);
     }
-    size = 1 << height;
-    node.resize(2*size, unit_dat);
-    for (int i = 0; i < (int)initdat.size(); i++) {
-      node.at(size + i) = initdat.at(i);
+    if (!nd->hi_node) {
+      nd->hi_node = new Node<DAT, OP>(unit_dat, nd->op);
+    }else {
+      nd->hi_node->op = comp(nd->op, nd->hi_node->op);
     }
-    for (int t = size - 1; t >= 1; t--) {
-      node.at(t) = add(node.at(t<<1|0), node.at(t<<1|1));
+    nd->op = unit_op;
+  }
+
+  DAT node_update(Node<DAT, OP>* nd, ll lo, ll hi, ll left, ll right, OP f) {
+    if (hi <= left || right <= lo) return appl(hi - lo, nd->op, nd->val);
+    if (left <= lo && hi <= right) {
+      nd->op = comp(f, nd->op);
+      return appl(hi - lo, nd->op, nd->val);
     }
-    susp.resize(size, unit_op);
+    ll mid = (lo + hi) / 2;
+    push(nd);
+    DAT val1 = node_update(nd->lo_node, lo, mid, left, right, f);
+    DAT val2 = node_update(nd->hi_node, mid, hi, left, right, f);
+    nd->val = add(val1, val2);
+    DLOGK(lo, hi, val1, val2, nd->val);
+    return nd->val;
   }
 
-  void child_updated_sub(int k, int t) {
-    node.at(t) = appl(k, susp.at(t),
-		      add(node.at(t<<1|0), node.at(t<<1|1)));
+  void update(ll left, ll right, OP f) {
+    node_update(node, tot_lo, tot_hi, left, right, f);
   }
 
-  void child_updated(int l, int r) {
-    int k = 1;
-    r--;
-    while (l > 1) {
-      l >>= 1;
-      r >>= 1;
-      k *= 2;
-      child_updated_sub(k, l);
-      if (l < r) child_updated_sub(k, r);
-    }
-  }
-
-  void node_op(int i, int k, OP f) {
-    node.at(i) = appl(k, f, node.at(i));
-    if (i < size) susp.at(i) = comp(f, susp.at(i));
-  }
-
-  void push_one(int i, int k) {
-    node_op(i<<1|0, k / 2, susp.at(i));
-    node_op(i<<1|1, k / 2, susp.at(i));
-    susp.at(i) = unit_op;
-  }
-
-  void push_upto(int l, int r) {
-    for (int s = height; s >= 1; s--) {
-      int lz = l >> s;
-      int rz = (r-1) >> s;
-      int k = 1 << s;
-      push_one(lz, k);
-      if (lz < rz) push_one(rz, k);
-    }
-  }
-
-  DAT query(int l, int r) {
-    // DLOG("l=", l, "r=", r);
-    if (l >= r) return unit_dat;
-    DAT ret_l = unit_dat;
-    DAT ret_r = unit_dat;
-    // DLOG("1: ret_l=", ret_l, "ret_r", ret_r);
-    l += size;
-    r += size;
-    if (range_update) push_upto(l, r);
-    while (l < r) {
-      if (l & 1) {
-	ret_l = add(ret_l, node.at(l));
-	// DLOG("l=", l, "ret_l=", ret_l);
-	l++;
+  /* for debugging */
+  void show_nodes() {
+    ll seq = 1;
+    auto sub = [&](auto rF, ll this_seq,
+                   Node<DAT, OP>* nd, ll lo, ll hi) -> void {
+      ll ts1 = 0, ts2 = 0;
+      if (nd->lo_node) {
+        ts1 = seq++;
+        ts2 = seq++;
       }
-      if (r & 1) {
-	ret_r = add(node.at(r-1), ret_r);
-	// DLOG("r=", r, "ret_r=", ret_r);
+      cerr << "{" << this_seq << "} [" << lo << ", " << hi << ") val="
+           << nd->val << ", op=" << nd->op;
+      if (ts1 > 0) {
+        cerr << ", lo_node=" << ts1 << ", hi_node=" << ts2;
       }
-      l >>= 1;
-      r >>= 1;
-    }
-    DAT ret = add(ret_l, ret_r);
-    // DLOG("ret_l=", ret_l, "ret_r", ret_r, "ret", ret);
-    return ret;
+      cerr << endl;
+      if (ts1 > 0) {
+        ll mid = (lo + hi) / 2;
+        rF(rF, ts1, nd->lo_node, lo, mid);
+        rF(rF, ts2, nd->hi_node, mid, hi);
+      }
+    };
+    cerr << endl;
+    sub(sub, seq++, node, tot_lo, tot_hi);
   }
-
-  void single_update(int i, OP f) {
-    update(i, i+1, f);
-  }
-
-  void update(int l, int r, OP f) {
-    // DLOG("update. 1. node=", node);
-    if (l >= r) return;
-    if ((! range_update) && (l + 1 < r)) {
-      cerr << "FATAL: r - l >= 2 without setting range_update." << endl;
-      abort();
-    }
-    l += size;
-    r += size;
-    if (range_update) push_upto(l, r);
-    // DLOG("update. 2. node=", node);
-    int l0 = l, r0 = r;
-    int k = 1;
-    while (l < r) {
-      if (l & 1) {
-	node_op(l, k, f);
-	l++;
-      }
-      if (r & 1) {
-	node_op(r-1, k, f);
-      }
-      l >>= 1;
-      r >>= 1;
-      k *= 2;
-    }
-    // DLOG("update. 3. node=", node);
-    child_updated(l0, r0);
-    // DLOG("node=", node);
-    // DLOG("susp=", susp);
-  }
-
-
-  // Returns the least r >= l s.t. check(Add(v[l], ..., v[r-1])) == true,
-  //    where check :: DAT -> bool
-  // If there is no such r, returns -1.
-  int binsearch_l(const auto& check, int l) {
-    // DLOG("binsearch_l; l=", l);
-    int x = l + size;
-    DAT val = unit_dat;
-    if (check(val)) return l;
-    // DLOG("pt1");
-    if (range_update) push_upto(x, x+1);
-    int k = 1;
-    while (true) {
-      DAT t = add(val, node.at(x));
-      if (check(t)) break;
-      if (x & 1) {
-	val = t;
-	x++;
-	if (__builtin_popcount(x) == 1) return -1;
-      }
-      x >>= 1;
-      k <<= 1;
-      // DLOG("  x=", x, "val=", val);
-    }
-    // DLOG("pt2; x=", x, "k=", k);
-    while (k > 1) {
-      if (range_update) push_one(x, k);
-      DAT t = add(val, node.at(x<<1|0));
-      if (check(t)) {
-	x = (x<<1|0);
-      }else {
-	x = (x<<1|1);
-	val = t;
-      }
-      k >>= 1;
-    }
-    // DLOG("pt3; x=", x, "k=", k);
-    return x + 1 - size;
-  }
-
+  
 };
 
 template<typename DAT, typename OP>
-auto make_seg_tree(DAT unit_dat, OP unit_op,
-		   auto add, auto comp, auto appl,
-		   bool range_update)
-  -> SegTree<DAT, OP, decltype(add), decltype(comp), decltype(appl)> {
-  return SegTree(unit_dat, unit_op, add, comp, appl, range_update);
+auto make_dyn_seg_tree(ll lo_, ll hi_, DAT unit_dat, OP unit_op,
+                       auto add, auto comp, auto appl)
+  -> DynSegTree<DAT, OP, decltype(add), decltype(comp), decltype(appl)> {
+  return DynSegTree(lo_, hi_, unit_dat, unit_op, add, comp, appl);
 }
-
-// ---- end segTree.cc
-// @@ !! LIM  -- end mark --
 
 int main(/* int argc, char *argv[] */) {
   ios_base::sync_with_stdio(false);
   cin.tie(nullptr);
   cout << setprecision(20);
 
-  ll N, M, Q; cin >> N >> M >> Q;
-  vector<ll> T(Q), X(Q), Y(Q);
-  vector<ll> app;
-  app.push_back(0);
-  for (ll q = 0; q < Q; q++) {
-    ll t, x, y; cin >> t >> x >> y; x--;
-    T[q] = t;
-    X[q] = x;
-    Y[q] = y;
-    app.push_back(y);
+  if (0) {
+    using DAT = ll;
+    using OP = optional<ll>;
+    const DAT unit_dat = LLONG_MAX;
+    const OP unit_op = nullopt;
+    auto xAdd = [](DAT x, DAT y) -> DAT { return min(x, y); };
+    auto xComp = [](OP h, OP g) -> OP { return h.has_value() ? h : g; };
+    auto xAppl = [](int k, OP f, DAT x) -> DAT { return f.value_or(x); };
+    auto dst = make_dyn_seg_tree(0, 64, unit_dat, unit_op, xAdd, xComp, xAppl);
+
+    dst.update(11, 12, 100);
+    // dst.show_nodes();
+    dst.update(20, 21, 200);
+    // dst.show_nodes();
+    cout << dst.query(0, 64) << endl;
+    cout << dst.query(0, 15) << endl;
+    cout << dst.query(15, 30) << endl;
+    cout << dst.query(30, 45) << endl;
+
   }
-  sort(app.begin(), app.end());
-  app.erase(unique(app.begin(), app.end()), app.end());
-  ll sz = app.size();
-  map<ll, ll> idx;
-  for (ll i = 0; i < sz; i++) { idx[app[i]] = i; }
 
-  ll lim = 2e5 + 1;
-  vector<ll> init(lim);
+  if (1) {
+    ll N, M, Q; cin >> N >> M >> Q;
+    ll lim = 1e8 + 1;
+    using DAT = ll;
+    using OP = ll;
+    const DAT unit_dat = 0;
+    const OP unit_op = 0;
+    auto xAdd = [](DAT x, DAT y) -> DAT { return x + y; };
+    auto xAppl = [](int k, OP f, DAT x) -> DAT { return k * f + x; };
+    auto xComp = [](OP h, OP g) -> OP { return h + g; };
+    auto st_A_num = make_dyn_seg_tree(0, lim, unit_dat, unit_op, xAdd, xComp, xAppl);
+    auto st_B_num = make_dyn_seg_tree(0, lim, unit_dat, unit_op, xAdd, xComp, xAppl);
+    auto st_A_sum = make_dyn_seg_tree(0, lim, unit_dat, unit_op, xAdd, xComp, xAppl);
+    auto st_B_sum = make_dyn_seg_tree(0, lim, unit_dat, unit_op, xAdd, xComp, xAppl);
+    st_A_num.update(0, 1, N);
+    st_B_num.update(0, 1, M);
 
-  using DAT = ll;
-  using OP = ll;
-  const DAT unit_dat = 0;
-  const OP unit_op = 0;
-  auto xAdd = [](DAT x, DAT y) -> DAT { return x + y; };
-  auto xAppl = [](int k, OP f, DAT x) -> DAT { return k * f + x; };
-  auto xComp = [](OP h, OP g) -> OP { return h + g; };
-  auto st_A_num = make_seg_tree(unit_dat, unit_op, xAdd, xComp, xAppl, false);
-  auto st_B_num = make_seg_tree(unit_dat, unit_op, xAdd, xComp, xAppl, false);
-  auto st_A_sum = make_seg_tree(unit_dat, unit_op, xAdd, xComp, xAppl, false);
-  auto st_B_sum = make_seg_tree(unit_dat, unit_op, xAdd, xComp, xAppl, false);
-  st_A_sum.set_data(init);
-  st_B_sum.set_data(init);
-  init[0] = N;
-  st_A_num.set_data(init);
-  init[0] = M;
-  st_B_num.set_data(init);
+    vector<ll> A(N), B(M);
+    
 
-  vector<ll> A(N), B(M);
+    auto func = [&](auto& st_me_num, auto& st_me_sum,
+                    auto& st_you_num, auto& st_you_sum,
+                    auto& rec_me, ll x, ll vnew) -> ll {
+      ll vold = rec_me[x];
+      ll vmin = min(vold, vnew);
+      ll vmax = max(vold, vnew);
+      ll diff1 = st_you_num.query(0, vmin) * (vnew - vold);
+      ll sum_middle = st_you_sum.query(vmin, vmax);
+      ll sum_up = st_you_num.query(vmin, vmax) * vmax;
+      ll diff2 = sum_up - sum_middle;
+      if (vnew < vold) diff2 = -diff2;
+      ll diff = diff1 + diff2;
 
-  auto func = [&](auto& st_me_num, auto& st_me_sum,
-                  auto& st_you_num, auto& st_you_sum,
-                  auto& rec_me, ll x, ll vnew) -> ll {
-    ll vold = rec_me[x];
-    ll vmin = min(vold, vnew);
-    ll vmax = max(vold, vnew);
-    ll diff1 = st_you_num.query(idx[0], idx[vmin]) * (vnew - vold);
-    ll sum_middle = st_you_sum.query(idx[vmin], idx[vmax]);
-    ll sum_up = st_you_num.query(idx[vmin], idx[vmax]) * vmax;
-    ll diff2 = sum_up - sum_middle;
-    if (vnew < vold) diff2 = -diff2;
-    ll diff = diff1 + diff2;
+      st_me_num.update(vold, vold + 1, -1);
+      st_me_num.update(vnew, vnew + 1,  1);
+      st_me_sum.update(vold, vold + 1, -vold);
+      st_me_sum.update(vnew, vnew + 1,  vnew);
+      rec_me[x] = vnew;
 
-    st_me_num.update(idx[vold], idx[vold] + 1, -1);
-    st_me_num.update(idx[vnew], idx[vnew] + 1,  1);
-    st_me_sum.update(idx[vold], idx[vold] + 1, -vold);
-    st_me_sum.update(idx[vnew], idx[vnew] + 1,  vnew);
-    rec_me[x] = vnew;
+      return diff;
+    };
 
-    return diff;
-  };
+    ll sum = 0;
+    for (ll q = 0; q < Q; q++) {
+      ll t, x, y; cin >> t >> x >> y; x--;
+      ll diff = 0;
+      if (t == 1) {
+        diff = func(st_A_num, st_A_sum, st_B_num, st_B_sum, A, x, y);
+      }else {
+        diff = func(st_B_num, st_B_sum, st_A_num, st_A_sum, B, x, y);
+      }
+      sum += diff;
+      cout << sum << "\n";
 
-  ll sum = 0;
-  for (ll q = 0; q < Q; q++) {
-    ll t = T[q];
-    ll x = X[q];
-    ll y = Y[q];
-    ll diff = 0;
-    if (t == 1) {
-      diff = func(st_A_num, st_A_sum, st_B_num, st_B_sum, A, x, y);
-    }else {
-      diff = func(st_B_num, st_B_sum, st_A_num, st_A_sum, B, x, y);
+      for (ll p = 0; p <= 10; p++) {
+        DLOGK(p, st_A_num.query(p, p+1));
+        DLOGK(p, st_A_sum.query(p, p+1));
+        DLOGK(p, st_B_num.query(p, p+1));
+        DLOGK(p, st_B_sum.query(p, p+1));
+      }
+
     }
-    sum += diff;
-    cout << sum << "\n";
   }
 
   return 0;
