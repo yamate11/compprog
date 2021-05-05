@@ -203,16 +203,18 @@ istream& operator>> (istream& is, vector<T>& v) {
 }
 
 template <typename T>
-vector<T> read_vector(istream& is) {
-  size_t n; cin >> n;
-  return read_vector_n(is, n);
+vector<T> read_vector_n(istream& is, size_t n) {
+  vector<T> ret(n);
+  for (size_t i = 0; i < n; i++) {
+    is >> ret[i];
+  }
+  return ret;
 }
 
 template <typename T>
-vector<T> read_vector_n(istream& is, size_t n) {
-  vector<T> ret(n);
-  for (size_t i = 0; i < n; i++) cin >> ret[i];
-  return ret;
+vector<T> read_vector(istream& is) {
+  size_t n; is >> n;
+  return read_vector_n<T>(is, n);
 }
 // @@ !! FUNC END >>
 
@@ -686,6 +688,32 @@ int main() {
     }
     assert(sv_show(2, sv, 9) == "[1, 2, 3, 0, 1, 2, 2, 3, 0]");
   }
+
+  {
+    stringstream ss1("5 2 4 -1");
+    pair<int, int> p1, p2, q1({5, 2}), q2({4, -1});
+    ss1 >> p1 >> p2;
+    assert(p1 == q1 && p2 == q2);
+
+    stringstream ss2("4 0 5 2 abc 1 -9");
+    tuple<int, int, int> t31, ta31({4, 0, 5});
+    tuple<int, string, bool, int> t41, ta41({2, "abc", true, -9});
+    ss2 >> t31 >> t41;
+    assert(t31 == ta31 && t41 == ta41);
+
+    stringstream ss3("5 7 1 2 4 9");
+    vector<pair<int, int>> v1(3), va1({{5, 7}, {1, 2}, {4, 9}});
+    ss3 >> v1;
+    assert(v1 == va1);
+    stringstream ss4("5 7 1 2 4 9");
+    auto v2 = read_vector_n<pair<int, int>>(ss4, 3);
+    assert(v2 == va1);
+    stringstream ss5("3 5 7 1 2 4 9");
+    auto v3 = read_vector<pair<int, int>>(ss5);
+    assert(v3 == va1);
+    
+  }
+
 
   cout << "Test done." << endl;
   return 0;
