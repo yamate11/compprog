@@ -84,7 +84,7 @@ def makeMakefile(path):
 CXX = g++-9
 WARNINGS = -Wall -Wno-format-security -Wshadow -fconcepts
 BOOSTINCLIB = -I/home/y-tanabe/lib/boost_1_73_0
-ATCODERLIB = -I/home/y-tanabe/WinHome/bytime/atCoder1710/clib/ac-library
+ATCODERLIB = -I/home/y-tanabe/proj/compprog/clib/ac-library
 CXXCOMMONFLAGS = -std=gnu++17 $(WARNINGS) $(BOOSTINCLIB) $(ATCODERLIB)
 
 ifdef CMPNAIVE

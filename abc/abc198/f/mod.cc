@@ -2,13 +2,20 @@
 #include <cassert>
 typedef long long int ll;
 using namespace std;
-// #include <atcoder/all>
-// using namespace atcoder;
 
-#define CONSTANT_MOD 998244353
+/*
+  If you need performance, use const.  This can be done by 
+  placing 
 
-// @@ !! LIM(mod)
-// --> f:gcd f:intDiv mod
+	#define CONSTANT_MOD (1e9 + 7)
+
+  in the heading part.
+ */
+
+
+// Library Insertion Mark
+// @@ !! LIM(f:gcd f:intDiv f:power)
+// --> f:gcd f:intDiv f:power
 // ---- inserted function gcd from util.cc
 
 tuple<ll, ll, ll> mut_div(ll a, ll b, ll c, bool eff_c = true) {
@@ -123,12 +130,45 @@ ll divCeil(ll x, ll y) {
     else       return (x + y + 1) / y;
   }
 }
-//   Just a note.  For d \in Z and t \in R,
-//       d < t <=> d < ceil(t),     d <= t <=> d <= floor(t),
-//       d > t <=> d > floor(t),    d >= t <=> d >= ceil(t).
 
 // ---- end intDiv
-// ---- inserted library file mod.cc
+// ---- inserted function power from util.cc
+/* *** WARNING ***  
+      ll x = power(10, 12) 
+   does not work since it is interpreted as 
+      ll x = power<int>((int)10, 12)
+   Use power<ll>(10, 12) or power(10LL, 12).
+ */
+template<typename T>
+T power(T a, ll b) {
+  T twoPow = a;
+  T rv(1);
+  while (b > 0) {
+    if (b & 1LL) rv *= twoPow;
+    twoPow *= twoPow;
+    b >>= 1;
+  }
+  return rv;
+}
+
+// ad-hoc power function
+template<typename T, typename Op>
+T ah_power(T a, ll b, const T& unit_t, Op op) {
+  T two_pow = a;
+  T ret = unit_t;
+  while (b > 0) {
+    if (b & 1LL) ret = op(ret, two_pow);
+    two_pow = op(two_pow, two_pow);
+    b >>= 1;
+  }
+  return ret;
+}
+// ---- end power
+// @@ !! LIM  -- end mark --
+
+//////////////////////////////////////////////////////////////////////
+// See help of libins command for dependency spec syntax.
+// @@ !! BEGIN(f:gcd f:intDiv)
 
 /*
   You may want to put something like:
@@ -266,50 +306,110 @@ ll Fp::MOD = 1e9 + 7;
 //    or whatever.  Or more preferably, use CONSTANT_MOD.
 #endif
 
-// ---- end mod.cc
-// @@ !! LIM  -- end mark --
+// @@ !! END ---- mod.cc
 
-int main(/* int argc, char *argv[] */) {
-  ios_base::sync_with_stdio(false);
-  cin.tie(nullptr);
-  cout << setprecision(20);
+// ----------------------------------------------------------------------
+int main() {
 
-  ll S; cin >> S;
-  S -= 6;
+  {
+    Fp::MOD = 1e9 + 7;
+    auto [t13, t11, t12] = eGCD(15, 20);
+    assert(t13 == 5 && t13 == 15 * t11 + 20 * t12);
+    assert(gcd(1,7) == 1);
+    assert(gcd(8, 2) == 2);
+  }
 
-  /*
+  {
+    Fp::MOD = 7;
+    assert(Fp(0).val == 0);
+    assert(Fp(2).val == 2);
+    assert(Fp(7).val == 0);
+    assert(Fp(74).val == 4);
+    assert(Fp(-4).val == 3);
+    assert(Fp(-7).val == 0);
+    assert(Fp(-8).val == 6);
+    assert(Fp(-14).val == 0);
+    assert(Fp(-16).val == 5);
+    Fp x;
+    assert((ll)x == 0);
+    assert(x == Fp(0));
+    assert(Fp(2) == Fp(-5));
+    assert(Fp(2) != Fp(-2));
+    x = Fp(3);
+    x += Fp(5);
+    assert(x == Fp(1));
+    x += Fp(6);
+    assert(x == Fp(0));
+    x = Fp(2);
+    x -= Fp(5);
+    assert(x == Fp(4));
+    x -= Fp(4);
+    assert(x == Fp(0));
+    x = Fp(6);
+    x *= Fp(2);
+    assert(x == Fp(5));
+    assert(Fp(5).inv() == Fp(3));
+    assert(Fp(5) == Fp(-4).inv());
+    x = Fp(2);
+    x /= Fp(3);
+    assert(x == Fp(3));
+    assert(Fp(10) + Fp(20) == Fp(2));
+    assert(Fp(10) * Fp(-2) == Fp(1));
+    assert(Fp(5) - Fp(8) == Fp(4));
+    assert(Fp(4) / Fp(6) == Fp(3));
+    assert(-Fp(4) == Fp(3));
+  }
 
-  // Case 1: rotate = id
-  // binom(S + 5, 5)
-  Fp n1 = Fp(S+5) * Fp(S+4) * Fp(S+3) * Fp(S+2) * Fp(S+1) / Fp(120);
+  {
+    vector<Fp> v01(10);
+    for (int i = 0; i < 10; i++) v01.at(i) = power(Fp(3), i);
+    assert(v01 == vector<Fp>({Fp(1), Fp(3), Fp(2), Fp(6), Fp(4), Fp(5),
+	    Fp(1), Fp(3), Fp(2), Fp(6)}));
+    assert(power(2, 0) == 1);
+    assert(power(2, 15) == 32768);
+    assert(power(2, 16) == 65536);
+  }
 
-  // Case 2a: rotate axis: connecting the centers of two surfaces
-  //          rotation degree: pi/2, 3pi/2
-  // 4a + b + c = S
-  // sum of arith. seq with first_term = S + 1, comm_diff = -4
-  //     number_term = S/4 + 1
-  Fp numterm = S/4 + 1;
-  Fp n2a = numterm * (2 * Fp(S + 1) + (numterm - 1) * Fp(-4)) / Fp(2);
+  {
+    Fp::MOD = 7;
+    Fp z1(5);
+    Fp z2(100);
+    Fp z3(z2);
+    assert(z3.val == 2);
+    Fp z4(0);
+    z4 = z1;
+    assert(z4.val == 5);
+    Fp z5(0);
+    z5 = -8;
+    assert(z5.val == 6);
+    Fp z6 = LLONG_MAX;
+    assert(z6.val == LLONG_MAX % 7);
+    for (int i = 30; i < 37; i++) {
+      for (int j = -50; i < -43; j++) {
+	assert(Fp(i) + Fp(j) == i + Fp(j));
+	assert(Fp(i) * Fp(j) == Fp(i) * j);
+	assert(Fp(i) - Fp(j) == i - Fp(j));
+	if (Fp(j) != Fp(0)) {
+	  assert(Fp(i) / Fp(j) == Fp(i) / j);
+	}
+      }
+    }
+    stringstream ss1;
+    ss1 << Fp(-9);
+    assert(ss1.str() == "5");
+    stringstream ss2("10");
+    Fp xx; ss2 >> xx;
+    assert(xx == Fp(3));
+  }
 
-  // Case 2b: rotate axis: connecting the centers of two surfaces
-  //          rotation degree: pi
-  // 2a + 2b + c + d = S
-  Fp n2b = 
+  {
+    Fp::MOD = 97;
+    Comb cb(10);
+    assert(cb.fact(4) == Fp(24));
+    assert(cb.perm(5,3) == Fp(60));
+    assert(cb.comb(6,2) == Fp(15));
+    assert(cb.comb(6,4) == Fp(15));
+  }
 
-  // Case 3: rotate axis: connecting the centers of two edges
-  // 2a + 2b + 2c = S
-  Fp n3 = 0;
-  if (S % 2 == 0) { n3 = Fp((S/2) + 1) * Fp((S/2) + 2) / Fp(2); }
-
-  // Case 4: rotate axis: connecting two vertices
-  // 3a + 3b = S;
-  Fp n4 = 0;
-  if (S % 3 == 0) { n4 = Fp(S/3 + 1); }
-  
-  Fp ans = (n1 + n2 * (3 * 3) + n3 * (6 * 1) + n4 * (4 * 2)
-
-  */
-
-  return 0;
+  cout << "ok" << endl;
 }
-

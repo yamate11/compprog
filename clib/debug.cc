@@ -72,6 +72,7 @@ void dbgLog(bool with_nl, Head&& head, Tail&&... tail)
   #define DCALL(func, ...)
 #endif
 
+/*
 #if DEBUG_LIB
   #define DLOG_LIB(...)        dbgLog(true, __VA_ARGS__)
   #define DLOGNNL_LIB(...)     dbgLog(false, __VA_ARGS__)
@@ -82,6 +83,7 @@ void dbgLog(bool with_nl, Head&& head, Tail&&... tail)
   #define DFMT_LIB(...)
   #define DCALL_LIB(func, ...)
 #endif
+*/
 
 #define DUP1(E1)       #E1 "=", E1
 #define DUP2(E1,E2)    DUP1(E1), DUP1(E2)
@@ -99,6 +101,12 @@ void dbgLog(bool with_nl, Head&& head, Tail&&... tail)
 #define DUP(...)          GET_MACRO(__VA_ARGS__, DUP12, DUP11, DUP10, DUP9, DUP8, DUP7, DUP6, DUP5, DUP4, DUP3, DUP2, DUP1)(__VA_ARGS__)
 #define DLOGK(...)        DLOG(DUP(__VA_ARGS__))
 #define DLOGKL(lab, ...)  DLOG(lab, DUP(__VA_ARGS__))
+
+#if DEBUG_LIB
+  #define DLOG_LIB   DLOG
+  #define DLOGK_LIB  DLOGK
+  #define DLOGKL_LIB DLOGKL
+#endif
 
 // @@ !! END ----------------------------------------
 //////////////////////////////////////////////////////////////////////

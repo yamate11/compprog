@@ -2,8 +2,8 @@
 #include <cassert>
 typedef long long int ll;
 using namespace std;
-// #include <atcoder/all>
-// using namespace atcoder;
+#include <atcoder/convolution>
+using namespace atcoder;
 
 #define CONSTANT_MOD 998244353
 
