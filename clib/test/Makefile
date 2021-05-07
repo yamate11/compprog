@@ -1,0 +1,45 @@
+CXX := g++
+
+ifeq ($(or $(DEBUG_LIB),$(DEBUG)),)
+  DEBUGFLAGS := -O2
+else
+  DEBUGFLAGS := -g -O0 -D_GLIBCXX_DEBUG -DDEBUG=1
+  ifdef DEBUG_LIB
+    DEBUGFLAGS := $(DEBUGFLAGS) -DDEBUG_LIB=1
+  endif
+endif
+
+WARNINGS := -Wall -Wno-format-security -Wshadow -fconcepts
+
+CXXFLAGS := -std=gnu++17 $(DEBUGFLAGS) $(WARNINGS)
+
+CXXFLAGS := $(CXXFLAGS) -I/home/y-tanabe/lib/boost_1_73_0
+CXXFLAGS := $(CXXFLAGS) -I/home/y-tanabe/proj/compprog/clib/ac-library
+CXXFLAGS := $(CXXFLAGS) $(if $(CMPNAIVE),-DCMPNAIVE=1)
+CXXFLAGS := $(CXXFLAGS) -DTEST_CONSTANT_MOD=$(if $(TEST_CONSTANT_MOD),1,0)
+
+skels := $(wildcard *_skel.cc)
+ts := $(patsubst %_skel.cc,%_t.cc,$(skels))
+pars := $(patsubst %_skel.cc,../%.cc,$(skels))
+execs := $(patsubst %_skel.cc,%_t,$(skels))
+
+all: $(execs)
+
+../.lib_depend: $(pars)
+	libins --cache-update
+
+%_t.cc: %_skel.cc ../%.cc
+	libins < $< > $@
+
+%: %.cc
+	$(CXX) -o $@ $(CXXFLAGS) $<
+
+# If you need intermediate %_.cc files, uncomment the following line.
+# .PRECIOUS:  %_t.cc
+
+check:
+	echo $(pars)
+
+
+# DO NOT DELETE THIS LINE - mfdep depends on it.
+

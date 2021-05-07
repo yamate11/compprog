@@ -9,7 +9,7 @@ using namespace std;
 
 
 // operator<< definitions for some classes
-// @@ !! FUNC BEGIN <<
+// @@ !! FUNC BEGIN f:<<
 template <typename T1, typename T2>
 ostream& operator<< (ostream& os, const pair<T1,T2>& p) {
   os << "(" << p.first << ", " << p.second << ")";
@@ -174,10 +174,10 @@ ostream& operator<< (ostream& os, int8_t x) {
   return os;
 }
 
-// @@ !! FUNC END <<
+// @@ !! FUNC END f:<<
 
 // operator>> definitions for some classes
-// @@ !! FUNC BEGIN >>
+// @@ !! FUNC BEGIN f:>>
 template <typename T1, typename T2>
 istream& operator>> (istream& is, pair<T1,T2>& p) {
   is >> p.first >> p.second;
@@ -216,7 +216,7 @@ vector<T> read_vector(istream& is) {
   size_t n; is >> n;
   return read_vector_n<T>(is, n);
 }
-// @@ !! FUNC END >>
+// @@ !! FUNC END f:>>
 
 /* 
    Power functions.   Time complexity is O(log b).
@@ -227,7 +227,7 @@ vector<T> read_vector(istream& is) {
    Otherwise, use ah_power(T a, ll b, T e, Op m).  e is the unit element
    of T and m : T -> T -> T is the multiplication.  
  */
-// @@ !! FUNC BEGIN power
+// @@ !! FUNC BEGIN f:power
 /* *** WARNING ***  
       ll x = power(10, 12) 
    does not work since it is interpreted as 
@@ -258,9 +258,9 @@ T ah_power(T a, ll b, const T& unit_t, Op op) {
   }
   return ret;
 }
-// @@ !! FUNC END power
+// @@ !! FUNC END f:power
 
-// @@ !! FUNC BEGIN gcd
+// @@ !! FUNC BEGIN f:gcd
 
 tuple<ll, ll, ll> mut_div(ll a, ll b, ll c, bool eff_c = true) {
   // auto [g, s, t] = mut_div(a, b, c, eff_c)
@@ -336,9 +336,9 @@ ll crt(vector<ll> as, vector<ll> xs) {
   return r;
 }
 
-// @@ !! FUNC END gcd
+// @@ !! FUNC END f:gcd
 
-// @@ !! FUNC BEGIN updMaxMin
+// @@ !! FUNC BEGIN f:updMaxMin
 template<typename T>
 bool updMax(T& tmax, const T& x) {
   if (x > tmax) { tmax = x; return true;  }
@@ -349,9 +349,9 @@ bool updMin(T& tmin, const T& x) {
   if (x < tmin) { tmin = x; return true;  }
   else          {           return false; }
 }
-// @@ !! FUNC END updMaxMin
+// @@ !! FUNC END f:updMaxMin
 
-// @@ !! FUNC BEGIN intDiv
+// @@ !! FUNC BEGIN f:intDiv
 // imod, divFloor, divCeil
 
 // imod(x, y) : remainder of x for y
@@ -392,9 +392,9 @@ ll divCeil(ll x, ll y) {
 //       d < t <=> d < ceil(t),     d <= t <=> d <= floor(t),
 //       d > t <=> d > floor(t),    d >= t <=> d >= ceil(t).
 
-// @@ !! FUNC END intDiv
+// @@ !! FUNC END f:intDiv
 
-// @@ !! FUNC BEGIN mex
+// @@ !! FUNC BEGIN f:mex
 
 // E.g.,  vector<int> v1({2,0,3});  assert(mex(v1.begin(), v1.end()) == 1);
 template<class ForwardIt>
@@ -412,9 +412,9 @@ int mex(ForwardIt first, ForwardIt last) {
   return sz;
 }
 
-// @@ !! FUNC END   mex
+// @@ !! FUNC END   f:mex
 
-// @@ !! FUNC BEGIN shortVector
+// @@ !! FUNC BEGIN f:shortVector
 
 // Vector for small integers such as 0..3, fit in a small bit width,
 // represented with a long long int.
@@ -446,9 +446,9 @@ string sv_show(int bw, ll sv, ll len = -1) {
   ret += "]";
   return ret;
 }
-// @@ !! FUNC END   shortVector
+// @@ !! FUNC END   f:shortVector
 
-// @@ !! FUNC BEGIN perfmeas
+// @@ !! FUNC BEGIN f:perfmeas
 
 // For performance measurement.
 // Returns seconds from the epoch in double
@@ -457,7 +457,7 @@ double get_time_sec() {
   return static_cast<double>(duration_cast<nanoseconds>(steady_clock::now().time_since_epoch()).count())/1000000000;
 }
 
-// @@ !! FUNC END perfmeas
+// @@ !! FUNC END f:perfmeas
 
 // @@ !! END ---- util.cc
 

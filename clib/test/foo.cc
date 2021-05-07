@@ -4,7 +4,7 @@ typedef long long int ll;
 using namespace std;
 
 // @@ !! LIM(binsearch)
-// --> binsearch
+
 // ---- inserted library file binsearch.cc
 
 template<typename T>
@@ -46,8 +46,10 @@ ll border_with_hint(ll t, auto pred, auto hint) {
   }
 }
 
+// a
 // ---- end binsearch.cc
-// @@ !! LIM  -- end mark --
+
+// @@ !! LIM -- end mark --
 
 
 int main(int argc, char *argv[]) {
