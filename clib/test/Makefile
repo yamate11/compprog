@@ -30,7 +30,7 @@ execs := $(execsSub) convolutionS_t
 all: $(execs)
 
 test: all
-	../clib_test $(execs)
+	./clib_test $(execs)
 
 include $(makefiles)
 

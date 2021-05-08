@@ -7,3 +7,4 @@ cans2
 cans3
 *.hi
 *.log
+*.d
