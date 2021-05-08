@@ -87,6 +87,7 @@ def readCachedDep():
     clibdir = f'{topDir}/clib'
     for fn in os.listdir(clibdir):
         if fn[-3:] != '.cc': continue
+        if fn[0] == '.': continue
         path = f'{clibdir}/{fn}'
         # debug(path, os.stat(path).st_mtime, dcMtime)
         if os.stat(path).st_mtime > dcMtime:
@@ -260,7 +261,7 @@ def make_makefile(inserted):
         makefile_name = base_outfile + '.d'
     cont = ''
     if args.outfile:
-        cont += f'{args.outfile} {makefile_name} &:'
+        cont += f'{args.outfile} {makefile_name} :'
     else:
         cont += f'{makefile_name} :'
     insertedArc = set()
@@ -272,7 +273,8 @@ def make_makefile(inserted):
                 cont += f' ../{lib}.cc'
         else:
             cont += f' ../{l}.cc'
-    cont += f'\n\tlibins -M -o {args.outfile} -i {args.infile}'
+    cont += '\n'
+    # cont += f'\n\tlibins -M -o {args.outfile} -i {args.infile}'
     with open(makefile_name, 'w') as wfp:
         print(cont, file=wfp)
         

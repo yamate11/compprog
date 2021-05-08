@@ -1,14 +1,3 @@
-#include <bits/stdc++.h>
-#include <cassert>
-typedef long long int ll;
-using namespace std;
-// #include <atcoder/all>
-// using namespace atcoder;
-
-// @@ !! LIM()
-// --> 
-// @@ !! LIM  -- end mark --
-
 /*
   Dynmaic Segment Tree
 
@@ -26,6 +15,10 @@ using namespace std;
   st.update(101, 200, 5000);
   ll ans = st.query(0, 1e8);
  */
+
+//////////////////////////////////////////////////////////////////////
+// See help of libins command for dependency spec syntax.
+// @@ !! BEGIN() ---- dynSegTree.cc
 
 template<typename DAT, typename OP> 
 struct Node {
@@ -160,6 +153,8 @@ auto make_dyn_seg_tree(ll lo_, ll hi_, DAT unit_dat, OP unit_op,
   -> DynSegTree<DAT, OP, decltype(add), decltype(comp), decltype(appl)> {
   return DynSegTree(lo_, hi_, unit_dat, unit_op, add, comp, appl);
 }
+
+// @@ !! END ---- doubling.cc
 
 int main(/* int argc, char *argv[] */) {
   ios_base::sync_with_stdio(false);

@@ -26,9 +26,9 @@ using namespace std;
  */
 
 
+//////////////////////////////////////////////////////////////////////
+// @@ !! BEGIN()  ---- binsearch.cc
 
-
-// -- from here -- from here ----------------------------------------
 template <class T>
 class CHT {
   int size;
@@ -93,7 +93,8 @@ public:
   }
 
 };
-// -- to here -- to here ----------------------------------------
+
+// @@ !! END  ---- binsearch.cc
 
 
 int main() {

@@ -1,5 +1,5 @@
 EXES = LinTr UnionFind binsearch bit board cht cmpNaive coordCompr \
-       cumsum2d debug dijkstra dinic doubling fft fix ftwo geometry \
+       cumsum2d debug dijkstra dinic doubling fix ftwo geometry \
        guessPoly ipoint intervalSet matrix minCostFlow misc mod \
        perm rerror rollingHash scc segTree dynSegTree sieve strSearch \
        suffixArray tree trie util interactive polynomial

@@ -3,8 +3,7 @@
 typedef long long int ll;
 using namespace std;
 
-// @@ !! LIM(perm mod)
-
+// @@ !! LIM(binsearch)
 
 int main(int argc, char *argv[]) {
   ios_base::sync_with_stdio(false);

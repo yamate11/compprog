@@ -1,12 +1,25 @@
-a1: a1.cc
+CXX := g++
 
-a1: xx.h
+ifeq ($(or $(DEBUG_LIB),$(DEBUG)),)
+  DEBUGFLAGS := -O2
+else
+  DEBUGFLAGS := -g -O0 -D_GLIBCXX_DEBUG -DDEBUG=1
+  ifdef DEBUG_LIB
+    DEBUGFLAGS := $(DEBUGFLAGS) -DDEBUG_LIB=1
+  endif
+endif
 
+WARNINGS := -Wall -Wno-format-security -Wshadow -fconcepts
 
-b1: b2 b4
-	echo aaa
+CXXFLAGS := -std=gnu++17 $(DEBUGFLAGS) $(WARNINGS)
 
-b2: b3
-	echo bbb
+CXXFLAGS := $(CXXFLAGS) -I/home/y-tanabe/lib/boost_1_73_0
+CXXFLAGS := $(CXXFLAGS) -I/home/y-tanabe/proj/compprog/clib/ac-library
+CXXFLAGS := $(CXXFLAGS) $(if $(CMPNAIVE),-DCMPNAIVE=1)
+CXXFLAGS := $(CXXFLAGS) -DTEST_CONSTANT_MOD=$(if $(TEST_CONSTANT_MOD),1,0)
 
+all: foo
+
+clean:
+	$(RM) cans.o cans cans.exe *~ *.stackdump core
 

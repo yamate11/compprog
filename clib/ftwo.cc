@@ -1,7 +1,15 @@
-#include <bits/stdc++.h>
-#include <cassert>
-typedef long long int ll;
-using namespace std;
+/*
+  Ftwo: Field F2 (Z/2Z)   addition = xor
+
+  The features are basically the same those in Fp in mod.cc with p = 2.
+
+  Additional functions:
+
+    vector<ll> getF2Basis(const vector<ll>& vs)
+      Each element of argument vs is regarded as a vector of F2
+      with length at most 63.  The return value is a maximal 
+      linearly independent subset of vs.  
+ */
 
 //////////////////////////////////////////////////////////////////////
 // See help of libins command for dependency spec syntax.
@@ -84,33 +92,18 @@ ostream& operator<< (ostream& os, const Ftwo& t) {
   return os;
 }
 
-// @@ !! END ---- ftwo.cc
-
-
-
-// ----------------------------------------------------------------------
-int main() {
-
-  {
-    Ftwo zero(0);
-    Ftwo one(1);
-
-    assert(zero + zero == zero);
-    assert(zero + one == one);
-    assert(one + zero == one);
-    assert(one + one == zero);
-    assert(zero - zero == zero);
-    assert(zero - one == one);
-    assert(one - zero == one);
-    assert(one - one == zero);
-    assert(zero * zero == zero);
-    assert(zero * one == zero);
-    assert(one * zero == zero);
-    assert(one * one == one);
-    assert(zero / one == zero);
-    assert(one / one == one);
+vector<ll> getF2Basis(const vector<ll>& vs) {
+  vector<ll> ret;
+  vector<ll> aux;
+  for (ll v : vs) {
+    ll e = v;
+    for (ll b : aux) { e = min(e, e ^ b); }
+    if (e) {
+      ret.push_back(v);
+      aux.push_back(e);
+    }
   }
-
-  cerr << "Test Done.\n";
-
+  return ret;
 }
+
+// @@ !! END ---- ftwo.cc
