@@ -3,7 +3,7 @@
 typedef long long int ll;
 using namespace std;
 
-// @@ !! LIM(binsearch)
+// @@ !! LIM(perm mod)
 
 
 int main(int argc, char *argv[]) {

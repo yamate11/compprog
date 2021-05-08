@@ -558,7 +558,7 @@ void dbgLog(bool with_nl, Head&& head, Tail&&... tail)
 
 //////////////////////////////////////////////////////////////////////
 // See help of libins command for dependency spec syntax.
-// @@ !! BEGIN(mod, f:power) ---- convolution.cc
+// @@ !! BEGIN(mod f:power) ---- convolution.cc
 
 #if ! defined(DLOG_LIB)
   #define DLOG_LIB(...)

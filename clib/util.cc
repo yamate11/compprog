@@ -3,11 +3,6 @@
 typedef long long int ll;
 using namespace std;
 
-//////////////////////////////////////////////////////////////////////
-// See help of libins command for dependency spec syntax.
-// @@ !! BEGIN() ---- util.cc
-
-
 // operator<< definitions for some classes
 // @@ !! FUNC BEGIN f:<<
 template <typename T1, typename T2>
@@ -458,8 +453,6 @@ double get_time_sec() {
 }
 
 // @@ !! FUNC END f:perfmeas
-
-// @@ !! END ---- util.cc
 
 template <class... Args>
 string dbgFormat(const char* fmt, Args... args) {

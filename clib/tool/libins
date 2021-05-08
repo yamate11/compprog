@@ -1,10 +1,10 @@
 #!/usr/bin/env python3
 
 import sys, os, argparse, re, json
-from util import topDir
+from util import topDir, die, debug
 
-magic = '@@ !!'
-markpat = magic + r'\s*LIM(?:\s*\((.*)\))?';
+args = None
+
 depCache = f'{topDir}/clib/.lib_depend'
 
 # dictionary for dependency.
@@ -21,12 +21,32 @@ defAt = {}
 class LibExc(Exception):
     pass
 
-def abort(msg):
-    print("libins: Fatal: " + msg, file=sys.stderr)
-    sys.exit(1)
-
-def log(msg):
-    print(msg, file=sys.stderr)
+magic = '@@ !!'
+markpat = magic + r'\s*LIM(?:\s*\((.*)\))?'
+markBeginLib = magic + r'\s*BEGIN\s*\((.*)\)'
+markEndLib = magic + r'\s*END'
+markBeginFunc = magic + r'\s*FUNC\s+BEGIN\s+([^\s\(]+)(?:\s*\((.*)\))?'
+markEndFunc = magic + r'\s*FUNC\s+END'
+def parseALine(line):
+    mo = re.search(magic, line)
+    if not mo:
+        return (None, None, None)
+    mo = re.search(markpat, line)
+    if mo:
+        return ('INSERT', None, mo[1].split() if mo[1] else [])
+    mo = re.search(markBeginLib, line)
+    if mo:
+        return ('LIB', None, mo[1].split())
+    mo = re.search(markEndLib, line)
+    if mo:
+        return ('LIB', None, None)
+    mo = re.search(markBeginFunc, line)
+    if mo:
+        return ('FUNC', mo[1], mo[2].split() if mo[2] else [])
+    mo = re.search(markEndFunc, line)
+    if mo:
+        return ('FUNC', None, None)
+    raise LibExc(f'Unknown format with {magic}')
 
 def buildInfo():
     global dep, defAt
@@ -40,22 +60,21 @@ def buildInfo():
         dep[libname] = []
         with open(path, 'r') as fp:
             for line in fp:
-                mo = re.search(magic + r'\s*BEGIN\s*\((.*)\)', line)
-                if mo:
-                    dep[libname] = mo[1].split()
-                pat = r'\s*FUNC\s+BEGIN\s+(\S+)(?:\s*\((.*)\))?'
-                mo = re.search(magic + pat, line)
-                if mo:
-                    funcname = mo[1]
-                    if funcname in defAt:
-                        p1 = defAt[funcname]
-                        raise LibExc(f'Function {funcname} is defined twice: '
-                                     f'{defAt[funcname]} and {libname}');
-                    defAt[funcname] = libname
-                    if mo[2]:
-                        dep[funcname] = mo[2].split()
-                    else:
-                        dep[funcname] = []
+                (tp, fn, lst) = parseALine(line)
+                if tp is None:
+                    continue
+                elif tp == 'LIB' and lst is not None:
+                        dep[libname] = lst
+                elif tp == 'FUNC' and lst is not None:
+                    if fn[:2] != 'f:':
+                        msg = f'Function name "{fn}" should start with "f:" ' \
+                            f' in {path}'
+                        raise LibExc(msg)
+                    if fn in defAt:
+                        raise LibExc(f'Function {fn} is defined twice: '
+                                     f'{defAt[fn]} and {libname}');
+                    defAt[fn] = libname
+                    dep[fn] = lst
     with open(depCache, 'w') as fp:
         json.dump({'dep': dep, 'defAt': defAt}, fp)
         
@@ -64,12 +83,13 @@ def readCachedDep():
     if not os.path.exists(depCache):
         buildInfo()
         return
-    dcAtime = os.stat(depCache).st_atime
+    dcMtime = os.stat(depCache).st_mtime
     clibdir = f'{topDir}/clib'
     for fn in os.listdir(clibdir):
         if fn[-3:] != '.cc': continue
         path = f'{clibdir}/{fn}'
-        if os.stat(path).st_atime > dcAtime:
+        # debug(path, os.stat(path).st_mtime, dcMtime)
+        if os.stat(path).st_mtime > dcMtime:
             buildInfo()
             return
     with open(depCache, 'r') as fp:
@@ -97,35 +117,53 @@ def depSort(libs):
             phase1(item)
         x = onstack.pop()
         assert(x == lib)
-        if lib[:2] == 'f:':
-            if lib not in defAt:
-                raise LibExc(f'Definition of Function{lib} not found.')
-            if defAt[lib] not in res1:
-                res1.append(lib)
-        else:
-            res1.append(lib)
+        res1.append(lib)
     for lib in libs:
         phase1(lib)
     # log(f'res1 = {res1}')
     return res1
 
-def doInsert(lib):
+def extractContents(lib):
     cont = ''
-    def readUntil(mark, rec):
-        nonlocal cont
+    path = f'{topDir}/clib/{lib}.cc'
+    if not os.path.exists(path):
+        raise LibExc(f'File not found: {path}')
+    with open(path) as fp:
+        phase = 'out'
+        func = ''
         while True:
             line = fp.readline()
             if not line:
-                raise LibExc(f'No beginmark in {lib}.cc')
-            exp = magic + r'\s*' + mark
-            if re.search(exp, line):
-                break
-            if rec:
-                cont += line
-
-    with open(f'{topDir}/clib/{lib}.cc') as fp:
-        readUntil('BEGIN', False)
-        readUntil('END', True)
+                if phase == 'out':
+                    raise LibExc(f'No beginmark in {lib}.cc')
+                elif phase == 'inLib':
+                    raise LibExc(f'No endmark in {lib}.cc')
+                else:
+                    raise LibExc(f'No endmark for function {func} in {lib}.cc')
+            (tp, fn, lst) = parseALine(line)
+            if tp == 'LIB' and lst is not None:
+                if phase == 'out':
+                    phase = 'inLib'
+                else:
+                    raise LibExc(f'Library and Function cannot be nested in {lib}.cc.')
+            elif tp == 'LIB' and lst is None:
+                if phase == 'inLib':
+                    return cont
+                else:
+                    raise LibExc(f'Endmark without beginmark in {lib}.cc')
+            elif tp == 'FUNC' and lst is not None:
+                if phase == 'out':
+                    phase = fn
+                else:
+                    raise LibExc(f'Library and Function cannot be nested in {lib}.cc.')
+            elif tp == 'FUNC' and lst is None:
+                if phase == 'out' or phase == 'inLib':
+                    raise LibExc(f'Endmark for {fn} without beginmark in {lib}.cc')
+                else:
+                    phase = 'out'
+            else:
+                if phase == 'inLib':
+                    cont += line
     return cont
 
 funcContents = {}
@@ -141,8 +179,9 @@ def readToFuncContents(libname):
             line = fp.readline()
             if not line:
                 raise MyEOF()
-            mo = re.search(magic + r'\s*FUNC\s+BEGIN\s+(\S+)', line)
-            if mo: return mo[1]
+            (tp, fn, lst) = parseALine(line)
+            if tp == 'FUNC' and lst is not None:
+                return fn
 
     def getNextFunc(fp):
         funcname = firstLine(fp)
@@ -152,8 +191,11 @@ def readToFuncContents(libname):
             if not line:
                 msg = f'No endmark for function {funcname} in {libname}.cc'
                 raise LibExc(msg)
-            mo = re.search(magic + r'\s*FUNC\s+END', line)
-            if mo: return (funcname, cont)
+            (tp, fn, lst) = parseALine(line)
+            if tp == 'FUNC' and lst is None:
+                return (funcname, cont)
+            elif tp == 'LIB':
+                raise LibExc('Library/Function cannot be nested.')
             cont += line
 
     with open(f'{topDir}/clib/{libname}.cc') as fp:
@@ -166,6 +208,8 @@ def readToFuncContents(libname):
             pass
 
 def getFuncContents(funcname):
+    if funcname not in defAt:
+        raise LibExc(f'Definition of Function {funcname} not found.')
     libname = defAt[funcname]
     pre = f'\n// ---- inserted function {funcname} from {libname}.cc\n'
     post = f'// ---- end {funcname}\n'
@@ -175,22 +219,24 @@ def getFuncContents(funcname):
             msg = f'Definition for {funcname} not found in {libname}'
             raise LibExc(msg)
     body = funcContents[funcname]
-    return pre + body + post
+    return (libname, pre + body + post)
 
 def getLibContents(libname):
     pre = f'\n// ---- inserted library file {libname}.cc\n'
-    body = doInsert(libname)
+    body = extractContents(libname)
     post = f'// ---- end {libname}.cc\n'
     return pre + body + post
 
 def composite(origLibs):
     outs = ''
-    for libOrFunc in depSort(origLibs):
+    inserted = depSort(origLibs)
+    for libOrFunc in inserted:
         if libOrFunc[:2] == 'f:':
-            outs += getFuncContents(libOrFunc)
+            (libname, cont) = getFuncContents(libOrFunc)
+            outs += cont
         else:
             outs += getLibContents(libOrFunc)
-    return outs
+    return (inserted, outs)
 
 def uniq(lst):
     ret = []
@@ -199,14 +245,51 @@ def uniq(lst):
             ret.append(x)
     return ret
 
+def make_makefile(inserted):
+    if args.outfile:
+        mo = re.match(r'(.*)\.', args.outfile)
+        if mo:
+            base_outfile = mo[1]
+        else:
+            base_outfile = args.outfile
+    else:
+        base_outfile = None
+    if args.makefile_name:
+        makefile_name = args.makefile_name
+    else:
+        makefile_name = base_outfile + '.d'
+    cont = ''
+    if args.outfile:
+        cont += f'{args.outfile} {makefile_name} &:'
+    else:
+        cont += f'{makefile_name} :'
+    insertedArc = set()
+    for l in inserted:
+        if l[:2] == 'f:':
+            lib = defAt[l]
+            if lib not in insertedArc:
+                insertedArc.add(lib)
+                cont += f' ../{lib}.cc'
+        else:
+            cont += f' ../{l}.cc'
+    cont += f'\n\tlibins -M -o {args.outfile} -i {args.infile}'
+    with open(makefile_name, 'w') as wfp:
+        print(cont, file=wfp)
+        
 def main():
-    args = commandLineArgs()
+    parseCommandLine()
 
     if args.cache_update:
         buildInfo()
         sys.exit(0)
 
-    inLines = sys.stdin.readlines()
+    if args.infile:
+        if not os.path.exists(args.infile):
+            die(f'File {args.infile} does not exist.')
+        with open(args.infile) as fp:
+            inLines = fp.readlines()
+    else:
+        inLines = sys.stdin.readlines()
     sz = len(inLines)
     (idxFst, idxLast) = (None, None)
     for (idx, line) in enumerate(inLines):
@@ -215,35 +298,50 @@ def main():
             if idxFst is None:
                 idxFst = idx
             idxLast = idx
+    outcont = ''
     if idxFst is None:
-        for line in inLines():
-            print(line, end='')
-        return
-    mo = re.search(markpat, inLines[idxFst])
-    assert(mo)
-    origLibs = mo[1].split() if mo[1] else []
-    addLibs = [f for f in args.file if f.lower() != "none"]
-    specLibs = uniq(origLibs + addLibs)
-    readCachedDep()
+        for line in inLines:
+            outcont += line
+        inserted = []
+    else:
+        mo = re.search(markpat, inLines[idxFst])
+        assert(mo)
+        origLibs = mo[1].split() if mo[1] else []
+        addLibs = [f for f in args.file if f.lower() != "none"]
+        specLibs = uniq(origLibs + addLibs)
 
-    def pout(outs, libs):
-        for i in range(idxFst):
-            print(inLines[i], end='')
-        print(f"// {magic} LIM({' '.join(libs)})")
-        if len(libs) > 0:
-            print(outs, end='')
-            print(f"\n// {magic} LIM -- end mark --")
-        for i in range(idxLast + 1, sz):
-            print(inLines[i], end='')
+        def addOutcont(outs, libs):
+            nonlocal outcont
+            for i in range(idxFst):
+                outcont += inLines[i]
+            outcont += f"// {magic} LIM({' '.join(libs)})\n"
+            if len(libs) > 0:
+                outcont += outs
+                outcont += f"\n// {magic} LIM -- end mark --\n"
+            for i in range(idxLast + 1, sz):
+                outcont += inLines[i]
 
-    try:
-        pout(composite(specLibs), specLibs)
-    except LibExc as e:
-        pout('', origLibs)
-        print(str(e), file=sys.stderr)
-        sys.exit(1)
-        
-def commandLineArgs():
+        try:
+            readCachedDep()
+            (inserted, outs) = composite(specLibs)
+        except LibExc as e:
+            if not args.outfile:
+                addOutcont('', origLibs)
+                print(outcont, end='', file=sys.stdout)
+            print(str(e), file=sys.stderr)
+            sys.exit(1)
+        addOutcont(outs, specLibs)
+    if args.outfile:
+        with open(args.outfile, 'w') as wfp:
+            print(outcont, end='', file=wfp)
+    else:
+        print(outcont, end='', file=sys.stdout)
+
+    if args.makefile:
+        make_makefile(inserted)
+
+def parseCommandLine():
+    global args
     parser = argparse.ArgumentParser(
         formatter_class=argparse.RawDescriptionHelpFormatter,
         description='''libins inserts library code.
@@ -266,6 +364,24 @@ and the last define the range of the library insertion part.
                         nargs='*');
     parser.add_argument('--cache-update', action='store_true',
                         help='only updates the cache and exits.')
-    return parser.parse_args()
+    parser.add_argument('-i', '--infile',
+                        help='input file.  If omitted, stdin is used.')
+    parser.add_argument('-o', '--outfile',
+                        help='output file.  If omitted, stdout is used.')
+    parser.add_argument('-M', dest='makefile', action='store_true',
+                        help='make a makefile')
+    parser.add_argument('--makefile-name',
+                        help='name of makefile.  If omitted, '
+                        'outfile name base with extension .d is used.')
+    args = parser.parse_args()
+    if args.cache_update:
+        if args.infile or args.outfile or args.makefile:
+            die("--cache-update cannot be specified"
+                "with --infile, --outfile or -M.")
+    if args.makefile:
+        if not (args.outfile and args.infile):
+            die("-M should be used with --infile and --outfile")
+    if args.makefile_name and not args.makefile:
+        die("--makefile-name should be used with -M")
 
 main()
