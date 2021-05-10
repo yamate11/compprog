@@ -8,8 +8,8 @@ using namespace std;
 #define CONSTANT_MOD (1e9 + 7)
 
 // @@ !! LIM(mod matrix debug)
-// --> f:gcd f:intDiv mod f:power matrix f:<< debug
-// ---- inserted function gcd from util.cc
+
+// ---- inserted function f:gcd from util.cc
 
 tuple<ll, ll, ll> mut_div(ll a, ll b, ll c, bool eff_c = true) {
   // auto [g, s, t] = mut_div(a, b, c, eff_c)
@@ -85,8 +85,9 @@ ll crt(vector<ll> as, vector<ll> xs) {
   return r;
 }
 
-// ---- end gcd
-// ---- inserted function intDiv from util.cc
+// ---- end f:gcd
+
+// ---- inserted function f:intDiv from util.cc
 // imod, divFloor, divCeil
 
 // imod(x, y) : remainder of x for y
@@ -127,7 +128,8 @@ ll divCeil(ll x, ll y) {
 //       d < t <=> d < ceil(t),     d <= t <=> d <= floor(t),
 //       d > t <=> d > floor(t),    d >= t <=> d >= ceil(t).
 
-// ---- end intDiv
+// ---- end f:intDiv
+
 // ---- inserted library file mod.cc
 
 /*
@@ -267,7 +269,8 @@ ll Fp::MOD = 1e9 + 7;
 #endif
 
 // ---- end mod.cc
-// ---- inserted function power from util.cc
+
+// ---- inserted function f:power from util.cc
 /* *** WARNING ***  
       ll x = power(10, 12) 
    does not work since it is interpreted as 
@@ -298,7 +301,8 @@ T ah_power(T a, ll b, const T& unit_t, Op op) {
   }
   return ret;
 }
-// ---- end power
+// ---- end f:power
+
 // ---- inserted library file matrix.cc
 
 struct MyExc : exception {};
@@ -553,7 +557,8 @@ ostream& operator<< (ostream& os, const Matrix<T>& mat) {
 }
 
 // ---- end matrix.cc
-// ---- inserted function << from util.cc
+
+// ---- inserted function f:<< from util.cc
 template <typename T1, typename T2>
 ostream& operator<< (ostream& os, const pair<T1,T2>& p) {
   os << "(" << p.first << ", " << p.second << ")";
@@ -718,7 +723,8 @@ ostream& operator<< (ostream& os, int8_t x) {
   return os;
 }
 
-// ---- end <<
+// ---- end f:<<
+
 // ---- inserted library file debug.cc
 template <class... Args>
 string dbgFormat(const char* fmt, Args... args) {
@@ -753,6 +759,7 @@ void dbgLog(bool with_nl, Head&& head, Tail&&... tail)
   #define DCALL(func, ...)
 #endif
 
+/*
 #if DEBUG_LIB
   #define DLOG_LIB(...)        dbgLog(true, __VA_ARGS__)
   #define DLOGNNL_LIB(...)     dbgLog(false, __VA_ARGS__)
@@ -763,6 +770,7 @@ void dbgLog(bool with_nl, Head&& head, Tail&&... tail)
   #define DFMT_LIB(...)
   #define DCALL_LIB(func, ...)
 #endif
+*/
 
 #define DUP1(E1)       #E1 "=", E1
 #define DUP2(E1,E2)    DUP1(E1), DUP1(E2)
@@ -781,8 +789,15 @@ void dbgLog(bool with_nl, Head&& head, Tail&&... tail)
 #define DLOGK(...)        DLOG(DUP(__VA_ARGS__))
 #define DLOGKL(lab, ...)  DLOG(lab, DUP(__VA_ARGS__))
 
+#if DEBUG_LIB
+  #define DLOG_LIB   DLOG
+  #define DLOGK_LIB  DLOGK
+  #define DLOGKL_LIB DLOGKL
+#endif
+
 // ---- end debug.cc
-// @@ !! LIM  -- end mark --
+
+// @@ !! LIM -- end mark --
 
 int main(/* int argc, char *argv[] */) {
   ios_base::sync_with_stdio(false);

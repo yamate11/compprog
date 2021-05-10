@@ -13,10 +13,13 @@ else
   CXXFLAGS = -O2 $(CXXCOMMONFLAGS)
 endif
 
-all: $(EXES)
+.PHONY: test clean
 
-test: $(EXES)
-	./clib_test $(EXES)
+all:
+	@echo "You do not need to make here.  But you can do 'make test'".
+
+test: 
+	$(MAKE) -C test test
 
 clean:
 	$(RM) *~ $(EXES)
