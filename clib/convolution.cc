@@ -814,13 +814,15 @@ vector<Fp> convolution(vector<Fp> a, vector<Fp> b) {
   return a;
 }
 
-#if ! defined(CONSTANT_MOD)
-
 template<class T> // T must be integral.
 vector<T> sub_convolution(int mod, const vector<T>& a, const vector<T>& b) {
+
+#ifdef CONSTANT_MOD
+  throw runtime_error("sub_convolution and convolution_ll cannot be called with CONSTANT_MOD defined");
+#else
+
   int n = int(a.size()), m = int(b.size());
   if (!n || !m) return {};
-
   int orig_mod = Fp::MOD;
   Fp::MOD = mod;
   vector<Fp> a2(n), b2(m);
@@ -834,6 +836,8 @@ vector<T> sub_convolution(int mod, const vector<T>& a, const vector<T>& b) {
   for (int i = 0; i < n + m - 1; i++) { c[i] = c2[i].val; }
   Fp::MOD = orig_mod;
   return c;
+
+#endif
 }
 
 vector<long long> convolution_ll(const vector<long long>& a,
@@ -899,8 +903,6 @@ vector<long long> convolution_ll(const vector<long long>& a,
 
   return c;
 }
-
-#endif  // #if ! defined(CONSTANT_MOD)
 
 // @@ !! END ---- convolution.cc
 

@@ -377,18 +377,26 @@ Fp operator +(int x, const Fp& y) { return Fp(x) + y; }
 Fp operator -(int x, const Fp& y) { return Fp(x) - y; }
 Fp operator *(int x, const Fp& y) { return Fp(x) * y; }
 Fp operator /(int x, const Fp& y) { return Fp(x) / y; }
+bool operator ==(int x, const Fp& y) { return Fp(x) == y; }
+bool operator !=(int x, const Fp& y) { return Fp(x) != y; }
 Fp operator +(ll x, const Fp& y) { return Fp(x) + y; }
 Fp operator -(ll x, const Fp& y) { return Fp(x) - y; }
 Fp operator *(ll x, const Fp& y) { return Fp(x) * y; }
 Fp operator /(ll x, const Fp& y) { return Fp(x) / y; }
+bool operator ==(ll x, const Fp& y) { return Fp(x) == y; }
+bool operator !=(ll x, const Fp& y) { return Fp(x) != y; }
 Fp operator +(const Fp& x, int y) { return x + Fp(y); }
 Fp operator -(const Fp& x, int y) { return x - Fp(y); }
 Fp operator *(const Fp& x, int y) { return x * Fp(y); }
 Fp operator /(const Fp& x, int y) { return x / Fp(y); }
+bool operator ==(const Fp& x, int y) { return x == Fp(y); }
+bool operator !=(const Fp& x, int y) { return x != Fp(y); }
 Fp operator +(const Fp& x, ll y) { return x + Fp(y); }
 Fp operator -(const Fp& x, ll y) { return x - Fp(y); }
 Fp operator *(const Fp& x, ll y) { return x * Fp(y); }
 Fp operator /(const Fp& x, ll y) { return x / Fp(y); }
+bool operator ==(const Fp& x, ll y) { return x == Fp(y); }
+bool operator !=(const Fp& x, ll y) { return x != Fp(y); }
 
 istream& operator>> (istream& is, Fp& t) {
   ll x; is >> x;
@@ -887,33 +895,34 @@ vector<long long> convolution_ll(const vector<long long>& a,
 // ---- inserted library file polynomial.cc
 
 template<typename T>
-vector<T> polyConvolution(vector<T>& a, const vector<T>& b) {
+vector<T> polyConvolution(const vector<T>& a, const vector<T>& b) {
   assert(0);
 }
 
 template<>
-vector<Fp> polyConvolution(vector<Fp>& a, const vector<Fp>& b) {
+vector<Fp> polyConvolution(const vector<Fp>& a, const vector<Fp>& b) {
+  vector<Fp> aa(a);
   vector<Fp> bb(b);
-  return convolution(a, move(bb));
+  return convolution(move(aa), move(bb));
 }
 
 template<typename T>
-vector<T> polyConvolution_ll(vector<T>& a, const vector<T>& b) {
+vector<T> polyConvolution_ll(const vector<T>& a, const vector<T>& b) {
   assert(0);
 }
 
 template<>
-vector<ll> polyConvolution_ll(vector<ll>& a, const vector<ll>& b) {
+vector<ll> polyConvolution_ll(const vector<ll>& a, const vector<ll>& b) {
   return convolution_ll(a, b);
 }
 
-// value of use_convolution
+// value of use_fft
 //    0 ... multiplication is naive
 //    1 ... multiplication uses convolution
 //             in this case, T must be Fp with 2^c | Fp::mod - 1
 //    2 ... multiplication uses convolution_ll
 //             in this case, T must be ll
-template<typename T, int use_convolution=0>
+template<typename T, int use_fft=0>
 struct Polynomial {
   vector<T> coef;
 
@@ -961,24 +970,29 @@ struct Polynomial {
     return *this;
   }
 
-  constexpr Polynomial& operator *=(const Polynomial& o) {
-    if (use_convolution == 0) {
-      int old_degree = degree();
-      int degree = old_degree + o.degree();
-      auto prev = move(coef);
-      coef = vector<T>(degree + 1);
-      for (int i = 0; i <= degree; i++) {
-        for (int j = max(0, i - o.degree()); j <= min(i, old_degree); j++) {
-          coef[i] += prev[j] * o.coef[i - j];
+  vector<T> coef_conv(const vector<T>& a, const vector<T>& b) const {
+    if (use_fft == 0) {
+      int a_size = a.size();
+      int b_size = b.size();
+      int new_size = a_size + b_size - 1;
+      auto ret = vector<T>(new_size);
+      for (int i = 0; i < new_size; i++) {
+        for (int j = max(0, i - b_size + 1); j <= min(i, a_size - 1); j++) {
+          ret[i] += a[j] * b[i - j];
         }
       }
-    }else if (use_convolution == 1) {
-      coef = polyConvolution(coef, o.coef);
-    }else if (use_convolution == 2) {
-      coef = polyConvolution_ll(coef, o.coef);
+      return ret;
+    }else if (use_fft == 1) {
+      return polyConvolution(a, b);
+    }else if (use_fft == 2) {
+      return polyConvolution_ll(a, b);
     }else {
       assert(0);
     }
+  }
+
+  constexpr Polynomial& operator *=(const Polynomial& o) {
+    coef = coef_conv(coef, o.coef);
     return *this;
   }
   
@@ -1047,6 +1061,36 @@ struct Polynomial {
     return { Polynomial(div_coef), Polynomial(mod_coef) };
   }
 
+  T subBostanMori(const Polynomial& o, int n) const {
+    auto rev = [](vector<T> &f) -> void {
+      for (int i = 1; i < (int)f.size(); i += 2) { f[i] = -f[i]; }
+    };
+    auto shift = [](vector<T> &f, int bit) -> void {
+      int d = ((int)f.size() + 1 - bit) >> 1;
+      for (int i = 0; i < d; i++) f[i] = f[(i << 1) | bit];
+      f.resize(d);
+    };
+    if (o.coef[0] != (T)1) {
+      throw runtime_error("subBostanMori: o.coef[0] should be 1.");
+    }
+    if (degree() >= o.degree()) {
+      throw runtime_error("subBostanMori: broken: degree() < o.degree()");
+    }
+    vector<T> p(coef), q(o.coef), q_rev(o.coef);
+    rev(q_rev);
+    for (; n; n >>= 1) {
+      p = coef_conv(move(p), q_rev);
+      shift(p, n % 2);
+      q = coef_conv(move(q), move(q_rev));
+      shift(q, 0);
+      q_rev = q; rev(q_rev);
+    }
+    return p[0] / q[0];
+  }
+
+  friend T bostanMori(const Polynomial& p, const Polynomial& q, int n) {
+    return p.subBostanMori(q, n);
+  }
 };
 
 template<typename T>
@@ -1076,8 +1120,8 @@ Polynomial<T> operator *(const Polynomial<T>& p, T t) {
 }
 */
 
-template<typename T>
-ostream& operator<< (ostream& os, const Polynomial<T>& p) {
+template<typename T, int use_fft>
+ostream& operator<< (ostream& os, const Polynomial<T, use_fft>& p) {
   os << p.coef;
   return os;
 }
@@ -1093,6 +1137,10 @@ int main(/* int argc, char *argv[] */) {
 
   random_device rd;
   mt19937 rng(rd());
+  auto randrange = [&rng](ll i, ll j) -> ll {
+    uniform_int_distribution<ll> dist(i, j - 1);
+    return dist(rng);
+  };
 
   {
     Polynomial p1({-2, 0, 1});
@@ -1233,12 +1281,11 @@ int main(/* int argc, char *argv[] */) {
 
   {
     Fp::MOD = primeB;
-    uniform_int_distribution<int> dist1(0, primeB - 1);
     vector<Fp> v1, v2;
     const int sz = 100;
     for (int i = 0; i < sz + 1; i++) {
-      v1.push_back(dist1(rng));
-      v2.push_back(dist1(rng));
+      v1.push_back(randrange(0, primeB));
+      v2.push_back(randrange(0, primeB));
     }
     v1[sz] = v2[sz] = 1;
     auto pol1X = Polynomial<Fp, 0>(v1);
@@ -1255,12 +1302,11 @@ int main(/* int argc, char *argv[] */) {
   }
 
   {
-    uniform_int_distribution<ll> dist1(0, (1LL << 30) - 1);
     vector<ll> v1, v2;
     const int sz = 100;
     for (int i = 0; i < sz + 1; i++) {
-      v1.push_back(dist1(rng));
-      v2.push_back(dist1(rng));
+      v1.push_back(randrange(0, 1LL << 30));
+      v2.push_back(randrange(0, 1LL << 30));
     }
     v1[sz] = v2[sz] = 1;
     auto pol1X = Polynomial<ll, 0>(v1);
@@ -1273,6 +1319,91 @@ int main(/* int argc, char *argv[] */) {
     assert(pol3Y.degree() == 2 * sz);
     for (ll i = 0; i <= 2 * sz; i++) {
       assert(pol3X.coef[i] == pol3Y.coef[i]);
+    }
+  }
+
+  {
+    using Pol = Polynomial<ll, 2>;
+    Pol X = Pol::get_X();
+    Pol p1 = Pol(1), p2 = Pol(1) - X;
+    for (ll i = 0; i < 100; i++) {
+      assert(bostanMori(p1, p2, 1) == 1);
+    }
+  }
+
+  {
+    Fp::MOD = primeB;
+    using Pol = Polynomial<Fp, 1>;
+    Pol X = Pol::get_X();
+    Pol p1 = Pol(1), p2 = Pol(1) - X - X*X;
+    assert(bostanMori(p1, p2, 0) == Fp(1));
+    assert(bostanMori(p1, p2, 1) == Fp(1));
+    assert(bostanMori(p1, p2, 2) == Fp(2));
+    assert(bostanMori(p1, p2, 10) == 89);
+
+    for (ll t = 0; t < 2; t++) {
+      ll degP = randrange(0, 100);
+      ll degQ = degP + randrange(1, 100);
+      ll lim = 10;
+      vector<Fp> coefP(degP + 1);
+      vector<Fp> coefQ(degQ + 1);
+      for (ll i = 0; i < degP + 1; i++) coefP[i] = randrange(-lim, lim + 1);
+      for (ll i = 1; i < degQ + 1; i++) coefQ[i] = randrange(-lim, lim + 1);
+      coefQ[0] = 1;
+      while (coefQ[degQ] == Fp(0)) coefQ[degQ] = randrange(-lim, lim + 1);
+      Pol p(coefP), q(coefQ);
+      ll degR = 2 * degQ;
+      vector<Fp> coefR(degR + 1);
+      for (ll i = 0; i <= degR; i++) coefR[i] = bostanMori(p, q, i);
+      Pol r(coefR);
+      Pol s = q * r;
+      for (ll i = 0; i <= degP; i++) {
+        assert(coefP[i] == s.coef[i]);
+      }
+      for (ll i = degP + 1; i < degR; i++) {
+        assert(s.coef[i] == Fp(0));
+      }
+    }
+  }
+
+  {
+    Fp::MOD = primeB;
+    using Pol = Polynomial<Fp, 1>;
+    ll d_lim = 120;
+    for (ll rep = 0; rep < 40; rep++) {
+      ll d = randrange(1, d_lim);
+      ll n = d + 2 + (d / 2);
+      vector<Fp> A(n), C(d);
+      for (ll i = 0; i < d; i++) {
+        A[i] = randrange(0, primeB);
+        C[i] = randrange(0, primeB);
+      }
+      for (ll i = d; i < n; i++) {
+        Fp v = 0;
+        for (ll j = 1; j <= d; j++) {
+          Fp w = C[j - 1] * A[i - j];
+          v += w;
+          DLOGK(j, w, v);
+        }
+        A[i] = v;
+      }
+      DLOGK(A, C);
+      vector<Fp> coefQ(d + 1);
+      coefQ[0] = 1;
+      for (ll i = 1; i <= d; i++) coefQ[i] = -C[i - 1];
+      Pol q(coefQ);
+      vector<Fp> coefP(A);
+      coefP.resize(d);
+      Pol p(coefP);
+      p *= q;
+      p.coef.resize(d);
+      for (ll i = d; i < n; i++) {
+        Fp v = bostanMori(p, q, i);
+        if (v != A[i]) {
+          DLOGK(p, q, i, v, A[i]);
+        }
+        assert(v == A[i]);
+      }
     }
   }
 

@@ -1,0 +1,160 @@
+--- ../../../clib/polynomial.cc	2021-05-14 07:49:13.105496477 +0900
++++ foo.cc	2021-05-14 11:46:24.982266590 +0900
+@@ -1,56 +1,3 @@
+-#include <bits/stdc++.h>
+-#include <cassert>
+-typedef long long int ll;
+-using namespace std;
+-
+-/*
+-  Polynomial
+-
+-  - Template: Polynomial<typename T, int use_fft>
+-    - use_fft = 0 : convolution is naive
+-    - use_fft = 1 : Use this only when T = Fp, with 2^c | Fp::MOD - 1.
+-    - use_fft = 2 : Use this only when T = ll
+-  - Use either of the following for ordinary cases:
+-    - using PolyLL = Polynomial<ll, 2>;
+-    - using PolyFp = Polynomial<Fp, 1>;
+-      (with possibly #define CONSTANT_MOD 998'244'353)
+-
+-  - Constructor:
+-    - no arg
+-        PolyLL p;                  // 0
+-    - Initializer List
+-        PolyFp p({-1, 0, 1, 2});   // -1 + X^2 + 2 X^3
+-    - Constant
+-        PolyLL p(5);               // 5
+-  - Using get_X()
+-        auto X = PolyFp::get_X();   // X
+-        auto p = -1 + X*X + 2*X*X*X;        // -1 + X^2 + 2 X^3
+-  - Degree
+-        int d = (-1.0 + X*X).degree()        // d == 2
+-  - Coefficients
+-        vector<double> v = (-1.0 + X*X).coef    // [-1.0, 0.0, 1.0]
+-  - Copy constructor, assignment, ...
+-        // as usual
+-  - Operators
+-        +, -, *, +=, -=, *=, ==, !=
+-  - Division (divmod)
+-        auto [d, m] = p.divmod(q);
+-        // p == q * d + m, degree(m) < degree(q)
+-        - Either of the following should hold:
+-            - T is a field, or
+-            - the coefficient of the highest degree of q is (T)1.
+-  - Bostan-Mori method 
+-    computes the n-th coefficency of formal power series p/q.
+-    - signature: 
+-        friend T bostanMori(const Polynomial& p, const Polynomial& q, int n);
+-    - usage:   
+-        Fp a = bostanMori(p, q, n);
+- */
+-
+-//////////////////////////////////////////////////////////////////////
+-// See help of libins command for dependency spec syntax.
+-// @@ !! BEGIN(f:<< mod convolution) ---- polynomial.cc
+-
+ template<typename T>
+ vector<T> polyConvolution(const vector<T>& a, const vector<T>& b) {
+   assert(0);
+@@ -88,7 +35,8 @@
+   Polynomial() : coef({(T)0}) {}
+   Polynomial(T t) : coef({t}) {}
+ 
+-  Polynomial(const vector<T> coef_) : coef(coef_) { adj_degree(); }
++  Polynomial(const vector<T>& coef_) : coef(coef_) { adj_degree(); }
++  Polynomial(vector<T>&& coef_) : coef(move(coef_)) { adj_degree(); }
+   Polynomial(initializer_list<T> init) : coef(init) { adj_degree(); }
+ 
+   Polynomial(const Polynomial& o) : coef(o.coef) {}
+@@ -173,49 +121,59 @@
+     return Polynomial({(T)0, (T)1});
+   }
+ 
+-  pair<Polynomial, T> _divide_linear(T c) const {
+-    vector<T> new_coef(coef.size() - 1);
+-    ll i = coef.size() - 1;
+-    ll x = coef[i];
+-    while (--i >= 0) {
+-      new_coef[i] = x;
+-      x = coef[i] + x * c;
+-    }
+-    return {Polynomial(new_coef), x};    
++  T atval(T t) const {
++    T ret = 0;
++    for (ll i = coef.size() - 1; i >= 0; i--) { ret = ret * t + coef[i]; }
++    return ret;
+   }
+ 
+-  // T must be a field
+-  pair<Polynomial, Polynomial> divmod(Polynomial q) const {
++  T selfDivideLinear(T c) {
++    ll x = coef[i];
++    for (ll i = coef.size() - 1; i >= 0; i--) {
++      y = coef[i] + x * c;
++      coef[i] = x;
++      x = y;
++    }
++    coef.pop_back();
++    return x;
++  }
++
++  pair<Polynomial, T> divideLinear(T c) const {
++    Polynomial ret(*this);
++    T t = ret.selfDivideLinear(c);
++    return {ret, t};
++  }
++
++  // p.divmod(q) returns pair (d, r),
++  // where p = qd + r, degree(r) < degree(q).
++  // Either of the following should hold, but no check is done.
++  //   - T is a field, or
++  //   - the coefficient of the highest degree of q is (T)1.
++  pair<Polynomial, Polynomial> divmod(const Polynomial& q) const {
+     int this_deg = degree();
+     int q_deg = q.degree();
+     if (q_deg == 0) {
+-      return { *this * ((T)1 / q.coef[0]), Polynomial((T)0) };
+-    }
+-    if (q_deg == 1) {
+-      assert((q.coef[0] / q.coef[1]) * q.coef[1] == q.coef[0]); // T must be a field
+-      auto [d, m] = _divide_linear(-q.coef[0] / q.coef[1]);
+-      return {d, Polynomial(m)};
++      vector<T> new_coef;
++      for (ll i = 0; i <= this_deg; i++) { new_coef[i] /= q.coef[0] }
++      return {Polynomial(move(new_coef)), Polynomial()};
+     }
+     int div_deg = this_deg - q_deg;
+-    if (div_deg < 0) {
+-      return { Polynomial((T)0), *this };
+-    }
++    if (div_deg < 0) { return { (T)0, *this }; }
+     int mod_deg = q_deg - 1;
+     vector<T> div_coef(div_deg + 1);
+     vector<T> mod_coef(coef);
+-    // DLOGK(div_deg, mod_deg);
+-    // DLOGK(div_coef, mod_coef);
++    DLOGK_LIB(div_deg, mod_deg);
++    DLOGK_LIB(div_coef, mod_coef);
+     for (int i = 0; i <= div_deg; i++) {
+       T c = mod_coef[this_deg - i] / q.coef[q_deg];
+       div_coef[div_deg - i] = c;
+       for (int j = 0; j <= q_deg; j++) {
+         mod_coef[this_deg - i - j] -= c * q.coef[q_deg - j];
+       }
+-      assert(mod_coef[this_deg - i] == (T)0); // T must be a field
+-      // DLOGK(i, div_coef, mod_coef);
++      DLOGK_LIB(i, div_coef, mod_coef);
+     }
+     mod_coef.resize(mod_deg + 1);
+-    return { Polynomial(div_coef), Polynomial(mod_coef) };
++    return { Polynomial(move(div_coef)), Polynomial(move(mod_coef)) };
+   }
+ 
+   T subBostanMori(const Polynomial& o, ll n) const {
+@@ -284,4 +242,4 @@
+ using PolyLL = Polynomial<ll, 2>;
+ using PolyFp = Polynomial<Fp, 1>;
+ 
+-// @@ !! END ---- polynomial.cc
++// ---- end polynomial.cc

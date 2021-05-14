@@ -1,10 +1,10 @@
 CXX := g++
 
-ifeq ($(or $(DEBUG_LIB),$(DEBUG)),)
+ifeq ($(DEBUG),)
   DEBUGFLAGS := -O2
 else
   DEBUGFLAGS := -g -O0 -D_GLIBCXX_DEBUG -DDEBUG=1
-  ifdef DEBUG_LIB
+  ifneq ($(DEBUG_LIB),)
     DEBUGFLAGS := $(DEBUGFLAGS) -DDEBUG_LIB=1
   endif
 endif

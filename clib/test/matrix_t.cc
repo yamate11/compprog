@@ -455,8 +455,7 @@ struct Fp {
 
   Fp inv() const {
     if (val == 0) {
-      cerr << "inv() is called for zero." << endl;
-      exit(1);
+      throw runtime_error("Fp::inv(): called for zero.");
     }
     auto [g, u, v] = eGCD(val, MOD);
     return Fp(u);
@@ -483,18 +482,26 @@ Fp operator +(int x, const Fp& y) { return Fp(x) + y; }
 Fp operator -(int x, const Fp& y) { return Fp(x) - y; }
 Fp operator *(int x, const Fp& y) { return Fp(x) * y; }
 Fp operator /(int x, const Fp& y) { return Fp(x) / y; }
+bool operator ==(int x, const Fp& y) { return Fp(x) == y; }
+bool operator !=(int x, const Fp& y) { return Fp(x) != y; }
 Fp operator +(ll x, const Fp& y) { return Fp(x) + y; }
 Fp operator -(ll x, const Fp& y) { return Fp(x) - y; }
 Fp operator *(ll x, const Fp& y) { return Fp(x) * y; }
 Fp operator /(ll x, const Fp& y) { return Fp(x) / y; }
+bool operator ==(ll x, const Fp& y) { return Fp(x) == y; }
+bool operator !=(ll x, const Fp& y) { return Fp(x) != y; }
 Fp operator +(const Fp& x, int y) { return x + Fp(y); }
 Fp operator -(const Fp& x, int y) { return x - Fp(y); }
 Fp operator *(const Fp& x, int y) { return x * Fp(y); }
 Fp operator /(const Fp& x, int y) { return x / Fp(y); }
+bool operator ==(const Fp& x, int y) { return x == Fp(y); }
+bool operator !=(const Fp& x, int y) { return x != Fp(y); }
 Fp operator +(const Fp& x, ll y) { return x + Fp(y); }
 Fp operator -(const Fp& x, ll y) { return x - Fp(y); }
 Fp operator *(const Fp& x, ll y) { return x * Fp(y); }
 Fp operator /(const Fp& x, ll y) { return x / Fp(y); }
+bool operator ==(const Fp& x, ll y) { return x == Fp(y); }
+bool operator !=(const Fp& x, ll y) { return x != Fp(y); }
 
 istream& operator>> (istream& is, Fp& t) {
   ll x; is >> x;

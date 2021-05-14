@@ -1,24 +1,32 @@
-CXX := g++
 
-ifeq ($(or $(DEBUG_LIB),$(DEBUG)),)
-  DEBUGFLAGS := -O2
+# CXX = g++
+# CXXCOMMONFLAGS = -std=gnu++1y -Wall -Wno-format-security -Wshadow
+
+CXX = g++-9
+WARNINGS = -Wall -Wno-format-security -Wshadow -fconcepts
+BOOSTINCLIB = -I/home/y-tanabe/lib/boost_1_73_0
+ATCODERLIB = -I/home/y-tanabe/proj/compprog/clib/ac-library
+CXXCOMMONFLAGS = -std=gnu++17 $(WARNINGS) $(BOOSTINCLIB) $(ATCODERLIB)
+
+ifdef CMPNAIVE
+  CMPNAIVEFLAGS = -DCMPNAIVE=1
 else
-  DEBUGFLAGS := -g -O0 -D_GLIBCXX_DEBUG -DDEBUG=1
-  ifdef DEBUG_LIB
-    DEBUGFLAGS := $(DEBUGFLAGS) -DDEBUG_LIB=1
-  endif
+  CMPNAIVEFLAGS = 
 endif
 
-WARNINGS := -Wall -Wno-format-security -Wshadow -fconcepts
+ifdef DEBUG
+  DEBUGFLAGS = -g -O0 -D_GLIBCXX_DEBUG -DDEBUG=1
+else
+  DEBUGFLAGS = -O2
+endif
 
-CXXFLAGS := -std=gnu++17 $(DEBUGFLAGS) $(WARNINGS)
+ifeq ($(DEBUG), 2)
+  DEBUGFLAGS = -g -O0 -D_GLIBCXX_DEBUG -DDEBUG=1 -DDEBUG_LIB=1
+endif
 
-CXXFLAGS := $(CXXFLAGS) -I/home/y-tanabe/lib/boost_1_73_0
-CXXFLAGS := $(CXXFLAGS) -I/home/y-tanabe/proj/compprog/clib/ac-library
-CXXFLAGS := $(CXXFLAGS) $(if $(CMPNAIVE),-DCMPNAIVE=1)
-CXXFLAGS := $(CXXFLAGS) -DTEST_CONSTANT_MOD=$(if $(TEST_CONSTANT_MOD),1,0)
+CXXFLAGS = $(DEBUGFLAGS) $(CMPNAIVEFLAGS) $(CXXCOMMONFLAGS) 
 
-all: foo
+all: polynomial_t
 
 clean:
 	$(RM) cans.o cans cans.exe *~ *.stackdump core

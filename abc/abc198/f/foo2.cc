@@ -1,46 +1,30 @@
-#include <bits/stdc++.h>
+#include <iostream>
+#include <iomanip>
 #include <cassert>
 typedef long long int ll;
 using namespace std;
 // #include <atcoder/all>
 
-struct A {
+
+class A {
+  int x;
+public:
+  int getX() { return x; }
+  void setX(int x_) { x = x_; }
+
+  friend int func(A a);
 };
 
-struct B {
-};
-
-void func1(A a) {}
-
-void func2(B b) {}
-
-void func3() {}
-
-template<typename T>
-void g(T t) {
-  func3();
-}
-
-template<>
-void g(A a) {
-  func1(a);
-}
-
-template<>
-void g(B b) {
-  func2(b);
+int func(A a) {
+  return a.x;
 }
 
 int main() {
-  
   A a;
-  g(a);
+  a.setX(3);
+  cout << a.getX() << endl;
   
-  B b;
-  g(b);
-
-  int c = 0;
-  g(c);
+  cout << func(a) << endl;
 
   return 0;
 }
