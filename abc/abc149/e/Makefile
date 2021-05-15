@@ -17,10 +17,16 @@ CXXFLAGS := -std=gnu++17 $(DEBUGFLAGS) $(WARNINGS)
 CXXFLAGS := $(CXXFLAGS) -I/home/y-tanabe/lib/boost_1_73_0
 CXXFLAGS := $(CXXFLAGS) -I/home/y-tanabe/proj/compprog/clib/ac-library
 CXXFLAGS := $(CXXFLAGS) $(if $(CMPNAIVE),-DCMPNAIVE=1)
-CXXFLAGS := $(CXXFLAGS)
 
-all: cans
+ifeq ($(USE_CONSTANT_MOD),)
+else
+CXXFLAGS := $(CXXFLAGS) -DUSE_CONSTANT_MOD
+endif
+
+EXEC := cans mod_t foo
+
+all: $(EXEC)
 
 clean:
-	$(RM) cans.o cans cans.exe *~ *.stackdump core
+	$(RM) $(EXEC) cans.o cans.exe *~ *.stackdump core
 

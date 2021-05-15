@@ -5,7 +5,7 @@
 	"util" "scc" "LinTr" "geometry" "binsearch" "dijkstra" "rerror"
 	"suffixArray" "board" "minCostFlow" "perm" "guessPoly" "ftwo"
 	"trie" "tree" "rollingHash" "fft" "doubling" "ipoint" "cumsum2d"
-	"interactive" "intervalSet" "polynomial"
+	"interactive" "intervalSet" "polynomial" "convolution"
 	"f:power" "f:<<" "f:>>" "f:updMaxMin" "f:gcd" "f:intDiv" 
         "f:perfmeas" "f:mex" "f:shortVector"
 	))
