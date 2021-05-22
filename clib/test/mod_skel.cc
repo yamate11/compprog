@@ -3,70 +3,24 @@
 typedef long long int ll;
 using namespace std;
 
-/*
-  If you need performance, use const.  This can be done by 
-  placing 
+// @@ !! LIM(mod f:power)
 
-	#define CONSTANT_MOD (1e9 + 7)
-
-  in the heading part.
- */
-
-
-// @@ !! LIM(f:gcd f:intDiv f:power mod)
+template<int mod> void testf1(int dyn_mod);
 
 int main() {
 
   {
-    Fp::MOD = 1e9 + 7;
     auto [t13, t11, t12] = eGCD(15, 20);
     assert(t13 == 5 && t13 == 15 * t11 + 20 * t12);
     assert(gcd(1,7) == 1);
     assert(gcd(8, 2) == 2);
   }
 
-  {
-    Fp::MOD = 7;
-    assert(Fp(0).val == 0);
-    assert(Fp(2).val == 2);
-    assert(Fp(7).val == 0);
-    assert(Fp(74).val == 4);
-    assert(Fp(-4).val == 3);
-    assert(Fp(-7).val == 0);
-    assert(Fp(-8).val == 6);
-    assert(Fp(-14).val == 0);
-    assert(Fp(-16).val == 5);
-    Fp x;
-    assert((ll)x == 0);
-    assert(x == Fp(0));
-    assert(Fp(2) == Fp(-5));
-    assert(Fp(2) != Fp(-2));
-    x = Fp(3);
-    x += Fp(5);
-    assert(x == Fp(1));
-    x += Fp(6);
-    assert(x == Fp(0));
-    x = Fp(2);
-    x -= Fp(5);
-    assert(x == Fp(4));
-    x -= Fp(4);
-    assert(x == Fp(0));
-    x = Fp(6);
-    x *= Fp(2);
-    assert(x == Fp(5));
-    assert(Fp(5).inv() == Fp(3));
-    assert(Fp(5) == Fp(-4).inv());
-    x = Fp(2);
-    x /= Fp(3);
-    assert(x == Fp(3));
-    assert(Fp(10) + Fp(20) == Fp(2));
-    assert(Fp(10) * Fp(-2) == Fp(1));
-    assert(Fp(5) - Fp(8) == Fp(4));
-    assert(Fp(4) / Fp(6) == Fp(3));
-    assert(-Fp(4) == Fp(3));
-  }
+  testf1<7>(0);
+  testf1<0>(7);
 
   {
+    using Fp = FpG<7>;
     vector<Fp> v01(10);
     for (int i = 0; i < 10; i++) v01.at(i) = power(Fp(3), i);
     assert(v01 == vector<Fp>({Fp(1), Fp(3), Fp(2), Fp(6), Fp(4), Fp(5),
@@ -77,7 +31,7 @@ int main() {
   }
 
   {
-    Fp::MOD = 7;
+    using Fp = FpG<7>;
     Fp z1(5);
     Fp z2(100);
     Fp z3(z2);
@@ -109,8 +63,9 @@ int main() {
   }
 
   {
-    Fp::MOD = 97;
-    Comb cb(10);
+    using Fp = FpG<97>;
+    using Comb = CombG<97>;
+    Comb cb(6);
     assert(cb.fact(4) == Fp(24));
     assert(cb.perm(5,3) == Fp(60));
     assert(cb.comb(6,2) == Fp(15));
@@ -119,3 +74,54 @@ int main() {
 
   cout << "ok" << endl;
 }
+
+template<int mod>
+void testf1(int dyn_mod) {
+  using Fp = FpG<mod>;
+  if (mod == 0) {
+    Fp::setMod(dyn_mod);
+  }
+  assert(Fp(0).val == 0);
+  assert(Fp(2).val == 2);
+  assert(Fp(7).val == 0);
+  assert(Fp(74).val == 4);
+  assert(Fp(-4).val == 3);
+  assert(Fp(-7).val == 0);
+  assert(Fp(-8).val == 6);
+  assert(Fp(-14).val == 0);
+  assert(Fp(-16).val == 5);
+  Fp x;
+  assert((ll)x == 0);
+  assert(x == Fp(0));
+  assert(Fp(2) == Fp(-5));
+  assert(Fp(2) != Fp(-2));
+  x = Fp(3);
+  x += Fp(5);
+  assert(x == Fp(1));
+  x += Fp(6);
+  assert(x == Fp(0));
+  x = Fp(2);
+  x -= Fp(5);
+  assert(x == Fp(4));
+  x -= Fp(4);
+  assert(x == Fp(0));
+  x = Fp(6);
+  x *= Fp(2);
+  assert(x == Fp(5));
+  assert(Fp(5).inv() == Fp(3));
+  assert(Fp(5) == Fp(-4).inv());
+  x = Fp(2);
+  x /= Fp(3);
+  assert(x == Fp(3));
+  assert(Fp(10) + Fp(20) == Fp(2));
+  assert(Fp(10) * Fp(-2) == Fp(1));
+  assert(Fp(5) - Fp(8) == Fp(4));
+  assert(Fp(4) / Fp(6) == Fp(3));
+  assert(-Fp(4) == Fp(3));
+  if (mod == 0) {
+    assert(Fp::getMod() == dyn_mod);
+  }else {
+    assert(Fp::getMod() == mod);
+  }
+}
+

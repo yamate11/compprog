@@ -250,193 +250,147 @@ ll crt(vector<ll> as, vector<ll> xs) {
 
 // ---- end f:gcd
 
-// ---- inserted function f:intDiv from util.cc
-// imod, divFloor, divCeil
-
-// imod(x, y) : remainder of x for y
-// for y > 0:
-//   imod(x, y)  = r where x = dy + r, 0 <= r < y
-//   imod(x, -y) = r where x = dy + r, 0 >= r > y
-// Thus, imod( 10,  7) =  3
-//       imod(-10,  7) =  4
-//       imod( 10, -7) = -4
-//       imod(-10, -7) = -3
-ll imod(ll x, ll y) {
-  ll v = x % y;
-  if ((x >= 0) == (y >= 0)) return v;
-  else                      return v == 0 ? 0 : v + y;
-}
-
-// Integer Division; regardless pos/neg
-ll divFloor(ll x, ll y) {
-  if (x > 0) {
-    if (y > 0) return x / y;
-    else       return (x - y - 1) / y;
-  }else {
-    if (y > 0) return (x - y + 1) / y;
-    else       return x / y;
-  }
-}
-
-ll divCeil(ll x, ll y) {
-  if (x > 0) {
-    if (y > 0) return (x + y - 1) / y;
-    else       return x / y;
-  }else {
-    if (y > 0) return x / y;
-    else       return (x + y + 1) / y;
-  }
-}
-//   Just a note.  For d \in Z and t \in R,
-//       d < t <=> d < ceil(t),     d <= t <=> d <= floor(t),
-//       d > t <=> d > floor(t),    d >= t <=> d >= ceil(t).
-
-// ---- end f:intDiv
-
 // ---- inserted library file mod.cc
 
-/*
-  You may want to put something like:
-#define CONSTANT_MOD (1e9 + 7)
-#define CONSTANT_MOD 998244353
-  in the header part (outside of library paste area)
- */
+template<int mod=0>
+struct FpG {   // G for General
+  static ll dyn_mod;
 
-struct Fp {
-#if defined(CONSTANT_MOD)
-  static const ll MOD = CONSTANT_MOD;
-#else
-  static ll MOD;
-#endif
+  static ll getMod() {
+    if (mod == 0) return dyn_mod;
+    else          return mod;
+  }
+
+  static void setMod(ll _mod) {  // effective only when mod == 0
+    dyn_mod = _mod;
+  }
+
+  static ll _conv(ll x) {
+    if (x >= getMod())  return x % getMod();
+    if (x >= 0)         return x;
+    if (x >= -getMod()) return x + getMod();
+    ll y = x % getMod();
+    if (y == 0) return 0;
+    return y + getMod();
+  }
 
   ll val;
 
-  /*
-  ll _calc_from_ll(ll t = 0) {
-    if      (t >= MOD)  return t % MOD;
-    else if (t >= 0)    return t;
-    else if (t >= -MOD) return t + MOD;
-    else {
-      ll v = t % MOD;
-      if (v == 0) return 0;
-      else        return v + MOD;
-    }
-  }
-  */
+  FpG(int t = 0) : val(_conv(t)) {}
+  FpG(ll t) : val(_conv(t)) {}
+  FpG(const FpG& t) : val(t.val) {}
+  FpG& operator =(const FpG& t) { val = t.val; return *this; }
+  FpG& operator =(ll t) { val = _conv(t); return *this; }
+  FpG& operator =(int t) { val = _conv(t); return *this; }
 
-  Fp(ll t = 0) : val(imod(t, MOD)) {}
-  Fp(const Fp& t) : val(t.val) {}
-  Fp& operator =(const Fp& t) { val = t.val; return *this; }
-  Fp& operator =(ll t) { val = imod(t, MOD); return *this; }
-  Fp& operator =(int t) { val = imod(t, MOD); return *this; }
-
-  Fp& operator +=(const Fp& t) {
+  FpG& operator +=(const FpG& t) {
     val += t.val;
-    if (val >= MOD) val -= MOD;
+    if (val >= getMod()) val -= getMod();
     return *this;
   }
 
-  Fp& operator -=(const Fp& t) {
+  FpG& operator -=(const FpG& t) {
     val -= t.val;
-    if (val < 0) val += MOD;
+    if (val < 0) val += getMod();
     return *this;
   }
 
-  Fp& operator *=(const Fp& t) {
-    val = (val * t.val) % MOD;
+  FpG& operator *=(const FpG& t) {
+    val = (val * t.val) % getMod();
     return *this;
   }
 
-  Fp inv() const {
+  FpG inv() const {
     if (val == 0) {
-      throw runtime_error("Fp::inv(): called for zero.");
+      throw runtime_error("FpG::inv(): called for zero.");
     }
-    auto [g, u, v] = eGCD(val, MOD);
-    return Fp(u);
+    auto [g, u, v] = eGCD(val, getMod());
+    return FpG(u);
   }
 
-  Fp& operator /=(const Fp& t) {
+  FpG& operator /=(const FpG& t) {
     return (*this) *= t.inv();
   }
 
-  Fp operator +(const Fp& t) const { return Fp(val) += t; }
-  Fp operator -(const Fp& t) const { return Fp(val) -= t; }
-  Fp operator *(const Fp& t) const { return Fp(val) *= t; }
-  Fp operator /(const Fp& t) const { return Fp(val) /= t; }
-  Fp operator -() const { return Fp(-val); }
+  FpG operator +(const FpG& t) const { return FpG(val) += t; }
+  FpG operator -(const FpG& t) const { return FpG(val) -= t; }
+  FpG operator *(const FpG& t) const { return FpG(val) *= t; }
+  FpG operator /(const FpG& t) const { return FpG(val) /= t; }
+  FpG operator -() const { return FpG(-val); }
 
-  bool operator ==(const Fp& t) const { return val == t.val; }
-  bool operator !=(const Fp& t) const { return val != t.val; }
+  bool operator ==(const FpG& t) const { return val == t.val; }
+  bool operator !=(const FpG& t) const { return val != t.val; }
   
   operator ll() const { return val; }
 
+  friend FpG operator +(int x, const FpG& y) { return FpG(x) + y; }
+  friend FpG operator -(int x, const FpG& y) { return FpG(x) - y; }
+  friend FpG operator *(int x, const FpG& y) { return FpG(x) * y; }
+  friend FpG operator /(int x, const FpG& y) { return FpG(x) / y; }
+  friend bool operator ==(int x, const FpG& y) { return FpG(x) == y; }
+  friend bool operator !=(int x, const FpG& y) { return FpG(x) != y; }
+  friend FpG operator +(ll x, const FpG& y) { return FpG(x) + y; }
+  friend FpG operator -(ll x, const FpG& y) { return FpG(x) - y; }
+  friend FpG operator *(ll x, const FpG& y) { return FpG(x) * y; }
+  friend FpG operator /(ll x, const FpG& y) { return FpG(x) / y; }
+  friend bool operator ==(ll x, const FpG& y) { return FpG(x) == y; }
+  friend bool operator !=(ll x, const FpG& y) { return FpG(x) != y; }
+  friend FpG operator +(const FpG& x, int y) { return x + FpG(y); }
+  friend FpG operator -(const FpG& x, int y) { return x - FpG(y); }
+  friend FpG operator *(const FpG& x, int y) { return x * FpG(y); }
+  friend FpG operator /(const FpG& x, int y) { return x / FpG(y); }
+  friend bool operator ==(const FpG& x, int y) { return x == FpG(y); }
+  friend bool operator !=(const FpG& x, int y) { return x != FpG(y); }
+  friend FpG operator +(const FpG& x, ll y) { return x + FpG(y); }
+  friend FpG operator -(const FpG& x, ll y) { return x - FpG(y); }
+  friend FpG operator *(const FpG& x, ll y) { return x * FpG(y); }
+  friend FpG operator /(const FpG& x, ll y) { return x / FpG(y); }
+  friend bool operator ==(const FpG& x, ll y) { return x == FpG(y); }
+  friend bool operator !=(const FpG& x, ll y) { return x != FpG(y); }
+
+  friend istream& operator>> (istream& is, FpG& t) {
+    ll x; is >> x;
+    t = x;
+    return is;
+  }
+
+  friend ostream& operator<< (ostream& os, const FpG& t) {
+    os << t.val;
+    return os;
+  }
+
 };
+template<int mod>
+ll FpG<mod>::dyn_mod;
 
-Fp operator +(int x, const Fp& y) { return Fp(x) + y; }
-Fp operator -(int x, const Fp& y) { return Fp(x) - y; }
-Fp operator *(int x, const Fp& y) { return Fp(x) * y; }
-Fp operator /(int x, const Fp& y) { return Fp(x) / y; }
-bool operator ==(int x, const Fp& y) { return Fp(x) == y; }
-bool operator !=(int x, const Fp& y) { return Fp(x) != y; }
-Fp operator +(ll x, const Fp& y) { return Fp(x) + y; }
-Fp operator -(ll x, const Fp& y) { return Fp(x) - y; }
-Fp operator *(ll x, const Fp& y) { return Fp(x) * y; }
-Fp operator /(ll x, const Fp& y) { return Fp(x) / y; }
-bool operator ==(ll x, const Fp& y) { return Fp(x) == y; }
-bool operator !=(ll x, const Fp& y) { return Fp(x) != y; }
-Fp operator +(const Fp& x, int y) { return x + Fp(y); }
-Fp operator -(const Fp& x, int y) { return x - Fp(y); }
-Fp operator *(const Fp& x, int y) { return x * Fp(y); }
-Fp operator /(const Fp& x, int y) { return x / Fp(y); }
-bool operator ==(const Fp& x, int y) { return x == Fp(y); }
-bool operator !=(const Fp& x, int y) { return x != Fp(y); }
-Fp operator +(const Fp& x, ll y) { return x + Fp(y); }
-Fp operator -(const Fp& x, ll y) { return x - Fp(y); }
-Fp operator *(const Fp& x, ll y) { return x * Fp(y); }
-Fp operator /(const Fp& x, ll y) { return x / Fp(y); }
-bool operator ==(const Fp& x, ll y) { return x == Fp(y); }
-bool operator !=(const Fp& x, ll y) { return x != Fp(y); }
-
-istream& operator>> (istream& is, Fp& t) {
-  ll x; is >> x;
-  t = x;
-  return is;
-}
-
-ostream& operator<< (ostream& os, const Fp& t) {
-  os << t.val;
-  return os;
-}
-
-class Comb {
+template<int mod=0>
+class CombG {
   int nMax;
-  vector<Fp> vFact;
-  vector<Fp> vInvFact;
+  vector<FpG<mod>> vFact;
+  vector<FpG<mod>> vInvFact;
 public:
-  Comb(int nm) : nMax(nm), vFact(nm+1), vInvFact(nm+1) {
+  CombG(int nm) : nMax(nm), vFact(nm+1), vInvFact(nm+1) {
     vFact.at(0) = 1;
     for (int i = 1; i <= nMax; i++) vFact.at(i) = i * vFact.at(i-1);
     vInvFact.at(nMax) = vFact.at(nMax).inv();
     for (int i = nMax; i >= 1; i--) vInvFact.at(i-1) = i * vInvFact.at(i);
   }
-  Fp fact(int n) { return vFact.at(n); }
-  Fp comb(int n, int r) {
+  FpG<mod> fact(int n) { return vFact.at(n); }
+  FpG<mod> comb(int n, int r) {
     return vFact.at(n) * vInvFact.at(r) * vInvFact.at(n-r);
   }
   // The number of permutation extracting r from n.
-  Fp perm(int n, int r) {
+  FpG<mod> perm(int n, int r) {
     return vFact.at(n) * vInvFact.at(n-r);
   }
 };
 
-#if !defined(CONSTANT_MOD)
-ll Fp::MOD = 1e9 + 7;
-// ll Fp::MOD = 998'244'353;
-// WARNING: You should not uncomment here.  Instead, write
-//    OUT OF LIBRARY PASTE AREA, such as in main():
-//                     Fp::MOD = 998'244'353;
-//    or whatever.  Or more preferably, use CONSTANT_MOD.
-#endif
+constexpr int primeA = 1'000'000'007;
+constexpr int primeB = 998'244'353;
+using FpA = FpG<primeA>;
+using FpB = FpG<primeB>;
+using CombA = CombG<primeA>;
+using CombB = CombG<primeB>;
 
 // ---- end mod.cc
 
@@ -669,20 +623,26 @@ constexpr int ac_primitive_root_constexpr(int m) {
   }
 }
 
-#if defined(CONSTANT_MOD)
-template <int m>
-constexpr int ac_primitive_root = ac_primitive_root_constexpr(m);
-constexpr int cv_get_mod() { return CONSTANT_MOD; }
-constexpr int cv_get_primitive_root() {
-  return ac_primitive_root<CONSTANT_MOD>;
-}
-#else
-int cv_get_mod() { return Fp::MOD; }
-int cv_get_primitive_root() { return ac_primitive_root_constexpr(Fp::MOD); }
-#endif
+template<int mod>
+int prim_root = mod > 0 ? ac_primitive_root_constexpr(mod) : 0;
 
-void butterfly(vector<Fp>& a) {
-  int g = cv_get_primitive_root();
+template<int mod>
+int cv_get_mod() {
+  if (mod > 0) return mod;
+  else return FpG<mod>::getMod();
+}
+
+template<int mod>
+int cv_get_primitive_root() {
+  if (mod > 0) return prim_root<mod>;
+  else return ac_primitive_root_constexpr(FpG<mod>::getMod());
+}
+
+
+template<int mod>
+void butterfly(vector<FpG<mod>>& a) {
+  using Fp = FpG<mod>;
+  int g = cv_get_primitive_root<mod>();
   int n = int(a.size());
   int h = ac_ceil_pow2(n);
 
@@ -691,12 +651,12 @@ void butterfly(vector<Fp>& a) {
   static bool first = true;
   static Fp sum_e[30];  // sum_e[i] = ies[0] * ... * ies[i - 1] * es[i]
   if (first) {
-#if defined(CONSTANT_MOD)
-    first = false;
-#endif    
+    if (mod > 0) {
+      first = false;
+    }
     Fp es[30], ies[30];  // es[i]^(2^(2+i)) == 1
-    int cnt2 = __builtin_ctz(cv_get_mod() - 1);
-    Fp e = power<Fp>(Fp(g), (cv_get_mod() - 1) >> cnt2), ie = e.inv();
+    int cnt2 = __builtin_ctz(cv_get_mod<mod>() - 1);
+    Fp e = power<Fp>(Fp(g), (cv_get_mod<mod>() - 1) >> cnt2), ie = e.inv();
     for (int i = cnt2; i >= 2; i--) {
       // e^(2^i) == 1
       es[i - 2] = e;
@@ -711,7 +671,7 @@ void butterfly(vector<Fp>& a) {
     }
     DLOGK_LIB(now);
   }
-  DLOGK_LIB(cv_get_mod());
+  DLOGK_LIB(cv_get_mod<mod>());
   for (int ph = 1; ph <= h; ph++) {
     int w = 1 << (ph - 1), p = 1 << (h - ph);
     Fp now = 1;
@@ -728,20 +688,22 @@ void butterfly(vector<Fp>& a) {
   }
 }
 
-void butterfly_inv(vector<Fp>& a) {
-  int g = cv_get_primitive_root();
+template<int mod>
+void butterfly_inv(vector<FpG<mod>>& a) {
+  using Fp = FpG<mod>;
+  int g = cv_get_primitive_root<mod>();
   int n = int(a.size());
   int h = ac_ceil_pow2(n);
 
   static bool first = true;
   static Fp sum_ie[30];  // sum_ie[i] = es[0] * ... * es[i - 1] * ies[i]
   if (first) {
-#if defined(CONSTANT_MOD)
-    first = false;
-#endif    
+    if (mod > 0) {
+      first = false;
+    }
     Fp es[30], ies[30];  // es[i]^(2^(2+i)) == 1
-    int cnt2 = __builtin_ctz(cv_get_mod() - 1);
-    Fp e = power<Fp>(Fp(g), (cv_get_mod() - 1) >> cnt2), ie = e.inv();
+    int cnt2 = __builtin_ctz(cv_get_mod<mod>() - 1);
+    Fp e = power<Fp>(Fp(g), (cv_get_mod<mod>() - 1) >> cnt2), ie = e.inv();
     for (int i = cnt2; i >= 2; i--) {
       // e^(2^i) == 1
       es[i - 2] = e;
@@ -766,7 +728,7 @@ void butterfly_inv(vector<Fp>& a) {
         auto r = a[i + offset + p];
         a[i + offset] = l + r;
         a[i + offset + p] =
-          (long long)(cv_get_mod() + l.val - r.val) * inow.val;
+          (long long)(cv_get_mod<mod>() + l.val - r.val) * inow.val;
       }
       inow *= sum_ie[__builtin_ctz(~(unsigned int)(s))];
     }
@@ -779,7 +741,9 @@ const ll lim_naive = 1;
 const ll lim_naive = 60;
 #endif
 
-vector<Fp> convolution(vector<Fp> a, vector<Fp> b) {
+template<int mod>
+vector<FpG<mod>> convolution(vector<FpG<mod>> a, vector<FpG<mod>> b) {
+  using Fp = FpG<mod>;
   int n = int(a.size()), m = int(b.size());
   if (!n || !m) return {};
   if (min(n, m) <= lim_naive) {
@@ -812,17 +776,12 @@ vector<Fp> convolution(vector<Fp> a, vector<Fp> b) {
   return a;
 }
 
-template<class T> // T must be integral.
-vector<T> sub_convolution(int mod, const vector<T>& a, const vector<T>& b) {
-
-#ifdef CONSTANT_MOD
-  throw runtime_error("sub_convolution and convolution_ll cannot be called with CONSTANT_MOD defined");
-#else
+template<int mod, class T> // T must be integral.
+vector<T> sub_convolution(const vector<T>& a, const vector<T>& b) {
 
   int n = int(a.size()), m = int(b.size());
   if (!n || !m) return {};
-  int orig_mod = Fp::MOD;
-  Fp::MOD = mod;
+  using Fp = FpG<mod>;
   vector<Fp> a2(n), b2(m);
   for (int i = 0; i < n; i++) { a2[i] = Fp(a[i]); }
   for (int i = 0; i < m; i++) { b2[i] = Fp(b[i]); }
@@ -832,10 +791,8 @@ vector<T> sub_convolution(int mod, const vector<T>& a, const vector<T>& b) {
   DLOGK_LIB(c2);
   vector<T> c(n + m - 1);
   for (int i = 0; i < n + m - 1; i++) { c[i] = c2[i].val; }
-  Fp::MOD = orig_mod;
   return c;
 
-#endif
 }
 
 vector<long long> convolution_ll(const vector<long long>& a,
@@ -858,9 +815,9 @@ vector<long long> convolution_ll(const vector<long long>& a,
   static constexpr unsigned long long i3 =
     ac_inv_gcd(MOD1 * MOD2, MOD3).second;
 
-  auto c1 = sub_convolution(MOD1, a, b);
-  auto c2 = sub_convolution(MOD2, a, b);
-  auto c3 = sub_convolution(MOD3, a, b);
+  auto c1 = sub_convolution<MOD1>(a, b);
+  auto c2 = sub_convolution<MOD2>(a, b);
+  auto c3 = sub_convolution<MOD3>(a, b);
   DLOGKL_LIB("***", a);
   DLOGK_LIB(b);
   DLOGK_LIB(c1);
@@ -912,15 +869,18 @@ vector<long long> convolution_ll(const vector<long long>& a,
   #define DLOGKL_LIB(lab, ...)
 #endif
 
+template<typename T> struct SparsePoly;
+
 template<typename T>
 vector<T> polyConvolution(const vector<T>& a, const vector<T>& b) {
   assert(0);
 }
 
-template<>
-vector<Fp> polyConvolution(const vector<Fp>& a, const vector<Fp>& b) {
-  vector<Fp> aa(a);
-  vector<Fp> bb(b);
+template<int mod=0>
+vector<FpG<mod>> polyConvolution(const vector<FpG<mod>>& a,
+                                 const vector<FpG<mod>>& b) {
+  vector<FpG<mod>> aa(a);
+  vector<FpG<mod>> bb(b);
   return convolution(move(aa), move(bb));
 }
 
@@ -942,15 +902,32 @@ vector<ll> polyConvolution_ll(const vector<ll>& a, const vector<ll>& b) {
 //             in this case, T must be ll
 template<typename T, int use_fft>
 struct Polynomial {
+  using SP = SparsePoly<T>;
+
+private:
+  // The highest coefficient should not be zero.
+  // Thus, the zero polynomial should be represented by the empty vector.
   vector<T> coef;
 
+public:
+  const vector<T>& coefVec() const { return coef; }
+  T getCoef(ll n) const {
+    if (n > degree()) return (T)0;
+    return coef[n];
+  }
+
+  // Degree of the zero polynomial is -1.
   int degree() const { return coef.size() - 1; }
 
-  Polynomial() : coef({(T)0}) {}
-  Polynomial(T t) : coef({t}) {}
+  void normalize() {
+    while (!coef.empty() && coef.back() == (T)0) coef.pop_back();
+  }
 
-  Polynomial(const vector<T>& coef_) : coef(coef_) { adj_degree(); }
-  Polynomial(vector<T>&& coef_) : coef(move(coef_)) { adj_degree(); }
+  Polynomial() : coef() {}
+  Polynomial(T t) : coef() { if (t != (T)0) { coef.push_back(t); } }
+
+  Polynomial(const vector<T>& coef_) : coef(coef_) { normalize(); }
+  Polynomial(vector<T>&& coef_) : coef(move(coef_)) { normalize(); }
 
   Polynomial(const Polynomial& o) : coef(o.coef) {}
   Polynomial(Polynomial&& o) : coef(move(o.coef)) {}
@@ -963,20 +940,26 @@ struct Polynomial {
     return *this;
   }
   Polynomial& operator =(T t) {
-    coef.resize(1);
-    coef[0] = t;
+    coef.resize(0);
+    if (t != (T)0) { coef.push_back(t); }
     return *this;
   }
 
-  void adj_degree() {
-    while (coef.size() > 1 && coef.back() == (T)0) coef.pop_back();
+  void _from_sparse(const SP& sp) {
+    coef = vector<T>(sp.degree() + 1);
+    for (auto [i, t] : sp.coef) coef[i] = t;
+  }
+  Polynomial(const SP& sp) { _from_sparse(sp); }
+  Polynomial& operator =(const SP& sp) {
+    _from_sparse(sp);
+    return *this;
   }
 
   Polynomial& operator +=(const Polynomial& o) {
     int deg = max(degree(), o.degree());
     if ((int)coef.size() < deg + 1) { coef.resize(deg + 1); }
     for (int i = 0; i <= o.degree(); i++) { coef[i] += o.coef[i]; }
-    adj_degree();
+    normalize();
     return *this;
   }
 
@@ -984,7 +967,7 @@ struct Polynomial {
     int deg = max(degree(), o.degree());
     if ((int)coef.size() < deg + 1) { coef.resize(deg + 1); }
     for (int i = 0; i <= o.degree(); i++) { coef[i] -= o.coef[i]; }
-    adj_degree();
+    normalize();
     return *this;
   }
 
@@ -1011,9 +994,13 @@ struct Polynomial {
 
   constexpr Polynomial& operator *=(const Polynomial& o) {
     coef = coef_conv(coef, o.coef);
+    normalize();
     return *this;
   }
   
+  Polynomial operator -() const {
+    return Polynomial() -= *this;
+  }
   Polynomial operator +(const Polynomial& o) const {
     return Polynomial(*this) += o;
   }
@@ -1023,16 +1010,9 @@ struct Polynomial {
   Polynomial operator *(const Polynomial& o) const {
     return Polynomial(*this) *= o;
   }
-  Polynomial operator -() const {
-    return Polynomial() -= *this;
-  }
 
   bool operator ==(const Polynomial& o) const { return coef == o.coef; }
   bool operator !=(const Polynomial& o) const { return coef != o.coef; }
-
-  static Polynomial get_X() {
-    return Polynomial({(T)0, (T)1});
-  }
 
   T atval(T t) const {
     T ret = 0;
@@ -1040,12 +1020,19 @@ struct Polynomial {
     return ret;
   }
 
+  Polynomial& selfCutoff(int deg) {
+    if (degree() <= deg) return *this;
+    coef.resize(deg + 1);
+    normalize();
+    return *this;
+  }
+
+  Polynomial cutoff(int deg) const {
+    return Polynomial(*this).selfCutoff(deg);
+  }
+
   T selfDivideLinear(T c) {
-    if (degree() == 0) {
-      T m = coef[0];
-      coef[0] = (T)0;
-      return m;
-    }
+    if (coef.empty()) { return (T)0; }
     T x = coef.back();
     for (ll i = coef.size() - 2; i >= 0; i--) {
       T y = coef[i] + x * c;
@@ -1138,41 +1125,258 @@ struct Polynomial {
   friend T bostanMori(const Polynomial& p, const Polynomial& q, ll n) {
     return p.subBostanMori(q, n);
   }
+
+
+  Polynomial& operator +=(T t) {
+    coef[0] += t;
+    normalize();
+    return *this;
+  }
+  Polynomial& operator -=(T t) { return *this += (-t); }
+  Polynomial& operator *=(T t) {
+    if (t == (T)0) {
+      coef.resize(0);
+    }else {
+      for (int i = 0; i < (int)coef.size(); i++) coef[i] *= t;
+    }
+    return *this;
+  }
+  Polynomial operator +(T t) const { return Polynomial(*this) += t; }
+  Polynomial operator -(T t) const { return Polynomial(*this) -= t; }
+  Polynomial operator *(T t) const { return Polynomial(*this) *= t; }
+  friend Polynomial operator +(T t, const Polynomial& p) { return p + t; }
+  friend Polynomial operator -(T t, const Polynomial& p) { return (-p) + t; }
+  friend Polynomial operator *(T t, const Polynomial& p) { return p * t; }
+
+
+  Polynomial& operator +=(const SP& o) {
+    if (degree() < o.degree()) { coef.resize(o.degree() + 1); }
+    for (auto [i, t] : o.coef) { coef[i] += t; }
+    normalize();
+    return *this;
+  }
+
+  Polynomial& operator -=(const SP& o) { 
+    if (degree() < o.degree()) { coef.resize(o.degree() + 1); }
+    for (auto [i, t] : o.coef) { coef[i] -= t; }
+    normalize();
+    return *this;
+  }
+
+  Polynomial& selfMult(const SP& o, int lim = -1) {
+    if (coef.empty()) return *this;
+    if (o.coef.empty()) { coef.resize(0); return *this; }
+    int dd = degree() + o.degree();
+    if (lim < 0 || dd < lim) lim = dd;
+    auto old_coef = move(coef);
+    coef = vector<T>(lim + 1);
+    for (auto [i, t] : o.coef) {
+      for (int j = 0; j < (int)old_coef.size() && j <= lim - i; j++) {
+        coef[i + j] += t * old_coef[j];
+      }
+    }
+    normalize();
+    return *this;
+  }
+
+  Polynomial mult(const SP& o, int lim = -1) const {
+    Polynomial p(*this);
+    return p.selfMult(o, lim);
+  }
+
+  Polynomial& operator *=(const SP& o) { return selfMult(o, -1); }
+
+  // the constant term of o should have the inverse.
+  Polynomial& selfDivFPS(const SP& o, int lim = -1) {
+    if (o.coef.empty()) throw runtime_error("selfDivFPS: o.coef.empty");
+    auto [i, t0] = o.coef.front();
+    if (i != 0) throw runtime_error("selfDivFPS: no constant factor");
+    T invt = (T)1 / t0;
+    if (invt * t0 != (T)1) throw runtime_error("selfDivFPS: no inverse");
+    if (lim < 0) lim = degree();
+    else if (lim > degree()) coef.resize(lim + 1);
+    auto work = move(coef);
+    coef = vector<T>(lim + 1);
+    for (int j = 0; j <= lim; j++) {
+      coef[j] = work[j] * invt;
+      for (auto [k, t] : o.coef) {
+        if (j + k > lim) break;
+        work[j + k] -= coef[j] * t;
+      }
+    }
+    normalize();
+    return *this;
+  }
+
+  Polynomial divFPS(const SP& o, int lim = -1) const {
+    Polynomial p(*this);
+    return p.selfDivFPS(o, lim);
+  }
+
+  Polynomial operator +(SP t) const { return Polynomial(*this) += t; }
+  Polynomial operator -(SP t) const { return Polynomial(*this) -= t; }
+  Polynomial operator *(SP t) const { return Polynomial(*this) *= t; }
+  friend Polynomial operator +(SP t, const Polynomial& p) { return p + t; }
+  friend Polynomial operator -(SP t, const Polynomial& p) { return (-p) + t; }
+  friend Polynomial operator *(SP t, const Polynomial& p) { return p * t; }
+
+
+  friend ostream& operator<< (ostream& os, const Polynomial& p) {
+    os << p.coef;
+    return os;
+  }
+
+  static const SparsePoly<T> X;
+  static SparsePoly<T> Xn(int n) { return SparsePoly<T>::Xn(n); }
+
 };
+template<typename T, int use_fft>
+const SparsePoly<T> Polynomial<T, use_fft>::X({{1,1}});
 
-template<typename T, int use_fft>
-Polynomial<T, use_fft> operator +(T t, const Polynomial<T, use_fft>& p) {
-  return Polynomial<T, use_fft>(t) + p;
-}
-template<typename T, int use_fft>
-Polynomial<T, use_fft> operator -(T t, const Polynomial<T, use_fft>& p) {
-  return Polynomial<T, use_fft>(t) - p;
-}
-template<typename T, int use_fft>
-Polynomial<T, use_fft> operator *(T t, const Polynomial<T, use_fft>& p) {
-  return Polynomial<T, use_fft>(t) * p;
-}
-template<typename T, int use_fft>
-Polynomial<T, use_fft> operator +(const Polynomial<T, use_fft>& p, T t) {
-  return p + Polynomial<T, use_fft>(t);
-}
-template<typename T, int use_fft>
-Polynomial<T, use_fft> operator -(const Polynomial<T, use_fft>& p, T t) {
-  return p - Polynomial<T, use_fft>(t);
-}
-template<typename T, int use_fft>
-Polynomial<T, use_fft> operator *(const Polynomial<T, use_fft>& p, T t) {
-  return p * Polynomial<T, use_fft>(t);
-}
 
-template<typename T, int use_fft>
-ostream& operator<< (ostream& os, const Polynomial<T, use_fft>& p) {
-  os << p.coef;
-  return os;
-}
+template<typename T>
+struct SparsePoly {   // Sparse Polynomial
+  using coef_elm_t = pair<ll, T>;      
+  using coef_t = vector<coef_elm_t>;   
+  coef_t coef;      
+  // {k, t} in coef means t*X^k.  all t should not be (T)0
+  // Thus, 0 (as polynomial) should be represented by the empty vector.
+
+  // degree of 0 (as polynomial) is -1
+  int degree() const {
+    if (coef.empty()) return -1;
+    return coef.back().first;
+  }
+  void normalize() {
+    while (!coef.empty() && coef.back().second == (T)0) coef.pop_back();
+  }
+
+  SparsePoly() : coef() {}
+  SparsePoly(const SparsePoly& sp) : coef(sp.coef) {}
+  SparsePoly(SparsePoly&& sp) : coef(move(sp.coef)) {}
+  SparsePoly(T t) : coef() { if (t != (T)0) { coef.emplace_back(0, t); } }
+
+  // argument coef_ should be sorted and should not contain (T)0
+  SparsePoly(const coef_t& coef_) : coef(coef_) { normalize(); }
+  SparsePoly(coef_t&& coef_) : coef(move(coef_)) { normalize(); }
+
+  SparsePoly& operator=(const SparsePoly& sp) {
+    coef = sp.coef;
+    return *this;
+  }
+  SparsePoly& operator=(SparsePoly&& sp) {
+    coef = move(sp.coef);
+    return *this;
+  }
+  SparsePoly& operator=(T t) {
+    if (t != (T)0) { coef.emplace_back(0, t); }
+    normalize();
+    return *this;
+  }
+
+  /*
+  static SparsePoly getX() { return SparsePoly({{1, 1}}); }
+  static SparsePoly getXn(int n) { return SparsePoly({{n, 1}}); }
+  */
+
+  coef_t _plus_minus(const coef_t& a, const coef_t& b, int flag) const {
+    coef_t ret;
+    int i = 0, j = 0;
+    while (true) {
+      auto [ka, ta] = i < (int)a.size() ? a[i] : coef_elm_t(LLONG_MAX, 0);
+      auto [kb, tb] = j < (int)b.size() ? b[j] : coef_elm_t(LLONG_MAX, 0);
+      if (flag != 1) tb = -tb;
+      if (ka < kb) {
+        ret.emplace_back(ka, ta);
+        i++;
+      }else if (ka > kb) {
+        ret.emplace_back(kb, tb);
+        j++;
+      }else if (ka == LLONG_MAX) { break; }
+      else {
+        T tt = ta + tb;
+        if (tt != (T)0) ret.emplace_back(ka, tt);
+        i++; j++;
+      }
+    }
+    return ret;
+  }
+
+  SparsePoly operator -() const {
+    coef_t new_coef;
+    for (const auto& [k, t] : coef) new_coef.emplace_back(k, -t);
+    return SparsePoly(new_coef);
+  }
+  SparsePoly& operator +=(const SparsePoly& o) {
+    coef = _plus_minus(coef, o.coef, 1);
+    return *this;
+  }
+  SparsePoly& operator -=(const SparsePoly& o) {
+    coef = _plus_minus(coef, o.coef, 2);
+    return *this;
+  }
+  SparsePoly& operator *=(const SparsePoly& o) {
+    coef_t new_coef;
+    for (const auto& [ko, to]: o.coef) {
+      coef_t shifted;
+      for (auto& [k, t] : coef) { shifted.emplace_back(k + ko, t * to); }
+      new_coef = _plus_minus(new_coef, shifted, 1);
+    }
+    coef = move(new_coef);
+    return *this;
+  }
+  SparsePoly operator +(const SparsePoly& o) const {
+    return SparsePoly(*this) += o;
+  }
+  SparsePoly operator -(const SparsePoly& o) const {
+    return SparsePoly(*this) -= o;
+  }
+  SparsePoly operator*(const SparsePoly& o) const {
+    return SparsePoly(*this) *= o;
+  }
+
+  bool operator ==(const SparsePoly& o) const { return coef == o.coef; }
+  bool operator !=(const SparsePoly& o) const { return coef != o.coef; }
+
+  friend SparsePoly operator+(const SparsePoly& sp, T t) {
+    return SparsePoly(sp) += t;
+  }
+  friend SparsePoly operator-(const SparsePoly& sp, T t) {
+    return SparsePoly(sp) -= t;
+  }
+  friend SparsePoly operator*(const SparsePoly& sp, T t) {
+    return SparsePoly(sp) *= t;
+  }
+  friend SparsePoly operator+(T t, const SparsePoly& sp) { return sp + t; }
+  friend SparsePoly operator-(T t, const SparsePoly& sp) { return -(sp - t); }
+  friend SparsePoly operator*(T t, const SparsePoly& sp) { return sp * t; }
+
+  friend ostream& operator<<(ostream& os, const SparsePoly& sp) {
+    if (sp.coef.empty()) {
+      cout << "0";
+    }else {
+      bool first = true;
+      for (const auto& [k, t] : sp.coef) {
+        if (first) first = false;
+        else cout << " ";
+        if (k == 0) cout << t;
+        else if (k == 1) cout << "+ " << t << "X";
+        else cout << "+ " << t << "X^" << k;
+      }
+    }
+    return os;
+  }
+
+  static const SparsePoly X;
+  static SparsePoly Xn(int n) { return SparsePoly({{n,1}}); }
+
+};
+template<typename T>
+const SparsePoly<T> SparsePoly<T>::X({{1,1}});
 
 using PolyLL = Polynomial<ll, 2>;
-using PolyFp = Polynomial<Fp, 1>;
+using PolyFpA = Polynomial<FpA, 0>;
+using PolyFpB = Polynomial<FpB, 1>;
 
 // ---- end polynomial.cc
 
@@ -1202,7 +1406,7 @@ int main(/* int argc, char *argv[] */) {
     assert(p1 != p2);
 
     assert(p1.degree() == 2 && p2.degree() == 3);
-    assert(p1.coef[0] == -2 && p1.coef[1] == 0 && p1.coef[2] == 1);
+    assert(p1.getCoef(0) == -2 && p1.getCoef(1) == 0 && p1.getCoef(2) == 1);
 
     assert(p1 + p2 == PolyLL({0, -1, 4, 2}));
     assert(p2 + p1 == PolyLL({0, -1, 4, 2}));
@@ -1232,23 +1436,39 @@ int main(/* int argc, char *argv[] */) {
       assert(p2.atval(x) == 2 + (-1) * x + 3 * x*x + 2 * x*x*x);
     }
 
-    auto X = PolyLL::get_X();
+    const auto& X = SparsePoly<ll>::X;
     assert((X - 1LL) * (X - 1LL) == (X * X) - 2LL * X + 1LL);
 
-    Fp::MOD = 2;
-    auto Y = Polynomial<Fp, 0>::get_X();
+    using Fp = FpG<2>;
+    auto Y = Polynomial<Fp, 0>({0,1});
     assert((Y - Fp(1)) * (Y - Fp(1)) == (Y * Y) + Fp(1));
+
+    PolyLL pzero;
+    assert(2 * p5 != p5);
+    assert(p5 + pzero == p5);
+    assert(p5 - pzero == p5);
+    assert(p5 * pzero == pzero);
+    assert(pzero + p5 == p5);
+    assert(pzero - p5 == -p5);
+    assert(pzero * p5 == pzero);
+    DLOGK(p5 - p5);
+    DLOGK(pzero);
+    assert(p5 - p5 == pzero);
+    assert(p5 * 0 == pzero);
+    assert(p5 + 0 == p5);
+    assert(0 * p5 == pzero);
+    assert(0 + p5 == p5);
 
   }
   cerr << "1 " << get_time_sec() - et << endl;
   et = get_time_sec();
   {
-    Fp::MOD = 1e9 + 7;
+    using Fp = FpA;
     using Pol = Polynomial<Fp, 0>;
     Pol p1;
-    assert(p1.degree() == 0 && p1.coef[0] == Fp(0));
+    assert(p1.degree() == -1);
     Pol p2(Fp(10));
-    assert(p2.degree() == 0 && p2.coef[0] == Fp(10));
+    assert(p2.degree() == 0 && p2.getCoef(0) == Fp(10));
     vector<Fp> v1({2, 3, 4});
     auto v2(v1);
     Pol p3(v1);
@@ -1286,34 +1506,32 @@ int main(/* int argc, char *argv[] */) {
   cerr << "2 " << get_time_sec() - et << endl;
   et = get_time_sec();
 
-  const int primeB = 998'244'353;
-
   {
-    Fp::MOD = primeB;
+    using Fp = FpB;
     using TupF = tuple<vector<Fp>, vector<Fp>, vector<Fp>>;
     vector<TupF> tests1({
         {{3,1,0,-2},  {4,3,2,1},        {-5,0,4}},
         {{-1,0,0,0,1},{2,4,6},          {1,-3}},
-        {{-3,4,1},    {7,6,5,4,3,2,1},  {0}},
+        {{-3,4,1},    {7,6,5,4,3,2,1},  {}},
         {{-3,4,1},    {7,6,5,4,3,2,1},  {3}},
         {{-3,4,1},    {7,6,5,4,3,2,1},  {2,1}},
         {{5,1},       {4,0,-1,1},       {4}},
         {{4,3},       {9},              {-2}},
-        {{-1,3},      {9},              {0}},
-        {{-1,3},      {0},              {3}},
-        {{-1,-7},     {0},              {0}},
-        {{3},         {4,3,2,1},        {0}}
+        {{-1,3},      {9},              {}},
+        {{-1,3},      {},               {3}},
+        {{-1,-7},     {},               {}},
+        {{3},         {4,3,2,1},        {}}
       });
     for (auto [vq, vd, vm] : tests1) {
-      PolyFp q(vq), d(vd), m(vm);
+      PolyFpB q(vq), d(vd), m(vm);
       auto p = q * d + m;
       auto [dd, mm] = p.divmod(q);
       DLOGK(p, q, d, m, dd, mm);
       assert(d == dd && m == mm);
       if (q.degree() == 1) {
-        auto [ddd, mmm] = p.divideLinear(-q.coef[0] / q.coef[1]);
+        auto [ddd, mmm] = p.divideLinear(-q.getCoef(0) / q.getCoef(1));
         DLOGK(p, q, d, m, ddd, mmm);
-        assert(ddd == q.coef[1] * d && PolyFp(mmm) == m);
+        assert(ddd == q.getCoef(1) * d && PolyFpB(mmm) == m);
       }
     }
 
@@ -1325,17 +1543,17 @@ int main(/* int argc, char *argv[] */) {
         {{5,1},       {4,0,-1,1},       {4}},
         {{4,5},       {9,0,-2},         {3}},
         {{4,1},       {9},              {-2}},
-        {{-3,1},      {9},              {0}},
-        {{-8,1},      {0},              {3}},
-        {{5,1},     {0},              {0}},
+        {{-3,1},      {9},              {}},
+        {{-8,1},      {},               {3}},
+        {{5,1},       {},               {}},
       });
     for (auto [vq, vd, vm] : tests2) {
       PolyLL q(vq), d(vd), m(vm);
       auto p = q * d + m;
       auto [dd, mm] = p.divmod(q);
       assert(d == dd && m == mm);
-      if (q.degree() == 1 && q.coef[1] == 1) {
-        auto [ddd, mmm] = p.divideLinear(-q.coef[0]);
+      if (q.degree() == 1 && q.getCoef(1) == 1) {
+        auto [ddd, mmm] = p.divideLinear(-q.getCoef(0));
         DLOGK(p, q, d, m, ddd, mmm);
         assert(ddd == d && PolyLL(mmm) == m);
       }
@@ -1359,7 +1577,7 @@ int main(/* int argc, char *argv[] */) {
   et = get_time_sec();
 
   {
-    Fp::MOD = primeB;
+    using Fp = FpB;
     vector<Fp> v1, v2;
     const int sz = 100;
     for (int i = 0; i < sz + 1; i++) {
@@ -1376,7 +1594,7 @@ int main(/* int argc, char *argv[] */) {
     assert(pol3X.degree() == 2 * sz);
     assert(pol3Y.degree() == 2 * sz);
     for (ll i = 0; i <= 2 * sz; i++) {
-      assert(pol3X.coef[i] == pol3Y.coef[i]);
+      assert(pol3X.getCoef(i) == pol3Y.getCoef(i));
     }
   }
   cerr << "4 " << get_time_sec() - et << endl;
@@ -1399,7 +1617,7 @@ int main(/* int argc, char *argv[] */) {
     assert(pol3X.degree() == 2 * sz);
     assert(pol3Y.degree() == 2 * sz);
     for (ll i = 0; i <= 2 * sz; i++) {
-      assert(pol3X.coef[i] == pol3Y.coef[i]);
+      assert(pol3X.getCoef(i) == pol3Y.getCoef(i));
     }
   }
   cerr << "5 " << get_time_sec() - et << endl;
@@ -1407,11 +1625,11 @@ int main(/* int argc, char *argv[] */) {
 
   {
     using Pol = PolyLL;
-    Pol X = Pol::get_X();
+    const auto& X = SparsePoly<ll>::X;
     Pol p1 = Pol(1), p2 = Pol(1) - X;
     auto a = p1.divFormalSeries(p2, 70);
     for (ll i = 0; i <= 70; i++) {
-      assert(a.coef[i] == 1);
+      assert(a.getCoef(i) == 1);
       assert(bostanMori(p1, p2, 1) == 1);
     }
   }
@@ -1419,16 +1637,16 @@ int main(/* int argc, char *argv[] */) {
   et = get_time_sec();
 
   {
-    Fp::MOD = primeB;
-    using Pol = PolyFp;
-    Pol X = Pol::get_X();
+    using Fp = FpB;
+    using Pol = PolyFpB;
+    const auto& X = Pol::X;
     Pol p1 = Pol(1), p2 = Pol(1) - X - X*X;
     assert(bostanMori(p1, p2, 0) == Fp(1));
     assert(bostanMori(p1, p2, 1) == Fp(1));
     assert(bostanMori(p1, p2, 2) == Fp(2));
     assert(bostanMori(p1, p2, 10) == 89);
     auto a = p1.divFormalSeries(p2, 10);
-    assert(a.coef == vector<Fp>({1, 1, 2, 3, 5, 8, 13, 21, 34, 55, 89}));
+    assert(a.coefVec() == vector<Fp>({1, 1, 2, 3, 5, 8, 13, 21, 34, 55, 89}));
 
     for (ll t = 0; t < 10; t++) {
       ll degP = randrange(0, 100);
@@ -1443,15 +1661,99 @@ int main(/* int argc, char *argv[] */) {
       Pol p(coefP), q(coefQ);
       ll degR = 2 * degQ;
       auto r = p.divFormalSeries(q, degR);
-      assert(r.coef[degR] == bostanMori(p, q, degR));
+      assert(r.getCoef(degR) == bostanMori(p, q, degR));
       for (ll i = 0; i < 10; i++) {
         ll idx = randrange(0, degR);
-        assert(r.coef[idx] == bostanMori(p, q, idx));
+        assert(r.getCoef(idx) == bostanMori(p, q, idx));
       }
     }
   }
   cerr << "7 " << get_time_sec() - et << endl;
   et = get_time_sec();
+
+  {
+    using SP = SparsePoly<ll>;
+    SP sp1;
+    SP sp2({{0, 1}, {1, -3}, {2, 3}, {3, -1}});
+    SP sp3({{1, 1}});
+    SP sp4 = SP::X;
+    SP sp52 = SP::Xn(2);
+    SP sp53 = SP::Xn(3);
+    SP sp6 = 1LL - sp4;
+    SP sp7 = sp6 * sp6 * sp6;
+    SP sp8 = 1LL - 3 * sp4 + 3 * sp52 - sp53;
+    assert(sp8 * 0 == sp1);
+    assert(sp8 - sp8 == sp1);
+    assert(sp2 == sp8);
+    assert(sp2 == sp7);
+
+    assert(PolyLL({1,2}) - SP::Xn(5) == PolyLL({1,2,0,0,0,-1}));
+    assert(PolyLL({10,11,12}) - 12 * SP::Xn(2) == PolyLL({10,11}));
+    assert(PolyLL() * SP() == PolyLL());
+    assert(SP() * PolyLL() == PolyLL());
+    assert(PolyLL() * SP::Xn(2) == PolyLL());
+    assert(SP::Xn(2) * PolyLL() == PolyLL());
+  }
+  {
+    using SP = SparsePoly<ll>;
+    PolyLL p1({1, 2, 3});
+    SP sp1 = 4LL - SP::Xn(2);
+    assert(p1 + sp1 == PolyLL({5, 2, 2}));
+    assert(p1 - sp1 == PolyLL({-3, 2, 4}));
+    assert(p1 * sp1 == PolyLL({4, 8, 11, -2, -3}));
+    PolyLL p2({1, 2, 3, 4, 5});
+    p2 = sp1;
+    assert(p2 == PolyLL(sp1));
+    p2 = 0;
+    assert(p2 == PolyLL());
+    PolyLL p4({1, 2, 3, 4, 5});
+    assert(p4.cutoff(2) == PolyLL({1, 2, 3}));
+    assert(p4.cutoff(0) == 1);
+    assert(p4.cutoff(-1) == 0);
+
+    PolyLL p10({1,2,3,4,5,6,7});
+    SP sp10({{0,1}, {2,-1}, {4,2}});
+    assert(p10.mult(sp10, 0) == (p10 * sp10).cutoff(0));
+    assert(p10.mult(sp10, 2) == (p10 * sp10).cutoff(2));
+    assert(p10.mult(sp10, 10) == (p10 * sp10).cutoff(10));
+    assert(p10.mult(sp10, 15) == (p10 * sp10).cutoff(15));
+  }
+
+  {
+    using SP = SparsePoly<ll>;
+    ll rep = 1000;
+    for (ll z = 0; z < rep; z++) {
+      ll deg1 = randrange(0, 10);
+      vector<ll> v1(deg1 + 1);
+      for (ll i = 0; i <= deg1; i++) v1[i] = randrange(-20, 20);
+      PolyLL p1(v1);
+      ll size2 = randrange(0, 5);
+      vector<pair<ll, ll>> v2;
+      ll cur = -1;
+      for (ll i = 0; i < size2; i++) {
+        cur += randrange(1, 4);
+        v2.emplace_back(cur, randrange(-20, 20));
+      }
+      SP sp2(v2);
+      PolyLL p3 = p1.mult(sp2);
+      PolyLL p4 = p1 * PolyLL(sp2);
+      assert(p3 == p4);
+      PolyLL p5 = p1.mult(sp2, deg1);
+      assert (p5 == p4.cutoff(deg1));
+
+      ll y = randrange(0,2) == 0 ? 1LL : -1LL;
+      SP sp3 = sp2 - PolyLL(sp2).getCoef(0) + y;
+      
+      PolyLL p6 = p1.divFPS(sp3);
+      PolyLL p7 = (p6 * sp3 - p1).cutoff(p1.degree());
+      assert(p7 == 0);
+      PolyLL p8 = p1.divFPS(sp3, 4);
+      PolyLL p9 = (p8 * sp3 - p1).cutoff(min(4, sp3.degree()));
+      assert(p9 == 0);
+    }
+  }
+
+
 
   cout << "test done." << endl;
 

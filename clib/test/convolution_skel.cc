@@ -3,10 +3,6 @@
 typedef long long int ll;
 using namespace std;
 
-#if TEST_CONSTANT_MOD
-  #define CONSTANT_MOD 998244353
-#endif
-
 // @@ !! LIM(convolution)
 
 template<typename T>
@@ -34,11 +30,8 @@ int main(int argc, char *argv[]) {
   uniform_int_distribution<int> dist2(-10000, 10000);
   uniform_int_distribution<int> dist3(0, 998'244'353 - 1);
 
-#if CONSTANT_MOD
-  
-  cout << "testing constant mod ..." << endl;
-
   {
+    using Fp = FpB;
     vector<Fp> vecA({1, 2, 3, 4});
     vector<Fp> vecB({-1, 0, 1, 2});
     auto res1 = convolution(vecA, vecB);
@@ -51,6 +44,7 @@ int main(int argc, char *argv[]) {
   }
 
   {
+    using Fp = FpB;
     ll loopcnt = 1000;
     while (loopcnt--) {
       ll sza = dist1(rng);
@@ -69,45 +63,9 @@ int main(int argc, char *argv[]) {
     }
   }
 
-#else  
-
-  cout << "testing variable mod ..." << endl;
-
-  if (1) {
-    Fp::MOD = 754974721;
-    vector<Fp> vecA({1, 2, 3, 4});
-    vector<Fp> vecB({-1, 0, 1, 2});
-    auto res1 = convolution(vecA, vecB);
-    DLOGK_LIB(res1);
-  }
-
-  if (1){
-    Fp::MOD = 998'244'353;
-    vector<Fp> vecA({1, 2, 3, 4});
-    vector<Fp> vecB({-1, 0, 1, 2});
-    auto res1 = convolution(vecA, vecB);
-    auto res2 = naive_convolution(vecA, vecB);
-    if (res1 != res2) {
-      DLOGK_LIB(res1);
-      DLOGK_LIB(res2);
-      assert(res1 == res2);
-    }
-  }
-
-  if (1) {
-    vector<ll> vecA({1, 2, 3, 4});
-    vector<ll> vecB({-1, 0, 1, 2});
-    auto res1 = convolution_ll(vecA, vecB);
-    auto res2 = naive_convolution(vecA, vecB);
-    if (res1 != res2) {
-      DLOGK_LIB(res1);
-      DLOGK_LIB(res2);
-      assert(res1 == res2);
-    }
-  }
-
-  if (1){
-    Fp::MOD = 998'244'353;
+  {
+    using Fp = FpG<0>;
+    Fp::setMod(primeB);
     ll loopcnt = 1000;
     while (loopcnt--) {
       ll sza = dist1(rng);
@@ -146,7 +104,6 @@ int main(int argc, char *argv[]) {
       assert(res1 == res2);
     }
   }
-#endif
 
   cout << "ok" << endl;
   return 0;

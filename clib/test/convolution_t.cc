@@ -3,10 +3,6 @@
 typedef long long int ll;
 using namespace std;
 
-#if TEST_CONSTANT_MOD
-  #define CONSTANT_MOD 998244353
-#endif
-
 // @@ !! LIM(convolution)
 
 // ---- inserted function f:gcd from util.cc
@@ -87,193 +83,147 @@ ll crt(vector<ll> as, vector<ll> xs) {
 
 // ---- end f:gcd
 
-// ---- inserted function f:intDiv from util.cc
-// imod, divFloor, divCeil
-
-// imod(x, y) : remainder of x for y
-// for y > 0:
-//   imod(x, y)  = r where x = dy + r, 0 <= r < y
-//   imod(x, -y) = r where x = dy + r, 0 >= r > y
-// Thus, imod( 10,  7) =  3
-//       imod(-10,  7) =  4
-//       imod( 10, -7) = -4
-//       imod(-10, -7) = -3
-ll imod(ll x, ll y) {
-  ll v = x % y;
-  if ((x >= 0) == (y >= 0)) return v;
-  else                      return v == 0 ? 0 : v + y;
-}
-
-// Integer Division; regardless pos/neg
-ll divFloor(ll x, ll y) {
-  if (x > 0) {
-    if (y > 0) return x / y;
-    else       return (x - y - 1) / y;
-  }else {
-    if (y > 0) return (x - y + 1) / y;
-    else       return x / y;
-  }
-}
-
-ll divCeil(ll x, ll y) {
-  if (x > 0) {
-    if (y > 0) return (x + y - 1) / y;
-    else       return x / y;
-  }else {
-    if (y > 0) return x / y;
-    else       return (x + y + 1) / y;
-  }
-}
-//   Just a note.  For d \in Z and t \in R,
-//       d < t <=> d < ceil(t),     d <= t <=> d <= floor(t),
-//       d > t <=> d > floor(t),    d >= t <=> d >= ceil(t).
-
-// ---- end f:intDiv
-
 // ---- inserted library file mod.cc
 
-/*
-  You may want to put something like:
-#define CONSTANT_MOD (1e9 + 7)
-#define CONSTANT_MOD 998244353
-  in the header part (outside of library paste area)
- */
+template<int mod=0>
+struct FpG {   // G for General
+  static ll dyn_mod;
 
-struct Fp {
-#if defined(CONSTANT_MOD)
-  static const ll MOD = CONSTANT_MOD;
-#else
-  static ll MOD;
-#endif
+  static ll getMod() {
+    if (mod == 0) return dyn_mod;
+    else          return mod;
+  }
+
+  static void setMod(ll _mod) {  // effective only when mod == 0
+    dyn_mod = _mod;
+  }
+
+  static ll _conv(ll x) {
+    if (x >= getMod())  return x % getMod();
+    if (x >= 0)         return x;
+    if (x >= -getMod()) return x + getMod();
+    ll y = x % getMod();
+    if (y == 0) return 0;
+    return y + getMod();
+  }
 
   ll val;
 
-  /*
-  ll _calc_from_ll(ll t = 0) {
-    if      (t >= MOD)  return t % MOD;
-    else if (t >= 0)    return t;
-    else if (t >= -MOD) return t + MOD;
-    else {
-      ll v = t % MOD;
-      if (v == 0) return 0;
-      else        return v + MOD;
-    }
-  }
-  */
+  FpG(int t = 0) : val(_conv(t)) {}
+  FpG(ll t) : val(_conv(t)) {}
+  FpG(const FpG& t) : val(t.val) {}
+  FpG& operator =(const FpG& t) { val = t.val; return *this; }
+  FpG& operator =(ll t) { val = _conv(t); return *this; }
+  FpG& operator =(int t) { val = _conv(t); return *this; }
 
-  Fp(ll t = 0) : val(imod(t, MOD)) {}
-  Fp(const Fp& t) : val(t.val) {}
-  Fp& operator =(const Fp& t) { val = t.val; return *this; }
-  Fp& operator =(ll t) { val = imod(t, MOD); return *this; }
-  Fp& operator =(int t) { val = imod(t, MOD); return *this; }
-
-  Fp& operator +=(const Fp& t) {
+  FpG& operator +=(const FpG& t) {
     val += t.val;
-    if (val >= MOD) val -= MOD;
+    if (val >= getMod()) val -= getMod();
     return *this;
   }
 
-  Fp& operator -=(const Fp& t) {
+  FpG& operator -=(const FpG& t) {
     val -= t.val;
-    if (val < 0) val += MOD;
+    if (val < 0) val += getMod();
     return *this;
   }
 
-  Fp& operator *=(const Fp& t) {
-    val = (val * t.val) % MOD;
+  FpG& operator *=(const FpG& t) {
+    val = (val * t.val) % getMod();
     return *this;
   }
 
-  Fp inv() const {
+  FpG inv() const {
     if (val == 0) {
-      throw runtime_error("Fp::inv(): called for zero.");
+      throw runtime_error("FpG::inv(): called for zero.");
     }
-    auto [g, u, v] = eGCD(val, MOD);
-    return Fp(u);
+    auto [g, u, v] = eGCD(val, getMod());
+    return FpG(u);
   }
 
-  Fp& operator /=(const Fp& t) {
+  FpG& operator /=(const FpG& t) {
     return (*this) *= t.inv();
   }
 
-  Fp operator +(const Fp& t) const { return Fp(val) += t; }
-  Fp operator -(const Fp& t) const { return Fp(val) -= t; }
-  Fp operator *(const Fp& t) const { return Fp(val) *= t; }
-  Fp operator /(const Fp& t) const { return Fp(val) /= t; }
-  Fp operator -() const { return Fp(-val); }
+  FpG operator +(const FpG& t) const { return FpG(val) += t; }
+  FpG operator -(const FpG& t) const { return FpG(val) -= t; }
+  FpG operator *(const FpG& t) const { return FpG(val) *= t; }
+  FpG operator /(const FpG& t) const { return FpG(val) /= t; }
+  FpG operator -() const { return FpG(-val); }
 
-  bool operator ==(const Fp& t) const { return val == t.val; }
-  bool operator !=(const Fp& t) const { return val != t.val; }
+  bool operator ==(const FpG& t) const { return val == t.val; }
+  bool operator !=(const FpG& t) const { return val != t.val; }
   
   operator ll() const { return val; }
 
+  friend FpG operator +(int x, const FpG& y) { return FpG(x) + y; }
+  friend FpG operator -(int x, const FpG& y) { return FpG(x) - y; }
+  friend FpG operator *(int x, const FpG& y) { return FpG(x) * y; }
+  friend FpG operator /(int x, const FpG& y) { return FpG(x) / y; }
+  friend bool operator ==(int x, const FpG& y) { return FpG(x) == y; }
+  friend bool operator !=(int x, const FpG& y) { return FpG(x) != y; }
+  friend FpG operator +(ll x, const FpG& y) { return FpG(x) + y; }
+  friend FpG operator -(ll x, const FpG& y) { return FpG(x) - y; }
+  friend FpG operator *(ll x, const FpG& y) { return FpG(x) * y; }
+  friend FpG operator /(ll x, const FpG& y) { return FpG(x) / y; }
+  friend bool operator ==(ll x, const FpG& y) { return FpG(x) == y; }
+  friend bool operator !=(ll x, const FpG& y) { return FpG(x) != y; }
+  friend FpG operator +(const FpG& x, int y) { return x + FpG(y); }
+  friend FpG operator -(const FpG& x, int y) { return x - FpG(y); }
+  friend FpG operator *(const FpG& x, int y) { return x * FpG(y); }
+  friend FpG operator /(const FpG& x, int y) { return x / FpG(y); }
+  friend bool operator ==(const FpG& x, int y) { return x == FpG(y); }
+  friend bool operator !=(const FpG& x, int y) { return x != FpG(y); }
+  friend FpG operator +(const FpG& x, ll y) { return x + FpG(y); }
+  friend FpG operator -(const FpG& x, ll y) { return x - FpG(y); }
+  friend FpG operator *(const FpG& x, ll y) { return x * FpG(y); }
+  friend FpG operator /(const FpG& x, ll y) { return x / FpG(y); }
+  friend bool operator ==(const FpG& x, ll y) { return x == FpG(y); }
+  friend bool operator !=(const FpG& x, ll y) { return x != FpG(y); }
+
+  friend istream& operator>> (istream& is, FpG& t) {
+    ll x; is >> x;
+    t = x;
+    return is;
+  }
+
+  friend ostream& operator<< (ostream& os, const FpG& t) {
+    os << t.val;
+    return os;
+  }
+
 };
+template<int mod>
+ll FpG<mod>::dyn_mod;
 
-Fp operator +(int x, const Fp& y) { return Fp(x) + y; }
-Fp operator -(int x, const Fp& y) { return Fp(x) - y; }
-Fp operator *(int x, const Fp& y) { return Fp(x) * y; }
-Fp operator /(int x, const Fp& y) { return Fp(x) / y; }
-bool operator ==(int x, const Fp& y) { return Fp(x) == y; }
-bool operator !=(int x, const Fp& y) { return Fp(x) != y; }
-Fp operator +(ll x, const Fp& y) { return Fp(x) + y; }
-Fp operator -(ll x, const Fp& y) { return Fp(x) - y; }
-Fp operator *(ll x, const Fp& y) { return Fp(x) * y; }
-Fp operator /(ll x, const Fp& y) { return Fp(x) / y; }
-bool operator ==(ll x, const Fp& y) { return Fp(x) == y; }
-bool operator !=(ll x, const Fp& y) { return Fp(x) != y; }
-Fp operator +(const Fp& x, int y) { return x + Fp(y); }
-Fp operator -(const Fp& x, int y) { return x - Fp(y); }
-Fp operator *(const Fp& x, int y) { return x * Fp(y); }
-Fp operator /(const Fp& x, int y) { return x / Fp(y); }
-bool operator ==(const Fp& x, int y) { return x == Fp(y); }
-bool operator !=(const Fp& x, int y) { return x != Fp(y); }
-Fp operator +(const Fp& x, ll y) { return x + Fp(y); }
-Fp operator -(const Fp& x, ll y) { return x - Fp(y); }
-Fp operator *(const Fp& x, ll y) { return x * Fp(y); }
-Fp operator /(const Fp& x, ll y) { return x / Fp(y); }
-bool operator ==(const Fp& x, ll y) { return x == Fp(y); }
-bool operator !=(const Fp& x, ll y) { return x != Fp(y); }
-
-istream& operator>> (istream& is, Fp& t) {
-  ll x; is >> x;
-  t = x;
-  return is;
-}
-
-ostream& operator<< (ostream& os, const Fp& t) {
-  os << t.val;
-  return os;
-}
-
-class Comb {
+template<int mod=0>
+class CombG {
   int nMax;
-  vector<Fp> vFact;
-  vector<Fp> vInvFact;
+  vector<FpG<mod>> vFact;
+  vector<FpG<mod>> vInvFact;
 public:
-  Comb(int nm) : nMax(nm), vFact(nm+1), vInvFact(nm+1) {
+  CombG(int nm) : nMax(nm), vFact(nm+1), vInvFact(nm+1) {
     vFact.at(0) = 1;
     for (int i = 1; i <= nMax; i++) vFact.at(i) = i * vFact.at(i-1);
     vInvFact.at(nMax) = vFact.at(nMax).inv();
     for (int i = nMax; i >= 1; i--) vInvFact.at(i-1) = i * vInvFact.at(i);
   }
-  Fp fact(int n) { return vFact.at(n); }
-  Fp comb(int n, int r) {
+  FpG<mod> fact(int n) { return vFact.at(n); }
+  FpG<mod> comb(int n, int r) {
     return vFact.at(n) * vInvFact.at(r) * vInvFact.at(n-r);
   }
   // The number of permutation extracting r from n.
-  Fp perm(int n, int r) {
+  FpG<mod> perm(int n, int r) {
     return vFact.at(n) * vInvFact.at(n-r);
   }
 };
 
-#if !defined(CONSTANT_MOD)
-ll Fp::MOD = 1e9 + 7;
-// ll Fp::MOD = 998'244'353;
-// WARNING: You should not uncomment here.  Instead, write
-//    OUT OF LIBRARY PASTE AREA, such as in main():
-//                     Fp::MOD = 998'244'353;
-//    or whatever.  Or more preferably, use CONSTANT_MOD.
-#endif
+constexpr int primeA = 1'000'000'007;
+constexpr int primeB = 998'244'353;
+using FpA = FpG<primeA>;
+using FpB = FpG<primeB>;
+using CombA = CombG<primeA>;
+using CombB = CombG<primeB>;
 
 // ---- end mod.cc
 
@@ -423,20 +373,26 @@ constexpr int ac_primitive_root_constexpr(int m) {
   }
 }
 
-#if defined(CONSTANT_MOD)
-template <int m>
-constexpr int ac_primitive_root = ac_primitive_root_constexpr(m);
-constexpr int cv_get_mod() { return CONSTANT_MOD; }
-constexpr int cv_get_primitive_root() {
-  return ac_primitive_root<CONSTANT_MOD>;
-}
-#else
-int cv_get_mod() { return Fp::MOD; }
-int cv_get_primitive_root() { return ac_primitive_root_constexpr(Fp::MOD); }
-#endif
+template<int mod>
+int prim_root = mod > 0 ? ac_primitive_root_constexpr(mod) : 0;
 
-void butterfly(vector<Fp>& a) {
-  int g = cv_get_primitive_root();
+template<int mod>
+int cv_get_mod() {
+  if (mod > 0) return mod;
+  else return FpG<mod>::getMod();
+}
+
+template<int mod>
+int cv_get_primitive_root() {
+  if (mod > 0) return prim_root<mod>;
+  else return ac_primitive_root_constexpr(FpG<mod>::getMod());
+}
+
+
+template<int mod>
+void butterfly(vector<FpG<mod>>& a) {
+  using Fp = FpG<mod>;
+  int g = cv_get_primitive_root<mod>();
   int n = int(a.size());
   int h = ac_ceil_pow2(n);
 
@@ -445,12 +401,12 @@ void butterfly(vector<Fp>& a) {
   static bool first = true;
   static Fp sum_e[30];  // sum_e[i] = ies[0] * ... * ies[i - 1] * es[i]
   if (first) {
-#if defined(CONSTANT_MOD)
-    first = false;
-#endif    
+    if (mod > 0) {
+      first = false;
+    }
     Fp es[30], ies[30];  // es[i]^(2^(2+i)) == 1
-    int cnt2 = __builtin_ctz(cv_get_mod() - 1);
-    Fp e = power<Fp>(Fp(g), (cv_get_mod() - 1) >> cnt2), ie = e.inv();
+    int cnt2 = __builtin_ctz(cv_get_mod<mod>() - 1);
+    Fp e = power<Fp>(Fp(g), (cv_get_mod<mod>() - 1) >> cnt2), ie = e.inv();
     for (int i = cnt2; i >= 2; i--) {
       // e^(2^i) == 1
       es[i - 2] = e;
@@ -465,7 +421,7 @@ void butterfly(vector<Fp>& a) {
     }
     DLOGK_LIB(now);
   }
-  DLOGK_LIB(cv_get_mod());
+  DLOGK_LIB(cv_get_mod<mod>());
   for (int ph = 1; ph <= h; ph++) {
     int w = 1 << (ph - 1), p = 1 << (h - ph);
     Fp now = 1;
@@ -482,20 +438,22 @@ void butterfly(vector<Fp>& a) {
   }
 }
 
-void butterfly_inv(vector<Fp>& a) {
-  int g = cv_get_primitive_root();
+template<int mod>
+void butterfly_inv(vector<FpG<mod>>& a) {
+  using Fp = FpG<mod>;
+  int g = cv_get_primitive_root<mod>();
   int n = int(a.size());
   int h = ac_ceil_pow2(n);
 
   static bool first = true;
   static Fp sum_ie[30];  // sum_ie[i] = es[0] * ... * es[i - 1] * ies[i]
   if (first) {
-#if defined(CONSTANT_MOD)
-    first = false;
-#endif    
+    if (mod > 0) {
+      first = false;
+    }
     Fp es[30], ies[30];  // es[i]^(2^(2+i)) == 1
-    int cnt2 = __builtin_ctz(cv_get_mod() - 1);
-    Fp e = power<Fp>(Fp(g), (cv_get_mod() - 1) >> cnt2), ie = e.inv();
+    int cnt2 = __builtin_ctz(cv_get_mod<mod>() - 1);
+    Fp e = power<Fp>(Fp(g), (cv_get_mod<mod>() - 1) >> cnt2), ie = e.inv();
     for (int i = cnt2; i >= 2; i--) {
       // e^(2^i) == 1
       es[i - 2] = e;
@@ -520,7 +478,7 @@ void butterfly_inv(vector<Fp>& a) {
         auto r = a[i + offset + p];
         a[i + offset] = l + r;
         a[i + offset + p] =
-          (long long)(cv_get_mod() + l.val - r.val) * inow.val;
+          (long long)(cv_get_mod<mod>() + l.val - r.val) * inow.val;
       }
       inow *= sum_ie[__builtin_ctz(~(unsigned int)(s))];
     }
@@ -533,7 +491,9 @@ const ll lim_naive = 1;
 const ll lim_naive = 60;
 #endif
 
-vector<Fp> convolution(vector<Fp> a, vector<Fp> b) {
+template<int mod>
+vector<FpG<mod>> convolution(vector<FpG<mod>> a, vector<FpG<mod>> b) {
+  using Fp = FpG<mod>;
   int n = int(a.size()), m = int(b.size());
   if (!n || !m) return {};
   if (min(n, m) <= lim_naive) {
@@ -566,17 +526,12 @@ vector<Fp> convolution(vector<Fp> a, vector<Fp> b) {
   return a;
 }
 
-template<class T> // T must be integral.
-vector<T> sub_convolution(int mod, const vector<T>& a, const vector<T>& b) {
-
-#ifdef CONSTANT_MOD
-  throw runtime_error("sub_convolution and convolution_ll cannot be called with CONSTANT_MOD defined");
-#else
+template<int mod, class T> // T must be integral.
+vector<T> sub_convolution(const vector<T>& a, const vector<T>& b) {
 
   int n = int(a.size()), m = int(b.size());
   if (!n || !m) return {};
-  int orig_mod = Fp::MOD;
-  Fp::MOD = mod;
+  using Fp = FpG<mod>;
   vector<Fp> a2(n), b2(m);
   for (int i = 0; i < n; i++) { a2[i] = Fp(a[i]); }
   for (int i = 0; i < m; i++) { b2[i] = Fp(b[i]); }
@@ -586,10 +541,8 @@ vector<T> sub_convolution(int mod, const vector<T>& a, const vector<T>& b) {
   DLOGK_LIB(c2);
   vector<T> c(n + m - 1);
   for (int i = 0; i < n + m - 1; i++) { c[i] = c2[i].val; }
-  Fp::MOD = orig_mod;
   return c;
 
-#endif
 }
 
 vector<long long> convolution_ll(const vector<long long>& a,
@@ -612,9 +565,9 @@ vector<long long> convolution_ll(const vector<long long>& a,
   static constexpr unsigned long long i3 =
     ac_inv_gcd(MOD1 * MOD2, MOD3).second;
 
-  auto c1 = sub_convolution(MOD1, a, b);
-  auto c2 = sub_convolution(MOD2, a, b);
-  auto c3 = sub_convolution(MOD3, a, b);
+  auto c1 = sub_convolution<MOD1>(a, b);
+  auto c2 = sub_convolution<MOD2>(a, b);
+  auto c3 = sub_convolution<MOD3>(a, b);
   DLOGKL_LIB("***", a);
   DLOGK_LIB(b);
   DLOGK_LIB(c1);
@@ -685,11 +638,8 @@ int main(int argc, char *argv[]) {
   uniform_int_distribution<int> dist2(-10000, 10000);
   uniform_int_distribution<int> dist3(0, 998'244'353 - 1);
 
-#if CONSTANT_MOD
-  
-  cout << "testing constant mod ..." << endl;
-
   {
+    using Fp = FpB;
     vector<Fp> vecA({1, 2, 3, 4});
     vector<Fp> vecB({-1, 0, 1, 2});
     auto res1 = convolution(vecA, vecB);
@@ -702,6 +652,7 @@ int main(int argc, char *argv[]) {
   }
 
   {
+    using Fp = FpB;
     ll loopcnt = 1000;
     while (loopcnt--) {
       ll sza = dist1(rng);
@@ -720,45 +671,9 @@ int main(int argc, char *argv[]) {
     }
   }
 
-#else  
-
-  cout << "testing variable mod ..." << endl;
-
-  if (1) {
-    Fp::MOD = 754974721;
-    vector<Fp> vecA({1, 2, 3, 4});
-    vector<Fp> vecB({-1, 0, 1, 2});
-    auto res1 = convolution(vecA, vecB);
-    DLOGK_LIB(res1);
-  }
-
-  if (1){
-    Fp::MOD = 998'244'353;
-    vector<Fp> vecA({1, 2, 3, 4});
-    vector<Fp> vecB({-1, 0, 1, 2});
-    auto res1 = convolution(vecA, vecB);
-    auto res2 = naive_convolution(vecA, vecB);
-    if (res1 != res2) {
-      DLOGK_LIB(res1);
-      DLOGK_LIB(res2);
-      assert(res1 == res2);
-    }
-  }
-
-  if (1) {
-    vector<ll> vecA({1, 2, 3, 4});
-    vector<ll> vecB({-1, 0, 1, 2});
-    auto res1 = convolution_ll(vecA, vecB);
-    auto res2 = naive_convolution(vecA, vecB);
-    if (res1 != res2) {
-      DLOGK_LIB(res1);
-      DLOGK_LIB(res2);
-      assert(res1 == res2);
-    }
-  }
-
-  if (1){
-    Fp::MOD = 998'244'353;
+  {
+    using Fp = FpG<0>;
+    Fp::setMod(primeB);
     ll loopcnt = 1000;
     while (loopcnt--) {
       ll sza = dist1(rng);
@@ -797,7 +712,6 @@ int main(int argc, char *argv[]) {
       assert(res1 == res2);
     }
   }
-#endif
 
   cout << "ok" << endl;
   return 0;

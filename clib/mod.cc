@@ -4,160 +4,178 @@ typedef long long int ll;
 using namespace std;
 
 /*
-  If you need performance, use const.  This can be done by 
-  placing 
+  mod.cc
+    defines struct FpG (finite Field for prime p; General version)
 
-	#define CONSTANT_MOD (1e9 + 7)
+  Usually, what you need to do is "using Fp = FpA;" or "using Fp = FpB",
+  because of the following definitions:
 
-  in the heading part.
+        constexpr int primeA = 1'000'000'007;
+        constexpr int primeB = 998'244'353;
+        using FpA = FpG<primeA>;
+        using FpB = FpG<primeB>;
+        using CombA = CombG<primeA>;
+        using CombB = CombG<primeB>;
+
+  If you need to dynamically change the value of mod:
+
+        FpG<0>::setMod(primeA);
+        FpG<0> x; 
+        ....
+
+  FpG<mod>::getMod() is also defined.
+
+  With CombG<mod>, you can do something like:
+
+        FpA Comb cb(1000);     // args upto 1000, inclusive
+        FpA x = cb.fact(1000);       // factorial
+        FpA y = cb.comb(500, 300);   // combination (binom)
+        FpA z = cb.perm(500, 300);   // permutation
  */
 
 //////////////////////////////////////////////////////////////////////
 // See help of libins command for dependency spec syntax.
-// @@ !! BEGIN(f:gcd f:intDiv)
+// @@ !! BEGIN(f:gcd) ---- mod.cc
 
-/*
-  You may want to put something like:
-#define CONSTANT_MOD (1e9 + 7)
-#define CONSTANT_MOD 998244353
-  in the header part (outside of library paste area)
- */
+template<int mod=0>
+struct FpG {   // G for General
+  static ll dyn_mod;
 
-struct Fp {
-#if defined(CONSTANT_MOD)
-  static const ll MOD = CONSTANT_MOD;
-#else
-  static ll MOD;
-#endif
+  static ll getMod() {
+    if (mod == 0) return dyn_mod;
+    else          return mod;
+  }
+
+  static void setMod(ll _mod) {  // effective only when mod == 0
+    dyn_mod = _mod;
+  }
+
+  static ll _conv(ll x) {
+    if (x >= getMod())  return x % getMod();
+    if (x >= 0)         return x;
+    if (x >= -getMod()) return x + getMod();
+    ll y = x % getMod();
+    if (y == 0) return 0;
+    return y + getMod();
+  }
 
   ll val;
 
-  /*
-  ll _calc_from_ll(ll t = 0) {
-    if      (t >= MOD)  return t % MOD;
-    else if (t >= 0)    return t;
-    else if (t >= -MOD) return t + MOD;
-    else {
-      ll v = t % MOD;
-      if (v == 0) return 0;
-      else        return v + MOD;
-    }
-  }
-  */
+  FpG(int t = 0) : val(_conv(t)) {}
+  FpG(ll t) : val(_conv(t)) {}
+  FpG(const FpG& t) : val(t.val) {}
+  FpG& operator =(const FpG& t) { val = t.val; return *this; }
+  FpG& operator =(ll t) { val = _conv(t); return *this; }
+  FpG& operator =(int t) { val = _conv(t); return *this; }
 
-  Fp(ll t = 0) : val(imod(t, MOD)) {}
-  Fp(const Fp& t) : val(t.val) {}
-  Fp& operator =(const Fp& t) { val = t.val; return *this; }
-  Fp& operator =(ll t) { val = imod(t, MOD); return *this; }
-  Fp& operator =(int t) { val = imod(t, MOD); return *this; }
-
-  Fp& operator +=(const Fp& t) {
+  FpG& operator +=(const FpG& t) {
     val += t.val;
-    if (val >= MOD) val -= MOD;
+    if (val >= getMod()) val -= getMod();
     return *this;
   }
 
-  Fp& operator -=(const Fp& t) {
+  FpG& operator -=(const FpG& t) {
     val -= t.val;
-    if (val < 0) val += MOD;
+    if (val < 0) val += getMod();
     return *this;
   }
 
-  Fp& operator *=(const Fp& t) {
-    val = (val * t.val) % MOD;
+  FpG& operator *=(const FpG& t) {
+    val = (val * t.val) % getMod();
     return *this;
   }
 
-  Fp inv() const {
+  FpG inv() const {
     if (val == 0) {
-      throw runtime_error("Fp::inv(): called for zero.");
+      throw runtime_error("FpG::inv(): called for zero.");
     }
-    auto [g, u, v] = eGCD(val, MOD);
-    return Fp(u);
+    auto [g, u, v] = eGCD(val, getMod());
+    return FpG(u);
   }
 
-  Fp& operator /=(const Fp& t) {
+  FpG& operator /=(const FpG& t) {
     return (*this) *= t.inv();
   }
 
-  Fp operator +(const Fp& t) const { return Fp(val) += t; }
-  Fp operator -(const Fp& t) const { return Fp(val) -= t; }
-  Fp operator *(const Fp& t) const { return Fp(val) *= t; }
-  Fp operator /(const Fp& t) const { return Fp(val) /= t; }
-  Fp operator -() const { return Fp(-val); }
+  FpG operator +(const FpG& t) const { return FpG(val) += t; }
+  FpG operator -(const FpG& t) const { return FpG(val) -= t; }
+  FpG operator *(const FpG& t) const { return FpG(val) *= t; }
+  FpG operator /(const FpG& t) const { return FpG(val) /= t; }
+  FpG operator -() const { return FpG(-val); }
 
-  bool operator ==(const Fp& t) const { return val == t.val; }
-  bool operator !=(const Fp& t) const { return val != t.val; }
+  bool operator ==(const FpG& t) const { return val == t.val; }
+  bool operator !=(const FpG& t) const { return val != t.val; }
   
   operator ll() const { return val; }
 
+  friend FpG operator +(int x, const FpG& y) { return FpG(x) + y; }
+  friend FpG operator -(int x, const FpG& y) { return FpG(x) - y; }
+  friend FpG operator *(int x, const FpG& y) { return FpG(x) * y; }
+  friend FpG operator /(int x, const FpG& y) { return FpG(x) / y; }
+  friend bool operator ==(int x, const FpG& y) { return FpG(x) == y; }
+  friend bool operator !=(int x, const FpG& y) { return FpG(x) != y; }
+  friend FpG operator +(ll x, const FpG& y) { return FpG(x) + y; }
+  friend FpG operator -(ll x, const FpG& y) { return FpG(x) - y; }
+  friend FpG operator *(ll x, const FpG& y) { return FpG(x) * y; }
+  friend FpG operator /(ll x, const FpG& y) { return FpG(x) / y; }
+  friend bool operator ==(ll x, const FpG& y) { return FpG(x) == y; }
+  friend bool operator !=(ll x, const FpG& y) { return FpG(x) != y; }
+  friend FpG operator +(const FpG& x, int y) { return x + FpG(y); }
+  friend FpG operator -(const FpG& x, int y) { return x - FpG(y); }
+  friend FpG operator *(const FpG& x, int y) { return x * FpG(y); }
+  friend FpG operator /(const FpG& x, int y) { return x / FpG(y); }
+  friend bool operator ==(const FpG& x, int y) { return x == FpG(y); }
+  friend bool operator !=(const FpG& x, int y) { return x != FpG(y); }
+  friend FpG operator +(const FpG& x, ll y) { return x + FpG(y); }
+  friend FpG operator -(const FpG& x, ll y) { return x - FpG(y); }
+  friend FpG operator *(const FpG& x, ll y) { return x * FpG(y); }
+  friend FpG operator /(const FpG& x, ll y) { return x / FpG(y); }
+  friend bool operator ==(const FpG& x, ll y) { return x == FpG(y); }
+  friend bool operator !=(const FpG& x, ll y) { return x != FpG(y); }
+
+  friend istream& operator>> (istream& is, FpG& t) {
+    ll x; is >> x;
+    t = x;
+    return is;
+  }
+
+  friend ostream& operator<< (ostream& os, const FpG& t) {
+    os << t.val;
+    return os;
+  }
+
 };
+template<int mod>
+ll FpG<mod>::dyn_mod;
 
-Fp operator +(int x, const Fp& y) { return Fp(x) + y; }
-Fp operator -(int x, const Fp& y) { return Fp(x) - y; }
-Fp operator *(int x, const Fp& y) { return Fp(x) * y; }
-Fp operator /(int x, const Fp& y) { return Fp(x) / y; }
-bool operator ==(int x, const Fp& y) { return Fp(x) == y; }
-bool operator !=(int x, const Fp& y) { return Fp(x) != y; }
-Fp operator +(ll x, const Fp& y) { return Fp(x) + y; }
-Fp operator -(ll x, const Fp& y) { return Fp(x) - y; }
-Fp operator *(ll x, const Fp& y) { return Fp(x) * y; }
-Fp operator /(ll x, const Fp& y) { return Fp(x) / y; }
-bool operator ==(ll x, const Fp& y) { return Fp(x) == y; }
-bool operator !=(ll x, const Fp& y) { return Fp(x) != y; }
-Fp operator +(const Fp& x, int y) { return x + Fp(y); }
-Fp operator -(const Fp& x, int y) { return x - Fp(y); }
-Fp operator *(const Fp& x, int y) { return x * Fp(y); }
-Fp operator /(const Fp& x, int y) { return x / Fp(y); }
-bool operator ==(const Fp& x, int y) { return x == Fp(y); }
-bool operator !=(const Fp& x, int y) { return x != Fp(y); }
-Fp operator +(const Fp& x, ll y) { return x + Fp(y); }
-Fp operator -(const Fp& x, ll y) { return x - Fp(y); }
-Fp operator *(const Fp& x, ll y) { return x * Fp(y); }
-Fp operator /(const Fp& x, ll y) { return x / Fp(y); }
-bool operator ==(const Fp& x, ll y) { return x == Fp(y); }
-bool operator !=(const Fp& x, ll y) { return x != Fp(y); }
-
-istream& operator>> (istream& is, Fp& t) {
-  ll x; is >> x;
-  t = x;
-  return is;
-}
-
-ostream& operator<< (ostream& os, const Fp& t) {
-  os << t.val;
-  return os;
-}
-
-class Comb {
+template<int mod=0>
+class CombG {
   int nMax;
-  vector<Fp> vFact;
-  vector<Fp> vInvFact;
+  vector<FpG<mod>> vFact;
+  vector<FpG<mod>> vInvFact;
 public:
-  Comb(int nm) : nMax(nm), vFact(nm+1), vInvFact(nm+1) {
+  CombG(int nm) : nMax(nm), vFact(nm+1), vInvFact(nm+1) {
     vFact.at(0) = 1;
     for (int i = 1; i <= nMax; i++) vFact.at(i) = i * vFact.at(i-1);
     vInvFact.at(nMax) = vFact.at(nMax).inv();
     for (int i = nMax; i >= 1; i--) vInvFact.at(i-1) = i * vInvFact.at(i);
   }
-  Fp fact(int n) { return vFact.at(n); }
-  Fp comb(int n, int r) {
+  FpG<mod> fact(int n) { return vFact.at(n); }
+  FpG<mod> comb(int n, int r) {
     return vFact.at(n) * vInvFact.at(r) * vInvFact.at(n-r);
   }
   // The number of permutation extracting r from n.
-  Fp perm(int n, int r) {
+  FpG<mod> perm(int n, int r) {
     return vFact.at(n) * vInvFact.at(n-r);
   }
 };
 
-#if !defined(CONSTANT_MOD)
-ll Fp::MOD = 1e9 + 7;
-// ll Fp::MOD = 998'244'353;
-// WARNING: You should not uncomment here.  Instead, write
-//    OUT OF LIBRARY PASTE AREA, such as in main():
-//                     Fp::MOD = 998'244'353;
-//    or whatever.  Or more preferably, use CONSTANT_MOD.
-#endif
+constexpr int primeA = 1'000'000'007;
+constexpr int primeB = 998'244'353;
+using FpA = FpG<primeA>;
+using FpB = FpG<primeB>;
+using CombA = CombG<primeA>;
+using CombB = CombG<primeB>;
 
 // @@ !! END ---- mod.cc
 

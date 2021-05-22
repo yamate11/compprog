@@ -22,19 +22,27 @@ using namespace std;
         PolyFp p({-1, 0, 1, 2});   // -1 + X^2 + 2 X^3
     - Constant
         PolyLL p(5);               // 5
-  - Using get_X()
-        auto X = PolyFp::get_X();   // X
-        auto p = -1 + X*X + 2*X*X*X;        // -1 + X^2 + 2 X^3
+  - Indeterminate element
+        const SparsePoly<T> X;   
+  - X^n
+        SparsePoly<T> Xn(int n);
   - Degree
         int d = (-1.0 + X*X).degree()        // d == 2
+        // The degree of the zero polynomial is zero; and the
+        // coefficient vector is empty.
   - Coefficients
-        vector<double> v = (-1.0 + X*X).coef    // [-1.0, 0.0, 1.0]
+        double x = (-1.0 + 20*X + 30*X*X).getCoef(2) // 30
+        double x = (-1.0 + 20*X + 30*X*X).getCoef(10) // 0
+        vector<double> v = (-1.0 + X*X).coefVec()    // [-1.0, 0.0, 1.0]
   - Copy constructor, assignment, ...
         // as usual
   - Operators
         +, -, *, +=, -=, *=, ==, !=
   - Value at t
         T v = p.atval(T t);
+  - Cutoff
+        p.cutoff(deg) is the polynomial for the degrees up to deg.
+        (mainly for FPS)
   - Division (divmod)
         auto [d, m] = p.divmod(q);
         // p == q * d + m, degree(m) < degree(q)
@@ -43,7 +51,7 @@ using namespace std;
             - the coefficient of the highest degree of q is (T)1.
   - Division by linear term X-c (for performance)
         auto [d, m] = p.divideLinear(c);   // p = (X-c) * d + m
-  - Formal Power Series for division
+  - Formal Power Series for division (naive method)
         Polynomial a = p.divFormalSeries(q, n)
         //    a.degree() == n
         //    a.coef[i] is the [x^i](p/q) (as a formal power series) 
@@ -59,6 +67,21 @@ using namespace std;
         friend T bostanMori(const Polynomial& p, const Polynomial& q, int n);
     - usage:   
         Fp a = bostanMori(p, q, n);
+
+  - Sparse polynomials
+          template<typename T> struct SparsePoly;
+      Give the constructor a vector of pair of a power and a coefficient.
+      E.g.,  3 - X^10 + 2X^20 ... SparsePoly<ll> sp({{0,3},{10,-1},{20,2}});
+
+      For 
+          Polynomial<T, use_fft> p;
+          SparsePoly<T> sp;
+      the following operations are supported
+          p + sp, p - sp, p * sp
+          p.mult(sp, cutoff=-1)     p.selfMult(sp, cutoff=-1)
+          p.divFPS(sp, cutoff=-1)   p.selfDivFPS(sp, cutoff=-1)
+
+
  */
 
 //////////////////////////////////////////////////////////////////////
@@ -71,15 +94,18 @@ using namespace std;
   #define DLOGKL_LIB(lab, ...)
 #endif
 
+template<typename T> struct SparsePoly;
+
 template<typename T>
 vector<T> polyConvolution(const vector<T>& a, const vector<T>& b) {
   assert(0);
 }
 
-template<>
-vector<Fp> polyConvolution(const vector<Fp>& a, const vector<Fp>& b) {
-  vector<Fp> aa(a);
-  vector<Fp> bb(b);
+template<int mod=0>
+vector<FpG<mod>> polyConvolution(const vector<FpG<mod>>& a,
+                                 const vector<FpG<mod>>& b) {
+  vector<FpG<mod>> aa(a);
+  vector<FpG<mod>> bb(b);
   return convolution(move(aa), move(bb));
 }
 
@@ -101,15 +127,32 @@ vector<ll> polyConvolution_ll(const vector<ll>& a, const vector<ll>& b) {
 //             in this case, T must be ll
 template<typename T, int use_fft>
 struct Polynomial {
+  using SP = SparsePoly<T>;
+
+private:
+  // The highest coefficient should not be zero.
+  // Thus, the zero polynomial should be represented by the empty vector.
   vector<T> coef;
 
+public:
+  const vector<T>& coefVec() const { return coef; }
+  T getCoef(ll n) const {
+    if (n > degree()) return (T)0;
+    return coef[n];
+  }
+
+  // Degree of the zero polynomial is -1.
   int degree() const { return coef.size() - 1; }
 
-  Polynomial() : coef({(T)0}) {}
-  Polynomial(T t) : coef({t}) {}
+  void normalize() {
+    while (!coef.empty() && coef.back() == (T)0) coef.pop_back();
+  }
 
-  Polynomial(const vector<T>& coef_) : coef(coef_) { adj_degree(); }
-  Polynomial(vector<T>&& coef_) : coef(move(coef_)) { adj_degree(); }
+  Polynomial() : coef() {}
+  Polynomial(T t) : coef() { if (t != (T)0) { coef.push_back(t); } }
+
+  Polynomial(const vector<T>& coef_) : coef(coef_) { normalize(); }
+  Polynomial(vector<T>&& coef_) : coef(move(coef_)) { normalize(); }
 
   Polynomial(const Polynomial& o) : coef(o.coef) {}
   Polynomial(Polynomial&& o) : coef(move(o.coef)) {}
@@ -122,20 +165,26 @@ struct Polynomial {
     return *this;
   }
   Polynomial& operator =(T t) {
-    coef.resize(1);
-    coef[0] = t;
+    coef.resize(0);
+    if (t != (T)0) { coef.push_back(t); }
     return *this;
   }
 
-  void adj_degree() {
-    while (coef.size() > 1 && coef.back() == (T)0) coef.pop_back();
+  void _from_sparse(const SP& sp) {
+    coef = vector<T>(sp.degree() + 1);
+    for (auto [i, t] : sp.coef) coef[i] = t;
+  }
+  Polynomial(const SP& sp) { _from_sparse(sp); }
+  Polynomial& operator =(const SP& sp) {
+    _from_sparse(sp);
+    return *this;
   }
 
   Polynomial& operator +=(const Polynomial& o) {
     int deg = max(degree(), o.degree());
     if ((int)coef.size() < deg + 1) { coef.resize(deg + 1); }
     for (int i = 0; i <= o.degree(); i++) { coef[i] += o.coef[i]; }
-    adj_degree();
+    normalize();
     return *this;
   }
 
@@ -143,7 +192,7 @@ struct Polynomial {
     int deg = max(degree(), o.degree());
     if ((int)coef.size() < deg + 1) { coef.resize(deg + 1); }
     for (int i = 0; i <= o.degree(); i++) { coef[i] -= o.coef[i]; }
-    adj_degree();
+    normalize();
     return *this;
   }
 
@@ -170,9 +219,13 @@ struct Polynomial {
 
   constexpr Polynomial& operator *=(const Polynomial& o) {
     coef = coef_conv(coef, o.coef);
+    normalize();
     return *this;
   }
   
+  Polynomial operator -() const {
+    return Polynomial() -= *this;
+  }
   Polynomial operator +(const Polynomial& o) const {
     return Polynomial(*this) += o;
   }
@@ -182,16 +235,9 @@ struct Polynomial {
   Polynomial operator *(const Polynomial& o) const {
     return Polynomial(*this) *= o;
   }
-  Polynomial operator -() const {
-    return Polynomial() -= *this;
-  }
 
   bool operator ==(const Polynomial& o) const { return coef == o.coef; }
   bool operator !=(const Polynomial& o) const { return coef != o.coef; }
-
-  static Polynomial get_X() {
-    return Polynomial({(T)0, (T)1});
-  }
 
   T atval(T t) const {
     T ret = 0;
@@ -199,12 +245,19 @@ struct Polynomial {
     return ret;
   }
 
+  Polynomial& selfCutoff(int deg) {
+    if (degree() <= deg) return *this;
+    coef.resize(deg + 1);
+    normalize();
+    return *this;
+  }
+
+  Polynomial cutoff(int deg) const {
+    return Polynomial(*this).selfCutoff(deg);
+  }
+
   T selfDivideLinear(T c) {
-    if (degree() == 0) {
-      T m = coef[0];
-      coef[0] = (T)0;
-      return m;
-    }
+    if (coef.empty()) { return (T)0; }
     T x = coef.back();
     for (ll i = coef.size() - 2; i >= 0; i--) {
       T y = coef[i] + x * c;
@@ -297,40 +350,257 @@ struct Polynomial {
   friend T bostanMori(const Polynomial& p, const Polynomial& q, ll n) {
     return p.subBostanMori(q, n);
   }
+
+
+  Polynomial& operator +=(T t) {
+    coef[0] += t;
+    normalize();
+    return *this;
+  }
+  Polynomial& operator -=(T t) { return *this += (-t); }
+  Polynomial& operator *=(T t) {
+    if (t == (T)0) {
+      coef.resize(0);
+    }else {
+      for (int i = 0; i < (int)coef.size(); i++) coef[i] *= t;
+    }
+    return *this;
+  }
+  Polynomial operator +(T t) const { return Polynomial(*this) += t; }
+  Polynomial operator -(T t) const { return Polynomial(*this) -= t; }
+  Polynomial operator *(T t) const { return Polynomial(*this) *= t; }
+  friend Polynomial operator +(T t, const Polynomial& p) { return p + t; }
+  friend Polynomial operator -(T t, const Polynomial& p) { return (-p) + t; }
+  friend Polynomial operator *(T t, const Polynomial& p) { return p * t; }
+
+
+  Polynomial& operator +=(const SP& o) {
+    if (degree() < o.degree()) { coef.resize(o.degree() + 1); }
+    for (auto [i, t] : o.coef) { coef[i] += t; }
+    normalize();
+    return *this;
+  }
+
+  Polynomial& operator -=(const SP& o) { 
+    if (degree() < o.degree()) { coef.resize(o.degree() + 1); }
+    for (auto [i, t] : o.coef) { coef[i] -= t; }
+    normalize();
+    return *this;
+  }
+
+  Polynomial& selfMult(const SP& o, int lim = -1) {
+    if (coef.empty()) return *this;
+    if (o.coef.empty()) { coef.resize(0); return *this; }
+    int dd = degree() + o.degree();
+    if (lim < 0 || dd < lim) lim = dd;
+    auto old_coef = move(coef);
+    coef = vector<T>(lim + 1);
+    for (auto [i, t] : o.coef) {
+      for (int j = 0; j < (int)old_coef.size() && j <= lim - i; j++) {
+        coef[i + j] += t * old_coef[j];
+      }
+    }
+    normalize();
+    return *this;
+  }
+
+  Polynomial mult(const SP& o, int lim = -1) const {
+    Polynomial p(*this);
+    return p.selfMult(o, lim);
+  }
+
+  Polynomial& operator *=(const SP& o) { return selfMult(o, -1); }
+
+  // the constant term of o should have the inverse.
+  Polynomial& selfDivFPS(const SP& o, int lim = -1) {
+    if (o.coef.empty()) throw runtime_error("selfDivFPS: o.coef.empty");
+    auto [i, t0] = o.coef.front();
+    if (i != 0) throw runtime_error("selfDivFPS: no constant factor");
+    T invt = (T)1 / t0;
+    if (invt * t0 != (T)1) throw runtime_error("selfDivFPS: no inverse");
+    if (lim < 0) lim = degree();
+    else if (lim > degree()) coef.resize(lim + 1);
+    auto work = move(coef);
+    coef = vector<T>(lim + 1);
+    for (int j = 0; j <= lim; j++) {
+      coef[j] = work[j] * invt;
+      for (auto [k, t] : o.coef) {
+        if (j + k > lim) break;
+        work[j + k] -= coef[j] * t;
+      }
+    }
+    normalize();
+    return *this;
+  }
+
+  Polynomial divFPS(const SP& o, int lim = -1) const {
+    Polynomial p(*this);
+    return p.selfDivFPS(o, lim);
+  }
+
+  Polynomial operator +(SP t) const { return Polynomial(*this) += t; }
+  Polynomial operator -(SP t) const { return Polynomial(*this) -= t; }
+  Polynomial operator *(SP t) const { return Polynomial(*this) *= t; }
+  friend Polynomial operator +(SP t, const Polynomial& p) { return p + t; }
+  friend Polynomial operator -(SP t, const Polynomial& p) { return (-p) + t; }
+  friend Polynomial operator *(SP t, const Polynomial& p) { return p * t; }
+
+
+  friend ostream& operator<< (ostream& os, const Polynomial& p) {
+    os << p.coef;
+    return os;
+  }
+
+  static const SparsePoly<T> X;
+  static SparsePoly<T> Xn(int n) { return SparsePoly<T>::Xn(n); }
+
 };
+template<typename T, int use_fft>
+const SparsePoly<T> Polynomial<T, use_fft>::X({{1,1}});
 
-template<typename T, int use_fft>
-Polynomial<T, use_fft> operator +(T t, const Polynomial<T, use_fft>& p) {
-  return Polynomial<T, use_fft>(t) + p;
-}
-template<typename T, int use_fft>
-Polynomial<T, use_fft> operator -(T t, const Polynomial<T, use_fft>& p) {
-  return Polynomial<T, use_fft>(t) - p;
-}
-template<typename T, int use_fft>
-Polynomial<T, use_fft> operator *(T t, const Polynomial<T, use_fft>& p) {
-  return Polynomial<T, use_fft>(t) * p;
-}
-template<typename T, int use_fft>
-Polynomial<T, use_fft> operator +(const Polynomial<T, use_fft>& p, T t) {
-  return p + Polynomial<T, use_fft>(t);
-}
-template<typename T, int use_fft>
-Polynomial<T, use_fft> operator -(const Polynomial<T, use_fft>& p, T t) {
-  return p - Polynomial<T, use_fft>(t);
-}
-template<typename T, int use_fft>
-Polynomial<T, use_fft> operator *(const Polynomial<T, use_fft>& p, T t) {
-  return p * Polynomial<T, use_fft>(t);
-}
 
-template<typename T, int use_fft>
-ostream& operator<< (ostream& os, const Polynomial<T, use_fft>& p) {
-  os << p.coef;
-  return os;
-}
+template<typename T>
+struct SparsePoly {   // Sparse Polynomial
+  using coef_elm_t = pair<ll, T>;      
+  using coef_t = vector<coef_elm_t>;   
+  coef_t coef;      
+  // {k, t} in coef means t*X^k.  all t should not be (T)0
+  // Thus, 0 (as polynomial) should be represented by the empty vector.
+
+  // degree of 0 (as polynomial) is -1
+  int degree() const {
+    if (coef.empty()) return -1;
+    return coef.back().first;
+  }
+  void normalize() {
+    while (!coef.empty() && coef.back().second == (T)0) coef.pop_back();
+  }
+
+  SparsePoly() : coef() {}
+  SparsePoly(const SparsePoly& sp) : coef(sp.coef) {}
+  SparsePoly(SparsePoly&& sp) : coef(move(sp.coef)) {}
+  SparsePoly(T t) : coef() { if (t != (T)0) { coef.emplace_back(0, t); } }
+
+  // argument coef_ should be sorted and should not contain (T)0
+  SparsePoly(const coef_t& coef_) : coef(coef_) { normalize(); }
+  SparsePoly(coef_t&& coef_) : coef(move(coef_)) { normalize(); }
+
+  SparsePoly& operator=(const SparsePoly& sp) {
+    coef = sp.coef;
+    return *this;
+  }
+  SparsePoly& operator=(SparsePoly&& sp) {
+    coef = move(sp.coef);
+    return *this;
+  }
+  SparsePoly& operator=(T t) {
+    if (t != (T)0) { coef.emplace_back(0, t); }
+    normalize();
+    return *this;
+  }
+
+  /*
+  static SparsePoly getX() { return SparsePoly({{1, 1}}); }
+  static SparsePoly getXn(int n) { return SparsePoly({{n, 1}}); }
+  */
+
+  coef_t _plus_minus(const coef_t& a, const coef_t& b, int flag) const {
+    coef_t ret;
+    int i = 0, j = 0;
+    while (true) {
+      auto [ka, ta] = i < (int)a.size() ? a[i] : coef_elm_t(LLONG_MAX, 0);
+      auto [kb, tb] = j < (int)b.size() ? b[j] : coef_elm_t(LLONG_MAX, 0);
+      if (flag != 1) tb = -tb;
+      if (ka < kb) {
+        ret.emplace_back(ka, ta);
+        i++;
+      }else if (ka > kb) {
+        ret.emplace_back(kb, tb);
+        j++;
+      }else if (ka == LLONG_MAX) { break; }
+      else {
+        T tt = ta + tb;
+        if (tt != (T)0) ret.emplace_back(ka, tt);
+        i++; j++;
+      }
+    }
+    return ret;
+  }
+
+  SparsePoly operator -() const {
+    coef_t new_coef;
+    for (const auto& [k, t] : coef) new_coef.emplace_back(k, -t);
+    return SparsePoly(new_coef);
+  }
+  SparsePoly& operator +=(const SparsePoly& o) {
+    coef = _plus_minus(coef, o.coef, 1);
+    return *this;
+  }
+  SparsePoly& operator -=(const SparsePoly& o) {
+    coef = _plus_minus(coef, o.coef, 2);
+    return *this;
+  }
+  SparsePoly& operator *=(const SparsePoly& o) {
+    coef_t new_coef;
+    for (const auto& [ko, to]: o.coef) {
+      coef_t shifted;
+      for (auto& [k, t] : coef) { shifted.emplace_back(k + ko, t * to); }
+      new_coef = _plus_minus(new_coef, shifted, 1);
+    }
+    coef = move(new_coef);
+    return *this;
+  }
+  SparsePoly operator +(const SparsePoly& o) const {
+    return SparsePoly(*this) += o;
+  }
+  SparsePoly operator -(const SparsePoly& o) const {
+    return SparsePoly(*this) -= o;
+  }
+  SparsePoly operator*(const SparsePoly& o) const {
+    return SparsePoly(*this) *= o;
+  }
+
+  bool operator ==(const SparsePoly& o) const { return coef == o.coef; }
+  bool operator !=(const SparsePoly& o) const { return coef != o.coef; }
+
+  friend SparsePoly operator+(const SparsePoly& sp, T t) {
+    return SparsePoly(sp) += t;
+  }
+  friend SparsePoly operator-(const SparsePoly& sp, T t) {
+    return SparsePoly(sp) -= t;
+  }
+  friend SparsePoly operator*(const SparsePoly& sp, T t) {
+    return SparsePoly(sp) *= t;
+  }
+  friend SparsePoly operator+(T t, const SparsePoly& sp) { return sp + t; }
+  friend SparsePoly operator-(T t, const SparsePoly& sp) { return -(sp - t); }
+  friend SparsePoly operator*(T t, const SparsePoly& sp) { return sp * t; }
+
+  friend ostream& operator<<(ostream& os, const SparsePoly& sp) {
+    if (sp.coef.empty()) {
+      cout << "0";
+    }else {
+      bool first = true;
+      for (const auto& [k, t] : sp.coef) {
+        if (first) first = false;
+        else cout << " ";
+        if (k == 0) cout << t;
+        else if (k == 1) cout << "+ " << t << "X";
+        else cout << "+ " << t << "X^" << k;
+      }
+    }
+    return os;
+  }
+
+  static const SparsePoly X;
+  static SparsePoly Xn(int n) { return SparsePoly({{n,1}}); }
+
+};
+template<typename T>
+const SparsePoly<T> SparsePoly<T>::X({{1,1}});
 
 using PolyLL = Polynomial<ll, 2>;
-using PolyFp = Polynomial<Fp, 1>;
+using PolyFpA = Polynomial<FpA, 0>;
+using PolyFpB = Polynomial<FpB, 1>;
 
 // @@ !! END ---- polynomial.cc

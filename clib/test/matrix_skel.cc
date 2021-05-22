@@ -7,7 +7,7 @@ using namespace std;
 // @@ !! LIM(debug f:power mod matrix)
 
 int main() {
-  Fp::MOD = 1e9 + 7;
+  using Fp = FpA;
 
   cerr << "start" << endl;
   cerr << "equation" << endl;
