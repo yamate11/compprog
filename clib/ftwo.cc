@@ -6,9 +6,10 @@
   Additional functions:
 
     vector<ll> getF2Basis(const vector<ll>& vs)
+      Returns a maximal linearly independent *subset* of vs.
       Each element of argument vs is regarded as a vector of F2
-      with length at most 63.  The return value is a maximal 
-      linearly independent subset of vs.  
+      with length at most 63.
+      (Implemented using a sweepout method by Noshibukuro @noshi91)
  */
 
 //////////////////////////////////////////////////////////////////////
@@ -92,9 +93,12 @@ ostream& operator<< (ostream& os, const Ftwo& t) {
   return os;
 }
 
+// From a tweet by Noshibukuro (@noshi91)
+// https://twitter.com/noshi91/status/1200702280128856064
+// 
 vector<ll> getF2Basis(const vector<ll>& vs) {
-  vector<ll> ret;
-  vector<ll> aux;
+  vector<ll> ret;    // original vectors
+  vector<ll> aux;    // This set will also be a basis of the vector space.
   for (ll v : vs) {
     ll e = v;
     for (ll b : aux) { e = min(e, e ^ b); }

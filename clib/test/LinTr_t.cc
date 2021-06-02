@@ -252,7 +252,7 @@ public:
 };
 
 constexpr int primeA = 1'000'000'007;
-constexpr int primeB = 998'244'353;
+constexpr int primeB = 998'244'353;          // '
 using FpA = FpG<primeA>;
 using FpB = FpG<primeB>;
 using CombA = CombG<primeA>;
@@ -294,6 +294,12 @@ T ah_power(T a, ll b, const T& unit_t, Op op) {
 // ---- end f:power
 
 // ---- inserted library file matrix.cc
+
+#if ! defined(DLOG_LIB)
+  #define DLOG_LIB(...)
+  #define DLOGK_LIB(...)
+  #define DLOGKL_LIB(lab, ...)
+#endif
 
 struct MyExc : exception {};
 
@@ -359,6 +365,26 @@ struct Matrix {
     return *this;
   }
   */
+
+  static Matrix fromVec(const vector<T>& svec, bool isColVect = true) {
+    vector<vector<T>> vec;
+    vec.push_back(svec);
+    Matrix ret = Matrix(vec);
+    if (isColVect) return ret.transpose();
+    else           return ret;
+  }
+
+  vector<T> rowVec(size_t row) const {
+    vector<T> result(dimJ);
+    for (size_t i = 0; i < dimJ; i++) result[i] = at(row, i);
+    return result;
+  }
+
+  vector<T> colVec(size_t col) const {
+    vector<T> result(dimI);
+    for (size_t i = 0; i < dimI; i++) result[i] = at(i, col);
+    return result;
+  }
 
   void partial_subst(const Matrix<T>& r, size_t i0, size_t j0,
 		     size_t i1, size_t j1, size_t i2, size_t j2) {
@@ -485,7 +511,8 @@ struct Matrix {
     T det = (T)1;
     size_t j0 = 0;
     size_t i0 = 0;
-    for ( ; i0 < dimI; i0++) {
+    // DLOGKL("  ", *this);
+    for ( ; i0 < dimI; i0++, j0++) {
       auto [i1, j1] = find_nz(i0, j0);
       if (i1 == dimI) break;
       j0 = j1;
@@ -499,6 +526,7 @@ struct Matrix {
 	if (i == i0) continue;
 	basic_mult_add(i0, -at(i, j0), i);
       }
+      // DLOGKL("  ", *this);
     }
     return {i0, det};
   }
@@ -536,6 +564,63 @@ struct Matrix {
     }
     return ret;
   }
+
+  /* WARNING: T should be a field. */
+  // Solves linear euqation "(*this) x = bs".
+  //        dimI and dimJ can be different.
+  // arguments:
+  //    bs ... vector<T>.  bs.size() == dimI should hold.
+  //    ret_kernel ... if false, returned kernel is an empty vector.
+  // return value: optional<pair<vector<T>, vector<vector<T>>>
+  //    If there is no solution, nullopt is returned.
+  //    Otherwise, ret.value() is a pair [sol, kernel].
+  //      sol ... a solution.  sol.size() is dimJ.
+  //      kernel ... A basis of the space { x | (*this) x = 0 }.
+  // Typical usage:
+  //    auto ret = mat.linSolution(bs);
+  //    if (!ret.has_value()) cout << "No solution\n";
+  //    else {
+  //      [sol, _dummy] = ret.value();
+  //      cout << "Solution is: " << sol << "\n";
+  //    }
+  optional<pair<vector<T>, vector<vector<T>>>>
+  linSolution(const vector<T>& bs, bool ret_kernel = true) {
+    Matrix<T> work(dimI, dimJ + 1);
+    for (size_t i = 0; i < dimI; i++) {
+      for (size_t j = 0; j < dimJ; j++) { work.at(i, j) = at(i, j); }
+      work.at(i, dimJ) = bs[i];
+    }
+    auto [rank, _] = work.self_sweepout();
+    // DLOGK(rank, work);
+    if (rank > 0) {
+      bool succ = false;
+      for (size_t j = 0; j < dimJ; j++) {
+        if (work.at(rank - 1, j) != (T)0) { succ = true; break; }
+      }
+      if (!succ) { return nullopt; }
+    }
+    vector<T> sol(dimJ, (T)0);
+    vector<vector<T>> kernel;
+    size_t j = 0;
+    for (size_t i = 0; i < rank; i++, j++) {
+      for ( ; work.at(i, j) == (T)0; j++);
+      sol[j] = work.at(i, dimJ);
+    }
+    if (ret_kernel) {
+      for ( ; j < dimJ; j++) {
+        vector<T> k_elem(dimJ);
+        k_elem[j] = (T)1;
+        size_t k = 0;
+        for (size_t i = 0; i < rank; i++, k++) {
+          for (; work.at(i, k) == (T)0; k++);
+          k_elem[k] = -work.at(i, j);
+        }
+        kernel.push_back(move(k_elem));
+      }
+    }
+    return make_optional(make_pair(move(sol), move(kernel)));
+  }
+
 
 };
 

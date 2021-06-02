@@ -5,9 +5,9 @@
 	"util" "scc" "LinTr" "geometry" "binsearch" "dijkstra" "rerror"
 	"suffixArray" "board" "minCostFlow" "perm" "guessPoly" "ftwo"
 	"trie" "tree" "rollingHash" "fft" "doubling" "ipoint" "cumsum2d"
-	"interactive" "intervalSet" "polynomial" "convolution"
+	"interactive" "intervalSet" "polynomial" "convolution" "adjMatrix"
 	"f:power" "f:<<" "f:>>" "f:updMaxMin" "f:gcd" "f:intDiv" 
-        "f:perfmeas" "f:mex" "f:shortVector"
+        "f:perfmeas" "f:mex" "f:shortVector" "f:floor_sum"
 	))
 
 (setq atcoder-topdir "/home/y-tanabe/proj/compprog")

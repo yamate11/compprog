@@ -219,7 +219,7 @@ public:
 };
 
 constexpr int primeA = 1'000'000'007;
-constexpr int primeB = 998'244'353;
+constexpr int primeB = 998'244'353;          // '
 using FpA = FpG<primeA>;
 using FpB = FpG<primeB>;
 using CombA = CombG<primeA>;
