@@ -1,6 +1,9 @@
+### If you want to build with debug options, invoke make as:
+###     make DEBUG=yes
+
 CXX := g++
 
-ifeq ($(DEBUG),)
+ifneq ($(DEBUG),yes)
   DEBUGFLAGS := -O2
 else
   DEBUGFLAGS := -g -O0 -D_GLIBCXX_DEBUG -DDEBUG=1

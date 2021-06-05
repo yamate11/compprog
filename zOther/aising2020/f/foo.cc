@@ -1233,6 +1233,7 @@ vector<ll> polyConvolution_ll(const vector<ll>& a, const vector<ll>& b) {
 //             in this case, T must be ll
 template<typename T, int use_fft>
 struct Polynomial {
+  using value_type = T;
   using SP = SparsePoly<T>;
 
 private:
@@ -1590,6 +1591,19 @@ struct SparsePoly {   // Sparse Polynomial
   // argument coef_ should be sorted and should not contain (T)0
   SparsePoly(const coef_t& coef_) : coef(coef_) { normalize(); }
   SparsePoly(coef_t&& coef_) : coef(move(coef_)) { normalize(); }
+  SparsePoly(initializer_list<coef_elm_t> init) : coef(init) { normalize(); }
+
+  void from_vec(const vector<T>& vec) {
+    coef.resize(0);
+    for (size_t i = 0; i < vec.size(); i++) {
+      if (vec[i] != (T)0) { coef.emplace_back(i, vec[i]); }
+    }
+    normalize();
+  }
+
+  SparsePoly(const vector<T>& vec) { from_vec(vec); }
+  template<int use_fft>
+  SparsePoly(const Polynomial<T, use_fft>& p) { from_vec(p.coefVec()); }
 
   SparsePoly& operator=(const SparsePoly& sp) {
     coef = sp.coef;
@@ -1602,6 +1616,28 @@ struct SparsePoly {   // Sparse Polynomial
   SparsePoly& operator=(T t) {
     if (t != (T)0) { coef.emplace_back(0, t); }
     normalize();
+    return *this;
+  }
+  SparsePoly& operator=(const coef_t& coef_) {
+    coef = coef_; normalize();
+    return *this;
+  }
+  SparsePoly& operator=(coef_t&& coef_) {
+    coef = move(coef_); normalize();
+    return *this;
+  }
+  SparsePoly& operator=(initializer_list<coef_elm_t> init) {
+    coef = init;
+    normalize();
+    return *this;
+  }
+  SparsePoly& operator=(const vector<T>& vec) {
+    from_vec(vec);
+    return *this;
+  }
+  template<int use_fft>
+  SparsePoly& operator=(const Polynomial<T, use_fft>& p) {
+    from_vec(p.coefVec());
     return *this;
   }
 
@@ -1713,50 +1749,56 @@ using PolyFpB = Polynomial<FpB, 1>;
 
 // @@ !! LIM -- end mark --
 
-template<typename T>
-optional<pair<vector<T>, vector<T>>> fitFPS(vector<T> vec, int verify) {
-  vector<T> q;
+template<typename Pol>
+optional<pair<Pol, Pol>> fitFPS(Pol seq, int verify) {
+  using T = typename Pol::value_type;
+  const vector<T>& vec = seq.coefVec();
 
   auto checkSol = [&](const vector<T>& sol) -> bool {
     int d = sol.size();
+    DLOGKL("checkSol", d);
     for (int i = 0; i < verify; i++) {
       T y = (T)0;
       for (int j = 0; j < d; j++) { y += sol[j] * vec[2*d - 1 + i - j]; }
-      if (vec[2*d + i] != y) { return false; }
+      DLOGK(i, y - vec[2*d + i]);
+      if (vec[2*d + i] != y) {
+        DLOG("false");
+        return false;
+      }
     }
     return true;
   };
 
-  auto findQ = [&]() -> bool {
-    for (int d = 1; d <= (int)vec.size() - verify; d++) {
+  auto findQ = [&]() -> optional<Pol> {
+    int sz = vec.size();
+    for (int d = 1; 2 * d + verify < sz; d++) {
       Matrix<T> mat(d, d);
       vector<T> bs(d);
       for (int i = 0; i < d; i++) {
         for (int j = 0; j < d; j++) { mat.at(i, j) = vec[d - 1 + i - j]; }
         bs[i] = vec[d + i];
       }
+      DLOGK(d, bs, mat);
       auto optsol = mat.linSolution(bs, false);
       if (!optsol) continue;
       auto& [sol, _] = *optsol;
+      DLOGK(d, sol);
       if (checkSol(sol)) {
-        q.resize(sol.size() + 1);
+        vector<T> q(sol.size() + 1);
         q[0] = (T)1;
         for (int i = 0; i < (int)sol.size(); i++) { q[i + 1] = -sol[i]; }
-        return true;
+        return make_optional(Pol(q));
       }
     }
-    return false;
+    return nullopt;
   };
 
-  if (findQ()) {
-    vector<T> p(q.size() - 1);
-    for (int i = 0; i < (int)p.size(); i++) {
-      for (int j = 0; j <= i; j++) { p[i] += vec[j] * q[i - j]; }
-    }
-    return make_optional(make_pair(move(p), move(q)));
-  }else {
-    return nullopt;
-  }
+  auto optq = findQ();
+  if (!optq) return nullopt;
+  Pol q = move(*optq);
+  Pol p = seq.cutoff(q.degree()) * q;
+  p.selfCutoff(q.degree() - 1);
+  return make_optional(make_pair(move(p), move(q)));
 }
 
 
@@ -1772,7 +1814,19 @@ int main(/* int argc, char *argv[] */) {
     return dist(rng);
   };
 
+  if (0) {
+    using Pol = Polynomial<FpA, 0>;
+    vector<FpA> v = {-5, 7, -47, 203, -919, 4163, -18815, 85099, -384839, 1740371};
+    Pol a(v);
+    auto optsol = fitFPS(a, 3);
+    if (optsol) cout << "OK\n";
+    else cout << "NG\n";
+
+    return 0;
+  }
+
   {// aising2020 F - Two Snuke
+    using Pol = Polynomial<double, 0>;
     ll N = 50;
     vector<double> A(2*N);
     for (ll s1 = 0; s1 < N; s1++) {
@@ -1780,21 +1834,23 @@ int main(/* int argc, char *argv[] */) {
         A[s1 + s2] += s2 - s1;
       }
     }
-    auto optsol = fitFPS(A, 10);
+    auto optsol = fitFPS(Pol(move(A)), 10);
     assert(optsol);
     auto [p, q] = *optsol;
-    assert(p == vector<double>({0, 1, 0, 0}));
-    assert(q == vector<double>({1, -2, 0, 2, -1}));
+    assert(p == Pol({0, 1}));
+    assert(q == Pol({1, -2, 0, 2, -1}));
   }
 
   {
-    using Pol = PolyFpA;
+    // using Pol = Polynomial<double, 0>;
+    // using Fp = double;
+    using Pol = Polynomial<FpA, 0>;
     using Fp = FpA;
-    using SP = SparsePoly<Fp>;
     
-    rep = 100;
+    ll rep = 1000000;
+    ll deglim = 10;
     for (ll _r = 0; _r < rep; _r++) {
-      ll deg_q = randrange(1, 10);
+      ll deg_q = randrange(1, deglim);
       ll deg_p = randrange(0, deg_q);
       vector<Fp> vq;
       vq.push_back(1);
@@ -1805,7 +1861,24 @@ int main(/* int argc, char *argv[] */) {
       if (vp[deg_p] == 0) vp[deg_p] = randrange(1, 10);
       Pol p(vp);
       Pol q(vq);
-      
+      Pol a = p.divFPS(Pol::SP(q), 3 * deglim);
+      auto optsol = fitFPS(a, deglim);
+      if (!optsol) {
+        cout << p << endl;
+        cout << q << endl;
+        cout << a << endl;
+      }
+      assert(optsol);
+      auto [p1, q1] = *optsol;
+      if (p != p1) {
+        cout << p << endl;
+        cout << q << endl;
+        cout << a << endl;
+        cout << p1 << endl;
+        cout << q1 << endl;
+      }
+      assert(p == p1);
+      assert(q == q1);
     }
   }
 

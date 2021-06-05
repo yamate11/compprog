@@ -902,6 +902,7 @@ vector<ll> polyConvolution_ll(const vector<ll>& a, const vector<ll>& b) {
 //             in this case, T must be ll
 template<typename T, int use_fft>
 struct Polynomial {
+  using value_type = T;
   using SP = SparsePoly<T>;
 
 private:
@@ -1028,7 +1029,10 @@ public:
   }
 
   Polynomial cutoff(int deg) const {
-    return Polynomial(*this).selfCutoff(deg);
+    int new_deg = min(deg, degree());
+    vector<T> new_coef(new_deg + 1);
+    for (int i = 0; i <= new_deg; i++) new_coef[i] = coef[i];
+    return Polynomial(move(new_coef));
   }
 
   T selfDivideLinear(T c) {
@@ -1259,6 +1263,19 @@ struct SparsePoly {   // Sparse Polynomial
   // argument coef_ should be sorted and should not contain (T)0
   SparsePoly(const coef_t& coef_) : coef(coef_) { normalize(); }
   SparsePoly(coef_t&& coef_) : coef(move(coef_)) { normalize(); }
+  SparsePoly(initializer_list<coef_elm_t> init) : coef(init) { normalize(); }
+
+  void from_vec(const vector<T>& vec) {
+    coef.resize(0);
+    for (size_t i = 0; i < vec.size(); i++) {
+      if (vec[i] != (T)0) { coef.emplace_back(i, vec[i]); }
+    }
+    normalize();
+  }
+
+  SparsePoly(const vector<T>& vec) { from_vec(vec); }
+  template<int use_fft>
+  SparsePoly(const Polynomial<T, use_fft>& p) { from_vec(p.coefVec()); }
 
   SparsePoly& operator=(const SparsePoly& sp) {
     coef = sp.coef;
@@ -1271,6 +1288,28 @@ struct SparsePoly {   // Sparse Polynomial
   SparsePoly& operator=(T t) {
     if (t != (T)0) { coef.emplace_back(0, t); }
     normalize();
+    return *this;
+  }
+  SparsePoly& operator=(const coef_t& coef_) {
+    coef = coef_; normalize();
+    return *this;
+  }
+  SparsePoly& operator=(coef_t&& coef_) {
+    coef = move(coef_); normalize();
+    return *this;
+  }
+  SparsePoly& operator=(initializer_list<coef_elm_t> init) {
+    coef = init;
+    normalize();
+    return *this;
+  }
+  SparsePoly& operator=(const vector<T>& vec) {
+    from_vec(vec);
+    return *this;
+  }
+  template<int use_fft>
+  SparsePoly& operator=(const Polynomial<T, use_fft>& p) {
+    from_vec(p.coefVec());
     return *this;
   }
 
@@ -1460,6 +1499,25 @@ int main(/* int argc, char *argv[] */) {
     assert(0 + p5 == p5);
 
   }
+  {
+    SparsePoly<ll> X = SparsePoly<ll>::X;
+
+    vector<ll> vec1({1, 0, 2});
+    SparsePoly<ll> sp1(vec1);
+    SparsePoly<ll> sp1a({{0,1}, {2,2}});
+    // DLOGK(sp1, sp1a);
+    assert(sp1 == sp1a);
+    Polynomial<ll, 0> pol1(vec1);
+    SparsePoly<ll> sp2(pol1);
+    assert(sp1 == sp2);
+    sp1 = vector<ll>({4, 1});
+    assert(sp1 == SparsePoly<ll>({{0,4}, {1,1}}));
+    sp1 = {{5, 2}};
+    assert(sp1 == 2*X*X*X*X*X);
+    sp1 = vector<pair<ll, ll>>({{2, -3}});
+    assert(sp1 == -3*X*X);
+  }
+
   cerr << "1 " << get_time_sec() - et << endl;
   et = get_time_sec();
   {
@@ -1706,10 +1764,18 @@ int main(/* int argc, char *argv[] */) {
     assert(p2 == PolyLL(sp1));
     p2 = 0;
     assert(p2 == PolyLL());
-    PolyLL p4({1, 2, 3, 4, 5});
+    PolyLL p4({1, 2, 3, 0, 5});
     assert(p4.cutoff(2) == PolyLL({1, 2, 3}));
+    assert(p4.cutoff(3) == PolyLL({1, 2, 3}));
+    assert(p4.cutoff(10) == p4);
     assert(p4.cutoff(0) == 1);
     assert(p4.cutoff(-1) == 0);
+    PolyLL p5;
+    p5 = p4; p5.selfCutoff(2); assert(p5 == PolyLL({1, 2, 3}));
+    p5 = p4; p5.selfCutoff(3); assert(p5 == PolyLL({1, 2, 3}));
+    p5 = p4; p5.selfCutoff(10); assert(p5 == p4);
+    p5 = p4; p5.selfCutoff(0); assert(p5 == 1);
+    p5 = p4; p5.selfCutoff(-1); assert(p5 == 0);
 
     PolyLL p10({1,2,3,4,5,6,7});
     SP sp10({{0,1}, {2,-1}, {4,2}});

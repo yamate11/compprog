@@ -127,6 +127,7 @@ vector<ll> polyConvolution_ll(const vector<ll>& a, const vector<ll>& b) {
 //             in this case, T must be ll
 template<typename T, int use_fft>
 struct Polynomial {
+  using value_type = T;
   using SP = SparsePoly<T>;
 
 private:
@@ -253,7 +254,10 @@ public:
   }
 
   Polynomial cutoff(int deg) const {
-    return Polynomial(*this).selfCutoff(deg);
+    int new_deg = min(deg, degree());
+    vector<T> new_coef(new_deg + 1);
+    for (int i = 0; i <= new_deg; i++) new_coef[i] = coef[i];
+    return Polynomial(move(new_coef));
   }
 
   T selfDivideLinear(T c) {
@@ -484,6 +488,19 @@ struct SparsePoly {   // Sparse Polynomial
   // argument coef_ should be sorted and should not contain (T)0
   SparsePoly(const coef_t& coef_) : coef(coef_) { normalize(); }
   SparsePoly(coef_t&& coef_) : coef(move(coef_)) { normalize(); }
+  SparsePoly(initializer_list<coef_elm_t> init) : coef(init) { normalize(); }
+
+  void from_vec(const vector<T>& vec) {
+    coef.resize(0);
+    for (size_t i = 0; i < vec.size(); i++) {
+      if (vec[i] != (T)0) { coef.emplace_back(i, vec[i]); }
+    }
+    normalize();
+  }
+
+  SparsePoly(const vector<T>& vec) { from_vec(vec); }
+  template<int use_fft>
+  SparsePoly(const Polynomial<T, use_fft>& p) { from_vec(p.coefVec()); }
 
   SparsePoly& operator=(const SparsePoly& sp) {
     coef = sp.coef;
@@ -496,6 +513,28 @@ struct SparsePoly {   // Sparse Polynomial
   SparsePoly& operator=(T t) {
     if (t != (T)0) { coef.emplace_back(0, t); }
     normalize();
+    return *this;
+  }
+  SparsePoly& operator=(const coef_t& coef_) {
+    coef = coef_; normalize();
+    return *this;
+  }
+  SparsePoly& operator=(coef_t&& coef_) {
+    coef = move(coef_); normalize();
+    return *this;
+  }
+  SparsePoly& operator=(initializer_list<coef_elm_t> init) {
+    coef = init;
+    normalize();
+    return *this;
+  }
+  SparsePoly& operator=(const vector<T>& vec) {
+    from_vec(vec);
+    return *this;
+  }
+  template<int use_fft>
+  SparsePoly& operator=(const Polynomial<T, use_fft>& p) {
+    from_vec(p.coefVec());
     return *this;
   }
 

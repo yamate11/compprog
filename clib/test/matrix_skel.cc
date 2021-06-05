@@ -54,7 +54,6 @@ T dotProd(const vector<T>& v1, const vector<T>& v2) {
 }
 
 int main() {
-  using Fp = FpA;
   random_device rd;
   mt19937 rng(rd());
   auto randrange = [&rng](ll i, ll j) -> ll {
@@ -62,7 +61,18 @@ int main() {
     return dist(rng);
   };
 
+  if (0) {
+    using Fp = FpG<2>;
+    Matrix<Fp> mat = {{0,0}, {0,1}, {0,0}};
+    vector<Fp> bs = {0,0,0};
+    mat.linSolution(bs, true);
+    return 0;
+  }
+
+
   {
+    using Fp = FpA;
+
     cerr << "start" << endl;
     cerr << "equation" << endl;
     Matrix<ll> mat0 = {{0,1,0},{2,0,-1}};
@@ -125,6 +135,8 @@ int main() {
   }
 
   {
+    using Fp = FpA;
+
     cerr << "sweepout, determinant, inverse" << endl;
     Matrix<Fp> mat13  = {{2,5,7}, {4,-2,20}, {4, 6, 42}, {8,-7,7}};
     Matrix<Fp> mat13a = {{2,5,7}, {0,-12,6}, {0, 0, 26}, {0,0,0}};
@@ -159,6 +171,8 @@ int main() {
   }
   
   {
+    using Fp = FpA;
+
     auto from_vec = [&](const auto& v) {
       return Matrix<Fp>::fromVec(v, true);
     };
@@ -189,7 +203,8 @@ int main() {
     auto optsol2 = mat2.linSolution(vec2);
     assert(optsol2.has_value());
     auto [sol2, kernel2] = optsol2.value();
-    assert(kernel2.size() == 2);
+    // DLOGK(mat2); DLOGK(vec2);
+    assert(kernel2.size() == 4);
     assert(mat2 * from_vec(sol2) == from_vec(vec2));
     Matrix<Fp> mat_zero_4 = from_vec(vector<Fp>({0,0,0,0}));
     assert(mat2 * from_vec(kernel2[0]) == mat_zero_4);
@@ -258,6 +273,49 @@ int main() {
       }
     }
 
+  }
+  
+  {
+    using Fp = FpG<2>;
+    
+    auto check = [&](const auto& mat, ll m, ll n) -> void {
+      vector<Fp> bs(m); // zero
+      auto optsol = mat.linSolution(bs, true);
+      assert(optsol);
+      auto [_, kernel] = *optsol;
+      ll sz = kernel.size();
+      Matrix<Fp> zero_m(m, 1);
+      ll cnt = 0;
+      for (ll x = 0; x < (1LL << n); x++) {
+        Matrix<Fp> v(n, 1);
+        for (ll i = 0; i < n; i++) v.at(i, 0) = (x >> i) & 1;
+        if (mat * v == zero_m) cnt++;
+      }
+      assert((1LL << sz) == cnt);
+    };
+      
+    ll rep = 1000;
+    for (ll _r = 0; _r < rep; _r++) {
+      ll m = randrange(1, 9);
+      ll n = randrange(1, 9);
+      Matrix<Fp> mat(m, n);
+      for (ll i = 0; i < m; i++) {
+        for (ll j = 0; j < n; j++) mat.at(i, j) = randrange(0, 2);
+      }
+      check(mat, m, n);
+    }
+    ll m = 4, n = 3;
+    for (ll xx = 0; xx < (1LL << (m*n)); xx++) {
+      Matrix<Fp> mat(m, n);
+      for (ll i = 0; i < m; i++) {
+        for (ll j = 0; j < n; j++) {
+          ll t = i * n + j;
+          mat.at(i, j) = (xx >> t) & 1;
+        }
+      }
+      check(mat, m, n);
+      check(mat.transpose(), n, m);
+    }
   }
 
   cerr << "ok" << endl;

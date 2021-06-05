@@ -83,6 +83,25 @@ int main(/* int argc, char *argv[] */) {
     assert(0 + p5 == p5);
 
   }
+  {
+    SparsePoly<ll> X = SparsePoly<ll>::X;
+
+    vector<ll> vec1({1, 0, 2});
+    SparsePoly<ll> sp1(vec1);
+    SparsePoly<ll> sp1a({{0,1}, {2,2}});
+    // DLOGK(sp1, sp1a);
+    assert(sp1 == sp1a);
+    Polynomial<ll, 0> pol1(vec1);
+    SparsePoly<ll> sp2(pol1);
+    assert(sp1 == sp2);
+    sp1 = vector<ll>({4, 1});
+    assert(sp1 == SparsePoly<ll>({{0,4}, {1,1}}));
+    sp1 = {{5, 2}};
+    assert(sp1 == 2*X*X*X*X*X);
+    sp1 = vector<pair<ll, ll>>({{2, -3}});
+    assert(sp1 == -3*X*X);
+  }
+
   cerr << "1 " << get_time_sec() - et << endl;
   et = get_time_sec();
   {
@@ -329,10 +348,18 @@ int main(/* int argc, char *argv[] */) {
     assert(p2 == PolyLL(sp1));
     p2 = 0;
     assert(p2 == PolyLL());
-    PolyLL p4({1, 2, 3, 4, 5});
+    PolyLL p4({1, 2, 3, 0, 5});
     assert(p4.cutoff(2) == PolyLL({1, 2, 3}));
+    assert(p4.cutoff(3) == PolyLL({1, 2, 3}));
+    assert(p4.cutoff(10) == p4);
     assert(p4.cutoff(0) == 1);
     assert(p4.cutoff(-1) == 0);
+    PolyLL p5;
+    p5 = p4; p5.selfCutoff(2); assert(p5 == PolyLL({1, 2, 3}));
+    p5 = p4; p5.selfCutoff(3); assert(p5 == PolyLL({1, 2, 3}));
+    p5 = p4; p5.selfCutoff(10); assert(p5 == p4);
+    p5 = p4; p5.selfCutoff(0); assert(p5 == 1);
+    p5 = p4; p5.selfCutoff(-1); assert(p5 == 0);
 
     PolyLL p10({1,2,3,4,5,6,7});
     SP sp10({{0,1}, {2,-1}, {4,2}});
