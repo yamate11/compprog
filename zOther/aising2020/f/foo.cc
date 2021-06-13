@@ -570,7 +570,7 @@ struct Matrix {
   //      cout << "Solution is: " << sol << "\n";
   //    }
   optional<pair<vector<T>, vector<vector<T>>>>
-  linSolution(const vector<T>& bs, bool ret_kernel = true) {
+  linSolution(const vector<T>& bs, bool ret_kernel = true) const {
     Matrix<T> work(dimI, dimJ + 1);
     for (size_t i = 0; i < dimI; i++) {
       for (size_t j = 0; j < dimJ; j++) { work.at(i, j) = at(i, j); }
@@ -586,22 +586,30 @@ struct Matrix {
       if (!succ) { return nullopt; }
     }
     vector<T> sol(dimJ, (T)0);
-    vector<vector<T>> kernel;
-    size_t j = 0;
-    for (size_t i = 0; i < rank; i++, j++) {
-      for ( ; work.at(i, j) == (T)0; j++);
-      sol[j] = work.at(i, dimJ);
+    {
+      size_t j = 0;
+      for (size_t i = 0; i < rank; i++, j++) {
+        for ( ; work.at(i, j) == (T)0; j++);
+        sol[j] = work.at(i, dimJ);
+      }
     }
+    vector<vector<T>> kernel;
     if (ret_kernel) {
-      for ( ; j < dimJ; j++) {
-        vector<T> k_elem(dimJ);
-        k_elem[j] = (T)1;
-        size_t k = 0;
-        for (size_t i = 0; i < rank; i++, k++) {
-          for (; work.at(i, k) == (T)0; k++);
-          k_elem[k] = -work.at(i, j);
+      vector<bool> cor(dimJ, false);
+      size_t i = 0;
+      for (size_t j = 0 ; j < dimJ; j++) {
+        if (i == dimI || work.at(i, j) == (T)0) {
+          vector<T> kv(dimJ);
+          kv[j] = (T)1;
+          for (size_t p = 0, q = 0; p < i; p++, q++) {
+            while (!cor[q]) q++;
+            kv[q] = -work.at(p, j);
+          }
+          kernel.push_back(move(kv));
+        }else {
+          cor[j] = true;
+          if (i < dimI) i++;
         }
-        kernel.push_back(move(k_elem));
       }
     }
     return make_optional(make_pair(move(sol), move(kernel)));
@@ -1360,7 +1368,10 @@ public:
   }
 
   Polynomial cutoff(int deg) const {
-    return Polynomial(*this).selfCutoff(deg);
+    int new_deg = min(deg, degree());
+    vector<T> new_coef(new_deg + 1);
+    for (int i = 0; i <= new_deg; i++) new_coef[i] = coef[i];
+    return Polynomial(move(new_coef));
   }
 
   T selfDivideLinear(T c) {
@@ -1756,13 +1767,13 @@ optional<pair<Pol, Pol>> fitFPS(Pol seq, int verify) {
 
   auto checkSol = [&](const vector<T>& sol) -> bool {
     int d = sol.size();
-    DLOGKL("checkSol", d);
+    // DLOGKL("checkSol", d);
     for (int i = 0; i < verify; i++) {
       T y = (T)0;
       for (int j = 0; j < d; j++) { y += sol[j] * vec[2*d - 1 + i - j]; }
-      DLOGK(i, y - vec[2*d + i]);
+      // DLOGK(i, y - vec[2*d + i]);
       if (vec[2*d + i] != y) {
-        DLOG("false");
+        // DLOG("false");
         return false;
       }
     }
@@ -1778,11 +1789,11 @@ optional<pair<Pol, Pol>> fitFPS(Pol seq, int verify) {
         for (int j = 0; j < d; j++) { mat.at(i, j) = vec[d - 1 + i - j]; }
         bs[i] = vec[d + i];
       }
-      DLOGK(d, bs, mat);
+      // DLOGK(d, bs, mat);
       auto optsol = mat.linSolution(bs, false);
       if (!optsol) continue;
       auto& [sol, _] = *optsol;
-      DLOGK(d, sol);
+      // DLOGK(d, sol);
       if (checkSol(sol)) {
         vector<T> q(sol.size() + 1);
         q[0] = (T)1;
@@ -1847,7 +1858,7 @@ int main(/* int argc, char *argv[] */) {
     using Pol = Polynomial<FpA, 0>;
     using Fp = FpA;
     
-    ll rep = 1000000;
+    ll rep = 1000;
     ll deglim = 10;
     for (ll _r = 0; _r < rep; _r++) {
       ll deg_q = randrange(1, deglim);
@@ -1863,22 +1874,9 @@ int main(/* int argc, char *argv[] */) {
       Pol q(vq);
       Pol a = p.divFPS(Pol::SP(q), 3 * deglim);
       auto optsol = fitFPS(a, deglim);
-      if (!optsol) {
-        cout << p << endl;
-        cout << q << endl;
-        cout << a << endl;
-      }
       assert(optsol);
       auto [p1, q1] = *optsol;
-      if (p != p1) {
-        cout << p << endl;
-        cout << q << endl;
-        cout << a << endl;
-        cout << p1 << endl;
-        cout << q1 << endl;
-      }
-      assert(p == p1);
-      assert(q == q1);
+      assert(p * q1 == p1 * q);
     }
   }
 

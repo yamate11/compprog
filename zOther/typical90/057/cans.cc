@@ -331,7 +331,7 @@ struct Matrix {
   //      cout << "Solution is: " << sol << "\n";
   //    }
   optional<pair<vector<T>, vector<vector<T>>>>
-  linSolution(const vector<T>& bs, bool ret_kernel = true) {
+  linSolution(const vector<T>& bs, bool ret_kernel = true) const {
     Matrix<T> work(dimI, dimJ + 1);
     for (size_t i = 0; i < dimI; i++) {
       for (size_t j = 0; j < dimJ; j++) { work.at(i, j) = at(i, j); }
@@ -347,22 +347,30 @@ struct Matrix {
       if (!succ) { return nullopt; }
     }
     vector<T> sol(dimJ, (T)0);
-    vector<vector<T>> kernel;
-    size_t j = 0;
-    for (size_t i = 0; i < rank; i++, j++) {
-      for ( ; work.at(i, j) == (T)0; j++);
-      sol[j] = work.at(i, dimJ);
+    {
+      size_t j = 0;
+      for (size_t i = 0; i < rank; i++, j++) {
+        for ( ; work.at(i, j) == (T)0; j++);
+        sol[j] = work.at(i, dimJ);
+      }
     }
+    vector<vector<T>> kernel;
     if (ret_kernel) {
-      for ( ; j < dimJ; j++) {
-        vector<T> k_elem(dimJ);
-        k_elem[j] = (T)1;
-        size_t k = 0;
-        for (size_t i = 0; i < rank; i++, k++) {
-          for (; work.at(i, k) == (T)0; k++);
-          k_elem[k] = -work.at(i, j);
+      vector<bool> cor(dimJ, false);
+      size_t i = 0;
+      for (size_t j = 0 ; j < dimJ; j++) {
+        if (i == dimI || work.at(i, j) == (T)0) {
+          vector<T> kv(dimJ);
+          kv[j] = (T)1;
+          for (size_t p = 0, q = 0; p < i; p++, q++) {
+            while (!cor[q]) q++;
+            kv[q] = -work.at(p, j);
+          }
+          kernel.push_back(move(kv));
+        }else {
+          cor[j] = true;
+          if (i < dimI) i++;
         }
-        kernel.push_back(move(k_elem));
       }
     }
     return make_optional(make_pair(move(sol), move(kernel)));

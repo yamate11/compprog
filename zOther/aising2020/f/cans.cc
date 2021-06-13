@@ -5,7 +5,7 @@ using namespace std;
 // #include <atcoder/all>
 // using namespace atcoder;
 
-// @@ !! LIM(debug matrix mod polynomial)
+// @@ !! LIM(debug interpolation mod)
 
 // ---- inserted function f:<< from util.cc
 template <typename T1, typename T2>
@@ -208,19 +208,6 @@ void dbgLog(bool with_nl, Head&& head, Tail&&... tail)
   #define DCALL(func, ...)
 #endif
 
-/*
-#if DEBUG_LIB
-  #define DLOG_LIB(...)        dbgLog(true, __VA_ARGS__)
-  #define DLOGNNL_LIB(...)     dbgLog(false, __VA_ARGS__)
-  #define DFMT_LIB(...)        cerr << dbgFormat(__VA_ARGS__) << endl
-  #define DCALL_LIB(func, ...) func(__VA_ARGS__)
-#else
-  #define DLOG_LIB(...)
-  #define DFMT_LIB(...)
-  #define DCALL_LIB(func, ...)
-#endif
-*/
-
 #define DUP1(E1)       #E1 "=", E1
 #define DUP2(E1,E2)    DUP1(E1), DUP1(E2)
 #define DUP3(E1,...)   DUP1(E1), DUP2(__VA_ARGS__)
@@ -246,389 +233,9 @@ void dbgLog(bool with_nl, Head&& head, Tail&&... tail)
 
 // ---- end debug.cc
 
-// ---- inserted function f:power from util.cc
-/* *** WARNING ***  
-      ll x = power(10, 12) 
-   does not work since it is interpreted as 
-      ll x = power<int>((int)10, 12)
-   Use power<ll>(10, 12) or power(10LL, 12).
- */
-template<typename T>
-T power(T a, ll b) {
-  T twoPow = a;
-  T rv(1);
-  while (b > 0) {
-    if (b & 1LL) rv *= twoPow;
-    twoPow *= twoPow;
-    b >>= 1;
-  }
-  return rv;
-}
-
-// ad-hoc power function
-template<typename T, typename Op>
-T ah_power(T a, ll b, const T& unit_t, Op op) {
-  T two_pow = a;
-  T ret = unit_t;
-  while (b > 0) {
-    if (b & 1LL) ret = op(ret, two_pow);
-    two_pow = op(two_pow, two_pow);
-    b >>= 1;
-  }
-  return ret;
-}
-// ---- end f:power
-
-// ---- inserted library file matrix.cc
-
-#if ! defined(DLOG_LIB)
-  #define DLOG_LIB(...)
-  #define DLOGK_LIB(...)
-  #define DLOGKL_LIB(lab, ...)
-#endif
-
-struct MyExc : exception {};
-
-template <typename T>
-struct Matrix {
-// private:
-  size_t dimI;
-  size_t dimJ;
-  vector<T> mem;
-  static size_t defDimIJ;
-
-  void init_from_vv(const vector<vector<T>>& vec) {
-    dimI = vec.size();
-    dimJ = vec.at(0).size();
-    if (dimI == dimJ) defDimIJ = dimI;
-    mem.resize(dimI*dimJ);
-    for (size_t i = 0; i < dimI; i++) {
-      assert(vec.at(i).size() == dimJ);
-      for (size_t j = 0; j < dimJ; j++) at(i,j) = vec.at(i).at(j);
-    }
-  }
-
-// public:
-
-  void precond(bool b, string msg) const {
-    if (!b) {
-      cerr << "**FATAL** " << msg << endl;
-      exit(1);
-    }
-  }
-
-  T&       at(size_t i, size_t j)       { return mem.at(i*dimJ + j); }
-  const T& at(size_t i, size_t j) const { return mem.at(i*dimJ + j); }
-  
-  Matrix(size_t m, size_t n) : dimI(m), dimJ(n), mem(dimI*dimJ) {
-    if (dimI == dimJ) defDimIJ = dimI;
-  }
-
-  Matrix(const vector<vector<T>>& vec) { init_from_vv(vec); }
-  Matrix(initializer_list<vector<T>> il) {
-    init_from_vv(vector<vector<T>>(il)); 
-  }
-
-  /*  They will be constructed as implicitly-defined constructors???
-  Matrix(const Matrix<T>& mat)
-    : dimI(mat.dimI), dimJ(mat.dimJ), mem(mat.mem) {}
-  Matrix(Matrix<T>&& mat)
-    : dimI(mat.dimI), dimJ(mat.dimJ), mem(move(mat.mem)) {}
-  */
-
-  Matrix(const T& t) {
-    precond(defDimIJ != 0, "defDimIJ not set Matrix(T)");
-    dimI = dimJ = defDimIJ;
-    mem.resize(dimI*dimJ, (T)0);
-    for (size_t i = 0; i < dimI; i++) at(i,i) = t;
-  }
-
-  /*
-  Matrix<T>& operator =(const Matrix<T>& r) {
-    dimI = r.dimI;
-    dimJ = r.dimJ;
-    mem = r.mem;
-    return *this;
-  }
-  */
-
-  static Matrix fromVec(const vector<T>& svec, bool isColVect = true) {
-    vector<vector<T>> vec;
-    vec.push_back(svec);
-    Matrix ret = Matrix(vec);
-    if (isColVect) return ret.transpose();
-    else           return ret;
-  }
-
-  vector<T> rowVec(size_t row) const {
-    vector<T> result(dimJ);
-    for (size_t i = 0; i < dimJ; i++) result[i] = at(row, i);
-    return result;
-  }
-
-  vector<T> colVec(size_t col) const {
-    vector<T> result(dimI);
-    for (size_t i = 0; i < dimI; i++) result[i] = at(i, col);
-    return result;
-  }
-
-  void partial_subst(const Matrix<T>& r, size_t i0, size_t j0,
-		     size_t i1, size_t j1, size_t i2, size_t j2) {
-    for (size_t i = i1; i < i2; i++) {
-      for (size_t j = j1; j < j2; j++) at(i0 + i, j0 + j) = r.at(i, j);
-    }
-  }
-
-  void partial_subst(const Matrix<T>& r) {
-    return partial_subst(r, 0, 0, 0, 0, r.dimI, r.dimJ);
-  }
-
-  void fill_row(const auto& vec, size_t i, size_t j0 = 0) {
-    for (size_t j = 0; j < vec.size(); j++) at(i, j0 + j) = vec[j];
-  }
-
-  void fill_col(const auto& vec, size_t j, size_t i0 = 0) {
-    for (size_t i = 0; i < vec.size(); i++) at(i0 + i, j) = vec[i];
-  }
-
-  Matrix<T>& operator +=(const Matrix<T>& r) {
-    precond(dimI == r.dimI && dimJ == r.dimJ, "dimension mismatch");
-    for (size_t i = 0; i < dimI; i++) {
-      for (size_t j = 0; j < dimJ; j++) at(i,j) += r.at(i,j);
-    }
-    return *this;
-  }
-
-  Matrix<T>& operator -=(const Matrix<T>& r) {
-    precond(dimI == r.dimI && dimJ == r.dimJ, "dimension mismatch");
-    for (size_t i = 0; i < dimI; i++) {
-      for (size_t j = 0; j < dimJ; j++) at(i,j) -= r.at(i,j);
-    }
-    return *this;
-  }
-
-  Matrix<T> operator +(const Matrix<T>& r) const {
-    return Matrix<T>(*this) += r;
-  }
-
-  Matrix<T> operator -(const Matrix<T>& r) const {
-    return Matrix<T>(*this) -= r;
-  }
-
-  // Unlike + and -, we anyway need a new object for multiplication.
-  // Thus, we first define operator *, and then define operator *=
-  // using operator *.
-  Matrix<T> operator *(const Matrix<T>& r) const {
-    precond(dimJ == r.dimI, "dimension mismatch");
-    Matrix<T> result(dimI, r.dimJ);
-    for (size_t i = 0; i < dimI; i++) {
-      for (size_t j = 0; j < r.dimJ; j++) {
-	T s = 0;
-	for (size_t k = 0; k < dimJ; k++)  s += at(i,k) * r.at(k,j);
-	result.at(i,j) = s;
-      }
-    }
-    return result;
-  }
-
-  Matrix<T>& operator *=(const Matrix<T>& r) {
-    return *this = *this * r;
-  }
-
-  bool operator ==(const Matrix<T>& r) const {
-    return dimI == r.dimI && dimJ == r.dimJ && mem == r.mem;
-  }
-  bool operator !=(const Matrix<T>& r) const { return !(*this == r); }
-
-  ostream& ostr_out(ostream& os) const {
-    vector<vector<T>> vec(dimI, vector<T>(dimJ));
-    for (size_t i = 0; i < dimI; i++) {
-      for (size_t j = 0; j < dimJ; j++) vec.at(i).at(j) = at(i,j);
-    }
-    return os << vec;
-  }
-
-  Matrix<T> matpower(ll x) const {
-    precond((defDimIJ = dimI) == dimJ, "only for square matrix");
-    return power(*this, x);
-  }
-
-  Matrix<T> transpose() const {
-    Matrix<T> res(dimJ, dimI);
-    for (size_t i = 0; i < dimI; i++) for (size_t j = 0; j < dimJ; j++) {
-	res.at(j,i) = at(i,j);
-      }
-    return res;
-  }
-
-  /* aux functions for sweepout */
-
-  void basic_mult(int i, T t) {
-    for (size_t j = 0; j < dimJ; j++) at(i, j) *= t;
-  }
-
-  void basic_xchg(int i1, int i2) {
-    for (size_t j = 0; j < dimJ; j++) swap(at(i1, j), at(i2, j));
-  }
-
-  void basic_mult_add(int i1, T t, int i2) {
-    for (size_t j = 0; j < dimJ; j++) at(i2, j) += at(i1, j) * t;
-  }
-
-  bool is_zero(T t) const { return t == (T)0; }
-
-  pair<size_t, size_t> find_nz(size_t i0, size_t j0) {
-    for ( ; j0 < dimJ; j0++) {
-      size_t i = i0;
-      for ( ; i < dimI && is_zero(at(i, j0)); i++);
-      if (i < dimI) return {i, j0};
-    }
-    return {dimI, dimJ};
-  }
-
-  /*
-    Sweepout for the vertical direction.
-    Returns a pair (rank, det)
-      rank: the rank of the matrix
-      det: internally used for determinant calculation
-    WARNNIG: T should be a field.
-   */
-  pair<size_t, T> self_sweepout() {
-    T det = (T)1;
-    size_t j0 = 0;
-    size_t i0 = 0;
-    // DLOGKL("  ", *this);
-    for ( ; i0 < dimI; i0++, j0++) {
-      auto [i1, j1] = find_nz(i0, j0);
-      if (i1 == dimI) break;
-      j0 = j1;
-      if (i1 != i0) {
-	det = -det;
-	basic_xchg(i0, i1);
-      }
-      det *= at(i0, j0);
-      basic_mult(i0, (T)1 / at(i0, j0));
-      for (size_t i = 0; i < dimI; i++) {
-	if (i == i0) continue;
-	basic_mult_add(i0, -at(i, j0), i);
-      }
-      // DLOGKL("  ", *this);
-    }
-    return {i0, det};
-  }
-  
-  pair<size_t, T> sweepout() const { 
-    Matrix<T> res1(*this);
-    return res1.self_sweepout();
-  }
-
-  /* WARNING: T should be a field. */
-  T determinant() const {
-    precond((defDimIJ = dimI) == dimJ, "only for square matrix");
-    auto [rank, det] = sweepout();
-    return (rank == dimI) ? det : (T)0;
-  }
-
-  /* WARNING: T should be a field. */
-  Matrix<T> inverse() const {
-    precond((defDimIJ = dimI) == dimJ, "only for square matrix");
-    Matrix<T> work(dimI, dimI * 2);
-    for (size_t i = 0; i < dimI; i++) {
-      for (size_t j = 0; j < dimI; j++) {
-	work.at(i, j) = at(i, j);
-	work.at(i, j + dimI) = (i == j) ? (T)1 : (T)0;
-      }
-    }
-    work.self_sweepout();
-    if (!is_zero(work.at(dimI-1, dimI-1) - (T)1)) {
-      cerr << "inverse() for non-regular matrix." << endl;
-      throw MyExc();
-    }
-    Matrix<T> ret(dimI, dimI);
-    for (size_t i = 0; i < dimI; i++) {
-      for (size_t j = 0; j < dimI; j++) ret.at(i, j) = work.at(i, j + dimI);
-    }
-    return ret;
-  }
-
-  /* WARNING: T should be a field. */
-  // Solves linear euqation "(*this) x = bs".
-  //        dimI and dimJ can be different.
-  // arguments:
-  //    bs ... vector<T>.  bs.size() == dimI should hold.
-  //    ret_kernel ... if false, returned kernel is an empty vector.
-  // return value: optional<pair<vector<T>, vector<vector<T>>>
-  //    If there is no solution, nullopt is returned.
-  //    Otherwise, ret.value() is a pair [sol, kernel].
-  //      sol ... a solution.  sol.size() is dimJ.
-  //      kernel ... A basis of the space { x | (*this) x = 0 }.
-  // Typical usage:
-  //    auto ret = mat.linSolution(bs);
-  //    if (!ret.has_value()) cout << "No solution\n";
-  //    else {
-  //      [sol, _dummy] = ret.value();
-  //      cout << "Solution is: " << sol << "\n";
-  //    }
-  optional<pair<vector<T>, vector<vector<T>>>>
-  linSolution(const vector<T>& bs, bool ret_kernel = true) {
-    Matrix<T> work(dimI, dimJ + 1);
-    for (size_t i = 0; i < dimI; i++) {
-      for (size_t j = 0; j < dimJ; j++) { work.at(i, j) = at(i, j); }
-      work.at(i, dimJ) = bs[i];
-    }
-    auto [rank, _] = work.self_sweepout();
-    // DLOGK(rank, work);
-    if (rank > 0) {
-      bool succ = false;
-      for (size_t j = 0; j < dimJ; j++) {
-        if (work.at(rank - 1, j) != (T)0) { succ = true; break; }
-      }
-      if (!succ) { return nullopt; }
-    }
-    vector<T> sol(dimJ, (T)0);
-    vector<vector<T>> kernel;
-    size_t j = 0;
-    for (size_t i = 0; i < rank; i++, j++) {
-      for ( ; work.at(i, j) == (T)0; j++);
-      sol[j] = work.at(i, dimJ);
-    }
-    if (ret_kernel) {
-      for ( ; j < dimJ; j++) {
-        vector<T> k_elem(dimJ);
-        k_elem[j] = (T)1;
-        size_t k = 0;
-        for (size_t i = 0; i < rank; i++, k++) {
-          for (; work.at(i, k) == (T)0; k++);
-          k_elem[k] = -work.at(i, j);
-        }
-        kernel.push_back(move(k_elem));
-      }
-    }
-    return make_optional(make_pair(move(sol), move(kernel)));
-  }
-
-
-};
-
-template<typename T> size_t Matrix<T>::defDimIJ = 0;
-
-template<typename T>
-ostream& operator<< (ostream& os, const Matrix<T>& mat) {
-  return mat.ostr_out(os);
-}
-
-// ---- end matrix.cc
-
 // ---- inserted function f:gcd from util.cc
 
 tuple<ll, ll, ll> mut_div(ll a, ll b, ll c, bool eff_c = true) {
-  // auto [g, s, t] = mut_div(a, b, c, eff_c)
-  //    If eff_c is true (default),
-  //        g == gcd(|a|, |b|) and as + bt == c, if such s,t exists
-  //        (g, s, t) == (-1, -1, -1)            otherwise
-  //    If eff_c is false,                                 
-  //        g == gcd(|a|, |b|) and as + bt == g           
-  //    N.b.  gcd(0, t) == gcd(t, 0) == t.
   if (a == 0) {
     if (eff_c) {
       if (c % b != 0) return {-1, -1, -1};
@@ -665,19 +272,6 @@ pair<ll, ll> crt_sub(ll a1, ll x1, ll a2, ll x2) {
   // DLOGK(r);
   return {r, z};
 };
-
-// Chinese Remainder Theorem
-//
-//    r = crt(a1, x1, a2, x2)
-//    ==>   r = a1 (mod x1);  r = a2 (mod x2);  0 <= r < lcm(x1, x2)
-//    If no such r exists, returns -1
-//    Note: x1 and x2 should >= 1.  a1 and a2 can be negative or zero.
-//
-//    r = crt(as, xs)
-//    ==>   for all i. r = as[i] (mod xs[i]); 0 <= r < lcm(xs)
-//    If no such r exists, returns -1
-//    Note: xs[i] should >= 1.  as[i] can be negative or zero.
-//          It should hold: len(xs) == len(as) > 0
 
 ll crt(ll a1, ll x1, ll a2, ll x2) { return crt_sub(a1, x1, a2, x2).first; }
 
@@ -841,6 +435,33 @@ using CombB = CombG<primeB>;
 
 // ---- end mod.cc
 
+// ---- inserted function f:power from util.cc
+template<typename T>
+T power(T a, ll b) {
+  T twoPow = a;
+  T rv(1);
+  while (b > 0) {
+    if (b & 1LL) rv *= twoPow;
+    twoPow *= twoPow;
+    b >>= 1;
+  }
+  return rv;
+}
+
+// ad-hoc power function
+template<typename T, typename Op>
+T ah_power(T a, ll b, const T& unit_t, Op op) {
+  T two_pow = a;
+  T ret = unit_t;
+  while (b > 0) {
+    if (b & 1LL) ret = op(ret, two_pow);
+    two_pow = op(two_pow, two_pow);
+    b >>= 1;
+  }
+  return ret;
+}
+// ---- end f:power
+
 // ---- inserted library file convolution.cc
 
 #if ! defined(DLOG_LIB)
@@ -871,10 +492,6 @@ constexpr pair<long long, long long> ac_inv_gcd(long long a, long long b) {
   a = ac_safe_mod(a, b);
   if (a == 0) return {b, 0};
 
-  // Contracts:
-  // [1] s - m0 * a = 0 (mod b)
-  // [2] t - m1 * a = 0 (mod b)
-  // [3] s * |m1| + t * |m0| <= b
   long long s = b, t = a;
   long long m0 = 0, m1 = 1;
 
@@ -882,11 +499,6 @@ constexpr pair<long long, long long> ac_inv_gcd(long long a, long long b) {
     long long u = s / t;
     s -= t * u;
     m0 -= m1 * u;  // |m1 * u| <= |m1| * s <= b
-
-    // [3]:
-    // (s - t * u) * |m1| + t * |m0 - m1 * u|
-    // <= s * |m1| - t * u * |m1| + t * (|m0| + |m1| * u)
-    // = s * |m1| + t * |m0| <= b
 
     auto tmp = s;
     s = t;
@@ -1161,23 +773,6 @@ vector<long long> convolution_ll(const vector<long long>& a,
     x += (c1[i] * i1) % MOD1 * M2M3;
     x += (c2[i] * i2) % MOD2 * M1M3;
     x += (c3[i] * i3) % MOD3 * M1M2;
-    // B = 2^63, -B <= x, r(real value) < B
-    // (x, x - M, x - 2M, or x - 3M) = r (mod 2B)
-    // r = c1[i] (mod MOD1)
-    // focus on MOD1
-    // r = x, x - M', x - 2M', x - 3M' (M' = M % 2^64) (mod 2B)
-    // r = x,
-    //     x - M' + (0 or 2B),
-    //     x - 2M' + (0, 2B or 4B),
-    //     x - 3M' + (0, 2B, 4B or 6B) (without mod!)
-    // (r - x) = 0, (0)
-    //           - M' + (0 or 2B), (1)
-    //           -2M' + (0 or 2B or 4B), (2)
-    //           -3M' + (0 or 2B or 4B or 6B) (3) (mod MOD1)
-    // we checked that
-    //   ((1) mod MOD1) mod 5 = 2
-    //   ((2) mod MOD1) mod 5 = 3
-    //   ((3) mod MOD1) mod 5 = 4
     long long diff =
       c1[i] - ac_safe_mod((long long)(x), (long long)(MOD1));
     if (diff < 0) diff += MOD1;
@@ -1225,14 +820,9 @@ vector<ll> polyConvolution_ll(const vector<ll>& a, const vector<ll>& b) {
   return convolution_ll(a, b);
 }
 
-// value of use_fft
-//    0 ... multiplication is naive
-//    1 ... multiplication uses convolution
-//             in this case, T must be Fp with 2^c | Fp::MOD - 1
-//    2 ... multiplication uses convolution_ll
-//             in this case, T must be ll
 template<typename T, int use_fft>
 struct Polynomial {
+  using value_type = T;
   using SP = SparsePoly<T>;
 
 private:
@@ -1359,7 +949,10 @@ public:
   }
 
   Polynomial cutoff(int deg) const {
-    return Polynomial(*this).selfCutoff(deg);
+    int new_deg = min(deg, degree());
+    vector<T> new_coef(new_deg + 1);
+    for (int i = 0; i <= new_deg; i++) new_coef[i] = coef[i];
+    return Polynomial(move(new_coef));
   }
 
   T selfDivideLinear(T c) {
@@ -1590,6 +1183,19 @@ struct SparsePoly {   // Sparse Polynomial
   // argument coef_ should be sorted and should not contain (T)0
   SparsePoly(const coef_t& coef_) : coef(coef_) { normalize(); }
   SparsePoly(coef_t&& coef_) : coef(move(coef_)) { normalize(); }
+  SparsePoly(initializer_list<coef_elm_t> init) : coef(init) { normalize(); }
+
+  void from_vec(const vector<T>& vec) {
+    coef.resize(0);
+    for (size_t i = 0; i < vec.size(); i++) {
+      if (vec[i] != (T)0) { coef.emplace_back(i, vec[i]); }
+    }
+    normalize();
+  }
+
+  SparsePoly(const vector<T>& vec) { from_vec(vec); }
+  template<int use_fft>
+  SparsePoly(const Polynomial<T, use_fft>& p) { from_vec(p.coefVec()); }
 
   SparsePoly& operator=(const SparsePoly& sp) {
     coef = sp.coef;
@@ -1602,6 +1208,28 @@ struct SparsePoly {   // Sparse Polynomial
   SparsePoly& operator=(T t) {
     if (t != (T)0) { coef.emplace_back(0, t); }
     normalize();
+    return *this;
+  }
+  SparsePoly& operator=(const coef_t& coef_) {
+    coef = coef_; normalize();
+    return *this;
+  }
+  SparsePoly& operator=(coef_t&& coef_) {
+    coef = move(coef_); normalize();
+    return *this;
+  }
+  SparsePoly& operator=(initializer_list<coef_elm_t> init) {
+    coef = init;
+    normalize();
+    return *this;
+  }
+  SparsePoly& operator=(const vector<T>& vec) {
+    from_vec(vec);
+    return *this;
+  }
+  template<int use_fft>
+  SparsePoly& operator=(const Polynomial<T, use_fft>& p) {
+    from_vec(p.coefVec());
     return *this;
   }
 
@@ -1711,54 +1339,415 @@ using PolyFpB = Polynomial<FpB, 1>;
 
 // ---- end polynomial.cc
 
-// @@ !! LIM -- end mark --
+// ---- inserted library file matrix.cc
+
+#if ! defined(DLOG_LIB)
+  #define DLOG_LIB(...)
+  #define DLOGK_LIB(...)
+  #define DLOGKL_LIB(lab, ...)
+#endif
+
+struct MyExc : exception {};
+
+template <typename T>
+struct Matrix {
+// private:
+  size_t dimI;
+  size_t dimJ;
+  vector<T> mem;
+  static size_t defDimIJ;
+
+  void init_from_vv(const vector<vector<T>>& vec) {
+    dimI = vec.size();
+    dimJ = vec.at(0).size();
+    if (dimI == dimJ) defDimIJ = dimI;
+    mem.resize(dimI*dimJ);
+    for (size_t i = 0; i < dimI; i++) {
+      assert(vec.at(i).size() == dimJ);
+      for (size_t j = 0; j < dimJ; j++) at(i,j) = vec.at(i).at(j);
+    }
+  }
+
+// public:
+
+  void precond(bool b, string msg) const {
+    if (!b) {
+      cerr << "**FATAL** " << msg << endl;
+      exit(1);
+    }
+  }
+
+  T&       at(size_t i, size_t j)       { return mem.at(i*dimJ + j); }
+  const T& at(size_t i, size_t j) const { return mem.at(i*dimJ + j); }
+  
+  Matrix(size_t m, size_t n) : dimI(m), dimJ(n), mem(dimI*dimJ) {
+    if (dimI == dimJ) defDimIJ = dimI;
+  }
+
+  Matrix(const vector<vector<T>>& vec) { init_from_vv(vec); }
+  Matrix(initializer_list<vector<T>> il) {
+    init_from_vv(vector<vector<T>>(il)); 
+  }
+
+  Matrix(const T& t) {
+    precond(defDimIJ != 0, "defDimIJ not set Matrix(T)");
+    dimI = dimJ = defDimIJ;
+    mem.resize(dimI*dimJ, (T)0);
+    for (size_t i = 0; i < dimI; i++) at(i,i) = t;
+  }
+
+  static Matrix fromVec(const vector<T>& svec, bool isColVect = true) {
+    vector<vector<T>> vec;
+    vec.push_back(svec);
+    Matrix ret = Matrix(vec);
+    if (isColVect) return ret.transpose();
+    else           return ret;
+  }
+
+  vector<T> rowVec(size_t row) const {
+    vector<T> result(dimJ);
+    for (size_t i = 0; i < dimJ; i++) result[i] = at(row, i);
+    return result;
+  }
+
+  vector<T> colVec(size_t col) const {
+    vector<T> result(dimI);
+    for (size_t i = 0; i < dimI; i++) result[i] = at(i, col);
+    return result;
+  }
+
+  void partial_subst(const Matrix<T>& r, size_t i0, size_t j0,
+		     size_t i1, size_t j1, size_t i2, size_t j2) {
+    for (size_t i = i1; i < i2; i++) {
+      for (size_t j = j1; j < j2; j++) at(i0 + i, j0 + j) = r.at(i, j);
+    }
+  }
+
+  void partial_subst(const Matrix<T>& r) {
+    return partial_subst(r, 0, 0, 0, 0, r.dimI, r.dimJ);
+  }
+
+  void fill_row(const auto& vec, size_t i, size_t j0 = 0) {
+    for (size_t j = 0; j < vec.size(); j++) at(i, j0 + j) = vec[j];
+  }
+
+  void fill_col(const auto& vec, size_t j, size_t i0 = 0) {
+    for (size_t i = 0; i < vec.size(); i++) at(i0 + i, j) = vec[i];
+  }
+
+  Matrix<T>& operator +=(const Matrix<T>& r) {
+    precond(dimI == r.dimI && dimJ == r.dimJ, "dimension mismatch");
+    for (size_t i = 0; i < dimI; i++) {
+      for (size_t j = 0; j < dimJ; j++) at(i,j) += r.at(i,j);
+    }
+    return *this;
+  }
+
+  Matrix<T>& operator -=(const Matrix<T>& r) {
+    precond(dimI == r.dimI && dimJ == r.dimJ, "dimension mismatch");
+    for (size_t i = 0; i < dimI; i++) {
+      for (size_t j = 0; j < dimJ; j++) at(i,j) -= r.at(i,j);
+    }
+    return *this;
+  }
+
+  Matrix<T> operator +(const Matrix<T>& r) const {
+    return Matrix<T>(*this) += r;
+  }
+
+  Matrix<T> operator -(const Matrix<T>& r) const {
+    return Matrix<T>(*this) -= r;
+  }
+
+  // Unlike + and -, we anyway need a new object for multiplication.
+  // Thus, we first define operator *, and then define operator *=
+  // using operator *.
+  Matrix<T> operator *(const Matrix<T>& r) const {
+    precond(dimJ == r.dimI, "dimension mismatch");
+    Matrix<T> result(dimI, r.dimJ);
+    for (size_t i = 0; i < dimI; i++) {
+      for (size_t j = 0; j < r.dimJ; j++) {
+	T s = 0;
+	for (size_t k = 0; k < dimJ; k++)  s += at(i,k) * r.at(k,j);
+	result.at(i,j) = s;
+      }
+    }
+    return result;
+  }
+
+  Matrix<T>& operator *=(const Matrix<T>& r) {
+    return *this = *this * r;
+  }
+
+  bool operator ==(const Matrix<T>& r) const {
+    return dimI == r.dimI && dimJ == r.dimJ && mem == r.mem;
+  }
+  bool operator !=(const Matrix<T>& r) const { return !(*this == r); }
+
+  ostream& ostr_out(ostream& os) const {
+    vector<vector<T>> vec(dimI, vector<T>(dimJ));
+    for (size_t i = 0; i < dimI; i++) {
+      for (size_t j = 0; j < dimJ; j++) vec.at(i).at(j) = at(i,j);
+    }
+    return os << vec;
+  }
+
+  Matrix<T> matpower(ll x) const {
+    precond((defDimIJ = dimI) == dimJ, "only for square matrix");
+    return power(*this, x);
+  }
+
+  Matrix<T> transpose() const {
+    Matrix<T> res(dimJ, dimI);
+    for (size_t i = 0; i < dimI; i++) for (size_t j = 0; j < dimJ; j++) {
+	res.at(j,i) = at(i,j);
+      }
+    return res;
+  }
+
+  /* aux functions for sweepout */
+
+  void basic_mult(int i, T t) {
+    for (size_t j = 0; j < dimJ; j++) at(i, j) *= t;
+  }
+
+  void basic_xchg(int i1, int i2) {
+    for (size_t j = 0; j < dimJ; j++) swap(at(i1, j), at(i2, j));
+  }
+
+  void basic_mult_add(int i1, T t, int i2) {
+    for (size_t j = 0; j < dimJ; j++) at(i2, j) += at(i1, j) * t;
+  }
+
+  bool is_zero(T t) const { return t == (T)0; }
+
+  pair<size_t, size_t> find_nz(size_t i0, size_t j0) {
+    for ( ; j0 < dimJ; j0++) {
+      size_t i = i0;
+      for ( ; i < dimI && is_zero(at(i, j0)); i++);
+      if (i < dimI) return {i, j0};
+    }
+    return {dimI, dimJ};
+  }
+
+  pair<size_t, T> self_sweepout() {
+    T det = (T)1;
+    size_t j0 = 0;
+    size_t i0 = 0;
+    // DLOGKL("  ", *this);
+    for ( ; i0 < dimI; i0++, j0++) {
+      auto [i1, j1] = find_nz(i0, j0);
+      if (i1 == dimI) break;
+      j0 = j1;
+      if (i1 != i0) {
+	det = -det;
+	basic_xchg(i0, i1);
+      }
+      det *= at(i0, j0);
+      basic_mult(i0, (T)1 / at(i0, j0));
+      for (size_t i = 0; i < dimI; i++) {
+	if (i == i0) continue;
+	basic_mult_add(i0, -at(i, j0), i);
+      }
+      // DLOGKL("  ", *this);
+    }
+    return {i0, det};
+  }
+  
+  pair<size_t, T> sweepout() const { 
+    Matrix<T> res1(*this);
+    return res1.self_sweepout();
+  }
+
+  /* WARNING: T should be a field. */
+  T determinant() const {
+    precond((defDimIJ = dimI) == dimJ, "only for square matrix");
+    auto [rank, det] = sweepout();
+    return (rank == dimI) ? det : (T)0;
+  }
+
+  /* WARNING: T should be a field. */
+  Matrix<T> inverse() const {
+    precond((defDimIJ = dimI) == dimJ, "only for square matrix");
+    Matrix<T> work(dimI, dimI * 2);
+    for (size_t i = 0; i < dimI; i++) {
+      for (size_t j = 0; j < dimI; j++) {
+	work.at(i, j) = at(i, j);
+	work.at(i, j + dimI) = (i == j) ? (T)1 : (T)0;
+      }
+    }
+    work.self_sweepout();
+    if (!is_zero(work.at(dimI-1, dimI-1) - (T)1)) {
+      cerr << "inverse() for non-regular matrix." << endl;
+      throw MyExc();
+    }
+    Matrix<T> ret(dimI, dimI);
+    for (size_t i = 0; i < dimI; i++) {
+      for (size_t j = 0; j < dimI; j++) ret.at(i, j) = work.at(i, j + dimI);
+    }
+    return ret;
+  }
+
+  optional<pair<vector<T>, vector<vector<T>>>>
+  linSolution(const vector<T>& bs, bool ret_kernel = true) const {
+    Matrix<T> work(dimI, dimJ + 1);
+    for (size_t i = 0; i < dimI; i++) {
+      for (size_t j = 0; j < dimJ; j++) { work.at(i, j) = at(i, j); }
+      work.at(i, dimJ) = bs[i];
+    }
+    auto [rank, _] = work.self_sweepout();
+    // DLOGK(rank, work);
+    if (rank > 0) {
+      bool succ = false;
+      for (size_t j = 0; j < dimJ; j++) {
+        if (work.at(rank - 1, j) != (T)0) { succ = true; break; }
+      }
+      if (!succ) { return nullopt; }
+    }
+    vector<T> sol(dimJ, (T)0);
+    {
+      size_t j = 0;
+      for (size_t i = 0; i < rank; i++, j++) {
+        for ( ; work.at(i, j) == (T)0; j++);
+        sol[j] = work.at(i, dimJ);
+      }
+    }
+    vector<vector<T>> kernel;
+    if (ret_kernel) {
+      vector<bool> cor(dimJ, false);
+      size_t i = 0;
+      for (size_t j = 0 ; j < dimJ; j++) {
+        if (i == dimI || work.at(i, j) == (T)0) {
+          vector<T> kv(dimJ);
+          kv[j] = (T)1;
+          for (size_t p = 0, q = 0; p < i; p++, q++) {
+            while (!cor[q]) q++;
+            kv[q] = -work.at(p, j);
+          }
+          kernel.push_back(move(kv));
+        }else {
+          cor[j] = true;
+          if (i < dimI) i++;
+        }
+      }
+    }
+    return make_optional(make_pair(move(sol), move(kernel)));
+  }
+
+
+};
+
+template<typename T> size_t Matrix<T>::defDimIJ = 0;
 
 template<typename T>
-optional<pair<vector<T>, vector<T>>> fitFPS(vector<T> vec, int verify) {
-  vector<T> q;
+ostream& operator<< (ostream& os, const Matrix<T>& mat) {
+  return mat.ostr_out(os);
+}
+
+// ---- end matrix.cc
+
+// ---- inserted library file interpolation.cc
+
+#if ! defined(DLOG_LIB)
+  #define DLOG_LIB(...)
+  #define DLOGK_LIB(...)
+  #define DLOGKL_LIB(lab, ...)
+#endif
+
+template<typename Pol>
+Pol lagrangePol(const vector<typename Pol::value_type>& vs) {
+  using T = typename Pol::value_type;
+  using SP = typename Pol::SP;
+  int k = vs.size() - 1;
+  vector<T> fact(k + 1);
+  fact[0] = (T)1;
+  for (ll i = 0; i < k; i++) fact[i + 1] = fact[i] * (T)(i + 1);
+  Pol aux((T)1);
+  for (int i = 0; i <= k; i++) aux *= SP::X - (T)i;
+  Pol ret;
+  for (int i = 0; i <= k; i++) {
+    T c = vs[i] / (fact[i] * fact[k - i]);
+    if ((k - i) % 2 != 0) c = -c;
+    auto [d, m] = aux.divideLinear(i);
+    assert(m == (T)0);
+    ret += d * c;
+  }
+  return ret;
+}
+
+template<typename T>
+T lagrangeVal(const vector<T>& vs, int n) {
+  int k = vs.size() - 1;
+  vector<T> fact(k + 1);
+  fact[0] = (T)1;
+  for (ll i = 0; i < k; i++) fact[i + 1] = fact[i] * (T)(i + 1);
+  T q = (T)1;
+  for (int i = 0; i <= k; i++) q *= T(n - i);
+  T ret = (T)0;
+  for (int i = 0; i <= k; i++) {
+    T c = vs[i] / (fact[i] * fact[k - i]);
+    if ((k - i) % 2 != 0) c = -c;
+    T d = q / (n - i);
+    ret += d * c;
+  }
+  return ret;
+}
+
+template<typename Pol>
+optional<pair<Pol, Pol>>
+fitFPS(const vector<typename Pol::value_type>& vec, int verify) {
+  using T = typename Pol::value_type;
 
   auto checkSol = [&](const vector<T>& sol) -> bool {
     int d = sol.size();
+    // DLOGKL("checkSol", d);
     for (int i = 0; i < verify; i++) {
       T y = (T)0;
       for (int j = 0; j < d; j++) { y += sol[j] * vec[2*d - 1 + i - j]; }
-      if (vec[2*d + i] != y) { return false; }
+      // DLOGK(i, y - vec[2*d + i]);
+      if (vec[2*d + i] != y) {
+        // DLOG("false");
+        return false;
+      }
     }
     return true;
   };
 
-  auto findQ = [&]() -> bool {
-    for (int d = 1; d <= (int)vec.size() - verify; d++) {
+  auto findQ = [&]() -> optional<Pol> {
+    int sz = vec.size();
+    for (int d = 1; 2 * d + verify < sz; d++) {
       Matrix<T> mat(d, d);
       vector<T> bs(d);
       for (int i = 0; i < d; i++) {
         for (int j = 0; j < d; j++) { mat.at(i, j) = vec[d - 1 + i - j]; }
         bs[i] = vec[d + i];
       }
+      // DLOGK(d, bs, mat);
       auto optsol = mat.linSolution(bs, false);
       if (!optsol) continue;
       auto& [sol, _] = *optsol;
+      // DLOGK(d, sol);
       if (checkSol(sol)) {
-        q.resize(sol.size() + 1);
+        vector<T> q(sol.size() + 1);
         q[0] = (T)1;
         for (int i = 0; i < (int)sol.size(); i++) { q[i + 1] = -sol[i]; }
-        return true;
+        return make_optional(Pol(q));
       }
     }
-    return false;
+    return nullopt;
   };
 
-  if (findQ()) {
-    vector<T> p(q.size() - 1);
-    for (int i = 0; i < (int)p.size(); i++) {
-      for (int j = 0; j <= i; j++) { p[i] += vec[j] * q[i - j]; }
-    }
-    return make_optional(make_pair(move(p), move(q)));
-  }else {
-    return nullopt;
-  }
+  auto optq = findQ();
+  if (!optq) return nullopt;
+  Pol q = move(*optq);
+  Pol p = Pol(vec).cutoff(q.degree()) * q;
+  p.selfCutoff(q.degree() - 1);
+  return make_optional(make_pair(move(p), move(q)));
 }
 
+// ---- end interpolation.cc
+
+// @@ !! LIM -- end mark --
 
 int main(/* int argc, char *argv[] */) {
   ios_base::sync_with_stdio(false);
@@ -1777,7 +1766,7 @@ int main(/* int argc, char *argv[] */) {
     }
   }
 
-  auto optsol = fitFPS(A, 10);
+  auto optsol = fitFPS<Pol>(A, 10);
   if (!optsol) {
     cout << "failed\n";
     return 0;

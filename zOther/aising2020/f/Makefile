@@ -19,7 +19,7 @@ CXXFLAGS := $(CXXFLAGS) -I/home/y-tanabe/proj/compprog/clib/ac-library
 CXXFLAGS := $(CXXFLAGS) $(if $(CMPNAIVE),-DCMPNAIVE=1)
 CXXFLAGS := $(CXXFLAGS)
 
-all: cans foo
+all: cans foo foo2 foo3
 
 clean:
 	$(RM) cans.o cans cans.exe *~ *.stackdump core
