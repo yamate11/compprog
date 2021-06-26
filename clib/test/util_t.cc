@@ -3,7 +3,7 @@
 typedef long long int ll;
 using namespace std;
 
-// @@ !! LIM(debug f:<< f:>> f:power f:gcd f:updMaxMin f:intDiv f:mex f:shortVector f:perfmeas)
+// @@ !! LIM(debug f:<< f:>> f:power f:gcd f:updMaxMin f:intDiv f:mex f:shortVector f:perfmeas f:itrange)
 
 // ---- inserted function f:<< from util.cc
 template <typename T1, typename T2>
@@ -517,6 +517,49 @@ double get_time_sec() {
 
 // ---- end f:perfmeas
 
+// ---- inserted function f:itrange from util.cc
+
+struct ItRange {
+  ll st;
+  ll en;
+
+  struct Itr {
+    using iterator_category = input_iterator_tag;
+    using value_type = ll;
+    using difference_type = ptrdiff_t;
+    using reference = value_type const&;
+    using pointer = value_type const*;
+
+    ll val;
+
+    bool operator ==(const Itr& o) const { return val == o.val; }
+    bool operator !=(const Itr& o) const { return val != o.val; }
+
+    reference operator *() const { return val; }
+    pointer operator ->() const { return &val; }
+
+    Itr& operator ++() {
+      val++;
+      return *this;
+    }
+    Itr operator ++(int) {
+      Itr const tmp(*this);
+      ++*this;
+      return tmp;
+    }
+
+  };
+
+  ItRange(ll v_start, ll v_end): st(v_start), en(v_end) {}
+  Itr begin() { return Itr({st}); }
+  Itr end() { return Itr({en}); }
+};
+
+// Imitation to Python range operator....
+
+
+// ---- end f:itrange
+
 // @@ !! LIM -- end mark --
 
 
@@ -711,6 +754,25 @@ int main() {
     auto v3 = read_vector<pair<int, int>>(ss5);
     assert(v3 == va1);
     
+  }
+
+  {
+    ItRange ir(0, 10);
+    vector<ll> vec, w;
+    for (ll x : ir) vec.push_back(x);
+    for (ll i = 0; i < 10; i++) w.push_back(i);
+    assert(vec == w);
+    vector<ll> vec2;
+    bool b1 = all_of(ir.begin(), ir.end(),
+                     [&](ll i) -> bool { return i * i < 10000; });
+    bool b2 = all_of(ir.begin(), ir.end(),
+                     [&](ll i) -> bool { return i * i < 50; });
+    bool b3 = any_of(ir.begin(), ir.end(),
+                     [&](ll i) -> bool { return i * i > 80; });
+    assert(b1 && !b2 && b3);
+    auto it = find_if(ir.begin(), ir.end(),
+                      [&](ll i) -> bool { return i * i > 50; });
+    assert (*it == 8);
   }
 
 

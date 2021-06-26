@@ -3,9 +3,231 @@
 typedef long long int ll;
 using namespace std;
 
-// @@ !! LIM(debug mod)
-// --> f:<< debug f:gcd f:intDiv mod
-// ---- inserted function << from util.cc
+// @@ !! LIM(mod debug)
+
+// ---- inserted function f:gcd from util.cc
+
+tuple<ll, ll, ll> mut_div(ll a, ll b, ll c, bool eff_c = true) {
+  // auto [g, s, t] = mut_div(a, b, c, eff_c)
+  //    If eff_c is true (default),
+  //        g == gcd(|a|, |b|) and as + bt == c, if such s,t exists
+  //        (g, s, t) == (-1, -1, -1)            otherwise
+  //    If eff_c is false,                                 
+  //        g == gcd(|a|, |b|) and as + bt == g           
+  //    N.b.  gcd(0, t) == gcd(t, 0) == t.
+  if (a == 0) {
+    if (eff_c) {
+      if (c % b != 0) return {-1, -1, -1};
+      else            return {abs(b), 0, c / b};
+    }else {
+      if (b < 0) return {-b, 0, -1};
+      else       return { b, 0,  1};
+    }
+  }else {
+    auto [g, t, u] = mut_div(b % a, a, c, eff_c);
+    // DLOGK(b%a, a, c, g, t, u);
+    if (g == -1) return {-1, -1, -1};
+    return {g, u - (b / a) * t, t};
+  }
+}
+
+// auto [g, s, t] = eGCD(a, b)  --->  sa + tb == g == gcd(|a|, |b|)
+//    N.b.  gcd(0, t) == gcd(t, 0) == t.
+tuple<ll, ll, ll> eGCD(ll a, ll b) { return mut_div(a, b, 0, false); }
+
+pair<ll, ll> crt_sub(ll a1, ll x1, ll a2, ll x2) {
+  // DLOGKL("crt_sub", a1, x1, a2, x2);
+  a1 = a1 % x1;
+  a2 = a2 % x2;
+  auto [g, s, t] = mut_div(x1, -x2, a2 - a1);
+  // DLOGK(g, s, t);
+  if (g == -1) return {-1, -1};
+  ll z = x1 / g * x2;
+  // DLOGK(z);
+  s = s % (x2 / g);
+  ll r = (x1 * s + a1) % z;
+  // DLOGK(r);
+  if (r < 0) r += z;
+  // DLOGK(r);
+  return {r, z};
+};
+
+// Chinese Remainder Theorem
+//
+//    r = crt(a1, x1, a2, x2)
+//    ==>   r = a1 (mod x1);  r = a2 (mod x2);  0 <= r < lcm(x1, x2)
+//    If no such r exists, returns -1
+//    Note: x1 and x2 should >= 1.  a1 and a2 can be negative or zero.
+//
+//    r = crt(as, xs)
+//    ==>   for all i. r = as[i] (mod xs[i]); 0 <= r < lcm(xs)
+//    If no such r exists, returns -1
+//    Note: xs[i] should >= 1.  as[i] can be negative or zero.
+//          It should hold: len(xs) == len(as) > 0
+
+ll crt(ll a1, ll x1, ll a2, ll x2) { return crt_sub(a1, x1, a2, x2).first; }
+
+ll crt(vector<ll> as, vector<ll> xs) {
+  // DLOGKL("crt", as, xs);
+  assert(xs.size() == as.size() && xs.size() > 0);
+  ll r = as[0];
+  ll z = xs[0];
+  for (size_t i = 1; i < xs.size(); i++) {
+    // DLOGK(i, r, z, as[i], xs[i]);
+    tie(r, z) = crt_sub(r, z, as[i], xs[i]);
+    // DLOGK(r, z);
+    if (r == -1) return -1;
+  }
+  return r;
+}
+
+// ---- end f:gcd
+
+// ---- inserted library file mod.cc
+
+template<int mod=0>
+struct FpG {   // G for General
+  static ll dyn_mod;
+
+  static ll getMod() {
+    if (mod == 0) return dyn_mod;
+    else          return mod;
+  }
+
+  static void setMod(ll _mod) {  // effective only when mod == 0
+    dyn_mod = _mod;
+  }
+
+  static ll _conv(ll x) {
+    if (x >= getMod())  return x % getMod();
+    if (x >= 0)         return x;
+    if (x >= -getMod()) return x + getMod();
+    ll y = x % getMod();
+    if (y == 0) return 0;
+    return y + getMod();
+  }
+
+  ll val;
+
+  FpG(int t = 0) : val(_conv(t)) {}
+  FpG(ll t) : val(_conv(t)) {}
+  FpG(const FpG& t) : val(t.val) {}
+  FpG& operator =(const FpG& t) { val = t.val; return *this; }
+  FpG& operator =(ll t) { val = _conv(t); return *this; }
+  FpG& operator =(int t) { val = _conv(t); return *this; }
+
+  FpG& operator +=(const FpG& t) {
+    val += t.val;
+    if (val >= getMod()) val -= getMod();
+    return *this;
+  }
+
+  FpG& operator -=(const FpG& t) {
+    val -= t.val;
+    if (val < 0) val += getMod();
+    return *this;
+  }
+
+  FpG& operator *=(const FpG& t) {
+    val = (val * t.val) % getMod();
+    return *this;
+  }
+
+  FpG inv() const {
+    if (val == 0) {
+      throw runtime_error("FpG::inv(): called for zero.");
+    }
+    auto [g, u, v] = eGCD(val, getMod());
+    return FpG(u);
+  }
+
+  FpG& operator /=(const FpG& t) {
+    return (*this) *= t.inv();
+  }
+
+  FpG operator +(const FpG& t) const { return FpG(val) += t; }
+  FpG operator -(const FpG& t) const { return FpG(val) -= t; }
+  FpG operator *(const FpG& t) const { return FpG(val) *= t; }
+  FpG operator /(const FpG& t) const { return FpG(val) /= t; }
+  FpG operator -() const { return FpG(-val); }
+
+  bool operator ==(const FpG& t) const { return val == t.val; }
+  bool operator !=(const FpG& t) const { return val != t.val; }
+  
+  operator ll() const { return val; }
+
+  friend FpG operator +(int x, const FpG& y) { return FpG(x) + y; }
+  friend FpG operator -(int x, const FpG& y) { return FpG(x) - y; }
+  friend FpG operator *(int x, const FpG& y) { return FpG(x) * y; }
+  friend FpG operator /(int x, const FpG& y) { return FpG(x) / y; }
+  friend bool operator ==(int x, const FpG& y) { return FpG(x) == y; }
+  friend bool operator !=(int x, const FpG& y) { return FpG(x) != y; }
+  friend FpG operator +(ll x, const FpG& y) { return FpG(x) + y; }
+  friend FpG operator -(ll x, const FpG& y) { return FpG(x) - y; }
+  friend FpG operator *(ll x, const FpG& y) { return FpG(x) * y; }
+  friend FpG operator /(ll x, const FpG& y) { return FpG(x) / y; }
+  friend bool operator ==(ll x, const FpG& y) { return FpG(x) == y; }
+  friend bool operator !=(ll x, const FpG& y) { return FpG(x) != y; }
+  friend FpG operator +(const FpG& x, int y) { return x + FpG(y); }
+  friend FpG operator -(const FpG& x, int y) { return x - FpG(y); }
+  friend FpG operator *(const FpG& x, int y) { return x * FpG(y); }
+  friend FpG operator /(const FpG& x, int y) { return x / FpG(y); }
+  friend bool operator ==(const FpG& x, int y) { return x == FpG(y); }
+  friend bool operator !=(const FpG& x, int y) { return x != FpG(y); }
+  friend FpG operator +(const FpG& x, ll y) { return x + FpG(y); }
+  friend FpG operator -(const FpG& x, ll y) { return x - FpG(y); }
+  friend FpG operator *(const FpG& x, ll y) { return x * FpG(y); }
+  friend FpG operator /(const FpG& x, ll y) { return x / FpG(y); }
+  friend bool operator ==(const FpG& x, ll y) { return x == FpG(y); }
+  friend bool operator !=(const FpG& x, ll y) { return x != FpG(y); }
+
+  friend istream& operator>> (istream& is, FpG& t) {
+    ll x; is >> x;
+    t = x;
+    return is;
+  }
+
+  friend ostream& operator<< (ostream& os, const FpG& t) {
+    os << t.val;
+    return os;
+  }
+
+};
+template<int mod>
+ll FpG<mod>::dyn_mod;
+
+template<int mod=0>
+class CombG {
+  int nMax;
+  vector<FpG<mod>> vFact;
+  vector<FpG<mod>> vInvFact;
+public:
+  CombG(int nm) : nMax(nm), vFact(nm+1), vInvFact(nm+1) {
+    vFact.at(0) = 1;
+    for (int i = 1; i <= nMax; i++) vFact.at(i) = i * vFact.at(i-1);
+    vInvFact.at(nMax) = vFact.at(nMax).inv();
+    for (int i = nMax; i >= 1; i--) vInvFact.at(i-1) = i * vInvFact.at(i);
+  }
+  FpG<mod> fact(int n) { return vFact.at(n); }
+  FpG<mod> comb(int n, int r) {
+    return vFact.at(n) * vInvFact.at(r) * vInvFact.at(n-r);
+  }
+  // The number of permutation extracting r from n.
+  FpG<mod> perm(int n, int r) {
+    return vFact.at(n) * vInvFact.at(n-r);
+  }
+};
+
+constexpr int primeA = 1'000'000'007;
+constexpr int primeB = 998'244'353;          // '
+using FpA = FpG<primeA>;
+using FpB = FpG<primeB>;
+using CombA = CombG<primeA>;
+using CombB = CombG<primeB>;
+
+// ---- end mod.cc
+
+// ---- inserted function f:<< from util.cc
 template <typename T1, typename T2>
 ostream& operator<< (ostream& os, const pair<T1,T2>& p) {
   os << "(" << p.first << ", " << p.second << ")";
@@ -170,7 +392,8 @@ ostream& operator<< (ostream& os, int8_t x) {
   return os;
 }
 
-// ---- end <<
+// ---- end f:<<
+
 // ---- inserted library file debug.cc
 template <class... Args>
 string dbgFormat(const char* fmt, Args... args) {
@@ -205,6 +428,7 @@ void dbgLog(bool with_nl, Head&& head, Tail&&... tail)
   #define DCALL(func, ...)
 #endif
 
+/*
 #if DEBUG_LIB
   #define DLOG_LIB(...)        dbgLog(true, __VA_ARGS__)
   #define DLOGNNL_LIB(...)     dbgLog(false, __VA_ARGS__)
@@ -215,6 +439,7 @@ void dbgLog(bool with_nl, Head&& head, Tail&&... tail)
   #define DFMT_LIB(...)
   #define DCALL_LIB(func, ...)
 #endif
+*/
 
 #define DUP1(E1)       #E1 "=", E1
 #define DUP2(E1,E2)    DUP1(E1), DUP1(E2)
@@ -224,264 +449,24 @@ void dbgLog(bool with_nl, Head&& head, Tail&&... tail)
 #define DUP6(E1,...)   DUP1(E1), DUP5(__VA_ARGS__)
 #define DUP7(E1,...)   DUP1(E1), DUP6(__VA_ARGS__)
 #define DUP8(E1,...)   DUP1(E1), DUP7(__VA_ARGS__)
-#define GET_MACRO(_1,_2,_3,_4,_5,_6,_7,_8,NAME,...) NAME
-#define DUP(...)          GET_MACRO(__VA_ARGS__, DUP8, DUP7, DUP6, DUP5, DUP4, DUP3, DUP2, DUP1)(__VA_ARGS__)
+#define DUP9(E1,...)   DUP1(E1), DUP8(__VA_ARGS__)
+#define DUP10(E1,...)   DUP1(E1), DUP9(__VA_ARGS__)
+#define DUP11(E1,...)   DUP1(E1), DUP10(__VA_ARGS__)
+#define DUP12(E1,...)   DUP1(E1), DUP11(__VA_ARGS__)
+#define GET_MACRO(_1,_2,_3,_4,_5,_6,_7,_8,_9,_10,_11,_12,NAME,...) NAME
+#define DUP(...)          GET_MACRO(__VA_ARGS__, DUP12, DUP11, DUP10, DUP9, DUP8, DUP7, DUP6, DUP5, DUP4, DUP3, DUP2, DUP1)(__VA_ARGS__)
 #define DLOGK(...)        DLOG(DUP(__VA_ARGS__))
 #define DLOGKL(lab, ...)  DLOG(lab, DUP(__VA_ARGS__))
 
+#if DEBUG_LIB
+  #define DLOG_LIB   DLOG
+  #define DLOGK_LIB  DLOGK
+  #define DLOGKL_LIB DLOGKL
+#endif
+
 // ---- end debug.cc
-// ---- inserted function gcd from util.cc
 
-tuple<ll, ll, ll> mut_div(ll a, ll b, ll c, bool eff_c = true) {
-  // auto [g, s, t] = mut_div(a, b, c, eff_c)
-  //    If eff_c is true (default),
-  //        g == gcd(|a|, |b|) and as + bt == c, if such s,t exists
-  //        (g, s, t) == (-1, -1, -1)            otherwise
-  //    If eff_c is false,                                 
-  //        g == gcd(|a|, |b|) and as + bt == g           
-  //    N.b.  gcd(0, t) == gcd(t, 0) == t.
-  if (a == 0) {
-    if (eff_c) {
-      if (c % b != 0) return {-1, -1, -1};
-      else            return {abs(b), 0, c / b};
-    }else {
-      if (b < 0) return {-b, 0, -1};
-      else       return { b, 0,  1};
-    }
-  }else {
-    auto [g, t, u] = mut_div(b % a, a, c, eff_c);
-    // DLOGK(b%a, a, c, g, t, u);
-    if (g == -1) return {-1, -1, -1};
-    return {g, u - (b / a) * t, t};
-  }
-}
-
-// auto [g, s, t] = eGCD(a, b)  --->  sa + tb == g == gcd(|a|, |b|)
-//    N.b.  gcd(0, t) == gcd(t, 0) == t.
-tuple<ll, ll, ll> eGCD(ll a, ll b) { return mut_div(a, b, 0, false); }
-
-pair<ll, ll> crt_sub(ll a1, ll x1, ll a2, ll x2) {
-  // DLOGKL("crt_sub", a1, x1, a2, x2);
-  a1 = a1 % x1;
-  a2 = a2 % x2;
-  auto [g, s, t] = mut_div(x1, -x2, a2 - a1);
-  // DLOGK(g, s, t);
-  if (g == -1) return {-1, -1};
-  ll z = x1 / g * x2;
-  // DLOGK(z);
-  s = s % (x2 / g);
-  ll r = (x1 * s + a1) % z;
-  // DLOGK(r);
-  if (r < 0) r += z;
-  // DLOGK(r);
-  return {r, z};
-};
-
-// Chinese Remainder Theorem
-//
-//    r = crt(a1, x1, a2, x2)
-//    ==>   r = a1 (mod x1);  r = a2 (mod x2);  0 <= r < lcm(x1, x2)
-//    If no such r exists, returns -1
-//    Note: x1 and x2 should >= 1.  a1 and a2 can be negative or zero.
-//
-//    r = crt(as, xs)
-//    ==>   for all i. r = as[i] (mod xs[i]); 0 <= r < lcm(xs)
-//    If no such r exists, returns -1
-//    Note: xs[i] should >= 1.  as[i] can be negative or zero.
-//          It should hold: len(xs) == len(as) > 0
-
-ll crt(ll a1, ll x1, ll a2, ll x2) { return crt_sub(a1, x1, a2, x2).first; }
-
-ll crt(vector<ll> as, vector<ll> xs) {
-  // DLOGKL("crt", as, xs);
-  assert(xs.size() == as.size() && xs.size() > 0);
-  ll r = as[0];
-  ll z = xs[0];
-  for (size_t i = 1; i < xs.size(); i++) {
-    // DLOGK(i, r, z, as[i], xs[i]);
-    tie(r, z) = crt_sub(r, z, as[i], xs[i]);
-    // DLOGK(r, z);
-    if (r == -1) return -1;
-  }
-  return r;
-}
-
-// ---- end gcd
-// ---- inserted function intDiv from util.cc
-// imod, divFloor, divCeil
-
-// imod(x, y) : remainder of x for y
-// for y > 0:
-//   imod(x, y)  = r where x = dy + r, 0 <= r < y
-//   imod(x, -y) = r where x = dy + r, 0 >= r > y
-// Thus, imod( 10,  7) =  3
-//       imod(-10,  7) =  4
-//       imod( 10, -7) = -4
-//       imod(-10, -7) = -3
-ll imod(ll x, ll y) {
-  ll v = x % y;
-  if ((x >= 0) == (y >= 0)) return v;
-  else                      return v == 0 ? 0 : v + y;
-}
-
-// Integer Division; regardless pos/neg
-ll divFloor(ll x, ll y) {
-  if (x > 0) {
-    if (y > 0) return x / y;
-    else       return (x - y - 1) / y;
-  }else {
-    if (y > 0) return (x - y + 1) / y;
-    else       return x / y;
-  }
-}
-
-ll divCeil(ll x, ll y) {
-  if (x > 0) {
-    if (y > 0) return (x + y - 1) / y;
-    else       return x / y;
-  }else {
-    if (y > 0) return x / y;
-    else       return (x + y + 1) / y;
-  }
-}
-
-// ---- end intDiv
-// ---- inserted library file mod.cc
-
-/*
-  You may want to put something like:
-#define CONSTANT_MOD (1e9 + 7)
-#define CONSTANT_MOD 998244353
-  in the header part (outside of library paste area)
- */
-
-struct Fp {
-#if defined(CONSTANT_MOD)
-  static const ll MOD = CONSTANT_MOD;
-#else
-  static ll MOD;
-#endif
-
-  ll val;
-
-  /*
-  ll _calc_from_ll(ll t = 0) {
-    if      (t >= MOD)  return t % MOD;
-    else if (t >= 0)    return t;
-    else if (t >= -MOD) return t + MOD;
-    else {
-      ll v = t % MOD;
-      if (v == 0) return 0;
-      else        return v + MOD;
-    }
-  }
-  */
-
-  Fp(ll t = 0) : val(imod(t, MOD)) {}
-  Fp(const Fp& t) : val(t.val) {}
-  Fp& operator =(const Fp& t) { val = t.val; return *this; }
-  Fp& operator =(ll t) { val = imod(t, MOD); return *this; }
-  Fp& operator =(int t) { val = imod(t, MOD); return *this; }
-
-  Fp& operator +=(const Fp& t) {
-    val += t.val;
-    if (val >= MOD) val -= MOD;
-    return *this;
-  }
-
-  Fp& operator -=(const Fp& t) {
-    val -= t.val;
-    if (val < 0) val += MOD;
-    return *this;
-  }
-
-  Fp& operator *=(const Fp& t) {
-    val = (val * t.val) % MOD;
-    return *this;
-  }
-
-  Fp inv() const {
-    if (val == 0) {
-      cerr << "inv() is called for zero." << endl;
-      exit(1);
-    }
-    auto [g, u, v] = eGCD(val, MOD);
-    return Fp(u);
-  }
-
-  Fp& operator /=(const Fp& t) {
-    return (*this) *= t.inv();
-  }
-
-  Fp operator +(const Fp& t) const { return Fp(val) += t; }
-  Fp operator -(const Fp& t) const { return Fp(val) -= t; }
-  Fp operator *(const Fp& t) const { return Fp(val) *= t; }
-  Fp operator /(const Fp& t) const { return Fp(val) /= t; }
-  Fp operator -() const { return Fp(-val); }
-
-  bool operator ==(const Fp& t) const { return val == t.val; }
-  bool operator !=(const Fp& t) const { return val != t.val; }
-  
-  operator ll() const { return val; }
-
-};
-
-Fp operator +(int x, const Fp& y) { return Fp(x) + y; }
-Fp operator -(int x, const Fp& y) { return Fp(x) - y; }
-Fp operator *(int x, const Fp& y) { return Fp(x) * y; }
-Fp operator /(int x, const Fp& y) { return Fp(x) / y; }
-Fp operator +(ll x, const Fp& y) { return Fp(x) + y; }
-Fp operator -(ll x, const Fp& y) { return Fp(x) - y; }
-Fp operator *(ll x, const Fp& y) { return Fp(x) * y; }
-Fp operator /(ll x, const Fp& y) { return Fp(x) / y; }
-Fp operator +(const Fp& x, int y) { return x + Fp(y); }
-Fp operator -(const Fp& x, int y) { return x - Fp(y); }
-Fp operator *(const Fp& x, int y) { return x * Fp(y); }
-Fp operator /(const Fp& x, int y) { return x / Fp(y); }
-Fp operator +(const Fp& x, ll y) { return x + Fp(y); }
-Fp operator -(const Fp& x, ll y) { return x - Fp(y); }
-Fp operator *(const Fp& x, ll y) { return x * Fp(y); }
-Fp operator /(const Fp& x, ll y) { return x / Fp(y); }
-
-istream& operator>> (istream& is, Fp& t) {
-  ll x; is >> x;
-  t = x;
-  return is;
-}
-
-ostream& operator<< (ostream& os, const Fp& t) {
-  os << t.val;
-  return os;
-}
-
-class Comb {
-  int nMax;
-  vector<Fp> vFact;
-  vector<Fp> vInvFact;
-public:
-  Comb(int nm) : nMax(nm), vFact(nm+1), vInvFact(nm+1) {
-    vFact.at(0) = 1;
-    for (int i = 1; i <= nMax; i++) vFact.at(i) = i * vFact.at(i-1);
-    vInvFact.at(nMax) = vFact.at(nMax).inv();
-    for (int i = nMax; i >= 1; i--) vInvFact.at(i-1) = i * vInvFact.at(i);
-  }
-  Fp fact(int n) { return vFact.at(n); }
-  Fp comb(int n, int r) {
-    return vFact.at(n) * vInvFact.at(r) * vInvFact.at(n-r);
-  }
-  // The number of permutation extracting r from n.
-  Fp perm(int n, int r) {
-    return vFact.at(n) * vInvFact.at(n-r);
-  }
-};
-
-#if !defined(CONSTANT_MOD)
-ll Fp::MOD = 1e9 + 7;
-// ll Fp::MOD = 998'244'353;
-#endif
-
-// ---- end mod.cc
-// @@ !! LIM  -- end mark --
+// @@ !! LIM -- end mark --
 
 #if DEBUG
 const ll lim = 3;
@@ -489,47 +474,36 @@ const ll lim = 3;
 const ll lim = 30;
 #endif
 
-Fp func(ll x, ll y, ll k) {
-  auto sub = [&](auto rF, ll x0, ll y0, ll v, ll sz) -> Fp {
-    auto covered = [&](ll oth) -> Fp {
-      oth = min(oth, sz);
-      ll to = min(k, v + sz - 1);
-      Fp s = (v + to) * (to - v + 1) / 2;
-      return s * oth;
-    };
-    Fp ret;
-    if (x <= x0 || y <= y0 || k < v) {
-      ret = 0;
-      DLOGKL("sub-1", x, y, k, x0, y0, v, sz, ret);
-    }else if (x0 + sz <= x) {
-      ret = covered(y - y0);
-      DLOGKL("sub-2", x, y, k, x0, y0, v, sz, ret);
-    }else if (y0 + sz <= y) {
-      ret = covered(x - x0);
-      DLOGKL("sub-3", x, y, k, x0, y0, v, sz, ret);
-    }else {
-      ll half = sz >> 1;
-      ret = 0;
-      ret += rF(rF, x0, y0, v, half);
-      ret += rF(rF, x0 + half, y0 + half, v, half);
-      ret += rF(rF, x0 + half, y0, v + half, half);
-      ret += rF(rF, x0, y0 + half, v + half, half);
-      DLOGKL("sub-4", x, y, k, x0, y0, v, sz, ret);
-    }
-    return ret;
-  };
-  Fp r = sub(sub, 0, 0, 1, (1LL << lim));
-  DLOGKL("func", x, y, k, r);
-  return r;
-}
+using Fp = FpA;
 
 void solve() {
   ll x1, y1, x2, y2, k; cin >> x1 >> y1 >> x2 >> y2 >> k;
-  Fp ans = func(x2,     y2,     k)
-         - func(x1 - 1, y2,     k)
-         - func(x2,     y1 - 1, k)
-         + func(x1 - 1, y1 - 1, k);
-  cout << ans << "\n";
+  x1--; y1--; 
+  auto func = [&](auto rF, ll sz, ll cx, ll cy, ll t) -> Fp {
+    if (x1 <= cx && cx + sz <= x2) {
+      ll vmax = min(k, t + sz);
+      ll vmin = t + 1;
+      Fp sum = Fp(vmax + vmin) * Fp(vmax - vmin + 1) / 2;
+      Fp ret = sum * (min(cy + sz, y2) - max(cy, y1));
+      DLOGKL("x", sz, cx, cy, t, ret);
+      return ret;
+    }else if (y1 <= cy && cy + sz <= y2) {
+      ll vmax = min(k, t + sz);
+      ll vmin = t + 1;
+      Fp sum = Fp(vmax + vmin) * Fp(vmax - vmin + 1) / 2;
+      Fp ret = sum * (min(cx + sz, x2) - max(cx, x1));
+      DLOGKL("y", sz, cx, cy, t, ret);
+      return ret;
+    }else if (cx + sz <= x1 || x2 <= cx || cy + sz <= y1 || y2 <= cy) {
+      return 0;
+    }else {
+      return rF(rF, sz / 2, cx, cy, t) +
+        rF(rF, sz / 2, cx + sz / 2, cy + sz / 2, t) +
+        rF(rF, sz / 2, cx + sz / 2, cy, t + sz / 2) +
+        rF(rF, sz / 2, cx, cy + sz / 2, t + sz / 2) ;
+    }
+  };
+  cout << func(func, 1<<lim, 0, 0, 0) << endl;
 }
 
 int main(/* int argc, char *argv[] */) {

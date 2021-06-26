@@ -3,7 +3,7 @@
 typedef long long int ll;
 using namespace std;
 
-// @@ !! LIM(debug f:<< f:>> f:power f:gcd f:updMaxMin f:intDiv f:mex f:shortVector f:perfmeas)
+// @@ !! LIM(debug f:<< f:>> f:power f:gcd f:updMaxMin f:intDiv f:mex f:shortVector f:perfmeas f:itrange)
 
 
 int main() {
@@ -197,6 +197,25 @@ int main() {
     auto v3 = read_vector<pair<int, int>>(ss5);
     assert(v3 == va1);
     
+  }
+
+  {
+    ItRange ir(0, 10);
+    vector<ll> vec, w;
+    for (ll x : ir) vec.push_back(x);
+    for (ll i = 0; i < 10; i++) w.push_back(i);
+    assert(vec == w);
+    vector<ll> vec2;
+    bool b1 = all_of(ir.begin(), ir.end(),
+                     [&](ll i) -> bool { return i * i < 10000; });
+    bool b2 = all_of(ir.begin(), ir.end(),
+                     [&](ll i) -> bool { return i * i < 50; });
+    bool b3 = any_of(ir.begin(), ir.end(),
+                     [&](ll i) -> bool { return i * i > 80; });
+    assert(b1 && !b2 && b3);
+    auto it = find_if(ir.begin(), ir.end(),
+                      [&](ll i) -> bool { return i * i > 50; });
+    assert (*it == 8);
   }
 
 

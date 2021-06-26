@@ -1,0 +1,1469 @@
+
+
+
+
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Tasks - 競プロ典型 90 問</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+	<meta http-equiv="Content-Language" content="en">
+	<meta name="viewport" content="width=device-width,initial-scale=1.0">
+	<meta name="format-detection" content="telephone=no">
+	<meta name="google-site-verification" content="nXGC_JxO0yoP1qBzMnYD_xgufO6leSLw1kyNo2HZltM" />
+
+	
+	<meta name="description" content="AtCoder is a programming contest site for anyone from beginners to experts. We hold weekly programming contests online.">
+	<meta name="author" content="AtCoder Inc.">
+
+	<meta property="og:site_name" content="AtCoder">
+	
+	<meta property="og:title" content="Tasks - 競プロ典型 90 問" />
+	<meta property="og:description" content="AtCoder is a programming contest site for anyone from beginners to experts. We hold weekly programming contests online." />
+	<meta property="og:type" content="website" />
+	<meta property="og:url" content="https://atcoder.jp/contests/typical90/tasks" />
+	<meta property="og:image" content="https://img.atcoder.jp/assets/atcoder.png" />
+	<meta name="twitter:card" content="summary" />
+	<meta name="twitter:site" content="@atcoder" />
+	
+	<meta property="twitter:title" content="Tasks - 競プロ典型 90 問" />
+
+	<link href="//fonts.googleapis.com/css?family=Lato:400,700" rel="stylesheet" type="text/css">
+	<link rel="stylesheet" type="text/css" href="//img.atcoder.jp/public/f6e8003/css/bootstrap.min.css">
+	<link rel="stylesheet" type="text/css" href="//img.atcoder.jp/public/f6e8003/css/base.css">
+	<link rel="shortcut icon" type="image/png" href="//img.atcoder.jp/assets/favicon.png">
+	<link rel="apple-touch-icon" href="//img.atcoder.jp/assets/atcoder.png">
+	<script src="//img.atcoder.jp/public/f6e8003/js/lib/jquery-1.9.1.min.js"></script>
+	<script src="//img.atcoder.jp/public/f6e8003/js/lib/bootstrap.min.js"></script>
+	<script src="//img.atcoder.jp/public/f6e8003/js/cdn/js.cookie.min.js"></script>
+	<script src="//img.atcoder.jp/public/f6e8003/js/cdn/moment.min.js"></script>
+	<script src="//img.atcoder.jp/public/f6e8003/js/cdn/moment_js-ja.js"></script>
+	<script>
+		var LANG = "en";
+		var userScreenName = "yamate11";
+		var csrfToken = "47GD3ab5nsLioSjOGsm4NqorHMLHa0r/RhEX5sRGU6E="
+	</script>
+	<script src="//img.atcoder.jp/public/f6e8003/js/utils.js"></script>
+	
+	
+		<script src="//img.atcoder.jp/public/f6e8003/js/contest.js"></script>
+		<link href="//img.atcoder.jp/public/f6e8003/css/contest.css" rel="stylesheet" />
+		<script>
+			var contestScreenName = "typical90";
+			var remainingText = "Remaining Time";
+			var countDownText = "Contest begins in";
+			var startTime = moment("2021-04-20T19:20:00+09:00");
+			var endTime = moment("2021-07-12T21:00:00+09:00");
+		</script>
+		<style></style>
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	<script src="//img.atcoder.jp/public/f6e8003/js/base.js"></script>
+	<script src="//img.atcoder.jp/public/f6e8003/js/ga.js"></script>
+</head>
+
+<body>
+
+<script type="text/javascript">
+	var __pParams = __pParams || [];
+	__pParams.push({client_id: '468', c_1: 'atcodercontest', c_2: 'ClientSite'});
+</script>
+<script type="text/javascript" src="https://cdn.d2-apps.net/js/tr.js" async></script>
+
+
+<div id="modal-contest-start" class="modal fade" tabindex="-1" role="dialog">
+	<div class="modal-dialog" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+				<h4 class="modal-title">Contest started</h4>
+			</div>
+			<div class="modal-body">
+				<p>競プロ典型 90 問 has begun.</p>
+			</div>
+			<div class="modal-footer">
+				
+					<a class="btn btn-primary" href='/contests/typical90/tasks'>Go to the task list page</a>
+				
+			</div>
+		</div>
+	</div>
+</div>
+<div id="modal-contest-end" class="modal fade" tabindex="-1" role="dialog">
+	<div class="modal-dialog" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+				<h4 class="modal-title">Contest is over</h4>
+			</div>
+			<div class="modal-body">
+				<p>競プロ典型 90 問 has ended.</p>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+			</div>
+		</div>
+	</div>
+</div>
+<div id="main-div" class="float-container">
+
+
+	<nav class="navbar navbar-inverse navbar-fixed-top">
+		<div class="container-fluid">
+			<div class="navbar-header">
+				<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapse" aria-expanded="false">
+					<span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span>
+				</button>
+				<a class="navbar-brand" href="/home"></a>
+			</div>
+			<div class="collapse navbar-collapse" id="navbar-collapse">
+				<ul class="nav navbar-nav">
+				
+					<li><a class="contest-title" href="/contests/typical90">競プロ典型 90 問</a></li>
+				
+				</ul>
+				<ul class="nav navbar-nav navbar-right">
+					
+					<li class="dropdown">
+						<a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
+							<img src='//img.atcoder.jp/assets/top/img/flag-lang/en.png'> English <span class="caret"></span>
+						</a>
+						<ul class="dropdown-menu">
+							<li><a href="/contests/typical90/tasks?lang=ja"><img src='//img.atcoder.jp/assets/top/img/flag-lang/ja.png'> 日本語</a></li>
+							<li><a href="/contests/typical90/tasks?lang=en"><img src='//img.atcoder.jp/assets/top/img/flag-lang/en.png'> English</a></li>
+						</ul>
+					</li>
+					
+					
+						<li class="dropdown">
+							<a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
+								<span class="glyphicon glyphicon-cog" aria-hidden="true"></span> yamate11 (Contestant) <span class="caret"></span>
+							</a>
+							<ul class="dropdown-menu">
+								<li><a href="/users/yamate11"><span class="glyphicon glyphicon-user" aria-hidden="true"></span> My Profile</a></li>
+								<li class="divider"></li>
+								<li><a href="/settings"><span class="glyphicon glyphicon-wrench" aria-hidden="true"></span> General Settings</a></li>
+								<li><a href="/settings/icon"><span class="glyphicon glyphicon-picture" aria-hidden="true"></span> Change Photo</a></li>
+								<li><a href="/settings/password"><span class="glyphicon glyphicon-lock" aria-hidden="true"></span> Change Password</a></li>
+								<li><a href="/settings/fav"><span class="glyphicon glyphicon-star" aria-hidden="true"></span> Manage Fav</a></li>
+								
+								
+								
+								<li class="divider"></li>
+								<li><a href="javascript:void(form_logout.submit())"><span class="glyphicon glyphicon-log-out" aria-hidden="true"></span> Sign Out</a></li>
+							</ul>
+						</li>
+					
+				</ul>
+			</div>
+		</div>
+	</nav>
+
+	<form method="POST" name="form_logout" action="/logout?continue=https%3A%2F%2Fatcoder.jp%2Fcontests%2Ftypical90%2Ftasks">
+		<input type="hidden" name="csrf_token" value="47GD3ab5nsLioSjOGsm4NqorHMLHa0r/RhEX5sRGU6E=" />
+	</form>
+	<div id="main-container" class="container"
+		 	style="padding-top:50px;">
+		
+
+
+<div class="row">
+	<div id="contest-nav-tabs" class="col-sm-12 mb-2 cnvtb-fixed">
+	<div>
+		<small class="contest-duration">
+			
+				Contest Duration:
+				<a href='http://www.timeanddate.com/worldclock/fixedtime.html?iso=20210420T1920&p1=248' target='blank'><time class='fixtime fixtime-full'>2021-04-20 19:20:00+0900</time></a> - <a href='http://www.timeanddate.com/worldclock/fixedtime.html?iso=20210712T2100&p1=248' target='blank'><time class='fixtime fixtime-full'>2021-07-12 21:00:00+0900</time></a> (local time)
+				
+			
+		</small>
+		<small class="back-to-home pull-right"><a href="/home">Back to Home</a></small>
+	</div>
+	<ul class="nav nav-tabs">
+		<li><a href="/contests/typical90"><span class="glyphicon glyphicon-home" aria-hidden="true"></span> Top</a></li>
+		
+			<li class="active"><a href="/contests/typical90/tasks"><span class="glyphicon glyphicon-tasks" aria-hidden="true"></span> Tasks</a></li>
+		
+
+		
+			<li><a href="/contests/typical90/clarifications"><span class="glyphicon glyphicon-question-sign" aria-hidden="true"></span> Clarifications <span id="clar-badge" class="badge"></span></a></li>
+		
+
+		
+			<li><a href="/contests/typical90/submit"><span class="glyphicon glyphicon-send" aria-hidden="true"></span> Submit</a></li>
+		
+
+		
+			<li>
+				<a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false"><span class="glyphicon glyphicon-list" aria-hidden="true"></span> Results<span class="caret"></span></a>
+				<ul class="dropdown-menu">
+					
+					
+						<li><a href="/contests/typical90/submissions/me"><span class="glyphicon glyphicon-user" aria-hidden="true"></span> My Submissions</a></li>
+						<li class="divider"></li>
+						<li><a href="/contests/typical90/score"><span class="glyphicon glyphicon-dashboard" aria-hidden="true"></span> My Score</a></li>
+					
+				</ul>
+			</li>
+		
+
+		
+			
+				
+					<li><a href="/contests/typical90/standings"><span class="glyphicon glyphicon-sort-by-attributes-alt" aria-hidden="true"></span> Standings</a></li>
+				
+			
+		
+
+		
+			<li><a href="/contests/typical90/custom_test"><span class="glyphicon glyphicon-wrench" aria-hidden="true"></span> Custom Test</a></li>
+		
+
+		
+		
+			
+			
+		
+
+		<li class="pull-right"><a id="fix-cnvtb" href="javascript:void(0)"><span class="glyphicon glyphicon-pushpin" aria-hidden="true"></span></a></li>
+	</ul>
+</div>
+	<div class="col-sm-12">
+		<h2>Tasks</h2>
+		<hr>
+		
+			<div class="panel panel-default table-responsive"><table class="table table-bordered table-striped">
+				<thead>
+					<tr>
+						<th width="3%" class="text-center"></th>
+						<th>Task Name</th>
+						<th width="10%" class="text-right no-break">Time Limit</th>
+						<th width="10%" class="text-right no-break">Memory Limit</th>
+						<th width="5%"></th>
+					</tr>
+				</thead>
+				<tbody>
+					
+						<tr>
+							<td class="text-center no-break"><a href="/contests/typical90/tasks/typical90_a">001</a></td>
+							<td><a href="/contests/typical90/tasks/typical90_a">Yokan Party（★4）</a></td>
+							<td class="text-right">2 sec</td>
+							<td class="text-right">1024 MB</td>
+							
+								<td class="no-break text-center">
+									
+										<a href="/contests/typical90/submit?taskScreenName=typical90_a">Submit</a>
+									
+									
+								</td>
+							
+						</tr>
+					
+						<tr>
+							<td class="text-center no-break"><a href="/contests/typical90/tasks/typical90_b">002</a></td>
+							<td><a href="/contests/typical90/tasks/typical90_b">Encyclopedia of Parentheses（★3）</a></td>
+							<td class="text-right">2 sec</td>
+							<td class="text-right">1024 MB</td>
+							
+								<td class="no-break text-center">
+									
+										<a href="/contests/typical90/submit?taskScreenName=typical90_b">Submit</a>
+									
+									
+								</td>
+							
+						</tr>
+					
+						<tr>
+							<td class="text-center no-break"><a href="/contests/typical90/tasks/typical90_c">003</a></td>
+							<td><a href="/contests/typical90/tasks/typical90_c">Longest Circular Road（★4）</a></td>
+							<td class="text-right">2 sec</td>
+							<td class="text-right">1024 MB</td>
+							
+								<td class="no-break text-center">
+									
+										<a href="/contests/typical90/submit?taskScreenName=typical90_c">Submit</a>
+									
+									
+								</td>
+							
+						</tr>
+					
+						<tr>
+							<td class="text-center no-break"><a href="/contests/typical90/tasks/typical90_d">004</a></td>
+							<td><a href="/contests/typical90/tasks/typical90_d">Cross Sum（★2）</a></td>
+							<td class="text-right">2 sec</td>
+							<td class="text-right">1024 MB</td>
+							
+								<td class="no-break text-center">
+									
+										<a href="/contests/typical90/submit?taskScreenName=typical90_d">Submit</a>
+									
+									
+								</td>
+							
+						</tr>
+					
+						<tr>
+							<td class="text-center no-break"><a href="/contests/typical90/tasks/typical90_e">005</a></td>
+							<td><a href="/contests/typical90/tasks/typical90_e">Restricted Digits（★7）</a></td>
+							<td class="text-right">5 sec</td>
+							<td class="text-right">1024 MB</td>
+							
+								<td class="no-break text-center">
+									
+										<a href="/contests/typical90/submit?taskScreenName=typical90_e">Submit</a>
+									
+									
+								</td>
+							
+						</tr>
+					
+						<tr>
+							<td class="text-center no-break"><a href="/contests/typical90/tasks/typical90_f">006</a></td>
+							<td><a href="/contests/typical90/tasks/typical90_f">Smallest Subsequence（★5）</a></td>
+							<td class="text-right">2 sec</td>
+							<td class="text-right">1024 MB</td>
+							
+								<td class="no-break text-center">
+									
+										<a href="/contests/typical90/submit?taskScreenName=typical90_f">Submit</a>
+									
+									
+								</td>
+							
+						</tr>
+					
+						<tr>
+							<td class="text-center no-break"><a href="/contests/typical90/tasks/typical90_g">007</a></td>
+							<td><a href="/contests/typical90/tasks/typical90_g">CP Classes（★3）</a></td>
+							<td class="text-right">3 sec</td>
+							<td class="text-right">1024 MB</td>
+							
+								<td class="no-break text-center">
+									
+										<a href="/contests/typical90/submit?taskScreenName=typical90_g">Submit</a>
+									
+									
+								</td>
+							
+						</tr>
+					
+						<tr>
+							<td class="text-center no-break"><a href="/contests/typical90/tasks/typical90_h">008</a></td>
+							<td><a href="/contests/typical90/tasks/typical90_h">AtCounter（★4）</a></td>
+							<td class="text-right">2 sec</td>
+							<td class="text-right">1024 MB</td>
+							
+								<td class="no-break text-center">
+									
+										<a href="/contests/typical90/submit?taskScreenName=typical90_h">Submit</a>
+									
+									
+								</td>
+							
+						</tr>
+					
+						<tr>
+							<td class="text-center no-break"><a href="/contests/typical90/tasks/typical90_i">009</a></td>
+							<td><a href="/contests/typical90/tasks/typical90_i">Three Point Angle（★6）</a></td>
+							<td class="text-right">3 sec</td>
+							<td class="text-right">1024 MB</td>
+							
+								<td class="no-break text-center">
+									
+										<a href="/contests/typical90/submit?taskScreenName=typical90_i">Submit</a>
+									
+									
+								</td>
+							
+						</tr>
+					
+						<tr>
+							<td class="text-center no-break"><a href="/contests/typical90/tasks/typical90_j">010</a></td>
+							<td><a href="/contests/typical90/tasks/typical90_j">Score Sum Queries（★2）</a></td>
+							<td class="text-right">2 sec</td>
+							<td class="text-right">1024 MB</td>
+							
+								<td class="no-break text-center">
+									
+										<a href="/contests/typical90/submit?taskScreenName=typical90_j">Submit</a>
+									
+									
+								</td>
+							
+						</tr>
+					
+						<tr>
+							<td class="text-center no-break"><a href="/contests/typical90/tasks/typical90_k">011</a></td>
+							<td><a href="/contests/typical90/tasks/typical90_k">Gravy Jobs（★6）</a></td>
+							<td class="text-right">2 sec</td>
+							<td class="text-right">1024 MB</td>
+							
+								<td class="no-break text-center">
+									
+										<a href="/contests/typical90/submit?taskScreenName=typical90_k">Submit</a>
+									
+									
+								</td>
+							
+						</tr>
+					
+						<tr>
+							<td class="text-center no-break"><a href="/contests/typical90/tasks/typical90_l">012</a></td>
+							<td><a href="/contests/typical90/tasks/typical90_l">Red Painting（★4）</a></td>
+							<td class="text-right">2 sec</td>
+							<td class="text-right">1024 MB</td>
+							
+								<td class="no-break text-center">
+									
+										<a href="/contests/typical90/submit?taskScreenName=typical90_l">Submit</a>
+									
+									
+								</td>
+							
+						</tr>
+					
+						<tr>
+							<td class="text-center no-break"><a href="/contests/typical90/tasks/typical90_m">013</a></td>
+							<td><a href="/contests/typical90/tasks/typical90_m">Passing（★5）</a></td>
+							<td class="text-right">2 sec</td>
+							<td class="text-right">1024 MB</td>
+							
+								<td class="no-break text-center">
+									
+										<a href="/contests/typical90/submit?taskScreenName=typical90_m">Submit</a>
+									
+									
+								</td>
+							
+						</tr>
+					
+						<tr>
+							<td class="text-center no-break"><a href="/contests/typical90/tasks/typical90_n">014</a></td>
+							<td><a href="/contests/typical90/tasks/typical90_n">We Used to Sing a Song Together（★3）</a></td>
+							<td class="text-right">2 sec</td>
+							<td class="text-right">1024 MB</td>
+							
+								<td class="no-break text-center">
+									
+										<a href="/contests/typical90/submit?taskScreenName=typical90_n">Submit</a>
+									
+									
+								</td>
+							
+						</tr>
+					
+						<tr>
+							<td class="text-center no-break"><a href="/contests/typical90/tasks/typical90_o">015</a></td>
+							<td><a href="/contests/typical90/tasks/typical90_o">Don&#39;t be too close（★6）</a></td>
+							<td class="text-right">2 sec</td>
+							<td class="text-right">1024 MB</td>
+							
+								<td class="no-break text-center">
+									
+										<a href="/contests/typical90/submit?taskScreenName=typical90_o">Submit</a>
+									
+									
+								</td>
+							
+						</tr>
+					
+						<tr>
+							<td class="text-center no-break"><a href="/contests/typical90/tasks/typical90_p">016</a></td>
+							<td><a href="/contests/typical90/tasks/typical90_p">Minimum Coins（★3）</a></td>
+							<td class="text-right">2 sec</td>
+							<td class="text-right">1024 MB</td>
+							
+								<td class="no-break text-center">
+									
+										<a href="/contests/typical90/submit?taskScreenName=typical90_p">Submit</a>
+									
+									
+								</td>
+							
+						</tr>
+					
+						<tr>
+							<td class="text-center no-break"><a href="/contests/typical90/tasks/typical90_q">017</a></td>
+							<td><a href="/contests/typical90/tasks/typical90_q">Crossing Segments（★7）</a></td>
+							<td class="text-right">2 sec</td>
+							<td class="text-right">1024 MB</td>
+							
+								<td class="no-break text-center">
+									
+										<a href="/contests/typical90/submit?taskScreenName=typical90_q">Submit</a>
+									
+									
+								</td>
+							
+						</tr>
+					
+						<tr>
+							<td class="text-center no-break"><a href="/contests/typical90/tasks/typical90_r">018</a></td>
+							<td><a href="/contests/typical90/tasks/typical90_r">Statue of Chokudai（★3）</a></td>
+							<td class="text-right">2 sec</td>
+							<td class="text-right">1024 MB</td>
+							
+								<td class="no-break text-center">
+									
+										<a href="/contests/typical90/submit?taskScreenName=typical90_r">Submit</a>
+									
+									
+								</td>
+							
+						</tr>
+					
+						<tr>
+							<td class="text-center no-break"><a href="/contests/typical90/tasks/typical90_s">019</a></td>
+							<td><a href="/contests/typical90/tasks/typical90_s">Pick Two（★6）</a></td>
+							<td class="text-right">2 sec</td>
+							<td class="text-right">1024 MB</td>
+							
+								<td class="no-break text-center">
+									
+										<a href="/contests/typical90/submit?taskScreenName=typical90_s">Submit</a>
+									
+									
+								</td>
+							
+						</tr>
+					
+						<tr>
+							<td class="text-center no-break"><a href="/contests/typical90/tasks/typical90_t">020</a></td>
+							<td><a href="/contests/typical90/tasks/typical90_t">Log Inequality（★3）</a></td>
+							<td class="text-right">2 sec</td>
+							<td class="text-right">1024 MB</td>
+							
+								<td class="no-break text-center">
+									
+										<a href="/contests/typical90/submit?taskScreenName=typical90_t">Submit</a>
+									
+									
+								</td>
+							
+						</tr>
+					
+						<tr>
+							<td class="text-center no-break"><a href="/contests/typical90/tasks/typical90_u">021</a></td>
+							<td><a href="/contests/typical90/tasks/typical90_u">Come Back in One Piece（★5）</a></td>
+							<td class="text-right">2 sec</td>
+							<td class="text-right">1024 MB</td>
+							
+								<td class="no-break text-center">
+									
+										<a href="/contests/typical90/submit?taskScreenName=typical90_u">Submit</a>
+									
+									
+								</td>
+							
+						</tr>
+					
+						<tr>
+							<td class="text-center no-break"><a href="/contests/typical90/tasks/typical90_v">022</a></td>
+							<td><a href="/contests/typical90/tasks/typical90_v">Cubic Cake（★2）</a></td>
+							<td class="text-right">2 sec</td>
+							<td class="text-right">1024 MB</td>
+							
+								<td class="no-break text-center">
+									
+										<a href="/contests/typical90/submit?taskScreenName=typical90_v">Submit</a>
+									
+									
+								</td>
+							
+						</tr>
+					
+						<tr>
+							<td class="text-center no-break"><a href="/contests/typical90/tasks/typical90_w">023</a></td>
+							<td><a href="/contests/typical90/tasks/typical90_w">Avoid War（★7）</a></td>
+							<td class="text-right">8 sec</td>
+							<td class="text-right">2048 MB</td>
+							
+								<td class="no-break text-center">
+									
+										<a href="/contests/typical90/submit?taskScreenName=typical90_w">Submit</a>
+									
+									
+								</td>
+							
+						</tr>
+					
+						<tr>
+							<td class="text-center no-break"><a href="/contests/typical90/tasks/typical90_x">024</a></td>
+							<td><a href="/contests/typical90/tasks/typical90_x">Select &#43;／- One（★2）</a></td>
+							<td class="text-right">2 sec</td>
+							<td class="text-right">1024 MB</td>
+							
+								<td class="no-break text-center">
+									
+										<a href="/contests/typical90/submit?taskScreenName=typical90_x">Submit</a>
+									
+									
+								</td>
+							
+						</tr>
+					
+						<tr>
+							<td class="text-center no-break"><a href="/contests/typical90/tasks/typical90_y">025</a></td>
+							<td><a href="/contests/typical90/tasks/typical90_y">Digit Product Equation（★7）</a></td>
+							<td class="text-right">2 sec</td>
+							<td class="text-right">1024 MB</td>
+							
+								<td class="no-break text-center">
+									
+										<a href="/contests/typical90/submit?taskScreenName=typical90_y">Submit</a>
+									
+									
+								</td>
+							
+						</tr>
+					
+						<tr>
+							<td class="text-center no-break"><a href="/contests/typical90/tasks/typical90_z">026</a></td>
+							<td><a href="/contests/typical90/tasks/typical90_z">Independent Set on a Tree（★4）</a></td>
+							<td class="text-right">2 sec</td>
+							<td class="text-right">1024 MB</td>
+							
+								<td class="no-break text-center">
+									
+										<a href="/contests/typical90/submit?taskScreenName=typical90_z">Submit</a>
+									
+									
+								</td>
+							
+						</tr>
+					
+						<tr>
+							<td class="text-center no-break"><a href="/contests/typical90/tasks/typical90_aa">027</a></td>
+							<td><a href="/contests/typical90/tasks/typical90_aa">Sign Up Requests （★2）</a></td>
+							<td class="text-right">1 sec</td>
+							<td class="text-right">1024 MB</td>
+							
+								<td class="no-break text-center">
+									
+										<a href="/contests/typical90/submit?taskScreenName=typical90_aa">Submit</a>
+									
+									
+								</td>
+							
+						</tr>
+					
+						<tr>
+							<td class="text-center no-break"><a href="/contests/typical90/tasks/typical90_ab">028</a></td>
+							<td><a href="/contests/typical90/tasks/typical90_ab">Cluttered Paper（★4）</a></td>
+							<td class="text-right">2 sec</td>
+							<td class="text-right">1024 MB</td>
+							
+								<td class="no-break text-center">
+									
+										<a href="/contests/typical90/submit?taskScreenName=typical90_ab">Submit</a>
+									
+									
+								</td>
+							
+						</tr>
+					
+						<tr>
+							<td class="text-center no-break"><a href="/contests/typical90/tasks/typical90_ac">029</a></td>
+							<td><a href="/contests/typical90/tasks/typical90_ac">Long Bricks（★5）</a></td>
+							<td class="text-right">4 sec</td>
+							<td class="text-right">1024 MB</td>
+							
+								<td class="no-break text-center">
+									
+										<a href="/contests/typical90/submit?taskScreenName=typical90_ac">Submit</a>
+									
+									
+								</td>
+							
+						</tr>
+					
+						<tr>
+							<td class="text-center no-break"><a href="/contests/typical90/tasks/typical90_ad">030</a></td>
+							<td><a href="/contests/typical90/tasks/typical90_ad">K Factors（★5）</a></td>
+							<td class="text-right">2 sec</td>
+							<td class="text-right">1024 MB</td>
+							
+								<td class="no-break text-center">
+									
+										<a href="/contests/typical90/submit?taskScreenName=typical90_ad">Submit</a>
+									
+									
+								</td>
+							
+						</tr>
+					
+						<tr>
+							<td class="text-center no-break"><a href="/contests/typical90/tasks/typical90_ae">031</a></td>
+							<td><a href="/contests/typical90/tasks/typical90_ae">VS AtCoder（★6）</a></td>
+							<td class="text-right">3 sec</td>
+							<td class="text-right">1024 MB</td>
+							
+								<td class="no-break text-center">
+									
+										<a href="/contests/typical90/submit?taskScreenName=typical90_ae">Submit</a>
+									
+									
+								</td>
+							
+						</tr>
+					
+						<tr>
+							<td class="text-center no-break"><a href="/contests/typical90/tasks/typical90_af">032</a></td>
+							<td><a href="/contests/typical90/tasks/typical90_af">AtCoder Ekiden（★3）</a></td>
+							<td class="text-right">5 sec</td>
+							<td class="text-right">1024 MB</td>
+							
+								<td class="no-break text-center">
+									
+										<a href="/contests/typical90/submit?taskScreenName=typical90_af">Submit</a>
+									
+									
+								</td>
+							
+						</tr>
+					
+						<tr>
+							<td class="text-center no-break"><a href="/contests/typical90/tasks/typical90_ag">033</a></td>
+							<td><a href="/contests/typical90/tasks/typical90_ag">Not Too Bright（★2）</a></td>
+							<td class="text-right">1 sec</td>
+							<td class="text-right">1024 MB</td>
+							
+								<td class="no-break text-center">
+									
+										<a href="/contests/typical90/submit?taskScreenName=typical90_ag">Submit</a>
+									
+									
+								</td>
+							
+						</tr>
+					
+						<tr>
+							<td class="text-center no-break"><a href="/contests/typical90/tasks/typical90_ah">034</a></td>
+							<td><a href="/contests/typical90/tasks/typical90_ah">There are few types of elements（★4）</a></td>
+							<td class="text-right">2 sec</td>
+							<td class="text-right">1024 MB</td>
+							
+								<td class="no-break text-center">
+									
+										<a href="/contests/typical90/submit?taskScreenName=typical90_ah">Submit</a>
+									
+									
+								</td>
+							
+						</tr>
+					
+						<tr>
+							<td class="text-center no-break"><a href="/contests/typical90/tasks/typical90_ai">035</a></td>
+							<td><a href="/contests/typical90/tasks/typical90_ai">Preserve Connectivity（★7）</a></td>
+							<td class="text-right">2 sec</td>
+							<td class="text-right">1024 MB</td>
+							
+								<td class="no-break text-center">
+									
+										<a href="/contests/typical90/submit?taskScreenName=typical90_ai">Submit</a>
+									
+									
+								</td>
+							
+						</tr>
+					
+						<tr>
+							<td class="text-center no-break"><a href="/contests/typical90/tasks/typical90_aj">036</a></td>
+							<td><a href="/contests/typical90/tasks/typical90_aj">Max Manhattan Distance（★5）</a></td>
+							<td class="text-right">2 sec</td>
+							<td class="text-right">1024 MB</td>
+							
+								<td class="no-break text-center">
+									
+										<a href="/contests/typical90/submit?taskScreenName=typical90_aj">Submit</a>
+									
+									
+								</td>
+							
+						</tr>
+					
+						<tr>
+							<td class="text-center no-break"><a href="/contests/typical90/tasks/typical90_ak">037</a></td>
+							<td><a href="/contests/typical90/tasks/typical90_ak">Don&#39;t Leave the Spice（★5）</a></td>
+							<td class="text-right">2 sec</td>
+							<td class="text-right">1024 MB</td>
+							
+								<td class="no-break text-center">
+									
+										<a href="/contests/typical90/submit?taskScreenName=typical90_ak">Submit</a>
+									
+									
+								</td>
+							
+						</tr>
+					
+						<tr>
+							<td class="text-center no-break"><a href="/contests/typical90/tasks/typical90_al">038</a></td>
+							<td><a href="/contests/typical90/tasks/typical90_al">Large LCM（★3）</a></td>
+							<td class="text-right">2 sec</td>
+							<td class="text-right">1024 MB</td>
+							
+								<td class="no-break text-center">
+									
+										<a href="/contests/typical90/submit?taskScreenName=typical90_al">Submit</a>
+									
+									
+								</td>
+							
+						</tr>
+					
+						<tr>
+							<td class="text-center no-break"><a href="/contests/typical90/tasks/typical90_am">039</a></td>
+							<td><a href="/contests/typical90/tasks/typical90_am">Tree Distance（★5）</a></td>
+							<td class="text-right">2 sec</td>
+							<td class="text-right">1024 MB</td>
+							
+								<td class="no-break text-center">
+									
+										<a href="/contests/typical90/submit?taskScreenName=typical90_am">Submit</a>
+									
+									
+								</td>
+							
+						</tr>
+					
+						<tr>
+							<td class="text-center no-break"><a href="/contests/typical90/tasks/typical90_an">040</a></td>
+							<td><a href="/contests/typical90/tasks/typical90_an">Get More Money（★7）</a></td>
+							<td class="text-right">2 sec</td>
+							<td class="text-right">1024 MB</td>
+							
+								<td class="no-break text-center">
+									
+										<a href="/contests/typical90/submit?taskScreenName=typical90_an">Submit</a>
+									
+									
+								</td>
+							
+						</tr>
+					
+						<tr>
+							<td class="text-center no-break"><a href="/contests/typical90/tasks/typical90_ao">041</a></td>
+							<td><a href="/contests/typical90/tasks/typical90_ao">Piles in AtCoder Farm（★7）</a></td>
+							<td class="text-right">2 sec</td>
+							<td class="text-right">1024 MB</td>
+							
+								<td class="no-break text-center">
+									
+										<a href="/contests/typical90/submit?taskScreenName=typical90_ao">Submit</a>
+									
+									
+								</td>
+							
+						</tr>
+					
+						<tr>
+							<td class="text-center no-break"><a href="/contests/typical90/tasks/typical90_ap">042</a></td>
+							<td><a href="/contests/typical90/tasks/typical90_ap">Multiple of 9（★4）</a></td>
+							<td class="text-right">2 sec</td>
+							<td class="text-right">1024 MB</td>
+							
+								<td class="no-break text-center">
+									
+										<a href="/contests/typical90/submit?taskScreenName=typical90_ap">Submit</a>
+									
+									
+								</td>
+							
+						</tr>
+					
+						<tr>
+							<td class="text-center no-break"><a href="/contests/typical90/tasks/typical90_aq">043</a></td>
+							<td><a href="/contests/typical90/tasks/typical90_aq">Maze Challenge with Lack of Sleep（★4）</a></td>
+							<td class="text-right">2 sec</td>
+							<td class="text-right">1024 MB</td>
+							
+								<td class="no-break text-center">
+									
+										<a href="/contests/typical90/submit?taskScreenName=typical90_aq">Submit</a>
+									
+									
+								</td>
+							
+						</tr>
+					
+						<tr>
+							<td class="text-center no-break"><a href="/contests/typical90/tasks/typical90_ar">044</a></td>
+							<td><a href="/contests/typical90/tasks/typical90_ar">Shift and Swapping（★3）</a></td>
+							<td class="text-right">2 sec</td>
+							<td class="text-right">1024 MB</td>
+							
+								<td class="no-break text-center">
+									
+										<a href="/contests/typical90/submit?taskScreenName=typical90_ar">Submit</a>
+									
+									
+								</td>
+							
+						</tr>
+					
+						<tr>
+							<td class="text-center no-break"><a href="/contests/typical90/tasks/typical90_as">045</a></td>
+							<td><a href="/contests/typical90/tasks/typical90_as">Simple Grouping（★6）</a></td>
+							<td class="text-right">2 sec</td>
+							<td class="text-right">1024 MB</td>
+							
+								<td class="no-break text-center">
+									
+										<a href="/contests/typical90/submit?taskScreenName=typical90_as">Submit</a>
+									
+									
+								</td>
+							
+						</tr>
+					
+						<tr>
+							<td class="text-center no-break"><a href="/contests/typical90/tasks/typical90_at">046</a></td>
+							<td><a href="/contests/typical90/tasks/typical90_at">I Love 46（★3）</a></td>
+							<td class="text-right">2 sec</td>
+							<td class="text-right">1024 MB</td>
+							
+								<td class="no-break text-center">
+									
+										<a href="/contests/typical90/submit?taskScreenName=typical90_at">Submit</a>
+									
+									
+								</td>
+							
+						</tr>
+					
+						<tr>
+							<td class="text-center no-break"><a href="/contests/typical90/tasks/typical90_au">047</a></td>
+							<td><a href="/contests/typical90/tasks/typical90_au">Monochromatic Diagonal（★7）</a></td>
+							<td class="text-right">2 sec</td>
+							<td class="text-right">1024 MB</td>
+							
+								<td class="no-break text-center">
+									
+										<a href="/contests/typical90/submit?taskScreenName=typical90_au">Submit</a>
+									
+									
+								</td>
+							
+						</tr>
+					
+						<tr>
+							<td class="text-center no-break"><a href="/contests/typical90/tasks/typical90_av">048</a></td>
+							<td><a href="/contests/typical90/tasks/typical90_av">I will not drop out（★3）</a></td>
+							<td class="text-right">2 sec</td>
+							<td class="text-right">1024 MB</td>
+							
+								<td class="no-break text-center">
+									
+										<a href="/contests/typical90/submit?taskScreenName=typical90_av">Submit</a>
+									
+									
+								</td>
+							
+						</tr>
+					
+						<tr>
+							<td class="text-center no-break"><a href="/contests/typical90/tasks/typical90_aw">049</a></td>
+							<td><a href="/contests/typical90/tasks/typical90_aw">Flip Digits 2（★6）</a></td>
+							<td class="text-right">2 sec</td>
+							<td class="text-right">1024 MB</td>
+							
+								<td class="no-break text-center">
+									
+										<a href="/contests/typical90/submit?taskScreenName=typical90_aw">Submit</a>
+									
+									
+								</td>
+							
+						</tr>
+					
+						<tr>
+							<td class="text-center no-break"><a href="/contests/typical90/tasks/typical90_ax">050</a></td>
+							<td><a href="/contests/typical90/tasks/typical90_ax">Stair Jump（★3）</a></td>
+							<td class="text-right">2 sec</td>
+							<td class="text-right">1024 MB</td>
+							
+								<td class="no-break text-center">
+									
+										<a href="/contests/typical90/submit?taskScreenName=typical90_ax">Submit</a>
+									
+									
+								</td>
+							
+						</tr>
+					
+						<tr>
+							<td class="text-center no-break"><a href="/contests/typical90/tasks/typical90_ay">051</a></td>
+							<td><a href="/contests/typical90/tasks/typical90_ay">Typical Shop（★5）</a></td>
+							<td class="text-right">3 sec</td>
+							<td class="text-right">1024 MB</td>
+							
+								<td class="no-break text-center">
+									
+										<a href="/contests/typical90/submit?taskScreenName=typical90_ay">Submit</a>
+									
+									
+								</td>
+							
+						</tr>
+					
+						<tr>
+							<td class="text-center no-break"><a href="/contests/typical90/tasks/typical90_az">052</a></td>
+							<td><a href="/contests/typical90/tasks/typical90_az">Dice Product（★3）</a></td>
+							<td class="text-right">2 sec</td>
+							<td class="text-right">1024 MB</td>
+							
+								<td class="no-break text-center">
+									
+										<a href="/contests/typical90/submit?taskScreenName=typical90_az">Submit</a>
+									
+									
+								</td>
+							
+						</tr>
+					
+						<tr>
+							<td class="text-center no-break"><a href="/contests/typical90/tasks/typical90_ba">053</a></td>
+							<td><a href="/contests/typical90/tasks/typical90_ba">Discrete Dowsing（★7）</a></td>
+							<td class="text-right">2 sec</td>
+							<td class="text-right">1024 MB</td>
+							
+								<td class="no-break text-center">
+									
+										<a href="/contests/typical90/submit?taskScreenName=typical90_ba">Submit</a>
+									
+									
+								</td>
+							
+						</tr>
+					
+						<tr>
+							<td class="text-center no-break"><a href="/contests/typical90/tasks/typical90_bb">054</a></td>
+							<td><a href="/contests/typical90/tasks/typical90_bb">Takahashi Number（★6）</a></td>
+							<td class="text-right">2 sec</td>
+							<td class="text-right">1024 MB</td>
+							
+								<td class="no-break text-center">
+									
+										<a href="/contests/typical90/submit?taskScreenName=typical90_bb">Submit</a>
+									
+									
+								</td>
+							
+						</tr>
+					
+						<tr>
+							<td class="text-center no-break"><a href="/contests/typical90/tasks/typical90_bc">055</a></td>
+							<td><a href="/contests/typical90/tasks/typical90_bc">Select 5（★2）</a></td>
+							<td class="text-right">5 sec</td>
+							<td class="text-right">1024 MB</td>
+							
+								<td class="no-break text-center">
+									
+										<a href="/contests/typical90/submit?taskScreenName=typical90_bc">Submit</a>
+									
+									
+								</td>
+							
+						</tr>
+					
+						<tr>
+							<td class="text-center no-break"><a href="/contests/typical90/tasks/typical90_bd">056</a></td>
+							<td><a href="/contests/typical90/tasks/typical90_bd">Lucky Bag（★5）</a></td>
+							<td class="text-right">2 sec</td>
+							<td class="text-right">1024 MB</td>
+							
+								<td class="no-break text-center">
+									
+										<a href="/contests/typical90/submit?taskScreenName=typical90_bd">Submit</a>
+									
+									
+								</td>
+							
+						</tr>
+					
+						<tr>
+							<td class="text-center no-break"><a href="/contests/typical90/tasks/typical90_be">057</a></td>
+							<td><a href="/contests/typical90/tasks/typical90_be">Flip Flap（★6）</a></td>
+							<td class="text-right">2 sec</td>
+							<td class="text-right">1024 MB</td>
+							
+								<td class="no-break text-center">
+									
+										<a href="/contests/typical90/submit?taskScreenName=typical90_be">Submit</a>
+									
+									
+								</td>
+							
+						</tr>
+					
+						<tr>
+							<td class="text-center no-break"><a href="/contests/typical90/tasks/typical90_bf">058</a></td>
+							<td><a href="/contests/typical90/tasks/typical90_bf">Original Calculator（★4）</a></td>
+							<td class="text-right">2 sec</td>
+							<td class="text-right">1024 MB</td>
+							
+								<td class="no-break text-center">
+									
+										<a href="/contests/typical90/submit?taskScreenName=typical90_bf">Submit</a>
+									
+									
+								</td>
+							
+						</tr>
+					
+						<tr>
+							<td class="text-center no-break"><a href="/contests/typical90/tasks/typical90_bg">059</a></td>
+							<td><a href="/contests/typical90/tasks/typical90_bg">Many Graph Queries（★7）</a></td>
+							<td class="text-right">3 sec</td>
+							<td class="text-right">1024 MB</td>
+							
+								<td class="no-break text-center">
+									
+										<a href="/contests/typical90/submit?taskScreenName=typical90_bg">Submit</a>
+									
+									
+								</td>
+							
+						</tr>
+					
+						<tr>
+							<td class="text-center no-break"><a href="/contests/typical90/tasks/typical90_bh">060</a></td>
+							<td><a href="/contests/typical90/tasks/typical90_bh">Chimera（★5）</a></td>
+							<td class="text-right">2 sec</td>
+							<td class="text-right">1024 MB</td>
+							
+								<td class="no-break text-center">
+									
+										<a href="/contests/typical90/submit?taskScreenName=typical90_bh">Submit</a>
+									
+									
+								</td>
+							
+						</tr>
+					
+						<tr>
+							<td class="text-center no-break"><a href="/contests/typical90/tasks/typical90_bi">061</a></td>
+							<td><a href="/contests/typical90/tasks/typical90_bi">Deck（★2）</a></td>
+							<td class="text-right">2 sec</td>
+							<td class="text-right">1024 MB</td>
+							
+								<td class="no-break text-center">
+									
+										<a href="/contests/typical90/submit?taskScreenName=typical90_bi">Submit</a>
+									
+									
+								</td>
+							
+						</tr>
+					
+						<tr>
+							<td class="text-center no-break"><a href="/contests/typical90/tasks/typical90_bj">062</a></td>
+							<td><a href="/contests/typical90/tasks/typical90_bj">Paint All（★6）</a></td>
+							<td class="text-right">2 sec</td>
+							<td class="text-right">1024 MB</td>
+							
+								<td class="no-break text-center">
+									
+										<a href="/contests/typical90/submit?taskScreenName=typical90_bj">Submit</a>
+									
+									
+								</td>
+							
+						</tr>
+					
+						<tr>
+							<td class="text-center no-break"><a href="/contests/typical90/tasks/typical90_bk">063</a></td>
+							<td><a href="/contests/typical90/tasks/typical90_bk">Monochromatic Subgrid（★4）</a></td>
+							<td class="text-right">4 sec</td>
+							<td class="text-right">1024 MB</td>
+							
+								<td class="no-break text-center">
+									
+										<a href="/contests/typical90/submit?taskScreenName=typical90_bk">Submit</a>
+									
+									
+								</td>
+							
+						</tr>
+					
+						<tr>
+							<td class="text-center no-break"><a href="/contests/typical90/tasks/typical90_bl">064</a></td>
+							<td><a href="/contests/typical90/tasks/typical90_bl">Uplift（★3）</a></td>
+							<td class="text-right">2 sec</td>
+							<td class="text-right">1024 MB</td>
+							
+								<td class="no-break text-center">
+									
+										<a href="/contests/typical90/submit?taskScreenName=typical90_bl">Submit</a>
+									
+									
+								</td>
+							
+						</tr>
+					
+						<tr>
+							<td class="text-center no-break"><a href="/contests/typical90/tasks/typical90_bm">065</a></td>
+							<td><a href="/contests/typical90/tasks/typical90_bm">RGB Balls 2（★7）</a></td>
+							<td class="text-right">3 sec</td>
+							<td class="text-right">1024 MB</td>
+							
+								<td class="no-break text-center">
+									
+										<a href="/contests/typical90/submit?taskScreenName=typical90_bm">Submit</a>
+									
+									
+								</td>
+							
+						</tr>
+					
+						<tr>
+							<td class="text-center no-break"><a href="/contests/typical90/tasks/typical90_bn">066</a></td>
+							<td><a href="/contests/typical90/tasks/typical90_bn">Various Arrays（★5）</a></td>
+							<td class="text-right">2 sec</td>
+							<td class="text-right">1024 MB</td>
+							
+								<td class="no-break text-center">
+									
+										<a href="/contests/typical90/submit?taskScreenName=typical90_bn">Submit</a>
+									
+									
+								</td>
+							
+						</tr>
+					
+						<tr>
+							<td class="text-center no-break"><a href="/contests/typical90/tasks/typical90_bo">067</a></td>
+							<td><a href="/contests/typical90/tasks/typical90_bo">Base 8 to 9（★2）</a></td>
+							<td class="text-right">2 sec</td>
+							<td class="text-right">1024 MB</td>
+							
+								<td class="no-break text-center">
+									
+										<a href="/contests/typical90/submit?taskScreenName=typical90_bo">Submit</a>
+									
+									
+								</td>
+							
+						</tr>
+					
+						<tr>
+							<td class="text-center no-break"><a href="/contests/typical90/tasks/typical90_bp">068</a></td>
+							<td><a href="/contests/typical90/tasks/typical90_bp">Paired Information（★5）</a></td>
+							<td class="text-right">2 sec</td>
+							<td class="text-right">1024 MB</td>
+							
+								<td class="no-break text-center">
+									
+										<a href="/contests/typical90/submit?taskScreenName=typical90_bp">Submit</a>
+									
+									
+								</td>
+							
+						</tr>
+					
+						<tr>
+							<td class="text-center no-break"><a href="/contests/typical90/tasks/typical90_bq">069</a></td>
+							<td><a href="/contests/typical90/tasks/typical90_bq">Colorful Blocks 2（★3）</a></td>
+							<td class="text-right">2 sec</td>
+							<td class="text-right">1024 MB</td>
+							
+								<td class="no-break text-center">
+									
+										<a href="/contests/typical90/submit?taskScreenName=typical90_bq">Submit</a>
+									
+									
+								</td>
+							
+						</tr>
+					
+						<tr>
+							<td class="text-center no-break"><a href="/contests/typical90/tasks/typical90_br">070</a></td>
+							<td><a href="/contests/typical90/tasks/typical90_br">Plant Planning（★4）</a></td>
+							<td class="text-right">2 sec</td>
+							<td class="text-right">1024 MB</td>
+							
+								<td class="no-break text-center">
+									
+										<a href="/contests/typical90/submit?taskScreenName=typical90_br">Submit</a>
+									
+									
+								</td>
+							
+						</tr>
+					
+						<tr>
+							<td class="text-center no-break"><a href="/contests/typical90/tasks/typical90_bs">071</a></td>
+							<td><a href="/contests/typical90/tasks/typical90_bs">Fuzzy Priority（★7）</a></td>
+							<td class="text-right">3 sec</td>
+							<td class="text-right">1024 MB</td>
+							
+								<td class="no-break text-center">
+									
+										<a href="/contests/typical90/submit?taskScreenName=typical90_bs">Submit</a>
+									
+									
+								</td>
+							
+						</tr>
+					
+						<tr>
+							<td class="text-center no-break"><a href="/contests/typical90/tasks/typical90_bt">072</a></td>
+							<td><a href="/contests/typical90/tasks/typical90_bt">Loop Railway Plan（★4）</a></td>
+							<td class="text-right">2 sec</td>
+							<td class="text-right">1024 MB</td>
+							
+								<td class="no-break text-center">
+									
+										<a href="/contests/typical90/submit?taskScreenName=typical90_bt">Submit</a>
+									
+									
+								</td>
+							
+						</tr>
+					
+						<tr>
+							<td class="text-center no-break"><a href="/contests/typical90/tasks/typical90_bu">073</a></td>
+							<td><a href="/contests/typical90/tasks/typical90_bu">We Need Both a and b（★5）</a></td>
+							<td class="text-right">2 sec</td>
+							<td class="text-right">1024 MB</td>
+							
+								<td class="no-break text-center">
+									
+										<a href="/contests/typical90/submit?taskScreenName=typical90_bu">Submit</a>
+									
+									
+								</td>
+							
+						</tr>
+					
+						<tr>
+							<td class="text-center no-break"><a href="/contests/typical90/tasks/typical90_bv">074</a></td>
+							<td><a href="/contests/typical90/tasks/typical90_bv">ABC String 2（★6）</a></td>
+							<td class="text-right">1 sec</td>
+							<td class="text-right">1024 MB</td>
+							
+								<td class="no-break text-center">
+									
+										<a href="/contests/typical90/submit?taskScreenName=typical90_bv">Submit</a>
+									
+									
+								</td>
+							
+						</tr>
+					
+						<tr>
+							<td class="text-center no-break"><a href="/contests/typical90/tasks/typical90_bw">075</a></td>
+							<td><a href="/contests/typical90/tasks/typical90_bw">Magic For Balls（★3）</a></td>
+							<td class="text-right">2 sec</td>
+							<td class="text-right">1024 MB</td>
+							
+								<td class="no-break text-center">
+									
+										<a href="/contests/typical90/submit?taskScreenName=typical90_bw">Submit</a>
+									
+									
+								</td>
+							
+						</tr>
+					
+						<tr>
+							<td class="text-center no-break"><a href="/contests/typical90/tasks/typical90_bx">076</a></td>
+							<td><a href="/contests/typical90/tasks/typical90_bx">Cake Cut（★3）</a></td>
+							<td class="text-right">2 sec</td>
+							<td class="text-right">1024 MB</td>
+							
+								<td class="no-break text-center">
+									
+										<a href="/contests/typical90/submit?taskScreenName=typical90_bx">Submit</a>
+									
+									
+								</td>
+							
+						</tr>
+					
+				</tbody>
+			</table></div>
+		
+		<p class="btn-text-group">
+			
+			
+				<a class="btn-text" href="/contests/typical90/score">My Score</a>
+				<span class="divider"></span>
+			
+			<a class="btn-text" href="/contests/typical90/tasks_print">Tasks for printing</a>
+		</p>
+		
+		
+		
+	</div>
+</div>
+
+
+
+
+		
+			<hr>
+			
+			
+			
+<div class="a2a_kit a2a_kit_size_20 a2a_default_style pull-right" data-a2a-url="https://atcoder.jp/contests/typical90/tasks?lang=en" data-a2a-title="Tasks - 競プロ典型 90 問">
+	<a class="a2a_button_facebook"></a>
+	<a class="a2a_button_twitter"></a>
+	
+		<a class="a2a_button_telegram"></a>
+	
+	<a class="a2a_dd" href="https://www.addtoany.com/share"></a>
+</div>
+
+		
+		<script async src="//static.addtoany.com/menu/page.js"></script>
+		
+	</div> 
+	<hr>
+</div> 
+
+	<div class="container" style="margin-bottom: 80px;">
+			<footer class="footer">
+			
+				<ul>
+					<li><a href="/contests/typical90/rules">Rule</a></li>
+					<li><a href="/contests/typical90/glossary">Glossary</a></li>
+					
+				</ul>
+			
+			<ul>
+				<li><a href="/tos">Terms of service</a></li>
+				<li><a href="/privacy">Privacy Policy</a></li>
+				<li><a href="/personal">Information Protection Policy</a></li>
+				<li><a href="/company">Company</a></li>
+				<li><a href="/faq">FAQ</a></li>
+				<li><a href="/contact">Contact</a></li>
+				
+			</ul>
+			<div class="text-center">
+					<small id="copyright">Copyright Since 2012 &copy;<a href="http://atcoder.co.jp">AtCoder Inc.</a> All rights reserved.</small>
+			</div>
+			</footer>
+	</div>
+	<p id="fixed-server-timer" class="contest-timer"></p>
+	<div id="scroll-page-top" style="display:none;"><span class="glyphicon glyphicon-arrow-up" aria-hidden="true"></span> Page Top</div>
+
+</body>
+</html>
+
+

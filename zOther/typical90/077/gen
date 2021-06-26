@@ -1,0 +1,119 @@
+#!/usr/bin/env python3
+
+import argparse, sys
+from random import randrange, choice, shuffle
+
+def show_list(lst):
+    return ' '.join(map(str,lst))
+
+# Function generate() should yield test cases of type string repeatedly.
+# E.g.,
+
+def generate_seq():
+    for x in range(1, 10):
+        for cdir in ['N', 'E', 'S', 'W']:
+            yield f'{x}\n{cdir}\n'
+
+# or E.g.,
+
+def generate_random():
+
+    # This is the function you should edit.
+    # You can use prcase() to print the value to the case
+
+    cx = 500
+    cy = 500
+
+    def onecase():
+        thedir = [(1,0),(1,1),(0,1),(-1,1),(-1,0),(-1,-1),(0,-1),(1,-1)]
+        A = [[0 for _ in range(cy + 200)] for __ in range(cx + 200)]
+        B = [[0 for _ in range(cy + 200)] for __ in range(cx + 200)]
+        def ctry(x, y, A, B):
+            shuffle(thedir)
+            for (dx, dy) in thedir:
+                if not B[cx+x+dx][cy+y+dy]:
+                    A[cx+x][cy+y] = 1
+                    B[cx+x+dx][cy+y+dy] = 1
+                    # print(f'A {cx+x} {cy+y}')
+                    # print(f'B {cx+x+dx} {cy+y+dy}')
+                    return 1
+            return 0
+        N = 20000
+        T = 1
+        prcase(N, T)
+        k = 1
+        while N > 0:
+            for i in range(-k, k + 1):
+                N -= ctry(i, k, A, B)
+                if N == 0:
+                    break
+                N -= ctry(i, -k, A, B)
+                if N == 0:
+                    break
+            if N == 0:
+                break
+            for i in range(-k + 1, k):
+                N -= ctry(k, i, A, B)
+                if N == 0:
+                    break
+                N -= ctry(-k, i, A, B)
+                if N == 0:
+                    break
+            k += 1
+        k += 5
+        for x in range(cx - k, cx + k):
+            for y in range(cy - k, cy + k):
+                if A[x][y]:
+                    prcase(x, y)
+        for x in range(cx - k, cx + k):
+            for y in range(cy - k, cy + k):
+                if B[x][y]:
+                    prcase(x, y)
+
+    # do not edit
+    def prcase(*args):
+        nonlocal case
+        for i, a in enumerate(args):
+            if i > 0:
+                case += ' '
+            case += str(a)
+        case += '\n'
+
+    # do not edit
+    while True:
+        case = ''
+        onecase()
+        yield case
+
+# generate = generate_seq
+generate = generate_random
+
+######################################################################
+# Hope that you need not edit the following code.
+
+end_mark = '^__=end=__^'
+end_file_mark = '^__=end_file=__^'
+
+def main():
+    ap = argparse.ArgumentParser();
+    ap.add_argument('-r', '--repeat', action='store_true',
+                    help='Repeatedly generates cases',)
+    args = ap.parse_args()
+
+    try:
+        if args.repeat:
+            for s in generate():
+                print(s.rstrip())
+                print(end_mark)
+            print(end_file_mark)
+        else:
+            for (i, s) in enumerate(generate()):
+                print(s.rstrip())
+                print(end_mark)
+                if (i == 0):
+                    break
+    except BrokenPipeError as e:
+        # print('caught: BrokenPipeError', file=sys.stderr)
+        pass
+
+main()

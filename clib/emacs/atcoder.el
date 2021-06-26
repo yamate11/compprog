@@ -8,7 +8,7 @@
 	"interactive" "intervalSet" "polynomial" "convolution" "adjMatrix"
         "interpolation"
 	"f:power" "f:<<" "f:>>" "f:updMaxMin" "f:gcd" "f:intDiv" 
-        "f:perfmeas" "f:mex" "f:shortVector" "f:floor_sum"
+        "f:perfmeas" "f:mex" "f:shortVector" "f:floor_sum" "f:itrange"
 	))
 
 (setq atcoder-topdir "/home/y-tanabe/proj/compprog")
