@@ -2,8 +2,8 @@
 #include <cassert>
 typedef long long int ll;
 using namespace std;
-#include <atcoder/maxflow>
-using namespace atcoder;
+// #include <atcoder/all>
+// using namespace atcoder;
 
 // @@ !! LIM(debug)
 
@@ -253,59 +253,34 @@ int main(/* int argc, char *argv[] */) {
   cin.tie(nullptr);
   cout << setprecision(20);
 
-  vector<ll> dx = {-100, 1, 1, 0, -1, -1, -1, 0, 1};
-  vector<ll> dy = {-100, 0, 1, 1, 1, 0, -1, -1, -1};
-
-  ll N, T; cin >> N >> T;
-  vector<ll> AX(N), AY(N), BX(N), BY(N);
-  for (ll i = 0; i < N; i++) cin >> AX[i] >> AY[i];
-  map<ll, map<ll, ll>> mp;
+  ll N; cin >> N;
+  vector<ll> L(N), R(N), T(N);
   for (ll i = 0; i < N; i++) {
-    cin >> BX[i] >> BY[i];
-    mp[BX[i]][BY[i]] = i;
+    ll t, l, r; cin >> t >> l >> r;
+    T[i] = t; L[i] = l; R[i] = r;
+    /*
+    if (t == 1) { L[i] = l; R[i] = r + 1; }
+    if (t == 2) { L[i] = l; R[i] = r; }
+    if (t == 3) { L[i] = l + 1; R[i] = r + 1; }
+    if (t == 4) { L[i] = l + 1; R[i] = r; }
+    */
   }
-
-  // Dinic d(2 + 2 * N, 0, 1);
-  mf_graph<ll> d(2 + 2 * N);
+  ll cnt = 0;
   for (ll i = 0; i < N; i++) {
-    d.add_edge(0, 2 + i, 1);
-    d.add_edge(2 + N + i, 1, 1);
-  }
-  vector<vector<ll>> rec(N, vector<ll>(9));
-  for (ll i = 0; i < N; i++) {
-    for (ll k = 1; k <= 8; k++) {
-      ll x = AX[i] + dx[k] * T;
-      ll y = AY[i] + dy[k] * T;
-      auto it = mp.find(x);
-      if (it == mp.end()) continue;
-      auto it2 = it->second.find(y);
-      if (it2 == it->second.end()) continue;
-      ll t = it2->second;
-      ll idx = d.add_edge(2 + i, 2 + N + t, 1);
-      rec[i][k] = idx;
-    }
-  }
-  ll flow = d.flow(0, 1);
-  DLOGK(flow);
-  if (flow < N) {
-    cout << "No\n";
-    return 0;
-  }
-  cout << "Yes\n";
-  vector<ll> ans(N);
-  for (ll i = 0; i < N; i++) {
-    for (ll k = 1; k <= 8; k++) {
-      if (rec[i][k] == 0) continue;
-      if (d.get_edge(rec[i][k]).flow == 1) {
-        ans[i] = k;
-        break;
+    for (ll j = i + 1; j < N; j++) {
+      DLOGK(i, j, L[i], R[i], L[j], R[j]);
+      if (R[i] < L[j] || R[j] < L[i]) continue;
+      if (R[i] == L[j]) {
+        if (T[i] % 2 == 0 || T[j] >= 3) continue;
       }
+      if (R[j] == L[i]) {
+        if (T[j] % 2 == 0 || T[i] >= 3) continue;
+      }
+      DLOGK(i, j);
+      cnt++;
     }
-    assert(ans[i] > 0);
   }
-  for (ll i = 0; i < N; i++) cout << ans[i] << " ";
-  cout << endl;
-
+  cout << cnt << endl;
 
   return 0;
 }

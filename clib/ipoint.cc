@@ -69,6 +69,7 @@ struct IPoint {
   }
 
   bool operator ==(const IPoint& o) const { return x == o.x && y == o.y; }
+  bool operator !=(const IPoint& o) const { return x != o.x || y != o.y; }
   IPoint operator +(const IPoint& o) const { return IPoint(x, y) += o; }
   IPoint operator -(const IPoint& o) const { return IPoint(x, y) -= o; }
   IPoint operator *(ll k) const { return IPoint(x, y) *= k; }
