@@ -30,7 +30,7 @@ using namespace std;
     vs is a vector of values at point 0, 1, 2, ..., deg
 
   template<typename T>
-  T lagrangeVal(const vector<T>& vs, int n) {
+  T lagrangeVal(const vector<T>& vs, ll n) {
     Lagrange Interpolation
     This function returns the value of the interpolated polynomial
     of degree deg, at x = n.
@@ -82,18 +82,30 @@ Pol lagrangePol(const vector<typename Pol::value_type>& vs) {
 }
 
 template<typename T>
-T lagrangeVal(const vector<T>& vs, int n) {
+T lagrangeVal(const vector<T>& vs, ll n) {
   int k = vs.size() - 1;
   vector<T> fact(k + 1);
+  vector<T> invfact(k + 1);
   fact[0] = (T)1;
   for (ll i = 0; i < k; i++) fact[i + 1] = fact[i] * (T)(i + 1);
-  T q = (T)1;
-  for (int i = 0; i <= k; i++) q *= T(n - i);
+  invfact[k] = (T)1 / fact[k];
+  for (ll i = k; i >= 1; i--) invfact[i - 1] = i * invfact[i];
+  vector<T> qF(k + 1), qB(k + 1);
+  // T q = (T)1;
+  qF[0] = qB[k] = (T)1;
+  for (int i = 0; i < k; i++) {
+    T tt = T(n - i);
+    if (tt == (T)0) return vs[i];
+    qF[i + 1] = qF[i] * tt;
+  }
+  for (int i = k; i > 0; i--) {
+    qB[i - 1] = qB[i] * T(n - i);
+  }
   T ret = (T)0;
   for (int i = 0; i <= k; i++) {
-    T c = vs[i] / (fact[i] * fact[k - i]);
+    T c = vs[i] * invfact[i] * invfact[k - i];
     if ((k - i) % 2 != 0) c = -c;
-    T d = q / (n - i);
+    T d = qF[i] * qB[i];
     ret += d * c;
   }
   return ret;

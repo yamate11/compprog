@@ -1,0 +1,10 @@
+#!/usr/bin/env python3
+
+from random import randrange
+
+m = 10000
+lst = [str(randrange(0, 10)) for _ in range(m)]
+print(''.join(lst))
+k = m // 2
+print(k)
+

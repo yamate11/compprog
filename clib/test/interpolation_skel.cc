@@ -107,6 +107,16 @@ int main(/* int argc, char *argv[] */) {
     }
   }
 
+  {
+    using Fp = FpG<11>;
+    auto f = [&](Fp x) -> Fp { return x*x*x*x + 4*x*x*x - 2*x*x + 5; };
+    vector<Fp> vec;
+    for (ll i = 0; i <= 4; i++) vec.push_back(f(i));
+    for (ll i = 0; i < 30; i++) {
+      assert(lagrangeVal(vec, i) == f(i));
+    }
+  }
+
   cout << "ok" << endl;
 
   return 0;

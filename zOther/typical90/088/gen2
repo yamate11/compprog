@@ -1,0 +1,19 @@
+#!/usr/bin/env python3
+
+from random import randrange
+
+N = 100
+lstA = [randrange(1, 100) for _ in range(N)]
+Q = 0
+lstQ = []
+for i in range(1, N + 1):
+    for j in range(i + 1, N + 1):
+        if randrange(0, 2) == 0:
+            Q += 1
+            lstQ.append((i, j))
+print(N, Q)
+for x in lstA:
+    print(x, end=' ')
+print()
+for (x, y) in lstQ:
+    print(x, y)
