@@ -27,7 +27,7 @@ using namespace std;
 
   With CombG<mod>, you can do something like:
 
-        FpA Comb cb(1000);     // args upto 1000, inclusive
+        CombA cb(1000);     // args upto 1000, inclusive
         FpA x = cb.fact(1000);       // factorial
         FpA y = cb.comb(500, 300);   // combination (binom)
         FpA z = cb.perm(500, 300);   // permutation
