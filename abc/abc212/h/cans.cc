@@ -12,6 +12,10 @@ int main(/* int argc, char *argv[] */) {
   cin.tie(nullptr);
   cout << setprecision(20);
 
+  ll N, K; cin >> N >> K;
+  for (ll i = 0; i < K; i++) cin >> A[i];
+  
+
   return 0;
 }
 

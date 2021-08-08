@@ -9,7 +9,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>F - Pond Skater</title>
+	<title>B - Weak Password</title>
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 	<meta http-equiv="Content-Language" content="en">
 	<meta name="viewport" content="width=device-width,initial-scale=1.0">
@@ -22,42 +22,42 @@
 
 	<meta property="og:site_name" content="AtCoder">
 	
-	<meta property="og:title" content="F - Pond Skater" />
+	<meta property="og:title" content="B - Weak Password" />
 	<meta property="og:description" content="AtCoder is a programming contest site for anyone from beginners to experts. We hold weekly programming contests online." />
 	<meta property="og:type" content="website" />
-	<meta property="og:url" content="https://atcoder.jp/contests/abc170/tasks/abc170_f" />
+	<meta property="og:url" content="https://atcoder.jp/contests/abc212/tasks/abc212_b" />
 	<meta property="og:image" content="https://img.atcoder.jp/assets/atcoder.png" />
 	<meta name="twitter:card" content="summary" />
 	<meta name="twitter:site" content="@atcoder" />
 	
-	<meta property="twitter:title" content="F - Pond Skater" />
+	<meta property="twitter:title" content="B - Weak Password" />
 
 	<link href="//fonts.googleapis.com/css?family=Lato:400,700" rel="stylesheet" type="text/css">
-	<link rel="stylesheet" type="text/css" href="//img.atcoder.jp/public/fb733e3/css/bootstrap.min.css">
-	<link rel="stylesheet" type="text/css" href="//img.atcoder.jp/public/fb733e3/css/base.css">
+	<link rel="stylesheet" type="text/css" href="//img.atcoder.jp/public/ad3eaad/css/bootstrap.min.css">
+	<link rel="stylesheet" type="text/css" href="//img.atcoder.jp/public/ad3eaad/css/base.css">
 	<link rel="shortcut icon" type="image/png" href="//img.atcoder.jp/assets/favicon.png">
 	<link rel="apple-touch-icon" href="//img.atcoder.jp/assets/atcoder.png">
-	<script src="//img.atcoder.jp/public/fb733e3/js/lib/jquery-1.9.1.min.js"></script>
-	<script src="//img.atcoder.jp/public/fb733e3/js/lib/bootstrap.min.js"></script>
-	<script src="//img.atcoder.jp/public/fb733e3/js/cdn/js.cookie.min.js"></script>
-	<script src="//img.atcoder.jp/public/fb733e3/js/cdn/moment.min.js"></script>
-	<script src="//img.atcoder.jp/public/fb733e3/js/cdn/moment_js-ja.js"></script>
+	<script src="//img.atcoder.jp/public/ad3eaad/js/lib/jquery-1.9.1.min.js"></script>
+	<script src="//img.atcoder.jp/public/ad3eaad/js/lib/bootstrap.min.js"></script>
+	<script src="//img.atcoder.jp/public/ad3eaad/js/cdn/js.cookie.min.js"></script>
+	<script src="//img.atcoder.jp/public/ad3eaad/js/cdn/moment.min.js"></script>
+	<script src="//img.atcoder.jp/public/ad3eaad/js/cdn/moment_js-ja.js"></script>
 	<script>
 		var LANG = "en";
 		var userScreenName = "yamate11";
-		var csrfToken = "xiDti+MQ2khmZMOji1p+4aZ3qbZN2FeooA1cFWmAmN0="
+		var csrfToken = "nsXJ8SVGUl99OjU7M/78RbRZcfGcvONV9gyEUrGpfLU="
 	</script>
-	<script src="//img.atcoder.jp/public/fb733e3/js/utils.js"></script>
+	<script src="//img.atcoder.jp/public/ad3eaad/js/utils.js"></script>
 	
 	
-		<script src="//img.atcoder.jp/public/fb733e3/js/contest.js"></script>
-		<link href="//img.atcoder.jp/public/fb733e3/css/contest.css" rel="stylesheet" />
+		<script src="//img.atcoder.jp/public/ad3eaad/js/contest.js"></script>
+		<link href="//img.atcoder.jp/public/ad3eaad/css/contest.css" rel="stylesheet" />
 		<script>
-			var contestScreenName = "abc170";
+			var contestScreenName = "abc212";
 			var remainingText = "Remaining Time";
 			var countDownText = "Contest begins in";
-			var startTime = moment("2020-06-14T21:00:00+09:00");
-			var endTime = moment("2020-06-14T22:40:00+09:00");
+			var startTime = moment("2021-07-31T21:00:00+09:00");
+			var endTime = moment("2021-07-31T22:40:00+09:00");
 		</script>
 		<style></style>
 	
@@ -67,20 +67,17 @@
 		<script>$(function(){$('var').each(function(){var html=$(this).html().replace(/<sub>/g,'_{').replace(/<\/sub>/g,'}');$(this).html('\\('+html+'\\)');});});</script>
 	
 	
-		<link href="//img.atcoder.jp/public/fb733e3/css/cdn/select2.min.css" rel="stylesheet" />
-		<link href="//img.atcoder.jp/public/fb733e3/css/cdn/select2-bootstrap.min.css" rel="stylesheet" />
-		<script src="//img.atcoder.jp/public/fb733e3/js/lib/select2.min.js"></script>
+		<link href="//img.atcoder.jp/public/ad3eaad/css/cdn/select2.min.css" rel="stylesheet" />
+		<link href="//img.atcoder.jp/public/ad3eaad/css/cdn/select2-bootstrap.min.css" rel="stylesheet" />
+		<script src="//img.atcoder.jp/public/ad3eaad/js/lib/select2.min.js"></script>
 	
 	
-		<link rel="stylesheet" href="//img.atcoder.jp/public/fb733e3/css/cdn/codemirror.min.css">
-		<script src="//img.atcoder.jp/public/fb733e3/js/cdn/codemirror.min.js"></script>
-		<script src="//img.atcoder.jp/public/fb733e3/js/codeMirror/merged.js"></script>
+		<link rel="stylesheet" href="//img.atcoder.jp/public/ad3eaad/css/cdn/codemirror.min.css">
+		<script src="//img.atcoder.jp/public/ad3eaad/js/cdn/codemirror.min.js"></script>
+		<script src="//img.atcoder.jp/public/ad3eaad/js/codeMirror/merged.js"></script>
 	
 	
-		<script src="//img.atcoder.jp/public/fb733e3/js/cdn/run_prettify.js"></script>
-	
-	
-	
+		<script src="//img.atcoder.jp/public/ad3eaad/js/cdn/run_prettify.js"></script>
 	
 	
 	
@@ -88,8 +85,11 @@
 	
 	
 	
-	<script src="//img.atcoder.jp/public/fb733e3/js/base.js"></script>
-	<script src="//img.atcoder.jp/public/fb733e3/js/ga.js"></script>
+	
+	
+	
+	<script src="//img.atcoder.jp/public/ad3eaad/js/base.js"></script>
+	<script src="//img.atcoder.jp/public/ad3eaad/js/ga.js"></script>
 </head>
 
 <body>
@@ -109,11 +109,11 @@
 				<h4 class="modal-title">Contest started</h4>
 			</div>
 			<div class="modal-body">
-				<p>AtCoder Beginner Contest 170 has begun.</p>
+				<p>AtCoder Beginner Contest 212 has begun.</p>
 			</div>
 			<div class="modal-footer">
 				
-					<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+					<a class="btn btn-primary" href='/contests/abc212/tasks'>Go to the task list page</a>
 				
 			</div>
 		</div>
@@ -127,7 +127,7 @@
 				<h4 class="modal-title">Contest is over</h4>
 			</div>
 			<div class="modal-body">
-				<p>AtCoder Beginner Contest 170 has ended.</p>
+				<p>AtCoder Beginner Contest 212 has ended.</p>
 			</div>
 			<div class="modal-footer">
 				<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
@@ -149,7 +149,7 @@
 			<div class="collapse navbar-collapse" id="navbar-collapse">
 				<ul class="nav navbar-nav">
 				
-					<li><a class="contest-title" href="/contests/abc170">AtCoder Beginner Contest 170</a></li>
+					<li><a class="contest-title" href="/contests/abc212">AtCoder Beginner Contest 212</a></li>
 				
 				</ul>
 				<ul class="nav navbar-nav navbar-right">
@@ -159,15 +159,15 @@
 							<img src='//img.atcoder.jp/assets/top/img/flag-lang/en.png'> English <span class="caret"></span>
 						</a>
 						<ul class="dropdown-menu">
-							<li><a href="/contests/abc170/tasks/abc170_f?lang=ja"><img src='//img.atcoder.jp/assets/top/img/flag-lang/ja.png'> 日本語</a></li>
-							<li><a href="/contests/abc170/tasks/abc170_f?lang=en"><img src='//img.atcoder.jp/assets/top/img/flag-lang/en.png'> English</a></li>
+							<li><a href="/contests/abc212/tasks/abc212_b?lang=ja"><img src='//img.atcoder.jp/assets/top/img/flag-lang/ja.png'> 日本語</a></li>
+							<li><a href="/contests/abc212/tasks/abc212_b?lang=en"><img src='//img.atcoder.jp/assets/top/img/flag-lang/en.png'> English</a></li>
 						</ul>
 					</li>
 					
 					
 						<li class="dropdown">
 							<a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
-								<span class="glyphicon glyphicon-cog" aria-hidden="true"></span> yamate11 (Guest) <span class="caret"></span>
+								<span class="glyphicon glyphicon-cog" aria-hidden="true"></span> yamate11 (Contestant) <span class="caret"></span>
 							</a>
 							<ul class="dropdown-menu">
 								<li><a href="/users/yamate11"><span class="glyphicon glyphicon-user" aria-hidden="true"></span> My Profile</a></li>
@@ -189,8 +189,8 @@
 		</div>
 	</nav>
 
-	<form method="POST" name="form_logout" action="/logout?continue=https%3A%2F%2Fatcoder.jp%2Fcontests%2Fabc170%2Ftasks%2Fabc170_f">
-		<input type="hidden" name="csrf_token" value="xiDti&#43;MQ2khmZMOji1p&#43;4aZ3qbZN2FeooA1cFWmAmN0=" />
+	<form method="POST" name="form_logout" action="/logout?continue=https%3A%2F%2Fatcoder.jp%2Fcontests%2Fabc212%2Ftasks%2Fabc212_b">
+		<input type="hidden" name="csrf_token" value="nsXJ8SVGUl99OjU7M/78RbRZcfGcvONV9gyEUrGpfLU=" />
 	</form>
 	<div id="main-container" class="container"
 		 	style="padding-top:50px;">
@@ -203,35 +203,35 @@
 		<small class="contest-duration">
 			
 				Contest Duration:
-				<a href='http://www.timeanddate.com/worldclock/fixedtime.html?iso=20200614T2100&p1=248' target='blank'><time class='fixtime fixtime-full'>2020-06-14 21:00:00+0900</time></a> - <a href='http://www.timeanddate.com/worldclock/fixedtime.html?iso=20200614T2240&p1=248' target='blank'><time class='fixtime fixtime-full'>2020-06-14 22:40:00+0900</time></a> (local time)
+				<a href='http://www.timeanddate.com/worldclock/fixedtime.html?iso=20210731T2100&p1=248' target='blank'><time class='fixtime fixtime-full'>2021-07-31 21:00:00+0900</time></a> - <a href='http://www.timeanddate.com/worldclock/fixedtime.html?iso=20210731T2240&p1=248' target='blank'><time class='fixtime fixtime-full'>2021-07-31 22:40:00+0900</time></a> (local time)
 				(100 minutes)
 			
 		</small>
 		<small class="back-to-home pull-right"><a href="/home">Back to Home</a></small>
 	</div>
 	<ul class="nav nav-tabs">
-		<li><a href="/contests/abc170"><span class="glyphicon glyphicon-home" aria-hidden="true"></span> Top</a></li>
+		<li><a href="/contests/abc212"><span class="glyphicon glyphicon-home" aria-hidden="true"></span> Top</a></li>
 		
-			<li class="active"><a href="/contests/abc170/tasks"><span class="glyphicon glyphicon-tasks" aria-hidden="true"></span> Tasks</a></li>
-		
-
-		
-			<li><a href="/contests/abc170/clarifications"><span class="glyphicon glyphicon-question-sign" aria-hidden="true"></span> Clarifications <span id="clar-badge" class="badge"></span></a></li>
+			<li class="active"><a href="/contests/abc212/tasks"><span class="glyphicon glyphicon-tasks" aria-hidden="true"></span> Tasks</a></li>
 		
 
 		
-			<li><a href="/contests/abc170/submit?taskScreenName=abc170_f"><span class="glyphicon glyphicon-send" aria-hidden="true"></span> Submit</a></li>
+			<li><a href="/contests/abc212/clarifications"><span class="glyphicon glyphicon-question-sign" aria-hidden="true"></span> Clarifications <span id="clar-badge" class="badge"></span></a></li>
+		
+
+		
+			<li><a href="/contests/abc212/submit?taskScreenName=abc212_b"><span class="glyphicon glyphicon-send" aria-hidden="true"></span> Submit</a></li>
 		
 
 		
 			<li>
 				<a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false"><span class="glyphicon glyphicon-list" aria-hidden="true"></span> Results<span class="caret"></span></a>
 				<ul class="dropdown-menu">
-					<li><a href="/contests/abc170/submissions"><span class="glyphicon glyphicon-globe" aria-hidden="true"></span> All Submissions</a></li>
 					
-						<li><a href="/contests/abc170/submissions/me"><span class="glyphicon glyphicon-user" aria-hidden="true"></span> My Submissions</a></li>
+					
+						<li><a href="/contests/abc212/submissions/me"><span class="glyphicon glyphicon-user" aria-hidden="true"></span> My Submissions</a></li>
 						<li class="divider"></li>
-						<li><a href="/contests/abc170/score"><span class="glyphicon glyphicon-dashboard" aria-hidden="true"></span> My Score</a></li>
+						<li><a href="/contests/abc212/score"><span class="glyphicon glyphicon-dashboard" aria-hidden="true"></span> My Score</a></li>
 					
 				</ul>
 			</li>
@@ -240,26 +240,18 @@
 		
 			
 				
-					<li><a href="/contests/abc170/standings"><span class="glyphicon glyphicon-sort-by-attributes-alt" aria-hidden="true"></span> Standings</a></li>
-				
-			
-				
-					<li><a href="/contests/abc170/standings/virtual"><span class="glyphicon glyphicon-sort-by-attributes-alt" aria-hidden="true"></span> Virtual Standings</a></li>
+					<li><a href="/contests/abc212/standings"><span class="glyphicon glyphicon-sort-by-attributes-alt" aria-hidden="true"></span> Standings</a></li>
 				
 			
 		
 
 		
-			<li><a href="/contests/abc170/custom_test"><span class="glyphicon glyphicon-wrench" aria-hidden="true"></span> Custom Test</a></li>
+			<li><a href="/contests/abc212/custom_test"><span class="glyphicon glyphicon-wrench" aria-hidden="true"></span> Custom Test</a></li>
 		
 
 		
-			<li><a href="/contests/abc170/editorial"><span class="glyphicon glyphicon-book" aria-hidden="true"></span> Editorial</a></li>
-		
 		
 			
-			
-				<li><a href="https://codeforces.com/blog/entry/78783" target="_blank" rel="noopener"><span class="glyphicon glyphicon-comment" aria-hidden="true"></span> Discuss</a></li>
 			
 		
 
@@ -268,8 +260,8 @@
 </div>
 	<div class="col-sm-12">
 		<span class="h2">
-			F - Pond Skater
-			<a class="btn btn-default btn-sm" href="/contests/abc170/tasks/abc170_f/editorial">Editorial</a>
+			B - Weak Password
+			
 		</span>
 		<span id="task-lang-btn" class="pull-right"><span data-lang="ja"><img src='//img.atcoder.jp/assets/top/img/flag-lang/ja.png'></span> / <span data-lang="en"><img src='//img.atcoder.jp/assets/top/img/flag-lang/en.png'></span></span>
 		<script>
@@ -308,7 +300,7 @@
 		</script>
 		<hr/>
 		<p>
-			Time Limit: 3 sec / Memory Limit: 1024 MB
+			Time Limit: 2 sec / Memory Limit: 1024 MB
 			
 		</p>
 
@@ -316,32 +308,27 @@
 			
 			<span class="lang">
 <span class="lang-ja">
-<p>配点 : <var>600</var> 点</p>
+<p>配点 : <var>200</var> 点</p>
 
 <div class="part">
 <section>
-<h3>問題文</h3><p>アメンボのすぬけ君は南北 <var>H</var> マス東西 <var>W</var> マスの長方形の形をしたグリッド状の池に住んでいます。北から <var>i</var> 番目、西から <var>j</var> 番目のマスをマス <var>(i,j)</var> とします。</p>
-<p>いくつかのマスには蓮の葉が浮かんでおり、すぬけ君はそれらのマスには入ることができません。
-<var>c_{ij}</var> が <code>@</code> のときマス <var>(i,j)</var> に蓮の葉が浮かんでいること、<code>.</code>のときそうでないことを表します。</p>
-<p>すぬけ君は一回水をかくことで東西南北のいずれかの方向に <var>1</var> マス以上 <var>K</var> マス以下移動することができます。
-移動の途中に蓮の葉のあるマスがあってはいけません。また、蓮の葉のあるマスや池の外に移動することもできません。</p>
-<p>すぬけ君がマス <var>(x_1,y_1)</var> から <var>(x_2,y_2)</var> まで移動するのに最小で何回水をかく必要があるか求めてください。
-<var>(x_1,y_1)</var> から <var>(x_2,y_2)</var> まで移動することができない場合、そのことを指摘してください。</p>
+<h3>問題文</h3><p><var>4</var> 桁の暗証番号 <var>X_1X_2X_3X_4</var> が与えられます。
+番号は先頭の桁が <var>0</var> であることもあり得ます。
+暗証番号は以下のいずれかの条件をみたすとき弱い暗証番号と呼ばれます。</p>
+<ul>
+<li><var>4</var> 桁とも同じ数字である。</li>
+<li><var>1\leq i\leq 3</var> をみたす任意の整数 <var>i</var> について、 <var>X_{i+1}</var> が、 <var>X_i</var> の次の数字である。
+ただし、 <var>0\leq j\leq 8</var> について <var>j</var> の次の数字は <var>j+1</var> であり、 <var>9</var> の次の数字は <var>0</var> である。 </li>
+</ul>
+<p>与えられた暗証番号が弱い暗証番号ならば <code>Weak</code> を、そうでないならば <code>Strong</code> を出力してください。</p>
 </section>
 </div>
 
 <div class="part">
 <section>
 <h3>制約</h3><ul>
-<li><var>1 \leq H,W,K \leq 10^6</var></li>
-<li><var>H \times W \leq 10^6</var></li>
-<li><var>1 \leq x_1,x_2 \leq H</var></li>
-<li><var>1 \leq y_1,y_2 \leq W</var></li>
-<li><var>x_1 \neq x_2</var> または <var>y_1 \neq y_2</var></li>
-<li><var>c_{i,j}</var> は <code>.</code> または <code>@</code></li>
-<li><var>c_{x_1,y_1} =</var> <code>.</code></li>
-<li><var>c_{x_2,y_2} =</var> <code>.</code></li>
-<li>入力される数はすべて整数である。</li>
+<li><var>0 \leq X_1, X_2, X_3, X_4 \leq 9</var></li>
+<li><var>X_1, X_2, X_3, X_4</var> は整数である。</li>
 </ul>
 </section>
 </div>
@@ -351,21 +338,14 @@
 <div class="part">
 <section>
 <h3>入力</h3><p>入力は以下の形式で標準入力から与えられる。</p>
-<pre><var>H</var> <var>W</var> <var>K</var>
-<var>x_1</var> <var>y_1</var> <var>x_2</var> <var>y_2</var>
-<var>c_{1,1}c_{1,2}</var> <var>..</var> <var>c_{1,W}</var>
-<var>c_{2,1}c_{2,2}</var> <var>..</var> <var>c_{2,W}</var>
-<var>:</var>
-<var>c_{H,1}c_{H,2}</var> <var>..</var> <var>c_{H,W}</var>
+<pre><var>X_1X_2X_3X_4</var>
 </pre>
-
 </section>
 </div>
 
 <div class="part">
 <section>
-<h3>出力</h3><p>すぬけ君がマス <var>(x_1,y_1)</var> から <var>(x_2,y_2)</var> まで移動するのに必要な最小の水かきの回数を出力せよ。
-<var>(x_1,y_1)</var> から <var>(x_2,y_2)</var> まで移動することができない場合、<code>-1</code>を出力せよ。</p>
+<h3>出力</h3><p>与えられた暗証番号が弱い暗証番号ならば <code>Weak</code> を、そうでないならば <code>Strong</code> を出力せよ。</p>
 </section>
 </div>
 </div>
@@ -373,108 +353,70 @@
 <hr />
 <div class="part">
 <section>
-<h3>入力例 1</h3><pre>3 5 2
-3 2 3 4
-.....
-.@..@
-..@..
+<h3>入力例 1</h3><pre>7777
 </pre>
-
 </section>
 </div>
 
 <div class="part">
 <section>
-<h3>出力例 1</h3><pre>5
+<h3>出力例 1</h3><pre>Weak
 </pre>
-
-<p>はじめ、すぬけ君はマス <var>(3,2)</var> にいます。
-以下のように <var>5</var> 回水をかくことでマス <var>(3,4)</var> まで移動することができます。</p>
-<ul>
-<li>
-<p>マス <var>(3,2)</var> から西に <var>1</var> マス進み、マス <var>(3,1)</var> に移動する。</p>
-</li>
-<li>
-<p>マス <var>(3,1)</var> から北に <var>2</var> マス進み、マス <var>(1,1)</var> に移動する。</p>
-</li>
-<li>
-<p>マス <var>(1,1)</var> から東に <var>2</var> マス進み、マス <var>(1,3)</var> に移動する。</p>
-</li>
-<li>
-<p>マス <var>(1,3)</var> から東に <var>1</var> マス進み、マス <var>(1,4)</var> に移動する。</p>
-</li>
-<li>
-<p>マス <var>(1,4)</var> から南に <var>2</var> マス進み、マス <var>(3,4)</var> に移動する。</p>
-</li>
-</ul>
+<p><var>4</var> 桁ともすべて <var>7</var> であるため、 <var>1</var> つめの条件をみたしており、弱い暗証番号です。</p>
 </section>
 </div>
 
 <hr />
 <div class="part">
 <section>
-<h3>入力例 2</h3><pre>1 6 4
-1 1 1 6
-......
+<h3>入力例 2</h3><pre>0112
 </pre>
-
 </section>
 </div>
 
 <div class="part">
 <section>
-<h3>出力例 2</h3><pre>2
+<h3>出力例 2</h3><pre>Strong
 </pre>
-
+<p><var>1</var> 桁目と <var>2</var> 桁目が異なっており、 <var>3</var> 桁目は <var>2</var> 桁目の次の数字ではないため、どちらの条件もみたしていません。</p>
 </section>
 </div>
 
 <hr />
 <div class="part">
 <section>
-<h3>入力例 3</h3><pre>3 3 1
-2 1 2 3
-.@.
-.@.
-.@.
+<h3>入力例 3</h3><pre>9012
 </pre>
-
 </section>
 </div>
 
 <div class="part">
 <section>
-<h3>出力例 3</h3><pre>-1
-</pre></section>
+<h3>出力例 3</h3><pre>Weak
+</pre>
+<p><var>9</var> の次の数字が <var>0</var> であることに注意してください。</p></section>
 </div>
 </span>
 <span class="lang-en">
-<p>Score : <var>600</var> points</p>
+<p>Score : <var>200</var> points</p>
 
 <div class="part">
 <section>
-<h3>Problem Statement</h3><p>Snuke, a water strider, lives in a rectangular pond that can be seen as a grid with <var>H</var> east-west rows and <var>W</var> north-south columns. Let <var>(i,j)</var> be the square at the <var>i</var>-th row from the north and <var>j</var>-th column from the west.</p>
-<p>Some of the squares have a lotus leaf on it and cannot be entered.
-The square <var>(i,j)</var> has a lotus leaf on it if <var>c_{ij}</var> is <code>@</code>, and it does not if <var>c_{ij}</var> is <code>.</code>.</p>
-<p>In one stroke, Snuke can move between <var>1</var> and <var>K</var> squares (inclusive) toward one of the four directions: north, east, south, and west.
-The move may not pass through a square with a lotus leaf. Moving to such a square or out of the pond is also forbidden.</p>
-<p>Find the minimum number of strokes Snuke takes to travel from the square <var>(x_1,y_1)</var> to <var>(x_2,y_2)</var>.
-If the travel from <var>(x_1,y_1)</var> to <var>(x_2,y_2)</var> is impossible, point out that fact.</p>
+<h3>Problem Statement</h3><p>You are given a <var>4</var>-digit PIN: <var>X_1X_2X_3X_4</var>, which may begin with a <var>0</var>.
+The PIN is said to be weak when it satisfies one of the following conditions:</p>
+<ul>
+<li>All of the four digits are the same.</li>
+<li>For each integer <var>i</var> such that <var>1\leq i\leq 3</var>, <var>X_{i+1}</var> follows <var>X_i</var>. Here, <var>j+1</var> follows <var>j</var> for each <var>0\leq j\leq 8</var>, and <var>0</var> follows <var>9</var>.</li>
+</ul>
+<p>If the given PIN is weak, print <code>Weak</code>; otherwise, print <code>Strong</code>.</p>
 </section>
 </div>
 
 <div class="part">
 <section>
 <h3>Constraints</h3><ul>
-<li><var>1 \leq H,W,K \leq 10^6</var></li>
-<li><var>H \times W \leq 10^6</var></li>
-<li><var>1 \leq x_1,x_2 \leq H</var></li>
-<li><var>1 \leq y_1,y_2 \leq W</var></li>
-<li><var>x_1 \neq x_2</var> or <var>y_1 \neq y_2</var>.</li>
-<li><var>c_{i,j}</var> is <code>.</code> or <code>@</code>.</li>
-<li><var>c_{x_1,y_1} =</var> <code>.</code></li>
-<li><var>c_{x_2,y_2} =</var> <code>.</code></li>
-<li>All numbers in input are integers.</li>
+<li><var>0 \leq X_1, X_2, X_3, X_4 \leq 9</var></li>
+<li><var>X_1</var>, <var>X_2</var>, <var>X_3</var>, and <var>X_4</var> are integers.</li>
 </ul>
 </section>
 </div>
@@ -484,20 +426,14 @@ If the travel from <var>(x_1,y_1)</var> to <var>(x_2,y_2)</var> is impossible, p
 <div class="part">
 <section>
 <h3>Input</h3><p>Input is given from Standard Input in the following format:</p>
-<pre><var>H</var> <var>W</var> <var>K</var>
-<var>x_1</var> <var>y_1</var> <var>x_2</var> <var>y_2</var>
-<var>c_{1,1}c_{1,2}</var> <var>..</var> <var>c_{1,W}</var>
-<var>c_{2,1}c_{2,2}</var> <var>..</var> <var>c_{2,W}</var>
-<var>:</var>
-<var>c_{H,1}c_{H,2}</var> <var>..</var> <var>c_{H,W}</var>
+<pre><var>X_1X_2X_3X_4</var>
 </pre>
-
 </section>
 </div>
 
 <div class="part">
 <section>
-<h3>Output</h3><p>Print the minimum number of strokes Snuke takes to travel from the square <var>(x_1,y_1)</var> to <var>(x_2,y_2)</var>, or print <code>-1</code> if the travel is impossible.</p>
+<h3>Output</h3><p>If the given PIN is weak, print <code>Weak</code>; otherwise, print <code>Strong</code>.</p>
 </section>
 </div>
 </div>
@@ -505,91 +441,59 @@ If the travel from <var>(x_1,y_1)</var> to <var>(x_2,y_2)</var> is impossible, p
 <hr />
 <div class="part">
 <section>
-<h3>Sample Input 1</h3><pre>3 5 2
-3 2 3 4
-.....
-.@..@
-..@..
+<h3>Sample Input 1</h3><pre>7777
 </pre>
-
 </section>
 </div>
 
 <div class="part">
 <section>
-<h3>Sample Output 1</h3><pre>5
+<h3>Sample Output 1</h3><pre>Weak
 </pre>
-
-<p>Initially, Snuke is at the square <var>(3,2)</var>.
-He can reach the square <var>(3, 4)</var> by making five strokes as follows:</p>
-<ul>
-<li>
-<p>From <var>(3, 2)</var>, go west one square to <var>(3, 1)</var>.</p>
-</li>
-<li>
-<p>From <var>(3, 1)</var>, go north two squares to <var>(1, 1)</var>.</p>
-</li>
-<li>
-<p>From <var>(1, 1)</var>, go east two squares to <var>(1, 3)</var>.</p>
-</li>
-<li>
-<p>From <var>(1, 3)</var>, go east one square to <var>(1, 4)</var>.</p>
-</li>
-<li>
-<p>From <var>(1, 4)</var>, go south two squares to <var>(3, 4)</var>.</p>
-</li>
-</ul>
+<p>All four digits are <var>7</var>, satisfying the first condition, so this PIN is weak.</p>
 </section>
 </div>
 
 <hr />
 <div class="part">
 <section>
-<h3>Sample Input 2</h3><pre>1 6 4
-1 1 1 6
-......
+<h3>Sample Input 2</h3><pre>0112
 </pre>
-
 </section>
 </div>
 
 <div class="part">
 <section>
-<h3>Sample Output 2</h3><pre>2
+<h3>Sample Output 2</h3><pre>Strong
 </pre>
-
+<p>The first and second digits differ, and the third digit does not follow the second digit, so neither condition is satisfied.</p>
 </section>
 </div>
 
 <hr />
 <div class="part">
 <section>
-<h3>Sample Input 3</h3><pre>3 3 1
-2 1 2 3
-.@.
-.@.
-.@.
+<h3>Sample Input 3</h3><pre>9012
 </pre>
-
 </section>
 </div>
 
 <div class="part">
 <section>
-<h3>Sample Output 3</h3><pre>-1
-</pre></section>
+<h3>Sample Output 3</h3><pre>Weak
+</pre>
+<p>Note that <var>0</var> follows <var>9</var>.</p></section>
 </div>
 </span>
 </span>
-
 		</div>
 
 		
 
 		
 		<hr/>
-		<form class="form-horizontal form-code-submit" action="/contests/abc170/submit" method="POST">
-			<input type="hidden" name="data.TaskScreenName" value="abc170_f" />
+		<form class="form-horizontal form-code-submit" action="/contests/abc212/submit" method="POST">
+			<input type="hidden" name="data.TaskScreenName" value="abc212_b" />
 			
 			<div class="form-group ">
 				<label class="control-label col-sm-2" for="select-lang">Language</label>
@@ -764,7 +668,7 @@ He can reach the square <var>(3, 4)</var> by making five strokes as follows:</p>
 	<input id="input-open-file" type="file" style="display:none;">
 </div>
 
-			<input type="hidden" name="csrf_token" value="xiDti&#43;MQ2khmZMOji1p&#43;4aZ3qbZN2FeooA1cFWmAmN0=" />
+			<input type="hidden" name="csrf_token" value="nsXJ8SVGUl99OjU7M/78RbRZcfGcvONV9gyEUrGpfLU=" />
 			<div class="form-group">
 				<label class="control-label col-sm-2" for="submit"></label>
 				<div class="col-sm-5">
@@ -784,7 +688,7 @@ He can reach the square <var>(3, 4)</var> by making five strokes as follows:</p>
 			
 			
 			
-<div class="a2a_kit a2a_kit_size_20 a2a_default_style pull-right" data-a2a-url="https://atcoder.jp/contests/abc170/tasks/abc170_f?lang=en" data-a2a-title="F - Pond Skater">
+<div class="a2a_kit a2a_kit_size_20 a2a_default_style pull-right" data-a2a-url="https://atcoder.jp/contests/abc212/tasks/abc212_b?lang=en" data-a2a-title="B - Weak Password">
 	<a class="a2a_button_facebook"></a>
 	<a class="a2a_button_twitter"></a>
 	
@@ -804,8 +708,8 @@ He can reach the square <var>(3, 4)</var> by making five strokes as follows:</p>
 			<footer class="footer">
 			
 				<ul>
-					<li><a href="/contests/abc170/rules">Rule</a></li>
-					<li><a href="/contests/abc170/glossary">Glossary</a></li>
+					<li><a href="/contests/abc212/rules">Rule</a></li>
+					<li><a href="/contests/abc212/glossary">Glossary</a></li>
 					
 				</ul>
 			

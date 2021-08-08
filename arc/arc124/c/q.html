@@ -9,7 +9,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>F - Pond Skater</title>
+	<title>C - LCM of GCDs</title>
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 	<meta http-equiv="Content-Language" content="en">
 	<meta name="viewport" content="width=device-width,initial-scale=1.0">
@@ -22,42 +22,42 @@
 
 	<meta property="og:site_name" content="AtCoder">
 	
-	<meta property="og:title" content="F - Pond Skater" />
+	<meta property="og:title" content="C - LCM of GCDs" />
 	<meta property="og:description" content="AtCoder is a programming contest site for anyone from beginners to experts. We hold weekly programming contests online." />
 	<meta property="og:type" content="website" />
-	<meta property="og:url" content="https://atcoder.jp/contests/abc170/tasks/abc170_f" />
+	<meta property="og:url" content="https://atcoder.jp/contests/arc124/tasks/arc124_c" />
 	<meta property="og:image" content="https://img.atcoder.jp/assets/atcoder.png" />
 	<meta name="twitter:card" content="summary" />
 	<meta name="twitter:site" content="@atcoder" />
 	
-	<meta property="twitter:title" content="F - Pond Skater" />
+	<meta property="twitter:title" content="C - LCM of GCDs" />
 
 	<link href="//fonts.googleapis.com/css?family=Lato:400,700" rel="stylesheet" type="text/css">
-	<link rel="stylesheet" type="text/css" href="//img.atcoder.jp/public/fb733e3/css/bootstrap.min.css">
-	<link rel="stylesheet" type="text/css" href="//img.atcoder.jp/public/fb733e3/css/base.css">
+	<link rel="stylesheet" type="text/css" href="//img.atcoder.jp/public/ad3eaad/css/bootstrap.min.css">
+	<link rel="stylesheet" type="text/css" href="//img.atcoder.jp/public/ad3eaad/css/base.css">
 	<link rel="shortcut icon" type="image/png" href="//img.atcoder.jp/assets/favicon.png">
 	<link rel="apple-touch-icon" href="//img.atcoder.jp/assets/atcoder.png">
-	<script src="//img.atcoder.jp/public/fb733e3/js/lib/jquery-1.9.1.min.js"></script>
-	<script src="//img.atcoder.jp/public/fb733e3/js/lib/bootstrap.min.js"></script>
-	<script src="//img.atcoder.jp/public/fb733e3/js/cdn/js.cookie.min.js"></script>
-	<script src="//img.atcoder.jp/public/fb733e3/js/cdn/moment.min.js"></script>
-	<script src="//img.atcoder.jp/public/fb733e3/js/cdn/moment_js-ja.js"></script>
+	<script src="//img.atcoder.jp/public/ad3eaad/js/lib/jquery-1.9.1.min.js"></script>
+	<script src="//img.atcoder.jp/public/ad3eaad/js/lib/bootstrap.min.js"></script>
+	<script src="//img.atcoder.jp/public/ad3eaad/js/cdn/js.cookie.min.js"></script>
+	<script src="//img.atcoder.jp/public/ad3eaad/js/cdn/moment.min.js"></script>
+	<script src="//img.atcoder.jp/public/ad3eaad/js/cdn/moment_js-ja.js"></script>
 	<script>
 		var LANG = "en";
 		var userScreenName = "yamate11";
-		var csrfToken = "xiDti+MQ2khmZMOji1p+4aZ3qbZN2FeooA1cFWmAmN0="
+		var csrfToken = "ud3Dk8Dys2M1x2AHARKwCRDq8tg5gKURzDf/ezshHKg="
 	</script>
-	<script src="//img.atcoder.jp/public/fb733e3/js/utils.js"></script>
+	<script src="//img.atcoder.jp/public/ad3eaad/js/utils.js"></script>
 	
 	
-		<script src="//img.atcoder.jp/public/fb733e3/js/contest.js"></script>
-		<link href="//img.atcoder.jp/public/fb733e3/css/contest.css" rel="stylesheet" />
+		<script src="//img.atcoder.jp/public/ad3eaad/js/contest.js"></script>
+		<link href="//img.atcoder.jp/public/ad3eaad/css/contest.css" rel="stylesheet" />
 		<script>
-			var contestScreenName = "abc170";
+			var contestScreenName = "arc124";
 			var remainingText = "Remaining Time";
 			var countDownText = "Contest begins in";
-			var startTime = moment("2020-06-14T21:00:00+09:00");
-			var endTime = moment("2020-06-14T22:40:00+09:00");
+			var startTime = moment("2021-07-25T21:00:00+09:00");
+			var endTime = moment("2021-07-25T23:00:00+09:00");
 		</script>
 		<style></style>
 	
@@ -67,20 +67,17 @@
 		<script>$(function(){$('var').each(function(){var html=$(this).html().replace(/<sub>/g,'_{').replace(/<\/sub>/g,'}');$(this).html('\\('+html+'\\)');});});</script>
 	
 	
-		<link href="//img.atcoder.jp/public/fb733e3/css/cdn/select2.min.css" rel="stylesheet" />
-		<link href="//img.atcoder.jp/public/fb733e3/css/cdn/select2-bootstrap.min.css" rel="stylesheet" />
-		<script src="//img.atcoder.jp/public/fb733e3/js/lib/select2.min.js"></script>
+		<link href="//img.atcoder.jp/public/ad3eaad/css/cdn/select2.min.css" rel="stylesheet" />
+		<link href="//img.atcoder.jp/public/ad3eaad/css/cdn/select2-bootstrap.min.css" rel="stylesheet" />
+		<script src="//img.atcoder.jp/public/ad3eaad/js/lib/select2.min.js"></script>
 	
 	
-		<link rel="stylesheet" href="//img.atcoder.jp/public/fb733e3/css/cdn/codemirror.min.css">
-		<script src="//img.atcoder.jp/public/fb733e3/js/cdn/codemirror.min.js"></script>
-		<script src="//img.atcoder.jp/public/fb733e3/js/codeMirror/merged.js"></script>
+		<link rel="stylesheet" href="//img.atcoder.jp/public/ad3eaad/css/cdn/codemirror.min.css">
+		<script src="//img.atcoder.jp/public/ad3eaad/js/cdn/codemirror.min.js"></script>
+		<script src="//img.atcoder.jp/public/ad3eaad/js/codeMirror/merged.js"></script>
 	
 	
-		<script src="//img.atcoder.jp/public/fb733e3/js/cdn/run_prettify.js"></script>
-	
-	
-	
+		<script src="//img.atcoder.jp/public/ad3eaad/js/cdn/run_prettify.js"></script>
 	
 	
 	
@@ -88,8 +85,11 @@
 	
 	
 	
-	<script src="//img.atcoder.jp/public/fb733e3/js/base.js"></script>
-	<script src="//img.atcoder.jp/public/fb733e3/js/ga.js"></script>
+	
+	
+	
+	<script src="//img.atcoder.jp/public/ad3eaad/js/base.js"></script>
+	<script src="//img.atcoder.jp/public/ad3eaad/js/ga.js"></script>
 </head>
 
 <body>
@@ -109,7 +109,7 @@
 				<h4 class="modal-title">Contest started</h4>
 			</div>
 			<div class="modal-body">
-				<p>AtCoder Beginner Contest 170 has begun.</p>
+				<p>AtCoder Regular Contest 124 has begun.</p>
 			</div>
 			<div class="modal-footer">
 				
@@ -127,7 +127,7 @@
 				<h4 class="modal-title">Contest is over</h4>
 			</div>
 			<div class="modal-body">
-				<p>AtCoder Beginner Contest 170 has ended.</p>
+				<p>AtCoder Regular Contest 124 has ended.</p>
 			</div>
 			<div class="modal-footer">
 				<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
@@ -149,7 +149,7 @@
 			<div class="collapse navbar-collapse" id="navbar-collapse">
 				<ul class="nav navbar-nav">
 				
-					<li><a class="contest-title" href="/contests/abc170">AtCoder Beginner Contest 170</a></li>
+					<li><a class="contest-title" href="/contests/arc124">AtCoder Regular Contest 124</a></li>
 				
 				</ul>
 				<ul class="nav navbar-nav navbar-right">
@@ -159,8 +159,8 @@
 							<img src='//img.atcoder.jp/assets/top/img/flag-lang/en.png'> English <span class="caret"></span>
 						</a>
 						<ul class="dropdown-menu">
-							<li><a href="/contests/abc170/tasks/abc170_f?lang=ja"><img src='//img.atcoder.jp/assets/top/img/flag-lang/ja.png'> 日本語</a></li>
-							<li><a href="/contests/abc170/tasks/abc170_f?lang=en"><img src='//img.atcoder.jp/assets/top/img/flag-lang/en.png'> English</a></li>
+							<li><a href="/contests/arc124/tasks/arc124_c?lang=ja"><img src='//img.atcoder.jp/assets/top/img/flag-lang/ja.png'> 日本語</a></li>
+							<li><a href="/contests/arc124/tasks/arc124_c?lang=en"><img src='//img.atcoder.jp/assets/top/img/flag-lang/en.png'> English</a></li>
 						</ul>
 					</li>
 					
@@ -189,8 +189,8 @@
 		</div>
 	</nav>
 
-	<form method="POST" name="form_logout" action="/logout?continue=https%3A%2F%2Fatcoder.jp%2Fcontests%2Fabc170%2Ftasks%2Fabc170_f">
-		<input type="hidden" name="csrf_token" value="xiDti&#43;MQ2khmZMOji1p&#43;4aZ3qbZN2FeooA1cFWmAmN0=" />
+	<form method="POST" name="form_logout" action="/logout?continue=https%3A%2F%2Fatcoder.jp%2Fcontests%2Farc124%2Ftasks%2Farc124_c">
+		<input type="hidden" name="csrf_token" value="ud3Dk8Dys2M1x2AHARKwCRDq8tg5gKURzDf/ezshHKg=" />
 	</form>
 	<div id="main-container" class="container"
 		 	style="padding-top:50px;">
@@ -203,35 +203,35 @@
 		<small class="contest-duration">
 			
 				Contest Duration:
-				<a href='http://www.timeanddate.com/worldclock/fixedtime.html?iso=20200614T2100&p1=248' target='blank'><time class='fixtime fixtime-full'>2020-06-14 21:00:00+0900</time></a> - <a href='http://www.timeanddate.com/worldclock/fixedtime.html?iso=20200614T2240&p1=248' target='blank'><time class='fixtime fixtime-full'>2020-06-14 22:40:00+0900</time></a> (local time)
-				(100 minutes)
+				<a href='http://www.timeanddate.com/worldclock/fixedtime.html?iso=20210725T2100&p1=248' target='blank'><time class='fixtime fixtime-full'>2021-07-25 21:00:00+0900</time></a> - <a href='http://www.timeanddate.com/worldclock/fixedtime.html?iso=20210725T2300&p1=248' target='blank'><time class='fixtime fixtime-full'>2021-07-25 23:00:00+0900</time></a> (local time)
+				(120 minutes)
 			
 		</small>
 		<small class="back-to-home pull-right"><a href="/home">Back to Home</a></small>
 	</div>
 	<ul class="nav nav-tabs">
-		<li><a href="/contests/abc170"><span class="glyphicon glyphicon-home" aria-hidden="true"></span> Top</a></li>
+		<li><a href="/contests/arc124"><span class="glyphicon glyphicon-home" aria-hidden="true"></span> Top</a></li>
 		
-			<li class="active"><a href="/contests/abc170/tasks"><span class="glyphicon glyphicon-tasks" aria-hidden="true"></span> Tasks</a></li>
-		
-
-		
-			<li><a href="/contests/abc170/clarifications"><span class="glyphicon glyphicon-question-sign" aria-hidden="true"></span> Clarifications <span id="clar-badge" class="badge"></span></a></li>
+			<li class="active"><a href="/contests/arc124/tasks"><span class="glyphicon glyphicon-tasks" aria-hidden="true"></span> Tasks</a></li>
 		
 
 		
-			<li><a href="/contests/abc170/submit?taskScreenName=abc170_f"><span class="glyphicon glyphicon-send" aria-hidden="true"></span> Submit</a></li>
+			<li><a href="/contests/arc124/clarifications"><span class="glyphicon glyphicon-question-sign" aria-hidden="true"></span> Clarifications <span id="clar-badge" class="badge"></span></a></li>
+		
+
+		
+			<li><a href="/contests/arc124/submit?taskScreenName=arc124_c"><span class="glyphicon glyphicon-send" aria-hidden="true"></span> Submit</a></li>
 		
 
 		
 			<li>
 				<a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false"><span class="glyphicon glyphicon-list" aria-hidden="true"></span> Results<span class="caret"></span></a>
 				<ul class="dropdown-menu">
-					<li><a href="/contests/abc170/submissions"><span class="glyphicon glyphicon-globe" aria-hidden="true"></span> All Submissions</a></li>
+					<li><a href="/contests/arc124/submissions"><span class="glyphicon glyphicon-globe" aria-hidden="true"></span> All Submissions</a></li>
 					
-						<li><a href="/contests/abc170/submissions/me"><span class="glyphicon glyphicon-user" aria-hidden="true"></span> My Submissions</a></li>
+						<li><a href="/contests/arc124/submissions/me"><span class="glyphicon glyphicon-user" aria-hidden="true"></span> My Submissions</a></li>
 						<li class="divider"></li>
-						<li><a href="/contests/abc170/score"><span class="glyphicon glyphicon-dashboard" aria-hidden="true"></span> My Score</a></li>
+						<li><a href="/contests/arc124/score"><span class="glyphicon glyphicon-dashboard" aria-hidden="true"></span> My Score</a></li>
 					
 				</ul>
 			</li>
@@ -240,26 +240,26 @@
 		
 			
 				
-					<li><a href="/contests/abc170/standings"><span class="glyphicon glyphicon-sort-by-attributes-alt" aria-hidden="true"></span> Standings</a></li>
+					<li><a href="/contests/arc124/standings"><span class="glyphicon glyphicon-sort-by-attributes-alt" aria-hidden="true"></span> Standings</a></li>
 				
 			
 				
-					<li><a href="/contests/abc170/standings/virtual"><span class="glyphicon glyphicon-sort-by-attributes-alt" aria-hidden="true"></span> Virtual Standings</a></li>
+					<li><a href="/contests/arc124/standings/virtual"><span class="glyphicon glyphicon-sort-by-attributes-alt" aria-hidden="true"></span> Virtual Standings</a></li>
 				
 			
 		
 
 		
-			<li><a href="/contests/abc170/custom_test"><span class="glyphicon glyphicon-wrench" aria-hidden="true"></span> Custom Test</a></li>
+			<li><a href="/contests/arc124/custom_test"><span class="glyphicon glyphicon-wrench" aria-hidden="true"></span> Custom Test</a></li>
 		
 
 		
-			<li><a href="/contests/abc170/editorial"><span class="glyphicon glyphicon-book" aria-hidden="true"></span> Editorial</a></li>
+			<li><a href="/contests/arc124/editorial"><span class="glyphicon glyphicon-book" aria-hidden="true"></span> Editorial</a></li>
 		
 		
 			
 			
-				<li><a href="https://codeforces.com/blog/entry/78783" target="_blank" rel="noopener"><span class="glyphicon glyphicon-comment" aria-hidden="true"></span> Discuss</a></li>
+				<li><a href="https://codeforces.com/blog/entry/93165" target="_blank" rel="noopener"><span class="glyphicon glyphicon-comment" aria-hidden="true"></span> Discuss</a></li>
 			
 		
 
@@ -268,8 +268,8 @@
 </div>
 	<div class="col-sm-12">
 		<span class="h2">
-			F - Pond Skater
-			<a class="btn btn-default btn-sm" href="/contests/abc170/tasks/abc170_f/editorial">Editorial</a>
+			C - LCM of GCDs
+			<a class="btn btn-default btn-sm" href="/contests/arc124/tasks/arc124_c/editorial">Editorial</a>
 		</span>
 		<span id="task-lang-btn" class="pull-right"><span data-lang="ja"><img src='//img.atcoder.jp/assets/top/img/flag-lang/ja.png'></span> / <span data-lang="en"><img src='//img.atcoder.jp/assets/top/img/flag-lang/en.png'></span></span>
 		<script>
@@ -308,7 +308,7 @@
 		</script>
 		<hr/>
 		<p>
-			Time Limit: 3 sec / Memory Limit: 1024 MB
+			Time Limit: 4 sec / Memory Limit: 1024 MB
 			
 		</p>
 
@@ -316,32 +316,26 @@
 			
 			<span class="lang">
 <span class="lang-ja">
-<p>配点 : <var>600</var> 点</p>
+<p>配点 : <var>500</var> 点</p>
 
 <div class="part">
 <section>
-<h3>問題文</h3><p>アメンボのすぬけ君は南北 <var>H</var> マス東西 <var>W</var> マスの長方形の形をしたグリッド状の池に住んでいます。北から <var>i</var> 番目、西から <var>j</var> 番目のマスをマス <var>(i,j)</var> とします。</p>
-<p>いくつかのマスには蓮の葉が浮かんでおり、すぬけ君はそれらのマスには入ることができません。
-<var>c_{ij}</var> が <code>@</code> のときマス <var>(i,j)</var> に蓮の葉が浮かんでいること、<code>.</code>のときそうでないことを表します。</p>
-<p>すぬけ君は一回水をかくことで東西南北のいずれかの方向に <var>1</var> マス以上 <var>K</var> マス以下移動することができます。
-移動の途中に蓮の葉のあるマスがあってはいけません。また、蓮の葉のあるマスや池の外に移動することもできません。</p>
-<p>すぬけ君がマス <var>(x_1,y_1)</var> から <var>(x_2,y_2)</var> まで移動するのに最小で何回水をかく必要があるか求めてください。
-<var>(x_1,y_1)</var> から <var>(x_2,y_2)</var> まで移動することができない場合、そのことを指摘してください。</p>
+<h3>問題文</h3><p>赤い袋と青い袋と <var>N</var> 個のカードパックがあります。はじめどちらの袋も空です。
+それぞれのカードパックには整数が書かれた <var>2</var> 枚のカードが封入されており、<var>i</var> 番目のカードパックに入っているカードにはそれぞれ <var>a_i,b_i</var> が書かれていることがわかっています。</p>
+<p>それぞれのカードパックについて、一方のカードを赤い袋に、他方のカードを青い袋に入れます。</p>
+<p>カードを袋に入れ終えたのち、赤い袋に入ったカードに書かれた整数全体の最大公約数を <var>X</var> とします。
+同様に、青い袋に入ったカードに書かれた整数全体の最大公約数を <var>Y</var> とします。
+<var>X</var> と <var>Y</var> の最小公倍数の値が得点となります。</p>
+<p>得点としてありうる値の最大値を求めてください。</p>
 </section>
 </div>
 
 <div class="part">
 <section>
 <h3>制約</h3><ul>
-<li><var>1 \leq H,W,K \leq 10^6</var></li>
-<li><var>H \times W \leq 10^6</var></li>
-<li><var>1 \leq x_1,x_2 \leq H</var></li>
-<li><var>1 \leq y_1,y_2 \leq W</var></li>
-<li><var>x_1 \neq x_2</var> または <var>y_1 \neq y_2</var></li>
-<li><var>c_{i,j}</var> は <code>.</code> または <code>@</code></li>
-<li><var>c_{x_1,y_1} =</var> <code>.</code></li>
-<li><var>c_{x_2,y_2} =</var> <code>.</code></li>
-<li>入力される数はすべて整数である。</li>
+<li>与えられる入力は全て整数</li>
+<li><var>1 \leq N \leq 50</var></li>
+<li><var>1 \leq a_i, b_i \leq 10^9</var></li>
 </ul>
 </section>
 </div>
@@ -351,21 +345,17 @@
 <div class="part">
 <section>
 <h3>入力</h3><p>入力は以下の形式で標準入力から与えられる。</p>
-<pre><var>H</var> <var>W</var> <var>K</var>
-<var>x_1</var> <var>y_1</var> <var>x_2</var> <var>y_2</var>
-<var>c_{1,1}c_{1,2}</var> <var>..</var> <var>c_{1,W}</var>
-<var>c_{2,1}c_{2,2}</var> <var>..</var> <var>c_{2,W}</var>
-<var>:</var>
-<var>c_{H,1}c_{H,2}</var> <var>..</var> <var>c_{H,W}</var>
+<pre><var>N</var>
+<var>a_1</var> <var>b_1</var>
+<var>\vdots</var>
+<var>a_N</var> <var>b_N</var>
 </pre>
-
 </section>
 </div>
 
 <div class="part">
 <section>
-<h3>出力</h3><p>すぬけ君がマス <var>(x_1,y_1)</var> から <var>(x_2,y_2)</var> まで移動するのに必要な最小の水かきの回数を出力せよ。
-<var>(x_1,y_1)</var> から <var>(x_2,y_2)</var> まで移動することができない場合、<code>-1</code>を出力せよ。</p>
+<h3>出力</h3><p>得点としてありうる値の最大値を出力せよ。</p>
 </section>
 </div>
 </div>
@@ -373,39 +363,21 @@
 <hr />
 <div class="part">
 <section>
-<h3>入力例 1</h3><pre>3 5 2
-3 2 3 4
-.....
-.@..@
-..@..
+<h3>入力例 1</h3><pre>2
+2 15
+10 6
 </pre>
-
 </section>
 </div>
 
 <div class="part">
 <section>
-<h3>出力例 1</h3><pre>5
+<h3>出力例 1</h3><pre>10
 </pre>
-
-<p>はじめ、すぬけ君はマス <var>(3,2)</var> にいます。
-以下のように <var>5</var> 回水をかくことでマス <var>(3,4)</var> まで移動することができます。</p>
 <ul>
-<li>
-<p>マス <var>(3,2)</var> から西に <var>1</var> マス進み、マス <var>(3,1)</var> に移動する。</p>
-</li>
-<li>
-<p>マス <var>(3,1)</var> から北に <var>2</var> マス進み、マス <var>(1,1)</var> に移動する。</p>
-</li>
-<li>
-<p>マス <var>(1,1)</var> から東に <var>2</var> マス進み、マス <var>(1,3)</var> に移動する。</p>
-</li>
-<li>
-<p>マス <var>(1,3)</var> から東に <var>1</var> マス進み、マス <var>(1,4)</var> に移動する。</p>
-</li>
-<li>
-<p>マス <var>(1,4)</var> から南に <var>2</var> マス進み、マス <var>(3,4)</var> に移動する。</p>
-</li>
+<li><var>2</var> が書かれたカードを赤い袋に入れ、<var>15</var> が書かれたカードを青い袋に入れ、<var>6</var> が書かれたカードを赤い袋に入れ、<var>10</var> が書かれたカードを青い袋に入れるのが最適な入れ方の <var>1</var> つです。</li>
+<li>このとき、赤い袋に入ったカードに書かれた整数全体の最大公約数は <var>2</var>、青い袋に入ったカードに書かれた整数全体の最大公約数は <var>5</var> です。</li>
+<li>このときの得点は <var>10</var> です。</li>
 </ul>
 </section>
 </div>
@@ -413,68 +385,77 @@
 <hr />
 <div class="part">
 <section>
-<h3>入力例 2</h3><pre>1 6 4
-1 1 1 6
-......
+<h3>入力例 2</h3><pre>5
+148834018 644854700
+947642099 255192490
+35137537 134714230
+944287156 528403260
+68656286 200621680
 </pre>
-
 </section>
 </div>
 
 <div class="part">
 <section>
-<h3>出力例 2</h3><pre>2
+<h3>出力例 2</h3><pre>238630
 </pre>
-
 </section>
 </div>
 
 <hr />
 <div class="part">
 <section>
-<h3>入力例 3</h3><pre>3 3 1
-2 1 2 3
-.@.
-.@.
-.@.
+<h3>入力例 3</h3><pre>20
+557057460 31783488
+843507940 794587200
+640711140 620259584
+1901220 499867584
+190122000 41414848
+349507610 620259584
+890404700 609665088
+392918800 211889920
+507308870 722352000
+156850650 498904448
+806117280 862969856
+193607570 992030080
+660673950 422816704
+622015810 563434560
+207866720 316871744
+63057130 117502592
+482593010 366954816
+605221700 705015552
+702500790 900532160
+171743540 353470912
 </pre>
-
 </section>
 </div>
 
 <div class="part">
 <section>
-<h3>出力例 3</h3><pre>-1
+<h3>出力例 3</h3><pre>152594452160
 </pre></section>
 </div>
 </span>
 <span class="lang-en">
-<p>Score : <var>600</var> points</p>
+<p>Score : <var>500</var> points</p>
 
 <div class="part">
 <section>
-<h3>Problem Statement</h3><p>Snuke, a water strider, lives in a rectangular pond that can be seen as a grid with <var>H</var> east-west rows and <var>W</var> north-south columns. Let <var>(i,j)</var> be the square at the <var>i</var>-th row from the north and <var>j</var>-th column from the west.</p>
-<p>Some of the squares have a lotus leaf on it and cannot be entered.
-The square <var>(i,j)</var> has a lotus leaf on it if <var>c_{ij}</var> is <code>@</code>, and it does not if <var>c_{ij}</var> is <code>.</code>.</p>
-<p>In one stroke, Snuke can move between <var>1</var> and <var>K</var> squares (inclusive) toward one of the four directions: north, east, south, and west.
-The move may not pass through a square with a lotus leaf. Moving to such a square or out of the pond is also forbidden.</p>
-<p>Find the minimum number of strokes Snuke takes to travel from the square <var>(x_1,y_1)</var> to <var>(x_2,y_2)</var>.
-If the travel from <var>(x_1,y_1)</var> to <var>(x_2,y_2)</var> is impossible, point out that fact.</p>
+<h3>Problem Statement</h3><p>We have a red bag, a blue bag, and <var>N</var> card packs. Initially, both bags are empty.
+Each card pack contains two cards with integers written on them. We know that the <var>i</var>-th card pack contains a card with <var>a_i</var> and another with <var>b_i</var>.</p>
+<p>For each card pack, we will put one of its cards in the red bag, and the other in the blue bag.</p>
+<p>After we put all cards in the bags, let <var>X</var> be the greatest common divisor of all integers written on cards in the red bag. Similarly, let <var>Y</var> be the greatest common divisor of all integers written on cards in the blue bag.
+Our score will be the least common multiple of <var>X</var> and <var>Y</var>.</p>
+<p>Find the maximum possible score.</p>
 </section>
 </div>
 
 <div class="part">
 <section>
 <h3>Constraints</h3><ul>
-<li><var>1 \leq H,W,K \leq 10^6</var></li>
-<li><var>H \times W \leq 10^6</var></li>
-<li><var>1 \leq x_1,x_2 \leq H</var></li>
-<li><var>1 \leq y_1,y_2 \leq W</var></li>
-<li><var>x_1 \neq x_2</var> or <var>y_1 \neq y_2</var>.</li>
-<li><var>c_{i,j}</var> is <code>.</code> or <code>@</code>.</li>
-<li><var>c_{x_1,y_1} =</var> <code>.</code></li>
-<li><var>c_{x_2,y_2} =</var> <code>.</code></li>
-<li>All numbers in input are integers.</li>
+<li>All values in input are integers.</li>
+<li><var>1 \leq N \leq 50</var></li>
+<li><var>1 \leq a_i, b_i \leq 10^9</var></li>
 </ul>
 </section>
 </div>
@@ -484,20 +465,17 @@ If the travel from <var>(x_1,y_1)</var> to <var>(x_2,y_2)</var> is impossible, p
 <div class="part">
 <section>
 <h3>Input</h3><p>Input is given from Standard Input in the following format:</p>
-<pre><var>H</var> <var>W</var> <var>K</var>
-<var>x_1</var> <var>y_1</var> <var>x_2</var> <var>y_2</var>
-<var>c_{1,1}c_{1,2}</var> <var>..</var> <var>c_{1,W}</var>
-<var>c_{2,1}c_{2,2}</var> <var>..</var> <var>c_{2,W}</var>
-<var>:</var>
-<var>c_{H,1}c_{H,2}</var> <var>..</var> <var>c_{H,W}</var>
+<pre><var>N</var>
+<var>a_1</var> <var>b_1</var>
+<var>\vdots</var>
+<var>a_N</var> <var>b_N</var>
 </pre>
-
 </section>
 </div>
 
 <div class="part">
 <section>
-<h3>Output</h3><p>Print the minimum number of strokes Snuke takes to travel from the square <var>(x_1,y_1)</var> to <var>(x_2,y_2)</var>, or print <code>-1</code> if the travel is impossible.</p>
+<h3>Output</h3><p>Print the maximum possible score.</p>
 </section>
 </div>
 </div>
@@ -505,39 +483,21 @@ If the travel from <var>(x_1,y_1)</var> to <var>(x_2,y_2)</var> is impossible, p
 <hr />
 <div class="part">
 <section>
-<h3>Sample Input 1</h3><pre>3 5 2
-3 2 3 4
-.....
-.@..@
-..@..
+<h3>Sample Input 1</h3><pre>2
+2 15
+10 6
 </pre>
-
 </section>
 </div>
 
 <div class="part">
 <section>
-<h3>Sample Output 1</h3><pre>5
+<h3>Sample Output 1</h3><pre>10
 </pre>
-
-<p>Initially, Snuke is at the square <var>(3,2)</var>.
-He can reach the square <var>(3, 4)</var> by making five strokes as follows:</p>
 <ul>
-<li>
-<p>From <var>(3, 2)</var>, go west one square to <var>(3, 1)</var>.</p>
-</li>
-<li>
-<p>From <var>(3, 1)</var>, go north two squares to <var>(1, 1)</var>.</p>
-</li>
-<li>
-<p>From <var>(1, 1)</var>, go east two squares to <var>(1, 3)</var>.</p>
-</li>
-<li>
-<p>From <var>(1, 3)</var>, go east one square to <var>(1, 4)</var>.</p>
-</li>
-<li>
-<p>From <var>(1, 4)</var>, go south two squares to <var>(3, 4)</var>.</p>
-</li>
+<li>One optimal move is to put the card with <var>2</var> in the red bag, the card with <var>15</var> in the blue bag, the card with <var>6</var> in the red bag, and the card with <var>10</var> in the blue bag.</li>
+<li>Then, the greatest common divisor of all integers written on cards in the red bag will be <var>2</var>, and the greatest common divisor of all integers written on cards in the blue bag will be <var>5</var>.</li>
+<li>The score here will be <var>10</var>.</li>
 </ul>
 </section>
 </div>
@@ -545,51 +505,66 @@ He can reach the square <var>(3, 4)</var> by making five strokes as follows:</p>
 <hr />
 <div class="part">
 <section>
-<h3>Sample Input 2</h3><pre>1 6 4
-1 1 1 6
-......
+<h3>Sample Input 2</h3><pre>5
+148834018 644854700
+947642099 255192490
+35137537 134714230
+944287156 528403260
+68656286 200621680
 </pre>
-
 </section>
 </div>
 
 <div class="part">
 <section>
-<h3>Sample Output 2</h3><pre>2
+<h3>Sample Output 2</h3><pre>238630
 </pre>
-
 </section>
 </div>
 
 <hr />
 <div class="part">
 <section>
-<h3>Sample Input 3</h3><pre>3 3 1
-2 1 2 3
-.@.
-.@.
-.@.
+<h3>Sample Input 3</h3><pre>20
+557057460 31783488
+843507940 794587200
+640711140 620259584
+1901220 499867584
+190122000 41414848
+349507610 620259584
+890404700 609665088
+392918800 211889920
+507308870 722352000
+156850650 498904448
+806117280 862969856
+193607570 992030080
+660673950 422816704
+622015810 563434560
+207866720 316871744
+63057130 117502592
+482593010 366954816
+605221700 705015552
+702500790 900532160
+171743540 353470912
 </pre>
-
 </section>
 </div>
 
 <div class="part">
 <section>
-<h3>Sample Output 3</h3><pre>-1
+<h3>Sample Output 3</h3><pre>152594452160
 </pre></section>
 </div>
 </span>
 </span>
-
 		</div>
 
 		
 
 		
 		<hr/>
-		<form class="form-horizontal form-code-submit" action="/contests/abc170/submit" method="POST">
-			<input type="hidden" name="data.TaskScreenName" value="abc170_f" />
+		<form class="form-horizontal form-code-submit" action="/contests/arc124/submit" method="POST">
+			<input type="hidden" name="data.TaskScreenName" value="arc124_c" />
 			
 			<div class="form-group ">
 				<label class="control-label col-sm-2" for="select-lang">Language</label>
@@ -764,7 +739,7 @@ He can reach the square <var>(3, 4)</var> by making five strokes as follows:</p>
 	<input id="input-open-file" type="file" style="display:none;">
 </div>
 
-			<input type="hidden" name="csrf_token" value="xiDti&#43;MQ2khmZMOji1p&#43;4aZ3qbZN2FeooA1cFWmAmN0=" />
+			<input type="hidden" name="csrf_token" value="ud3Dk8Dys2M1x2AHARKwCRDq8tg5gKURzDf/ezshHKg=" />
 			<div class="form-group">
 				<label class="control-label col-sm-2" for="submit"></label>
 				<div class="col-sm-5">
@@ -784,7 +759,7 @@ He can reach the square <var>(3, 4)</var> by making five strokes as follows:</p>
 			
 			
 			
-<div class="a2a_kit a2a_kit_size_20 a2a_default_style pull-right" data-a2a-url="https://atcoder.jp/contests/abc170/tasks/abc170_f?lang=en" data-a2a-title="F - Pond Skater">
+<div class="a2a_kit a2a_kit_size_20 a2a_default_style pull-right" data-a2a-url="https://atcoder.jp/contests/arc124/tasks/arc124_c?lang=en" data-a2a-title="C - LCM of GCDs">
 	<a class="a2a_button_facebook"></a>
 	<a class="a2a_button_twitter"></a>
 	
@@ -804,8 +779,8 @@ He can reach the square <var>(3, 4)</var> by making five strokes as follows:</p>
 			<footer class="footer">
 			
 				<ul>
-					<li><a href="/contests/abc170/rules">Rule</a></li>
-					<li><a href="/contests/abc170/glossary">Glossary</a></li>
+					<li><a href="/contests/arc124/rules">Rule</a></li>
+					<li><a href="/contests/arc124/glossary">Glossary</a></li>
 					
 				</ul>
 			

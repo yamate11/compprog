@@ -1,0 +1,14 @@
+#!/usr/bin/env python3
+
+from random import randrange
+
+def main():
+    n = 100000
+    m = 300000
+    print(n, m)
+    for i in range(m):
+        x = randrange(n)
+        y = randrange(n)
+        print(x, y)
+
+main()

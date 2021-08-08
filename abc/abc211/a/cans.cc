@@ -12,6 +12,10 @@ int main(/* int argc, char *argv[] */) {
   cin.tie(nullptr);
   cout << setprecision(20);
 
+  ll A, B; cin >> A >> B;
+  double C = double(A - B) / 3.0 + B;
+  cout << C << endl;
+
   return 0;
 }
 

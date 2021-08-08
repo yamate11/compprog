@@ -9,7 +9,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>F - Pond Skater</title>
+	<title>B - XOR Matching 2</title>
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 	<meta http-equiv="Content-Language" content="en">
 	<meta name="viewport" content="width=device-width,initial-scale=1.0">
@@ -22,42 +22,42 @@
 
 	<meta property="og:site_name" content="AtCoder">
 	
-	<meta property="og:title" content="F - Pond Skater" />
+	<meta property="og:title" content="B - XOR Matching 2" />
 	<meta property="og:description" content="AtCoder is a programming contest site for anyone from beginners to experts. We hold weekly programming contests online." />
 	<meta property="og:type" content="website" />
-	<meta property="og:url" content="https://atcoder.jp/contests/abc170/tasks/abc170_f" />
+	<meta property="og:url" content="https://atcoder.jp/contests/arc124/tasks/arc124_b" />
 	<meta property="og:image" content="https://img.atcoder.jp/assets/atcoder.png" />
 	<meta name="twitter:card" content="summary" />
 	<meta name="twitter:site" content="@atcoder" />
 	
-	<meta property="twitter:title" content="F - Pond Skater" />
+	<meta property="twitter:title" content="B - XOR Matching 2" />
 
 	<link href="//fonts.googleapis.com/css?family=Lato:400,700" rel="stylesheet" type="text/css">
-	<link rel="stylesheet" type="text/css" href="//img.atcoder.jp/public/fb733e3/css/bootstrap.min.css">
-	<link rel="stylesheet" type="text/css" href="//img.atcoder.jp/public/fb733e3/css/base.css">
+	<link rel="stylesheet" type="text/css" href="//img.atcoder.jp/public/ad3eaad/css/bootstrap.min.css">
+	<link rel="stylesheet" type="text/css" href="//img.atcoder.jp/public/ad3eaad/css/base.css">
 	<link rel="shortcut icon" type="image/png" href="//img.atcoder.jp/assets/favicon.png">
 	<link rel="apple-touch-icon" href="//img.atcoder.jp/assets/atcoder.png">
-	<script src="//img.atcoder.jp/public/fb733e3/js/lib/jquery-1.9.1.min.js"></script>
-	<script src="//img.atcoder.jp/public/fb733e3/js/lib/bootstrap.min.js"></script>
-	<script src="//img.atcoder.jp/public/fb733e3/js/cdn/js.cookie.min.js"></script>
-	<script src="//img.atcoder.jp/public/fb733e3/js/cdn/moment.min.js"></script>
-	<script src="//img.atcoder.jp/public/fb733e3/js/cdn/moment_js-ja.js"></script>
+	<script src="//img.atcoder.jp/public/ad3eaad/js/lib/jquery-1.9.1.min.js"></script>
+	<script src="//img.atcoder.jp/public/ad3eaad/js/lib/bootstrap.min.js"></script>
+	<script src="//img.atcoder.jp/public/ad3eaad/js/cdn/js.cookie.min.js"></script>
+	<script src="//img.atcoder.jp/public/ad3eaad/js/cdn/moment.min.js"></script>
+	<script src="//img.atcoder.jp/public/ad3eaad/js/cdn/moment_js-ja.js"></script>
 	<script>
 		var LANG = "en";
 		var userScreenName = "yamate11";
-		var csrfToken = "xiDti+MQ2khmZMOji1p+4aZ3qbZN2FeooA1cFWmAmN0="
+		var csrfToken = "ud3Dk8Dys2M1x2AHARKwCRDq8tg5gKURzDf/ezshHKg="
 	</script>
-	<script src="//img.atcoder.jp/public/fb733e3/js/utils.js"></script>
+	<script src="//img.atcoder.jp/public/ad3eaad/js/utils.js"></script>
 	
 	
-		<script src="//img.atcoder.jp/public/fb733e3/js/contest.js"></script>
-		<link href="//img.atcoder.jp/public/fb733e3/css/contest.css" rel="stylesheet" />
+		<script src="//img.atcoder.jp/public/ad3eaad/js/contest.js"></script>
+		<link href="//img.atcoder.jp/public/ad3eaad/css/contest.css" rel="stylesheet" />
 		<script>
-			var contestScreenName = "abc170";
+			var contestScreenName = "arc124";
 			var remainingText = "Remaining Time";
 			var countDownText = "Contest begins in";
-			var startTime = moment("2020-06-14T21:00:00+09:00");
-			var endTime = moment("2020-06-14T22:40:00+09:00");
+			var startTime = moment("2021-07-25T21:00:00+09:00");
+			var endTime = moment("2021-07-25T23:00:00+09:00");
 		</script>
 		<style></style>
 	
@@ -67,20 +67,17 @@
 		<script>$(function(){$('var').each(function(){var html=$(this).html().replace(/<sub>/g,'_{').replace(/<\/sub>/g,'}');$(this).html('\\('+html+'\\)');});});</script>
 	
 	
-		<link href="//img.atcoder.jp/public/fb733e3/css/cdn/select2.min.css" rel="stylesheet" />
-		<link href="//img.atcoder.jp/public/fb733e3/css/cdn/select2-bootstrap.min.css" rel="stylesheet" />
-		<script src="//img.atcoder.jp/public/fb733e3/js/lib/select2.min.js"></script>
+		<link href="//img.atcoder.jp/public/ad3eaad/css/cdn/select2.min.css" rel="stylesheet" />
+		<link href="//img.atcoder.jp/public/ad3eaad/css/cdn/select2-bootstrap.min.css" rel="stylesheet" />
+		<script src="//img.atcoder.jp/public/ad3eaad/js/lib/select2.min.js"></script>
 	
 	
-		<link rel="stylesheet" href="//img.atcoder.jp/public/fb733e3/css/cdn/codemirror.min.css">
-		<script src="//img.atcoder.jp/public/fb733e3/js/cdn/codemirror.min.js"></script>
-		<script src="//img.atcoder.jp/public/fb733e3/js/codeMirror/merged.js"></script>
+		<link rel="stylesheet" href="//img.atcoder.jp/public/ad3eaad/css/cdn/codemirror.min.css">
+		<script src="//img.atcoder.jp/public/ad3eaad/js/cdn/codemirror.min.js"></script>
+		<script src="//img.atcoder.jp/public/ad3eaad/js/codeMirror/merged.js"></script>
 	
 	
-		<script src="//img.atcoder.jp/public/fb733e3/js/cdn/run_prettify.js"></script>
-	
-	
-	
+		<script src="//img.atcoder.jp/public/ad3eaad/js/cdn/run_prettify.js"></script>
 	
 	
 	
@@ -88,8 +85,11 @@
 	
 	
 	
-	<script src="//img.atcoder.jp/public/fb733e3/js/base.js"></script>
-	<script src="//img.atcoder.jp/public/fb733e3/js/ga.js"></script>
+	
+	
+	
+	<script src="//img.atcoder.jp/public/ad3eaad/js/base.js"></script>
+	<script src="//img.atcoder.jp/public/ad3eaad/js/ga.js"></script>
 </head>
 
 <body>
@@ -109,7 +109,7 @@
 				<h4 class="modal-title">Contest started</h4>
 			</div>
 			<div class="modal-body">
-				<p>AtCoder Beginner Contest 170 has begun.</p>
+				<p>AtCoder Regular Contest 124 has begun.</p>
 			</div>
 			<div class="modal-footer">
 				
@@ -127,7 +127,7 @@
 				<h4 class="modal-title">Contest is over</h4>
 			</div>
 			<div class="modal-body">
-				<p>AtCoder Beginner Contest 170 has ended.</p>
+				<p>AtCoder Regular Contest 124 has ended.</p>
 			</div>
 			<div class="modal-footer">
 				<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
@@ -149,7 +149,7 @@
 			<div class="collapse navbar-collapse" id="navbar-collapse">
 				<ul class="nav navbar-nav">
 				
-					<li><a class="contest-title" href="/contests/abc170">AtCoder Beginner Contest 170</a></li>
+					<li><a class="contest-title" href="/contests/arc124">AtCoder Regular Contest 124</a></li>
 				
 				</ul>
 				<ul class="nav navbar-nav navbar-right">
@@ -159,8 +159,8 @@
 							<img src='//img.atcoder.jp/assets/top/img/flag-lang/en.png'> English <span class="caret"></span>
 						</a>
 						<ul class="dropdown-menu">
-							<li><a href="/contests/abc170/tasks/abc170_f?lang=ja"><img src='//img.atcoder.jp/assets/top/img/flag-lang/ja.png'> 日本語</a></li>
-							<li><a href="/contests/abc170/tasks/abc170_f?lang=en"><img src='//img.atcoder.jp/assets/top/img/flag-lang/en.png'> English</a></li>
+							<li><a href="/contests/arc124/tasks/arc124_b?lang=ja"><img src='//img.atcoder.jp/assets/top/img/flag-lang/ja.png'> 日本語</a></li>
+							<li><a href="/contests/arc124/tasks/arc124_b?lang=en"><img src='//img.atcoder.jp/assets/top/img/flag-lang/en.png'> English</a></li>
 						</ul>
 					</li>
 					
@@ -189,8 +189,8 @@
 		</div>
 	</nav>
 
-	<form method="POST" name="form_logout" action="/logout?continue=https%3A%2F%2Fatcoder.jp%2Fcontests%2Fabc170%2Ftasks%2Fabc170_f">
-		<input type="hidden" name="csrf_token" value="xiDti&#43;MQ2khmZMOji1p&#43;4aZ3qbZN2FeooA1cFWmAmN0=" />
+	<form method="POST" name="form_logout" action="/logout?continue=https%3A%2F%2Fatcoder.jp%2Fcontests%2Farc124%2Ftasks%2Farc124_b">
+		<input type="hidden" name="csrf_token" value="ud3Dk8Dys2M1x2AHARKwCRDq8tg5gKURzDf/ezshHKg=" />
 	</form>
 	<div id="main-container" class="container"
 		 	style="padding-top:50px;">
@@ -203,35 +203,35 @@
 		<small class="contest-duration">
 			
 				Contest Duration:
-				<a href='http://www.timeanddate.com/worldclock/fixedtime.html?iso=20200614T2100&p1=248' target='blank'><time class='fixtime fixtime-full'>2020-06-14 21:00:00+0900</time></a> - <a href='http://www.timeanddate.com/worldclock/fixedtime.html?iso=20200614T2240&p1=248' target='blank'><time class='fixtime fixtime-full'>2020-06-14 22:40:00+0900</time></a> (local time)
-				(100 minutes)
+				<a href='http://www.timeanddate.com/worldclock/fixedtime.html?iso=20210725T2100&p1=248' target='blank'><time class='fixtime fixtime-full'>2021-07-25 21:00:00+0900</time></a> - <a href='http://www.timeanddate.com/worldclock/fixedtime.html?iso=20210725T2300&p1=248' target='blank'><time class='fixtime fixtime-full'>2021-07-25 23:00:00+0900</time></a> (local time)
+				(120 minutes)
 			
 		</small>
 		<small class="back-to-home pull-right"><a href="/home">Back to Home</a></small>
 	</div>
 	<ul class="nav nav-tabs">
-		<li><a href="/contests/abc170"><span class="glyphicon glyphicon-home" aria-hidden="true"></span> Top</a></li>
+		<li><a href="/contests/arc124"><span class="glyphicon glyphicon-home" aria-hidden="true"></span> Top</a></li>
 		
-			<li class="active"><a href="/contests/abc170/tasks"><span class="glyphicon glyphicon-tasks" aria-hidden="true"></span> Tasks</a></li>
-		
-
-		
-			<li><a href="/contests/abc170/clarifications"><span class="glyphicon glyphicon-question-sign" aria-hidden="true"></span> Clarifications <span id="clar-badge" class="badge"></span></a></li>
+			<li class="active"><a href="/contests/arc124/tasks"><span class="glyphicon glyphicon-tasks" aria-hidden="true"></span> Tasks</a></li>
 		
 
 		
-			<li><a href="/contests/abc170/submit?taskScreenName=abc170_f"><span class="glyphicon glyphicon-send" aria-hidden="true"></span> Submit</a></li>
+			<li><a href="/contests/arc124/clarifications"><span class="glyphicon glyphicon-question-sign" aria-hidden="true"></span> Clarifications <span id="clar-badge" class="badge"></span></a></li>
+		
+
+		
+			<li><a href="/contests/arc124/submit?taskScreenName=arc124_b"><span class="glyphicon glyphicon-send" aria-hidden="true"></span> Submit</a></li>
 		
 
 		
 			<li>
 				<a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false"><span class="glyphicon glyphicon-list" aria-hidden="true"></span> Results<span class="caret"></span></a>
 				<ul class="dropdown-menu">
-					<li><a href="/contests/abc170/submissions"><span class="glyphicon glyphicon-globe" aria-hidden="true"></span> All Submissions</a></li>
+					<li><a href="/contests/arc124/submissions"><span class="glyphicon glyphicon-globe" aria-hidden="true"></span> All Submissions</a></li>
 					
-						<li><a href="/contests/abc170/submissions/me"><span class="glyphicon glyphicon-user" aria-hidden="true"></span> My Submissions</a></li>
+						<li><a href="/contests/arc124/submissions/me"><span class="glyphicon glyphicon-user" aria-hidden="true"></span> My Submissions</a></li>
 						<li class="divider"></li>
-						<li><a href="/contests/abc170/score"><span class="glyphicon glyphicon-dashboard" aria-hidden="true"></span> My Score</a></li>
+						<li><a href="/contests/arc124/score"><span class="glyphicon glyphicon-dashboard" aria-hidden="true"></span> My Score</a></li>
 					
 				</ul>
 			</li>
@@ -240,26 +240,26 @@
 		
 			
 				
-					<li><a href="/contests/abc170/standings"><span class="glyphicon glyphicon-sort-by-attributes-alt" aria-hidden="true"></span> Standings</a></li>
+					<li><a href="/contests/arc124/standings"><span class="glyphicon glyphicon-sort-by-attributes-alt" aria-hidden="true"></span> Standings</a></li>
 				
 			
 				
-					<li><a href="/contests/abc170/standings/virtual"><span class="glyphicon glyphicon-sort-by-attributes-alt" aria-hidden="true"></span> Virtual Standings</a></li>
+					<li><a href="/contests/arc124/standings/virtual"><span class="glyphicon glyphicon-sort-by-attributes-alt" aria-hidden="true"></span> Virtual Standings</a></li>
 				
 			
 		
 
 		
-			<li><a href="/contests/abc170/custom_test"><span class="glyphicon glyphicon-wrench" aria-hidden="true"></span> Custom Test</a></li>
+			<li><a href="/contests/arc124/custom_test"><span class="glyphicon glyphicon-wrench" aria-hidden="true"></span> Custom Test</a></li>
 		
 
 		
-			<li><a href="/contests/abc170/editorial"><span class="glyphicon glyphicon-book" aria-hidden="true"></span> Editorial</a></li>
+			<li><a href="/contests/arc124/editorial"><span class="glyphicon glyphicon-book" aria-hidden="true"></span> Editorial</a></li>
 		
 		
 			
 			
-				<li><a href="https://codeforces.com/blog/entry/78783" target="_blank" rel="noopener"><span class="glyphicon glyphicon-comment" aria-hidden="true"></span> Discuss</a></li>
+				<li><a href="https://codeforces.com/blog/entry/93165" target="_blank" rel="noopener"><span class="glyphicon glyphicon-comment" aria-hidden="true"></span> Discuss</a></li>
 			
 		
 
@@ -268,8 +268,8 @@
 </div>
 	<div class="col-sm-12">
 		<span class="h2">
-			F - Pond Skater
-			<a class="btn btn-default btn-sm" href="/contests/abc170/tasks/abc170_f/editorial">Editorial</a>
+			B - XOR Matching 2
+			<a class="btn btn-default btn-sm" href="/contests/arc124/tasks/arc124_b/editorial">Editorial</a>
 		</span>
 		<span id="task-lang-btn" class="pull-right"><span data-lang="ja"><img src='//img.atcoder.jp/assets/top/img/flag-lang/ja.png'></span> / <span data-lang="en"><img src='//img.atcoder.jp/assets/top/img/flag-lang/en.png'></span></span>
 		<script>
@@ -308,7 +308,7 @@
 		</script>
 		<hr/>
 		<p>
-			Time Limit: 3 sec / Memory Limit: 1024 MB
+			Time Limit: 2 sec / Memory Limit: 1024 MB
 			
 		</p>
 
@@ -316,47 +316,49 @@
 			
 			<span class="lang">
 <span class="lang-ja">
-<p>配点 : <var>600</var> 点</p>
+<p>配点 : <var>400</var> 点</p>
 
 <div class="part">
 <section>
-<h3>問題文</h3><p>アメンボのすぬけ君は南北 <var>H</var> マス東西 <var>W</var> マスの長方形の形をしたグリッド状の池に住んでいます。北から <var>i</var> 番目、西から <var>j</var> 番目のマスをマス <var>(i,j)</var> とします。</p>
-<p>いくつかのマスには蓮の葉が浮かんでおり、すぬけ君はそれらのマスには入ることができません。
-<var>c_{ij}</var> が <code>@</code> のときマス <var>(i,j)</var> に蓮の葉が浮かんでいること、<code>.</code>のときそうでないことを表します。</p>
-<p>すぬけ君は一回水をかくことで東西南北のいずれかの方向に <var>1</var> マス以上 <var>K</var> マス以下移動することができます。
-移動の途中に蓮の葉のあるマスがあってはいけません。また、蓮の葉のあるマスや池の外に移動することもできません。</p>
-<p>すぬけ君がマス <var>(x_1,y_1)</var> から <var>(x_2,y_2)</var> まで移動するのに最小で何回水をかく必要があるか求めてください。
-<var>(x_1,y_1)</var> から <var>(x_2,y_2)</var> まで移動することができない場合、そのことを指摘してください。</p>
+<h3>問題文</h3><p>非負整数のみからなる長さ <var>N</var> の数列 <var>a,b</var> が与えられます。<var>a,b</var> の <var>i</var> 番目の要素はそれぞれ <var>a_i, b_i</var> です。 </p>
+<p>非負整数 <var>x</var> が以下の条件を満たすとき、<var>x</var> を <strong>よい数</strong> と呼びます。</p>
+<ul>
+<li>条件：<var>b</var> を並べ替えて、<var>1 \leq i \leq N</var> を満たすどの整数 <var>i</var> についても <var>a_i \mbox{ XOR } b_i = x</var> が成立するようにすることができる。ここで、<var>\mbox{XOR }</var> はビットごとの排他的論理和である。</li>
+</ul>
+<p>よい数を小さい方からすべて列挙してください。</p>
+<details>
+<summary><var>\mbox{ XOR }</var> とは</summary>
+<p>
+整数 <var>x, y</var> のビットごとの排他的論理和 <var>x \mbox{ XOR } y</var> は、以下のように定義されます。
+<ul>
+<li> <var>x \mbox{ XOR } y</var> を二進表記した際の <var>2^k</var> (<var>k \geq 0</var>) の位の数は、<var>x, y</var> を二進表記した際の <var>2^k</var> の位の数のうち一方のみが <var>1</var> であれば <var>1</var>、そうでなければ <var>0</var> である。</li>
+</ul>
+例えば、<var>3 \mbox{ XOR } 5 = 6</var> となります (二進表記すると: <var>011 \mbox{ XOR } 101 = 110</var>)。
+</p>
+</details>
+
 </section>
 </div>
 
 <div class="part">
 <section>
 <h3>制約</h3><ul>
-<li><var>1 \leq H,W,K \leq 10^6</var></li>
-<li><var>H \times W \leq 10^6</var></li>
-<li><var>1 \leq x_1,x_2 \leq H</var></li>
-<li><var>1 \leq y_1,y_2 \leq W</var></li>
-<li><var>x_1 \neq x_2</var> または <var>y_1 \neq y_2</var></li>
-<li><var>c_{i,j}</var> は <code>.</code> または <code>@</code></li>
-<li><var>c_{x_1,y_1} =</var> <code>.</code></li>
-<li><var>c_{x_2,y_2} =</var> <code>.</code></li>
-<li>入力される数はすべて整数である。</li>
+<li>与えられる入力は全て整数</li>
+<li><var>1 \leq N \leq 2000</var></li>
+<li><var>0 \leq a_i, b_i &lt; 2^{30}</var></li>
 </ul>
 </section>
 </div>
 
 <hr />
+
 <div class="io-style">
 <div class="part">
 <section>
 <h3>入力</h3><p>入力は以下の形式で標準入力から与えられる。</p>
-<pre><var>H</var> <var>W</var> <var>K</var>
-<var>x_1</var> <var>y_1</var> <var>x_2</var> <var>y_2</var>
-<var>c_{1,1}c_{1,2}</var> <var>..</var> <var>c_{1,W}</var>
-<var>c_{2,1}c_{2,2}</var> <var>..</var> <var>c_{2,W}</var>
-<var>:</var>
-<var>c_{H,1}c_{H,2}</var> <var>..</var> <var>c_{H,W}</var>
+<pre><var>N</var>
+<var>a_1</var> <var>\cdots</var> <var>a_N</var>
+<var>b_1</var> <var>\cdots</var> <var>b_N</var>
 </pre>
 
 </section>
@@ -364,20 +366,19 @@
 
 <div class="part">
 <section>
-<h3>出力</h3><p>すぬけ君がマス <var>(x_1,y_1)</var> から <var>(x_2,y_2)</var> まで移動するのに必要な最小の水かきの回数を出力せよ。
-<var>(x_1,y_1)</var> から <var>(x_2,y_2)</var> まで移動することができない場合、<code>-1</code>を出力せよ。</p>
+<h3>出力</h3><p><var>1</var> 行目によい数の個数 <var>K</var> を出力せよ。
+続けて <var>K</var> 行出力せよ。続く <var>K</var> 行の <var>i</var> 行目には小さい方から <var>i</var> 番目のよい数を出力せよ。</p>
 </section>
 </div>
 </div>
 
 <hr />
+
 <div class="part">
 <section>
-<h3>入力例 1</h3><pre>3 5 2
-3 2 3 4
-.....
-.@..@
-..@..
+<h3>入力例 1</h3><pre>3
+1 2 3
+6 4 7
 </pre>
 
 </section>
@@ -385,37 +386,23 @@
 
 <div class="part">
 <section>
-<h3>出力例 1</h3><pre>5
+<h3>出力例 1</h3><pre>1
+5
 </pre>
 
-<p>はじめ、すぬけ君はマス <var>(3,2)</var> にいます。
-以下のように <var>5</var> 回水をかくことでマス <var>(3,4)</var> まで移動することができます。</p>
 <ul>
-<li>
-<p>マス <var>(3,2)</var> から西に <var>1</var> マス進み、マス <var>(3,1)</var> に移動する。</p>
-</li>
-<li>
-<p>マス <var>(3,1)</var> から北に <var>2</var> マス進み、マス <var>(1,1)</var> に移動する。</p>
-</li>
-<li>
-<p>マス <var>(1,1)</var> から東に <var>2</var> マス進み、マス <var>(1,3)</var> に移動する。</p>
-</li>
-<li>
-<p>マス <var>(1,3)</var> から東に <var>1</var> マス進み、マス <var>(1,4)</var> に移動する。</p>
-</li>
-<li>
-<p>マス <var>(1,4)</var> から南に <var>2</var> マス進み、マス <var>(3,4)</var> に移動する。</p>
-</li>
+<li><var>b</var> を <var>(4, 7, 6)</var> と並び替えたとき、<var>a_1 \mbox{ XOR } b_1 = a_2 \mbox{ XOR } b_2 = a_3 \mbox{ XOR } b_3 = 5</var> となるため、<var>5</var> はよい数です。他によい数はありません。</li>
 </ul>
 </section>
 </div>
 
 <hr />
+
 <div class="part">
 <section>
-<h3>入力例 2</h3><pre>1 6 4
-1 1 1 6
-......
+<h3>入力例 2</h3><pre>2
+0 1
+0 2
 </pre>
 
 </section>
@@ -423,20 +410,19 @@
 
 <div class="part">
 <section>
-<h3>出力例 2</h3><pre>2
+<h3>出力例 2</h3><pre>0
 </pre>
 
 </section>
 </div>
 
 <hr />
+
 <div class="part">
 <section>
-<h3>入力例 3</h3><pre>3 3 1
-2 1 2 3
-.@.
-.@.
-.@.
+<h3>入力例 3</h3><pre>24
+14911005 70152939 282809711 965900047 168465665 337027481 520073861 20800623 934711525 944543101 522277111 580736275 468493313 912814743 99651737 439502451 365446123 198473587 285587229 253330309 591640417 761745547 247947767 750367481
+805343020 412569406 424258892 329301584 123050452 1042573510 1073384116 495212986 158432830 145726540 623594202 836660574 380872916 722447664 230460104 718360386 620079272 109804454 60321058 38178640 475708360 207775930 393038502 310271010
 </pre>
 
 </section>
@@ -444,52 +430,64 @@
 
 <div class="part">
 <section>
-<h3>出力例 3</h3><pre>-1
+<h3>出力例 3</h3><pre>8
+107543995
+129376201
+139205201
+160626723
+312334911
+323172429
+481902037
+493346727
 </pre></section>
 </div>
 </span>
 <span class="lang-en">
-<p>Score : <var>600</var> points</p>
+<p>Score : <var>400</var> points</p>
 
 <div class="part">
 <section>
-<h3>Problem Statement</h3><p>Snuke, a water strider, lives in a rectangular pond that can be seen as a grid with <var>H</var> east-west rows and <var>W</var> north-south columns. Let <var>(i,j)</var> be the square at the <var>i</var>-th row from the north and <var>j</var>-th column from the west.</p>
-<p>Some of the squares have a lotus leaf on it and cannot be entered.
-The square <var>(i,j)</var> has a lotus leaf on it if <var>c_{ij}</var> is <code>@</code>, and it does not if <var>c_{ij}</var> is <code>.</code>.</p>
-<p>In one stroke, Snuke can move between <var>1</var> and <var>K</var> squares (inclusive) toward one of the four directions: north, east, south, and west.
-The move may not pass through a square with a lotus leaf. Moving to such a square or out of the pond is also forbidden.</p>
-<p>Find the minimum number of strokes Snuke takes to travel from the square <var>(x_1,y_1)</var> to <var>(x_2,y_2)</var>.
-If the travel from <var>(x_1,y_1)</var> to <var>(x_2,y_2)</var> is impossible, point out that fact.</p>
+<h3>Problem Statement</h3><p>Given are sequences <var>a</var> and <var>b</var>,  each of length <var>N</var>, consisting of non-negative integers. The <var>i</var>-th elements of <var>a</var> and <var>b</var> are <var>a_i</var> and <var>b_i</var>, respectively.</p>
+<p>A non-negative integer <var>x</var> is said to be <strong>good</strong> when the following condition is satisfied:</p>
+<ul>
+<li>Condition: It is possible to permute <var>b</var> so that <var>a_i \mbox{ XOR } b_i = x</var> holds for every integer <var>i</var> such that <var>1 \leq i \leq N</var>, where <var>\mbox{XOR }</var> is the bitwise XOR.</li>
+</ul>
+<p>List all good integers in ascending order.</p>
+<details>
+    <summary>
+        What is <var>\mathrm{XOR}</var>?
+    </summary>
+    <p>
+        The bitwise <var>\mathrm{XOR}</var> of integers <var>x</var> and <var>y</var>, <var>x\ \mathrm{XOR}\ y</var>, is defined as follows:
+        <ul>
+            <li>When <var>x\ \mathrm{XOR}\ y</var> is written in base two, the digit in the <var>2^k</var>'s place (<var>k \geq 0</var>) is <var>1</var> if exactly one of <var>x</var> and <var>y</var> is <var>1</var>, and <var>0</var> otherwise.</li>
+        </ul>
+        For example, we have <var>3\ \mathrm{XOR}\ 5 = 6</var> (in base two: <var>011\ \mathrm{XOR}\ 101 = 110</var>).
+    </p>
+</details>
+
 </section>
 </div>
 
 <div class="part">
 <section>
 <h3>Constraints</h3><ul>
-<li><var>1 \leq H,W,K \leq 10^6</var></li>
-<li><var>H \times W \leq 10^6</var></li>
-<li><var>1 \leq x_1,x_2 \leq H</var></li>
-<li><var>1 \leq y_1,y_2 \leq W</var></li>
-<li><var>x_1 \neq x_2</var> or <var>y_1 \neq y_2</var>.</li>
-<li><var>c_{i,j}</var> is <code>.</code> or <code>@</code>.</li>
-<li><var>c_{x_1,y_1} =</var> <code>.</code></li>
-<li><var>c_{x_2,y_2} =</var> <code>.</code></li>
-<li>All numbers in input are integers.</li>
+<li>All values in input are integers.</li>
+<li><var>1 \leq N \leq 2000</var></li>
+<li><var>0 \leq a_i, b_i &lt; 2^{30}</var></li>
 </ul>
 </section>
 </div>
 
 <hr />
+
 <div class="io-style">
 <div class="part">
 <section>
 <h3>Input</h3><p>Input is given from Standard Input in the following format:</p>
-<pre><var>H</var> <var>W</var> <var>K</var>
-<var>x_1</var> <var>y_1</var> <var>x_2</var> <var>y_2</var>
-<var>c_{1,1}c_{1,2}</var> <var>..</var> <var>c_{1,W}</var>
-<var>c_{2,1}c_{2,2}</var> <var>..</var> <var>c_{2,W}</var>
-<var>:</var>
-<var>c_{H,1}c_{H,2}</var> <var>..</var> <var>c_{H,W}</var>
+<pre><var>N</var>
+<var>a_1</var> <var>\cdots</var> <var>a_N</var>
+<var>b_1</var> <var>\cdots</var> <var>b_N</var>
 </pre>
 
 </section>
@@ -497,19 +495,19 @@ If the travel from <var>(x_1,y_1)</var> to <var>(x_2,y_2)</var> is impossible, p
 
 <div class="part">
 <section>
-<h3>Output</h3><p>Print the minimum number of strokes Snuke takes to travel from the square <var>(x_1,y_1)</var> to <var>(x_2,y_2)</var>, or print <code>-1</code> if the travel is impossible.</p>
+<h3>Output</h3><p>In the first line, print <var>K</var>, the number of good integers.
+Then, print <var>K</var> more lines. In the <var>i</var>-th of these <var>K</var> lines, print the <var>i</var>-th smallest good integer.</p>
 </section>
 </div>
 </div>
 
 <hr />
+
 <div class="part">
 <section>
-<h3>Sample Input 1</h3><pre>3 5 2
-3 2 3 4
-.....
-.@..@
-..@..
+<h3>Sample Input 1</h3><pre>3
+1 2 3
+6 4 7
 </pre>
 
 </section>
@@ -517,37 +515,23 @@ If the travel from <var>(x_1,y_1)</var> to <var>(x_2,y_2)</var> is impossible, p
 
 <div class="part">
 <section>
-<h3>Sample Output 1</h3><pre>5
+<h3>Sample Output 1</h3><pre>1
+5
 </pre>
 
-<p>Initially, Snuke is at the square <var>(3,2)</var>.
-He can reach the square <var>(3, 4)</var> by making five strokes as follows:</p>
 <ul>
-<li>
-<p>From <var>(3, 2)</var>, go west one square to <var>(3, 1)</var>.</p>
-</li>
-<li>
-<p>From <var>(3, 1)</var>, go north two squares to <var>(1, 1)</var>.</p>
-</li>
-<li>
-<p>From <var>(1, 1)</var>, go east two squares to <var>(1, 3)</var>.</p>
-</li>
-<li>
-<p>From <var>(1, 3)</var>, go east one square to <var>(1, 4)</var>.</p>
-</li>
-<li>
-<p>From <var>(1, 4)</var>, go south two squares to <var>(3, 4)</var>.</p>
-</li>
+<li>If we permute <var>b</var> into <var>(4, 7, 6)</var>, we have <var>a_1 \mbox{ XOR } b_1 = a_2 \mbox{ XOR } b_2 = a_3 \mbox{ XOR } b_3 = 5</var>, so <var>5</var> is a good integer. There are no other good integers.</li>
 </ul>
 </section>
 </div>
 
 <hr />
+
 <div class="part">
 <section>
-<h3>Sample Input 2</h3><pre>1 6 4
-1 1 1 6
-......
+<h3>Sample Input 2</h3><pre>2
+0 1
+0 2
 </pre>
 
 </section>
@@ -555,20 +539,19 @@ He can reach the square <var>(3, 4)</var> by making five strokes as follows:</p>
 
 <div class="part">
 <section>
-<h3>Sample Output 2</h3><pre>2
+<h3>Sample Output 2</h3><pre>0
 </pre>
 
 </section>
 </div>
 
 <hr />
+
 <div class="part">
 <section>
-<h3>Sample Input 3</h3><pre>3 3 1
-2 1 2 3
-.@.
-.@.
-.@.
+<h3>Sample Input 3</h3><pre>24
+14911005 70152939 282809711 965900047 168465665 337027481 520073861 20800623 934711525 944543101 522277111 580736275 468493313 912814743 99651737 439502451 365446123 198473587 285587229 253330309 591640417 761745547 247947767 750367481
+805343020 412569406 424258892 329301584 123050452 1042573510 1073384116 495212986 158432830 145726540 623594202 836660574 380872916 722447664 230460104 718360386 620079272 109804454 60321058 38178640 475708360 207775930 393038502 310271010
 </pre>
 
 </section>
@@ -576,7 +559,15 @@ He can reach the square <var>(3, 4)</var> by making five strokes as follows:</p>
 
 <div class="part">
 <section>
-<h3>Sample Output 3</h3><pre>-1
+<h3>Sample Output 3</h3><pre>8
+107543995
+129376201
+139205201
+160626723
+312334911
+323172429
+481902037
+493346727
 </pre></section>
 </div>
 </span>
@@ -588,8 +579,8 @@ He can reach the square <var>(3, 4)</var> by making five strokes as follows:</p>
 
 		
 		<hr/>
-		<form class="form-horizontal form-code-submit" action="/contests/abc170/submit" method="POST">
-			<input type="hidden" name="data.TaskScreenName" value="abc170_f" />
+		<form class="form-horizontal form-code-submit" action="/contests/arc124/submit" method="POST">
+			<input type="hidden" name="data.TaskScreenName" value="arc124_b" />
 			
 			<div class="form-group ">
 				<label class="control-label col-sm-2" for="select-lang">Language</label>
@@ -764,7 +755,7 @@ He can reach the square <var>(3, 4)</var> by making five strokes as follows:</p>
 	<input id="input-open-file" type="file" style="display:none;">
 </div>
 
-			<input type="hidden" name="csrf_token" value="xiDti&#43;MQ2khmZMOji1p&#43;4aZ3qbZN2FeooA1cFWmAmN0=" />
+			<input type="hidden" name="csrf_token" value="ud3Dk8Dys2M1x2AHARKwCRDq8tg5gKURzDf/ezshHKg=" />
 			<div class="form-group">
 				<label class="control-label col-sm-2" for="submit"></label>
 				<div class="col-sm-5">
@@ -784,7 +775,7 @@ He can reach the square <var>(3, 4)</var> by making five strokes as follows:</p>
 			
 			
 			
-<div class="a2a_kit a2a_kit_size_20 a2a_default_style pull-right" data-a2a-url="https://atcoder.jp/contests/abc170/tasks/abc170_f?lang=en" data-a2a-title="F - Pond Skater">
+<div class="a2a_kit a2a_kit_size_20 a2a_default_style pull-right" data-a2a-url="https://atcoder.jp/contests/arc124/tasks/arc124_b?lang=en" data-a2a-title="B - XOR Matching 2">
 	<a class="a2a_button_facebook"></a>
 	<a class="a2a_button_twitter"></a>
 	
@@ -804,8 +795,8 @@ He can reach the square <var>(3, 4)</var> by making five strokes as follows:</p>
 			<footer class="footer">
 			
 				<ul>
-					<li><a href="/contests/abc170/rules">Rule</a></li>
-					<li><a href="/contests/abc170/glossary">Glossary</a></li>
+					<li><a href="/contests/arc124/rules">Rule</a></li>
+					<li><a href="/contests/arc124/glossary">Glossary</a></li>
 					
 				</ul>
 			
