@@ -4,6 +4,9 @@ typedef long long int ll;
 using namespace std;
 
 /*
+  *NOTE* This implementation is slow O(N(logN)^2).
+         Use ac-library O(N) instead.
+
   Suffix Array
 
     SuffixArray sa("abcabc");         // let N = "abcabc".size()

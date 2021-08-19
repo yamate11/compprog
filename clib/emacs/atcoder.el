@@ -6,7 +6,7 @@
 	"suffixArray" "board" "minCostFlow" "perm" "guessPoly" "ftwo"
 	"trie" "tree" "rollingHash" "fft" "doubling" "ipoint" "cumsum2d"
 	"interactive" "intervalSet" "polynomial" "convolution" "adjMatrix"
-        "interpolation"
+        "interpolation" "fastTransform"
 	"f:power" "f:<<" "f:>>" "f:updMaxMin" "f:gcd" "f:intDiv" 
         "f:perfmeas" "f:mex" "f:shortVector" "f:floor_sum" "f:itrange"
 	))
