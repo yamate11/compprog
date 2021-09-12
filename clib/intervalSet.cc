@@ -6,7 +6,7 @@ using namespace std;
 /*
   Managing a set of intervals using set<pair<ll, ll>>
 
-  using itv_elem_t = pair<ll, ll>;
+  using itv_elem_t = pair<ll, ll>;  // expresses half-open interval [a,b)
   using itv_set = set<itv_elem_t>;
   
   itv_set from_sorted_vector(const auto& vec);

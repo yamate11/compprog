@@ -45,7 +45,7 @@ using namespace std;
  */
 
 template<typename E>
-struct CSR {
+struct CSR {  // Compressed Sparse Row
   int size;
   vector<int> start;
   vector<E> es;

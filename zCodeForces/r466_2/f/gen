@@ -21,9 +21,9 @@ def generate_random():
         n = 100000
         q = 100000
         lim = 100000
-        n = 10
-        q = 100
-        lim = 50
+        # n = 10
+        # q = 100
+        # lim = 500
         lst = [randrange(1, lim) for _ in range(n)]
         case = f'''{n} {q}
 {show_list(lst)}
@@ -67,7 +67,7 @@ def main():
             for (i, s) in enumerate(generate()):
                 print(s.rstrip())
                 print(end_mark)
-                if (i == 4):
+                if (i == 0):
                     break
     except BrokenPipeError as e:
         # print('caught: BrokenPipeError', file=sys.stderr)

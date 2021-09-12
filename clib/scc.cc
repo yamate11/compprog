@@ -3,230 +3,185 @@
 typedef long long int ll;
 using namespace std;
 
-// @@ !! LIM(f:<<)
-// --> f:<<
-// ---- inserted function << from util.cc
-template <typename T1, typename T2>
-ostream& operator<< (ostream& os, const pair<T1,T2>& p) {
-  os << "(" << p.first << ", " << p.second << ")";
-  return os;
-}
+/*
+   SCC ... strongly connected component
+                    This employs Tarjan's algorithm.
 
-template <typename T1, typename T2, typename T3>
-ostream& operator<< (ostream& os, const tuple<T1,T2,T3>& t) {
-  os << "(" << get<0>(t) << ", " << get<1>(t)
-     << ", " << get<2>(t) << ")";
-  return os;
-}
+   Usage:
+     ll N; cin >> N;
+     SCC scc(N);     // argument is the number of nodes.  
+     for (ll i = 0; i < M; i++) {
+       ll x, y; cin >> x, y; x--; y--;   // nodes should be 0-indexed.
+       scc.addEdge(x, y);
+     }
+     scc.build();    // optional (will be lazily built even if omitted)
+     // Now you can call:
+     ll sz = scc.numComp(); // number of components
+     ll nd = some arbitarily node...
+     ll ccid = scc.ccForNode(nd);  // component that nd belongs to
+     const vector<int>& nodes = scc.nodesInCC(ccid);
+                            // vector of nodes in component ccid
+     assert(nodes.find(nd) != nodes.end());  // should hold
+     // CCIDs are topologically sorted IN REVERSE ORDER.
+     scc.edge_build();  // optional (will be lazily built even if omitted)
+     // Now you can call:
+     const vector<int>& fwds = scc.cFwd(ccid);
+                        // successors in the DAG of sccs
+     // for all elelment f of fwds, ccid > f holds. (reverse top. order)
+     const vector<int>& bwds = scc.cBwd(ccid);
+                        // predecessors in the DAG of sccs
 
-template <typename T1, typename T2, typename T3, typename T4>
-ostream& operator<< (ostream& os, const tuple<T1,T2,T3,T4>& t) {
-  os << "(" << get<0>(t) << ", " << get<1>(t)
-     << ", " << get<2>(t) << ", " << get<3>(t) << ")";
-  return os;
-}
-
-template <typename T>
-ostream& operator<< (ostream& os, const vector<T>& v) {
-  os << '[';
-  for (auto it = v.begin(); it != v.end(); it++) {
-    if (it != v.begin()) os << ", ";
-    os << *it;
-  }
-  os << ']';
-
-  return os;
-}
-
-template <typename T>
-ostream& operator<< (ostream& os, const set<T>& v) {
-  os << '{';
-  for (auto it = v.begin(); it != v.end(); it++) {
-    if (it != v.begin()) os << ", ";
-    os << *it;
-  }
-  os << '}';
-
-  return os;
-}
-
-template <typename T1, typename T2>
-ostream& operator<< (ostream& os, const map<T1, T2>& mp) {
-  os << '[';
-  for (auto it = mp.begin(); it != mp.end(); it++) {
-    if (it != mp.begin()) os << ", ";
-    os << it->first << ": " << it->second;
-  }
-  os << ']';
-
-  return os;
-}
-
-template <typename T, typename T2, typename T3>
-ostream& operator<< (ostream& os, const priority_queue<T, T2, T3>& orig) {
-  priority_queue<T, T2, T3> pq(orig);
-  bool first = true;
-  os << '[';
-  while (!pq.empty()) {
-    T x = pq.top(); pq.pop();
-    if (!first) os << ", ";
-    os << x;
-    first = false;
-  }
-  return os << ']';
-}
-// ---- end <<
-// @@ !! LIM  -- end mark --
-
+   APIs:
+     SCC(int size)                            constructor
+           Original nodes should be {0, .., size-1}
+     void addEdge(int from, int to)           adds an edge
+     void build()                             (optional)
+     void edge_build()                        (optional)
+     int numComp()                            number of SCCs
+     int ccForNode(int nd)                    ID of SCC which nd belongs to
+     const vector<int>& nodesInCC(int ccid)   nodes in SCC ccid
+     const vector<int>& cFwd(int ccid)        successor SCCs of ccid
+     const vector<int>& cBwd(int ccid)        predecessor SCCs of ccid
+ */
 
 //////////////////////////////////////////////////////////////////////
 // See help of libins command for dependency spec syntax.
-// @@ !! BEGIN()
-using Edge = pair<int, int>;
+// @@ !! BEGIN() ---- scc.cc
+
+template<typename E>
+struct CSR {  // Compressed Sparse Row
+  int size;
+  vector<int> start;
+  vector<E> es;
+  vector<pair<int, E>> tmp;
+  CSR(int size_) : size(size_), start(size + 1) {}
+  void add(int i, const E& e) { tmp.emplace_back(i, E(e)); }
+  void add(int i, E&& e) { tmp.emplace_back(i, e); }
+  void build() {
+    vector<int> num(size);
+    int tot = 0;
+    for (auto& [i, e] : tmp) {
+      num[i]++;
+      tot++;
+    }
+    es.resize(tot);
+    for (int i = 0; i < size; i++) start[i+1] = start[i] + num[i];
+    for (auto& [i, e] : tmp) {
+      es[start[i + 1] - num[i]] = move(e);
+      num[i]--;
+    }
+  }
+};
 
 struct SCC {
-  // size is the number of nodes
   int size;
 
-  // numComp is the number of SCCs
-  int numComp;
+  CSR<int> csr;
 
-  // ccForNode.at(n) is the identifier of the SCC that n belongs to
-  vector<int> ccForNode;
-
-  // nodesInCC.at(c) is the vector of nodes in SCC c.
-  vector<vector<int>> nodesInCC;
-
-  // cArr.at(c) is the vector of SCCs that are right after c.
-  // Identifiers are in a topological order.  I.e.,
-  //     m \in cArr.at(n) => n < m
-  vector<vector<int>> cArr;
-
-  // cRevArr.at(c) is the vector of SCCs that are right before c.
-  vector<vector<int>> cRevArr;
-
-  void init(auto edges) {
-    vector<vector<int>> arr(size);
-    vector<vector<int>> revArr(size);
-    for (Edge e : edges) {
-      arr[e.first].push_back(e.second);
-      revArr[e.second].push_back(e.first);
-    }
-    vector<bool> visited(size);
-    vector<int> finOrder;
-    auto dfs1 = [&](const auto& recF, int n) -> void {
-      if (visited.at(n)) return;
-      visited.at(n) = true;
-      for (int m : arr[n]) recF(recF, m);
-      finOrder.push_back(n);
-    };
-    for (int i = 0; i < size; i++) {
-      if (!visited.at(i)) dfs1(dfs1, i);
-    }
-    ccForNode.resize(size, -1);
-    vector<set<int>> compRev;
-    auto dfs2 = [&](const auto& recF, int n, int ccID) -> void {
-      ccForNode.at(n) = ccID;
-      nodesInCC.at(ccID).push_back(n);
-      for (int m : revArr.at(n)) {
-	int y = ccForNode.at(m);
-	if (y == -1) {
-	  recF(recF, m, ccID);
-	}else if (y == ccID) {
-	  // do nothing
-	}else {
-	  compRev.at(ccID).insert(y);
-	}
-      }
-    };
-    int ccID = 0;
-    for (int f = (int)finOrder.size() -1; f >= 0; f--) {
-      int n = finOrder.at(f);
-      if (ccForNode.at(n) == -1) {
-	nodesInCC.push_back(vector<int>());
-	compRev.push_back(set<int>());
-	dfs2(dfs2, n, ccID++);
-      }
-    }
-    numComp = ccID;
-    cArr.resize(numComp);
-    cRevArr.resize(numComp);
-    for (int i = 0; i < numComp; i++) {
-      auto& s = compRev.at(i);
-      cRevArr.at(i) = vector<int>(s.begin(), s.end());
-      for (int x : cRevArr.at(i)) cArr.at(x).push_back(i);
-    }
+  vector<int> _ccForNode;
+  int ccForNode(int nd) {
+    if (!built) build();
+    return _ccForNode[nd];
   }
 
-  // _size is the number of nodes.
-  // Edges should be numbered from 0 to _size - 1.
-  // _edges is the vector of pair of int and int.
-  SCC(int _size, vector<Edge>& _edges)
-    : size(_size) { init(_edges); }
-  SCC(int _size, vector<Edge>&& _edges)
-    : size(_size) { init(_edges); }
+  vector<vector<int>> _nodesInCC;
+  const vector<int>& nodesInCC(int ccid) {
+    if (!built) build();
+    return _nodesInCC[ccid];
+  }
+
+  int numComp() {
+    if (! built) build();
+    return _nodesInCC.size();
+  }
+
+  vector<vector<int>> _cFwd;
+  const vector<int>& cFwd(int ccid) {
+    if (!edge_built) edge_build();
+    return _cFwd[ccid];
+  }
+
+  vector<vector<int>> _cBwd;
+  const vector<int>& cBwd(int ccid) {
+    if (!edge_built) edge_build();
+    return _cBwd[ccid];
+  }
+
+  // true if sccs have built
+  bool built;
+
+  // true if edges between sccs have built
+  bool edge_built;
+
+  SCC(int sz) : size(sz), csr(size), _ccForNode(sz), 
+                built(false), edge_built(false) {}
+
+  void addEdge(int from, int to) { csr.add(from, to); }
+
+  void build() {
+    if (built) return;
+    built = true;
+    csr.build();
+    int idx = 0;
+    vector<int> stack;
+    vector<int> index(size, -1);
+    vector<int> lowlink(size);
+    vector<bool> onstack(size, false);
+    auto dfs = [&](auto rF, int i) -> void {
+      // DLOGKL("dfs", i);
+      index[i] = idx;
+      lowlink[i] = idx;
+      idx++;
+      stack.push_back(i);
+      onstack[i] = true;
+      for (int k = csr.start[i]; k < csr.start[i + 1]; k++) {
+        int j = csr.es[k];
+        if (index[j] < 0) {
+          rF(rF, j);
+          lowlink[i] = min(lowlink[i], lowlink[j]);
+        }else if (onstack[j]) {
+          lowlink[i] = min(lowlink[i], index[j]);
+        }
+      }
+      // DLOGK(i, lowlink[i], index[i]);
+      if (lowlink[i] == index[i]) {
+        int ccid = _nodesInCC.size();
+        _nodesInCC.resize(ccid + 1);
+        vector<int>& cc = _nodesInCC[ccid];
+        while (true) {
+          int j = stack.back(); stack.pop_back();
+          onstack[j] = false;
+          cc.push_back(j);
+          _ccForNode[j] = ccid;
+          if (j == i) break;
+        }
+      }
+    };
+    for (int i = 0; i < size; i++) if (index[i] < 0) dfs(dfs, i);
+  }
+
+  void edge_build() {
+    if (edge_built) return;
+    edge_built = true;
+    if (!built) build();
+    int sz = _nodesInCC.size();
+    _cFwd.resize(sz);
+    _cBwd.resize(sz);
+    for (int icc = 0; icc < sz; icc++) {
+      vector<bool> tmp(sz);
+      for (int i : _nodesInCC[icc]) {
+        for (int k = csr.start[i]; k < csr.start[i + 1]; k++) {
+          int j = csr.es[k];
+          int jcc = _ccForNode[j];
+          if (icc == jcc) continue;
+          if (tmp[jcc]) continue;
+          tmp[jcc] = true;
+          _cFwd[icc].push_back(jcc);
+          _cBwd[jcc].push_back(icc);
+        }
+      }
+    }
+  }
 };
+
 // @@ !! END ---- scc.cc
-
-
-int main(int argc, char *argv[]) {
-  ios_base::sync_with_stdio(false);
-  cin.tie(nullptr);
-  cout << setprecision(20);
-
-  vector<Edge> edge1 = { Edge(0, 1), Edge(1, 0) };
-  SCC scc1(2, edge1);
-  assert(scc1.size == 2);
-  assert(scc1.numComp == 1);
-  assert(scc1.nodesInCC.at(0) == vector<int>({0,1}));
-  assert(scc1.ccForNode == vector<int>({0,0}));
-
-  vector<Edge> edge2 = {
-    Edge(0, 1), Edge(1, 2), Edge(2, 0),
-    Edge(1, 3), Edge(3, 4), Edge(4, 5),
-    Edge(5, 6), Edge(6, 5)
-  };
-  SCC scc2(7, edge2);
-  assert(scc2.size == 7);
-  assert(scc2.numComp == 4);
-  assert(scc2.ccForNode.at(0) == scc2.ccForNode.at(2));
-  assert(scc2.ccForNode.at(5) == scc2.ccForNode.at(6));
-  assert(scc2.nodesInCC.at(scc2.ccForNode.at(3)).size() == 1);
-  assert(scc2.cArr.at(scc2.ccForNode.at(0))
-	 == vector<int>({scc2.ccForNode.at(3)}));
-  for (int n = 0; n < scc2.numComp; n++) {
-    for (int m: scc2.cArr.at(n)) assert(n < m);
-  }
-
-  vector<Edge> edge3 = {
-    Edge(0,1), Edge(0,2), Edge(1,2), Edge(2,1),
-    Edge(1,3), Edge(2,3), Edge(3,6), Edge(6,2),
-    Edge(3,4), Edge(3,5), Edge(3,8), Edge(4,4), Edge(4,9), Edge(9,10),
-    Edge(5,7), Edge(7,5), Edge(7,10), Edge(8,10)
-  };
-  SCC scc3(11, edge3);
-  int c1236 = scc3.ccForNode.at(1);
-  int c57 = scc3.ccForNode.at(5);
-  int c4 = scc3.ccForNode.at(4);
-  int c8 = scc3.ccForNode.at(8);
-  int c9 = scc3.ccForNode.at(9);
-  assert(scc3.nodesInCC.at(c1236).size() == 4);
-  assert(scc3.nodesInCC.at(c57).size() == 2);
-  assert(scc3.nodesInCC.at(c4).size() == 1);
-  assert(scc3.nodesInCC.at(c9).size() == 1);
-  assert(scc3.cArr.at(c4) == vector<int>({c9}));
-  assert(scc3.cRevArr.at(c4) == vector<int>({c1236}));
-  vector<int> varr1236 = scc3.cArr.at(c1236);
-  set<int> sarr1236(varr1236.begin(), varr1236.end());
-  assert(varr1236.size() == 3);
-  assert(sarr1236.count(c4) == 1);
-  assert(sarr1236.count(c57) == 1);
-  assert(sarr1236.count(c8) == 1);
-  for (int n = 0; n < scc3.numComp; n++) {
-    for (int m: scc3.cArr.at(n)) assert(n < m);
-  }
-
-  cout << "Test completed." << endl;
-  return 0;
-}
-

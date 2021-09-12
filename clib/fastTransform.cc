@@ -7,37 +7,56 @@
     - Hadamard transformation
   and {and|or|xor} convolutions using these transformations
 
-
   Functions:
 
-  vector<T> xor_conv(vector<T> vec1, vector<T> vec2);
-  vector<T> and_conv(vector<T> vec1, vector<T> vec2);
-  vector<T> or_conv(vector<T> vec1, vector<T> vec2);
-    Returns {xor|and|or} convolution.
-    E.g.  if vec = xor_conv(vec1, vec2) then
-             vec[k] = \sum {vec1[i] * vec2[j] | i ^ j = k}
+    vector<T> xor_conv(vector<T> vec1, vector<T> vec2);
+    vector<T> and_conv(vector<T> vec1, vector<T> vec2);
+    vector<T> or_conv(vector<T> vec1, vector<T> vec2);
+      Returns {xor|and|or} convolution.
+      E.g.  if vec = xor_conv(vec1, vec2) then
+               vec[k] = \sum {vec1[i] * vec2[j] | i ^ j = k}
+      The sizes of vec? need not be powers of two.
+  
+    void xor_conv_dest(vector<T>& vec1, vector<T>& vec2);
+    void and_conv_dest(vector<T>& vec1, vector<T>& vec2);
+    void or_conv_dest(vector<T>& vec1, vector<T>& vec2);
+      Performs {xor|and|or} convolution destructively.
+      The result will be set in vec1.  Both vec1 and vec2 are destructed.
+      The sizes of vec? need not be powers of two.
+  
+    void hadamard(vector<T>& vec);
+    void inv_hadamard(vector<T>& vec);
+    void zeta_upper(vector<T>& vec);
+    void moebius_upper(vector<T>& vec);
+    void zeta_lower(vector<T>& vec);
+    void moebius_lower(vector<T>& vec);
+      Performs corresponding transformation of vec.  
+      The result will be set in vec.
+      The size of vec MUST be a power of two.
+  
+    int trans_resize(vector<T>& x);
+      Resizes x to a power of two.  Returns the new size.
+    int trans_resize(vector<T>& x, vector<T>& y);
+      Resizes x and y to (the same) power of two.  Returns the new size.
 
-  void xor_conv_dest(vector<T>& vec1, vector<T>& vec2);
-  void and_conv_dest(vector<T>& vec1, vector<T>& vec2);
-  void or_conv_dest(vector<T>& vec1, vector<T>& vec2);
-    Performs {xor|and|or} convolution destructively.
-    The result will be set in vec1.  Both vec1 and vec2 are destructed.
-    The sizes of vec[12] need not be powers of two.
+  Notice:
 
-  void hadamard(vector<T>& vec);
-  void inv_hadamard(vector<T>& vec);
-  void zeta_upper(vector<T>& vec);
-  void moebius_upper(vector<T>& vec);
-  void zeta_lower(vector<T>& vec);
-  void moebius_lower(vector<T>& vec);
-    Performs corresponding transformation of vec.  
-    The result will be set in vec.
-    The size of vec MUST be a power of two.
+    Definitions of zeta/moebius transformations:
 
-  int trans_resize(vector<T>& x);
-    Resizes x to a power of two.  Returns the new size.
-  int trans_resize(vector<T>& x, vector<T>& y);
-    Resizes x and y to (the same) power of two.  Returns the new size.
+      For f : power(S) -> T,  zeta_upper(f) : power(S) -> T
+        zeta_upper(f)(X) := \sum { f(Y) | X \subseteq Y }
+        zeta_lower(f)(X) := \sum { f(Y) | Y \subseteq X }
+        moebius_upper(f) := inverse of zeta_upper
+        moebius_lower(f) := inverse of zeta_lower
+
+      In the functions of this library, f is encoded with 
+        vec[x] = f(X)  where ((x >> t) & 1) == 1 <=> t \in X
+
+      The complexity is O(N 2^N) where vec.size() == 2^N.
+
+    For hadamard transformations, 
+      refer to https://yamate11.github.io/blog/posts/2021/08-10-xor-conv/
+
  */
 
 //////////////////////////////////////////////////////////////////////

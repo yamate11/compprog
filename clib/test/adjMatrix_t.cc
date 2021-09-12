@@ -451,6 +451,7 @@ public:
   }
   FpG<mod> fact(int n) { return vFact.at(n); }
   FpG<mod> comb(int n, int r) {
+    if (r < 0 || r > n) return 0;
     return vFact.at(n) * vInvFact.at(r) * vInvFact.at(n-r);
   }
   // The number of permutation extracting r from n.
