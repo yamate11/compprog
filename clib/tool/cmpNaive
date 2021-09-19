@@ -153,7 +153,7 @@ class IndepInOut(InOut):
         return self.body
 
     def run_naive(self, s_question):
-        return self.run_either(s_question, [self.naive], None)
+        return self.run_either(s_question, self.naive.split(), None)
 
     def run_body(self, s_question):
         return self.run_either(s_question, self.body.split(), args.show_stderr)
