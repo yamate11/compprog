@@ -577,6 +577,8 @@ struct ItRange {
   Itr end() { return Itr({en}); }
 };
 
+#define ALLIR(a, b) ItRange(a, b).begin(), ItRange(a, b).end()
+
 // Imitation to Python range operator....
 
 

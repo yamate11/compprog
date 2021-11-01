@@ -4,10 +4,15 @@ typedef long long int ll;
 using namespace std;
 // #include <atcoder/all>
 // using namespace atcoder;
+#define REP2(i, a, b) for (ll i = (a); i < (b); i++)
+#define REP2R(i, a, b) for (ll i = (a); i >= (b); i--)
+#define REP(i, b) REP2(i, 0, b)
+#define ALL(coll) (coll).begin(), (coll).end()
+#define SIZE(v) ((ll)((v).size()))
 
 // @@ !! LIM(debug)
-// --> f:<< debug
-// ---- inserted function << from util.cc
+
+// ---- inserted function f:<< from util.cc
 template <typename T1, typename T2>
 ostream& operator<< (ostream& os, const pair<T1,T2>& p) {
   os << "(" << p.first << ", " << p.second << ")";
@@ -172,7 +177,8 @@ ostream& operator<< (ostream& os, int8_t x) {
   return os;
 }
 
-// ---- end <<
+// ---- end f:<<
+
 // ---- inserted library file debug.cc
 template <class... Args>
 string dbgFormat(const char* fmt, Args... args) {
@@ -207,6 +213,7 @@ void dbgLog(bool with_nl, Head&& head, Tail&&... tail)
   #define DCALL(func, ...)
 #endif
 
+/*
 #if DEBUG_LIB
   #define DLOG_LIB(...)        dbgLog(true, __VA_ARGS__)
   #define DLOGNNL_LIB(...)     dbgLog(false, __VA_ARGS__)
@@ -217,6 +224,7 @@ void dbgLog(bool with_nl, Head&& head, Tail&&... tail)
   #define DFMT_LIB(...)
   #define DCALL_LIB(func, ...)
 #endif
+*/
 
 #define DUP1(E1)       #E1 "=", E1
 #define DUP2(E1,E2)    DUP1(E1), DUP1(E2)
@@ -235,8 +243,15 @@ void dbgLog(bool with_nl, Head&& head, Tail&&... tail)
 #define DLOGK(...)        DLOG(DUP(__VA_ARGS__))
 #define DLOGKL(lab, ...)  DLOG(lab, DUP(__VA_ARGS__))
 
+#if DEBUG_LIB
+  #define DLOG_LIB   DLOG
+  #define DLOGK_LIB  DLOGK
+  #define DLOGKL_LIB DLOGKL
+#endif
+
 // ---- end debug.cc
-// @@ !! LIM  -- end mark --
+
+// @@ !! LIM -- end mark --
 
 int main(/* int argc, char *argv[] */) {
   ios_base::sync_with_stdio(false);
@@ -245,31 +260,30 @@ int main(/* int argc, char *argv[] */) {
 
   ll N, M; cin >> N >> M;
   using sta = pair<ll, ll>;
-  auto info = vector(N + 1, vector<sta>());
-  for (ll i = 0; i < M; i++) {
-    ll x, y, z; cin >> x >> y >> z;
-    info[x].emplace_back(y, z);
+  vector<vector<sta>> con(N);
+  REP(i, M) {
+    ll x, y, z; cin >> x >> y >> z; x--;
+    con[x].emplace_back(y, z);
   }
-  vector S(1LL << N, 0LL);
-  S[0] = 1;
-  for (ll x = 0; x < (1LL<<N); x++) {
-    DLOGK(x);
-    for (ll i = 0; i < N; i++) {
-      if ((x >> i) & 1) continue;
-      ll y = x | (1LL << i);
-      DLOGK(y);
-      bool succ = true;
-      for (auto [yy, zz] : info[__builtin_popcountll(y)]) {
-        ll c = __builtin_popcountll(y & ((1LL << yy) - 1));
-        if (c > zz) {
-          succ = false;
-          break;
-        }
+  vector tbl(1LL << N, 0LL);
+  tbl[0] = 1;
+  REP(x, (1LL << N) - 1) {
+    if (tbl[x] == 0) continue;
+    ll n = __builtin_popcountll(x);
+    DLOGK(x, n, con[n]);
+    REP(k, N) {
+      ll x2 = x | (1LL << k);
+      if (x == x2) continue;;
+      if (all_of(ALL(con[n]), [&](auto& yz) -> bool {
+        auto& [y, z] = yz;
+        return __builtin_popcountll(x2 & ((1LL << y) - 1)) <= z;
+      })) {
+        DLOGK(x2, x, tbl[x]);
+        tbl[x2] += tbl[x];
       }
-      if (succ) S[y] += S[x];
     }
   }
-  cout << S[(1LL << N) - 1] << endl;
+  cout << tbl[(1LL << N) - 1] << endl;
 
   return 0;
 }

@@ -10,100 +10,67 @@ int main(/* int argc, char *argv[] */) {
   cin.tie(nullptr);
   cout << setprecision(20);
 
+  random_device rd;
+  mt19937 rng(rd());
+  auto randrange = [&rng](ll i, ll j) -> ll {
+    uniform_int_distribution<ll> dist(i, j - 1);
+    return dist(rng);
+  };
+
   {
-    vector<ll> vec({2,3,4,10,13,14});
-    itv_set is = from_sorted_vector(vec);
-    itv_set ref;
-    ref.emplace(2, 5);
-    ref.emplace(10, 11);
-    ref.emplace(13, 15);
-    assert(is == ref);
+    //               0 1 2 3 4 5 6 7 8 91011121314
+    vector<int> vec({0,0,1,1,1,0,0,0,0,0,1,0,0,1,1});
+    itv_set<int> isA(0, vec);
+    // represents {2,3,4,10,13,14} == [2,5) \cup [10, 11) \cup [13, 15)
+    itv_set isB(0, 15, 0);
+    isB.put(2, 5, 1);
+    isB.put(10, 11, 1);
+    isB.put(13, 15, 1);
+    for (ll i = 0; i < 15; i++) assert(isA.get(i) == isB.get(i));
   }
   {
-    vector<ll> vec;
-    itv_set is = from_sorted_vector(vec);
-    assert(is == itv_set());
-  }
-  {
-    vector<ll> vec({5});
-    itv_set is = from_sorted_vector(vec);
-    itv_set ref;
-    ref.emplace(5, 6);
-    assert(is == ref);
-  }
-  {
-  itv_set is;
-    itv_add(is, 2);
-    itv_add(is, 7);
-    itv_add(is, 4);
-    itv_add(is, 3);
-    itv_add(is, 9);
-    itv_add(is, 11);
-    itv_add(is, 8);
-    itv_add(is, 10);
-    {
-      vector<ll> vec({2,3,4,7,8,9,10,11});
-      assert(is == from_sorted_vector(vec));
-    }
-    itv_del(is, 7);
-    {
-      vector<ll> vec({2,3,4,8,9,10,11});
-      assert(is == from_sorted_vector(vec));
-    }
-    itv_del(is, 4);
-    {
-      vector<ll> vec({2,3,8,9,10,11});
-      assert(is == from_sorted_vector(vec));
-    }
-    itv_del(is, 10);
-    {
-      vector<ll> vec({2,3,8,9,11});
-      assert(is == from_sorted_vector(vec));
-      itv_del(is, 5);
-      assert(is == from_sorted_vector(vec));
-    }
-    itv_add(is, 5);
-    {
-      vector<ll> vec({2,3,5,8,9,11});
-      assert(is == from_sorted_vector(vec));
-      itv_del(is, 5);
-      vector<ll> vec1({2,3,8,9,11});
-      assert(is == from_sorted_vector(vec1));
-    }
-    itv_add(is, 1);
-    {
-      vector<ll> vec({1,2,3,8,9,11});
-      assert(is == from_sorted_vector(vec));
-    }
-    itv_add(is, 12);
-    {
-      vector<ll> vec({1,2,3,8,9,11,12});
-      assert(is == from_sorted_vector(vec));
-    }
-    itv_add(is, 14);
-    {
-      vector<ll> vec({1,2,3,8,9,11,12,14});
-      assert(is == from_sorted_vector(vec));
-    }
-    itv_add(is, 13);
-    {
-      vector<ll> vec({1,2,3,8,9,11,12,13,14});
-      assert(is == from_sorted_vector(vec));
-    }
-    itv_add(is, 5);
-    {
-      vector<ll> vec({1,2,3,5,8,9,11,12,13,14});
-      assert(is == from_sorted_vector(vec));
-    }
-    for (ll i = 0; i <= 10; i++) {
-      auto it = itv_in(is, i);
-      if ((1 <= i && i <= 3) || i == 5 || (8 <= i && i <= 9)) {
-        assert(it != is.end() && it->first <= i && i < it->second);
-      }else {
-        assert(it == is.end());
+    ll nc = 1000;
+    ll sz = 40;
+    ll mutL = 10;
+    ll mutR = 20;
+    ll vmax = sz * 2;
+    for (ll i = 0; i < nc; i++) {
+      vector<ll> vec(sz);
+      for (ll j = 0; j < sz; j++) vec[j] = randrange(0, vmax);
+      itv_set is(0, vec);
+      ll mut = randrange(mutL, mutR);
+      for (ll k = 0; k < mut; k++) {
+        ll l = randrange(0, sz - 1);
+        ll r = randrange(l + 1, sz);
+        ll x = randrange(0, vmax);
+        if (k % 2 == 0) {
+          is.put(l, r, x);
+          for (ll j = l; j < r; j++) vec[j] = x;
+        }else {
+          is.put(l, x);
+          vec[l] = x;
+        }
+      }
+      for (ll j = 0; j < sz; j++) assert(vec[j] == is.get(j));
+      for (ll j = 0; j < sz; j++) {
+        auto [l, r, y] = is.get_itv(j);
+        assert(l <= j && j < r && is.get(j) == y);
+      }
+      ll l = randrange(0, sz - 1);
+      ll r = randrange(l + 1, sz);
+      auto vv = is.get(l, r);
+      ll l2 = -1, r2 = -1;
+      assert(get<0>(vv[0]) == l);
+      assert(get<1>(vv[vv.size() - 1]) == r);
+      for (ll p = 0; p < (ll)vv.size() - 1; p++) {
+        auto [l1, r1, y1] = vv[p];
+        if (l2 >= 0) assert(l2 < l1 && r2 == l1);
+        for (ll x = l1; x < r1; x++) assert(is.get(x) == y1);
       }
     }
   }
+
+
   cout << "ok\n";
 }
 

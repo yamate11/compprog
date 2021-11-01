@@ -555,6 +555,8 @@ struct ItRange {
   Itr end() { return Itr({en}); }
 };
 
+#define ALLIR(a, b) ItRange(a, b).begin(), ItRange(a, b).end()
+
 // Imitation to Python range operator....
 
 
@@ -770,7 +772,7 @@ int main() {
     bool b3 = any_of(ir.begin(), ir.end(),
                      [&](ll i) -> bool { return i * i > 80; });
     assert(b1 && !b2 && b3);
-    auto it = find_if(ir.begin(), ir.end(),
+    auto it = find_if(ALLIR(0, 10),
                       [&](ll i) -> bool { return i * i > 50; });
     assert (*it == 8);
   }

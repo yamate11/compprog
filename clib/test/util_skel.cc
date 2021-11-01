@@ -213,7 +213,7 @@ int main() {
     bool b3 = any_of(ir.begin(), ir.end(),
                      [&](ll i) -> bool { return i * i > 80; });
     assert(b1 && !b2 && b3);
-    auto it = find_if(ir.begin(), ir.end(),
+    auto it = find_if(ALLIR(0, 10),
                       [&](ll i) -> bool { return i * i > 50; });
     assert (*it == 8);
   }

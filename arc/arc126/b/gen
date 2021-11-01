@@ -1,0 +1,22 @@
+#!/usr/bin/env python3
+
+from random import randrange
+
+def main():
+    n = 200000
+    m = 200000
+    print(n, m)
+    cnt = 0
+    d = set()
+    while True:
+        if cnt == m:
+            break
+        a = randrange(1, n + 1)
+        b = randrange(1, n + 1)
+        if (a, b) in d:
+            continue
+        print(a, b)
+        d.add((a, b))
+        cnt += 1
+
+main()
