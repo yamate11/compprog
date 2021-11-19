@@ -33,25 +33,25 @@
 	<meta property="twitter:title" content="A - Long Common Subsequence" />
 
 	<link href="//fonts.googleapis.com/css?family=Lato:400,700" rel="stylesheet" type="text/css">
-	<link rel="stylesheet" type="text/css" href="//img.atcoder.jp/public/ea2bd15/css/bootstrap.min.css">
-	<link rel="stylesheet" type="text/css" href="//img.atcoder.jp/public/ea2bd15/css/base.css">
+	<link rel="stylesheet" type="text/css" href="//img.atcoder.jp/public/9abad24/css/bootstrap.min.css">
+	<link rel="stylesheet" type="text/css" href="//img.atcoder.jp/public/9abad24/css/base.css">
 	<link rel="shortcut icon" type="image/png" href="//img.atcoder.jp/assets/favicon.png">
 	<link rel="apple-touch-icon" href="//img.atcoder.jp/assets/atcoder.png">
-	<script src="//img.atcoder.jp/public/ea2bd15/js/lib/jquery-1.9.1.min.js"></script>
-	<script src="//img.atcoder.jp/public/ea2bd15/js/lib/bootstrap.min.js"></script>
-	<script src="//img.atcoder.jp/public/ea2bd15/js/cdn/js.cookie.min.js"></script>
-	<script src="//img.atcoder.jp/public/ea2bd15/js/cdn/moment.min.js"></script>
-	<script src="//img.atcoder.jp/public/ea2bd15/js/cdn/moment_js-ja.js"></script>
+	<script src="//img.atcoder.jp/public/9abad24/js/lib/jquery-1.9.1.min.js"></script>
+	<script src="//img.atcoder.jp/public/9abad24/js/lib/bootstrap.min.js"></script>
+	<script src="//img.atcoder.jp/public/9abad24/js/cdn/js.cookie.min.js"></script>
+	<script src="//img.atcoder.jp/public/9abad24/js/cdn/moment.min.js"></script>
+	<script src="//img.atcoder.jp/public/9abad24/js/cdn/moment_js-ja.js"></script>
 	<script>
 		var LANG = "en";
 		var userScreenName = "yamate11";
-		var csrfToken = "mjcc2cVhAU61qmMyehNJiIBIK6i08G+Vvbc8JZJb8hI="
+		var csrfToken = "yft7CC7wht/NrGsKQq57RpVrRtPwvg5YnVTGzUjWtgI="
 	</script>
-	<script src="//img.atcoder.jp/public/ea2bd15/js/utils.js"></script>
+	<script src="//img.atcoder.jp/public/9abad24/js/utils.js"></script>
 	
 	
-		<script src="//img.atcoder.jp/public/ea2bd15/js/contest.js"></script>
-		<link href="//img.atcoder.jp/public/ea2bd15/css/contest.css" rel="stylesheet" />
+		<script src="//img.atcoder.jp/public/9abad24/js/contest.js"></script>
+		<link href="//img.atcoder.jp/public/9abad24/css/contest.css" rel="stylesheet" />
 		<script>
 			var contestScreenName = "agc052";
 			var remainingText = "Remaining Time";
@@ -62,34 +62,48 @@
 		<style></style>
 	
 	
-		<script type="text/x-mathjax-config">MathJax.Hub.Config({messageStyle:"none",tex2jax:{skipTags:["script","noscript","style","textarea","code"],inlineMath:[['\\(','\\)']]},delayStartupUntil:"onload"});</script>
-		<script src="//cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+		<link href="//img.atcoder.jp/public/9abad24/css/cdn/select2.min.css" rel="stylesheet" />
+		<link href="//img.atcoder.jp/public/9abad24/css/cdn/select2-bootstrap.min.css" rel="stylesheet" />
+		<script src="//img.atcoder.jp/public/9abad24/js/lib/select2.min.js"></script>
+	
+	
+		<link rel="stylesheet" href="//img.atcoder.jp/public/9abad24/css/cdn/codemirror.min.css">
+		<script src="//img.atcoder.jp/public/9abad24/js/cdn/codemirror.min.js"></script>
+		<script src="//img.atcoder.jp/public/9abad24/js/codeMirror/merged.js"></script>
+	
+	
+		<script src="//img.atcoder.jp/public/9abad24/js/cdn/run_prettify.js"></script>
+	
+	
+		<link rel="stylesheet" href="//img.atcoder.jp/public/9abad24/css/cdn/katex.min.css">
+		<script defer src="//img.atcoder.jp/public/9abad24/js/cdn/katex.min.js"></script>
+		<script defer src="//img.atcoder.jp/public/9abad24/js/cdn/auto-render.min.js"></script>
 		<script>$(function(){$('var').each(function(){var html=$(this).html().replace(/<sub>/g,'_{').replace(/<\/sub>/g,'}');$(this).html('\\('+html+'\\)');});});</script>
-	
-	
-		<link href="//img.atcoder.jp/public/ea2bd15/css/cdn/select2.min.css" rel="stylesheet" />
-		<link href="//img.atcoder.jp/public/ea2bd15/css/cdn/select2-bootstrap.min.css" rel="stylesheet" />
-		<script src="//img.atcoder.jp/public/ea2bd15/js/lib/select2.min.js"></script>
-	
-	
-		<link rel="stylesheet" href="//img.atcoder.jp/public/ea2bd15/css/cdn/codemirror.min.css">
-		<script src="//img.atcoder.jp/public/ea2bd15/js/cdn/codemirror.min.js"></script>
-		<script src="//img.atcoder.jp/public/ea2bd15/js/codeMirror/merged.js"></script>
-	
-	
-		<script src="//img.atcoder.jp/public/ea2bd15/js/cdn/run_prettify.js"></script>
-	
-	
-	
-	
+		<script>
+			var katexOptions = {
+				delimiters: [
+					{left: "$$", right: "$$", display: true},
+					
+					{left: "\\(", right: "\\)", display: false},
+					{left: "\\[", right: "\\]", display: true}
+				],
+      	ignoredTags: ["script", "noscript", "style", "textarea", "code", "option"],
+				ignoredClasses: ["prettyprint", "source-code-for-copy"],
+				throwOnError: false
+			};
+			document.addEventListener("DOMContentLoaded", function() { renderMathInElement(document.body, katexOptions);});
+		</script>
 	
 	
 	
 	
 	
 	
-	<script src="//img.atcoder.jp/public/ea2bd15/js/base.js"></script>
-	<script src="//img.atcoder.jp/public/ea2bd15/js/ga.js"></script>
+	
+	
+	
+	<script src="//img.atcoder.jp/public/9abad24/js/base.js"></script>
+	<script src="//img.atcoder.jp/public/9abad24/js/ga.js"></script>
 </head>
 
 <body>
@@ -190,7 +204,7 @@
 	</nav>
 
 	<form method="POST" name="form_logout" action="/logout?continue=https%3A%2F%2Fatcoder.jp%2Fcontests%2Fagc052%2Ftasks%2Fagc052_a">
-		<input type="hidden" name="csrf_token" value="mjcc2cVhAU61qmMyehNJiIBIK6i08G&#43;Vvbc8JZJb8hI=" />
+		<input type="hidden" name="csrf_token" value="yft7CC7wht/NrGsKQq57RpVrRtPwvg5YnVTGzUjWtgI=" />
 	</form>
 	<div id="main-container" class="container"
 		 	style="padding-top:50px;">
@@ -394,7 +408,7 @@
 <div class="part">
 <section>
 <h3>Problem Statement</h3><p>You are given <var>3</var> binary strings <var>S_1, S_2, S_3</var>, each containing exactly <var>N</var> <code>0</code>'s and <var>N</var> <code>1</code>'s.</p>
-<p>Find a binary string of length <var>2N+1</var>, which is a subsequence of all of the strings <var>S_1 + S_1, S_2 + S_2, S_3 + S_3</var> (<var>s+t</var> denotes the concatnation of strings <var>s</var> and <var>t</var> in order). It's guaranteed that under the constraints above such a string always exists.</p>
+<p>Find a binary string of length <var>2N+1</var>, which is a subsequence of all of the strings <var>S_1 + S_1, S_2 + S_2, S_3 + S_3</var> (<var>s+t</var> denotes the concatenation of strings <var>s</var> and <var>t</var> in order). It's guaranteed that under the constraints above such a string always exists.</p>
 <p>Here a string <var>B</var> is a subsequence of a string <var>A</var> if <var>B</var> can be obtained by removing zero or more characters from <var>A</var> and concatenating the remaining characters without changing the order.</p>
 <p>You will be given <var>T</var> test cases. Solve each of them.</p>
 </section>
@@ -644,7 +658,7 @@ If many such strings exist, you can print any.</p>
 	<input id="input-open-file" type="file" style="display:none;">
 </div>
 
-			<input type="hidden" name="csrf_token" value="mjcc2cVhAU61qmMyehNJiIBIK6i08G&#43;Vvbc8JZJb8hI=" />
+			<input type="hidden" name="csrf_token" value="yft7CC7wht/NrGsKQq57RpVrRtPwvg5YnVTGzUjWtgI=" />
 			<div class="form-group">
 				<label class="control-label col-sm-2" for="submit"></label>
 				<div class="col-sm-5">

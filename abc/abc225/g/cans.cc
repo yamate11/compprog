@@ -10,7 +10,100 @@ using namespace std;
 #define ALL(coll) (coll).begin(), (coll).end()
 #define SIZE(v) ((ll)((v).size()))
 
-// @@ !! LIM()
+// @@ !! LIM(dinic)
+
+// ---- inserted library file dinic.cc
+
+struct Edge {
+  int dst;  // destination
+  ll cap;   // capacity
+  int rev;  // index of reverse edge
+  Edge(int d, ll c, int r) : dst(d), cap(c), rev(r) {}
+};
+
+struct Dinic {
+
+  int vSize;
+  int source;
+  int sink;
+  vector<int> level;  // from sink rather than source
+  vector<size_t> iter;
+  vector<vector<Edge>> edges;
+  int eidx;
+  vector<int> e_to_u;
+  vector<int> e_to_uidx;
+
+  ll dfs(int u, ll sCap) {
+    if (u == sink) return sCap;
+    ll f = 0;
+    for (size_t& i = iter.at(u); i < edges.at(u).size(); i++) {
+      Edge& e = edges.at(u).at(i);
+      if (e.cap == 0 || level.at(e.dst) >= level.at(u)) continue;
+      ll f0 = dfs(e.dst, min(sCap - f, e.cap));
+      e.cap -= f0;
+      edges.at(e.dst).at(e.rev).cap += f0;
+      f += f0;
+      if (f == sCap) break;
+    }
+    return f;
+  }
+
+  void set_level() {
+    level.assign(vSize, -1);
+    deque<pair<int,int>> deq;
+    deq.emplace_back(sink, 0);
+    while (!deq.empty()) {
+      pair<int,int> p = deq.front(); deq.pop_front();
+      int i = p.first;
+      int lev = p.second;
+      if (level.at(i) >= 0) continue;
+      level.at(i) = lev;
+      for (const Edge& erev : edges.at(i)) {
+	const Edge& e = edges.at(erev.dst).at(erev.rev);
+	if (e.cap == 0) continue;
+	deq.emplace_back(erev.dst, lev + 1);
+      }
+    }
+  }
+
+public:
+
+  Dinic(int sz, int src, int snk)
+    : vSize(sz), source(src), sink(snk), edges(sz), eidx(0) {}
+
+  ll add_edge(int u, int v, ll cap) {
+    assert(0 <= u && u < vSize && 0 <= v && v < vSize);
+    assert(cap >= 0);
+    int nu = edges.at(u).size();
+    int nv = edges.at(v).size();
+    edges.at(u).emplace_back(v, cap, nv);
+    edges.at(v).emplace_back(u, 0,   nu);
+    assert(eidx == (ll)e_to_u.size() && eidx == (ll)e_to_uidx.size());
+    e_to_u.push_back(u);
+    e_to_uidx.push_back(nu);
+    return eidx++;
+  }
+
+  ll run() {
+    ll flow = 0;
+    while(1) {
+      set_level();
+      if (level.at(source) == -1) break;
+      iter.assign(vSize, 0);
+      flow += dfs(source, LLONG_MAX);
+    }
+    return flow;
+  }
+
+  ll eflow(ll i) {
+    Edge e = edges.at(e_to_u[i]).at(e_to_uidx[i]);
+    return edges.at(e.dst).at(e.rev).cap;
+  }
+
+};
+// ---- end dinic.cc
+
+// @@ !! LIM -- end mark --
 
 int main(/* int argc, char *argv[] */) {
   ios_base::sync_with_stdio(false);
@@ -18,40 +111,26 @@ int main(/* int argc, char *argv[] */) {
   cout << setprecision(20);
 
   ll H, W, C; cin >> H >> W >> C;
-  vector A(H, vector(W, 0LL)); REP(i, H) REP(j, W) cin >> A[i][j];
-
-  ll NE = (H + W) % 2 == 0 ? (H-1 + W-1) / 2 + 1 : (H-1 + W-1 - 1) / 2 + 1;
-  ll NO = (H + W) % 2 == 0 ? (H-1 + W-1 - 1) / 2 + 1 : (H-1 + W-1) / 2 + 1;
-  ll shiftE = W % 2 == 0 ? (W-2) / 2 : (W-1) / 2;
-  ll shiftO = W % 2 == 0 ? (W-1) / 2 : (W-2) / 2;
-  ll ME = (H % 2 == 0 ? (H-2) / 2 : (H-1) / 2) + 1 + shiftE;
-  ll MO = (H % 2 == 0 ? (H-1) / 2 : (H-2) / 2) + 1 + shiftO;
-  vector vE(NE, vector(ME, 0LL));
-  vector vO(NO, vector(MO, 0LL));
-
-  REP(y, H) REP(x, W) {
-    if ((x + y) % 2 == 0) vE[(x + y)     / 2][(x - y)     / 2 + shiftE] = A[y][x];
-    else                  vO[(x + y - 1) / 2][(x - y - 1) / 2 + shiftO] = A[y][x];
+  ll tot = 0;
+  vector A(H, vector(W, 0LL)); REP(r, H) REP(c, W) {
+    cin >> A[r][c];
+    tot += A[r][c];
   }
-  auto func = [&](const auto& vec, ll n, ll m) {
-    vector tbl(n + 1, vector(m + 1, 0LL));
-    vector S(n + 1, vector(m + 1, 0LL));
-    REP(i, n) REP(j, m) S[i][j+1] = S[i][j] + vec[i][j];
-    REP(j, n) REP(i, m) S[i+1][j+1] = S[i][j+1] + vec[i][j+1];
-    auto acc = [&](ll i0, ll j0, ll i1, ll j1) -> ll { return S[i1][j1] - S[i1][j0] - S[i0][j1] + S[i0][j0]; };
-    REP(i, n) REP(j, m) {
-      ll val = 0;
-      REP(p, i) REP(q, j) {
-        val = max(val, tbl[p][q] + acc(p, q, i, j));
-      }
-      tbl[i][j] = val;
-    }
-    return tbl[n][m];
-  };
+  ll ndTrue = 0;
+  ll ndFalse = 1;
+  // Node enc(r, c) means that (r,c) is hatched.
+  auto enc = [&](ll r, ll c) -> ll { return c + W * r + 2; };
 
-  ll score1 = func(vE, NE, ME);
-  ll score2 = func(vO, NO, MO);
-  cout << score1 + score2 << endl;
+  Dinic d(2 + W * H, ndTrue, ndFalse);
+  REP(r, H) REP(c, W) d.add_edge(ndTrue, enc(r, c), A[r][c]);
+  REP(r, H) REP(c, W) {
+    if (r-1 >= 0 and c-1 >= 0) d.add_edge(enc(r, c), enc(r-1, c-1), C);
+    else                       d.add_edge(enc(r, c), ndFalse,       C);
+    if (r-1 >= 0 and c+1 < W)  d.add_edge(enc(r, c), enc(r-1, c+1), C);
+    else                       d.add_edge(enc(r, c), ndFalse,       C);
+  }
+  ll flow = d.run();
+  cout << tot - flow << endl;
   return 0;
 }
 
