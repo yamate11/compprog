@@ -487,36 +487,52 @@ int main(/* int argc, char *argv[] */) {
   vector t(N + 1, vector(N + 1, Fp(0)));
   vector u(N + 1, vector(N + 1, Fp(0)));
   vector v(N + 1, vector(N + 1, Fp(0)));
+  vector et(N + 1, vector(N + 1, false));
+  vector eu(N + 1, vector(N + 1, false));
+  vector ev(N + 1, vector(N + 1, false));
 
-  auto s = [&](ll k, ll n) -> Fp { return t[k][n] + u[k][n]; };
-
-  REP2(k, 1, N + 1) {
-    REP2(n, k, N + 1) {
-      if (n == k and n == 1) {
-        u[k][n] = 1;
-        DLOGKL("u", k, n, u[k][n]);
-      }
-      if (k == M and n == M) {
-        v[k][n] = 1;
-        DLOGKL("v", k, n, v[k][n]);
-      }
-      if (k + n <= N) {
-        t[k][k + n] += s(k, n);
-        DLOGKL("t", k, k + n, t[k][k + n]);
-      }
-      if (k + M <= N and n + k + M <= N) {
-        v[k + M][n + k + M] += s(k, n);
-        DLOGKL("v", k + M, n + k + M, v[k + M][n + k]);
-        DLOGKL("  v", k, n, s(k, n));
-      }
-      if (k + 1 <= N and n + 1 <= N) {
-        u[k + 1][n + 1] += s(k, n) - v[k][n];
-        DLOGKL("u", k + 1, n + 1, u[k + 1][n + 1]);
-      }
+  auto fv = [&](auto rfs, ll k, ll n) -> Fp {
+    Fp& ret = v[k][n];
+    if (not ev[k][n]) {
+      ev[k][n] = true;
+      if (k == M and M == n) ret = 1;
+      else if (n <= k or k <= M) ret = 0;
+      else ret = rfs(rfs, k - M, n - k);
     }
-  }
-  
-  REP2(k, 1, N + 1) cout << s(k, N) << "\n";
+    DLOGKL("v", k, n, ret);
+    return ret;
+  };
+
+  auto ft = [&](auto rfs, ll k, ll n) -> Fp {
+    Fp& ret = t[k][n];
+    if (not et[k][n]) {
+      et[k][n] = true;
+      if (n < 2 * k) ret = 0;
+      else ret = rfs(rfs, k, n - k);
+    }
+    DLOGKL("t", k, n, ret);
+    return ret;
+  };
+
+  auto fu = [&](auto rfs, ll k, ll n) -> Fp {
+    Fp& ret = u[k][n];
+    if (not eu[k][n]) {
+      eu[k][n] = true;
+      if (n < k or (k == 1 and 1 < n)) ret = 0;
+      else if (k == 1 and n == 1) ret = 1;
+      else ret = rfs(rfs, k - 1, n - 1) - fv(rfs, k - 1, n - 1);
+    }
+    DLOGKL("u", k, n, ret);
+    return ret;
+  };
+
+  auto fs = [&](auto rfs, ll k, ll n) -> Fp {
+    Fp ret = ft(rfs, k, n) + fu(rfs, k, n);
+    DLOGKL("s", k, n, ret);
+    return ret;
+  };
+
+  REP2(k, 1, N + 1) cout << fs(fs, k, N) << "\n";
 
   return 0;
 }
