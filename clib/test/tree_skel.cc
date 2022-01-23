@@ -3,7 +3,7 @@
 typedef long long int ll;
 using namespace std;
 
-// @@ !! LIM(f:updMaxMin tree)
+// @@ !! LIM(tree)
 
 
 int main(int argc, char *argv[]) {
@@ -11,27 +11,24 @@ int main(int argc, char *argv[]) {
   cin.tie(nullptr);
   cout << setprecision(20);
 
-  vector<Edge> edge1({{0,1}, {0,2}, {1,3}, {1,4}, {2,5}, {2,6}});
-  Tree t1(edge1);
+  vector<TreeEdge> edge1({{0,1}, {0,2}, {1,3}, {1,4}, {2,5}, {2,6}});
+  Tree t1(7, edge1);
   assert(t1.nnpath(1, 2) == vector<int>({1,0,2}));
   assert(t1.nnpath(3, 2) == vector<int>({3,1,0,2}));
   assert(t1.nnpath(6, 0) == vector<int>({6,2,0}));
   assert(t1.nnpath(4, 2) == vector<int>({4,1,0,2}));
   assert(t1.nnpath(2, 4) == vector<int>({2,0,1,4}));
 
-  stringstream ss2("3\n1 2\n1 3\n");
-  ll N; ss2 >> N;
-  vector<Edge> ve;
-  for (ll i = 0; i < N - 1; i++) ve.push_back(Edge(ss2, 1));
-  Tree t2(move(ve));
-  assert(t2.edge.at(1) == make_pair(0, 2));
-  assert(t2.node2edgeID(0,1) == 0);
-  assert(t2.node2edgeID(2,0) == 1);
+  Tree t2(3);
+  t2.add_edge(0, 1);
+  t2.add_edge(0, 2);
+  assert(t2.edgeIdx(0,1) == 0);
+  assert(t2.edgeIdx(2,0) == 1);
 
-  vector<Edge>
+  vector<TreeEdge>
     edge3({{0,1}, {1,2}, {2,3}, {3,4}, {4,5}, {5,6}, {6,7},
 	   {6,8}, {3,9}, {9,10}, {0,11}, {11,12}, {11,13}});
-  Tree t3(edge3);
+  Tree t3(14, edge3);
   assert(t3.nnpath(1,5) == vector<int>({1,2,3,4,5}));
   assert(t3.nnpath(7,2) == vector<int>({7,6,5,4,3,2}));
   for (int i = 0; i <=7; i++) assert(t3.ancestorDep(7,i) == i);
@@ -40,11 +37,11 @@ int main(int argc, char *argv[]) {
   assert(t3.lca(7,10) == 3);
   assert(t3.diameter() == 9);
 
-  vector<Edge>
+  vector<TreeEdge>
     edge4({{0,1}, {1,2}, {3,4}, {0,3}, {3,5}, {6,7}, {6,8}, {6,1}});
-  Tree t4(edge4);
+  Tree t4(9, edge4);
   auto sub4 = [](Tree t, int i)  {
-    auto v = t.child.at(i);
+    auto v = t.child(i);
     return set<int>(v.begin(), v.end());
   };
   assert(sub4(t4, 0) == set<int>({1,3}));
@@ -52,17 +49,17 @@ int main(int argc, char *argv[]) {
   assert(sub4(t4, 3) == set<int>({4,5}));
   assert(sub4(t4, 6) == set<int>({7,8}));
   assert(sub4(t4, 8) == set<int>());
-  assert(t4.parent.at(0) == 0);
-  assert(t4.parent.at(1) == 0);
-  assert(t4.parent.at(2) == 1);
-  assert(t4.parent.at(6) == 1);
-  assert(t4.parent.at(8) == 6);
+  assert(t4.parent(0) == -1);
+  assert(t4.parent(1) == 0);
+  assert(t4.parent(2) == 1);
+  assert(t4.parent(6) == 1);
+  assert(t4.parent(8) == 6);
 
   // The length of the longest simple path that goes through the node
   using T5 = pair<ll, ll>;
-  vector<Edge> edge5({{0,1}, {0,2}, {0,3}, {1,4}, {1,5}, {2,6}, {2,7}});
+  vector<TreeEdge> edge5({{0,1}, {0,2}, {0,3}, {1,4}, {1,5}, {2,6}, {2,7}});
   vector<ll> len5({10,6,3,5,3,2,1});
-  Tree t5(edge5);
+  Tree t5(8, edge5);
   auto add5 = [&](T5 p1, T5 p2) -> T5 {
     ll a1 = p1.first;
     ll a2 = p2.first;
@@ -72,13 +69,13 @@ int main(int argc, char *argv[]) {
     return make_pair(a1, a2);
   };
   auto mod5 = [&](T5 p, ll n, ll c) -> T5 {
-    return make_pair(p.first + len5.at(t5.node2edgeID(n,c)), 0);
+    return make_pair(p.first + len5[t5.edgeIdx(n,c)], 0);
   };
   auto v5 = reroot(t5, make_pair(0, 0), add5, mod5);
   vector<ll> ans5 = {23, 23, 23, 18, 23, 21, 23, 22};
   assert(t5.numNodes == 8);
   for (ll i = 0; i < t5.numNodes; i++) {
-    assert(v5.at(i).first + v5.at(i).second == ans5.at(i));
+    assert(v5[i].first + v5[i].second == ans5[i]);
   }
 
   // ABC160-F
@@ -100,19 +97,20 @@ int main(int argc, char *argv[]) {
   auto mod6 = [&](T6 t, ll n, ll c) -> T6 {
     return make_pair(t.first + 1, t.second);
   };
-  vector<Edge> edge6({{0,1}, {1,2}, {2,3}, {2,4}, {2,5}, {5,6}, {5,7}});
+  vector<TreeEdge> edge6({{0,1}, {1,2}, {2,3}, {2,4}, {2,5}, {5,6}, {5,7}});
                                 // input No.4
-  Tree t6(edge6);
+  Tree t6(8);
+  for (auto [x, y] : edge6) t6.add_edge(y, x);
   auto res6 = reroot(t6, unitT6, add6, mod6);
   vector<ll> ans6({40,280,840,120,120,504,72,72}); 
   assert(t6.numNodes = 8);
-  for (ll i = 0; i < 8; i++) assert(res6.at(i).second == ans6.at(i));
+  for (ll i = 0; i < 8; i++) assert(res6[i].second == ans6[i]);
 
   // NJPC2017-E   https://njpc2017.contest.atcoder.jp/tasks/njpc2017_e
-  vector<Edge> edge7({{1,0},{2,1},{1,3},{3,4},{3,5},{6,5}});
+  vector<TreeEdge> edge7({{1,0},{2,1},{1,3},{3,4},{3,5},{6,5}});
   vector<ll> time({2,3,5,1,4,6});
   for (ll rt = 0; rt < 7; rt++) {
-    Tree t7(edge7, rt);
+    Tree t7(7, edge7, rt);
     using T7 = pair<ll, ll>;
     const T7 unitT7 = make_pair(0, 0);
     auto  add7 = [&](const T7& tt1, const T7& tt2) -> T7 {
@@ -121,16 +119,16 @@ int main(int argc, char *argv[]) {
       return make_pair(max(top1, top2), rev1 + rev2);
     };
     auto mod7 = [&](const T7& t, ll n, ll c) -> T7 {
-      ll eid = t7.node2edgeID(c, n);
-      ll addRev = (t7.edge.at(eid).first == n) ? 1 : 0;
-      return make_pair(t.first + time.at(eid), t.second + addRev);
+      ll eid = t7.edgeIdx(c, n);
+      ll addRev = (edge7[eid].first == n) ? 1 : 0;
+      return make_pair(t.first + time[eid], t.second + addRev);
     };
     auto res7 = reroot(t7, unitT7, add7, mod7);
     { ll x, z;
-      tie(x, z) = res7.at(1); assert(x == 15 && z == 4);
-      tie(x, z) = res7.at(3); assert(x == 10 && z == 3);
-      tie(x, z) = res7.at(4); assert(x == 11 && z == 2);
-      tie(x, z) = res7.at(5); assert(x == 12 && z == 2);
+      tie(x, z) = res7[1]; assert(x == 15 && z == 4);
+      tie(x, z) = res7[3]; assert(x == 10 && z == 3);
+      tie(x, z) = res7[4]; assert(x == 11 && z == 2);
+      tie(x, z) = res7[5]; assert(x == 12 && z == 2);
     }
   }
 
