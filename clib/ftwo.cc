@@ -48,6 +48,10 @@ struct Ftwo {
     return Ftwo(1);
   }
 
+  Ftwo zero() const { return (Ftwo)0; }
+  Ftwo one() const { return (Ftwo)1; }
+  Ftwo inverse() const { return inv(); }
+
   Ftwo& operator /=(const Ftwo& t) {
     return (*this) *= t.inv();
   }

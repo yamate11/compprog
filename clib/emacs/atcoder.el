@@ -2,12 +2,12 @@
       '("NONE" "cmpNaive" "UnionFind" "bit" "cht" "coordCompr" "debug"
 	"dinic" "fix"
 	"integer" "matrix" "misc" "mod" "segTree" "sieve" "strSearch"
-	"util" "scc" "LinTr" "geometry" "binsearch" "dijkstra" "rerror"
+	"util" "scc" "geometry" "binsearch" "dijkstra" "rerror"
 	"suffixArray" "board" "minCostFlow" "perm" "guessPoly" "ftwo"
 	"trie" "tree" "rollingHash" "fft" "doubling" "ipoint" "cumsum2d"
 	"interactive" "intervalSet" "polynomial" "convolution" "adjMatrix"
         "interpolation" "fastTransform"
-	"f:power" "f:<<" "f:>>" "f:updMaxMin" "f:gcd" "f:intDiv" 
+	"power" "f:<<" "f:>>" "f:updMaxMin" "f:gcd" "f:intDiv" 
         "f:perfmeas" "f:mex" "f:shortVector" "f:floor_sum" "f:itrange"
 	))
 

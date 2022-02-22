@@ -62,12 +62,12 @@ int main(/* int argc, char *argv[] */) {
         mat.at(x, i) = 1;
         mat.at(y, i) = -1;
       }
-      auto optsol2 = mat.linSolution(bs);
+      auto optsol2 = mat.linSolution(Matrix<Fp>(0, 1, bs));
       if (optsol1.has_value()) {
         assert(optsol2.has_value());
-        auto colv = Matrix<Fp>::fromVec(optsol1.value());
+        auto colv = Matrix<Fp>(0, 1, optsol1.value());
         auto lhs = mat * colv;
-        assert(mat * colv == Matrix<Fp>::fromVec(bs));
+        assert(mat * colv == Matrix<Fp>(0, 1, bs));
         has_sol++;
       }else {
         assert(!optsol2.has_value());

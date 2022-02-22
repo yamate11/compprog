@@ -43,10 +43,7 @@ using namespace std;
     verify is the number of terms to test whether both terms are equal.
     It is recommended to have vs.size() >= 2 * deg + verify where deg
     is an estimated upper limit of degree of q.
-    Usutally, the template parameter Pol cannot be omittted.
-
-
-
+    Usually, the template parameter Pol cannot be omittted.
 */
 
 
@@ -66,9 +63,9 @@ Pol lagrangePol(const vector<typename Pol::value_type>& vs) {
   using SP = typename Pol::SP;
   int k = vs.size() - 1;
   vector<T> fact(k + 1);
-  fact[0] = (T)1;
+  fact[0] = one<T>(vs[0]);
   for (ll i = 0; i < k; i++) fact[i + 1] = fact[i] * (T)(i + 1);
-  Pol aux((T)1);
+  Pol aux(one<T>(vs[0]));
   for (int i = 0; i <= k; i++) aux *= SP::X - (T)i;
   Pol ret;
   for (int i = 0; i <= k; i++) {
@@ -86,13 +83,13 @@ T lagrangeVal(const vector<T>& vs, ll n) {
   int k = vs.size() - 1;
   vector<T> fact(k + 1);
   vector<T> invfact(k + 1);
-  fact[0] = (T)1;
+  fact[0] = one<T>(vs[0]);
   for (ll i = 0; i < k; i++) fact[i + 1] = fact[i] * (T)(i + 1);
-  invfact[k] = (T)1 / fact[k];
+  invfact[k] = one<T>(vs[0]) / fact[k];
   for (ll i = k; i >= 1; i--) invfact[i - 1] = i * invfact[i];
   vector<T> qF(k + 1), qB(k + 1);
   // T q = (T)1;
-  qF[0] = qB[k] = (T)1;
+  qF[0] = qB[k] = one<T>(vs[0]);
   for (int i = 0; i < k; i++) {
     T tt = T(n - i);
     if (tt == (T)0) return vs[i];
@@ -116,12 +113,12 @@ optional<pair<Pol, Pol>>
 fitFPS(const vector<typename Pol::value_type>& vec, int verify) {
   using T = typename Pol::value_type;
 
-  auto checkSol = [&](const vector<T>& sol) -> bool {
-    int d = sol.size();
+  auto checkSol = [&](const Matrix<T>& sol) -> bool {
+    int d = sol.dimI;
     // DLOGKL("checkSol", d);
     for (int i = 0; i < verify; i++) {
       T y = (T)0;
-      for (int j = 0; j < d; j++) { y += sol[j] * vec[2*d - 1 + i - j]; }
+      for (int j = 0; j < d; j++) { y += sol.at(j, 0) * vec[2*d - 1 + i - j]; }
       // DLOGK(i, y - vec[2*d + i]);
       if (vec[2*d + i] != y) {
         // DLOG("false");
@@ -141,14 +138,15 @@ fitFPS(const vector<typename Pol::value_type>& vec, int verify) {
         bs[i] = vec[d + i];
       }
       // DLOGK(d, bs, mat);
-      auto optsol = mat.linSolution(bs, false);
+      Matrix<T> mm(0, 1, bs);
+      auto optsol = mat.template linSolution<false>(mm);
       if (!optsol) continue;
       auto& [sol, _] = *optsol;
       // DLOGK(d, sol);
       if (checkSol(sol)) {
-        vector<T> q(sol.size() + 1);
-        q[0] = (T)1;
-        for (int i = 0; i < (int)sol.size(); i++) { q[i + 1] = -sol[i]; }
+        vector<T> q(sol.dimI + 1);
+        q[0] = one<T>(vec[0]);
+        for (int i = 0; i < (int)sol.dimI; i++) { q[i + 1] = -sol.at(i, 0); }
         return make_optional(Pol(q));
       }
     }

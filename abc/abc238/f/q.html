@@ -1,0 +1,796 @@
+
+
+
+
+
+
+
+
+<!DOCTYPE html>
+<html>
+<head>
+	<title>F - Two Exams</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+	<meta http-equiv="Content-Language" content="en">
+	<meta name="viewport" content="width=device-width,initial-scale=1.0">
+	<meta name="format-detection" content="telephone=no">
+	<meta name="google-site-verification" content="nXGC_JxO0yoP1qBzMnYD_xgufO6leSLw1kyNo2HZltM" />
+
+	
+	<meta name="description" content="AtCoder is a programming contest site for anyone from beginners to experts. We hold weekly programming contests online.">
+	<meta name="author" content="AtCoder Inc.">
+
+	<meta property="og:site_name" content="AtCoder">
+	
+	<meta property="og:title" content="F - Two Exams" />
+	<meta property="og:description" content="AtCoder is a programming contest site for anyone from beginners to experts. We hold weekly programming contests online." />
+	<meta property="og:type" content="website" />
+	<meta property="og:url" content="https://atcoder.jp/contests/abc238/tasks/abc238_f" />
+	<meta property="og:image" content="https://img.atcoder.jp/assets/atcoder.png" />
+	<meta name="twitter:card" content="summary" />
+	<meta name="twitter:site" content="@atcoder" />
+	
+	<meta property="twitter:title" content="F - Two Exams" />
+
+	<link href="//fonts.googleapis.com/css?family=Lato:400,700" rel="stylesheet" type="text/css">
+	<link rel="stylesheet" type="text/css" href="//img.atcoder.jp/public/ad733c8/css/bootstrap.min.css">
+	<link rel="stylesheet" type="text/css" href="//img.atcoder.jp/public/ad733c8/css/base.css">
+	<link rel="shortcut icon" type="image/png" href="//img.atcoder.jp/assets/favicon.png">
+	<link rel="apple-touch-icon" href="//img.atcoder.jp/assets/atcoder.png">
+	<script src="//img.atcoder.jp/public/ad733c8/js/lib/jquery-1.9.1.min.js"></script>
+	<script src="//img.atcoder.jp/public/ad733c8/js/lib/bootstrap.min.js"></script>
+	<script src="//img.atcoder.jp/public/ad733c8/js/cdn/js.cookie.min.js"></script>
+	<script src="//img.atcoder.jp/public/ad733c8/js/cdn/moment.min.js"></script>
+	<script src="//img.atcoder.jp/public/ad733c8/js/cdn/moment_js-ja.js"></script>
+	<script>
+		var LANG = "en";
+		var userScreenName = "yamate11";
+		var csrfToken = "4AQjp1+HwJxqeAG/GDSI65sIt+s23hUOZbISmjJJ/1c="
+	</script>
+	<script src="//img.atcoder.jp/public/ad733c8/js/utils.js"></script>
+	
+	
+		<script src="//img.atcoder.jp/public/ad733c8/js/contest.js"></script>
+		<link href="//img.atcoder.jp/public/ad733c8/css/contest.css" rel="stylesheet" />
+		<script>
+			var contestScreenName = "abc238";
+			var remainingText = "Remaining Time";
+			var countDownText = "Contest begins in";
+			var startTime = moment("2022-02-05T21:00:00+09:00");
+			var endTime = moment("2022-02-05T22:40:00+09:00");
+		</script>
+		<style></style>
+	
+	
+		<link href="//img.atcoder.jp/public/ad733c8/css/cdn/select2.min.css" rel="stylesheet" />
+		<link href="//img.atcoder.jp/public/ad733c8/css/cdn/select2-bootstrap.min.css" rel="stylesheet" />
+		<script src="//img.atcoder.jp/public/ad733c8/js/lib/select2.min.js"></script>
+	
+	
+		<link rel="stylesheet" href="//img.atcoder.jp/public/ad733c8/css/cdn/codemirror.min.css">
+		<script src="//img.atcoder.jp/public/ad733c8/js/cdn/codemirror.min.js"></script>
+		<script src="//img.atcoder.jp/public/ad733c8/js/codeMirror/merged.js"></script>
+	
+	
+		<script src="//img.atcoder.jp/public/ad733c8/js/cdn/run_prettify.js"></script>
+	
+	
+		<link rel="stylesheet" href="//img.atcoder.jp/public/ad733c8/css/cdn/katex.min.css">
+		<script defer src="//img.atcoder.jp/public/ad733c8/js/cdn/katex.min.js"></script>
+		<script defer src="//img.atcoder.jp/public/ad733c8/js/cdn/auto-render.min.js"></script>
+		<script>$(function(){$('var').each(function(){var html=$(this).html().replace(/<sub>/g,'_{').replace(/<\/sub>/g,'}');$(this).html('\\('+html+'\\)');});});</script>
+		<script>
+			var katexOptions = {
+				delimiters: [
+					{left: "$$", right: "$$", display: true},
+					
+					{left: "\\(", right: "\\)", display: false},
+					{left: "\\[", right: "\\]", display: true}
+				],
+      	ignoredTags: ["script", "noscript", "style", "textarea", "code", "option"],
+				ignoredClasses: ["prettyprint", "source-code-for-copy"],
+				throwOnError: false
+			};
+			document.addEventListener("DOMContentLoaded", function() { renderMathInElement(document.body, katexOptions);});
+		</script>
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	<script src="//img.atcoder.jp/public/ad733c8/js/base.js"></script>
+	<script src="//img.atcoder.jp/public/ad733c8/js/ga.js"></script>
+</head>
+
+<body>
+
+<script type="text/javascript">
+	var __pParams = __pParams || [];
+	__pParams.push({client_id: '468', c_1: 'atcodercontest', c_2: 'ClientSite'});
+</script>
+<script type="text/javascript" src="https://cdn.d2-apps.net/js/tr.js" async></script>
+
+
+<div id="modal-contest-start" class="modal fade" tabindex="-1" role="dialog">
+	<div class="modal-dialog" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+				<h4 class="modal-title">Contest started</h4>
+			</div>
+			<div class="modal-body">
+				<p>Monoxer Programming Contest 2022（AtCoder Beginner Contest 238） has begun.</p>
+			</div>
+			<div class="modal-footer">
+				
+					<a class="btn btn-primary" href='/contests/abc238/tasks'>Go to the task list page</a>
+				
+			</div>
+		</div>
+	</div>
+</div>
+<div id="modal-contest-end" class="modal fade" tabindex="-1" role="dialog">
+	<div class="modal-dialog" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+				<h4 class="modal-title">Contest is over</h4>
+			</div>
+			<div class="modal-body">
+				<p>Monoxer Programming Contest 2022（AtCoder Beginner Contest 238） has ended.</p>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+			</div>
+		</div>
+	</div>
+</div>
+<div id="main-div" class="float-container">
+
+
+	<nav class="navbar navbar-inverse navbar-fixed-top">
+		<div class="container-fluid">
+			<div class="navbar-header">
+				<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapse" aria-expanded="false">
+					<span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span>
+				</button>
+				<a class="navbar-brand" href="/home"></a>
+			</div>
+			<div class="collapse navbar-collapse" id="navbar-collapse">
+				<ul class="nav navbar-nav">
+				
+					<li><a class="contest-title" href="/contests/abc238">Monoxer Programming Contest 2022（AtCoder Beginner Contest 238）</a></li>
+				
+				</ul>
+				<ul class="nav navbar-nav navbar-right">
+					
+					<li class="dropdown">
+						<a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
+							<img src='//img.atcoder.jp/assets/top/img/flag-lang/en.png'> English <span class="caret"></span>
+						</a>
+						<ul class="dropdown-menu">
+							<li><a href="/contests/abc238/tasks/abc238_f?lang=ja"><img src='//img.atcoder.jp/assets/top/img/flag-lang/ja.png'> 日本語</a></li>
+							<li><a href="/contests/abc238/tasks/abc238_f?lang=en"><img src='//img.atcoder.jp/assets/top/img/flag-lang/en.png'> English</a></li>
+						</ul>
+					</li>
+					
+					
+						<li class="dropdown">
+							<a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
+								<span class="glyphicon glyphicon-cog" aria-hidden="true"></span> yamate11 (Contestant) <span class="caret"></span>
+							</a>
+							<ul class="dropdown-menu">
+								<li><a href="/users/yamate11"><span class="glyphicon glyphicon-user" aria-hidden="true"></span> My Profile</a></li>
+								<li class="divider"></li>
+								<li><a href="/settings"><span class="glyphicon glyphicon-wrench" aria-hidden="true"></span> General Settings</a></li>
+								<li><a href="/settings/icon"><span class="glyphicon glyphicon-picture" aria-hidden="true"></span> Change Photo</a></li>
+								<li><a href="/settings/password"><span class="glyphicon glyphicon-lock" aria-hidden="true"></span> Change Password</a></li>
+								<li><a href="/settings/fav"><span class="glyphicon glyphicon-star" aria-hidden="true"></span> Manage Fav</a></li>
+								
+								
+								
+								<li class="divider"></li>
+								<li><a href="javascript:void(form_logout.submit())"><span class="glyphicon glyphicon-log-out" aria-hidden="true"></span> Sign Out</a></li>
+							</ul>
+						</li>
+					
+				</ul>
+			</div>
+		</div>
+	</nav>
+
+	<form method="POST" name="form_logout" action="/logout?continue=https%3A%2F%2Fatcoder.jp%2Fcontests%2Fabc238%2Ftasks%2Fabc238_f">
+		<input type="hidden" name="csrf_token" value="4AQjp1&#43;HwJxqeAG/GDSI65sIt&#43;s23hUOZbISmjJJ/1c=" />
+	</form>
+	<div id="main-container" class="container"
+		 	style="padding-top:50px;">
+		
+
+
+<div class="row">
+	<div id="contest-nav-tabs" class="col-sm-12 mb-2 cnvtb-fixed">
+	<div>
+		<small class="contest-duration">
+			
+				Contest Duration:
+				<a href='http://www.timeanddate.com/worldclock/fixedtime.html?iso=20220205T2100&p1=248' target='blank'><time class='fixtime fixtime-full'>2022-02-05 21:00:00+0900</time></a> - <a href='http://www.timeanddate.com/worldclock/fixedtime.html?iso=20220205T2240&p1=248' target='blank'><time class='fixtime fixtime-full'>2022-02-05 22:40:00+0900</time></a> (local time)
+				(100 minutes)
+			
+		</small>
+		<small class="back-to-home pull-right"><a href="/home">Back to Home</a></small>
+	</div>
+	<ul class="nav nav-tabs">
+		<li><a href="/contests/abc238"><span class="glyphicon glyphicon-home" aria-hidden="true"></span> Top</a></li>
+		
+			<li class="active"><a href="/contests/abc238/tasks"><span class="glyphicon glyphicon-tasks" aria-hidden="true"></span> Tasks</a></li>
+		
+
+		
+			<li><a href="/contests/abc238/clarifications"><span class="glyphicon glyphicon-question-sign" aria-hidden="true"></span> Clarifications <span id="clar-badge" class="badge"></span></a></li>
+		
+
+		
+			<li><a href="/contests/abc238/submit?taskScreenName=abc238_f"><span class="glyphicon glyphicon-send" aria-hidden="true"></span> Submit</a></li>
+		
+
+		
+			<li>
+				<a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false"><span class="glyphicon glyphicon-list" aria-hidden="true"></span> Results<span class="caret"></span></a>
+				<ul class="dropdown-menu">
+					
+					
+						<li><a href="/contests/abc238/submissions/me"><span class="glyphicon glyphicon-user" aria-hidden="true"></span> My Submissions</a></li>
+						<li class="divider"></li>
+						<li><a href="/contests/abc238/score"><span class="glyphicon glyphicon-dashboard" aria-hidden="true"></span> My Score</a></li>
+					
+				</ul>
+			</li>
+		
+
+		
+			
+				
+					<li><a href="/contests/abc238/standings"><span class="glyphicon glyphicon-sort-by-attributes-alt" aria-hidden="true"></span> Standings</a></li>
+				
+			
+		
+
+		
+			<li><a href="/contests/abc238/custom_test"><span class="glyphicon glyphicon-wrench" aria-hidden="true"></span> Custom Test</a></li>
+		
+
+		
+		
+			
+			
+		
+
+		<li class="pull-right"><a id="fix-cnvtb" href="javascript:void(0)"><span class="glyphicon glyphicon-pushpin" aria-hidden="true"></span></a></li>
+	</ul>
+</div>
+	<div class="col-sm-12">
+		<span class="h2">
+			F - Two Exams
+			
+		</span>
+		<span id="task-lang-btn" class="pull-right"><span data-lang="ja"><img src='//img.atcoder.jp/assets/top/img/flag-lang/ja.png'></span> / <span data-lang="en"><img src='//img.atcoder.jp/assets/top/img/flag-lang/en.png'></span></span>
+		<script>
+			$(function() {
+				var ts = $('#task-statement span.lang');
+				if (ts.children('span').size() <= 1) {
+					$('#task-lang-btn').hide();
+					ts.children('span').show();
+					return;
+				}
+				var REMEMBER_LB = 5;
+				var LS_KEY = 'task_lang';
+				var taskLang = getLS(LS_KEY) || '';
+				var changeTimes = 0;
+				if (taskLang == 'ja' || taskLang == 'en') {
+					changeTimes = REMEMBER_LB;
+				} else {
+					var changeTimes = parseInt(taskLang, 10);
+					if (isNaN(changeTimes)) {
+						changeTimes = 0;
+						delLS(LS_KEY);
+					}
+					changeTimes++;
+					taskLang = LANG;
+				}
+				ts.children('span.lang-' + taskLang).show();
+
+				$('#task-lang-btn span').click(function() {
+					var l = $(this).data('lang');
+					ts.children('span').hide();
+					ts.children('span.lang-' + l).show();
+					if (changeTimes < REMEMBER_LB) setLS(LS_KEY, changeTimes);
+					else setLS(LS_KEY, l);
+				});
+			});
+		</script>
+		<hr/>
+		<p>
+			Time Limit: 2 sec / Memory Limit: 1024 MB
+			
+		</p>
+
+		<div id="task-statement">
+			
+			<span class="lang">
+<span class="lang-ja">
+<p>配点 : <var>500</var> 点</p>
+
+<div class="part">
+<section>
+<h3>問題文</h3><p>高橋王国にて、 <var>1</var> から <var>N</var> までの番号のついた <var>N</var> 人の国民が競技プログラミングの試験に参加しました。<br />
+試験は <var>2</var> 回からなり、人 <var>i</var> は <var>1</var> 回目の試験で <var>P_i</var> 位、 <var>2</var> 回目の試験で <var>Q_i</var> 位となりました。<br />
+なお、どちらの試験においても、複数人が同じ順位になることはありませんでした。すなわち、順位を表す数列 <var>P,Q</var> はそれぞれ <var>(1,2,...,N)</var> の順列です。  </p>
+<p>高橋王国の大統領であるいろはちゃんは、この試験の結果に基づいて、 <var>N</var> 人の中から競技プログラミングの世界大会に出場する <var>K</var> 人の代表を決めることになりました。<br />
+代表を決めるにあたって、以下が成立していなければなりません。</p>
+<ul>
+<li>人 <var>x</var> が代表であり、人 <var>y</var> が代表でないような人の組 <var>(x,y)</var> であって、 <var>P_x &gt; P_y</var> かつ <var>Q_x &gt; Q_y</var> であるようなものが存在してはならない。<ul>
+<li>言い換えると、 <var>2</var> 回の試験の双方で人 <var>y</var> が人 <var>x</var> よりも小さい順位を取っているにも拘らず、人 <var>x</var> が代表で人 <var>y</var> が代表でないということがあってはならない。</li>
+</ul>
+</li>
+</ul>
+<p>いろはちゃんは、ひとまず上記の条件を満たす代表の選び方の数を知りたいので、この数を求めてください。<br />
+ただし、この数は非常に大きくなる場合もあるので、 <var>998244353</var> で割った余りを出力してください。</p>
+</section>
+</div>
+
+<div class="part">
+<section>
+<h3>制約</h3><ul>
+<li>入力は全て整数</li>
+<li><var>1 \le N \le 300</var></li>
+<li><var>1 \le K \le N</var></li>
+<li><var>P,Q</var> は <var>(1,2,...,N)</var> の順列である。</li>
+</ul>
+</section>
+</div>
+
+<hr />
+<div class="io-style">
+<div class="part">
+<section>
+<h3>入力</h3><p>入力は以下の形式で標準入力から与えられる。</p>
+<pre><var>N</var> <var>K</var>
+<var>P_1</var> <var>P_2</var> <var>\dots</var> <var>P_N</var>
+<var>Q_1</var> <var>Q_2</var> <var>\dots</var> <var>Q_N</var>
+</pre>
+</section>
+</div>
+
+<div class="part">
+<section>
+<h3>出力</h3><p>答えを整数として出力せよ。</p>
+</section>
+</div>
+</div>
+
+<hr />
+<div class="part">
+<section>
+<h3>入力例 1</h3><pre>4 2
+2 4 3 1
+2 1 4 3
+</pre>
+</section>
+</div>
+
+<div class="part">
+<section>
+<h3>出力例 1</h3><pre>3
+</pre>
+<ul>
+<li>人 <var>1</var> と人 <var>2</var> を代表にすることは問題ありません。  </li>
+<li>人 <var>1</var> と人 <var>3</var> を代表にすると、双方の試験で人 <var>4</var> が人 <var>3</var> よりも小さい順位を取っているため、 <var>(x,y)=(3,4)</var> に対して問題文中の条件に違反します。   </li>
+<li>人 <var>1</var> と人 <var>4</var> を代表にすることは問題ありません。</li>
+<li>人 <var>2</var> と人 <var>3</var> を代表にすると、 <var>(x,y)=(3,1)</var> に対して問題文中の条件に違反します。</li>
+<li>人 <var>2</var> と人 <var>4</var> を代表にすることは問題ありません。</li>
+<li>人 <var>3</var> と人 <var>4</var> を代表にすると、 <var>(x,y)=(3,1)</var> に対して問題文中の条件に違反します。</li>
+</ul>
+<p>結局、求める答えは <var>3</var> 通りです。</p>
+</section>
+</div>
+
+<hr />
+<div class="part">
+<section>
+<h3>入力例 2</h3><pre>33 16
+1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32 33
+33 32 31 30 29 28 27 26 25 24 23 22 21 20 19 18 17 16 15 14 13 12 11 10 9 8 7 6 5 4 3 2 1
+</pre>
+</section>
+</div>
+
+<div class="part">
+<section>
+<h3>出力例 2</h3><pre>168558757
+</pre>
+<p><var>33</var> 人から <var>16</var> 人を選ぶ <var>\binom{33}{16} = 1166803110</var> 通りの全てにおいて、問題文中の条件を満たします。<br />
+よって、 <var>1166803110</var> を <var>998244353</var> で割った余りである <var>168558757</var> を出力することとなります。</p>
+</section>
+</div>
+
+<hr />
+<div class="part">
+<section>
+<h3>入力例 3</h3><pre>15 7
+4 9 7 5 6 13 2 11 3 1 12 14 15 10 8
+4 14 9 12 7 15 1 2 8 11 3 5 13 6 10
+</pre>
+</section>
+</div>
+
+<div class="part">
+<section>
+<h3>出力例 3</h3><pre>23
+</pre></section>
+</div>
+</span>
+<span class="lang-en">
+<p>Score : <var>500</var> points</p>
+
+<div class="part">
+<section>
+<h3>Problem Statement</h3><p>In the Kingdom of Takahashi, <var>N</var> citizens numbered <var>1</var> to <var>N</var> took an examination of competitive programming.<br />
+There were two tests, and Citizen <var>i</var> ranked <var>P_i</var>-th in the first test and <var>Q_i</var>-th in the second test.<br />
+There were no ties in either test. That is, each of the sequences <var>P</var> and <var>Q</var> is a permutation of <var>(1, 2, ..., N)</var>.</p>
+<p>Iroha, the president of the kingdom, is going to select <var>K</var> citizens for the national team at the coming world championship of competitive programming.<br />
+The members of the national team must be selected so that the following is satisfied.</p>
+<ul>
+<li>There should not be a pair of citizens <var>(x, y)</var> where Citizen <var>x</var> is selected and Citizen <var>y</var> is not selected such that <var>P_x &gt; P_y</var> and <var>Q_x &gt; Q_y</var>.<ul>
+<li>In other words, if Citizen <var>y</var> got a rank smaller than that of Citizen <var>x</var> in both tests, it is not allowed to select Citizen <var>x</var> while not selecting Citizen <var>y</var>.</li>
+</ul>
+</li>
+</ul>
+<p>To begin with, Iroha wants to know the number of ways to select citizens for the national team that satisfy the condition above. Find it to help her.<br />
+Since this number can be enormous, print it modulo <var>998244353</var>.</p>
+</section>
+</div>
+
+<div class="part">
+<section>
+<h3>Constraints</h3><ul>
+<li>All values in input are integers.</li>
+<li><var>1 \le N \le 300</var></li>
+<li><var>1 \le K \le N</var></li>
+<li>Each of <var>P</var> and <var>Q</var> is a permutation of <var>(1,2,...,N)</var>.</li>
+</ul>
+</section>
+</div>
+
+<hr />
+<div class="io-style">
+<div class="part">
+<section>
+<h3>Input</h3><p>Input is given from Standard Input in the following format:</p>
+<pre><var>N</var> <var>K</var>
+<var>P_1</var> <var>P_2</var> <var>\dots</var> <var>P_N</var>
+<var>Q_1</var> <var>Q_2</var> <var>\dots</var> <var>Q_N</var>
+</pre>
+</section>
+</div>
+
+<div class="part">
+<section>
+<h3>Output</h3><p>Print the answer as an integer.</p>
+</section>
+</div>
+</div>
+
+<hr />
+<div class="part">
+<section>
+<h3>Sample Input 1</h3><pre>4 2
+2 4 3 1
+2 1 4 3
+</pre>
+</section>
+</div>
+
+<div class="part">
+<section>
+<h3>Sample Output 1</h3><pre>3
+</pre>
+<ul>
+<li>It is fine to select Citizen <var>1</var> and Citizen <var>2</var> for the team.</li>
+<li>If Citizen <var>1</var> and Citizen <var>3</var> are selected, Citizen <var>4</var> ranked higher than Citizen <var>3</var> did in both tests, so the pair <var>(x,y)=(3,4)</var> would violate the condition in the Problem Statement.</li>
+<li>It is fine to select Citizen <var>1</var> and Citizen <var>4</var>.</li>
+<li>If Citizen <var>2</var> and Citizen <var>3</var> are selected, the pair <var>(x,y)=(3,1)</var> would violate the condition.</li>
+<li>It is fine to select Citizen <var>2</var> and Citizen <var>4</var>.</li>
+<li>If Citizen <var>3</var> and Citizen <var>4</var> are selected, the pair <var>(x,y)=(3,1)</var> would violate the condition.</li>
+</ul>
+<p>The final answer is <var>3</var>.</p>
+</section>
+</div>
+
+<hr />
+<div class="part">
+<section>
+<h3>Sample Input 2</h3><pre>33 16
+1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32 33
+33 32 31 30 29 28 27 26 25 24 23 22 21 20 19 18 17 16 15 14 13 12 11 10 9 8 7 6 5 4 3 2 1
+</pre>
+</section>
+</div>
+
+<div class="part">
+<section>
+<h3>Sample Output 2</h3><pre>168558757
+</pre>
+<p>All <var>\binom{33}{16} = 1166803110</var> ways of selecting <var>16</var> from the <var>33</var> citizens satisfy the requirement.<br />
+Therefore, we should print <var>1166803110</var> modulo <var>998244353</var>, that is, <var>168558757</var>.</p>
+</section>
+</div>
+
+<hr />
+<div class="part">
+<section>
+<h3>Sample Input 3</h3><pre>15 7
+4 9 7 5 6 13 2 11 3 1 12 14 15 10 8
+4 14 9 12 7 15 1 2 8 11 3 5 13 6 10
+</pre>
+</section>
+</div>
+
+<div class="part">
+<section>
+<h3>Sample Output 3</h3><pre>23
+</pre></section>
+</div>
+</span>
+</span>
+		</div>
+
+		
+
+		
+		<hr/>
+		<form class="form-horizontal form-code-submit" action="/contests/abc238/submit" method="POST">
+			<input type="hidden" name="data.TaskScreenName" value="abc238_f" />
+			
+			<div class="form-group ">
+				<label class="control-label col-sm-2" for="select-lang">Language</label>
+				<div id="select-lang" class="col-sm-5" data-name="data.LanguageId">
+					<select class="form-control current" data-placeholder="-" name="data.LanguageId" required>
+						<option></option>
+						
+							<option value="4001" data-mime="text/x-csrc">C (GCC 9.2.1)</option>
+						
+							<option value="4002" data-mime="text/x-csrc">C (Clang 10.0.0)</option>
+						
+							<option value="4003" data-mime="text/x-c&#43;&#43;src">C&#43;&#43; (GCC 9.2.1)</option>
+						
+							<option value="4004" data-mime="text/x-c&#43;&#43;src">C&#43;&#43; (Clang 10.0.0)</option>
+						
+							<option value="4005" data-mime="text/x-java">Java (OpenJDK 11.0.6)</option>
+						
+							<option value="4006" data-mime="text/x-python">Python (3.8.2)</option>
+						
+							<option value="4007" data-mime="text/x-sh">Bash (5.0.11)</option>
+						
+							<option value="4008" data-mime="text/x-bc">bc (1.07.1)</option>
+						
+							<option value="4009" data-mime="text/x-sh">Awk (GNU Awk 4.1.4)</option>
+						
+							<option value="4010" data-mime="text/x-csharp">C# (.NET Core 3.1.201)</option>
+						
+							<option value="4011" data-mime="text/x-csharp">C# (Mono-mcs 6.8.0.105)</option>
+						
+							<option value="4012" data-mime="text/x-csharp">C# (Mono-csc 3.5.0)</option>
+						
+							<option value="4013" data-mime="text/x-clojure">Clojure (1.10.1.536)</option>
+						
+							<option value="4014" data-mime="text/x-crystal">Crystal (0.33.0)</option>
+						
+							<option value="4015" data-mime="text/x-d">D (DMD 2.091.0)</option>
+						
+							<option value="4016" data-mime="text/x-d">D (GDC 9.2.1)</option>
+						
+							<option value="4017" data-mime="text/x-d">D (LDC 1.20.1)</option>
+						
+							<option value="4018" data-mime="application/dart">Dart (2.7.2)</option>
+						
+							<option value="4019" data-mime="text/x-dc">dc (1.4.1)</option>
+						
+							<option value="4020" data-mime="text/x-erlang">Erlang (22.3)</option>
+						
+							<option value="4021" data-mime="elixir">Elixir (1.10.2)</option>
+						
+							<option value="4022" data-mime="text/x-fsharp">F# (.NET Core 3.1.201)</option>
+						
+							<option value="4023" data-mime="text/x-fsharp">F# (Mono 10.2.3)</option>
+						
+							<option value="4024" data-mime="text/x-forth">Forth (gforth 0.7.3)</option>
+						
+							<option value="4025" data-mime="text/x-fortran">Fortran (GNU Fortran 9.2.1)</option>
+						
+							<option value="4026" data-mime="text/x-go">Go (1.14.1)</option>
+						
+							<option value="4027" data-mime="text/x-haskell">Haskell (GHC 8.8.3)</option>
+						
+							<option value="4028" data-mime="text/x-haxe">Haxe (4.0.3); js</option>
+						
+							<option value="4029" data-mime="text/x-haxe">Haxe (4.0.3); Java</option>
+						
+							<option value="4030" data-mime="text/javascript">JavaScript (Node.js 12.16.1)</option>
+						
+							<option value="4031" data-mime="text/x-julia">Julia (1.4.0)</option>
+						
+							<option value="4032" data-mime="text/x-kotlin">Kotlin (1.3.71)</option>
+						
+							<option value="4033" data-mime="text/x-lua">Lua (Lua 5.3.5)</option>
+						
+							<option value="4034" data-mime="text/x-lua">Lua (LuaJIT 2.1.0)</option>
+						
+							<option value="4035" data-mime="text/x-sh">Dash (0.5.8)</option>
+						
+							<option value="4036" data-mime="text/x-nim">Nim (1.0.6)</option>
+						
+							<option value="4037" data-mime="text/x-objectivec">Objective-C (Clang 10.0.0)</option>
+						
+							<option value="4038" data-mime="text/x-common-lisp">Common Lisp (SBCL 2.0.3)</option>
+						
+							<option value="4039" data-mime="text/x-ocaml">OCaml (4.10.0)</option>
+						
+							<option value="4040" data-mime="text/x-octave">Octave (5.2.0)</option>
+						
+							<option value="4041" data-mime="text/x-pascal">Pascal (FPC 3.0.4)</option>
+						
+							<option value="4042" data-mime="text/x-perl">Perl (5.26.1)</option>
+						
+							<option value="4043" data-mime="text/x-perl">Raku (Rakudo 2020.02.1)</option>
+						
+							<option value="4044" data-mime="text/x-php">PHP (7.4.4)</option>
+						
+							<option value="4045" data-mime="text/x-prolog">Prolog (SWI-Prolog 8.0.3)</option>
+						
+							<option value="4046" data-mime="text/x-python">PyPy2 (7.3.0)</option>
+						
+							<option value="4047" data-mime="text/x-python">PyPy3 (7.3.0)</option>
+						
+							<option value="4048" data-mime="text/x-racket">Racket (7.6)</option>
+						
+							<option value="4049" data-mime="text/x-ruby">Ruby (2.7.1)</option>
+						
+							<option value="4050" data-mime="text/x-rustsrc">Rust (1.42.0)</option>
+						
+							<option value="4051" data-mime="text/x-scala">Scala (2.13.1)</option>
+						
+							<option value="4052" data-mime="text/x-java">Java (OpenJDK 1.8.0)</option>
+						
+							<option value="4053" data-mime="text/x-scheme">Scheme (Gauche 0.9.9)</option>
+						
+							<option value="4054" data-mime="text/x-sml">Standard ML (MLton 20130715)</option>
+						
+							<option value="4055" data-mime="text/x-swift">Swift (5.2.1)</option>
+						
+							<option value="4056" data-mime="text/plain">Text (cat 8.28)</option>
+						
+							<option value="4057" data-mime="text/typescript">TypeScript (3.8)</option>
+						
+							<option value="4058" data-mime="text/x-vb">Visual Basic (.NET Core 3.1.101)</option>
+						
+							<option value="4059" data-mime="text/x-sh">Zsh (5.4.2)</option>
+						
+							<option value="4060" data-mime="text/x-cobol">COBOL - Fixed (OpenCOBOL 1.1.0)</option>
+						
+							<option value="4061" data-mime="text/x-cobol">COBOL - Free (OpenCOBOL 1.1.0)</option>
+						
+							<option value="4062" data-mime="text/x-brainfuck">Brainfuck (bf 20041219)</option>
+						
+							<option value="4063" data-mime="text/x-ada">Ada2012 (GNAT 9.2.1)</option>
+						
+							<option value="4064" data-mime="text/x-unlambda">Unlambda (2.0.0)</option>
+						
+							<option value="4065" data-mime="text/x-python">Cython (0.29.16)</option>
+						
+							<option value="4066" data-mime="text/x-sh">Sed (4.4)</option>
+						
+							<option value="4067" data-mime="text/x-vim">Vim (8.2.0460)</option>
+						
+					</select>
+					<span class="error"></span>
+				</div>
+			</div>
+			<script>var currentLang = getLS('defaultLang');</script>
+			
+			
+<div class="form-group">
+	<label class="control-label col-sm-2" for="sourceCode">Source Code</label>
+	<div class="col-sm-7" id="sourceCode">
+		<div class="div-editor">
+			<textarea class="form-control editor" name="sourceCode"></textarea>
+		</div>
+		<textarea class="form-control plain-textarea" style="display:none;"></textarea>
+		<p>
+			<span class="gray">* at most 512 KiB</span><br>
+			<span class="gray">* Your source code will be saved as Main.<i>extension</i>.</span>
+		</p>
+	</div>
+	<div class="col-sm-3 editor-buttons">
+		<p><button id="btn-open-file" type="button" class="btn btn-default btn-sm">
+			<span class="glyphicon glyphicon-folder-open" aria-hidden="true"></span> &nbsp; Open File
+		</button></p>
+		<p><button type="button" class="btn btn-default btn-sm btn-toggle-editor" data-toggle="button" aria-pressed="false" autocomplete="off">
+			Toggle Editor
+		</button></p>
+		<p><button type="button" class="btn btn-default btn-sm btn-auto-height" data-toggle="button" aria-pressed="false" autocomplete="off">
+			Auto Height
+		</button></p>
+	</div>
+	<input id="input-open-file" type="file" style="display:none;">
+</div>
+
+			<input type="hidden" name="csrf_token" value="4AQjp1&#43;HwJxqeAG/GDSI65sIt&#43;s23hUOZbISmjJJ/1c=" />
+			<div class="form-group">
+				<label class="control-label col-sm-2" for="submit"></label>
+				<div class="col-sm-5">
+					<button type="submit" class="btn btn-primary" id="submit">Submit</button>
+				</div>
+			</div>
+		</form>
+		
+	</div>
+</div>
+
+
+
+
+		
+			<hr>
+			
+			
+			
+<div class="a2a_kit a2a_kit_size_20 a2a_default_style pull-right" data-a2a-url="https://atcoder.jp/contests/abc238/tasks/abc238_f?lang=en" data-a2a-title="F - Two Exams">
+	<a class="a2a_button_facebook"></a>
+	<a class="a2a_button_twitter"></a>
+	
+		<a class="a2a_button_telegram"></a>
+	
+	<a class="a2a_dd" href="https://www.addtoany.com/share"></a>
+</div>
+
+		
+		<script async src="//static.addtoany.com/menu/page.js"></script>
+		
+	</div> 
+	<hr>
+</div> 
+
+	<div class="container" style="margin-bottom: 80px;">
+			<footer class="footer">
+			
+				<ul>
+					<li><a href="/contests/abc238/rules">Rule</a></li>
+					<li><a href="/contests/abc238/glossary">Glossary</a></li>
+					
+				</ul>
+			
+			<ul>
+				<li><a href="/tos">Terms of service</a></li>
+				<li><a href="/privacy">Privacy Policy</a></li>
+				<li><a href="/personal">Information Protection Policy</a></li>
+				<li><a href="/company">Company</a></li>
+				<li><a href="/faq">FAQ</a></li>
+				<li><a href="/contact">Contact</a></li>
+				
+			</ul>
+			<div class="text-center">
+					<small id="copyright">Copyright Since 2012 &copy;<a href="http://atcoder.co.jp">AtCoder Inc.</a> All rights reserved.</small>
+			</div>
+			</footer>
+	</div>
+	<p id="fixed-server-timer" class="contest-timer"></p>
+	<div id="scroll-page-top" style="display:none;"><span class="glyphicon glyphicon-arrow-up" aria-hidden="true"></span> Page Top</div>
+
+</body>
+</html>
+
+

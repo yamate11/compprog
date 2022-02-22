@@ -4,279 +4,179 @@ typedef long long int ll;
 using namespace std;
 
 // Library Insertion Mark
-// @@ !! LIM(debug f:power mod matrix)
+// @@ !! LIM(algOp power mod matrix)
 
-// ---- inserted function f:<< from util.cc
-template <typename T1, typename T2>
-ostream& operator<< (ostream& os, const pair<T1,T2>& p) {
-  os << "(" << p.first << ", " << p.second << ")";
-  return os;
-}
+// ---- inserted library file algOp.cc
 
-template <typename T1, typename T2, typename T3>
-ostream& operator<< (ostream& os, const tuple<T1,T2,T3>& t) {
-  os << "(" << get<0>(t) << ", " << get<1>(t)
-     << ", " << get<2>(t) << ")";
-  return os;
-}
+// Common definitions
+//    zero, one, inverse
 
-template <typename T1, typename T2, typename T3, typename T4>
-ostream& operator<< (ostream& os, const tuple<T1,T2,T3,T4>& t) {
-  os << "(" << get<0>(t) << ", " << get<1>(t)
-     << ", " << get<2>(t) << ", " << get<3>(t) << ")";
-  return os;
-}
-
-template <typename T>
-ostream& operator<< (ostream& os, const vector<T>& v) {
-  os << '[';
-  for (auto it = v.begin(); it != v.end(); it++) {
-    if (it != v.begin()) os << ", ";
-    os << *it;
-  }
-  os << ']';
-
-  return os;
-}
-
-template <typename T, typename C>
-ostream& operator<< (ostream& os, const set<T, C>& v) {
-  os << '{';
-  for (auto it = v.begin(); it != v.end(); it++) {
-    if (it != v.begin()) os << ", ";
-    os << *it;
-  }
-  os << '}';
-
-  return os;
-}
-
-template <typename T, typename C>
-ostream& operator<< (ostream& os, const unordered_set<T, C>& v) {
-  os << '{';
-  for (auto it = v.begin(); it != v.end(); it++) {
-    if (it != v.begin()) os << ", ";
-    os << *it;
-  }
-  os << '}';
-
-  return os;
-}
-
-template <typename T, typename C>
-ostream& operator<< (ostream& os, const multiset<T, C>& v) {
-  os << '{';
-  for (auto it = v.begin(); it != v.end(); it++) {
-    if (it != v.begin()) os << ", ";
-    os << *it;
-  }
-  os << '}';
-
-  return os;
-}
-
-template <typename T1, typename T2, typename C>
-ostream& operator<< (ostream& os, const map<T1, T2, C>& mp) {
-  os << '[';
-  for (auto it = mp.begin(); it != mp.end(); it++) {
-    if (it != mp.begin()) os << ", ";
-    os << it->first << ": " << it->second;
-  }
-  os << ']';
-
-  return os;
-}
-
-template <typename T1, typename T2, typename C>
-ostream& operator<< (ostream& os, const unordered_map<T1, T2, C>& mp) {
-  os << '[';
-  for (auto it = mp.begin(); it != mp.end(); it++) {
-    if (it != mp.begin()) os << ", ";
-    os << it->first << ": " << it->second;
-  }
-  os << ']';
-
-  return os;
-}
-
-template <typename T, typename T2>
-ostream& operator<< (ostream& os, const queue<T, T2>& orig) {
-  queue<T, T2> que(orig);
-  bool first = true;
-  os << '[';
-  while (!que.empty()) {
-    T x = que.front(); que.pop();
-    if (!first) os << ", ";
-    os << x;
-    first = false;
-  }
-  return os << ']';
-}
-
-template <typename T, typename T2>
-ostream& operator<< (ostream& os, const deque<T, T2>& orig) {
-  deque<T, T2> que(orig);
-  bool first = true;
-  os << '[';
-  while (!que.empty()) {
-    T x = que.front(); que.pop_front();
-    if (!first) os << ", ";
-    os << x;
-    first = false;
-  }
-  return os << ']';
-}
-
-template <typename T, typename T2, typename T3>
-ostream& operator<< (ostream& os, const priority_queue<T, T2, T3>& orig) {
-  priority_queue<T, T2, T3> pq(orig);
-  bool first = true;
-  os << '[';
-  while (!pq.empty()) {
-    T x = pq.top(); pq.pop();
-    if (!first) os << ", ";
-    os << x;
-    first = false;
-  }
-  return os << ']';
-}
-
-template <typename T>
-ostream& operator<< (ostream& os, const stack<T>& st) {
-  stack<T> tmp(st);
-  os << '[';
-  bool first = true;
-  while (!tmp.empty()) {
-    T& t = tmp.top();
-    if (first) first = false;
-    else os << ", ";
-    os << t;
-    tmp.pop();
-  }
-  os << ']';
-  return os;
-}
-
-#if __cplusplus >= 201703L
-template <typename T>
-ostream& operator<< (ostream& os, const optional<T>& t) {
-  if (t.has_value()) os << "v(" << t.value() << ")";
-  else               os << "nullopt";
-  return os;
-}
-#endif
-
-ostream& operator<< (ostream& os, int8_t x) {
-  os << (int32_t)x;
-  return os;
-}
-
-// ---- end f:<<
-
-// ---- inserted library file debug.cc
-template <class... Args>
-string dbgFormat(const char* fmt, Args... args) {
-  size_t len = snprintf(nullptr, 0, fmt, args...);
-  char buf[len + 1];
-  snprintf(buf, len + 1, fmt, args...);
-  return string(buf);
-}
-
-template <class Head>
-void dbgLog(bool with_nl, Head&& head) {
-  cerr << head;
-  if (with_nl) cerr << endl;
-}
-
-template <class Head, class... Tail>
-void dbgLog(bool with_nl, Head&& head, Tail&&... tail)
-{
-  cerr << head << " ";
-  dbgLog(with_nl, forward<Tail>(tail)...);
-}
-
-#if DEBUG
-  #define DLOG(...)        dbgLog(true, __VA_ARGS__)
-  #define DLOGNNL(...)     dbgLog(false, __VA_ARGS__)
-  #define DFMT(...)        cerr << dbgFormat(__VA_ARGS__) << endl
-  #define DCALL(func, ...) func(__VA_ARGS__)
-#else
-  #define DLOG(...)
-  #define DLOGNNL(...)
-  #define DFMT(...)
-  #define DCALL(func, ...)
-#endif
-
-/*
-#if DEBUG_LIB
-  #define DLOG_LIB(...)        dbgLog(true, __VA_ARGS__)
-  #define DLOGNNL_LIB(...)     dbgLog(false, __VA_ARGS__)
-  #define DFMT_LIB(...)        cerr << dbgFormat(__VA_ARGS__) << endl
-  #define DCALL_LIB(func, ...) func(__VA_ARGS__)
-#else
-  #define DLOG_LIB(...)
-  #define DFMT_LIB(...)
-  #define DCALL_LIB(func, ...)
-#endif
-*/
-
-#define DUP1(E1)       #E1 "=", E1
-#define DUP2(E1,E2)    DUP1(E1), DUP1(E2)
-#define DUP3(E1,...)   DUP1(E1), DUP2(__VA_ARGS__)
-#define DUP4(E1,...)   DUP1(E1), DUP3(__VA_ARGS__)
-#define DUP5(E1,...)   DUP1(E1), DUP4(__VA_ARGS__)
-#define DUP6(E1,...)   DUP1(E1), DUP5(__VA_ARGS__)
-#define DUP7(E1,...)   DUP1(E1), DUP6(__VA_ARGS__)
-#define DUP8(E1,...)   DUP1(E1), DUP7(__VA_ARGS__)
-#define DUP9(E1,...)   DUP1(E1), DUP8(__VA_ARGS__)
-#define DUP10(E1,...)   DUP1(E1), DUP9(__VA_ARGS__)
-#define DUP11(E1,...)   DUP1(E1), DUP10(__VA_ARGS__)
-#define DUP12(E1,...)   DUP1(E1), DUP11(__VA_ARGS__)
-#define GET_MACRO(_1,_2,_3,_4,_5,_6,_7,_8,_9,_10,_11,_12,NAME,...) NAME
-#define DUP(...)          GET_MACRO(__VA_ARGS__, DUP12, DUP11, DUP10, DUP9, DUP8, DUP7, DUP6, DUP5, DUP4, DUP3, DUP2, DUP1)(__VA_ARGS__)
-#define DLOGK(...)        DLOG(DUP(__VA_ARGS__))
-#define DLOGKL(lab, ...)  DLOG(lab, DUP(__VA_ARGS__))
-
-#if DEBUG_LIB
-  #define DLOG_LIB   DLOG
-  #define DLOGK_LIB  DLOGK
-  #define DLOGKL_LIB DLOGKL
-#endif
-
-// ---- end debug.cc
-
-// ---- inserted function f:power from util.cc
-/* *** WARNING ***  
-      ll x = power(10, 12) 
-   does not work since it is interpreted as 
-      ll x = power<int>((int)10, 12)
-   Use power<ll>(10, 12) or power(10LL, 12).
- */
 template<typename T>
-T power(T a, ll b) {
-  T twoPow = a;
-  T rv(1);
-  while (b > 0) {
-    if (b & 1LL) rv *= twoPow;
-    twoPow *= twoPow;
-    b >>= 1;
-  }
-  return rv;
+constexpr T zero(const T& t) {
+  if constexpr (is_integral_v<T> || is_floating_point_v<T>) { return (T)0; }
+  else { return t.zero(); }
 }
 
-// ad-hoc power function
-template<typename T, typename Op>
-T ah_power(T a, ll b, const T& unit_t, Op op) {
-  T two_pow = a;
-  T ret = unit_t;
+template<typename T>
+constexpr T one(const T& t) {
+  if constexpr (is_integral_v<T> || is_floating_point_v<T>) { return (T)1; }
+  else { return t.one(); }
+}
+
+template<typename T>
+constexpr T inverse(const T& t) {
+  if constexpr (is_floating_point_v<T>) { return 1.0 / t; }
+  else { return t.inverse(); }
+}
+
+// begin -- detection ideom
+//    cf. https://blog.tartanllama.xyz/detection-idiom/
+
+namespace detail {
+  template <template <class...> class Trait, class Enabler, class... Args>
+  struct is_detected : false_type{};
+
+  template <template <class...> class Trait, class... Args>
+  struct is_detected<Trait, void_t<Trait<Args...>>, Args...> : true_type{};
+}
+
+template <template <class...> class Trait, class... Args>
+using is_detected = typename detail::is_detected<Trait, void, Args...>::type;
+
+// end -- detection ideom
+
+
+template<typename T>
+// using subst_add_t = decltype(T::subst_add(declval<typename T::value_type &>(), declval<typename T::value_type>()));
+using subst_add_t = decltype(T::subst_add);
+template<typename T>
+using has_subst_add = is_detected<subst_add_t, T>;
+
+template<typename T>
+using add_t = decltype(T::add);
+template<typename T>
+using has_add = is_detected<add_t, T>;
+
+template<typename T>
+using subst_mult_t = decltype(T::subst_mult);
+template<typename T>
+using has_subst_mult = is_detected<subst_mult_t, T>;
+
+template<typename T>
+using mult_t = decltype(T::mult);
+template<typename T>
+using has_mult = is_detected<mult_t, T>;
+
+template<typename T>
+using subst_subt_t = decltype(T::subst_subt);
+template<typename T>
+using has_subst_subt = is_detected<subst_subt_t, T>;
+
+template<typename T>
+using subt_t = decltype(T::subt);
+template<typename T>
+using has_subt = is_detected<subt_t, T>;
+
+template <typename Opdef>
+struct MyAlg {
+  using T = typename Opdef::value_type;
+  using value_type = T;
+  T v;
+  MyAlg() {}
+  MyAlg(const T& v_) : v(v_) {}
+  MyAlg(T&& v_) : v(move(v_)) {}
+  bool operator==(MyAlg o) const { return v == o.v; }
+  bool operator!=(MyAlg o) const { return v != o.v; }
+  operator T() const { return v; }
+  MyAlg zero() const { return MyAlg(Opdef::zero(v)); }
+  MyAlg one() const { return MyAlg(Opdef::one(v)); }
+  MyAlg inverse() const { return MyAlg(Opdef::inverse(v)); }
+  MyAlg operator/=(const MyAlg& o) { return *this *= o.inverse(); }
+  MyAlg operator/(const MyAlg& o) const { return (*this) * o.inverse(); }
+  MyAlg operator-() const { return zero() - *this; }
+
+  MyAlg& operator +=(const MyAlg& o) { 
+    if constexpr (has_subst_add<Opdef>::value) {
+      Opdef::subst_add(v, o.v);
+      return *this;
+    }else if constexpr (has_add<Opdef>::value) {
+      v = Opdef::add(v, o.v);
+      return *this;
+    }else static_assert("either subst_add or add is needed.");
+
+  }
+  MyAlg operator +(const MyAlg& o) const { 
+    if constexpr (has_add<Opdef>::value) {
+      return MyAlg(Opdef::add(v, o.v));
+    }else if constexpr (has_subst_add<Opdef>::value) {
+      MyAlg ret(v);
+      Opdef::subst_add(ret.v, o.v);
+      return ret;
+    }else static_assert("either subst_add or add is needed.");
+  }
+  MyAlg& operator *=(const MyAlg& o) { 
+    if constexpr (has_subst_mult<Opdef>::value) {
+      Opdef::subst_mult(v, o.v);
+      return *this;
+    }else if constexpr (has_mult<Opdef>::value) {
+      v = Opdef::mult(v, o.v);
+      return *this;
+    }else static_assert("either subst_mult or mult is needed.");
+
+  }
+  MyAlg operator *(const MyAlg& o) const { 
+    if constexpr (has_mult<Opdef>::value) {
+      return MyAlg(Opdef::mult(v, o.v));
+    }else if constexpr (has_subst_mult<Opdef>::value) {
+      MyAlg ret(v);
+      Opdef::subst_mult(ret.v, o.v);
+      return ret;
+    }else static_assert("either subst_mult or mult is needed.");
+  }
+  MyAlg& operator -=(const MyAlg& o) { 
+    if constexpr (has_subst_subt<Opdef>::value) {
+      Opdef::subst_subt(v, o.v);
+      return *this;
+    }else if constexpr (has_subt<Opdef>::value) {
+      v = Opdef::subt(v, o.v);
+      return *this;
+    }else static_assert("either subst_subt or subt is needed.");
+
+  }
+  MyAlg operator -(const MyAlg& o) const { 
+    if constexpr (has_subt<Opdef>::value) {
+      return MyAlg(Opdef::subt(v, o.v));
+    }else if constexpr (has_subst_subt<Opdef>::value) {
+      MyAlg ret(v);
+      Opdef::subst_subt(ret.v, o.v);
+      return ret;
+    }else static_assert("either subst_subt or subt is needed.");
+  }
+  friend istream& operator >>(istream& is, MyAlg& t)       { is >> t.v; return is; }
+  friend ostream& operator <<(ostream& os, const MyAlg& t) { os << t.v; return os; }
+};
+
+
+
+
+
+// ---- end algOp.cc
+
+// ---- inserted library file power.cc
+
+template<typename T>
+T power(const T& a, ll b) {
+  auto two_pow = a;
+  auto ret = one<T>(a);
   while (b > 0) {
-    if (b & 1LL) ret = op(ret, two_pow);
-    two_pow = op(two_pow, two_pow);
+    if (b & 1LL) ret *= two_pow;
+    two_pow *= two_pow;
     b >>= 1;
   }
   return ret;
 }
-// ---- end f:power
+
+// ---- end power.cc
 
 // ---- inserted function f:gcd from util.cc
 
@@ -414,6 +314,10 @@ struct FpG {   // G for General
     return FpG(u);
   }
 
+  FpG zero() const { return (FpG)0; }
+  FpG one() const { return (FpG)1; }
+  FpG inverse() const { return inv(); }
+
   FpG& operator /=(const FpG& t) {
     return (*this) *= t.inv();
   }
@@ -503,400 +407,291 @@ using CombB = CombG<primeB>;
 
 // ---- inserted library file matrix.cc
 
-#if ! defined(DLOG_LIB)
-  #define DLOG_LIB(...)
-  #define DLOGK_LIB(...)
-  #define DLOGKL_LIB(lab, ...)
-#endif
-
-struct MyExc : exception {};
-
 template <typename T>
 struct Matrix {
-// private:
-  size_t dimI;
-  size_t dimJ;
+
+  struct Part {
+    const Matrix& mat;
+    int i_size;
+    int j_size;
+    int i_0;
+    int j_0;
+    Part(const Matrix& mat_, int i_size_ = -1, int j_size_ = -1, int i_0_ = 0, int j_0_ = 0)
+      : mat(mat_), i_size(i_size_ >= 0 ? i_size_ : mat.dimI),
+        j_size(j_size_ >= 0 ? j_size_ : mat.dimJ), i_0(i_0_), j_0(j_0_) {
+      if (i_0 + i_size > mat.dimI or j_0 + j_size > mat.dimJ) throw domain_error("part");
+    }
+  };
+
+  int dimI;
+  int dimJ;
+  bool rev_rc = false; // if true, the order in mem is column->row
   vector<T> mem;
-  static size_t defDimIJ;
 
-  void init_from_vv(const vector<vector<T>>& vec) {
-    dimI = vec.size();
-    dimJ = vec.at(0).size();
-    if (dimI == dimJ) defDimIJ = dimI;
-    mem.resize(dimI*dimJ);
-    for (size_t i = 0; i < dimI; i++) {
-      assert(vec.at(i).size() == dimJ);
-      for (size_t j = 0; j < dimJ; j++) at(i,j) = vec.at(i).at(j);
-    }
-  }
-
-// public:
-
-  void precond(bool b, string msg) const {
-    if (!b) {
-      cerr << "**FATAL** " << msg << endl;
-      exit(1);
-    }
-  }
-
-  T&       at(size_t i, size_t j)       { return mem.at(i*dimJ + j); }
-  const T& at(size_t i, size_t j) const { return mem.at(i*dimJ + j); }
+  T&       at(int i, int j)       { return rev_rc ? mem[j*dimI + i] : mem[i*dimJ + j]; }
+  const T& at(int i, int j) const { return rev_rc ? mem[j*dimI + i] : mem[i*dimJ + j]; }
   
-  Matrix(size_t m, size_t n) : dimI(m), dimJ(n), mem(dimI*dimJ) {
-    if (dimI == dimJ) defDimIJ = dimI;
+  Matrix() : dimI(1), dimJ(1), mem(1) {}
+  Matrix(int dimI_, int dimJ_) : dimI(dimI_), dimJ(dimJ_), mem(dimI*dimJ) {}
+  Matrix(int dimI_, int dimJ_, const T& t) : dimI(dimI_), dimJ(dimJ_), mem(dimI*dimJ, t) {}
+
+  template<typename Z>
+  void _from_vec(int dimI_, int dimJ_, Z&& vec) {
+    int sz = vec.size();
+    dimI = dimI_ <= 0 ? sz / dimJ_ : dimI_;
+    dimJ = dimJ_ <= 0 ? sz / dimI_ : dimJ_;
+    if (dimI * dimJ != sz) throw domain_error("_from_vec: inconsistent sizes");
+    mem = forward<Z>(vec);
   }
+  Matrix(int dimI_, int dimJ_, const vector<T>& vec) { _from_vec(dimI_, dimJ_, vec); }
+  Matrix(int dimI_, int dimJ_, vector<T>&&      vec) { _from_vec(dimI_, dimJ_, move(vec)); }
 
-  Matrix(const vector<vector<T>>& vec) { init_from_vv(vec); }
-  Matrix(initializer_list<vector<T>> il) {
-    init_from_vv(vector<vector<T>>(il)); 
-  }
-
-  /*  They will be constructed as implicitly-defined constructors???
-  Matrix(const Matrix<T>& mat)
-    : dimI(mat.dimI), dimJ(mat.dimJ), mem(mat.mem) {}
-  Matrix(Matrix<T>&& mat)
-    : dimI(mat.dimI), dimJ(mat.dimJ), mem(move(mat.mem)) {}
-  */
-
-  Matrix(const T& t) {
-    precond(defDimIJ != 0, "defDimIJ not set Matrix(T)");
-    dimI = dimJ = defDimIJ;
-    mem.resize(dimI*dimJ, (T)0);
-    for (size_t i = 0; i < dimI; i++) at(i,i) = t;
-  }
-
-  /*
-  Matrix<T>& operator =(const Matrix<T>& r) {
-    dimI = r.dimI;
-    dimJ = r.dimJ;
-    mem = r.mem;
-    return *this;
-  }
-  */
-
-  static Matrix fromVec(const vector<T>& svec, bool isColVect = true) {
-    vector<vector<T>> vec;
-    vec.push_back(svec);
-    Matrix ret = Matrix(vec);
-    if (isColVect) return ret.transpose();
-    else           return ret;
-  }
-
-  vector<T> rowVec(size_t row) const {
-    vector<T> result(dimJ);
-    for (size_t i = 0; i < dimJ; i++) result[i] = at(row, i);
-    return result;
-  }
-
-  vector<T> colVec(size_t col) const {
-    vector<T> result(dimI);
-    for (size_t i = 0; i < dimI; i++) result[i] = at(i, col);
-    return result;
-  }
-
-  void partial_subst(const Matrix<T>& r, size_t i0, size_t j0,
-		     size_t i1, size_t j1, size_t i2, size_t j2) {
-    for (size_t i = i1; i < i2; i++) {
-      for (size_t j = j1; j < j2; j++) at(i0 + i, j0 + j) = r.at(i, j);
+  Matrix(initializer_list<initializer_list<T>> il) {
+    dimI = il.size();
+    if (dimI == 0) throw domain_error("from_il: zero rows");
+    dimJ = (*il.begin()).size();
+    if (dimJ == 0) throw domain_error("from_il: zero columns");
+    mem.resize(dimI * dimJ);
+    int i = 0;
+    for (auto it : il) {
+      if ((int)it.size() != dimJ) throw domain_error("from_il: not in rectangular shape");
+      int j = 0;
+      for (const T& t : it) mem[i * dimJ + (j++)] = t;
+      i++;
     }
   }
 
-  void partial_subst(const Matrix<T>& r) {
-    return partial_subst(r, 0, 0, 0, 0, r.dimI, r.dimJ);
+  Matrix(const Part& cs) : dimI(cs.i_size), dimJ(cs.j_size), mem(dimI*dimJ) {
+    for (int i = 0; i < dimI; i++) for (int j = 0; j < dimJ; j++) at(i, j) = cs.mat.at(cs.i_0 + i, cs.j_0 + j);
   }
 
-  void fill_row(const auto& vec, size_t i, size_t j0 = 0) {
-    for (size_t j = 0; j < vec.size(); j++) at(i, j0 + j) = vec[j];
+  bool operator ==(const Matrix& r) const {
+    if (dimI != r.dimI or dimJ != r.dimJ) return false;
+    if (rev_rc == r.rev_rc) return mem == r.mem;
+    for (int i = 0; i < dimI; i++) for (int j = 0; j < dimJ; j++) if (at(i, j) != r.at(i, j)) return false;
+    return true;
   }
+  bool operator !=(const Matrix& r) const { return !(*this == r); }
 
-  void fill_col(const auto& vec, size_t j, size_t i0 = 0) {
-    for (size_t i = 0; i < vec.size(); i++) at(i0 + i, j) = vec[i];
-  }
+  T _zero_T() const { return ::zero<T>(at(0, 0)); }
+  T _one_T() const { return ::one<T>(at(0, 0)); }
 
-  Matrix<T>& operator +=(const Matrix<T>& r) {
-    precond(dimI == r.dimI && dimJ == r.dimJ, "dimension mismatch");
-    for (size_t i = 0; i < dimI; i++) {
-      for (size_t j = 0; j < dimJ; j++) at(i,j) += r.at(i,j);
-    }
-    return *this;
-  }
-
-  Matrix<T>& operator -=(const Matrix<T>& r) {
-    precond(dimI == r.dimI && dimJ == r.dimJ, "dimension mismatch");
-    for (size_t i = 0; i < dimI; i++) {
-      for (size_t j = 0; j < dimJ; j++) at(i,j) -= r.at(i,j);
-    }
-    return *this;
-  }
-
-  Matrix<T> operator +(const Matrix<T>& r) const {
-    return Matrix<T>(*this) += r;
-  }
-
-  Matrix<T> operator -(const Matrix<T>& r) const {
-    return Matrix<T>(*this) -= r;
-  }
-
-  // Unlike + and -, we anyway need a new object for multiplication.
-  // Thus, we first define operator *, and then define operator *=
-  // using operator *.
-  Matrix<T> operator *(const Matrix<T>& r) const {
-    precond(dimJ == r.dimI, "dimension mismatch");
-    Matrix<T> result(dimI, r.dimJ);
-    for (size_t i = 0; i < dimI; i++) {
-      for (size_t j = 0; j < r.dimJ; j++) {
-	T s = 0;
-	for (size_t k = 0; k < dimJ; k++)  s += at(i,k) * r.at(k,j);
-	result.at(i,j) = s;
+  template<int sign>
+  Matrix& _add_subt(const Matrix& r) {
+    if (dimI != r.dimI or dimJ != r.dimJ) throw domain_error("_add_subt: dimension mismatch");
+    for (int i = 0; i < dimI; i++) for (int j = 0; j < dimJ; j++) {
+        if constexpr (sign > 0) at(i, j) += r.at(i, j);
+        else                    at(i, j) -= r.at(i, j);
       }
-    }
+    return *this;
+  }
+  Matrix& operator +=(const Matrix& r) { return _add_subt<1>(r); }
+  Matrix& operator -=(const Matrix& r) { return _add_subt<-1>(r); }
+  Matrix operator +(const Matrix& r) const { return Matrix(*this) += r; }
+  Matrix operator -(const Matrix& r) const { return Matrix(*this) -= r; }
+
+  Matrix operator *(const Matrix& r) const {
+    if (dimJ != r.dimI) throw domain_error("mult: dimension mismatch");
+    Matrix result(dimI, r.dimJ, _zero_T());
+    for (int i = 0; i < dimI; i++) for (int j = 0; j < r.dimJ; j++) {
+	for (int k = 0; k < dimJ; k++) result.at(i, j) += at(i, k) * r.at(k, j);
+      }
     return result;
   }
+  Matrix& operator *=(const Matrix& r) { return *this = *this * r; }
 
-  Matrix<T>& operator *=(const Matrix<T>& r) {
-    return *this = *this * r;
+  Matrix& operator *=(const T& t) {
+    for (int p = 0; p < dimI * dimJ; p++) mem[p] *= t;
+    return *this;
+  }
+  friend Matrix operator *(const Matrix& mat, const T& t) { return Matrix(mat) *= t; }
+  friend Matrix operator *(const T& t, const Matrix& mat) { // Mult of T might be non-commutative
+    Matrix ret(mat);
+    for (int p = 0; p < mat.dimI * mat.dimJ; p++) ret.mem[p] = t * ret.mem[p];
+    return ret;
   }
 
-  bool operator ==(const Matrix<T>& r) const {
-    return dimI == r.dimI && dimJ == r.dimJ && mem == r.mem;
-  }
-  bool operator !=(const Matrix<T>& r) const { return !(*this == r); }
-
-  ostream& ostr_out(ostream& os) const {
-    vector<vector<T>> vec(dimI, vector<T>(dimJ));
-    for (size_t i = 0; i < dimI; i++) {
-      for (size_t j = 0; j < dimJ; j++) vec.at(i).at(j) = at(i,j);
+  static Matrix from_vvec(const vector<vector<T>>& vvec) {
+    int dimI_ = vvec.size();
+    if (dimI_ == 0) throw domain_error("from_vvec: zero rows");
+    int dimJ_ = vvec[0].size();
+    if (dimJ_ == 0) throw domain_error("from_vvec: zero columns");
+    Matrix ret(dimI_, dimJ_);
+    for (int i = 0; i < dimI_; i++) {
+      if ((int)vvec[i].size() != dimJ_) throw domain_error("from_vvec: not in rectangular shape");
+      for (int j = 0; j < dimJ_; j++) ret.mem[i*dimJ_ + j] = vvec[i][j];
     }
-    return os << vec;
+    return ret;
   }
 
-  Matrix<T> matpower(ll x) const {
-    precond((defDimIJ = dimI) == dimJ, "only for square matrix");
-    return power(*this, x);
+  Matrix zero() const { return Matrix(dimI, dimJ, _zero_T()); }
+  Matrix unit() const {
+    if (dimI != dimJ) throw domain_error("unit: dimension mismatch");
+    Matrix ret(dimI, dimI, _zero_T());
+    for (int i = 0; i < dimI; i++) ret.at(i, i) = _one_T();
+    return ret;
+  }
+  Matrix one() const { return unit(); }  // for general operation Ring
+
+  Part part(int i_size_ = -1, int j_size_ = -1, int i_0_ = 0, int j_0_ = 0) const {
+    return Part(*this, i_size_, j_size_, i_0_, j_0_);
   }
 
-  Matrix<T> transpose() const {
-    Matrix<T> res(dimJ, dimI);
-    for (size_t i = 0; i < dimI; i++) for (size_t j = 0; j < dimJ; j++) {
-	res.at(j,i) = at(i,j);
+  Matrix rowVec(int i) const { return Matrix(part(1, -1, i, 0)); }
+  Matrix colVec(int j) const { return Matrix(part(-1, 1, 0, j)); }
+
+  void memcopy(const Part& cs, int i_1 = 0, int j_1 = 0) {
+    for (int i = 0; i < cs.i_size; i++) for (int j = 0; j < cs.j_size; j++) {
+        at(i_1 + i, j_1 + j) = cs.mat.at(cs.i_0 + i, cs.j_0 + j);
       }
-    return res;
   }
+
+  Matrix matpower(ll x) const { return power<Matrix>(*this, x); }
+
+  Matrix& self_transpose() {
+    rev_rc = not rev_rc;
+    swap(dimI, dimJ);
+    return *this;
+  }
+  Matrix transpose() { return Matrix(*this).self_transpose(); }
 
   /* aux functions for sweepout */
 
-  void basic_mult(int i, T t) {
-    for (size_t j = 0; j < dimJ; j++) at(i, j) *= t;
+  void basic_mult(int i, T t) {               // multiplies i-th row by t
+    for (int j = 0; j < dimJ; j++) at(i, j) *= t;
+  }
+  void basic_xchg(int i1, int i2) {           // exchanges i1-th and i2-th rows
+    for (int j = 0; j < dimJ; j++) swap(at(i1, j), at(i2, j));
+  }
+  void basic_mult_add(int i1, T t, int i2) {  // adds t times of i1-th row to i2-th row
+    for (int j = 0; j < dimJ; j++) at(i2, j) += t * at(i1, j);
   }
 
-  void basic_xchg(int i1, int i2) {
-    for (size_t j = 0; j < dimJ; j++) swap(at(i1, j), at(i2, j));
-  }
-
-  void basic_mult_add(int i1, T t, int i2) {
-    for (size_t j = 0; j < dimJ; j++) at(i2, j) += at(i1, j) * t;
-  }
-
-  bool is_zero(T t) const { return t == (T)0; }
-
-  pair<size_t, size_t> find_nz(size_t i0, size_t j0) {
+  pair<int, int> _find_nz(int i0, int j0) const {
     for ( ; j0 < dimJ; j0++) {
-      size_t i = i0;
-      for ( ; i < dimI && is_zero(at(i, j0)); i++);
+      int i = i0;
+      for ( ; i < dimI && at(i, j0) == _zero_T(); i++);
       if (i < dimI) return {i, j0};
     }
     return {dimI, dimJ};
   }
 
-  /*
-    Sweepout for the vertical direction.
-    Returns a pair (rank, det)
-      rank: the rank of the matrix
-      det: internally used for determinant calculation
-    WARNNIG: T should be a field.
-   */
-  pair<size_t, T> self_sweepout() {
-    T det = (T)1;
-    size_t j0 = 0;
-    size_t i0 = 0;
-    // DLOGKL("  ", *this);
+  pair<int, T> self_sweepout() {
+    T det = _one_T();
+    int j0 = 0;
+    int i0 = 0;
     for ( ; i0 < dimI; i0++, j0++) {
-      auto [i1, j1] = find_nz(i0, j0);
+      auto [i1, j1] = _find_nz(i0, j0);
       if (i1 == dimI) break;
       j0 = j1;
       if (i1 != i0) {
-	det = -det;
+        det = -det;
 	basic_xchg(i0, i1);
       }
       det *= at(i0, j0);
-      basic_mult(i0, (T)1 / at(i0, j0));
-      for (size_t i = 0; i < dimI; i++) {
+      basic_mult(i0, ::inverse<T>(at(i0, j0)));
+      for (int i = 0; i < dimI; i++) {
 	if (i == i0) continue;
-	basic_mult_add(i0, -at(i, j0), i);
+        basic_mult_add(i0, -at(i, j0), i);
       }
-      // DLOGKL("  ", *this);
     }
-    return {i0, det};
+    return {i0, move(det)};
   }
   
-  pair<size_t, T> sweepout() const { 
-    Matrix<T> res1(*this);
+  pair<int, T> sweepout() const { 
+    Matrix res1(*this);
     return res1.self_sweepout();
   }
 
-  /* WARNING: T should be a field. */
   T determinant() const {
-    precond((defDimIJ = dimI) == dimJ, "only for square matrix");
     auto [rank, det] = sweepout();
-    return (rank == dimI) ? det : (T)0;
+    return (rank == dimI) ? det : _zero_T();
   }
 
-  /* WARNING: T should be a field. */
-  Matrix<T> inverse() const {
-    precond((defDimIJ = dimI) == dimJ, "only for square matrix");
-    Matrix<T> work(dimI, dimI * 2);
-    for (size_t i = 0; i < dimI; i++) {
-      for (size_t j = 0; j < dimI; j++) {
-	work.at(i, j) = at(i, j);
-	work.at(i, j + dimI) = (i == j) ? (T)1 : (T)0;
-      }
-    }
+  optional<Matrix> inv() const {
+    if (dimI != dimJ) throw domain_error("inv: not square");
+    Matrix work(dimI, dimI * 2);
+    work.memcopy(part());
+    work.memcopy(unit().part(), 0, dimI);
     work.self_sweepout();
-    if (!is_zero(work.at(dimI-1, dimI-1) - (T)1)) {
-      cerr << "inverse() for non-regular matrix." << endl;
-      throw MyExc();
-    }
-    Matrix<T> ret(dimI, dimI);
-    for (size_t i = 0; i < dimI; i++) {
-      for (size_t j = 0; j < dimI; j++) ret.at(i, j) = work.at(i, j + dimI);
-    }
+    if (work.at(dimI - 1, dimI - 1) != _one_T()) return {};
+    Matrix ret(dimI, dimI);
+    ret.memcopy(work.part(dimI, dimI, 0, dimI));
     return ret;
   }
 
-  /* WARNING: T should be a field. */
-  // Solves linear euqation "(*this) x = bs".
-  //        dimI and dimJ can be different.
-  // arguments:
-  //    bs ... vector<T>.  bs.size() == dimI should hold.
-  //    ret_kernel ... if false, returned kernel is an empty vector.
-  // return value: optional<pair<vector<T>, vector<vector<T>>>
-  //    If there is no solution, nullopt is returned.
-  //    Otherwise, ret.value() is a pair [sol, kernel].
-  //      sol ... a solution.  sol.size() is dimJ.
-  //      kernel ... A basis of the space { x | (*this) x = 0 }.
-  // Typical usage:
-  //    auto ret = mat.linSolution(bs);
-  //    if (!ret.has_value()) cout << "No solution\n";
-  //    else {
-  //      [sol, _dummy] = ret.value();
-  //      cout << "Solution is: " << sol << "\n";
-  //    }
-  optional<pair<vector<T>, vector<vector<T>>>>
-  linSolution(const vector<T>& bs, bool ret_kernel = true) const {
-    Matrix<T> work(dimI, dimJ + 1);
-    for (size_t i = 0; i < dimI; i++) {
-      for (size_t j = 0; j < dimJ; j++) { work.at(i, j) = at(i, j); }
-      work.at(i, dimJ) = bs[i];
-    }
+  Matrix inverse() const { return inv().value(); } // for general operation of Ring / Semi Ring
+
+  template<bool ret_kernel = false>
+  optional<pair<Matrix, vector<Matrix>>> linSolution(const Matrix& bs) const {
+    if (dimI != bs.dimI or bs.dimJ != 1) throw domain_error("linSolution: invalid bs");
+    Matrix work(dimI, dimJ + 1);
+    work.memcopy(part());
+    work.memcopy(bs.part(), 0, dimJ);
     auto [rank, _] = work.self_sweepout();
-    // DLOGK(rank, work);
-    if (rank > 0) {
-      bool succ = false;
-      for (size_t j = 0; j < dimJ; j++) {
-        if (work.at(rank - 1, j) != (T)0) { succ = true; break; }
+    Matrix sol(dimJ, 1);
+    vector<Matrix> kernel;
+    if (rank == 0) {
+      if constexpr (not ret_kernel) return make_pair(move(sol), move(kernel));
+      for (int j = 0; j < dimJ; j++) {
+        Matrix m(dimJ, 1);
+        m.at(j, 0) = _one_T();
+        kernel.push_back(m);
       }
-      if (!succ) { return nullopt; }
+      return make_pair(move(sol), move(kernel));
     }
-    vector<T> sol(dimJ, (T)0);
-    {
-      size_t j = 0;
-      for (size_t i = 0; i < rank; i++, j++) {
-        for ( ; work.at(i, j) == (T)0; j++);
-        sol[j] = work.at(i, dimJ);
-      }
+    if (not ([&]() -> bool {
+      for (int j = 0; j < dimJ; j++) if (work.at(rank - 1, j) != _zero_T()) return true;
+      return false;
+    })()) return nullopt;
+    for (int i = 0, j = 0; i < rank; i++, j++) {
+      for ( ; work.at(i, j) == _zero_T(); j++);
+      sol.at(j, 0) = work.at(i, dimJ);
     }
-    vector<vector<T>> kernel;
-    if (ret_kernel) {
-      vector<bool> cor(dimJ, false);
-      size_t i = 0;
-      for (size_t j = 0 ; j < dimJ; j++) {
-        if (i == dimI || work.at(i, j) == (T)0) {
-          vector<T> kv(dimJ);
-          kv[j] = (T)1;
-          for (size_t p = 0, q = 0; p < i; p++, q++) {
-            while (!cor[q]) q++;
-            kv[q] = -work.at(p, j);
-          }
-          kernel.push_back(move(kv));
-        }else {
-          cor[j] = true;
-          if (i < dimI) i++;
+    if constexpr (not ret_kernel) return make_pair(move(sol), move(kernel));
+    vector<bool> cor(dimJ, false);
+    int i = 0;
+    for (int j = 0 ; j < dimJ; j++) {
+      if (i == dimI || work.at(i, j) == _zero_T()) {
+        Matrix vec(dimJ, 1);
+        vec.at(j, 0) = _one_T();
+        for (int p = 0, q = 0; p < i; p++, q++) {
+          while (!cor[q]) q++;
+          vec.at(q, 0) = -work.at(p, j);
         }
+        kernel.push_back(move(vec));
+      }else {
+        cor[j] = true;
+        if (i < dimI) i++;
       }
     }
-    return make_optional(make_pair(move(sol), move(kernel)));
+    return make_pair(move(sol), move(kernel));
   }
 
+  friend istream& operator >>(istream& is, Matrix& mat) {
+    is >> mat.dimI >> mat.dimJ;
+    mat.rev_rc = false;
+    mat.mem.resize(mat.dimI * mat.dimJ);
+    for (int i = 0; i < mat.dimI; i++) for (int j = 0; j < mat.dimJ; j++) is >> mat.at(i, j);
+    return is;
+  }
+
+  friend ostream& operator <<(ostream& os, const Matrix& mat) {
+    for (int i = 0; i < mat.dimI; i++) {
+      for (int j = 0; j < mat.dimJ; j++) {
+        if (j > 0) os << ", ";
+        os << mat.at(i, j);
+      }
+      os << "\n";
+    }
+    return os;
+  }
 
 };
-
-template<typename T> size_t Matrix<T>::defDimIJ = 0;
-
-template<typename T>
-ostream& operator<< (ostream& os, const Matrix<T>& mat) {
-  return mat.ostr_out(os);
-}
 
 // ---- end matrix.cc
 
 // @@ !! LIM -- end mark --
-
-template<typename T>
-vector<T> operator+(const vector<T>& v1,
-                    const vector<T>& v2) {
-  if (v1.size() != v2.size()) { throw runtime_error("different size"); }
-  vector<T> result(v1.size());
-  for (size_t i = 0; i < v1.size(); i++) result[i] = v1[i] + v2[i];
-  return result;
-}
-
-template<typename T>
-vector<T> operator-(const vector<T>& v1,
-                    const vector<T>& v2) {
-  if (v1.size() != v2.size()) { throw runtime_error("different size"); }
-  vector<T> result(v1.size());
-  for (size_t i = 0; i < v1.size(); i++) result[i] = v1[i] - v2[i];
-  return result;
-}
-
-template<typename T>
-vector<T> operator*(T c1, const vector<T>& v2) {
-  vector<T> result(v2.size());
-  for (size_t i = 0; i < v2.size(); i++) result[i] = c1 * v2[i];
-  return result;
-}
-
-template<typename T>
-vector<T> operator*(const vector<T>& v1, T c2) {
-  vector<T> result(v1.size());
-  for (size_t i = 0; i < v1.size(); i++) result[i] = v1[i] * c2;
-  return result;
-}
-
-template<typename T>
-vector<T> operator/(const vector<T>& v1, T c2) {
-  vector<T> result(v1.size());
-  for (size_t i = 0; i < v1.size(); i++) result[i] = v1[i] / c2;
-  return result;
-}
-
-template<typename T>
-T dotProd(const vector<T>& v1, const vector<T>& v2) {
-  if (v1.size() != v2.size()) { throw runtime_error("different size"); }
-  T result = (T)0;
-  for (size_t i = 0; i < v1.size(); i++) result += v1[i] * v2[i];
-  return result;
-}
 
 int main() {
   random_device rd;
@@ -906,21 +701,12 @@ int main() {
     return dist(rng);
   };
 
-  if (0) {
-    using Fp = FpG<2>;
-    Matrix<Fp> mat = {{0,0}, {0,1}, {0,0}};
-    vector<Fp> bs = {0,0,0};
-    mat.linSolution(bs, true);
-    return 0;
-  }
-
-
   {
     using Fp = FpA;
 
     cerr << "start" << endl;
     cerr << "equation" << endl;
-    Matrix<ll> mat0 = {{0,1,0},{2,0,-1}};
+    Matrix<ll> mat0({{0,1,0},{2,0,-1}});
     Matrix<ll> mat1 = Matrix<ll>(2,3);
     mat1.at(0,1) = 1;
     mat1.at(1,0) = 2;
@@ -929,10 +715,10 @@ int main() {
     assert(!(mat0 != mat1));
 
     cerr << "addition" << endl;
-    Matrix<ll> mat2 = {{1,0,0}, {0,0,1}};
-    Matrix<ll> mat3 = {{4}, {5}, {6}};
-    Matrix<ll> mat4 = {{5}, {2}};
-    Matrix<ll> mat5 = {{1,1,0},{2,0,0}};
+    Matrix<ll> mat2({{1,0,0}, {0,0,1}});
+    Matrix<ll> mat3({{4}, {5}, {6}});
+    Matrix<ll> mat4({{5}, {2}});
+    Matrix<ll> mat5({{1,1,0},{2,0,0}});
     Matrix<ll> tmp = mat2 + mat0;
     bool tmp2 = tmp == mat5;
     assert(tmp2);
@@ -965,7 +751,7 @@ int main() {
 
     cerr << "at" << endl;
     vector<vector<ll>> vec10 = {{3,2,0}, {5,4,1}};
-    Matrix<ll> mat10(vec10);
+    Matrix<ll> mat10 = Matrix<ll>::from_vvec(vec10);
     Matrix<ll> mat11(2, 3);
     for (int i = 0; i < 2; i++) for (int j = 0; j < 3; j++) {
         mat11.at(i,j) = vec10.at(i).at(j);
@@ -977,6 +763,44 @@ int main() {
     Matrix<ll> mat12 = {{0,2}, {1,0}, {0,-1}};
     assert(mat12a == mat12.transpose());
     assert(mat12a.transpose() == mat12);
+    assert(mat12a == mat12a.transpose().transpose());
+
+    Matrix<ll> mat13({{1,2,-1}, {3,0,-2}});
+    Matrix<ll> mat14({{0,1}, {-1,2}, {3,1}});
+    Matrix<ll> mat14b({{0,-1,3}, {1,2,1}});
+    mat14.self_transpose();
+    assert(mat14 == mat14b);
+    assert(mat13 + mat14 == Matrix<ll>({{1,1,2}, {4,2,-1}}));
+    assert(mat13 - mat14 == Matrix<ll>({{1,3,-4}, {2,-2,-3}}));
+    Matrix<ll> mat15({{1,2,3,4},{5,6,7,8},{9,10,11,12}});
+    assert(mat14 * mat15 == mat14b * mat15);
+    Matrix<FpB> mat16({{2,3,4},{-1,0,-2},{1,-1,3}});
+    Matrix<FpB> mat16a({{2,-1,1},{3,0,-1},{4,-2,3}});
+    mat16a.self_transpose();
+    assert(mat16 == mat16a);
+    assert(mat16a.determinant() != 0);
+    assert(mat16.inverse() == mat16a.inverse());
+  }
+
+  {
+    struct MinMax {
+      ll v;
+      MinMax(ll v_ = LLONG_MAX) : v(v_) {}
+      bool operator ==(const MinMax& o) const { return v == o.v; }
+      bool operator !=(const MinMax& o) const { return v != o.v; }
+      MinMax zero() const { return LLONG_MAX; }
+      MinMax one() const { return LLONG_MIN; }
+      MinMax operator +=(const MinMax& o) { if (v > o.v) v = o.v; return *this;}
+      MinMax operator *=(const MinMax& o) { if (v < o.v) v = o.v; return *this;}
+      MinMax operator +(const MinMax& o) const { return MinMax(v) += o; }
+      MinMax operator *(const MinMax& o) const { return MinMax(v) *= o; }
+    };
+    MinMax x10(10), x2(2), x5(5), x4(4), x6(6);
+    Matrix<MinMax> mat1({{x2, x5}, {x10, x2}});
+    Matrix<MinMax> mat2({{x5, x5}, {x4,  x6}});
+    assert(mat1 + mat2 == Matrix<MinMax>({{x2, x5}, {x4, x2}}));
+    assert(mat1 * x6 == Matrix<MinMax>({{x6, x6}, {x10, x6}}));
+    assert(mat1 * mat2 == Matrix<MinMax>({{x5, x5}, {x4, x6}}));
   }
 
   {
@@ -989,7 +813,7 @@ int main() {
     mat13b.at(3,2) = Fp(-69) / Fp(2);
     auto [rank13, det13] = mat13.sweepout();
     assert(rank13 == 3 && det13 == Fp(2) * Fp(-12) * Fp(26));
-    auto [rank13x, det13x] = mat13.transpose().sweepout();
+    auto [rank13x, det13x] = mat13.self_transpose().sweepout();
     assert(rank13x == rank13 && det13x == det13);
     Matrix<Fp> mat13c = {{2,5,7}, {4,-2,20}, {4, 6, 42}};
     assert(mat13c.determinant() == Fp(2) * Fp(-12) * Fp(26));
@@ -1006,56 +830,88 @@ int main() {
     Matrix<Fp> mat17 = {{1,1,0,0},{0,0,1,0},{0,0,0,0}};
     assert(mat16.sweepout().first == 2);
     Matrix<Fp> matUnit3 = {{1,0,0}, {0,1,0}, {0,0,1}};
-    assert(mat13c * mat13c.inverse() == matUnit3);
+    assert(mat13c * mat13c.inv().value() == matUnit3);
     Matrix<Fp> mat18 = {{2,3,5}, {1,4,-2}, {2+1,3+4,5-2}};
-    try {
-      Matrix<Fp> mat19 = mat18.inverse();
-      assert(0);
-    }catch(const MyExc& e) {
-    }
+    assert(not mat18.inv().has_value());
   }
   
   {
+    using Fp = FpB;
+    Matrix<Fp> mat1a(3, 5);
+    for (int i = 0; i < 3; i++) for (int j = 0; j < 5; j++) mat1a.at(i, j) = 42;
+    assert(mat1a == Matrix<Fp>(3, 5, 42));
+    Matrix<Fp> mat2a(2, 3, {1,2,3,4,5,6});
+    Matrix<Fp> mat2b(0, 3, {1,2,3,4,5,6});
+    Matrix<Fp> mat2c(2, 0, {1,2,3,4,5,6});
+    vector<Fp> vec2d({1,2,3,4,5,6});
+    Matrix<Fp> mat2d(2, 3, vec2d);
+    Matrix<Fp> mat2e({{1,2,3},{4,5,6}});
+    assert(mat2a == mat2b);
+    assert(mat2a == mat2c);
+    assert(mat2a == mat2d);
+    assert(mat2a == mat2e);
+    assert(Matrix<Fp>(mat2a.part(1, 2, 1, 1)) == Matrix<Fp>({{5,6}}));
+    assert(Matrix<Fp>(mat2a.part(2, 2)) == Matrix<Fp>({{1,2},{4,5}}));
+    assert(Matrix<Fp>(mat2a.part()) == mat2a);
+    assert(mat1a != mat2a);
+    vector<vector<Fp>> vvec2f({{1,2,3},{4,5,6}});
+    assert(Matrix<Fp>::from_vvec(vvec2f) == mat2a);
+    Matrix<Fp> mat3a({{1,2,3},{4,5,6},{7,8,9}});
+    assert(mat3a.zero() == Matrix<Fp>({{0,0,0},{0,0,0},{0,0,0}}));
+    assert(mat3a.unit() == Matrix<Fp>({{1,0,0},{0,1,0},{0,0,1}}));
+    assert(mat3a.rowVec(1) == Matrix<Fp>({{4,5,6}}));
+    assert(mat3a.colVec(1) == Matrix<Fp>(0, 1, {2,5,8}));
+    Matrix<Fp> mat3b(mat3a);
+    mat3b.memcopy(mat2a.part(1,2,1,1), 2, 1);
+    assert(mat3b == Matrix<Fp>({{1,2,3},{4,5,6},{7,5,6}}));
+    auto mat3c = mat3a.zero();
+    mat3c.memcopy(mat2a.part(1,2,1,1));
+    assert(mat3c == Matrix<Fp>({{5,6,0},{0,0,0},{0,0,0}}));
+    stringstream ss("2 3 11 12 13 -14 -15 -16 1000");
+    int x;
+    Matrix<int> mat4a;
+    ss >> mat4a >> x;
+    assert(mat4a == Matrix<int>({{11,12,13},{-14,-15,-16}}));
+    assert(x == 1000);
+    stringstream ss2;
+    ss2 << mat4a << "foo\n";
+    assert(ss2.str() == "11, 12, 13\n-14, -15, -16\nfoo\n");
+  }
+
+  {
     using Fp = FpA;
 
-    auto from_vec = [&](const auto& v) {
-      return Matrix<Fp>::fromVec(v, true);
-    };
-
     cerr << "linear equation" << endl;
-    Matrix<Fp> mat1 = {{1,2,3}, {4,5,6}, {3,1,2}};
-    vector<Fp> vec1 = {14,26,11};
-    auto optsol1 = mat1.linSolution(vec1);
+    Matrix<Fp> mat1({{1,2,3}, {4,5,6}, {3,1,2}});
+    Matrix<Fp> vec1({{14,26,11}});
+    vec1.self_transpose();
+    auto optsol1 = mat1.linSolution<true>(vec1);
     assert(optsol1.has_value());
     auto [sol1, kernel1] = optsol1.value();
     assert(kernel1.size() == 0);
-    Matrix<Fp> vec1a = from_vec(sol1);
-    assert(mat1 * from_vec(sol1) == from_vec(vec1));
+    assert(mat1 * sol1 == vec1);
     
-    vector<Fp> vv1 = {2,3,1,1,2,1};
-    vector<Fp> vv2 = {0,0,0,2,0,1};
+    Matrix<Fp> vv1(1, 0, {2,3,1,1,2,1});
+    Matrix<Fp> vv2(1, 0, {0,0,0,2,0,1});
     // vector<Fp> vv3 = {0,0,0,2,1,-1};
     auto vv4 = vv1 + vv2 + Fp(2) * vv1;
     auto vv5 = vv1 + Fp(3) * vv1;
     auto vv6 = Fp(4) * vv1 + Fp(2) * vv5;
-    vector<Fp> vv7 = {1,2,3,4,5,6};
-    Fp t1 = dotProd(vv1, vv7);
-    Fp t4 = dotProd(vv4, vv7);
-    Fp t5 = dotProd(vv5, vv7);
-    Fp t6 = dotProd(vv6, vv7);
-    vector<Fp> vec2({t1, t4, t5, t6});
-    Matrix<Fp> mat2 = {vv1, vv4, vv5, vv6};
-    auto optsol2 = mat2.linSolution(vec2);
+    Matrix<Fp> mat2(4, 6);
+    mat2.memcopy(vv1.part(), 0, 0);
+    mat2.memcopy(vv4.part(), 1, 0);
+    mat2.memcopy(vv5.part(), 2, 0);
+    mat2.memcopy(vv6.part(), 3, 0);
+    Matrix<Fp> vv7(0, 1, {1,2,3,4,5,6});
+    auto vec2 = mat2 * vv7;
+    auto optsol2 = mat2.linSolution<true>(vec2);
     assert(optsol2.has_value());
     auto [sol2, kernel2] = optsol2.value();
-    // DLOGK(mat2); DLOGK(vec2);
     assert(kernel2.size() == 4);
-    assert(mat2 * from_vec(sol2) == from_vec(vec2));
-    Matrix<Fp> mat_zero_4 = from_vec(vector<Fp>({0,0,0,0}));
-    assert(mat2 * from_vec(kernel2[0]) == mat_zero_4);
-    assert(mat2 * from_vec(kernel2[1]) == mat_zero_4);
+    assert(mat2 * sol2 == vec2);
+    for (const auto& m : kernel2) assert(mat2 * m == Matrix<Fp>(4, 1));
 
-    vector<Fp> vec3 = {1,2,3,4};
+    Matrix<Fp> vec3(0, 1, {1,2,3,4});
     auto optsol3 = mat2.linSolution(vec3);
     assert(!optsol3.has_value());
 
@@ -1088,21 +944,21 @@ int main() {
           }
         }
       }
-      vector<Fp> z(n);
+      Matrix<Fp> z(n, 1);
       for (ll p = 0; p < m; p++) {
         z = z + Fp(randrange(-6, 7)) * A.colVec(p);
       }
       auto optsol10 = A.linSolution(z);
       assert(optsol10.has_value());
       auto [sol10, kernel10] = optsol10.value();
-      assert(A * from_vec(sol10) == from_vec(z));
-      auto zero_mat = from_vec(vector<Fp>(n));
+      assert(A * sol10 == z);
+      auto zero_mat = Matrix<Fp>(n, 1);
       for (const auto& kk : kernel10) {
-        assert(A * from_vec(kk) == zero_mat);
+        assert(A * kk == zero_mat);
       }
       if (rank < min(n, m)) {
         Matrix<Fp> B(n, m + 1);
-        B.partial_subst(A);
+        B.memcopy(A.part());
         while (true) {
           for (ll k = 0; k < n; k++) B.at(k, m) = Fp(randrange(-10, 10));
           auto [chk, _] = B.sweepout();
@@ -1123,9 +979,9 @@ int main() {
   {
     using Fp = FpG<2>;
     
-    auto check = [&](const auto& mat, ll m, ll n) -> void {
-      vector<Fp> bs(m); // zero
-      auto optsol = mat.linSolution(bs, true);
+    auto check = [&](const Matrix<Fp>& mat, ll m, ll n) -> void {
+      Matrix<Fp> bs(m, 1);
+      auto optsol = mat.linSolution<true>(bs);
       assert(optsol);
       auto [_, kernel] = *optsol;
       ll sz = kernel.size();

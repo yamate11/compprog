@@ -3,9 +3,19 @@
 typedef long long int ll;
 using namespace std;
 
-// @@ !! LIM(f:<< f:perfmeas sieve)
+// @@ !! LIM(f:<< sieve)
 
 int main() {
+
+  {
+    using RT = vector<vector<ll, int>>;
+    auto s = sieve(97);
+    assert(s[s.size() - 1] == 97);
+    assert(prfac(2) == RT({{2, 1}}));
+    assert(prfac(12) == RT({{2, 2}, {3, 1}}));
+    assert(prfac(97*97, sieve(97)) == RT({{97, 2}}));
+    assert(prfac(1'000'000'007) == RT({{1'000'000'007, 1}}));
+  }
 
   {
     auto p = sieve(1000);
@@ -61,38 +71,6 @@ int main() {
 	assert(p1 == p2 && r1 == r2);
       }
     }
-  }
-  {
-    // performance
-    ll n = 1e6;
-    double t1 = get_time_sec();
-    ll dummy = 0;
-    auto primes = sieve(n);
-    for (ll i = 2*n/3; i < n; i++) {
-      auto pr = prfac(i, primes);
-      dummy += pr.size();
-    }
-    double t2 = get_time_sec();
-    auto divSieve = divisorSieve(n);
-    for (ll i = 2*n/3; i < n; i++) {
-      auto pr = prfacDivSieve(n, divSieve);
-      dummy += pr.size();
-    }
-    double t3 = get_time_sec();
-    cout << t2 - t1 << ", " << t3 - t2 << endl;
-    cout << primes[0] << divSieve[0] << dummy << endl;
-  }
-  {
-    ll n = 1e7;
-    double t1 = get_time_sec();
-    auto primes = sieve(ll(sqrt(n)) + 1);
-    auto pr1 = prfac(n, primes);
-    double t2 = get_time_sec();
-    auto divSieve = divisorSieve(n);
-    auto pr2 = prfacDivSieve(n, divSieve);
-    double t3 = get_time_sec();
-    cout << t2 - t1 << ", " << t3 - t2 << endl;
-    assert(pr1.size() == pr2.size());
   }
 
   cerr << "OK\n";

@@ -17,6 +17,21 @@ int main(/* int argc, char *argv[] */) {
   cin.tie(nullptr);
   cout << setprecision(20);
 
+  auto solve = [&]() -> ll {
+    ll H, W, K; cin >> H >> W >> K;
+    ll sa = 0, sb = 0;
+    vector<ll> A(H); REP(i, H) { cin >> A[i]; sa += A[i]; }
+    vector<ll> B(W); REP(i, W) { cin >> B[i]; sb += B[i]; }
+    ll pa = sa % K, pb = sb % K;
+    if (pa != pb) return -1;
+    ll ta = 0, tb = 0;
+    REP(i, H) ta += ((K - 1) * W - A[i]) % K;
+    REP(i, W) tb += ((K - 1) * H - B[i]) % K;
+    return (K - 1) * H * W - max(ta, tb);
+  };
+  cout << solve() << endl;
+    
+
   return 0;
 }
 

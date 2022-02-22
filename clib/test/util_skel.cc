@@ -3,7 +3,7 @@
 typedef long long int ll;
 using namespace std;
 
-// @@ !! LIM(debug f:<< f:>> f:power f:gcd f:updMaxMin f:intDiv f:mex f:shortVector f:perfmeas f:itrange)
+// @@ !! LIM(debug f:<< f:>> f:gcd f:updMaxMin f:intDiv f:mex f:shortVector f:perfmeas f:itrange)
 
 
 int main() {
@@ -126,22 +126,6 @@ int main() {
     }
   }
 
-
-  assert(power(10LL, 12) == (ll)1e12);
-  // power<Fp> is tested in mod.cc
-  using T01 = vector<int>;
-  int N01 = 5;
-  auto comp = [&](const T01& f, const T01& g) -> T01 {
-    T01 ret(N01);
-    for (int i = 0; i < N01; i++) ret.at(i) = f.at(g.at(i));
-    return ret;
-  };
-  T01 unit01({0,1,2,3,4});
-  T01 vec01({1,2,3,4,0});
-  assert(ah_power(vec01, 0, unit01, comp) == unit01);
-  assert(ah_power(vec01, 1, unit01, comp) == vec01);
-  assert(ah_power(vec01, 2, unit01, comp) == T01({2,3,4,0,1}));
-  assert(ah_power(vec01, 1000000000003LL, unit01, comp) == T01({3,4,0,1,2}));
 
   {
     set<ll> s1({5, 2, 4});

@@ -18,7 +18,7 @@ def main():
         rc = run(cmd, stdout=DEVNULL, stderr=DEVNULL)
         if rc.returncode != 0:
             failed.append(c)
-            diag('NG')
+            diag('*** NG ***')
         else:
             diag('OK')
     if len(failed) == 0:

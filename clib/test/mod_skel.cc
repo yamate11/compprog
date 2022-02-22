@@ -3,7 +3,7 @@
 typedef long long int ll;
 using namespace std;
 
-// @@ !! LIM(mod f:power)
+// @@ !! LIM(mod power)
 
 template<int mod> void testf1(int dyn_mod);
 

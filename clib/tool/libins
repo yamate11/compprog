@@ -110,8 +110,8 @@ def depSort(libs):
             return
         visited.add(lib)
         if lib not in dep:
-            msg = f'Library or Function {lib} not found.  ' + \
-                f'Dependency chain is {onstack}.'
+            msg = f'Library or Function "{lib}" not found.  ' + \
+                f'dep is {dep}.  Dependency chain is {onstack}.'
             raise LibExc(msg)
         onstack.append(lib)
         for item in dep[lib]:

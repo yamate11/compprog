@@ -35,7 +35,7 @@ using namespace std;
 
 //////////////////////////////////////////////////////////////////////
 // See help of libins command for dependency spec syntax.
-// @@ !! BEGIN(f:gcd) ---- mod.cc
+// @@ !! BEGIN(algOp f:gcd) ---- mod.cc
 
 template<int mod=0>
 struct FpG {   // G for General
@@ -92,6 +92,10 @@ struct FpG {   // G for General
     auto [g, u, v] = eGCD(val, getMod());
     return FpG(u);
   }
+
+  FpG zero() const { return (FpG)0; }
+  FpG one() const { return (FpG)1; }
+  FpG inverse() const { return inv(); }
 
   FpG& operator /=(const FpG& t) {
     return (*this) *= t.inv();

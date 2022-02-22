@@ -233,48 +233,6 @@ vector<T> read_vector(istream& is) {
 }
 // @@ !! FUNC END f:>>
 
-/* 
-   Power functions.   Time complexity is O(log b).
-
-   If T supports "operation *=" and "cast from int 1", then
-   you can use power(a, b).
-
-   Otherwise, use ah_power(T a, ll b, T e, Op m).  e is the unit element
-   of T and m : T -> T -> T is the multiplication.  
- */
-// @@ !! FUNC BEGIN f:power
-/* *** WARNING ***  
-      ll x = power(10, 12) 
-   does not work since it is interpreted as 
-      ll x = power<int>((int)10, 12)
-   Use power<ll>(10, 12) or power(10LL, 12).
- */
-template<typename T>
-T power(T a, ll b) {
-  T twoPow = a;
-  T rv(1);
-  while (b > 0) {
-    if (b & 1LL) rv *= twoPow;
-    twoPow *= twoPow;
-    b >>= 1;
-  }
-  return rv;
-}
-
-// ad-hoc power function
-template<typename T, typename Op>
-T ah_power(T a, ll b, const T& unit_t, Op op) {
-  T two_pow = a;
-  T ret = unit_t;
-  while (b > 0) {
-    if (b & 1LL) ret = op(ret, two_pow);
-    two_pow = op(two_pow, two_pow);
-    b >>= 1;
-  }
-  return ret;
-}
-// @@ !! FUNC END f:power
-
 // @@ !! FUNC BEGIN f:gcd
 
 tuple<ll, ll, ll> mut_div(ll a, ll b, ll c, bool eff_c = true) {

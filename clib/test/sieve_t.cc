@@ -3,7 +3,7 @@
 typedef long long int ll;
 using namespace std;
 
-// @@ !! LIM(f:<< f:perfmeas sieve)
+// @@ !! LIM(f:<< sieve)
 
 // ---- inserted function f:<< from util.cc
 template <typename T1, typename T2>
@@ -172,16 +172,50 @@ ostream& operator<< (ostream& os, int8_t x) {
 
 // ---- end f:<<
 
-// ---- inserted function f:perfmeas from util.cc
+// ---- inserted function f:itrange from util.cc
 
-// For performance measurement.
-// Returns seconds from the epoch in double
-double get_time_sec() {
-  using namespace std::chrono;
-  return static_cast<double>(duration_cast<nanoseconds>(steady_clock::now().time_since_epoch()).count())/1000000000;
-}
+struct ItRange {
+  ll st;
+  ll en;
 
-// ---- end f:perfmeas
+  struct Itr {
+    using iterator_category = input_iterator_tag;
+    using value_type = ll;
+    using difference_type = ptrdiff_t;
+    using reference = value_type const&;
+    using pointer = value_type const*;
+
+    ll val;
+
+    bool operator ==(const Itr& o) const { return val == o.val; }
+    bool operator !=(const Itr& o) const { return val != o.val; }
+
+    reference operator *() const { return val; }
+    pointer operator ->() const { return &val; }
+
+    Itr& operator ++() {
+      val++;
+      return *this;
+    }
+    Itr operator ++(int) {
+      Itr const tmp(*this);
+      ++*this;
+      return tmp;
+    }
+
+  };
+
+  ItRange(ll v_start, ll v_end): st(v_start), en(v_end) {}
+  Itr begin() { return Itr({st}); }
+  Itr end() { return Itr({en}); }
+};
+
+#define ALLIR(a, b) ItRange(a, b).begin(), ItRange(a, b).end()
+
+// Imitation to Python range operator....
+
+
+// ---- end f:itrange
 
 // ---- inserted library file sieve.cc
 
@@ -221,31 +255,28 @@ vector<int> divisorSieve(int upto) {
             primes should contain prime numbers at least up to sqrt(n)
  */
 
-const vector<int> dummy_primes;
-
-vector<pair<ll, int>> prfac(ll n, const vector<int>& primes = dummy_primes) {
-  vector<int> tmp_primes;
-  if (primes.size() == 0) {
-    tmp_primes = sieve((int)sqrt((double)n) + 1);
-  }
-  const vector<int>& prms = primes.size() == 0 ? tmp_primes : primes;
-
+vector<pair<ll, int>> _prfac_sub(ll n, const auto& it_beg, const auto& it_end) {
   vector<pair<ll, int>> res;
   ll x = n;
-  for (ll p : prms) {
-    if (x == 1)  break;
-    if (p * p > x)  break;
-    if (x % p != 0)  continue;
-    int c = 1;
-    x /= p;
+  for (auto it = it_beg; it != it_end and *it * *it <= x; it++) {
+    ll p = *it;
+    int r = 0;
     while (x % p == 0) {
-      c += 1;
       x /= p;
+      r++;
     }
-    res.push_back(make_pair(p, c));
+    if (r > 0) res.push_back(make_pair(p, r));
   }
-  if (x != 1)  res.push_back(make_pair(x, 1));
+  if (x > 1) res.push_back(make_pair(x, 1));
   return res;
+}
+
+vector<pair<ll, int>> prfac(ll n) {
+  ItRange itr(2, n + 1);
+  return _prfac_sub(n, itr.begin(), itr.end());
+}
+vector<pair<ll, int>> prfac(ll n, const vector<int>& primes) {
+  return _prfac_sub(n, primes.begin(), primes.end());
 }
 
 vector<pair<int, int>> prfacDivSieve(int n, const vector<int>& divSieve) {
@@ -268,12 +299,6 @@ vector<pair<int, int>> prfacDivSieve(int n, const vector<int>& divSieve) {
 }
 
 /*
-vector<pair<ll, int>> prfac(ll n) {
-  return prfac(n, sieve((int)(sqrt((double)n)) + 1));
-}
-*/
-
-/*
     List of divisors
       - getDivisors(n)
       - getDivisors(n, primes)
@@ -281,39 +306,39 @@ vector<pair<ll, int>> prfac(ll n) {
     Note: the results are NOT sorted
  */
 
-// gdsub ... aux function used in getDivisors()
-vector<ll> gdsub(int i, int n, auto fs) {
-  if (i == n) { return vector<ll>({1}); }
-  auto part = gdsub(i+1, n, fs);
-  ll p  = fs.at(i).first;
-  int r = fs.at(i).second;
+// _gdsub ... aux function used in getDivisors()
+vector<ll> _gdsub(int i, auto fs) {
+  if (i == (int)fs.size()) { return vector<ll>({1}); }
+  auto part = _gdsub(i+1, fs);
+  auto [p, r] = fs[i];
   ll pp = p;    // pp = p^m, for m \in [1, r]
   int partOrigLen = part.size();
   for (int m = 1; m <= r; m++) {
-    for (int j = 0; j < partOrigLen; j++) {
-      part.push_back(pp * part.at(j));
-    }
+    for (int j = 0; j < partOrigLen; j++) part.push_back(pp * part[j]);
     pp *= p;
   }
   return part;
 }
 
-vector<ll> getDivisors(ll n, const vector<int>& primes = dummy_primes) {
-  auto fs = prfac(n, primes);
-  return gdsub(0, fs.size(), fs);
-}
-
-vector<ll> getDivisorsDivSieve(ll n, const vector<int>& divSieve) {
-  auto fs = prfacDivSieve(n, divSieve);
-  return gdsub(0, fs.size(), fs);
-}
-
+vector<ll> getDivisors(ll n) { return _gdsub(0, prfac(n)); }
+vector<ll> getDivisors(ll n, const vector<int>& primes) { return _gdsub(0, prfac(n, primes)); }
+vector<ll> getDivisorsDivSieve(ll n, const vector<int>& divSieve) { return _gdsub(0, prfacDivSieve(n, divSieve)); }
 
 // ---- end sieve.cc
 
 // @@ !! LIM -- end mark --
 
 int main() {
+
+  {
+    using RT = vector<pair<ll, int>>;
+    auto s = sieve(97);
+    assert(s[s.size() - 1] == 97);
+    assert(prfac(2) == RT({{2, 1}}));
+    assert(prfac(12) == RT({{2, 2}, {3, 1}}));
+    assert(prfac(97*97, sieve(97)) == RT({{97, 2}}));
+    assert(prfac(1'000'000'007) == RT({{1'000'000'007, 1}}));
+  }
 
   {
     auto p = sieve(1000);
@@ -369,38 +394,6 @@ int main() {
 	assert(p1 == p2 && r1 == r2);
       }
     }
-  }
-  {
-    // performance
-    ll n = 1e6;
-    double t1 = get_time_sec();
-    ll dummy = 0;
-    auto primes = sieve(n);
-    for (ll i = 2*n/3; i < n; i++) {
-      auto pr = prfac(i, primes);
-      dummy += pr.size();
-    }
-    double t2 = get_time_sec();
-    auto divSieve = divisorSieve(n);
-    for (ll i = 2*n/3; i < n; i++) {
-      auto pr = prfacDivSieve(n, divSieve);
-      dummy += pr.size();
-    }
-    double t3 = get_time_sec();
-    cout << t2 - t1 << ", " << t3 - t2 << endl;
-    cout << primes[0] << divSieve[0] << dummy << endl;
-  }
-  {
-    ll n = 1e7;
-    double t1 = get_time_sec();
-    auto primes = sieve(ll(sqrt(n)) + 1);
-    auto pr1 = prfac(n, primes);
-    double t2 = get_time_sec();
-    auto divSieve = divisorSieve(n);
-    auto pr2 = prfacDivSieve(n, divSieve);
-    double t3 = get_time_sec();
-    cout << t2 - t1 << ", " << t3 - t2 << endl;
-    assert(pr1.size() == pr2.size());
   }
 
   cerr << "OK\n";
