@@ -5,7 +5,28 @@ using namespace std;
 // #include <atcoder/all>
 // using namespace atcoder;
 
-// @@ !! LIM()
+// @@ !! LIM(f:updMaxMin)
+
+// ---- inserted function f:updMaxMin from util.cc
+template<typename T>
+bool updMax(T& tmax, const T& x) {
+  if (x > tmax) { tmax = x; return true;  }
+  else          {           return false; }
+}
+template<typename T>
+bool updMin(T& tmin, const T& x) {
+  if (x < tmin) { tmin = x; return true;  }
+  else          {           return false; }
+}
+// ---- end f:updMaxMin
+
+// @@ !! LIM -- end mark --
+
+#define REP2(i, a, b) for (ll i = (a); i < (b); i++)
+#define REP2R(i, a, b) for (ll i = (a); i >= (b); i--)
+#define REP(i, b) REP2(i, 0, b)
+#define ALL(coll) (coll).begin(), (coll).end()
+#define SIZE(v) ((ll)((v).size()))
 
 int main(/* int argc, char *argv[] */) {
   ios_base::sync_with_stdio(false);
@@ -13,34 +34,20 @@ int main(/* int argc, char *argv[] */) {
   cout << setprecision(20);
 
   ll N, K; cin >> N >> K;
-  vector<ll> A(N);
-  for (ll i = 0; i < N; i++) cin >> A[i];
-  sort(A.begin(), A.end(), greater<ll>());
-  auto tbl = vector(N + 1, vector(40, -1LL));
-  auto func = [&](auto rF, ll i, ll j) -> ll {
-    ll& ret = tbl[i][j];
-    if (ret < 0) {
-      if (i == N) ret = 0;
-      else {
-        ll q = rF(rF, i + 1, j) + 1;
-        if (j > 0) {
-          ll idx = lower_bound(A.begin(), A.end(), A[i] / 2, greater<ll>())
-            - A.begin();
-          ll p = rF(rF, idx, j - 1);
-          ret = min(p, q);
-        }else {
-          ret = q;
-        }
-      }
-    }
-    return ret;
-  };
-  for (ll j = 0; j < 40; j++) {
-    ll t = func(func, 0, j);
-    if (t <= K) {
-      cout << j << " " << t << endl;
-      return 0;
-    }
+  vector<ll> A(N); REP(i, N) cin >> A[i];
+  sort(ALL(A));
+  const ll lim = 64 - __builtin_clzll(A[N-1]);
+  const ll big = 1e15;
+  auto tbl = vector(N + 1, vector(lim + 1, big));
+  tbl[0][0] = 0;
+  REP(i, N) REP(k, lim + 1) {
+    updMin(tbl[i + 1][k], tbl[i][k] + 1);
+    ll j = lower_bound(ALL(A), (A[i] + 2) / 2) - A.begin();
+    if (k + 1 < lim + 1) updMin(tbl[i + 1][k + 1], tbl[j][k]);
+  }
+  REP(k, lim + 1) if (tbl[N][k] <= K) {
+    cout << k << " " << tbl[N][k] << endl;
+    break;
   }
   
   return 0;

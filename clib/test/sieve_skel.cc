@@ -8,7 +8,7 @@ using namespace std;
 int main() {
 
   {
-    using RT = vector<vector<ll, int>>;
+    using RT = vector<pair<ll, int>>;
     auto s = sieve(97);
     assert(s[s.size() - 1] == 97);
     assert(prfac(2) == RT({{2, 1}}));
