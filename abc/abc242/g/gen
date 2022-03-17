@@ -1,18 +1,20 @@
 #!/usr/bin/env python3
 
+import sys
 from random import randrange
 
 def main():
-    n = int(9e4)
-    q = int(9e5)
+    n = int(sys.argv[1])
+    q = int(sys.argv[2])
     print(n)
     lst = [randrange(1, n + 1) for i in range(n)]
     print(' '.join(map(str, lst)))
     print(q)
     for i in range(q):
-        l = randrange(1, n + 1)
-        r = randrange(l, n + 1)
-        print(l, r)
-
+        x = randrange(1, n + 1)
+        y = randrange(1, n + 1)
+        if x > y:
+            x, y = y, x
+        print(x, y)
 
 main()
