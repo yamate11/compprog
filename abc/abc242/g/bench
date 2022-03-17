@@ -1,0 +1,60 @@
+#!/usr/bin/env python3
+
+import sys, os, re, json
+from subprocess import run, PIPE
+
+def getinfo(cp):
+    time = None
+    cnt = None
+    for line in cp.stderr.split('\n'):
+        mo = re.match(r'^allt\s*(.*)', line)
+        if mo:
+            time = float(mo[1])
+        mo = re.match(r'^pchk\s*(.*)', line)
+        if mo:
+            cnt = int(mo[1])
+    return {'time': time, 'cnt': cnt}
+
+def main():
+    # ns = [int(1e5)]
+    # qs = [int(1e4), int(1e5), int(1e6)]
+    # buf_ces = [0.5, 1.41/2, 1.0, 1.41, 2]
+    ns = [int(1e5)]
+    qs = [int(1e4), int(1e5), int(1e6)]
+    # buf_ces = [1.0]
+    # trep = 4
+    # rce = 1.2
+    # rr = 1.0
+    # for t in range(4):
+    #     rr *= rce;
+    #     buf_ces.append(rr)
+    # rr = 1.0
+    # for t in range(4):
+    #     rr /= rce;
+    #     buf_ces.append(rr)
+    # buf_ces.sort()
+    buf_ces = [0.8, 1.0, 1.2, 1.4, 1.6, 2.0, 2.5, 3.0]
+    rep = 3
+    inp = './din_8.txt'
+    for n in ns:
+        for q in qs:
+            for r in range(rep):
+                cp = run(['./gen', str(n), str(q)], encoding='UTF-8', stdout=PIPE)
+                if cp.returncode != 0:
+                    print('run failed.')
+                    sys.exit(1)
+                with open(inp, 'w') as wfp:
+                    print(cp.stdout, file=wfp)
+                with open('/dev/null', 'w') as nullfp:
+                    with open(inp, 'r') as inpfp:
+                        cp = run(['./cans'], encoding='UTF-8', stdin=inpfp, stdout=nullfp, stderr=PIPE)
+                        info = getinfo(cp)
+                        print(f'hilbert,,{n},{q},{info["time"]},{info["cnt"]}')
+                    for bc in buf_ces:
+                        with open(inp, 'r') as inpfp:
+                            cp = run(['./cans2', str(bc)], encoding='UTF-8', stdin=inpfp, stdout=nullfp, stderr=PIPE)
+                            info = getinfo(cp)
+                            print(f'mo,{bc},{n},{q},{info["time"]},{info["cnt"]}')
+    os.unlink(inp)
+
+main()
