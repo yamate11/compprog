@@ -18,18 +18,26 @@ int main(/* int argc, char *argv[] */) {
   cout << setprecision(20);
 
   ll N; cin >> N;
-  vector<ll> A(N);
-  REP(i, N) cin >> A[i];
-  ll vmax = 0;
-  ll gap = 0;
+  vector rn(N, vector<string>(2));
   REP(i, N) {
-    ll j = (i + 1) % N;
-    gap += abs(A[j] - A[i]);
-    vmax = max(vmax, A[i]);
+    cin >> rn[i][0] >> rn[i][1];
   }
-  cout << max(gap / 2, vmax) << endl;
-
-  
+  vector rec(N, vector(2, true));
+  REP(i, N) REP(p, 2) {
+    REP2(j, i + 1, N) REP(q, 2) {
+      if (rn[i][p] == rn[j][q]) {
+        rec[i][p] = false;
+        rec[j][q] = false;
+      }
+    }
+  }
+  REP(i, N) {
+    if ((not rec[i][0]) and (not rec[i][1])) {
+      cout << "No\n";
+      return 0;
+    }
+  }
+  cout << "Yes\n";
 
   return 0;
 }

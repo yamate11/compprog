@@ -17,19 +17,12 @@ int main(/* int argc, char *argv[] */) {
   cin.tie(nullptr);
   cout << setprecision(20);
 
-  ll N; cin >> N;
-  vector<ll> A(N);
-  REP(i, N) cin >> A[i];
-  ll vmax = 0;
-  ll gap = 0;
-  REP(i, N) {
-    ll j = (i + 1) % N;
-    gap += abs(A[j] - A[i]);
-    vmax = max(vmax, A[i]);
-  }
-  cout << max(gap / 2, vmax) << endl;
-
-  
+  string S; cin >> S;
+  string a = "0000";
+  a[1] = S[0];
+  a[2] = S[1];
+  a[3] = S[2];
+  cout << a << endl;
 
   return 0;
 }

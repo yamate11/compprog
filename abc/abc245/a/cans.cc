@@ -17,19 +17,14 @@ int main(/* int argc, char *argv[] */) {
   cin.tie(nullptr);
   cout << setprecision(20);
 
-  ll N; cin >> N;
-  vector<ll> A(N);
-  REP(i, N) cin >> A[i];
-  ll vmax = 0;
-  ll gap = 0;
-  REP(i, N) {
-    ll j = (i + 1) % N;
-    gap += abs(A[j] - A[i]);
-    vmax = max(vmax, A[i]);
-  }
-  cout << max(gap / 2, vmax) << endl;
-
-  
+  auto solve = [&]() -> bool {
+    ll a, b, c, d; cin >> a >> b >> c >> d;
+    if (a < c) return true;
+    if (a > c) return false;
+    if (b <= d) return true;
+    return false;
+  };
+  cout << (solve() ? "Takahashi\n" : "Aoki\n");
 
   return 0;
 }

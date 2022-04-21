@@ -2,8 +2,6 @@
 #include <cassert>
 typedef long long int ll;
 using namespace std;
-// #include <atcoder/all>
-// using namespace atcoder;
 #define REP2(i, a, b) for (ll i = (a); i < (b); i++)
 #define REP2R(i, a, b) for (ll i = (a); i >= (b); i--)
 #define REP(i, b) REP2(i, 0, b)
@@ -17,19 +15,11 @@ int main(/* int argc, char *argv[] */) {
   cin.tie(nullptr);
   cout << setprecision(20);
 
-  ll N; cin >> N;
-  vector<ll> A(N);
-  REP(i, N) cin >> A[i];
-  ll vmax = 0;
-  ll gap = 0;
-  REP(i, N) {
-    ll j = (i + 1) % N;
-    gap += abs(A[j] - A[i]);
-    vmax = max(vmax, A[i]);
-  }
-  cout << max(gap / 2, vmax) << endl;
+  auto solve = [&]() -> void {
+  };
 
-  
+  ll T; cin >> T;
+  for (ll t = 0; t < T; t++) solve();
 
   return 0;
 }

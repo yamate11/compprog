@@ -17,18 +17,15 @@ int main(/* int argc, char *argv[] */) {
   cin.tie(nullptr);
   cout << setprecision(20);
 
-  ll N; cin >> N;
-  vector<ll> A(N);
-  REP(i, N) cin >> A[i];
-  ll vmax = 0;
-  ll gap = 0;
-  REP(i, N) {
-    ll j = (i + 1) % N;
-    gap += abs(A[j] - A[i]);
-    vmax = max(vmax, A[i]);
-  }
-  cout << max(gap / 2, vmax) << endl;
-
+  ll x1, y1, x2, y2, x3, y3; cin >> x1 >> y1 >> x2 >> y2 >> x3 >> y3;
+  ll x, y;
+  if (x1 == x2) x = x3;
+  else if (x2 == x3) x = x1;
+  else if (x1 == x3) x = x2;
+  if (y1 == y2) y = y3;
+  else if (y2 == y3) y = y1;
+  else if (y1 == y3) y = y2;
+  cout << x << " " << y << endl;
   
 
   return 0;
