@@ -10,7 +10,7 @@ using namespace std;
 #define ALL(coll) (coll).begin(), (coll).end()
 #define SIZE(v) ((ll)((v).size()))
 
-// @@ !! LIM(mod power)
+// @@ !! LIM(mod)
 
 // ---- inserted library file algOp.cc
 
@@ -395,49 +395,29 @@ using CombB = CombG<primeB>;
 
 // ---- end mod.cc
 
-// ---- inserted library file power.cc
-
-template<typename T>
-T power(const T& a, ll b) {
-  auto two_pow = a;
-  auto ret = one<T>(a);
-  while (b > 0) {
-    if (b & 1LL) ret *= two_pow;
-    two_pow *= two_pow;
-    b >>= 1;
-  }
-  return ret;
-}
-
-// ---- end power.cc
-
 // @@ !! LIM -- end mark --
 
-using Fp = FpB;
-using Comb = CombB;
+using Fp = FpG<0>;
 
 int main(/* int argc, char *argv[] */) {
   ios_base::sync_with_stdio(false);
   cin.tie(nullptr);
   cout << setprecision(20);
 
-  ll N, A, B, C; cin >> N >> A >> B >> C;
-  Comb cb(N);
+  ll N, P; cin >> N >> P;
+  Fp::setMod(P);
 
-  auto sgn = [&](ll k) -> ll { return k % 2 == 0 ? 1 : -1; };
-  auto func = [&](ll x) {
-    vector<Fp> ret(N + 1);
-    REP(i, x + 1) ret[i] = power<Fp>(2, i);
-    REP2(i, x, N) ret[i + 1] = 2 * ret[i] - cb.comb(i, x);
-    return ret;
-  };
-  auto fa = func(A);
-  auto fb = func(B);
-  auto fc = func(C);
-  Fp ans = fa[N] * fb[N] * fc[N];
-  REP2(k, 1, N + 1) ans += sgn(k) * cb.comb(N, k) * fa[N - k] * fb[N - k] * fc[N - k];
-  cout << ans << endl;
-    
+  auto tbl_init = vector<Fp>(2*N, Fp(0));
+  auto tbl = tbl_init;
+  tbl[1-1] = 26;
+  REP2(i, 1, N) {
+    auto prev = move(tbl);
+    tbl = tbl_init;
+    REP2(s, -N, N) {
+      if (prev[s+N] == Fp(0)) continue;
+      
+    }
+  }
 
   return 0;
 }
