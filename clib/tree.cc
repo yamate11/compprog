@@ -47,7 +47,7 @@ using namespace std;
     Tree tr(N, root);
     for (ll i = 0; i < N-1; i++) {
       ll a, b; cin >> a >> b; a--; b--;
-      tr.add_tree(a, b);
+      tr.add_edge(a, b);
     }
     auto dfs = [&](const auto& recF, ll n) -> T {
       do_something();
