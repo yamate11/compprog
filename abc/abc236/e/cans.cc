@@ -10,7 +10,7 @@ using namespace std;
 #define ALL(coll) (coll).begin(), (coll).end()
 #define SIZE(v) ((ll)((v).size()))
 
-// @@ !! LIM(binsearch f:updMaxMin debug)
+// @@ !! LIM(binsearch f:intDiv debug)
 
 // ---- inserted library file binsearch.cc
 
@@ -55,18 +55,48 @@ ll border_with_hint(ll t, auto pred, auto hint) {
 
 // ---- end binsearch.cc
 
-// ---- inserted function f:updMaxMin from util.cc
-template<typename T>
-bool updMax(T& tmax, const T& x) {
-  if (x > tmax) { tmax = x; return true;  }
-  else          {           return false; }
+// ---- inserted function f:intDiv from util.cc
+// imod, divFloor, divCeil
+
+// imod(x, y) : remainder of x for y
+// for y > 0:
+//   imod(x, y)  = r where x = dy + r, 0 <= r < y
+//   imod(x, -y) = r where x = dy + r, 0 >= r > y
+// Thus, imod( 10,  7) =  3
+//       imod(-10,  7) =  4
+//       imod( 10, -7) = -4
+//       imod(-10, -7) = -3
+ll imod(ll x, ll y) {
+  ll v = x % y;
+  if ((x >= 0) == (y >= 0)) return v;
+  else                      return v == 0 ? 0 : v + y;
 }
-template<typename T>
-bool updMin(T& tmin, const T& x) {
-  if (x < tmin) { tmin = x; return true;  }
-  else          {           return false; }
+
+// Integer Division; regardless pos/neg
+ll divFloor(ll x, ll y) {
+  if (x > 0) {
+    if (y > 0) return x / y;
+    else       return (x - y - 1) / y;
+  }else {
+    if (y > 0) return (x - y + 1) / y;
+    else       return x / y;
+  }
 }
-// ---- end f:updMaxMin
+
+ll divCeil(ll x, ll y) {
+  if (x > 0) {
+    if (y > 0) return (x + y - 1) / y;
+    else       return x / y;
+  }else {
+    if (y > 0) return x / y;
+    else       return (x + y + 1) / y;
+  }
+}
+//   Just a note.  For d \in Z and t \in R,
+//       d < t <=> d < ceil(t),     d <= t <=> d <= floor(t),
+//       d > t <=> d > floor(t),    d >= t <=> d >= ceil(t).
+
+// ---- end f:intDiv
 
 // ---- inserted function f:<< from util.cc
 template <typename T1, typename T2>
@@ -314,38 +344,44 @@ int main(/* int argc, char *argv[] */) {
   cin.tie(nullptr);
   cout << setprecision(20);
 
-  
   ll N; cin >> N;
-  vector<ll> A(N);
-  REP(i, N) cin >> A[i];
-  auto check_mean = [&](double x) {
-    DLOGK(x);
-    vector<double> tbl(N + 1, -1e18);
-    tbl[0] = 0;
+  vector<ll> A(N); REP(i, N) cin >> A[i];
+  
+
+  // mean is m or more.
+  auto check_mean = [&](double m) -> bool {
+    double take = 0, skip = 0;
     REP(i, N) {
-      updMax(tbl[i + 1], tbl[i] + A[i] - x);
-      if (i + 1 < N) updMax(tbl[i + 2], tbl[i] + A[i + 1] - x);
-      DLOGK(i);
-      DLOGK(tbl);
+      double t = take, s = skip;
+      take = max(t, s) + A[i] - m;
+      skip = t;
     }
-    if (tbl[N - 1] >= 0 or tbl[N] >= 0) return true;
-    else return false;
+    return max(take, skip) >= 0;
   };
-  double mean = binsearch_r<double>(check_mean, 0, 1.1e9, 5e-4, true);
+  double mean = binsearch_r<double>(check_mean, 1, 1.1e9, 1e-4, false);
   cout << mean << endl;
 
-  auto check_med = [&](ll x) {
-    vector<ll> tbl(N + 1, -1e9);
-    tbl[0] = 0;
+  // median is m or more.
+  auto check_median = [&](ll m) -> bool {
+    ll tot = 0, eff = 0;
+    ll left = -1;
     REP(i, N) {
-      updMax(tbl[i + 1], tbl[i] + (A[i] >= x ? 1 : -1));
-      if (i + 1 < N) updMax(tbl[i + 2], tbl[i] + (A[i + 1] >= x ? 1 : -1));
+      if (A[i] >= m) {
+        tot++;
+        eff++;
+        left = i;
+      }else if (left < i - 1) {
+        tot++;
+        left = i;
+      }
     }
-    if (tbl[N - 1] > 0 or tbl[N] > 0) return true;
-    else return false;
+    bool b = tot - divCeil(tot, 2) + 1 <= eff;
+    DLOGK(m, tot, eff, b);
+    return b;
   };
-  ll med = binsearch_i<ll>(check_med, 0, 1.1e9);
-  cout << med << endl;
+  ll median = binsearch_i<ll>(check_median, 1, ll(1.1e9));
+  cout << median << endl;
+  
 
   return 0;
 }
