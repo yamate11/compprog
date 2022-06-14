@@ -2,7 +2,7 @@ EXES = UnionFind binsearch bit board cht cmpNaive coordCompr \
        cumsum2d debug dijkstra dinic doubling fix ftwo geometry \
        guessPoly ipoint intervalSet matrix minCostFlow misc mod \
        perm rerror rollingHash scc segTree dynSegTree sieve strSearch \
-       suffixArray tree trie util interactive polynomial
+       suffixArray tree trie util interactive polynomial sortedIndex
 
 CXX = g++-9
 CXXCOMMONFLAGS = -std=gnu++17 -Wall -Wno-format-security -Wshadow -fconcepts -DCMPNAIVE

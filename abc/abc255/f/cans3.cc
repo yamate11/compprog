@@ -260,46 +260,37 @@ int main(/* int argc, char *argv[] */) {
   cin.tie(nullptr);
   cout << setprecision(20);
 
+  using pll = pair<ll, ll>;
+
   ll N; cin >> N;
   vector<ll> P(N); REP(i, N) { cin >> P[i]; P[i]--; }
   vector<ll> I(N); REP(i, N) { cin >> I[i]; I[i]--; }
-  if (P[0] != 0) { cout << -1 << endl; return 0; }
-  vector<ll> revP(N); REP(i, N) revP[P[i]] = i;
-  vector<ll> J(N); REP(i, N) J[i] = revP[I[i]];
-  vector<ll> revJ(N); REP(i, N) revJ[J[i]] = i;
-  DLOGK(J);
-  DLOGK(revJ);
-
-  vector cldL(N, -1), cldR(N, -1);
-  auto dfs = [&](auto rF, ll nd, ll left, ll len) -> void {
-    ll pos = revJ[nd];
-    if (not (left <= pos and pos < left + len)) throw myexc();
-    ll lenL = pos - left;
-    ll lenR = len - lenL - 1;
-    if (lenL > 0) {
-      cldL[nd] = nd + 1;
-      rF(rF, nd + 1, left, lenL);
-    }
-    if (lenR > 0) {
-      ll cnd = nd + lenL + 1;
-      cldR[nd] = cnd;
-      rF(rF, cnd, left + lenL + 1, lenR);
-    }
-  };
+  vector<ll> Irev(N); REP(i, N) { Irev[I[i]] = i; }
+  vector<pll> ans(N, pll(-1, -1));
   try {
+    if (P[0] != 0) throw myexc();
+    auto dfs = [&](auto rF, ll pl, ll il, ll len) -> void {
+      ll nd = P[pl];
+      ll idx = Irev[nd];
+      ll lenL = idx - il;
+      ll lenR = len - lenL - 1;
+      if (not (lenL >= 0 and lenR >= 0)) throw myexc();
+      if (lenL > 0) {
+        rF(rF, pl + 1, il, lenL);
+        ans[nd].first = P[pl + 1];
+      }
+      if (lenR > 0) {
+        rF(rF, pl + lenL + 1, idx + 1, lenR);
+        ans[nd].second = P[pl + lenL + 1];
+      }
+    };
     dfs(dfs, 0, 0, N);
-  }catch(myexc& e) {
+  }catch (myexc& e) {
     cout << -1 << endl;
     return 0;
   }
-  DLOGK(cldL);
-  DLOGK(cldR);
-  vector<ll> ansL(N), ansR(N);
-  REP(i, N) {
-    ansL[P[i]] = cldL[i] < 0 ? 0 : P[cldL[i]] + 1;
-    ansR[P[i]] = cldR[i] < 0 ? 0 : P[cldR[i]] + 1;
-  }
-  REP(i, N) cout << ansL[i] << " " << ansR[i] << "\n";
+  for (auto [l, r] : ans) cout << l + 1 << " " << r + 1 << "\n";
+
 
   return 0;
 }
