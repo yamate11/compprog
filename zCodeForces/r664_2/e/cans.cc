@@ -40,14 +40,7 @@ int main(/* int argc, char *argv[] */) {
     ll cnt = 0;
     for (ll i = 0; i < k; i++) {
       hist[k] = i;
-      bool fail = false;
-      for (ll h = 1; h <= k; h++) {
-	if (prohib[h][hist[h]][k][i]) {
-	  fail = true;
-	  break;
-	}
-      }
-      if (!fail) cnt += rF(rF, k+1);
+      if (not EXISTS(h, 1, k + 1, prohib[h][hist[h]][k][i])) cnt += rF(rF, k + 1);
     }
     return cnt;
   };

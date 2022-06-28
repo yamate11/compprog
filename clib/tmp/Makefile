@@ -9,7 +9,7 @@ else
 endif
 # CXXFLAGS = -O2 $(CXXCOMMONFLAGS) $(BOOSTINCLIB)
 
-all: matrix_t
+all: matrix_t foo
 
 clean:
 	$(RM) cans.o cans cans.exe *~ *.stackdump core
