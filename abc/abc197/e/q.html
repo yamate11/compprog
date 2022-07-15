@@ -33,25 +33,25 @@
 	<meta property="twitter:title" content="E - Traveler" />
 
 	<link href="//fonts.googleapis.com/css?family=Lato:400,700" rel="stylesheet" type="text/css">
-	<link rel="stylesheet" type="text/css" href="//img.atcoder.jp/public/bcfdb7f/css/bootstrap.min.css">
-	<link rel="stylesheet" type="text/css" href="//img.atcoder.jp/public/bcfdb7f/css/base.css">
+	<link rel="stylesheet" type="text/css" href="//img.atcoder.jp/public/ad37944/css/bootstrap.min.css">
+	<link rel="stylesheet" type="text/css" href="//img.atcoder.jp/public/ad37944/css/base.css">
 	<link rel="shortcut icon" type="image/png" href="//img.atcoder.jp/assets/favicon.png">
 	<link rel="apple-touch-icon" href="//img.atcoder.jp/assets/atcoder.png">
-	<script src="//img.atcoder.jp/public/bcfdb7f/js/lib/jquery-1.9.1.min.js"></script>
-	<script src="//img.atcoder.jp/public/bcfdb7f/js/lib/bootstrap.min.js"></script>
-	<script src="//img.atcoder.jp/public/bcfdb7f/js/cdn/js.cookie.min.js"></script>
-	<script src="//img.atcoder.jp/public/bcfdb7f/js/cdn/moment.min.js"></script>
-	<script src="//img.atcoder.jp/public/bcfdb7f/js/cdn/moment_js-ja.js"></script>
+	<script src="//img.atcoder.jp/public/ad37944/js/lib/jquery-1.9.1.min.js"></script>
+	<script src="//img.atcoder.jp/public/ad37944/js/lib/bootstrap.min.js"></script>
+	<script src="//img.atcoder.jp/public/ad37944/js/cdn/js.cookie.min.js"></script>
+	<script src="//img.atcoder.jp/public/ad37944/js/cdn/moment.min.js"></script>
+	<script src="//img.atcoder.jp/public/ad37944/js/cdn/moment_js-ja.js"></script>
 	<script>
 		var LANG = "en";
 		var userScreenName = "yamate11";
-		var csrfToken = "WNpb+1FiHBCFHCz+0OKnf6COSo+4j7xXUqvjlJ+F2ow="
+		var csrfToken = "m7nzaFT1VR9yOxwqxDm55I7uVRoC0ACtCYOLuKe/Zws="
 	</script>
-	<script src="//img.atcoder.jp/public/bcfdb7f/js/utils.js"></script>
+	<script src="//img.atcoder.jp/public/ad37944/js/utils.js"></script>
 	
 	
-		<script src="//img.atcoder.jp/public/bcfdb7f/js/contest.js"></script>
-		<link href="//img.atcoder.jp/public/bcfdb7f/css/contest.css" rel="stylesheet" />
+		<script src="//img.atcoder.jp/public/ad37944/js/contest.js"></script>
+		<link href="//img.atcoder.jp/public/ad37944/css/contest.css" rel="stylesheet" />
 		<script>
 			var contestScreenName = "abc197";
 			var remainingText = "Remaining Time";
@@ -62,34 +62,48 @@
 		<style></style>
 	
 	
-		<script type="text/x-mathjax-config">MathJax.Hub.Config({messageStyle:"none",tex2jax:{skipTags:["script","noscript","style","textarea","code"],inlineMath:[['\\(','\\)']]},delayStartupUntil:"onload"});</script>
-		<script src="//cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+		<link href="//img.atcoder.jp/public/ad37944/css/cdn/select2.min.css" rel="stylesheet" />
+		<link href="//img.atcoder.jp/public/ad37944/css/cdn/select2-bootstrap.min.css" rel="stylesheet" />
+		<script src="//img.atcoder.jp/public/ad37944/js/lib/select2.min.js"></script>
+	
+	
+		<link rel="stylesheet" href="//img.atcoder.jp/public/ad37944/css/cdn/codemirror.min.css">
+		<script src="//img.atcoder.jp/public/ad37944/js/cdn/codemirror.min.js"></script>
+		<script src="//img.atcoder.jp/public/ad37944/js/codeMirror/merged.js"></script>
+	
+	
+		<script src="//img.atcoder.jp/public/ad37944/js/cdn/run_prettify.js"></script>
+	
+	
+		<link rel="stylesheet" href="//img.atcoder.jp/public/ad37944/css/cdn/katex.min.css">
+		<script defer src="//img.atcoder.jp/public/ad37944/js/cdn/katex.min.js"></script>
+		<script defer src="//img.atcoder.jp/public/ad37944/js/cdn/auto-render.min.js"></script>
 		<script>$(function(){$('var').each(function(){var html=$(this).html().replace(/<sub>/g,'_{').replace(/<\/sub>/g,'}');$(this).html('\\('+html+'\\)');});});</script>
-	
-	
-		<link href="//img.atcoder.jp/public/bcfdb7f/css/cdn/select2.min.css" rel="stylesheet" />
-		<link href="//img.atcoder.jp/public/bcfdb7f/css/cdn/select2-bootstrap.min.css" rel="stylesheet" />
-		<script src="//img.atcoder.jp/public/bcfdb7f/js/lib/select2.min.js"></script>
-	
-	
-		<link rel="stylesheet" href="//img.atcoder.jp/public/bcfdb7f/css/cdn/codemirror.min.css">
-		<script src="//img.atcoder.jp/public/bcfdb7f/js/cdn/codemirror.min.js"></script>
-		<script src="//img.atcoder.jp/public/bcfdb7f/js/codeMirror/merged.js"></script>
-	
-	
-		<script src="//img.atcoder.jp/public/bcfdb7f/js/cdn/run_prettify.js"></script>
-	
-	
-	
-	
+		<script>
+			var katexOptions = {
+				delimiters: [
+					{left: "$$", right: "$$", display: true},
+					
+					{left: "\\(", right: "\\)", display: false},
+					{left: "\\[", right: "\\]", display: true}
+				],
+      	ignoredTags: ["script", "noscript", "style", "textarea", "code", "option"],
+				ignoredClasses: ["prettyprint", "source-code-for-copy"],
+				throwOnError: false
+			};
+			document.addEventListener("DOMContentLoaded", function() { renderMathInElement(document.body, katexOptions);});
+		</script>
 	
 	
 	
 	
 	
 	
-	<script src="//img.atcoder.jp/public/bcfdb7f/js/base.js"></script>
-	<script src="//img.atcoder.jp/public/bcfdb7f/js/ga.js"></script>
+	
+	
+	
+	<script src="//img.atcoder.jp/public/ad37944/js/base.js"></script>
+	<script src="//img.atcoder.jp/public/ad37944/js/ga.js"></script>
 </head>
 
 <body>
@@ -190,7 +204,7 @@
 	</nav>
 
 	<form method="POST" name="form_logout" action="/logout?continue=https%3A%2F%2Fatcoder.jp%2Fcontests%2Fabc197%2Ftasks%2Fabc197_e">
-		<input type="hidden" name="csrf_token" value="WNpb&#43;1FiHBCFHCz&#43;0OKnf6COSo&#43;4j7xXUqvjlJ&#43;F2ow=" />
+		<input type="hidden" name="csrf_token" value="m7nzaFT1VR9yOxwqxDm55I7uVRoC0ACtCYOLuKe/Zws=" />
 	</form>
 	<div id="main-container" class="container"
 		 	style="padding-top:50px;">
@@ -258,6 +272,8 @@
 		
 		
 			
+			
+				<li><a href="https://codeforces.com/blog/entry/89032" target="_blank" rel="noopener"><span class="glyphicon glyphicon-comment" aria-hidden="true"></span> Discuss</a></li>
 			
 		
 
@@ -702,7 +718,7 @@ Find the minimum time needed to start at the coordinate <var>0</var>, collect al
 	<input id="input-open-file" type="file" style="display:none;">
 </div>
 
-			<input type="hidden" name="csrf_token" value="WNpb&#43;1FiHBCFHCz&#43;0OKnf6COSo&#43;4j7xXUqvjlJ&#43;F2ow=" />
+			<input type="hidden" name="csrf_token" value="m7nzaFT1VR9yOxwqxDm55I7uVRoC0ACtCYOLuKe/Zws=" />
 			<div class="form-group">
 				<label class="control-label col-sm-2" for="submit"></label>
 				<div class="col-sm-5">

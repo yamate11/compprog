@@ -2,33 +2,22 @@
 #include <cassert>
 typedef long long int ll;
 using namespace std;
+// #include <atcoder/all>
+// using namespace atcoder;
+#define REP2(i, a, b) for (ll i = (a); i < (b); i++)
+#define REP2R(i, a, b) for (ll i = (a); i >= (b); i--)
+#define REP(i, b) REP2(i, 0, b)
+#define ALL(coll) (coll).begin(), (coll).end()
+#define SIZE(v) ((ll)((v).size()))
 
-int main(/* int argc, char *argv[] */) {
-  ios_base::sync_with_stdio(false);
-  cin.tie(nullptr);
-  cout << setprecision(20);
-
-  string s = bitset<64>(1040).to_string();
-  cout << s << endl;
-    
-  cout << "hex, 100" << hex << 100 << endl;
-  cout << "oct, 100" << oct << 100 << endl;
-  cout << dec;
-
-  ll x1 = 1e9;
-  ll x2 = 1e9 + 1;
-  ll x3 = 1e10;
-  ll x4 = 1e10 + 1;
-  ll x5 = 1e18;
-  ll x6 = 1e18 + 1;
-  ll x7 = ll(1e18) + 1;
-
-  cout << x1 << endl;
-  cout << x2 << endl;
-  cout << x3 << endl;
-  cout << x4 << endl;
-  cout << x5 << endl;
-  cout << x6 << endl;
-  cout << x7 << endl;
-
+int main() {
+  ll t = 9.223372036854775e18;
+  ll lim = 1e6;
+  vector<ll> v(lim);
+  for (ll i = 0; i < lim; i++) {
+    v[i] = (ll)((long double)t + (long double)i);
+  }
+  for (ll i = 0; i < lim - 1; i++) {
+    if (v[i] != v[i + 1]) cout << (i + 1) << " " << v[i + 1] << "\n";
+  }
 }

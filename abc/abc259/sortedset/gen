@@ -1,0 +1,13 @@
+#!/usr/bin/env python3
+
+from random import randrange
+
+def main():
+    n = 5*10**5
+    # n = 100
+    lim = 10**5
+    print(n)
+    for _ in range(n):
+        print(randrange(1, 3), randrange(1, lim))
+
+main()

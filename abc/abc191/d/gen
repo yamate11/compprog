@@ -17,11 +17,30 @@ def generate_seq():
 # or E.g.,
 
 def generate_random():
+
+    # This is the function you should edit.
+    # You can use prcase() to print the value to the case
+    def onecase():
+        lim = 100
+        mag = 10000
+        x = randrange(-(lim * mag), lim*mag)
+        y = randrange(-(lim * mag), lim*mag)
+        r = randrange(lim*mag)
+        prcase(x / mag, y / mag, r / mag)
+
+    # do not edit
+    def prcase(*args):
+        nonlocal case
+        for i, a in enumerate(args):
+            if i > 0:
+                case += ' '
+            case += str(a)
+        case += '\n'
+
+    # do not edit
     while True:
-        x = randrange(-5, 5)
-        y = randrange(-5, 5)
-        r = randrange(1, 5)
-        case = f'{x} {y} {r}\n'
+        case = ''
+        onecase()
         yield case
 
 # generate = generate_seq

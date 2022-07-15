@@ -530,6 +530,8 @@ struct ItRange {
 
   };
 
+  using iterator = Itr;
+
   ItRange(ll v_start, ll v_end): st(v_start), en(v_end) {}
   Itr begin() { return Itr({st}); }
   Itr end() { return Itr({en}); }

@@ -4,10 +4,15 @@ typedef long long int ll;
 using namespace std;
 // #include <atcoder/all>
 // using namespace atcoder;
+#define REP2(i, a, b) for (ll i = (a); i < (b); i++)
+#define REP2R(i, a, b) for (ll i = (a); i >= (b); i--)
+#define REP(i, b) REP2(i, 0, b)
+#define ALL(coll) (coll).begin(), (coll).end()
+#define SIZE(v) ((ll)((v).size()))
 
-// @@ !! LIM(f:intDiv debug binsearch)
-// --> f:intDiv f:<< debug binsearch
-// ---- inserted function intDiv from util.cc
+// @@ !! LIM(f:intDiv debug cmpNaive binsearch)
+
+// ---- inserted function f:intDiv from util.cc
 // imod, divFloor, divCeil
 
 // imod(x, y) : remainder of x for y
@@ -44,9 +49,13 @@ ll divCeil(ll x, ll y) {
     else       return (x + y + 1) / y;
   }
 }
+//   Just a note.  For d \in Z and t \in R,
+//       d < t <=> d < ceil(t),     d <= t <=> d <= floor(t),
+//       d > t <=> d > floor(t),    d >= t <=> d >= ceil(t).
 
-// ---- end intDiv
-// ---- inserted function << from util.cc
+// ---- end f:intDiv
+
+// ---- inserted function f:<< from util.cc
 template <typename T1, typename T2>
 ostream& operator<< (ostream& os, const pair<T1,T2>& p) {
   os << "(" << p.first << ", " << p.second << ")";
@@ -211,7 +220,8 @@ ostream& operator<< (ostream& os, int8_t x) {
   return os;
 }
 
-// ---- end <<
+// ---- end f:<<
+
 // ---- inserted library file debug.cc
 template <class... Args>
 string dbgFormat(const char* fmt, Args... args) {
@@ -246,6 +256,7 @@ void dbgLog(bool with_nl, Head&& head, Tail&&... tail)
   #define DCALL(func, ...)
 #endif
 
+/*
 #if DEBUG_LIB
   #define DLOG_LIB(...)        dbgLog(true, __VA_ARGS__)
   #define DLOGNNL_LIB(...)     dbgLog(false, __VA_ARGS__)
@@ -256,6 +267,7 @@ void dbgLog(bool with_nl, Head&& head, Tail&&... tail)
   #define DFMT_LIB(...)
   #define DCALL_LIB(func, ...)
 #endif
+*/
 
 #define DUP1(E1)       #E1 "=", E1
 #define DUP2(E1,E2)    DUP1(E1), DUP1(E2)
@@ -265,60 +277,210 @@ void dbgLog(bool with_nl, Head&& head, Tail&&... tail)
 #define DUP6(E1,...)   DUP1(E1), DUP5(__VA_ARGS__)
 #define DUP7(E1,...)   DUP1(E1), DUP6(__VA_ARGS__)
 #define DUP8(E1,...)   DUP1(E1), DUP7(__VA_ARGS__)
-#define GET_MACRO(_1,_2,_3,_4,_5,_6,_7,_8,NAME,...) NAME
-#define DUP(...)          GET_MACRO(__VA_ARGS__, DUP8, DUP7, DUP6, DUP5, DUP4, DUP3, DUP2, DUP1)(__VA_ARGS__)
+#define DUP9(E1,...)   DUP1(E1), DUP8(__VA_ARGS__)
+#define DUP10(E1,...)   DUP1(E1), DUP9(__VA_ARGS__)
+#define DUP11(E1,...)   DUP1(E1), DUP10(__VA_ARGS__)
+#define DUP12(E1,...)   DUP1(E1), DUP11(__VA_ARGS__)
+#define GET_MACRO(_1,_2,_3,_4,_5,_6,_7,_8,_9,_10,_11,_12,NAME,...) NAME
+#define DUP(...)          GET_MACRO(__VA_ARGS__, DUP12, DUP11, DUP10, DUP9, DUP8, DUP7, DUP6, DUP5, DUP4, DUP3, DUP2, DUP1)(__VA_ARGS__)
 #define DLOGK(...)        DLOG(DUP(__VA_ARGS__))
 #define DLOGKL(lab, ...)  DLOG(lab, DUP(__VA_ARGS__))
 
+#if DEBUG_LIB
+  #define DLOG_LIB   DLOG
+  #define DLOGK_LIB  DLOGK
+  #define DLOGKL_LIB DLOGKL
+#endif
+
 // ---- end debug.cc
+
+// ---- inserted library file cmpNaive.cc
+
+const string end_mark("^__=end=__^");
+
+int naive(istream& cin, ostream& cout);
+int body(istream& cin, ostream& cout);
+
+void cmpNaive() {
+  while (true) {
+    string s;
+    getline(cin, s);
+    bool run_body;
+    if (s.at(0) == 'Q') {
+      return;
+    }else if (s.at(0) == 'B') {
+      run_body = true;
+    }else if (s.at(0) == 'N') {
+      run_body = false;
+    }else {
+      cerr << "Unknown body/naive specifier.\n";
+      exit(1);
+    }
+    string input_s;
+    while (true) {
+      getline(cin, s);
+      if (s == end_mark) break;
+      input_s += s;
+      input_s += "\n";
+    }
+    stringstream ss_in(move(input_s));
+    stringstream ss_out;
+    if (run_body) {
+      body(ss_in, ss_out);
+    }else {
+      naive(ss_in, ss_out);
+    }
+    cout << ss_out.str() << end_mark << endl;
+  }
+}
+
+int main(int argc, char *argv[]) {
+  ios_base::sync_with_stdio(false);
+  cin.tie(nullptr);
+  cout << setprecision(20);
+
+#if CMPNAIVE
+  if (argc == 2) {
+    if (strcmp(argv[1], "cmpNaive") == 0) {
+      cmpNaive();
+    }else if (strcmp(argv[1], "naive") == 0) {
+      naive(cin, cout);
+    }else if (strcmp(argv[1], "skip") == 0) {
+      exit(0);
+    }else {
+      cerr << "Unknown argument.\n";
+      exit(1);
+    }
+  }else {
+#endif
+    body(cin, cout);
+#if CMPNAIVE
+  }
+#endif
+  return 0;
+}
+
+/*
+int naive(istream& cin, ostream& cout) {
+  return 0;
+}
+int body(istream& cin, ostream& cout) {
+  return 0;
+}
+*/
+
+// ---- end cmpNaive.cc
+
 // ---- inserted library file binsearch.cc
 
 template<typename T>
-T binsearch(auto check, T yes, T no, T err = (T)1) {
+T binsearch_i(auto check, T yes, T no, T err = (T)1) {
   while (abs(yes - no) > err) {
-    T mid = (yes + no) / (T)2;
+    T mid = (yes + no) / 2;
     if (check(mid)) yes = mid;
     else            no  = mid;
   }
   return yes;
 }
 
+template<typename T>
+T binsearch_r(auto check, T yes, T no, T err, bool rel = true) {
+  while (abs(yes - no) > err &&
+         (!rel || abs(yes - no) > abs(yes) * err)) {
+    T mid = (yes + no) / 2.0;
+    if (check(mid)) yes = mid;
+    else            no  = mid;
+  }
+  return yes;
+}
+
+ll border_with_hint(ll t, auto pred, auto hint) {
+  double y = hint(t);
+  double d = floor(y);
+  double e = ceil(y);
+  bool rd = pred(d, t);
+  bool re = pred(e, t);
+  if (rd && !re) return d;
+  if (!rd && re) return e;
+  for (ll i = 1; true; i++) {
+    bool rd_i = pred(d - i, t);
+    if (rd_i && !rd) return d - i;
+    if (!rd_i && rd) return d - (i - 1);
+    bool re_i = pred(e + i, t);
+    if (re_i && !re) return e + i;
+    if (!re_i && re) return e + (i - 1);
+  }
+}
+
 // ---- end binsearch.cc
-// @@ !! LIM  -- end mark --
 
-int main(/* int argc, char *argv[] */) {
-  ios_base::sync_with_stdio(false);
-  cin.tie(nullptr);
-  cout << setprecision(20);
+// @@ !! LIM -- end mark --
 
-  const ll scale = 10000;
+using pll = pair<ll, ll>;
 
+const ll mag = 10000;
+
+int naive(istream& cin, ostream& cout) {
   double X, Y, R; cin >> X >> Y >> R;
-  ll x0 = ll(floor(scale * X + 0.5));
-  ll y0 = ll(floor(scale * Y + 0.5));
-  ll r0 = ll(floor(scale * R + 0.5));
+
   ll ans = 0;
-  for (ll x = -200000; x <= 200000; x++) {
-    if (abs(scale * x - x0) > r0) continue;
-    ll rr = r0 * r0;
-    ll xx = (scale * x - x0) * (scale * x - x0);
-    ll ht;
-    if (0) {
-      ll htc = sqrt(rr - xx);
-      ht = max(htc - 100LL, 0LL);
-      for (; (ht + 1) * (ht + 1) + xx <= rr; ht++);
-    }else {
-      auto check = [&](ll h) -> bool {
-        return h * h + xx <= rr;
-      };
-      ht = binsearch<ll>(check, 0LL, r0 + 1);
+  for (ll x = llround(floor(X - R)); x <= llround(ceil(X + R)); x++) {
+    for (ll y = llround(floor(Y - R)); y <= llround(ceil(Y + R)); y++) {
+      ll dx = llround((x - X) * mag);
+      ll dy = llround((y - Y) * mag);
+      ll mr = llround(R * mag);
+      if (dx * dx + dy * dy <= mr * mr) ans++;
     }
-    ll y1 = divFloor(y0 + ht, scale);
-    ll y2 = divCeil(y0 - ht, scale);
-    DLOGK(x, y1, y2);
-    ans += y1 - y2 + 1;
   }
   cout << ans << endl;
+
+  return 0;
+}
+
+
+pll g(ll x1, ll y1, ll r1) {
+  auto check2 = [&](ll dd) -> bool { return 2 * dd * dd <= r1 * r1; };
+  ll dd = binsearch_i<ll>(check2, 0, r1 + 1);
+  ll low = divCeil(x1 - dd, mag);
+  ll hi  = divFloor(x1 + dd, mag);
+  DLOGKL("** g **", x1, y1, r1, low, hi);
+  ll a = 0, c = 0;
+  for (ll x = low; x <= hi; x++) {
+    auto check = [&](ll d) -> bool { return (x * mag - x1) * (x * mag - x1) + d * d <= r1 * r1; };
+    ll d = binsearch_i<ll>(check, 0, r1 + 1);
+    // ll d = llround(floor(sqrt((long double)(r1 * r1 - (x * mag - x1) * (x * mag - x1)))));
+    ll yc = y1 + d;
+    ll yl = y1 + abs(x * mag - x1);
+    ll Yc = divFloor(yc, mag);
+    ll Yl = divFloor(yl, mag);
+    a += Yc - Yl;
+    if (yl % mag == 0) c++;
+    DLOGK(x, a, c);
+  }
+  return pll(a, c);
+}
+
+pll f(ll x1, ll y1, ll r1) {
+  auto [a1, c1] = g(x1, y1, r1);
+  auto [a2, c2] = g(x1, -y1, r1);
+  ll a = a1 + a2;
+  ll c = c1 + c2;
+  if (x1 % mag == 0 and y1 % mag == 0) c--;
+  return pll(a, c);
+}
+
+
+int body(istream& cin, ostream& cout) {
+
+  double X, Y, R; cin >> X >> Y >> R;
+  ll x = llround(X * mag);
+  ll y = llround(Y * mag);
+  ll r = llround(R * mag);
+  auto [a1, c1] = f(x, y, r);
+  auto [a2, c2] = f(y, x, r);
+  DLOGK(a1, c1, a2, c2);
+  assert(c1 == c2);
+  cout << a1 + a2 + c1 << endl;
 
   return 0;
 }
