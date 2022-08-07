@@ -268,6 +268,10 @@ template<typename T>
 class SortedSet {
   constexpr static ll BUCKET_RATIO = 50;
   constexpr static ll REBUILD_RATIO = 170;
+  /*
+  constexpr static ll BUCKET_RATIO = 5;
+  constexpr static ll REBUILD_RATIO = 17;
+  */
 
   struct Itr {
     using iterator_category = input_iterator_tag;
@@ -431,7 +435,7 @@ int main(int argc, char *argv[]) {
   cin.tie(nullptr);
   cout << setprecision(20);
 
-  {
+  if (0) {
     set<int> ss;
     SortedSet<int> myss;
     ll N; cin >> N;

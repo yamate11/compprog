@@ -1,0 +1,78 @@
+#!/usr/bin/env python3
+
+# Game Solver
+#   This code segment judges which player wins at a given position in a game
+#   like NIM.   It is assumed that a player loses when he cannot move.
+#
+#   You should define functions moves and mkkey:
+#
+#     moves(v) returns the list of all positions movable from position v
+#     mkkey(v) returns a hashable value for v.  If v is already hashable,
+#              the identity function is OK.
+#
+#   Then, function judge(v) returns True if the player at v LOSES,
+#   and returns False if the player at v wins.
+
+# --- You should modify code from HERE(, and the main function).
+
+import sys
+
+def debug(*msg):
+    print(*msg, file=sys.stderr)
+
+# (The following code is for NIM.)
+
+N = 2
+
+#     moves(v) returns the list of all positions movable from position v
+def moves(v):
+    ret = []
+    t = 0
+    for i in range(len(v)):
+        t ^= v[i]
+    if t == 0:
+        return []
+    for i in range(len(v)):
+        ret.append(v[:i] + v[i + 1:])
+    debug(v, ret)
+    return ret
+
+#     mkkey(v) returns a hashable value for v.  If v is already hashable,
+#              the identity function is OK.
+def mkkey(v):
+    return (tuple(v))
+
+# --- You should modify code to HERE.
+
+
+# You need not edit function judge().
+memo = {}
+def judge(v):
+    k = mkkey(v)
+    if k not in memo:
+        result = True
+        for w in moves(v):
+            if judge(w):
+                result = False
+                break
+        memo[k] = result
+    return memo[k]
+
+def main():
+    # Prints the winning places for the second player.
+    m = 6
+    t = [1] * N
+    poss = []
+    v = []
+    def dfs(i, v, s):
+        if i == N:
+            poss.append(v)
+            return
+        for t in range(s, m + 1):
+            dfs(i + 1, v + [t], t)
+    dfs(0, v, 1)
+    for v in poss:
+        if judge(v):
+            print(v)
+
+main()

@@ -53,10 +53,11 @@ using namespace std;
   for (BrdIdx p : dirs) { ... brd.at(i + p) ... }
 
   // Frequently used vector<BrdIdx> are defined:
-    BrdIdx::nbr4   // the same as dirs above
-    BrdIdx::nbr5
-    BrdIdx::nbr8
-    BrdIdx::nbr9
+    BrdIdx::nbr4   //       DOWN,     RIGHT,     UP,     LEFT
+    BrdIdx::nbr4D  //             DR,        UR,     UL,       DL
+    BrdIdx::nbr5   // SELF, DOWN,     RIGHT,     UP,     LEFT
+    BrdIdx::nbr8   //       DOWN, DR, RIGHT, UR, UP, UL, LEFT, DL
+    BrdIdx::nbr9   // SELF, DOWN, DR, RIGHT, UR, UP, UL, LEFT, DL
 
   // bi.rotateQ() returns a BrdIdx obtained by rotating bi 
   // by pi/2 counterclockwise.  Thus, BrdIdx::nbr4 has the same elements as
@@ -100,10 +101,11 @@ struct BrdIdx {
 };
 
 vector<BrdIdx>
-  BrdIdx::nbr4({      {1,0},      {0,1},       {-1,0},        {0,-1}       }),
-  BrdIdx::nbr5({{0,0},{1,0},      {0,1},       {-1,0},        {0,-1}       }),
-  BrdIdx::nbr8({      {1,0},{1,1},{0,1},{-1,1},{-1,0},{-1,-1},{0,-1},{1,-1}}),
-  BrdIdx::nbr9({{0,0},{1,0},{1,1},{0,1},{-1,1},{-1,0},{-1,-1},{0,-1},{1,-1}});
+  BrdIdx::nbr4 ({      {1,0},      {0,1},       {-1,0},        {0,-1}       }),
+  BrdIdx::nbr4D({            {1,1},      {-1,1},       {-1,-1},       {1,-1}}),
+  BrdIdx::nbr5 ({{0,0},{1,0},      {0,1},       {-1,0},        {0,-1}       }),
+  BrdIdx::nbr8 ({      {1,0},{1,1},{0,1},{-1,1},{-1,0},{-1,-1},{0,-1},{1,-1}}),
+  BrdIdx::nbr9 ({{0,0},{1,0},{1,1},{0,1},{-1,1},{-1,0},{-1,-1},{0,-1},{1,-1}});
 
 BrdIdx operator *(int k, const BrdIdx& o) { return o * k; }
 ostream& operator <<(ostream& os, const BrdIdx& i) {

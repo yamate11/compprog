@@ -66,6 +66,9 @@ Specify the types separated by commas.  If none is needed, specify "void",
 >>>> ''', 'll x')    
     if fin_ans == 'void':
         fin_ans = ''
+    mult_q = ask('''Multiple-question style?  Select Y or N.
+>>>> ''', 'N')
+
     print('''File cans.cc has been created.  Open and read the description
 in the beginning of the file.''')
 
@@ -73,6 +76,11 @@ in the beginning of the file.''')
 #include <cassert>
 typedef long long int ll;
 using namespace std;
+#define REP2(i, a, b) for (ll i = (a); i < (b); i++)
+#define REP2R(i, a, b) for (ll i = (a); i >= (b); i--)
+#define REP(i, b) REP2(i, 0, b)
+#define ALL(coll) (coll).begin(), (coll).end()
+#define SIZE(v) ((ll)((v).size()))
 
 /*
   Skelton for Interactive Problems
@@ -131,9 +139,11 @@ int main(int argc, char *argv[]) {
     }
   }
     
-  try {
-    do_game(is_judge);
-  }catch (const SolveExc& e) {
+####( INSERT 4 )####
+    try {
+      do_game(is_judge);
+    }catch (const SolveExc& e) {
+    }
   }
   return 0;
 }
@@ -238,7 +248,7 @@ void do_game(bool is_judge) {
 }
 '''
 
-    insert = [''] * 4
+    insert = [''] * 5
 
     if ask_first_p:
         insert[0] = f'''  virtual {resp_type} ask({ask_type}) = 0;
@@ -305,6 +315,13 @@ void do_game(bool is_judge) {
   }}
 '''
     insert[3] = f'  void answer({fin_ans}) {{\n'
+
+    if mult_q[0] in "Yy":
+        insert[4] = '''  ll T; cin >> T;
+  for (ll _t = 0; _t < T; _t++) {
+'''
+    else:
+        insert[4] = '  {\n'
 
     cont = ''
     for line in template.split('\n'):

@@ -1,0 +1,54 @@
+#!/usr/bin/env python3
+
+from datetime import timedelta
+import sys, argparse, json, requests, requests_cache, re, os, subprocess
+
+def die(*msg):
+    print(*msg, file=sys.stderr)
+    sys.exit(1)
+
+def warn(*msg):
+    print(*msg, file=sys.stderr, flush=True)
+
+def get_vc_id(s_vcid):
+    ps = [p for p in s_vcid.split('/') if re.match(r'[-0-9a-f]{36}$', p)]
+    if not ps:
+        die('Virtual contest ID not found')
+    if len(ps) >= 2:
+        die('Two or more virtual contest IDs found: ', ' '.join(ps))
+    return ps[0]
+
+def main():
+    global args
+    args = parseArgs()
+    requests_cache.install_cache('atcoder_problems', backend='sqlite',
+                                 expire_after=timedelta(days=1))
+    vc_id = get_vc_id(args.vcid)
+    vc_url = f'https://kenkoooo.com/atcoder/internal-api/contest/get/{vc_id}'
+    r = requests.get(vc_url)
+    data = json.loads(r.content)
+    problems = sorted(data['problems'], key=lambda x: x['order'])
+    for (i, problem) in enumerate(problems):
+        problem_id = problem['id']
+        contest_id = problem_id.rsplit('_', maxsplit=1)[0].replace('_', '-')\
+            .lower()
+        cmd = ['qread', '--url', 
+               f'https://atcoder.jp/contests/{contest_id}/tasks/{problem_id}']
+        rc = subprocess.run(cmd)
+        if rc.returncode != 0:
+            warn('qread failed')
+            os.rename(problem_id[-1], str(i + 1) + 'failed')
+        else:
+            os.rename(problem_id[-1], str(i + 1))
+    
+def parseArgs():
+    parser = argparse.ArgumentParser(
+        description='Reads problems of a virtual contest in AtCoder Problems'
+    )
+    parser.add_argument(
+        'vcid', type=str,
+        help='string that contains an id of a virtual contest',
+    )
+    return parser.parse_args()
+
+main()

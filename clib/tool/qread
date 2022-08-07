@@ -1,26 +1,24 @@
-#!/usr/bin/env python3
+#!/home/y-tanabe/.venv_10/bin/python
 
 import sys, argparse, os, re
 from bs4 import BeautifulSoup
 import util
-from util import warn, die, getPage
+from util import warn, die, getPage, debug
 
 args = None
-fKeep = None
-contestName = None
 
-def conflictFiles(qdict):
-    files = []
-    for d in qdict:
-        if not os.path.isdir(d): continue
-        for f in os.listdir(d):
-            if f in ['q.html', 'Makefile', 'cans.cc'] or util.id_in_fname(f):
-                files.append(f'{d}/{f}')
-    return files
+# def conflictFiles(qdict):
+#     files = []
+#     for d in qdict:
+#         if not os.path.isdir(d): continue
+#         for f in os.listdir(d):
+#             if f in ['q.html', 'Makefile', 'cans.cc'] or util.id_in_fname(f):
+#                 files.append(f'{d}/{f}')
+#     return files
 
-def quest():
+def quest(contestName):
     qlist = 'qlist.html'
-    if not os.path.exists(qlist):
+    if args.contest or not os.path.exists(qlist):
         url = f'https://atcoder.jp/contests/{contestName}/tasks'
         page = getPage(url)
         with open(qlist, 'w', encoding='UTF-8') as wfp:
@@ -29,7 +27,8 @@ def quest():
         soup = BeautifulSoup(fp, 'lxml')
     qdict = {}
     for row in soup.table.find_all('tr')[1:]:
-        qdict[row.a.string.lower()] = row.a.attrs['href']
+        qdict[row.a.string.lower()] = \
+            'https://atcoder.jp' + row.a.attrs['href']
     if args.all_questions:
         return qdict
     retv = {}
@@ -37,6 +36,7 @@ def quest():
         xx = x.lower()
         if xx not in qdict: die(f'Unknown question {x}')
         retv[xx] = qdict[xx]
+    # debug("retv", retv)
     return retv
 
 # We assume that samples are in <h3> tags....
@@ -66,8 +66,8 @@ def extractEg(qid, page):
         if i not in outs: continue
         infile  = f'{qid}/{util.in_file(i)}'
         outfile = f'{qid}/{util.exp_file(i)}'
-        if fKeep and (os.path.exists(infile) or os.path.exists(outfile)):
-            continue
+        # if fKeep and (os.path.exists(infile) or os.path.exists(outfile)):
+        #     continue
         with open(infile, 'w') as wfp:
             if ins[i]:
                 print(ins[i], file=wfp)
@@ -130,13 +130,13 @@ int main(/* int argc, char *argv[] */) {
 ''', file=wfp)
 
 def doQuest(qid, url):
+    # debug('doQuest ', qid, url)
     if not os.path.exists(qid):
         os.mkdir(qid)
     p = f'{qid}/q.html'
-    if not (fKeep and os.path.exists(p)):
-        page = getPage(url)
-        with open(p, 'w', encoding='UTF-8') as wfp:
-            print(page, end='', file=wfp)
+    page = getPage(url)
+    with open(p, 'w', encoding='UTF-8') as wfp:
+        print(page, end='', file=wfp)
     with open(p, 'r', encoding='UTF-8') as fp:
         page = fp.read()
         # It may seem that in the case of
@@ -144,13 +144,8 @@ def doQuest(qid, url):
         # but this code forces translation from \r\n to \n.
     extractEg(qid, page)
 
-    p = f'{qid}/Makefile'
-    if not (fKeep and os.path.exists(p)):
-        makeMakefile(p)
-
-    p = f'{qid}/cans.cc'
-    if not (fKeep and os.path.exists(p)):
-        makeSource(p)
+    makeMakefile(f'{qid}/Makefile')
+    makeSource(f'{qid}/cans.cc')
 
 def getContestName(name):
     cnFile = ".contestName"
@@ -164,27 +159,22 @@ def getContestName(name):
     return os.path.basename(os.getcwd())
 
 def main():
-    global args, fKeep, contestName
+    global args
     args = parseArgs()
 
-    if not args.quest and not args.all_questions:
-        die('No question is specified.')
-    contestName = getContestName(args.contest)
-
-    qdict = quest()
-
-    if args.existing:
-        fKeep = args.existing[0] == 'k'
+    if args.url:
+        qdict = {args.url[-1]: args.url}
+    elif args.quest or args.all_questions:
+        qdict = quest(getContestName(args.contest))
     else:
-        files = conflictFiles(qdict)
-        if files:
-            die('You need to specify --existing '
-                + 'because the following files exist: '
-                + ' '.join(files))
-        fKeep = True   # We really do not need it, but just in case.
+        die('No question is specified.')
 
     for q in qdict:
-        doQuest(q, f'https://atcoder.jp{qdict[q]}')
+        if os.path.exists(q):
+            die(f'File or directory {q} exists.')
+
+    for q in qdict:
+        doQuest(q, qdict[q])
 
 def parseArgs():
     parser = argparse.ArgumentParser(
@@ -192,12 +182,12 @@ def parseArgs():
         makes a makefile and cans.cc.
 '''
     )
-    parser.add_argument(
-        '-e', '--existing', type=str,
-        choices=['keep', 'overwrite', 'k', 'o'],
-        help="If 'k' or 'keep' is specified, files are untouched; "
-             "for 'o' or 'overwrite', files are overwritten."
-    )
+    # parser.add_argument(
+    #     '-e', '--existing', type=str,
+    #     choices=['keep', 'overwrite', 'k', 'o'],
+    #     help="If 'k' or 'keep' is specified, files are untouched; "
+    #          "for 'o' or 'overwrite', files are overwritten."
+    # )
     parser.add_argument(
         '-c', '--contest', type=str,
         help='''Contest identifier, such as abc147 or tdpc.
@@ -207,6 +197,16 @@ def parseArgs():
     parser.add_argument(
         '-a', '--all_questions', action='store_true',
         help='All questions will be retrieved.')
+    # parser.add_argument(
+    #     '--force', action='store_true',
+    #     help='''Existing directories will be overwritten.  If not specified,
+    #     an existing directory causes an error.
+    #     ''')
+    parser.add_argument(
+        '--url', type=str,
+        help='''Problem URL.  If specified, -a, -c and quest are ignored.
+        The question identifier is taken from the last letter of the URL.
+        ''')
     parser.add_argument(
         'quest', type=str, nargs='*',
         help='question identifier such as a or f')

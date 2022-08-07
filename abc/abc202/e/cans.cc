@@ -10,7 +10,67 @@ using namespace std;
 #define ALL(coll) (coll).begin(), (coll).end()
 #define SIZE(v) ((ll)((v).size()))
 
-// @@ !! LIM(debug)
+// @@ !! LIM(f:intDiv mapget debug)
+
+// ---- inserted function f:intDiv from util.cc
+// imod, divFloor, divCeil
+
+// imod(x, y) : remainder of x for y
+// for y > 0:
+//   imod(x, y)  = r where x = dy + r, 0 <= r < y
+//   imod(x, -y) = r where x = dy + r, 0 >= r > y
+// Thus, imod( 10,  7) =  3
+//       imod(-10,  7) =  4
+//       imod( 10, -7) = -4
+//       imod(-10, -7) = -3
+ll imod(ll x, ll y) {
+  ll v = x % y;
+  if ((x >= 0) == (y >= 0)) return v;
+  else                      return v == 0 ? 0 : v + y;
+}
+
+// Integer Division; regardless pos/neg
+ll divFloor(ll x, ll y) {
+  if (x > 0) {
+    if (y > 0) return x / y;
+    else       return (x - y - 1) / y;
+  }else {
+    if (y > 0) return (x - y + 1) / y;
+    else       return x / y;
+  }
+}
+
+ll divCeil(ll x, ll y) {
+  if (x > 0) {
+    if (y > 0) return (x + y - 1) / y;
+    else       return x / y;
+  }else {
+    if (y > 0) return x / y;
+    else       return (x + y + 1) / y;
+  }
+}
+//   Just a note.  For d \in Z and t \in R,
+//       d < t <=> d < ceil(t),     d <= t <=> d <= floor(t),
+//       d > t <=> d > floor(t),    d >= t <=> d >= ceil(t).
+
+// ---- end f:intDiv
+
+// ---- inserted library file mapget.cc
+
+template<typename MP, typename A = typename MP::key_type, typename B = typename MP::mapped_type>
+B mapget(const MP& mp, const A& a) {
+  auto it = mp.find(a);
+  if (it == mp.end()) return B();
+  return it->second;
+}
+
+template<typename MP, typename A = typename MP::key_type, typename B = typename MP::mapped_type>
+void mapset(MP& mp, const A& a, B val) {
+  if (val == B()) mp.erase(a);
+  else            mp[a] = val;
+}
+
+// ---- end mapget.cc
 
 // ---- inserted function f:<< from util.cc
 template <typename T1, typename T2>
@@ -259,40 +319,50 @@ int main(/* int argc, char *argv[] */) {
   cout << setprecision(20);
 
   ll N; cin >> N;
-  vector par(N, 0LL);
-  vector cld(N, vector<ll>());
-  par[0] = -1;
+  vector<ll> P(N);
+  vector<vector<ll>> C(N);
   REP2(i, 1, N) {
-    cin >> par[i]; par[i]--;
-    cld[par[i]].push_back(i);
+    ll p; cin >> p; p--;
+    P[i] = p;
+    C[p].push_back(i);
   }
-  ll Q; cin >> Q;
-  vector qs(N, vector<ll>());
-  vector lev(Q, 0LL);
-  REP(q, Q) {
-    ll u, d; cin >> u >> d; u--;
-    qs[u].push_back(q);
-    lev[q] = d;
-  }
-  vector cnt(0, 0LL), ans(Q, 0LL);
-  auto numlev = [&](ll d) -> ll { return d >= SIZE(cnt) ? 0 : cnt[d]; };
-  auto dfs = [&](auto rF, ll nd, ll lv) -> void {
-    DLOGKL("in", nd, cnt);
-    for (ll q : qs[nd]) {
-      ans[q] = -numlev(lev[q]);
-      DLOGKL("ans minus", q, ans[q]);
-    }
-    if (SIZE(cnt) == lv) cnt.resize(lv + 1);
-    cnt[lv]++;
-    for (ll c : cld[nd]) rF(rF, c, lv + 1);
-    DLOGKL("out", nd, cnt);
-    for (ll q : qs[nd]) {
-      ans[q] += numlev(lev[q]);
-      DLOGKL("ans plus", q, ans[q]);
-    }
+  DLOGK(P, C);
+  vector<ll> et;
+  vector<ll> ei(N);
+  vector<ll> eo(N);
+  auto dfs = [&](auto rF, ll nd, ll lev) -> void {
+    ei[nd] = SIZE(et);
+    et.push_back(lev);
+    for (ll c : C[nd]) rF(rF, c, lev + 1);
+    eo[nd] = SIZE(et);
   };
   dfs(dfs, 0, 0);
-  REP(q, Q) cout << ans[q] << "\n";
+  ll sz = llround(ceil(sqrt(N)));
+  ll numB = divCeil(N, sz);
+  vector div(numB, vector<int>(N));
+  for (ll i = 0; sz * i < N; i++) {
+    ll e = min(sz * (i + 1), N);
+    REP2(j, sz * i, e) div[i][et[j]]++;
+  }
+  ll Q; cin >> Q;
+  REP(_q, Q) {
+    ll u, d; cin >> u >> d; u--;
+    ll L = ei[u];
+    ll R = eo[u];
+    ll iL = divCeil(L, sz);
+    ll iR = divFloor(R, sz);
+    ll ans = 0;
+    if (iL < iR) {
+      REP2(i, iL, iR) {
+        ans += div[i][d];
+      }
+      REP2(j, L, iL * sz) if (et[j] == d) ans++;
+      REP2(j, iR * sz, R) if (et[j] == d) ans++;
+    }else {
+      REP2(j, L, R) if (et[j] == d) ans++;
+    }
+    cout << ans << endl;
+  }
   return 0;
 }
 

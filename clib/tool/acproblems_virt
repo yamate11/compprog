@@ -1,0 +1,152 @@
+#!/home/y-tanabe/.venv_10/bin/python
+
+from selenium import webdriver
+from selenium.webdriver.common.by import By
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
+from datetime import datetime, timedelta
+from dateutil.parser import parse
+import time, sys, re, subprocess, os, argparse
+
+from util import warn, die, debug
+
+driver = None
+args = None
+
+def msg(*m):
+    if args.quiet:
+        return
+    print(*m, file=sys.stderr, flush=True)
+
+def search_vc(exp, excl=[1]):
+    driver.get('https://kenkoooo.com/atcoder/#/contest/recent')
+    retry = 10
+    while True:
+        try:
+            idx = 0
+            tables = driver.find_elements(By.TAG_NAME, 'table')
+            for t in tables:
+                if t.text.startswith('Title'):
+                    continue
+                if not (excl and idx in excl):
+                    for row in t.find_elements(By.TAG_NAME, 'tr'):
+                        col = row.find_element(By.TAG_NAME, 'td')
+                        ta = col.find_element(By.TAG_NAME, 'a')
+                        url = ta.get_attribute('href')
+                        txt = ta.text
+                        if mo := re.match(r'Public\s*(.*)', txt):
+                            txt = mo[1]
+                        if re.search(exp, txt):
+                            return (url, txt)
+                idx += 1
+            return (None, None)
+        except Exception:
+            retry -= 1
+            if retry <= 0:
+                raise
+            msg(f'Retrying (retry={retry})')
+            time.sleep(0.3)
+
+def get_questions(url):
+    driver.get(url)
+    retry = 10
+    while True:
+        try:
+            tables = driver.find_elements(By.TAG_NAME, 'table')
+            for t in tables:
+                if "Problem Name" in t.text:
+                    body = t.find_element(By.TAG_NAME, "tbody")
+                    ret = []
+                    for row in body.find_elements(By.TAG_NAME, "tr"):
+                        col = row.find_element(By.TAG_NAME, "td")
+                        ta = col.find_element(By.TAG_NAME, "a")
+                        ret.append((ta.get_attribute('href'), ta.text))
+                    return ret
+        except Exception:
+            retry -= 1
+            if retry <= 0:
+                raise
+            msg(f'Retrying (retry={retry})')
+            time.sleep(0.3)
+
+def waits_until(tspec):
+    if not tspec:
+        return
+    dt_now = datetime.now()
+    dt = parse(tspec)
+    if dt_now - timedelta(hours=1) <= dt and dt <= dt_now:
+        msg('The specified time has already passed.  Will run immediately.')
+        return
+    if dt < dt_now - timedelta(hours=1):
+        msg('The time is considered tomorrow\'s time.')
+        dt += timedelta(hours=24)
+    msg(f'Sleeping {dt - dt_now} seconds.')
+    time.sleep((dt - dt_now).total_seconds())
+
+def dir_check():
+    fs = os.listdir('.')
+    cnt = 0
+    for f in fs:
+        if len(f) == 1 or re.match(r'\d+$'):
+            warn(f'File or directory {f} may be dangerous.')
+            cnt += 1
+            if cnt == 5:
+                warn(f'There may be other danger files.')
+                return False
+    return cnt == 0
+
+def main():
+    global driver, args
+
+    args = parseArgs()
+
+    dir_check()
+
+    msg('Initializing.')
+    options = webdriver.ChromeOptions()
+    options.add_argument('--headless')
+    driver = webdriver.Chrome(options=options)
+
+    waits_until(args.starts_at)
+
+    msg('Searching the virtual contest.')
+    (vc_url, vc_name) = search_vc(args.exp)
+    if vc_url is None:
+        die('Failed to find virtual contest.')
+    msg('Reading the virtual contest page.')
+    lst = get_questions(vc_url)
+    success = []
+    for (i, (q_url, q_name)) in enumerate(lst):
+        cmd = ['qread', '--url', q_url]
+        msg(f'Downloading question {i + 1}: {q_name}')
+        rc = subprocess.run(cmd)
+        if rc.returncode != 0:
+            warn(f'qread failed with url {q_url}')
+        else:
+            success.append(i + 1)
+        if os.path.exists(q_url[-1]):
+            os.rename(q_url[-1], f'{i + 1}_tmp')
+    for i in success:
+        os.rename(f'{i}_tmp', f'{i}')
+    # driver.quit()
+
+def parseArgs():
+    parser = argparse.ArgumentParser(
+        description='''Read questions of a virtual contest''',
+    )
+    parser.add_argument(
+        'exp', type=str,
+        help='''Regular expression for the title of a virtual contest.''',
+    )
+    parser.add_argument(
+        '-q', '--quiet', action='store_true',
+        help='''Quiet mode'''
+    )
+    parser.add_argument(
+        '--starts-at', type=str,
+        help='''Time to start reading.'''
+    )
+    return parser.parse_args()
+
+main()
+

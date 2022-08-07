@@ -1,0 +1,9 @@
+#!/usr/bin/env python3
+
+from random import randrange
+
+n = 300000
+print(n)
+for _ in range(n):
+    print(randrange(n))
+    

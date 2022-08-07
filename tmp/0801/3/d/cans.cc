@@ -1,0 +1,37 @@
+#include <bits/stdc++.h>
+#include <cassert>
+typedef long long int ll;
+using namespace std;
+// #include <atcoder/all>
+// using namespace atcoder;
+#define REP2(i, a, b) for (ll i = (a); i < (b); i++)
+#define REP2R(i, a, b) for (ll i = (a); i >= (b); i--)
+#define REP(i, b) REP2(i, 0, b)
+#define ALL(coll) (coll).begin(), (coll).end()
+#define SIZE(v) ((ll)((v).size()))
+
+// @@ !! LIM()
+
+int main(/* int argc, char *argv[] */) {
+  ios_base::sync_with_stdio(false);
+  cin.tie(nullptr);
+  cout << setprecision(20);
+
+  ll N; cin >> N;
+  vector<ll> A(N);
+  vector rec(N + 1, vector<ll>());
+  REP(i, N) {
+    ll a; cin >> a;
+    rec[a].push_back(i);
+  }
+  ll Q; cin >> Q;
+  REP(_q, Q) {
+    ll L, R, X; cin >> L >> R >> X; L--;
+    ll r0 = lower_bound(ALL(rec[X]), R) - rec[X].begin();
+    ll l0 = lower_bound(ALL(rec[X]), L) - rec[X].begin();
+    cout << r0 - l0 << endl;
+  }
+
+  return 0;
+}
+
