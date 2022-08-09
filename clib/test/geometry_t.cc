@@ -255,23 +255,20 @@ using Real = double;
 // Default Error Value.
 Real g_err = 1e-9;    // Too small value is not good.
 
-bool r_eq(Real x, Real y, Real err = g_err) {
-  return abs(x - y) <= err || abs(x - y) <= abs(x) * err;
+bool may_eq(Real x, Real y, Real err = g_err, bool abs_only = false) {
+  return abs(x - y) <= err or (not abs_only and abs(x - y) <= abs(x) * err);
 }
-bool r_le(Real x, Real y, Real err = g_err) {
-  return x - y <= err || x - y <= abs(x) * err;
+bool may_le(Real x, Real y, Real err = g_err, bool abs_only = false) {
+  return x - y <= err or (not abs_only and x - y <= abs(x) * err);
 }
-bool r_ge(Real x, Real y, Real err = g_err) { return r_le(y, x, err); }
-bool r_gt(Real x, Real y, Real err = g_err) { return !r_le(x, y, err); }
-bool r_lt(Real x, Real y, Real err = g_err) { return !r_le(y, x, err); }
-bool r_ne(Real x, Real y, Real err = g_err) { return !r_eq(x, y, err); }
+bool may_ge(Real x, Real y, Real err = g_err, bool abs_only = false) {
+  return y - x <= err or (not abs_only and y - x <= abs(x) * err);
+}
 
-bool rp_eq(Real x, Real y, Real err = g_err) { return abs(x - y) <= err; }
-bool rp_le(Real x, Real y, Real err = g_err) { return x - y <= err; }
-bool rp_ge(Real x, Real y, Real err = g_err) { return rp_le(y, x, err); }
-bool rp_gt(Real x, Real y, Real err = g_err) { return !rp_le(x, y, err); }
-bool rp_lt(Real x, Real y, Real err = g_err) { return !rp_le(y, x, err); }
-bool rp_ne(Real x, Real y, Real err = g_err) { return !rp_eq(x, y, err); }
+bool may_eq_abs_only(Real x, Real y, Real err = g_err) { return may_eq(x, y, err, true); }
+bool may_le_abs_only(Real x, Real y, Real err = g_err) { return may_le(x, y, err, true); }
+bool may_ge_abs_only(Real x, Real y, Real err = g_err) { return may_ge(x, y, err, true); }
+
 
 // ---- end rerror.cc
 
@@ -306,7 +303,7 @@ struct Point {
   bool operator ==(const Point& p) const { return x == p.x && y == p.y; }
   bool operator !=(const Point& p) const { return ! (*this == p); }
   bool sim(const Point& p, Real err = g_err) const {
-    return r_eq(x, p.x, err) && r_eq(y, p.y, err);
+    return may_eq(x, p.x, err) && may_eq(y, p.y, err);
   }
   static bool sim(const Point& p1, const Point& p2,
 		      Real err = g_err) { return p1.sim(p2, err); }
@@ -331,7 +328,7 @@ struct Point {
   Point rotateQ() const { return Point(-y, x); }
 
   bool parallel(const Point& p, Real err = g_err) const {
-    return r_eq(x * p.y, y * p.x, err);
+    return may_eq(x * p.y, y * p.x, err);
   }
 
   Real innerProd(const Point& p) const { return x * p.x + y * p.y; }
@@ -391,8 +388,8 @@ struct Line {
   int ptSide(const Point& p, Real err = g_err) const {
     Real t1 = dir.y * (p.x - base.x);
     Real t2 = dir.x * (p.y - base.y);
-    if (r_eq(t1, t2, err)) return SIDE_ON;
-    if (r_lt(t1, t2, err)) return SIDE_P;
+    if (may_eq(t1, t2, err)) return SIDE_ON;
+    if (may_le(t1, t2, err)) return SIDE_P;
     return SIDE_N;
   }
 
@@ -455,13 +452,13 @@ struct Circle {
   bool operator ==(const Circle& o) const { return c == o.c && r == o.r; }
   bool operator !=(const Circle& o) const { return ! (*this == o); }
   bool sim(const Circle& o, Real err = g_err) const {
-    return c.sim(o.c, err) && r_eq(r, o.r, err);
+    return c.sim(o.c, err) && may_eq(r, o.r, err);
   }
   static bool sim(const Circle& c1, const Circle& c2,
 		  Real err = g_err) { return c1.sim(c2, err); }
 
   bool ptOn(const Point& p, Real err = g_err) const {
-    return r_eq((p - c).len(), r, err);
+    return may_eq((p - c).len(), r, err);
   }
 
   tuple<bool, Point, Point> intersect(const Line& o) const {
@@ -585,7 +582,7 @@ int in_triangle(const Point& pt, const Point& tr0,
   auto chk = [&](const Point& b, const Point& e, const Point& p) -> bool {
     Point be = e - b;
     Point bp = p - b;
-    Real r = r_eq(be.x, 0.0) ? bp.y / be.y : bp.x / be.x;
+    Real r = may_eq(be.x, 0.0) ? bp.y / be.y : bp.x / be.x;
     return 0.0 <= r && r <= 1.0;
   };
 
@@ -637,7 +634,7 @@ vector<Point> naive_convex_hull(const vector<Point>& o_pts) {
 	Point q1 = pts.at(i) - pts.at(m);
 	Point q2 = pts.at(j) - pts.at(m);
 	if (!q1.parallel(q2)) continue;
-	if (!r_eq(q1.x, 0.0)) {
+	if (!may_eq(q1.x, 0.0)) {
 	  if (q2.x / q1.x < 0) { inner.insert(m); return; }
 	}else {
 	  if (q2.y / q1.y < 0) { inner.insert(m); return; }
@@ -729,8 +726,8 @@ int main(int argc, char *argv[]) {
     assert(! l02.ptOn(p03));
     assert(l01.unsafe_intersect(l02).sim(Point(1,1)));
     assert(l03.unsafe_intersect(l04).sim(p01));
-    assert(r_eq(l01.len(p01), sqrt(2)/2));
-    assert(r_eq(Line(p01.rotateQ(), p01).len(orig), 5));
+    assert(may_eq(l01.len(p01), sqrt(2)/2));
+    assert(may_eq(Line(p01.rotateQ(), p01).len(orig), 5));
   
     Point p08(1, -2), p09(4, 2);
     Circle c01(p09, 2), c02(p08, 1), c03(p08, 4), c04(p08, 10);
@@ -772,17 +769,17 @@ int main(int argc, char *argv[]) {
 
   {
     Point p10(7,2), p11(-3, 5);
-    assert(r_eq(p10.innerProd(p11), -11));
-    assert(r_eq(p11.innerProd(p10), -11));
-    assert(r_eq(p10.outerProd(p11), 41));
-    assert(r_eq(p11.outerProd(p10), -41));
-    assert(r_eq(Point(1,1).angle(Point(-1,0)), G_PI*0.75));
-    assert(r_eq(Point(-1,0).angle(Point(1,1)), -G_PI*0.75));
+    assert(may_eq(p10.innerProd(p11), -11));
+    assert(may_eq(p11.innerProd(p10), -11));
+    assert(may_eq(p10.outerProd(p11), 41));
+    assert(may_eq(p11.outerProd(p10), -41));
+    assert(may_eq(Point(1,1).angle(Point(-1,0)), G_PI*0.75));
+    assert(may_eq(Point(-1,0).angle(Point(1,1)), -G_PI*0.75));
     for (ll i = 0; i < 20; i++) {
       Point p12 = p10.rotate(i*G_PI/10);
-      assert(r_eq(p10.innerProd(p12),
+      assert(may_eq(p10.innerProd(p12),
 		  p10.len() * p12.len() * cos(p10.angle(p12))));
-      assert(r_eq(p10.outerProd(p12),
+      assert(may_eq(p10.outerProd(p12),
 		  p10.len() * p12.len() * sin(p10.angle(p12))));
     }
   }
@@ -816,12 +813,12 @@ int main(int argc, char *argv[]) {
     vector<Point> pts1 = {{0,0}, {2,0}, {2,2}, {0,2}, {1,1}, {0,1}, {2,1}};
     auto ch1 = convex_hull(pts1);
     assert(ch1 == vector<Point>({{0,0}, {2,0}, {2,2}, {0,2}}));
-    assert(r_eq(get<0>(convex_diameter(ch1)), 2.0*sqrt(2.0)));
+    assert(may_eq(get<0>(convex_diameter(ch1)), 2.0*sqrt(2.0)));
 
     vector<Point> pts2 = {{0,0}, {3,0}, {5,0}, {1,2}, {4,2}};
     auto ch2 = convex_hull(pts2);
     assert(ch2 == vector<Point>({{0,0}, {5,0}, {4,2}, {1,2}}));
-    assert(r_eq(get<0>(convex_diameter(ch2)), 5.0));
+    assert(may_eq(get<0>(convex_diameter(ch2)), 5.0));
   
     vector<Point> pts3 = {{0,5}, {1,4}, {1,8}, {2,1}, {2,2}, {3,5}, {3,8}, {4,5}};
     auto ch3 = convex_hull(pts3);
@@ -864,13 +861,13 @@ int main(int argc, char *argv[]) {
 	// DLOG("nch=", nch);
       }
       assert(chx == nchx);
-      if (!r_eq(d, nd)) {
+      if (!may_eq(d, nd)) {
 	// DLOG("pts=", pts);
 	// DLOG("ch=", ch);
 	// DLOG("d=", d, ch.at(i), ch.at(j));
 	// DLOG("nd=", nd, pts.at(ni), pts.at(nj));
       }
-      assert(r_eq(d, nd));
+      assert(may_eq(d, nd));
     }
 
     // end  (convex_hull and convex_diameter)

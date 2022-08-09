@@ -16,135 +16,84 @@ using Real = double;
 // Default Error Value.
 Real g_err = 1e-9;    // Too small value is not good.
 
-bool r_eq(Real x, Real y, Real err = g_err) {
-  return abs(x - y) <= err || abs(x - y) <= abs(x) * err;
+bool may_eq(Real x, Real y, Real err = g_err, bool abs_only = false) {
+  return abs(x - y) <= err or (not abs_only and abs(x - y) <= abs(x) * err);
 }
-bool r_le(Real x, Real y, Real err = g_err) {
-  return x - y <= err || x - y <= abs(x) * err;
+bool may_le(Real x, Real y, Real err = g_err, bool abs_only = false) {
+  return x - y <= err or (not abs_only and x - y <= abs(x) * err);
 }
-bool r_ge(Real x, Real y, Real err = g_err) { return r_le(y, x, err); }
-bool r_gt(Real x, Real y, Real err = g_err) { return !r_le(x, y, err); }
-bool r_lt(Real x, Real y, Real err = g_err) { return !r_le(y, x, err); }
-bool r_ne(Real x, Real y, Real err = g_err) { return !r_eq(x, y, err); }
+bool may_ge(Real x, Real y, Real err = g_err, bool abs_only = false) {
+  return y - x <= err or (not abs_only and y - x <= abs(x) * err);
+}
 
-bool rp_eq(Real x, Real y, Real err = g_err) { return abs(x - y) <= err; }
-bool rp_le(Real x, Real y, Real err = g_err) { return x - y <= err; }
-bool rp_ge(Real x, Real y, Real err = g_err) { return rp_le(y, x, err); }
-bool rp_gt(Real x, Real y, Real err = g_err) { return !rp_le(x, y, err); }
-bool rp_lt(Real x, Real y, Real err = g_err) { return !rp_le(y, x, err); }
-bool rp_ne(Real x, Real y, Real err = g_err) { return !rp_eq(x, y, err); }
+bool may_eq_abs_only(Real x, Real y, Real err = g_err) { return may_eq(x, y, err, true); }
+bool may_le_abs_only(Real x, Real y, Real err = g_err) { return may_le(x, y, err, true); }
+bool may_ge_abs_only(Real x, Real y, Real err = g_err) { return may_ge(x, y, err, true); }
+
 
 // ---- end rerror.cc
 
 // @@ !! LIM -- end mark --
 
 int main() {
-  assert(r_eq(3,3));
-  assert(r_ne(3,4));
-  assert(r_le(3,4));
-  assert(r_le(3,3));
-  assert(r_ge(4,3));
-  assert(r_ge(3,3));
-  assert(r_lt(3,4));
-  assert(r_gt(4,3));
-  assert(! r_eq(3,4));
-  assert(! r_ne(3,3));
-  assert(! r_le(4,3));
-  assert(! r_ge(3,4));
-  assert(! r_lt(4,3));
-  assert(! r_lt(3,3));
-  assert(! r_gt(3,4));
-  assert(! r_gt(3,3));
+  assert(may_eq(3,3));
+  assert(may_le(3,4));
+  assert(may_le(3,3));
+  assert(may_ge(4,3));
+  assert(may_ge(3,3));
+  assert(! may_eq(3,4));
+  assert(! may_le(4,3));
+  assert(! may_ge(3,4));
 
-  assert(! r_eq(3-1e-6, 3));
-  assert(  r_eq(3-1e-14, 3));
-  assert(  r_eq(3+1e-14, 3));
-  assert(! r_eq(3+1e-6, 3));
+  assert(! may_eq(3-1e-6, 3));
+  assert(  may_eq(3-1e-14, 3));
+  assert(  may_eq(3+1e-14, 3));
+  assert(! may_eq(3+1e-6, 3));
 
-  assert(  r_ne(3-1e-6, 3));
-  assert(! r_ne(3-1e-14, 3));
-  assert(! r_ne(3+1e-14, 3));
-  assert(  r_ne(3+1e-6, 3));
+  assert(  may_le(3-1e-6, 3));
+  assert(  may_le(3-1e-14, 3));
+  assert(  may_le(3+1e-14, 3));
+  assert(! may_le(3+1e-6, 3));
 
-  assert(  r_lt(3-1e-6, 3));
-  assert(! r_lt(3-1e-14, 3));
-  assert(! r_lt(3+1e-14, 3));
-  assert(! r_lt(3+1e-6, 3));
+  assert(! may_ge(3-1e-6, 3));
+  assert(  may_ge(3-1e-14, 3));
+  assert(  may_ge(3+1e-14, 3));
+  assert(  may_ge(3+1e-6, 3));
 
-  assert(  r_le(3-1e-6, 3));
-  assert(  r_le(3-1e-14, 3));
-  assert(  r_le(3+1e-14, 3));
-  assert(! r_le(3+1e-6, 3));
+  assert(! may_eq(3-1e-4, 3, 1e-6));
+  assert(  may_eq(3-1e-8, 3, 1e-6));
+  assert(  may_eq(3+1e-8, 3, 1e-6));
+  assert(! may_eq(3+1e-4, 3, 1e-6));
 
-  assert(! r_gt(3-1e-6, 3));
-  assert(! r_gt(3-1e-14, 3));
-  assert(! r_gt(3+1e-14, 3));
-  assert(  r_gt(3+1e-6, 3));
+  assert(! may_eq_abs_only(3-1e-6, 3));
+  assert(  may_eq_abs_only(3-1e-14, 3));
+  assert(  may_eq_abs_only(3+1e-14, 3));
+  assert(! may_eq_abs_only(3+1e-6, 3));
 
-  assert(! r_ge(3-1e-6, 3));
-  assert(  r_ge(3-1e-14, 3));
-  assert(  r_ge(3+1e-14, 3));
-  assert(  r_ge(3+1e-6, 3));
+  assert(  may_le_abs_only(3-1e-6, 3));
+  assert(  may_le_abs_only(3-1e-14, 3));
+  assert(  may_le_abs_only(3+1e-14, 3));
+  assert(! may_le_abs_only(3+1e-6, 3));
 
-  assert(! r_eq(3-1e-4, 3, 1e-6));
-  assert(  r_eq(3-1e-8, 3, 1e-6));
-  assert(  r_eq(3+1e-8, 3, 1e-6));
-  assert(! r_eq(3+1e-4, 3, 1e-6));
+  assert(! may_ge_abs_only(3-1e-6, 3));
+  assert(  may_ge_abs_only(3-1e-14, 3));
+  assert(  may_ge_abs_only(3+1e-14, 3));
+  assert(  may_ge_abs_only(3+1e-6, 3));
 
-  assert(! rp_eq(3-1e-6, 3));
-  assert(  rp_eq(3-1e-14, 3));
-  assert(  rp_eq(3+1e-14, 3));
-  assert(! rp_eq(3+1e-6, 3));
+  assert(! may_eq(3-1e-4, 3, 1e-6, true));
+  assert(  may_eq(3-1e-8, 3, 1e-6, true));
+  assert(  may_eq(3+1e-8, 3, 1e-6, true));
+  assert(! may_eq(3+1e-4, 3, 1e-6, true));
 
-  assert(  rp_ne(3-1e-6, 3));
-  assert(! rp_ne(3-1e-14, 3));
-  assert(! rp_ne(3+1e-14, 3));
-  assert(  rp_ne(3+1e-6, 3));
+  assert(! may_eq(1e10-100, 1e10));
+  assert(  may_eq(1e10-  1, 1e10));
+  assert(  may_eq(1e10+  1, 1e10));
+  assert(! may_eq(1e10+100, 1e10));
 
-  assert(  rp_lt(3-1e-6, 3));
-  assert(! rp_lt(3-1e-14, 3));
-  assert(! rp_lt(3+1e-14, 3));
-  assert(! rp_lt(3+1e-6, 3));
-
-  assert(  rp_le(3-1e-6, 3));
-  assert(  rp_le(3-1e-14, 3));
-  assert(  rp_le(3+1e-14, 3));
-  assert(! rp_le(3+1e-6, 3));
-
-  assert(! rp_gt(3-1e-6, 3));
-  assert(! rp_gt(3-1e-14, 3));
-  assert(! rp_gt(3+1e-14, 3));
-  assert(  rp_gt(3+1e-6, 3));
-
-  assert(! rp_ge(3-1e-6, 3));
-  assert(  rp_ge(3-1e-14, 3));
-  assert(  rp_ge(3+1e-14, 3));
-  assert(  rp_ge(3+1e-6, 3));
-
-  assert(! rp_eq(3-1e-4, 3, 1e-6));
-  assert(  rp_eq(3-1e-8, 3, 1e-6));
-  assert(  rp_eq(3+1e-8, 3, 1e-6));
-  assert(! rp_eq(3+1e-4, 3, 1e-6));
-
-  assert(! r_eq(1e10-100, 1e10));
-  assert(  r_eq(1e10-  1, 1e10));
-  assert(  r_eq(1e10+  1, 1e10));
-  assert(! r_eq(1e10+100, 1e10));
-
-  assert(! rp_eq(1e10-100, 1e10));
-  assert(! rp_eq(1e10-  1, 1e10));
-  assert(! rp_eq(1e10+  1, 1e10));
-  assert(! rp_eq(1e10+100, 1e10));
-
-  assert(  r_lt(1e10-100, 1e10));
-  assert(! r_lt(1e10-  1, 1e10));
-  assert(! r_lt(1e10+  1, 1e10));
-  assert(! r_lt(1e10+100, 1e10));
-
-  assert(  rp_lt(1e10-100, 1e10));
-  assert(  rp_lt(1e10-  1, 1e10));
-  assert(! rp_lt(1e10+  1, 1e10));
-  assert(! rp_lt(1e10+100, 1e10));
+  assert(! may_eq_abs_only(1e10-100, 1e10));
+  assert(! may_eq_abs_only(1e10-  1, 1e10));
+  assert(! may_eq_abs_only(1e10+  1, 1e10));
+  assert(! may_eq_abs_only(1e10+100, 1e10));
 
   cout << "Test Done." << endl;
 }

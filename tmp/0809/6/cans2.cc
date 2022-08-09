@@ -10,7 +10,30 @@ using namespace std;
 #define ALL(coll) (coll).begin(), (coll).end()
 #define SIZE(v) ((ll)((v).size()))
 
-// @@ !! LIM(geometry)
+// @@ !! LIM(forall geometry)
+
+// ---- inserted library file forall.cc
+
+#define EX_REP_LL(i, from, to) for (ll i = from; i < to; i++)
+#define EX_REP_RB(x, coll) for (auto x : coll)
+#define EXGEN(rep_part, cond, yes, no_behaviour) ([&]() { rep_part if (cond) return (yes); no_behaviour; }())
+#define EXISTS_BASE(rep_part, cond) EXGEN(rep_part, cond, true, return false)
+#define EXFIND_BASE(rep_part, cond, t) EXGEN(rep_part, cond, t, assert(0))
+#define EXFIND_D_BASE(rep_part, cond, t, def) EXGEN(rep_part, cond, t, return def)
+
+#define EXISTS(i, from, to, cond) EXISTS_BASE(EX_REP_LL(i, from, to), cond)
+#define FORALL(i, from, to, cond) (not EXISTS(i, from, to, not (cond)))
+#define EXFIND(i, from, to, cond) EXFIND_BASE(EX_REP_LL(i, from, to), cond, i)
+#define EXFIND_D(i, from, to, cond, def) EXFIND_D_BASE(EX_REP_LL(i, from, to), cond, i, def)
+
+#define EXISTS_C(x, coll, cond) EXISTS_BASE(EX_REP_RB(x, coll), cond)
+#define FORALL_C(x, coll, cond) (not EXISTS_C(x, coll, not (cond)))
+#define EXFIND_C(x, coll, cond) EXFIND_BASE(EX_REP_RB(x, coll), cond, x)
+#define EXFIND_D_C(x, coll, cond, def) EXFIND_D_BASE(EX_REP_RB(x, coll), cond, x, def)
+
+#define IMPLIES(a, b) (not (a) or (b))
+
+// ---- end forall.cc
 
 // ---- inserted library file rerror.cc
 
@@ -22,23 +45,6 @@ using Real = double;
 
 // Default Error Value.
 Real g_err = 1e-9;    // Too small value is not good.
-
-bool may_eq(Real x, Real y, Real err = g_err, bool abs_only = false) {
-  return abs(x - y) <= err or (not abs_only and abs(x - y) <= abs(x) * err);
-}
-bool may_le(Real x, Real y, Real err = g_err, bool abs_only = false) {
-  return x - y <= err or (not abs_only and x - y <= abs(x) * err);
-}
-bool may_ge(Real x, Real y, Real err = g_err, bool abs_only = false) {
-  return y - x <= err or (not abs_only and y - x <= abs(x) * err);
-}
-
-bool may_eq_abs_only(Real x, Real y, Real err = g_err) { return may_eq(x, y, err, true); }
-bool may_le_abs_only(Real x, Real y, Real err = g_err) { return may_le(x, y, err, true); }
-bool may_ge_abs_only(Real x, Real y, Real err = g_err) { return may_ge(x, y, err, true); }
-
-
-/*
 
 bool r_eq(Real x, Real y, Real err = g_err) {
   return abs(x - y) <= err || abs(x - y) <= abs(x) * err;
@@ -57,8 +63,6 @@ bool rp_ge(Real x, Real y, Real err = g_err) { return rp_le(y, x, err); }
 bool rp_gt(Real x, Real y, Real err = g_err) { return !rp_le(x, y, err); }
 bool rp_lt(Real x, Real y, Real err = g_err) { return !rp_le(y, x, err); }
 bool rp_ne(Real x, Real y, Real err = g_err) { return !rp_eq(x, y, err); }
-
-*/
 
 // ---- end rerror.cc
 
@@ -93,7 +97,7 @@ struct Point {
   bool operator ==(const Point& p) const { return x == p.x && y == p.y; }
   bool operator !=(const Point& p) const { return ! (*this == p); }
   bool sim(const Point& p, Real err = g_err) const {
-    return may_eq(x, p.x, err) && may_eq(y, p.y, err);
+    return r_eq(x, p.x, err) && r_eq(y, p.y, err);
   }
   static bool sim(const Point& p1, const Point& p2,
 		      Real err = g_err) { return p1.sim(p2, err); }
@@ -118,7 +122,7 @@ struct Point {
   Point rotateQ() const { return Point(-y, x); }
 
   bool parallel(const Point& p, Real err = g_err) const {
-    return may_eq(x * p.y, y * p.x, err);
+    return r_eq(x * p.y, y * p.x, err);
   }
 
   Real innerProd(const Point& p) const { return x * p.x + y * p.y; }
@@ -178,8 +182,8 @@ struct Line {
   int ptSide(const Point& p, Real err = g_err) const {
     Real t1 = dir.y * (p.x - base.x);
     Real t2 = dir.x * (p.y - base.y);
-    if (may_eq(t1, t2, err)) return SIDE_ON;
-    if (may_le(t1, t2, err)) return SIDE_P;
+    if (r_eq(t1, t2, err)) return SIDE_ON;
+    if (r_lt(t1, t2, err)) return SIDE_P;
     return SIDE_N;
   }
 
@@ -242,13 +246,13 @@ struct Circle {
   bool operator ==(const Circle& o) const { return c == o.c && r == o.r; }
   bool operator !=(const Circle& o) const { return ! (*this == o); }
   bool sim(const Circle& o, Real err = g_err) const {
-    return c.sim(o.c, err) && may_eq(r, o.r, err);
+    return c.sim(o.c, err) && r_eq(r, o.r, err);
   }
   static bool sim(const Circle& c1, const Circle& c2,
 		  Real err = g_err) { return c1.sim(c2, err); }
 
   bool ptOn(const Point& p, Real err = g_err) const {
-    return may_eq((p - c).len(), r, err);
+    return r_eq((p - c).len(), r, err);
   }
 
   tuple<bool, Point, Point> intersect(const Line& o) const {
@@ -372,7 +376,7 @@ int in_triangle(const Point& pt, const Point& tr0,
   auto chk = [&](const Point& b, const Point& e, const Point& p) -> bool {
     Point be = e - b;
     Point bp = p - b;
-    Real r = may_eq(be.x, 0.0) ? bp.y / be.y : bp.x / be.x;
+    Real r = r_eq(be.x, 0.0) ? bp.y / be.y : bp.x / be.x;
     return 0.0 <= r && r <= 1.0;
   };
 

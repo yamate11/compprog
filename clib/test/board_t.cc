@@ -32,14 +32,15 @@ struct BrdIdx {
 
   BrdIdx rotateQ() { return BrdIdx(-c, r); } // counter-clockwise
 
-  static vector<BrdIdx> nbr4, nbr5, nbr8, nbr9;
+  static vector<BrdIdx> nbr4, nbr4D, nbr5, nbr8, nbr9;
 };
 
 vector<BrdIdx>
-  BrdIdx::nbr4({      {1,0},      {0,1},       {-1,0},        {0,-1}       }),
-  BrdIdx::nbr5({{0,0},{1,0},      {0,1},       {-1,0},        {0,-1}       }),
-  BrdIdx::nbr8({      {1,0},{1,1},{0,1},{-1,1},{-1,0},{-1,-1},{0,-1},{1,-1}}),
-  BrdIdx::nbr9({{0,0},{1,0},{1,1},{0,1},{-1,1},{-1,0},{-1,-1},{0,-1},{1,-1}});
+  BrdIdx::nbr4 ({      {1,0},      {0,1},       {-1,0},        {0,-1}       }),
+  BrdIdx::nbr4D({            {1,1},      {-1,1},       {-1,-1},       {1,-1}}),
+  BrdIdx::nbr5 ({{0,0},{1,0},      {0,1},       {-1,0},        {0,-1}       }),
+  BrdIdx::nbr8 ({      {1,0},{1,1},{0,1},{-1,1},{-1,0},{-1,-1},{0,-1},{1,-1}}),
+  BrdIdx::nbr9 ({{0,0},{1,0},{1,1},{0,1},{-1,1},{-1,0},{-1,-1},{0,-1},{1,-1}});
 
 BrdIdx operator *(int k, const BrdIdx& o) { return o * k; }
 ostream& operator <<(ostream& os, const BrdIdx& i) {
