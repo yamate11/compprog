@@ -8,3 +8,5 @@ cans3
 *.hi
 *.log
 *.d
+clib/test/*_t.cc
+clib/test/*_t
