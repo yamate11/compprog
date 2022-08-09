@@ -97,7 +97,7 @@ struct BrdIdx {
 
   BrdIdx rotateQ() { return BrdIdx(-c, r); } // counter-clockwise
 
-  static vector<BrdIdx> nbr4, nbr5, nbr8, nbr9;
+  static vector<BrdIdx> nbr4, nbr4D, nbr5, nbr8, nbr9;
 };
 
 vector<BrdIdx>

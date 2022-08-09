@@ -32,7 +32,7 @@ vector<Point> naive_convex_hull(const vector<Point>& o_pts) {
 	Point q1 = pts.at(i) - pts.at(m);
 	Point q2 = pts.at(j) - pts.at(m);
 	if (!q1.parallel(q2)) continue;
-	if (!r_eq(q1.x, 0.0)) {
+	if (!may_eq(q1.x, 0.0)) {
 	  if (q2.x / q1.x < 0) { inner.insert(m); return; }
 	}else {
 	  if (q2.y / q1.y < 0) { inner.insert(m); return; }
@@ -124,8 +124,8 @@ int main(int argc, char *argv[]) {
     assert(! l02.ptOn(p03));
     assert(l01.unsafe_intersect(l02).sim(Point(1,1)));
     assert(l03.unsafe_intersect(l04).sim(p01));
-    assert(r_eq(l01.len(p01), sqrt(2)/2));
-    assert(r_eq(Line(p01.rotateQ(), p01).len(orig), 5));
+    assert(may_eq(l01.len(p01), sqrt(2)/2));
+    assert(may_eq(Line(p01.rotateQ(), p01).len(orig), 5));
   
     Point p08(1, -2), p09(4, 2);
     Circle c01(p09, 2), c02(p08, 1), c03(p08, 4), c04(p08, 10);
@@ -167,17 +167,17 @@ int main(int argc, char *argv[]) {
 
   {
     Point p10(7,2), p11(-3, 5);
-    assert(r_eq(p10.innerProd(p11), -11));
-    assert(r_eq(p11.innerProd(p10), -11));
-    assert(r_eq(p10.outerProd(p11), 41));
-    assert(r_eq(p11.outerProd(p10), -41));
-    assert(r_eq(Point(1,1).angle(Point(-1,0)), G_PI*0.75));
-    assert(r_eq(Point(-1,0).angle(Point(1,1)), -G_PI*0.75));
+    assert(may_eq(p10.innerProd(p11), -11));
+    assert(may_eq(p11.innerProd(p10), -11));
+    assert(may_eq(p10.outerProd(p11), 41));
+    assert(may_eq(p11.outerProd(p10), -41));
+    assert(may_eq(Point(1,1).angle(Point(-1,0)), G_PI*0.75));
+    assert(may_eq(Point(-1,0).angle(Point(1,1)), -G_PI*0.75));
     for (ll i = 0; i < 20; i++) {
       Point p12 = p10.rotate(i*G_PI/10);
-      assert(r_eq(p10.innerProd(p12),
+      assert(may_eq(p10.innerProd(p12),
 		  p10.len() * p12.len() * cos(p10.angle(p12))));
-      assert(r_eq(p10.outerProd(p12),
+      assert(may_eq(p10.outerProd(p12),
 		  p10.len() * p12.len() * sin(p10.angle(p12))));
     }
   }
@@ -211,12 +211,12 @@ int main(int argc, char *argv[]) {
     vector<Point> pts1 = {{0,0}, {2,0}, {2,2}, {0,2}, {1,1}, {0,1}, {2,1}};
     auto ch1 = convex_hull(pts1);
     assert(ch1 == vector<Point>({{0,0}, {2,0}, {2,2}, {0,2}}));
-    assert(r_eq(get<0>(convex_diameter(ch1)), 2.0*sqrt(2.0)));
+    assert(may_eq(get<0>(convex_diameter(ch1)), 2.0*sqrt(2.0)));
 
     vector<Point> pts2 = {{0,0}, {3,0}, {5,0}, {1,2}, {4,2}};
     auto ch2 = convex_hull(pts2);
     assert(ch2 == vector<Point>({{0,0}, {5,0}, {4,2}, {1,2}}));
-    assert(r_eq(get<0>(convex_diameter(ch2)), 5.0));
+    assert(may_eq(get<0>(convex_diameter(ch2)), 5.0));
   
     vector<Point> pts3 = {{0,5}, {1,4}, {1,8}, {2,1}, {2,2}, {3,5}, {3,8}, {4,5}};
     auto ch3 = convex_hull(pts3);
@@ -259,13 +259,13 @@ int main(int argc, char *argv[]) {
 	// DLOG("nch=", nch);
       }
       assert(chx == nchx);
-      if (!r_eq(d, nd)) {
+      if (!may_eq(d, nd)) {
 	// DLOG("pts=", pts);
 	// DLOG("ch=", ch);
 	// DLOG("d=", d, ch.at(i), ch.at(j));
 	// DLOG("nd=", nd, pts.at(ni), pts.at(nj));
       }
-      assert(r_eq(d, nd));
+      assert(may_eq(d, nd));
     }
 
     // end  (convex_hull and convex_diameter)
