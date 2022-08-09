@@ -70,6 +70,12 @@ def get_questions(url):
             time.sleep(0.3)
 
 def waits_until(tspec):
+    def unit(t):
+        return 60 if t >= 60 else 10 if t >= 10 else 5 if t >= 5 else 1
+    def round_down(t):
+        u = unit(t)
+        return u * int(t / u)
+
     if not tspec:
         return
     dt_now = datetime.now()
@@ -80,20 +86,30 @@ def waits_until(tspec):
     if dt < dt_now - timedelta(hours=1):
         msg('The time is considered tomorrow\'s time.')
         dt += timedelta(hours=24)
-    msg(f'Sleeping {dt - dt_now} seconds.')
-    time.sleep((dt - dt_now).total_seconds())
+    while True:
+        rest = (dt - dt_now).total_seconds()
+        if rest < 0.05:
+            break
+        msg(f'Starts in {int(rest + 0.5)} seconds')
+        w = round_down(rest - 0.05)
+        time.sleep((dt - dt_now).total_seconds() - w)
+        dt_now = datetime.now()
+
 
 def dir_check():
     fs = os.listdir('.')
+    if not (len(fs) == 0 or args.force):
+        die('Current directory is not empty.  Consider --force.')
     cnt = 0
     for f in fs:
-        if len(f) == 1 or re.match(r'\d+$'):
-            warn(f'File or directory {f} may be dangerous.')
+        if len(f) == 1 or re.match(r'\d+$', f):
+            warn(f'Existing file or directory {f} may be a problem.')
             cnt += 1
             if cnt == 5:
-                warn(f'There may be other danger files.')
-                return False
-    return cnt == 0
+                warn(f'There may be other problematic files.')
+                break
+    if cnt > 0:
+        die('Problematic files in the current directory.')
 
 def main():
     global driver, args
@@ -102,7 +118,7 @@ def main():
 
     dir_check()
 
-    msg('Initializing.')
+    msg('Initializing chrome driver.')
     options = webdriver.ChromeOptions()
     options.add_argument('--headless')
     driver = webdriver.Chrome(options=options)
@@ -145,6 +161,10 @@ def parseArgs():
     parser.add_argument(
         '--starts-at', type=str,
         help='''Time to start reading.'''
+    )
+    parser.add_argument(
+        '-f', '--force', action='store_true',
+        help='''Execute even when directory is not empty.'''
     )
     return parser.parse_args()
 
