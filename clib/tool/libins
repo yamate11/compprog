@@ -132,8 +132,11 @@ def extractContents(lib):
     with open(path) as fp:
         phase = 'out'
         func = ''
+        ln = 0
+        start_ln = -1
         while True:
             line = fp.readline()
+            ln += 1
             if not line:
                 if phase == 'out':
                     raise LibExc(f'No beginmark in {lib}.cc')
@@ -145,11 +148,12 @@ def extractContents(lib):
             if tp == 'LIB' and lst is not None:
                 if phase == 'out':
                     phase = 'inLib'
+                    start_ln = ln + 1
                 else:
                     raise LibExc(f'Library and Function cannot be nested in {lib}.cc.')
             elif tp == 'LIB' and lst is None:
                 if phase == 'inLib':
-                    return cont
+                    return (cont, start_ln)
                 else:
                     raise LibExc(f'Endmark without beginmark in {lib}.cc')
             elif tp == 'FUNC' and lst is not None:
@@ -165,7 +169,7 @@ def extractContents(lib):
             else:
                 if phase == 'inLib':
                     cont += line
-    return cont
+    return (cont, start_ln)
 
 funcContents = {}
 
@@ -223,10 +227,11 @@ def getFuncContents(funcname):
     return (libname, pre + body + post)
 
 def getLibContents(libname):
+    (body, start_ln) = extractContents(libname)
     pre = f'\n// ---- inserted library file {libname}.cc\n'
-    body = extractContents(libname)
+    lndesc = f'#line {start_ln} "{topDir}/clib/{libname}.cc"\n' if args.orig_lineno else ''
     post = f'// ---- end {libname}.cc\n'
-    return pre + body + post
+    return pre + lndesc + body + post
 
 def composite(origLibs):
     outs = ''
@@ -320,6 +325,7 @@ def main():
             if len(libs) > 0:
                 outcont += outs
                 outcont += f"\n// {magic} LIM -- end mark --\n"
+                outcont += f'#line {idxLast + 2} "{args.infile}"\n' if args.orig_lineno else ''
             for i in range(idxLast + 1, sz):
                 outcont += inLines[i]
 
@@ -371,10 +377,12 @@ and the last define the range of the library insertion part.
     parser.add_argument('-o', '--outfile',
                         help='output file.  If omitted, stdout is used.')
     parser.add_argument('-M', dest='makefile', action='store_true',
-                        help='make a makefile')
+                        help='makes a makefile')
     parser.add_argument('--makefile-name',
                         help='name of makefile.  If omitted, '
                         'outfile name base with extension .d is used.')
+    parser.add_argument('--orig-lineno', action='store_true',
+                        help='inserts line numbers in the original file')
     args = parser.parse_args()
     if args.cache_update:
         if args.infile or args.outfile or args.makefile:
@@ -385,5 +393,8 @@ and the last define the range of the library insertion part.
             die("-M should be used with --infile and --outfile")
     if args.makefile_name and not args.makefile:
         die("--makefile-name should be used with -M")
+    if args.orig_lineno and not args.infile:
+        warn("--orig-lineno is ignored as infile is not specified.")
+        args.orig_lineno = False
 
 main()

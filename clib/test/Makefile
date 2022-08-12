@@ -38,7 +38,7 @@ test: all
 include $(makefiles)
 
 %_t.cc %_t.d &: %_skel.cc
-	libins -M -o $*_t.cc -i $*_skel.cc
+	libins -M -o $*_t.cc -i $*_skel.cc --orig-lineno
 
 %: %.cc
 	$(CXX) -o $@ $(CXXFLAGS) $<
