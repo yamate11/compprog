@@ -18,6 +18,7 @@ using namespace std;
 
   Point
     Point p(x, y);
+    cin >> p;
     cout << p.x << p.y;
     cout << p;
     p.sim(q);  //  p and q are neally equal
@@ -154,9 +155,8 @@ struct Point {
 };
 
 Point operator *(Real k, const Point& p) { return p * k; }
-ostream& operator <<(ostream& os, const Point& p) {
-  return os << "(" << p.x << ", " << p.y << ")";
-}
+istream& operator >>(istream& is, Point& p) { is >> p.x >> p.y; return is; }
+ostream& operator <<(ostream& os, const Point& p) { return os << "(" << p.x << ", " << p.y << ")"; }
 
 struct Line;
 ostream& operator <<(ostream& os, const Line& l);
@@ -249,7 +249,7 @@ struct Line {
 };
 
 ostream& operator <<(ostream& os, const Line& l) {
-  return os << "[d " << l.dir << ", b " << l.base << ")";
+  return os << "[d " << l.dir << ", b " << l.base << "]";
 }
 Line Line::x_axis(Point(1,0), Point(0,0));
 Line Line::y_axis(Point(0,1), Point(0,0));
