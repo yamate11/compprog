@@ -6,6 +6,7 @@ using namespace std;
 // @@ !! LIM(rerror)
 
 // ---- inserted library file rerror.cc
+#line 34 "/home/y-tanabe/proj/compprog/clib/rerror.cc"
 
 #if RERROR_LONGDOUBLE
 using Real = long double;

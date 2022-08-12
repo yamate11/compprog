@@ -173,6 +173,7 @@ ostream& operator<< (ostream& os, int8_t x) {
 // ---- end f:<<
 
 // ---- inserted library file debug.cc
+#line 42 "/home/y-tanabe/proj/compprog/clib/debug.cc"
 template <class... Args>
 string dbgFormat(const char* fmt, Args... args) {
   size_t len = snprintf(nullptr, 0, fmt, args...);
@@ -245,6 +246,7 @@ void dbgLog(bool with_nl, Head&& head, Tail&&... tail)
 // ---- end debug.cc
 
 // ---- inserted library file rerror.cc
+#line 34 "/home/y-tanabe/proj/compprog/clib/rerror.cc"
 
 #if RERROR_LONGDOUBLE
 using Real = long double;
@@ -286,6 +288,7 @@ bool updMin(T& tmin, const T& x) {
 // ---- end f:updMaxMin
 
 // ---- inserted library file geometry.cc
+#line 102 "/home/y-tanabe/proj/compprog/clib/geometry.cc"
 
 #if RERROR_LONGDOUBLE
 #define G_PI 3.141592653589793238462643383279502884L
@@ -342,9 +345,8 @@ struct Point {
 };
 
 Point operator *(Real k, const Point& p) { return p * k; }
-ostream& operator <<(ostream& os, const Point& p) {
-  return os << "(" << p.x << ", " << p.y << ")";
-}
+istream& operator >>(istream& is, Point& p) { is >> p.x >> p.y; return is; }
+ostream& operator <<(ostream& os, const Point& p) { return os << "(" << p.x << ", " << p.y << ")"; }
 
 struct Line;
 ostream& operator <<(ostream& os, const Line& l);
@@ -437,7 +439,7 @@ struct Line {
 };
 
 ostream& operator <<(ostream& os, const Line& l) {
-  return os << "[d " << l.dir << ", b " << l.base << ")";
+  return os << "[d " << l.dir << ", b " << l.base << "]";
 }
 Line Line::x_axis(Point(1,0), Point(0,0));
 Line Line::y_axis(Point(0,1), Point(0,0));
@@ -606,6 +608,7 @@ int in_triangle(const Point& pt, const Point& tr0,
 // ---- end geometry.cc
 
 // @@ !! LIM -- end mark --
+#line 7 "geometry_skel.cc"
 
 bool pt_comp(const Point& a, const Point& b) {
   if (a.x != b.x) return a.x < b.x;
@@ -768,6 +771,24 @@ int main(int argc, char *argv[]) {
   }
 
   {
+    stringstream ss1("1.234 5.678"), ss2("-1000 -3000");
+    Point p1, p2;
+    ss1 >> p1;
+    ss2 >> p2;
+    assert(p1.sim(Point(1.234, 5.678)));
+    assert(p2.sim(Point(-1000, -3000)));
+    stringstream ss3, ss4, ss5, ss6;
+    ss3 << p1;
+    ss4 << p2;
+    ss5 << Line(Point(10, -20), Point(-30, 40));
+    ss6 << Circle(Point(-10, 20), 5);
+    assert(ss3.str() == "(1.234, 5.678)");
+    assert(ss4.str() == "(-1000, -3000)");
+    assert(ss5.str() == "[d (10, -20), b (-30, 40)]");
+    assert(ss6.str() == "[c (-10, 20), 5]");
+  }
+
+  {
     Point p10(7,2), p11(-3, 5);
     assert(may_eq(p10.innerProd(p11), -11));
     assert(may_eq(p11.innerProd(p10), -11));
@@ -874,5 +895,4 @@ int main(int argc, char *argv[]) {
   }
 
   cout << "Test done." << endl;
-
 }

@@ -38,28 +38,6 @@ bool may_le_abs_only(Real x, Real y, Real err = g_err) { return may_le(x, y, err
 bool may_ge_abs_only(Real x, Real y, Real err = g_err) { return may_ge(x, y, err, true); }
 
 
-/*
-
-bool r_eq(Real x, Real y, Real err = g_err) {
-  return abs(x - y) <= err || abs(x - y) <= abs(x) * err;
-}
-bool r_le(Real x, Real y, Real err = g_err) {
-  return x - y <= err || x - y <= abs(x) * err;
-}
-bool r_ge(Real x, Real y, Real err = g_err) { return r_le(y, x, err); }
-bool r_gt(Real x, Real y, Real err = g_err) { return !r_le(x, y, err); }
-bool r_lt(Real x, Real y, Real err = g_err) { return !r_le(y, x, err); }
-bool r_ne(Real x, Real y, Real err = g_err) { return !r_eq(x, y, err); }
-
-bool rp_eq(Real x, Real y, Real err = g_err) { return abs(x - y) <= err; }
-bool rp_le(Real x, Real y, Real err = g_err) { return x - y <= err; }
-bool rp_ge(Real x, Real y, Real err = g_err) { return rp_le(y, x, err); }
-bool rp_gt(Real x, Real y, Real err = g_err) { return !rp_le(x, y, err); }
-bool rp_lt(Real x, Real y, Real err = g_err) { return !rp_le(y, x, err); }
-bool rp_ne(Real x, Real y, Real err = g_err) { return !rp_eq(x, y, err); }
-
-*/
-
 // ---- end rerror.cc
 
 // ---- inserted function f:updMaxMin from util.cc
@@ -402,37 +380,11 @@ int main(/* int argc, char *argv[] */) {
   cin.tie(nullptr);
   cout << setprecision(20);
 
-  random_device rd;
-  mt19937 g(rd());
+  double a, b, d; cin >> a >> b >> d;
+  Point p(a, b);
+  Point q = p.rotate(M_PI * d / 180);
+  cout << q.x << " " << q.y << endl;
 
-  ll N; cin >> N;
-  vector<Point> P(N);
-  REP(i, N) {
-    Real x, y; cin >> x >> y;
-    P[i] = Point(x, y);
-  }
-  shuffle(P.begin(), P.end(), g);
-  
-  auto weizl = [&](auto rF, ll p, vector<ll> r) -> Circle {
-    if (SIZE(r) == 3) {
-      auto pt = circumcenter(P[r[0]], P[r[1]], P[r[2]]);
-      return Circle(pt, (P[r[0]] - pt).len());
-    }else if (p == N) {
-      if (SIZE(r) == 2) {
-        return Circle((P[r[0]] + P[r[1]]) / 2, (P[r[0]] - P[r[1]]).len() / 2);
-      }else if (SIZE(r) == 1) {
-        return Circle(P[r[0]], 0.0);
-      }else assert(0);
-    }else if (p == N - 1 and SIZE(r) == 0) {
-      return Circle(P[N-1], 0.0);
-    }
-    Circle c = rF(rF, p + 1, r);
-    if (may_le((P[p] - c.c).len(), c.r)) return c;
-    r.push_back(p);
-    return rF(rF, p + 1, r);
-  };
-  Circle c = weizl(weizl, 0, vector<ll>());
-  cout << c.r << endl;
 
   return 0;
 }

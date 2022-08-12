@@ -166,6 +166,24 @@ int main(int argc, char *argv[]) {
   }
 
   {
+    stringstream ss1("1.234 5.678"), ss2("-1000 -3000");
+    Point p1, p2;
+    ss1 >> p1;
+    ss2 >> p2;
+    assert(p1.sim(Point(1.234, 5.678)));
+    assert(p2.sim(Point(-1000, -3000)));
+    stringstream ss3, ss4, ss5, ss6;
+    ss3 << p1;
+    ss4 << p2;
+    ss5 << Line(Point(10, -20), Point(-30, 40));
+    ss6 << Circle(Point(-10, 20), 5);
+    assert(ss3.str() == "(1.234, 5.678)");
+    assert(ss4.str() == "(-1000, -3000)");
+    assert(ss5.str() == "[d (10, -20), b (-30, 40)]");
+    assert(ss6.str() == "[c (-10, 20), 5]");
+  }
+
+  {
     Point p10(7,2), p11(-3, 5);
     assert(may_eq(p10.innerProd(p11), -11));
     assert(may_eq(p11.innerProd(p10), -11));
@@ -272,5 +290,4 @@ int main(int argc, char *argv[]) {
   }
 
   cout << "Test done." << endl;
-
 }
