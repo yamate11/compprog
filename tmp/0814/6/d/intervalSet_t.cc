@@ -3,10 +3,9 @@
 typedef long long int ll;
 using namespace std;
 
-// @@ !! LIM(intervalSet)
+// @@ !! LIM()
 
 // ---- inserted library file intervalSet.cc
-#line 46 "/home/y-tanabe/proj/compprog/clib/intervalSet.cc"
 
 template<typename T>
 struct itv_set {
@@ -133,8 +132,6 @@ struct itv_set {
 
 // ---- end intervalSet.cc
 
-// @@ !! LIM -- end mark --
-#line 7 "intervalSet_skel.cc"
 
 int main(/* int argc, char *argv[] */) {
   ios_base::sync_with_stdio(false);
@@ -259,3 +256,5 @@ int main(/* int argc, char *argv[] */) {
 
   cout << "ok\n";
 }
+
+  
