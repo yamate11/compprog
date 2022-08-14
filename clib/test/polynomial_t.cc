@@ -173,6 +173,7 @@ ostream& operator<< (ostream& os, int8_t x) {
 // ---- end f:<<
 
 // ---- inserted library file algOp.cc
+#line 105 "/home/y-tanabe/proj/compprog/clib/algOp.cc"
 
 // Common definitions
 //    zero, one, inverse
@@ -407,6 +408,7 @@ ll crt(vector<ll> as, vector<ll> xs) {
 // ---- end f:gcd
 
 // ---- inserted library file mod.cc
+#line 39 "/home/y-tanabe/proj/compprog/clib/mod.cc"
 
 template<int mod=0>
 struct FpG {   // G for General
@@ -556,6 +558,7 @@ using CombB = CombG<primeB>;
 // ---- end mod.cc
 
 // ---- inserted library file debug.cc
+#line 42 "/home/y-tanabe/proj/compprog/clib/debug.cc"
 template <class... Args>
 string dbgFormat(const char* fmt, Args... args) {
   size_t len = snprintf(nullptr, 0, fmt, args...);
@@ -639,6 +642,7 @@ double get_time_sec() {
 // ---- end f:perfmeas
 
 // ---- inserted library file power.cc
+#line 16 "/home/y-tanabe/proj/compprog/clib/power.cc"
 
 template<typename T>
 T power(const T& a, ll b) {
@@ -655,6 +659,7 @@ T power(const T& a, ll b) {
 // ---- end power.cc
 
 // ---- inserted library file convolution.cc
+#line 24 "/home/y-tanabe/proj/compprog/clib/convolution.cc"
 
 #if ! defined(DLOG_LIB)
   #define DLOG_LIB(...)
@@ -1006,6 +1011,7 @@ vector<long long> convolution_ll(const vector<long long>& a,
 // ---- end convolution.cc
 
 // ---- inserted library file polynomial.cc
+#line 94 "/home/y-tanabe/proj/compprog/clib/polynomial.cc"
 
 #if ! defined(DLOG_LIB)
   #define DLOG_LIB(...)
@@ -1564,6 +1570,7 @@ using PolyFpB = Polynomial<FpB, 1>;
 // ---- end polynomial.cc
 
 // @@ !! LIM -- end mark --
+#line 7 "polynomial_skel.cc"
 
 int main(/* int argc, char *argv[] */) {
   ios_base::sync_with_stdio(false);
