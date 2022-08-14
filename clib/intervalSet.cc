@@ -29,7 +29,14 @@ using namespace std;
           where x0 ==l and xn == r.  
           Note that it might be the case t_i == t_{i+1}.
   tuple<ll, ll, T> get_itv(ll x) ... returns (l, r, f(x)) where x \in [l, r)
-
+  void normalize() ... remove redundant endpoints
+  void update(auto upd, const itv_set& o)
+      ... upd receives T& and const T& and updates the first argument (and returns nothing).
+          This function is executed with each element of *this as the first and that of o as the second parameter.
+      e.g. 
+      // itv_set<ll> A(...), B(...);
+      // auto upd = [&](ll& a, const ll& b) -> void { a += b; };
+      // A.update(upd, B);
 
  */
 
@@ -41,33 +48,21 @@ template<typename T>
 struct itv_set {
   
   auto get_it(ll x) {
-    auto it = repl.lower_bound(x);
-    if (it == repl.end()) {
-      throw runtime_error("get_it: out of range");
-    }
-    if (it->first == x) return it;
-    if (it == repl.begin()) {
-      throw runtime_error("get_it: out of range");
-    }
-    return prev(it);
+    if (x < l0 or r0 < x) throw runtime_error("itv_set.get_it: out of range");
+    auto it = repl.upper_bound(x);
+    return std::prev(it);
   }
 
   auto get_it(ll x) const {
-    auto it = repl.lower_bound(x);
-    if (it == repl.end()) {
-      throw runtime_error("get_it: out of range");
-    }
-    if (it->first == x) return it;
-    if (it == repl.begin()) {
-      throw runtime_error("get_it: out of range");
-    }
-    return prev(it);
+    if (x < l0 or r0 <= x) throw runtime_error("itv_set.get_it: out of range");
+    auto it = repl.upper_bound(x);
+    return std::prev(it);
   }
 
   auto divide(ll x) {
     auto it = get_it(x);
     if (it->first == x) return it;
-    auto [y, t] = *it;
+    auto& [y, t] = *it;
     auto [it2, rc] = repl.emplace(x, t);
     assert(rc);
     return it2;
@@ -75,13 +70,17 @@ struct itv_set {
 
   ll l0;
   ll r0;
-  map<ll, T> repl;
+  map<ll, T> repl;  // repl always has (LLONG_MIN, *) and (LLONG_MAX, *) as centinels.
 
-  itv_set(ll l0_, ll r0_, T t) : l0(l0_), r0(r0_) {
+  itv_set(ll l0_, ll r0_, const T& t) : l0(l0_), r0(r0_) {
+    repl[LLONG_MIN] = t;
+    repl[LLONG_MAX] = T();
     repl[l0] = t; repl[r0] = t;
   }
   itv_set(ll l0_, const vector<T>& vec) : l0(l0_), r0(l0_ + (ll)vec.size()) {
-    for (int i = 0; i < (int)vec.size(); i++) {
+    repl[LLONG_MIN] = vec[0];
+    repl[LLONG_MAX] = T();
+    for (int i = 1; i < (int)vec.size(); i++) {
       repl[l0 + i] = vec[i];
     }
     repl[r0] = vec[0];
@@ -125,9 +124,47 @@ struct itv_set {
   tuple<ll, ll, T> get_itv(ll x) const {
     auto it = get_it(x);
     auto it2 = next(it);
-    return {it->first, it2->first, it->second};
+    return {max(l0, it->first), min(r0, it2->first), it->second};
   }
 
+  void normalize() {
+    auto it = repl.begin();
+    while (true) {
+      auto itX = std::next(it);
+      while (true) {
+        if (itX == repl.end()) return;
+        if (it->second != itX->second) break;
+        itX = repl.erase(itX);
+      }
+      it = itX;
+    }
+  }
+
+  void update(auto upd, const itv_set& o) {
+    if (l0 != o.l0 or r0 != o.r0) throw runtime_error("itv_set.apply: the intervals do not match.");
+    auto itO = o.repl.begin();
+    auto itT = repl.begin();
+    while (itO->first < LLONG_MAX) {
+      /*
+      DLOGK(itT->first, itO->first);
+      DLOGKL("before", repl);
+      DLOGKL("after ", repl);
+      */
+      if (std::next(itO)->first < std::next(itT)->first) {
+        auto it_nxt = divide(std::next(itO)->first);
+        upd(itT->second, itO->second);
+        itT = it_nxt;
+        itO++;
+      }else if (std::next(itO)->first > std::next(itT)->first) {
+        upd(itT->second, itO->second);
+        itT++;
+      }else { // std::next(itO)->first == std::next(itT)->first
+        upd(itT->second, itO->second);
+        itT++;
+        itO++;
+      }
+    }
+  }
 };
 
 // @@ !! END ---- intervalSet.cc
