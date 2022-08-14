@@ -22,6 +22,10 @@ using namespace std;
         PolyFp p({-1, 0, 1, 2});   // -1 + X^2 + 2 X^3
     - Constant
         PolyLL p(5);               // 5
+    - vector
+        vector<ll> vec = ....;
+        PolyLL p(vec);  // or
+        PolyLL p(move(vec));
   - Indeterminate element
         const SparsePoly<T> X;   
   - X^n
