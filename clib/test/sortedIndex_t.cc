@@ -6,6 +6,7 @@ using namespace std;
 // @@ !! LIM(sortedIndex)
 
 // ---- inserted library file sortedIndex.cc
+#line 22 "/home/y-tanabe/proj/compprog/clib/sortedIndex.cc"
 
 vector<int> sortedIndex(const auto& vec, auto comp) {
   vector<int> ret(vec.size());
@@ -20,6 +21,7 @@ vector<int> sortedIndex(const Collection& vec) { return sortedIndex(vec, less<ty
 // ---- end sortedIndex.cc
 
 // @@ !! LIM -- end mark --
+#line 7 "sortedIndex_skel.cc"
 
 using pll = pair<ll, ll>;
 

@@ -173,6 +173,7 @@ ostream& operator<< (ostream& os, int8_t x) {
 // ---- end f:<<
 
 // ---- inserted library file debug.cc
+#line 42 "/home/y-tanabe/proj/compprog/clib/debug.cc"
 template <class... Args>
 string dbgFormat(const char* fmt, Args... args) {
   size_t len = snprintf(nullptr, 0, fmt, args...);
@@ -245,6 +246,7 @@ void dbgLog(bool with_nl, Head&& head, Tail&&... tail)
 // ---- end debug.cc
 
 // ---- inserted library file trie.cc
+#line 258 "/home/y-tanabe/proj/compprog/clib/trie.cc"
 
 struct TrNode {
   vector<int> next;
@@ -296,6 +298,7 @@ ostream& operator<< (ostream& os, const Trie& trie) {
 // ---- end trie.cc
 
 // @@ !! LIM -- end mark --
+#line 7 "trie_skel.cc"
 
 
 int main(int argc, char *argv[]) {

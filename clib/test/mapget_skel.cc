@@ -22,4 +22,27 @@ int main(int argc, char *argv[]) {
     assert(mapget(mp, 7) == 0);
     assert(mp.find(7) == mp.end());
   }
+  {
+    using vi = vector<int>;
+    map<int, vi> mp;
+    mapset(mp, 3, vi{1, 2, 3});
+    mapset(mp, 7, move(vi{-1, -2}));
+    mapset(mp, 10, vi{});
+    assert(mapget(mp, 3) == (vi{1, 2, 3}));
+    assert(mapget(mp, 7) == (vi{-1, -2}));
+    assert(mapget(mp, 10) == vi{});
+    assert(mapget(mp, 100000) == vi{});
+    assert(mp.find(10) == mp.end());
+    mapset(mp, 7, vi{});
+    assert(mp.size() == 1);
+  }
+  {
+    using mis = map<int, string>;
+    map<int, string> mp{{5, "hello"}, {2, "world"}};
+    mapset(mp, 4, "", "---");
+    mapset(mp, 7, "---", "---");
+    assert(mapget<mis>(mp, 2, string("---")) == "world");
+    assert(mapget<mis>(mp, 7, string("---")) == "---");
+    assert(mapget<mis>(mp, -10, string("---")) == "---");
+  }
 }

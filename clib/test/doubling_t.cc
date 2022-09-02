@@ -6,6 +6,7 @@ using namespace std;
 // @@ !! LIM(doubling)
 
 // ---- inserted library file doubling.cc
+#line 49 "/home/y-tanabe/proj/compprog/clib/doubling.cc"
 
 template <typename T, typename Fop>
 struct Doubling {
@@ -84,6 +85,7 @@ auto make_doubling(ll lim, const auto& nxt, const auto& alpha, T unit, auto op)
 // ---- end doubling.cc
 
 // @@ !! LIM -- end mark --
+#line 7 "doubling_skel.cc"
 
 int main(/* int argc, char *argv[] */) {
   ios_base::sync_with_stdio(false);

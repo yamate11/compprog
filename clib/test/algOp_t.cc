@@ -6,6 +6,7 @@ using namespace std;
 // @@ !! LIM(algOp)
 
 // ---- inserted library file algOp.cc
+#line 105 "/home/y-tanabe/proj/compprog/clib/algOp.cc"
 
 // Common definitions
 //    zero, one, inverse
@@ -162,6 +163,7 @@ struct MyAlg {
 // ---- end algOp.cc
 
 // @@ !! LIM -- end mark --
+#line 7 "algOp_skel.cc"
 
 
 int main() {

@@ -220,6 +220,7 @@ struct ItRange {
 // ---- end f:itrange
 
 // ---- inserted library file sieve.cc
+#line 40 "/home/y-tanabe/proj/compprog/clib/sieve.cc"
 
 // sieve(upto) returns the list of prime numbers up to upto.
 //   Size: upto(1e8).size() ... 5.7e6,  upto(1e9).size() ... 5.1e7
@@ -329,6 +330,7 @@ vector<ll> getDivisorsDivSieve(ll n, const vector<int>& divSieve) { return _gdsu
 // ---- end sieve.cc
 
 // @@ !! LIM -- end mark --
+#line 7 "sieve_skel.cc"
 
 int main() {
 

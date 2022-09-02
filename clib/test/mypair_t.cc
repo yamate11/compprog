@@ -11,6 +11,7 @@ using namespace std;
 // @@ !! LIM(mypair)
 
 // ---- inserted library file mypair.cc
+#line 29 "/home/y-tanabe/proj/compprog/clib/mypair.cc"
 
 template<typename A, typename B>
 struct mypair {
@@ -75,6 +76,7 @@ using pll = mypair<ll, ll>;
 // ---- end mypair.cc
 
 // @@ !! LIM -- end mark --
+#line 12 "mypair_skel.cc"
 
 int main(/* int argc, char *argv[] */) {
   ios_base::sync_with_stdio(false);

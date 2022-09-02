@@ -6,6 +6,7 @@ using namespace std;
 // @@ !! LIM(minCostFlow)
 
 // ---- inserted library file minCostFlow.cc
+#line 22 "/home/y-tanabe/proj/compprog/clib/minCostFlow.cc"
 
 struct Edge {
   int dst;
@@ -89,6 +90,7 @@ public:
 // ---- end minCostFlow.cc
 
 // @@ !! LIM -- end mark --
+#line 7 "minCostFlow_skel.cc"
 
 
   

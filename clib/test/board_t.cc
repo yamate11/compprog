@@ -6,6 +6,7 @@ using namespace std;
 // @@ !! LIM(board)
 
 // ---- inserted library file board.cc
+#line 74 "/home/y-tanabe/proj/compprog/clib/board.cc"
 
 struct BrdIdx {
   int r;
@@ -211,6 +212,7 @@ struct BoardRange {
 // ---- end board.cc
 
 // @@ !! LIM -- end mark --
+#line 7 "board_skel.cc"
 
 template<typename T>
 bool same(const Board<T>& brdA, const Board<T>& brdB) {

@@ -1,492 +1,232 @@
 #include <bits/stdc++.h>
 #include <cassert>
-typedef long long int ll;
 using namespace std;
+using ll = long long int;
+using pll = pair<ll, ll>;
+// #include <atcoder/all>
+// using namespace atcoder;
+#define REP(i, a, b) for (ll i = (a); i < (b); i++)
+#define REPrev(i, a, b) for (ll i = (a); i >= (b); i--)
+#define ALL(coll) (coll).begin(), (coll).end()
+#define SIZE(v) ((ll)((v).size()))
+#define REPOUT(i, a, b, exp, sep) REP(i, (a), (b)) { if (i != (a)) cout << (sep); cout << (exp); } cout << "\n"
 
-// @@ !! LIM(debug mod tree)
-// --> f:<< debug f:gcd mod f:updMaxMin tree
-// ---- inserted function << from util.cc
-template <typename T1, typename T2>
-ostream& operator<< (ostream& os, const pair<T1,T2>& p) {
-  os << "(" << p.first << ", " << p.second << ")";
-  return os;
-}
+// @@ !! LIM(tree)
 
-template <typename T1, typename T2, typename T3>
-ostream& operator<< (ostream& os, const tuple<T1,T2,T3>& t) {
-  os << "(" << get<0>(t) << ", " << get<1>(t)
-     << ", " << get<2>(t) << ")";
-  return os;
-}
-
-template <typename T1, typename T2, typename T3, typename T4>
-ostream& operator<< (ostream& os, const tuple<T1,T2,T3,T4>& t) {
-  os << "(" << get<0>(t) << ", " << get<1>(t)
-     << ", " << get<2>(t) << ", " << get<3>(t) << ")";
-  return os;
-}
-
-template <typename T>
-ostream& operator<< (ostream& os, const vector<T>& v) {
-  os << '[';
-  for (auto it = v.begin(); it != v.end(); it++) {
-    if (it != v.begin()) os << ", ";
-    os << *it;
-  }
-  os << ']';
-
-  return os;
-}
-
-template <typename T>
-ostream& operator<< (ostream& os, const set<T>& v) {
-  os << '{';
-  for (auto it = v.begin(); it != v.end(); it++) {
-    if (it != v.begin()) os << ", ";
-    os << *it;
-  }
-  os << '}';
-
-  return os;
-}
-
-template <typename T>
-ostream& operator<< (ostream& os, const multiset<T>& v) {
-  os << '{';
-  for (auto it = v.begin(); it != v.end(); it++) {
-    if (it != v.begin()) os << ", ";
-    os << *it;
-  }
-  os << '}';
-
-  return os;
-}
-
-template <typename T1, typename T2>
-ostream& operator<< (ostream& os, const map<T1, T2>& mp) {
-  os << '[';
-  for (auto it = mp.begin(); it != mp.end(); it++) {
-    if (it != mp.begin()) os << ", ";
-    os << it->first << ": " << it->second;
-  }
-  os << ']';
-
-  return os;
-}
-
-template <typename T, typename T2, typename T3>
-ostream& operator<< (ostream& os, const priority_queue<T, T2, T3>& orig) {
-  priority_queue<T, T2, T3> pq(orig);
-  bool first = true;
-  os << '[';
-  while (!pq.empty()) {
-    T x = pq.top(); pq.pop();
-    if (!first) os << ", ";
-    os << x;
-    first = false;
-  }
-  return os << ']';
-}
-// ---- end <<
-// ---- inserted library file debug.cc
-template <class... Args>
-string dbgFormat(const char* fmt, Args... args) {
-  size_t len = snprintf(nullptr, 0, fmt, args...);
-  char buf[len + 1];
-  snprintf(buf, len + 1, fmt, args...);
-  return string(buf);
-}
-
-template <class Head>
-void dbgLog(Head&& head) {
-  cerr << head << endl;
-}
-
-template <class Head, class... Tail>
-void dbgLog(Head&& head, Tail&&... tail)
-{
-  cerr << head << " ";
-  dbgLog(forward<Tail>(tail)...);
-}
-
-#if DEBUG
-  #define DLOG(...)        dbgLog(__VA_ARGS__)
-  #define DFMT(...)        cerr << dbgFormat(__VA_ARGS__) << endl
-  #define DCALL(func, ...) func(__VA_ARGS__)
-#else
-  #define DLOG(...)
-  #define DFMT(...)
-  #define DCALL(func, ...)
-#endif
-
-// ---- end debug.cc
-// ---- inserted function gcd from util.cc
-// g = eGCD(a, b, s, t)  --->  sa + tb = g
-ll eGCD(ll a, ll b, ll& s, ll& t) {
-  if (a == 0) {
-    s = 0;
-    t = 1;
-    return b;
-  }
-  ll u = 0;
-  ll g = eGCD(b % a, a, t, u);
-  s = u - (b / a) * t;
-  return g;
-}
-
-// gcd(0, x) = x, gcd(-x, y) = gcd(x, y)
-ll gcd(ll a, ll b) {
-  ll dummy1 = 0;
-  ll dummy2 = 0;
-  return eGCD(abs(a), abs(b), dummy1, dummy2);
-}
-// ---- end gcd
-// ---- inserted library file mod.cc
-
-ll MOD = 1e9 + 7;
-// ll MOD = 998244353;
-
-struct Fp {
-  ll val;
-
-  Fp(ll t = 0) {
-    if      (t >= MOD)  val = t % MOD;
-    else if (t >= 0)    val = t;
-    else if (t >= -MOD) val = t + MOD;
-    else {
-      ll v = t % MOD;
-      if (v == 0) val = 0;
-      else        val = v + MOD;
-    }
-  }
-
-  Fp& operator +=(const Fp& t) {
-    val += t.val;
-    if (val >= MOD) val -= MOD;
-    return *this;
-  }
-
-  Fp& operator -=(const Fp& t) {
-    val -= t.val;
-    if (val < 0) val += MOD;
-    return *this;
-  }
-
-  Fp& operator *=(const Fp& t) {
-    val = (val * t.val) % MOD;
-    return *this;
-  }
-
-  Fp inv() const {
-    if (val == 0) {
-      cerr << "inv() is called for zero." << endl;
-      exit(1);
-    }
-    ll u = 0;
-    ll v = 0;
-    eGCD(val, MOD, u, v);
-    return Fp(u);
-  }
-
-  Fp& operator /=(const Fp& t) {
-    return (*this) *= t.inv();
-  }
-
-  Fp operator +(const Fp& t) const { return Fp(val) += t; }
-  Fp operator -(const Fp& t) const { return Fp(val) -= t; }
-  Fp operator *(const Fp& t) const { return Fp(val) *= t; }
-  Fp operator /(const Fp& t) const { return Fp(val) /= t; }
-  Fp operator -() const { return Fp(-val); }
-
-  bool operator ==(const Fp& t) const { return val == t.val; }
-  bool operator !=(const Fp& t) const { return val != t.val; }
-  
-  operator ll() const { return val; }
-
-};
-
-class Comb {
-  int nMax;
-  vector<Fp> vFact;
-  vector<Fp> vInvFact;
-public:
-  Comb(int nm) : nMax(nm), vFact(nm+1), vInvFact(nm+1) {
-    vFact.at(0) = 1;
-    for (int i = 1; i <= nMax; i++) vFact.at(i) = i * vFact.at(i-1);
-    vInvFact.at(nMax) = vFact.at(nMax).inv();
-    for (int i = nMax; i >= 1; i--) vInvFact.at(i-1) = i * vInvFact.at(i);
-  }
-  Fp fact(int n) { return vFact.at(n); }
-  Fp comb(int n, int r) {
-    return vFact.at(n) * vInvFact.at(r) * vInvFact.at(n-r);
-  }
-  // The number of permutation extracting r from n.
-  Fp perm(int n, int r) {
-    return vFact.at(n) * vInvFact.at(n-r);
-  }
-};
-
-// ---- end mod.cc
-// ---- inserted function updMaxMin from util.cc
-template<typename T>
-bool updMax(T& tmax, const T& x) {
-  if (x > tmax) { tmax = x; return true;  }
-  else          {           return false; }
-}
-template<typename T>
-bool updMin(T& tmin, const T& x) {
-  if (x < tmin) { tmin = x; return true;  }
-  else          {           return false; }
-}
-// ---- end updMaxMin
 // ---- inserted library file tree.cc
 
-class Edge : public pair<int, int> {
-public:
-  Edge() : pair<int, int>() {}
-  Edge(const int& x, const int& y) : pair<int, int>(x, y) {}
-  Edge(istream& stream, int shift) {
-    stream >> this->first >> this->second;
-    this->first -= shift;
-    this->second -= shift;
+using TreeEdge = pair<int, int>;
+
+struct Tree {
+
+  int numNodes;
+  int root;
+  int numEdges = 0;
+  bool good_nbr = false;
+  vector<vector<int>> _nbr;
+      // if (u, v) is the idx-th edge, then _nbr[u] has v and _nbr[v] has u.
+      // when good_nbr is true, then _nbr[u][0] is the parent.  (_nbr[root][0] is -1)
+  vector<int> _depth;
+  unordered_map<int, map<int, int>> _node2edgeIdx;
+  vector<vector<int>> pPnt;   
+          // pPnt[0][n] == parent of n (or root if n is root)
+          // pPnt[t][n] == parent^{2^t}[n]
+
+  Tree(int numNodes_, int root_ = 0) : numNodes(numNodes_), root(root_), _nbr(numNodes_) {}
+
+  Tree(int numNodes_, const auto& edge_, int root_ = 0) : numNodes(numNodes_), root(root_), _nbr(numNodes_) {
+    for (size_t i = 0; i < edge_.size(); i++) add_edge(edge_[i].first, edge_[i].second);
   }
-};
 
-class Tree {
-
-  void init() {
-    numNodes = edge.size() + 1;
-    parent.resize(numNodes);
-    child.resize(numNodes);
-    depth.resize(numNodes);
-    for (int i = 0; i < numNodes - 1; i++) {
-      Edge e = edge.at(i);
-      child.at(e.first).push_back(e.second);
-      child.at(e.second).push_back(e.first);
-    }
-    auto dfs = [&](const auto& recF, int n, int p, int l) -> void {
-      parent.at(n) = p;
-      depth.at(n) = l;
+  void set_parent_child() {
+    if (good_nbr) return;
+    if (numNodes != numEdges + 1) throw range_error("numNodes and numEdges");
+    good_nbr = true;
+    _depth.resize(numNodes);
+    auto dfs = [&](auto rF, int nd, int pt, int d) -> void {
+      _depth[nd] = d;
+      int sz = _nbr[nd].size();
       int ip = -1;
-      auto& vecC = child.at(n);
-      int numC = vecC.size();
-      for (int i = 0; i < numC; i++) {
-	int c = vecC.at(i);
-	if (c == p) ip = i;
-	else        recF(recF, c, n, l+1);
+      for (int i = 0; i < sz; i++) {
+        if (_nbr[nd][i] == pt) ip = i;
+        else                  rF(rF, _nbr[nd][i], nd, d + 1);
       }
-      if (n != root) {
-	if (ip < numC - 1) swap(vecC.at(ip), vecC.at(numC - 1));
-	vecC.resize(numC - 1);
+      if (nd == root) {
+        ip = _nbr[nd].size();
+        _nbr[nd].push_back(-1);
       }
+      if (ip > 0) swap(_nbr[nd][0], _nbr[nd][ip]);
     };
     dfs(dfs, root, -1, 0);
-    parent.at(root) = root;
   }
 
-  vector<vector<int>> pPnt;   
-          // pPnt.at(0) == parent
-          // pPnt.at(t).at(n) == parent^{2^t}.at(n)
   void preparePPnt() {
-    pPnt.push_back(parent);
+    set_parent_child();
+    if (not pPnt.empty()) return;
+    vector<int> vec_parent(numNodes);
+    for (int i = 0; i < numNodes; i++) vec_parent[i] = i == root ? i : _nbr[i][0];
+    pPnt.push_back(move(vec_parent));
     for (int t = 0; true; t++) {
       bool done = true;
       vector<int> vec(numNodes);
       for (int n = 0; n < numNodes; n++) {
-	int m = pPnt.at(t).at(n);
-	vec.at(n) = pPnt.at(t).at(m);
-	if (vec.at(n) != m) done = false;
+	int m = pPnt[t][n];
+	vec[n] = pPnt[t][m];
+	if (vec[n] != m) done = false;
       }
       pPnt.push_back(move(vec));
       if (done) break;
     }
   }
 
-  map<int, map<int, int>> __node2edgeID;
-
-public:
-  int numNodes;
-  int root;
-  vector<int> parent;   // parent.at(root) == root
-  vector<vector<int>> child;
-  vector<int> depth;
-  vector<Edge> edge;
-
-  Tree(vector<Edge>&& edge_, int root_ = 0) : root(root_), edge(move(edge_)) {
-    init();
+  int add_edge(int x, int y) {
+    _nbr[x].push_back(y);
+    _nbr[y].push_back(x);
+    _node2edgeIdx[x][y] = _node2edgeIdx[y][x] = numEdges;
+    return numEdges++;
   }
 
-  Tree(const auto& edge_, int root_ = 0) : root(root_), edge() {
-    for (Edge e : edge_) edge.push_back(e);
-    init();
+  // parent(root) == -1
+  int parent(int x) {
+    set_parent_child();
+    return _nbr[x][0];
+  }
+
+  vector<int> child(int x) { 
+    set_parent_child();
+    vector<int> ret(_nbr[x].size() - 1);
+    copy(_nbr[x].begin() + 1, _nbr[x].end(), ret.begin());
+    return ret;
+  }
+
+  int depth(int x) {
+    set_parent_child();
+    return _depth[x];
   }
 
   // Lowest Common Ancestor
   int lca(int x, int y) {
-    if (depth.at(x) > depth.at(y)) swap(x, y);
-    int dep = depth.at(x);
+    set_parent_child();
+    if (_depth[x] > _depth[y]) swap(x, y);
+    int dep = _depth[x];
     int yy = ancestorDep(y, dep);
     if (x == yy) return x;
     int t = 0;
     for (int q = 1; q < dep; q *= 2) t++;
     for ( ; t >= 0; t--) {
-      if (pPnt.at(t).at(x) != pPnt.at(t).at(yy)) {
-	x = pPnt.at(t).at(x);
-	yy = pPnt.at(t).at(yy);
+      if (pPnt[t][x] != pPnt[t][yy]) {
+	x = pPnt[t][x];
+	yy = pPnt[t][yy];
       }
     }
-    return parent.at(x);
+    return parent(x);
   }
 
-  // the path between two nodes
+  // the path between two nodes (list of nodes, including x and y)
   vector<int> nnpath(int x, int y) {
-    vector<int> ret, sub;
+    vector<int> ret;
     int c = lca(x, y);
-    for ( ; x != c; x = parent.at(x)) ret.push_back(x);
-    for ( ; y != c; y = parent.at(y)) sub.push_back(y);
+    for ( ; x != c; x = parent(x)) ret.push_back(x);
     ret.push_back(c);
-    for (int i = sub.size() - 1; i >= 0; i--) ret.push_back(sub.at(i));
+    int len = (int)ret.size();
+    for ( ; y != c; y = parent(y)) ret.push_back(y);
+    reverse(ret.begin() + len, ret.end());
     return ret;
   }
 
   // the ancestor of n whose depth is dep
-  int ancestorDep(int n, int dep) {
-    if (pPnt.size() == 0) preparePPnt();
-    int diff = depth.at(n) - dep;
-    assert(diff >= 0);
-    for (int t = 0; diff > 0; t++) {
-      if (diff & (1 << t)) {
-	n = pPnt.at(t).at(n);
-	diff ^= (1 << t);
-      }
-    }
-    return n;
+  int ancestorDep(int x, int dep) {
+    preparePPnt();
+    int diff = depth(x) - dep;
+    if (diff < 0) throw range_error("ancestorDep");
+    for (int t = 0; diff >> t; t++) if (diff >> t & 1) x = pPnt[t][x];
+    return x;
   }
 
-  int node2edgeID(int n1, int n2) {
-    if (__node2edgeID.empty()) {
-      for (ll i = 0; i < numNodes - 1; i++) {
-	Edge e = edge.at(i);
-	__node2edgeID[e.first][e.second] = i;
-	__node2edgeID[e.second][e.first] = i;
-      }
-    }
-    auto it1 = __node2edgeID.find(n1);
-    if (it1 == __node2edgeID.end()) return -1;
-    auto it2 = it1->second.find(n2);
-    if (it2 == it1->second.end()) return -1;
-    return it2->second;
+  int edgeIdx(int x, int y) {
+    auto itx = _node2edgeIdx.find(x);
+    if (itx == _node2edgeIdx.end()) return -1;
+    auto ity = itx->second.find(y);
+    if (ity == itx->second.end()) return -1;
+    return ity->second;
   }
-  Edge node2edge(int n1, int n2) { return edge.at(node2edgeID(n1, n2)); }
-  
 
 #pragma GCC diagnostic push
 #pragma GCC diagnostic ignored "-Wunused-but-set-variable"    
-  // diameter
-  //   not efficient at all.  fixed-rooted tree is not suitable....
   int diameter() {
-  // tuple<int, int, int> diameter() {
-    int maxDepth = 0;
-    int mdArg1 = -1;
-    for (int i = 0; i < numNodes; i++) {
-      if (updMax(maxDepth, depth.at(i))) mdArg1 = i;
-    }
-    Tree tr2(edge, mdArg1);
-    maxDepth = 0;
-    int mdArg2;
-    for (int i = 0; i < numNodes; i++) {
-      if (updMax(maxDepth, tr2.depth.at(i))) mdArg2 = i;
-    }
-    // Return mdArg1 and mdArg2 if you need endpoints as well.
-    // return make_tuple(maxDepth, mdArg1, mdArg2);
-    return maxDepth;
+    set_parent_child();
+    ll nd0 = max_element(_depth.begin(), _depth.end()) - _depth.begin();
+    auto dfs2 = [&](auto rF, int nd, int pt, int dp) -> int {
+      int ret = 0;
+      for (ll cld : _nbr[nd]) {
+        if (cld < 0 or cld == pt) continue;
+        ret = max(ret, 1 + rF(rF, cld, nd, dp + 1));
+      }
+      return ret;
+    };
+    return dfs2(dfs2, nd0, -1, 0);
   }
-};
 #pragma GCC diagnostic pop
 
-template <typename T, typename ADD_T, typename MOD_T>
-class RerootTree {
-public:
-  const Tree& tree;
-  const T& unitT;
-  const ADD_T& add;   // T -> T -> T
-  const MOD_T& mod;   // T -> int -> int -> T
-  
-  vector<vector<T>> left;
-  vector<vector<T>> right;
-  vector<T> res;
-
-  T dfs1(int n) {
-    vector<T> vec;
-    for (ll c : tree.child.at(n)) vec.push_back(mod(dfs1(c), c, n));
-    int k = tree.child.at(n).size();
-    vector<T>& leftN = left.at(n);
-    vector<T>& rightN = right.at(n);
-    leftN.resize(k+1);
-    leftN.at(0) = unitT;
-    for (int i = 0; i < k; i++) {
-      leftN.at(i+1) = add(leftN.at(i), vec.at(i));
-    }
-    rightN.resize(k+1);
-    rightN.at(k) = unitT;
-    for (int i = k-1; i >= 0; i--) {
-      rightN.at(i) = add(vec.at(i), rightN.at(i+1));
-    }
-    DLOG("n=", n, "right.at(n).at(0)=", rightN.at(0));
-    return rightN.at(0);
-  }
-
-  void dfs2(int n, const T& parRes) {
-    T thisRes = add(right.at(n).at(0), parRes);
-    res.at(n) = thisRes;
-    for (int i = 0; i < (int)tree.child.at(n).size(); i++) {
-      int c = tree.child.at(n).at(i);
-      T x = add(parRes, add(left.at(n).at(i), right.at(n).at(i+1)));
-      dfs2(c, mod(move(x), n, c));
-    }
-  }
-
-  RerootTree(const Tree& tree_, auto add_, auto mod_, T unitT_
-	     ) : tree(tree_), unitT(unitT_), add(add_), mod(mod_),
-		 left(tree.numNodes), right(tree.numNodes),
-		 res(tree.numNodes) {
-    dfs1(tree.root);
-    dfs2(tree.root, unitT);
-  }
 };
 
+template <typename T>
+vector<T> reroot(Tree& tree, const T& unit, auto add, auto mod) {
+  vector<T> result(tree.numNodes);
+  vector<T> sum(tree.numNodes);
+  vector<vector<T>> sum_excl(tree.numNodes);
+  
+  auto dfs1 = [&](const auto& recF, int n) -> void {
+    const auto cld = tree.child(n);
+    int k = cld.size();
+    vector<T> right(k+1), m(k+1);
+    T g = right[k] = unit;
+    for (int i = k-1; i >= 0; i--) {
+      int c = cld[i];
+      recF(recF, c);
+      m[i] = mod(sum[c], n, c);
+      right[i] = g = add(m[i], g);
+    }
+    sum[n] = g;
+    T gp = unit;
+    sum_excl[n].resize(k);
+    for (int i = 0; i < k; i++) {
+      sum_excl[n][i] = add(gp, right[i+1]);
+      gp = add(gp, m[i]);
+    }
+  };
+  dfs1(dfs1, tree.root);
+
+  auto dfs2 = [&](const auto& recF, int n, T t) -> void {
+    result[n] = add(sum[n], t);
+    const auto cld = tree.child(n);
+    int k = cld.size();
+    for (int i = 0; i < k; i++) {
+      int c = cld[i];
+      recF(recF, c, mod(add(sum_excl[n][i], t), c, n));
+    }
+  };
+  dfs2(dfs2, tree.root, unit);
+  
+  return result;
+}
 
 // ---- end tree.cc
-// @@ !! LIM  -- end mark --
 
-int main(int argc, char *argv[]) {
+// @@ !! LIM -- end mark --
+
+int main(/* int argc, char *argv[] */) {
   ios_base::sync_with_stdio(false);
   cin.tie(nullptr);
   cout << setprecision(20);
 
   ll N, M; cin >> N >> M;
-  MOD = M;
-
-  vector<Edge> ve;
-  for (ll i = 0; i < N-1; i++) ve.emplace_back(cin, 1);
-  Tree tr(move(ve));
-  
-  using T = tuple<Fp, Fp, Fp>;
-  T unitT = make_tuple(Fp(1), Fp(0), Fp(0));
-  auto add = [&](const T& t1, const T& t2) -> T {
-    Fp p1, q1, r1; tie(p1, q1, r1) = t1;
-    Fp p2, q2, r2; tie(p2, q2, r2) = t2;
-    return make_tuple(p1 * p2, q1 + q2, r1 + r2);
-  };
-  auto mod = [&](const T& t, int c, int n) -> T {
-    Fp p, q, r; tie(p, q, r) = t;
-    return make_tuple(p + Fp(1), p, q + r);
-  };
-  RerootTree<T, decltype(add), decltype(mod)> rrt(tr, add, mod, unitT);
-  for (ll i = 0; i < N; i++) {
-    Fp p, q, r; tie(p, q, r) = mod(rrt.res.at(i), 0, 0);
-    cout << ll(q) << "\n";
+  Tree tr(N);
+  REP(i, 0, N - 1) {
+    ll x, y; cin >> x >> y; x--; y--;
+    tr.add_edge(x, y);
   }
+  us
 
   return 0;
 }

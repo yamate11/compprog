@@ -6,6 +6,7 @@ using namespace std;
 // @@ !! LIM(UnionFind)
 
 // ---- inserted library file UnionFind.cc
+#line 23 "/home/y-tanabe/proj/compprog/clib/UnionFind.cc"
 
 class UnionFind {
 protected:
@@ -82,6 +83,7 @@ const vector<int>& UnionFind::group(int i) { return groups().at(leader(i)); }
 // ---- end UnionFind.cc
 
 // @@ !! LIM -- end mark --
+#line 7 "UnionFind_skel.cc"
 
 class myRandom {
   random_device dev;

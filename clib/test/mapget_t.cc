@@ -6,23 +6,30 @@ using namespace std;
 // @@ !! LIM(mapget)
 
 // ---- inserted library file mapget.cc
+#line 21 "/home/y-tanabe/proj/compprog/clib/mapget.cc"
 
-template<typename MP, typename A = typename MP::key_type, typename B = typename MP::mapped_type>
-B mapget(const MP& mp, const A& a) {
+template<typename MP>
+typename MP::mapped_type mapget(MP& mp,
+            const typename MP::key_type& a,
+            const typename MP::mapped_type& def = typename MP::mapped_type()) {
   auto it = mp.find(a);
-  if (it == mp.end()) return B();
-  return it->second;
+  return it == mp.end() ? def : it->second;
 }
 
-template<typename MP, typename A = typename MP::key_type, typename B = typename MP::mapped_type>
-void mapset(MP& mp, const A& a, B val) {
-  if (val == B()) mp.erase(a);
-  else            mp[a] = val;
+
+template<typename MP>
+void mapset(MP& mp,
+            const typename MP::key_type& a,
+            typename MP::mapped_type&& val,
+            const typename MP::mapped_type& def = typename MP::mapped_type()) {
+  if (val == def) mp.erase(a);
+  else mp[a] = forward<typename MP::mapped_type>(val);
 }
 
 // ---- end mapget.cc
 
 // @@ !! LIM -- end mark --
+#line 7 "mapget_skel.cc"
 
 int main(int argc, char *argv[]) {
   ios_base::sync_with_stdio(false);
@@ -40,5 +47,28 @@ int main(int argc, char *argv[]) {
     mapset(mp, 7, 0);
     assert(mapget(mp, 7) == 0);
     assert(mp.find(7) == mp.end());
+  }
+  {
+    using vi = vector<int>;
+    map<int, vi> mp;
+    mapset(mp, 3, vi{1, 2, 3});
+    mapset(mp, 7, move(vi{-1, -2}));
+    mapset(mp, 10, vi{});
+    assert(mapget(mp, 3) == (vi{1, 2, 3}));
+    assert(mapget(mp, 7) == (vi{-1, -2}));
+    assert(mapget(mp, 10) == vi{});
+    assert(mapget(mp, 100000) == vi{});
+    assert(mp.find(10) == mp.end());
+    mapset(mp, 7, vi{});
+    assert(mp.size() == 1);
+  }
+  {
+    using mis = map<int, string>;
+    map<int, string> mp{{5, "hello"}, {2, "world"}};
+    mapset(mp, 4, "", "---");
+    mapset(mp, 7, "---", "---");
+    assert(mapget<mis>(mp, 2, string("---")) == "world");
+    assert(mapget<mis>(mp, 7, string("---")) == "---");
+    assert(mapget<mis>(mp, -10, string("---")) == "---");
   }
 }

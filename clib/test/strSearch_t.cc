@@ -6,6 +6,7 @@ using namespace std;
 // @@ !! LIM(strSearch)
 
 // ---- inserted library file strSearch.cc
+#line 13 "/home/y-tanabe/proj/compprog/clib/strSearch.cc"
 vector<int> zAlg(string s) {
   int n = s.size();
   vector<int> z(n);
@@ -36,6 +37,7 @@ vector<int> matches(string p, string s, char sepChar = '\xff') {
 // ---- end strSearch.cc
 
 // @@ !! LIM -- end mark --
+#line 7 "strSearch_skel.cc"
 
 bool myEqual(auto v1, auto v2) {
   if (v1.size() != v2.size()) return false;

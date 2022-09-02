@@ -1,0 +1,226 @@
+#!/home/y-tanabe/.venv_10/bin/python3
+
+import random
+import argparse, re, sys
+
+class MyExc(Exception):
+    pass
+
+def die(*msg):
+    print(*msg, file=sys.stderr, flush=True)
+    sys.exit(1)
+
+def debug(*msg):
+    print(*msg, file=sys.stderr, flush=True)
+
+def parseParams(s):
+    # print(f'*** parseParms <{s}>')
+    rlist = []
+    rdic = {}
+    while True:
+        (parsed, s) = parseAParam(s)
+        # print(f'parsed = {parsed}')
+        if type(parsed) == tuple and type(parsed[0]) == str:
+            (k, v) = parsed
+            if k in rdic:
+                raise MyExc(f'Key {k} is duplicated: {s}')
+            rdic[k] = v
+        elif rdic:
+            raise MyExc(f'Positional param after keyword param: {s}')
+        else:
+            rlist.append(parsed)
+        if s == '':
+            raise MyExc(f'Unexpected end of string')
+        if s[0] == ')':
+            return ((rlist, rdic), s[1:].strip())
+        if s[0] != ',':
+            die(f'Internal error: {s}')
+        s = s[1:].strip()
+
+def parseAParam(s, val_only=False):
+    # print(f'***** parseAParam <{s}>')
+    if s[0] == ',' or s[0] == ')':
+        raise MyExc(f'Unexpected character found: {s}')
+    if (mo := re.match(r'\(\s*(.*)', s)):
+        (parsed, rest) = parseParams(mo[1])
+        return (parsed, rest)
+    if (mo := re.match(r'(\w+)\s*=\s*(.*)', s)):
+        if val_only:
+            raise MyExc(f'Duplicated equal sign: {s}')
+        key = mo[1]
+        sv = mo[2]
+        (val, rest) = parseAParam(sv, True)
+        return ((key, val), rest)
+    mo = re.match(r'(.*?)\s*((?:,\s*|\)\s*|$).*)', s)
+    return (mo[1], mo[2])
+
+def parseSpec(spec):
+    if not (mo := re.match(r'(\s*).*?@(\w+)\s*(.*)', spec)):
+        raise MyExc(f'@-word not recognized: {spec}')
+    indent = len(mo[1])
+    command = mo[2]
+    (param, rest) = parseAParam(mo[3])
+    if rest == '':
+        did = None
+    else:
+        if not (mo := re.match(r'\[(\w+)\]\s*(.*)', rest)):
+            raise MyExc(f'Unrecognized part: {rest}')
+        did = mo[1]
+        if mo[2] != '':
+            raise MyExc(f'Unrecognized part: {mo[2]}')
+    return (indent, command, param, did)
+
+    # # @DefStruct(LRS, ((l, dec=1), r, (s, string)), ord=(r, l, (s, GT))) [T5x4e0]
+    # {
+    #     name: 'DefStruct',
+    #     params: (['LRS', 
+    #               ([(['l'], {'dec': '1'}), 'r', (['s', 'string'], {})],
+    #                {})],
+    #              {'ord': (['r', 'l', (['s', 'GT'], {})], {})}),
+    #     id: 'T5x4e0',
+    # }
+
+def mkdic(lst, param):
+    if type(param) == str:
+        (pp, dic) = ([param], {})
+    else:
+        (pp, dic) = param
+    for i in range(len(lst)):
+        if i < len(pp):
+            dic[lst[i]] = pp[i]
+    return dic
+
+def gv(dic, name):
+    if dic.get(name) is None:
+        raise MyExc(f'Necessary positional parameter {name} is missing.')
+    return dic[name]
+
+# Get the value for name, expecting the value is a list (not a dictionary).
+# If mustList is True, then a single string is regarded as an error,
+# otherwise, a single string is converted to a singleton list.
+def gvlst(dic, name, mustExist=False, mustList=False):
+    if not dic.get(name):
+        if mustExist:
+            raise MyExc(f'Necessary positional parameter {name} is missing.')
+        return []
+    if type(dic[name]) == str:
+        if mustList:
+            raise MyExc(f'parameter {name} must be a list.')
+        return [dic[name]]
+    (slst, sdic) = dic[name]
+    if sdic:
+        raise MyExc(f'parameter {name} must not contain key-value.')
+    return slst
+
+def get_types(d, vn):
+    try:
+        tps = gvlst(d, 'type')
+        if not tps:
+            intype = 'll'
+            outtype = 'll'
+        elif len(tps) == 1:
+            intype = tps[0]
+            outtype = tps[0]
+        elif len(tps) == 2:
+            intype = tps[0]
+            outtype = tps[1]
+        else:
+            raise MyExc(f'type is invalid: too many specs')
+    except MyExc as e:
+        raise MyExc(f'variable {vn}: {e}')
+    return (intype, outtype)
+
+def g_sub_inpVec(d, vname):
+    vn = gv(d, "varname")
+    (intype, outtype) = get_types(d, vn)
+    decval = d.get('dec')
+    sdec = '' if decval is None else f'{vname} -= {decval}; '
+    return (vn, intype, outtype, sdec)
+
+def g_inpVec(param):
+    d = mkdic(['size', 'varname'], param)
+    sz = gv(d, "size")
+    (vn, intype, outtype, sdec) = g_sub_inpVec(d, 'v')
+    gen = f'''vector<{outtype}> {vn}({sz});
+for (int i = 0; i < {sz}; i++) {{ {intype} v; cin >> v; {sdec}{vn}[i] = v; }}'''
+    return gen
+
+def g_inpGrid(param):
+    d = mkdic(['sizeH', 'sizeW', 'varname'], param)
+    szH = gv(d, "sizeH")
+    szW = gv(d, "sizeW")
+    vn = gv(d, "varname")
+    (intype, outtype) = get_types(d, vn)
+    decval = d.get('dec')
+    sdec = '' if decval is None else f'v -= {decval}; '
+    gen = f'''vector<{outtype}> {vn}({szH});
+for (int i = 0; i < {szH}; i++) for (int j = 0; j < {szW}; j++) {{ {intype} v; cin >> v; {sdec}{vn}[i][j] = v; }}'''
+    return gen
+
+def g_inpMVec(param):
+    d = mkdic(['size', 'vecs'], param)
+    sz = gv(d, 'size')
+    vecs = gvlst(d, "vecs")
+    z1 = []
+    z2 = []
+    for (i, vec) in enumerate(vecs):
+        d1 = mkdic(['varname'], vec)
+        locv = 'v' + str(i + 1)
+        (vn, intype, outtype, sdec) = g_sub_inpVec(d1, locv)
+        z1.append(f'vector<{outtype}> {vn}({sz});')
+        z2.append(f'  {intype} {locv}; cin >> {locv}; {sdec}{vn}[i] = {locv};')
+    zz = z1 + [f'for (int i = 0; i < {sz}; i++) {{'] + z2 + ['}']
+    return '\n'.join(zz)
+
+def g_defStruct(param):
+    pass
+
+letters = [chr(x) for x in range(ord('0'), ord('9') + 1)] \
+    + [chr(x) for x in range(ord('a'), ord('z') + 1)] \
+    + [chr(x) for x in range(ord('A'), ord('Z') + 1)]
+def mkdid():
+    ret = ''
+    for i in range(8):
+        ret += random.choice(letters)
+    return ret
+
+def generate(indent, command, param, did, spec):
+    if not did:
+        did = mkdid()
+        s1 = spec.rstrip() + f' [{did}]'
+    else:
+        s1 = spec.rstrip()
+    s = ''
+    if   command == 'InpVec':    s += g_inpVec(   param)
+    elif command == 'InpGrid':   s += g_inpGrid(  param)
+    elif command == 'InpMVec':   s += g_inpMVec(  param)
+    elif command == 'DefStruct': s += g_defStruct(param)
+    else:
+        raise MyExc(f'Unknown command {command}')
+    s += f'\n// @End [{did}]'
+    s = '\n'.join([' ' * indent + line for line in s.split('\n')])
+    return s1 + '\n' + s
+
+def main():
+    args = parseArgs()
+    try:
+        parsed = parseSpec(args.spec)
+        s = generate(*parsed, args.spec)
+    except MyExc as e:
+        raise
+    print(s)
+    
+
+def parseArgs():
+    parser = argparse.ArgumentParser(
+        description='''TBW
+'''
+    )
+    parser.add_argument(
+        'spec', type=str, help='TBW'
+    )
+    return parser.parse_args()
+
+
+main()
+

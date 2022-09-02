@@ -1,0 +1,390 @@
+#!/home/y-tanabe/.venv_10/bin/python3
+
+import random
+import argparse, re, sys
+
+class MyExc(Exception):
+    pass
+
+def die(*msg):
+    print(*msg, file=sys.stderr, flush=True)
+    sys.exit(1)
+
+def debug(*msg):
+    print(*msg, file=sys.stderr, flush=True)
+
+def parseParams(s):
+    '''Parses a list of parameters.
+
+Returns (param, rest), where param is the parsed parameter and rest is the unparsed part.
+Argument s should starts the next character to the opening parenthesis.  Returned rest does not contain the
+closing parenthesis.
+E.g.
+  parseParams('a, b)  , c)' ==> ((['a', 'b'], {}), ', c)')
+'''
+    rlist = []
+    rdic = {}
+    while True:
+        (kind, parsed, s) = parseAParam(s)
+        if kind == 'kv':
+            (k, v) = parsed
+            if k in rdic:
+                raise MyExc(f'Key {k} is duplicated: "{s}"')
+            rdic[k] = v
+        elif rdic:
+            raise MyExc(f'Positional param after keyword param: "{s}"')
+        else:
+            rlist.append(parsed)
+        if s == '':
+            raise MyExc(f'Unexpected end of string while parsing a list.')
+        if s[0] == ')':
+            return ((rlist, rdic), s[1:].strip())
+        elif s[0] == ',':
+            s = s[1:].strip()
+        else:
+            raise MyExc(f'Syntax error: "{s}"')
+
+def parseAParam(s):
+    '''Parses a parameter.
+
+Returns (KIND, param, rest), where KIND is either 'str', 'list', 'kv'; 
+param is the parsed parameter and rest is the unparsed part.
+When the parameter is in the key-value form, it param is represeneted as pair (key, value),
+in other cases param is represented as the final parsed form written in the description 
+of parseSpec.
+E.g. 
+  parseAParam('foo  , bar  )') ==> ('str', 'foo', ', bar  )')
+  parseAParam('foo), bar') ==> ('str', 'foo', '), bar')
+  parseAParam('(1,2), bar') ==> ('list', (['1', '2'], {}), ', bar')
+  parseAParam('a=b, bar') ==> ('kv', ('a', 'b'), ', bar')
+'''
+    if s[0] == ',' or s[0] == ')':
+        raise MyExc(f'Unexpected character found: "{s}"')
+    if (mo := re.match(r'\(\s*(.*)', s)):
+        (parsed, rest) = parseParams(mo[1])
+        return ('list', parsed, rest)
+    if (mo := re.match(r'(\w+)\s*=\s*(.*)', s)):
+        key = mo[1]
+        sv = mo[2]
+        (kind, val, rest) = parseAParam(sv)
+        if kind == 'kv':
+            raise MyExc(f'too many equal chars: "{s}"')
+        return ('kv', (key, val), rest)
+    mo = re.match(r'(.*?)\s*((?:,\s*|\)\s*|$).*)', s)
+    return ('str', mo[1], mo[2])
+
+def parseSpec(spec):
+    '''Parses spec.
+
+It returns (indent, command, param, did), where indent is the number of leading spaces,
+command is the name of the command with '@' stripped off, did is the id enclosed in the
+bracket (None if not present).  param is something like the following:
+  <param> ::= <string> | tuple(<mandatory-list>, <optional-dic>)
+  <mandatory-list> ::= list(<param>)
+  <optional-dic> ::= dict(<string>: <param>)
+E.g., if spec = '  // @DefStruct(LRS, ((l, dec=1), r, (s, string)), ord=(r, l, (s, GT))) [T5x4e0]',
+the followings are returned.
+  indent = 2
+  command = 'DefStruct'
+  param = (['LRS', 
+            ([(['l'], {'dec': '1'}), 'r', (['s', 'string'], {})
+             ], {}
+            )
+           ],
+           {'ord': (['r', 'l', (['s', 'GT'], {})], {})}
+          )
+  did = 'T5x4e0'
+'''
+    if not (mo := re.match(r'(\s*).*?@(\w+)\s*(.*)', spec)):
+        raise MyExc(f'@-word not recognized: "{spec}"')
+    indent = len(mo[1])
+    command = mo[2]
+    (kind, param, rest) = parseAParam(mo[3])
+    if kind != 'list':
+        raise MyExc(f'Syntax error.')
+    if rest == '':
+        did = None
+    else:
+        if not (mo := re.match(r'\[(\w+)\]\s*(.*)', rest)):
+            raise MyExc(f'Unrecognized part: "{rest}"')
+        did = mo[1]
+        if mo[2] != '':
+            raise MyExc(f'Unrecognized part: "{mo[2]}"')
+    return (indent, command, param, did)
+
+def mkdic(param, posp, kwp):
+    '''Parameter is checked and returned as a dictionary.
+
+Argument param is the parsed parameter.  Argument posp is the list of positional parameters.
+Each member of posp is (name, default).  When default is None, it is a mandatory parameter.
+Argument kwp is a dictionary for keyword parameters; a key is a keyword and its value is its
+default value.  Returned dictionary contains all names in posp and kwp as its key.
+'''
+    if type(param) == str:
+        (pp, dic) = ([param], {})
+    else:
+        (pp, dic) = param
+    if len(pp) > len(posp):
+        raise MyExc(f'Too many positional parameters.')
+    for (i, (name, default)) in enumerate(posp):
+        if i < len(pp):
+            if name in dic:
+                raise MyExc(f'Parameter {name} duplicates as positinal and keyword parameters.')
+            dic[name] = pp[i]
+        elif name in dic:
+            pass
+        elif default is not None:
+            dic[name] = default
+        else:
+            raise MyExc(f'Mandatory parameter {name} is missing.')
+    pns = {n : True for (n, d) in posp}
+    for k in dic:
+        if not (k in kwp or k in pns):
+            raise MyExc(f'Unknown parameter {k}.')
+    for k in kwp:
+        if not k in dic:
+            dic[k] = kwp[k]
+    return dic
+
+def mk_hered_list(param):
+    if not param:
+        return []
+    if type(param) == str:
+        return [param]
+    (pp, dic) = param
+    if dic:
+        raise MyExc(f'Unexpected non-empty dict: {dic}')
+    ret = []
+    for p in pp:
+        if type(p) == str:
+            ret.append(p)
+        else:
+            ret.append(mk_hered_list(p))
+    return ret
+
+def get_types(param, vn):
+    try:
+        dd = mkdic(param, [('intype', None), ('outtype', '__SAME__')], {})
+        if dd['outtype'] == '__SAME__':
+            dd['outtype'] = dd['intype']
+        return (dd['intype'], dd['outtype'])
+    except MyExc as e:
+        raise MyExc(f'Type of variable {vn}: {e}')
+
+# Beware: sz2 is OUTER
+def vec_declare(sz1, sz2, vn, tp):
+    def vec_init(sz, init):
+        return f'vector({sz}, {init})'
+    init = vec_init(sz1, tp + '()')
+    if sz2 is not None:
+        init = vec_init(sz2, init)
+    return f"auto {vn} = {init};"
+
+def shift_base(x, base):
+    return x if base is None else x + ' + ' + base
+
+def mkloop(v, sz):
+    return f'for (int {v} = 0; {v} < {sz}; {v}++)'
+
+def mkidx(v, base):
+    return '[' + shift_base(v, base) + ']'
+
+# Beware: sz2 is OUTER
+def gen_vec(d, sz1, sz2, locv):
+    (in_type, out_type) = get_types(d['type'], d['varname'])
+    sdec = '' if d["dec"] is None else f'{locv} -= {d["dec"]}; '
+    vn = d['varname']
+    base = d['base']
+    sb_sz1 = shift_base(sz1, base)
+    sb_sz2 = None if sz2 is None else shift_base(sz2, base)
+    vec_decl = vec_declare(sb_sz1, sb_sz2, vn, out_type)
+    if sz2 is None:
+        loop = mkloop('i', sz1)
+    else:
+        loop = mkloop('i', sz2) + ' ' + mkloop('j', sz1)
+
+    if sz2 is None:
+        idx = mkidx('i', base)
+    else:
+        idx = mkidx('i', base) + mkidx('j', base)
+    assign = f'{in_type} {locv}; cin >> {locv}; {sdec}{vn}{idx} = {locv};'
+    return (vec_decl, loop, assign)
+    
+def g_inpVec(param):
+    d = mkdic(param, [('size', None), ('varname', None), ('type', 'll')], {'dec': None, 'base': None})
+    sz = d['size']
+    (vec_decl, loop, assign) = gen_vec(d, sz, None, 'v')
+    return f'{vec_decl}\n{loop} {{ {assign} }}'
+
+def g_inpGrid(param):
+    d = mkdic(param, [('sizeH', None), ('sizeW', None), ('varname', None), ('type', 'll')],
+              {'dec': None, 'base': None})
+    (vec_decl, loop, assign) = gen_vec(d, d['sizeW'], d['sizeH'], 'v')
+    return f'{vec_decl}\n{loop} {{ {assign} }}'
+
+def g_inpMVec(param):
+    d = mkdic(param, [('size', None), ('vecs', None)], {})
+    (vecs, kwp) = d['vecs']
+    if kwp:
+        for k in kwp:
+            MyExc(f'Unexpected keyword {k} in vecs')
+    z1 = []
+    z2 = []
+    for (i, vec) in enumerate(vecs):
+        try:
+            d1 = mkdic(vec, [('varname', None), ('type', 'll')], {'dec': None, 'base': None})
+            (vec_decl, loop, assign) = gen_vec(d1, d['size'], None, 'v' + str(i + 1))
+        except MyExc as e:
+            raise MyExc(f'In vector {i + 1}: {e}')
+        z1.append(vec_decl);
+        z2.append('  ' + assign);
+    zz = z1 + [loop + ' {'] + z2 + ['}']
+    return '\n'.join(zz)
+
+def mksdec(locv, dec):
+    return '' if dec is None else f'{locv} -= {dec};'
+
+def notNoneJoin(lst):
+    lst2 = [e for e in lst if e is not None]
+    return '\n'.join(lst2)
+
+def mk_fields_list(param):
+    c_fields = []
+    for f in mk_hered_list(param):
+        if type(f) == str:  c_fields.append((f, 'll'))
+        elif len(f) == 1:   c_fields.append((f[0], 'll'))
+        elif len(f) == 2:   c_fields.append((f[0], f[1]))
+        else:   raise MyExc(f'Unexpected list of length >= 3 in fields {f}')
+    return c_fields
+
+def mkstruct(namebase, c_fields, idx, order, istr):
+    tp = namebase + '_t'
+    out = f'struct {tp} {{'
+    out += '\n' + '\n'.join([f'  {t} {v};' for (v, t) in c_fields])
+    if idx:
+        out += f'\n  int {idx};'
+    plist = ', '.join([f'{t} {v}_' for (v, t) in c_fields])
+    init_list = ', '.join([f'{v}({v}_)' for (v, t) in c_fields])
+    read_list = ' >> '.join([f't.{v}' for (v, t) in c_fields])
+    
+    out += f'''
+  {tp}() {{}}
+  {tp}({plist}) : {init_list} {{}}'''
+    if idx:
+        out += f'\n  {tp}({plist}, int {idx}_) : {init_list}, {idx}({idx}_) {{}}'
+    if istr:
+        out += f'''\n  friend istream& operator>>(istream& istr, {tp}& t) {{
+    istr >> {read_list};
+    return istr;
+  }}'''
+    if order:
+        out += f'\n  bool operator<(const {tp}& o) const {{'
+        o_fields = []
+        for o in order:
+            if type(o) == str:  o_fields.append((o,    '<'))
+            elif len(o) == 1:   o_fields.append((o[0], '<'))
+            elif len(o) == 2:   o_fields.append((o[0], '>' if o[1] else '<'))
+            else:   raise MyExc(f'Unexpected list of length >= 3 in order {o}')
+        for (s, op) in o_fields:
+            out += f'\n    if ({s} {op} o.{s}) return true;'
+        out += '\n    return false;\n  }'
+    out += '\n};'
+    return out
+
+def g_inpNbrList(param):
+    def get_vec_decl(name):
+        return f'auto {name} = vector({szNode}, vector(0, {tp}()));'
+    d = mkdic(param, [('sizeNode', None), ('sizeEdge', None), ('varname', None)],
+              {'dir': False, 'bwd': None, 'dec': None, 'read': None, 'idx': None, 'ord': None, 'istr': False})
+    sdec = mksdec('u', d["dec"]) + ' ' + mksdec('v', d["dec"]);
+    vn = d['varname']
+    szNode = d['sizeNode']
+    szEdge = d['sizeEdge']
+    tp = 'int'
+    loop = f'for (int i = 0; i < {szEdge}; i++)'
+    i_read = f'  int u, v; cin >> u >> v; {sdec}'
+    struct = None
+    emplace_add_arg = ''
+    if d['read'] or d['idx']:
+        c_fields_R = mk_fields_list(d['read'])
+        lst = [('nd', 'int')] + c_fields_R
+        struct = mkstruct(vn, lst, idx=d['idx'], order=mk_hered_list(d['ord']), istr=d['istr'])
+        tp = vn + '_t'
+        for (n, t) in c_fields_R:
+            i_read += f'\n  {t} {n}; cin >> {n};'
+        eaa = [n for (n, t) in c_fields_R]
+        if d['idx']:
+            eaa.append('i')
+        emplace_add_arg = ', ' + ', '.join(eaa)
+    assign_u = f'  {vn}[u].emplace_back(v{emplace_add_arg});'
+    vec_decl = get_vec_decl(vn)
+    vec_decl_bwd = None
+    if d['bwd'] is not None:
+        vec_decl_bwd = get_vec_decl(d['bwd'])
+        assign_v = f'  {d["bwd"]}[v].emplace_back(u{emplace_add_arg});'
+    elif d['dir']:
+        assign_v = None
+    else:
+        assign_v = f'  {vn}[v].emplace_back(u{emplace_add_arg});'
+    gen = notNoneJoin([struct, vec_decl, vec_decl_bwd, loop + ' {', i_read, assign_u, assign_v, '}'])
+    return gen
+
+def g_defStruct(param):
+    d = mkdic(param, [('structname', None), ('fields', None)], {'idx': None, 'ord': None, 'istr': True})
+    struct = mkstruct(d['structname'], mk_fields_list(d['fields']), idx=d['idx'],
+                      order=mk_hered_list(d['ord']), istr=d['istr'])
+    return struct
+
+
+letters = [chr(x) for x in range(ord('0'), ord('9') + 1)] \
+    + [chr(x) for x in range(ord('a'), ord('z') + 1)] \
+    + [chr(x) for x in range(ord('A'), ord('Z') + 1)]
+def create_did():
+    ret = ''
+    for i in range(8):
+        ret += random.choice(letters)
+    return ret
+
+def generate(indent, command, param, did, spec):
+    prep = ' ' * indent
+    if (ss2 := spec[indent:indent+2]) != '//' and ss2 != '/*':
+        prep += '// '
+    prep += spec.strip()
+    if not did:
+        did = create_did()
+        prep += f' [{did}]'
+    s = ''
+    if   command == 'InpVec':    s += g_inpVec(   param)
+    elif command == 'InpGrid':   s += g_inpGrid(  param)
+    elif command == 'InpMVec':   s += g_inpMVec(  param)
+    elif command == 'InpNbrList': s += g_inpNbrList(param)
+    elif command == 'DefStruct': s += g_defStruct(param)
+    else:
+        raise MyExc(f'Unknown command {command}')
+    s += f'\n// @End [{did}]'
+    s = '\n'.join([' ' * indent + line for line in s.split('\n')])
+    return prep + '\n' + s
+
+def main():
+    args = parseArgs()
+    try:
+        parsed = parseSpec(args.spec)
+        s = generate(*parsed, args.spec)
+    except MyExc as e:
+        die(str(e))
+    print(s)
+    
+
+def parseArgs():
+    parser = argparse.ArgumentParser(
+        description='''TBW
+'''
+    )
+    parser.add_argument(
+        'spec', type=str, help='TBW'
+    )
+    return parser.parse_args()
+
+
+main()
+

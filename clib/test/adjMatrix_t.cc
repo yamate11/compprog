@@ -175,6 +175,7 @@ ostream& operator<< (ostream& os, int8_t x) {
 // ---- end f:<<
 
 // ---- inserted library file debug.cc
+#line 42 "/home/y-tanabe/proj/compprog/clib/debug.cc"
 template <class... Args>
 string dbgFormat(const char* fmt, Args... args) {
   size_t len = snprintf(nullptr, 0, fmt, args...);
@@ -247,6 +248,7 @@ void dbgLog(bool with_nl, Head&& head, Tail&&... tail)
 // ---- end debug.cc
 
 // ---- inserted library file algOp.cc
+#line 105 "/home/y-tanabe/proj/compprog/clib/algOp.cc"
 
 // Common definitions
 //    zero, one, inverse
@@ -481,6 +483,7 @@ ll crt(vector<ll> as, vector<ll> xs) {
 // ---- end f:gcd
 
 // ---- inserted library file mod.cc
+#line 40 "/home/y-tanabe/proj/compprog/clib/mod.cc"
 
 template<int mod=0>
 struct FpG {   // G for General
@@ -610,10 +613,11 @@ public:
     for (int i = nMax; i >= 1; i--) vInvFact.at(i-1) = i * vInvFact.at(i);
   }
   FpG<mod> fact(int n) { return vFact.at(n); }
-  FpG<mod> comb(int n, int r) {
+  FpG<mod> binom(int n, int r) {
     if (r < 0 || r > n) return 0;
     return vFact.at(n) * vInvFact.at(r) * vInvFact.at(n-r);
   }
+  FpG<mod> binom_dup(int n, int r) { return binom(n + r - 1, r); }
   // The number of permutation extracting r from n.
   FpG<mod> perm(int n, int r) {
     return vFact.at(n) * vInvFact.at(n-r);
@@ -630,6 +634,7 @@ using CombB = CombG<primeB>;
 // ---- end mod.cc
 
 // ---- inserted library file power.cc
+#line 16 "/home/y-tanabe/proj/compprog/clib/power.cc"
 
 template<typename T>
 T power(const T& a, ll b) {
@@ -646,6 +651,7 @@ T power(const T& a, ll b) {
 // ---- end power.cc
 
 // ---- inserted library file matrix.cc
+#line 73 "/home/y-tanabe/proj/compprog/clib/matrix.cc"
 
 template <typename T>
 struct Matrix {
@@ -932,6 +938,7 @@ struct Matrix {
 // ---- end matrix.cc
 
 // ---- inserted library file adjMatrix.cc
+#line 27 "/home/y-tanabe/proj/compprog/clib/adjMatrix.cc"
 
 template<typename T, typename IT> // IT is typically int or ll
 optional<vector<T>> adjMatEq(vector<pair<IT, IT>> adj, vector<T> bs) {
@@ -969,6 +976,7 @@ optional<vector<T>> adjMatEq(vector<pair<IT, IT>> adj, vector<T> bs) {
 // ---- end adjMatrix.cc
 
 // @@ !! LIM -- end mark --
+#line 9 "adjMatrix_skel.cc"
 
 int main(/* int argc, char *argv[] */) {
   ios_base::sync_with_stdio(false);

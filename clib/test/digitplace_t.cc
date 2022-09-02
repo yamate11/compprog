@@ -6,6 +6,7 @@ using namespace std;
 // @@ !! LIM(digitplace)
 
 // ---- inserted library file digitplace.cc
+#line 25 "/home/y-tanabe/proj/compprog/clib/digitplace.cc"
 
 struct DigitPlace {
   int base;
@@ -52,6 +53,7 @@ struct DigitPlace {
 // ---- end digitplace.cc
 
 // @@ !! LIM -- end mark --
+#line 7 "digitplace_skel.cc"
 
 int main(/* int argc, char *argv[] */) {
   ios_base::sync_with_stdio(false);

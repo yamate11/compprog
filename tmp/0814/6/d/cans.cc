@@ -2,8 +2,7 @@
 #include <cassert>
 typedef long long int ll;
 using namespace std;
-// #include <atcoder/all>
-// using namespace atcoder;
+#include <atcoder/lazysegtree>
 #define REP(i, a, b) for (ll i = (a); i < (b); i++)
 #define REPrev(i, a, b) for (ll i = (a); i >= (b); i--)
 #define ALL(coll) (coll).begin(), (coll).end()
@@ -11,44 +10,32 @@ using namespace std;
 #define InpVec(vec, n) vector<ll> vec(n); REP(i, 0, (n)) cin >> vec[i]
 #define REPOUT(i, a, b, exp, sep) REP(i, (a), (b)) { if (i != (a)) cout << (sep); cout << (exp); } cout << "\n"
 
-// @@ !! LIM(f:updMaxMin)
+// @@ !! LIM()
 
-// ---- inserted function f:updMaxMin from util.cc
-template<typename T>
-bool updMax(T& tmax, const T& x) {
-  if (x > tmax) { tmax = x; return true;  }
-  else          {           return false; }
-}
-template<typename T>
-bool updMin(T& tmin, const T& x) {
-  if (x < tmin) { tmin = x; return true;  }
-  else          {           return false; }
-}
-// ---- end f:updMaxMin
+constexpr ll inf = 1e18;
+using S = ll;
+using F = ll;
+S op(S a, S b) { return min(a, b); }
+constexpr S e() { return inf; }
+S mapping(F f, S x) { return min(f, x); }
+F composition(F f, F g) { return min(f, g); }
+constexpr F id() { return inf; }
+using Seg = atcoder::lazy_segtree<S, op, e, F, mapping, composition, id>;
 
-// @@ !! LIM -- end mark --
-
-int main(/* int argc, char *argv[] */) {
-  ios_base::sync_with_stdio(false);
-  cin.tie(nullptr);
-  cout << setprecision(20);
-
+int main() {
   ll N, M; cin >> N >> M;
-  using sta = tuple<ll, ll, ll>;
-  vector<sta> LRC;
-  REP(i, 0, M) {
+  vector<tuple<ll, ll, ll>> LRC;
+  for (ll i = 0; i < M; i++) {
     ll l, r, c; cin >> l >> r >> c; l--;
     LRC.emplace_back(l, r, c);
   }
   sort(ALL(LRC));
-  ll big = 1e18;
-  vector<ll> tbl(N, big);
-  tbl[0] = 0;
-  for (auto [l, r, c] : LRC) {
-    ll b = tbl[l];
-    REP(i, l, r) updMin(tbl[i], b + c);
-  }
-  cout << (tbl[N - 1] >= big ? -1 : tbl[N - 1]) << endl;
+
+  Seg st(N);
+  st.set(0, 0);
+  for (auto [l, r, c] : LRC) st.apply(l, r, st.get(l) + c);
+  ll ans = st.get(N - 1);
+  cout << (ans >= inf ? -1 : ans) << endl;
 
   return 0;
 }

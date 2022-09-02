@@ -6,6 +6,7 @@ using namespace std;
 // @@ !! LIM(tree)
 
 // ---- inserted library file tree.cc
+#line 93 "/home/y-tanabe/proj/compprog/clib/tree.cc"
 
 using TreeEdge = pair<int, int>;
 
@@ -206,6 +207,7 @@ vector<T> reroot(Tree& tree, const T& unit, auto add, auto mod) {
 // ---- end tree.cc
 
 // @@ !! LIM -- end mark --
+#line 7 "tree_skel.cc"
 
 
 int main(int argc, char *argv[]) {

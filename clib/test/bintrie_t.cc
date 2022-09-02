@@ -6,6 +6,7 @@ using namespace std;
 // @@ !! LIM(bintrie)
 
 // ---- inserted library file bintrie.cc
+#line 23 "/home/y-tanabe/proj/compprog/clib/bintrie.cc"
 
 struct BTNode {
   int ne; // number of elements stored
@@ -152,6 +153,7 @@ struct BinTrie {
 // ---- end bintrie.cc
 
 // @@ !! LIM -- end mark --
+#line 7 "bintrie_skel.cc"
 
 int main() {
 

@@ -35,6 +35,7 @@ bool may_ge_abs_only(Real x, Real y, Real err = g_err) { return may_ge(x, y, err
 // ---- end rerror.cc
 
 // @@ !! LIM -- end mark --
+#line 7 "rerror_skel.cc"
 
 int main() {
   assert(may_eq(3,3));

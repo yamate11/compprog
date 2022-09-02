@@ -173,6 +173,7 @@ ostream& operator<< (ostream& os, int8_t x) {
 // ---- end f:<<
 
 // ---- inserted library file debug.cc
+#line 42 "/home/y-tanabe/proj/compprog/clib/debug.cc"
 template <class... Args>
 string dbgFormat(const char* fmt, Args... args) {
   size_t len = snprintf(nullptr, 0, fmt, args...);
@@ -245,6 +246,7 @@ void dbgLog(bool with_nl, Head&& head, Tail&&... tail)
 // ---- end debug.cc
 
 // ---- inserted library file perm.cc
+#line 219 "/home/y-tanabe/proj/compprog/clib/perm.cc"
 
 template<typename T>
 class IterPerm {
@@ -407,6 +409,7 @@ public:
 // ---- end perm.cc
 
 // @@ !! LIM -- end mark --
+#line 7 "perm_skel.cc"
 
 
 int cmp_vec(const auto& v1, const auto& v2) {

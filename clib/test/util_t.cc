@@ -173,6 +173,7 @@ ostream& operator<< (ostream& os, int8_t x) {
 // ---- end f:<<
 
 // ---- inserted library file debug.cc
+#line 42 "/home/y-tanabe/proj/compprog/clib/debug.cc"
 template <class... Args>
 string dbgFormat(const char* fmt, Args... args) {
   size_t len = snprintf(nullptr, 0, fmt, args...);
@@ -532,6 +533,7 @@ struct ItRange {
 // ---- end f:itrange
 
 // @@ !! LIM -- end mark --
+#line 7 "util_skel.cc"
 
 
 int main() {

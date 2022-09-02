@@ -8,6 +8,7 @@ using namespace std;
 // @@ !! LIM(dynSegTree)
 
 // ---- inserted library file dynSegTree.cc
+#line 22 "/home/y-tanabe/proj/compprog/clib/dynSegTree.cc"
 
 template<typename DAT, typename OP> 
 struct Node {
@@ -146,6 +147,7 @@ auto make_dyn_seg_tree(ll lo_, ll hi_, DAT unit_dat, OP unit_op,
 // ---- end dynSegTree.cc
 
 // @@ !! LIM -- end mark --
+#line 9 "dynSegTree_skel.cc"
 
 int main(/* int argc, char *argv[] */) {
   ios_base::sync_with_stdio(false);

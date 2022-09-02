@@ -173,6 +173,7 @@ ostream& operator<< (ostream& os, int8_t x) {
 // ---- end f:<<
 
 // ---- inserted library file scc.cc
+#line 50 "/home/y-tanabe/proj/compprog/clib/scc.cc"
 
 template<typename E>
 struct CSR {  // Compressed Sparse Row
@@ -313,6 +314,7 @@ struct SCC {
 // ---- end scc.cc
 
 // @@ !! LIM -- end mark --
+#line 7 "scc_skel.cc"
 
 struct NaiveSCC {
   bool built;

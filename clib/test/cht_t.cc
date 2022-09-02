@@ -6,6 +6,7 @@ using namespace std;
 // @@ !! LIM(cht)
 
 // ---- inserted library file cht.cc
+#line 31 "/home/y-tanabe/proj/compprog/clib/cht.cc"
 
 template <class T>
 class CHT {
@@ -75,6 +76,7 @@ public:
 // ---- end cht.cc
 
 // @@ !! LIM -- end mark --
+#line 7 "cht_skel.cc"
 
 int main() {
 

@@ -13,6 +13,7 @@ using namespace std;
 // @@ !! LIM(topord)
 
 // ---- inserted library file topord.cc
+#line 24 "/home/y-tanabe/proj/compprog/clib/topord.cc"
 
 class TopOrd {
   bool built;
@@ -51,6 +52,7 @@ public:
 // ---- end topord.cc
 
 // @@ !! LIM -- end mark --
+#line 14 "topord_skel.cc"
 
 struct TopOrd_test {
 

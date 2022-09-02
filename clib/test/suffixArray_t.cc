@@ -6,6 +6,7 @@ using namespace std;
 // @@ !! LIM(suffixArray)
 
 // ---- inserted library file suffixArray.cc
+#line 50 "/home/y-tanabe/proj/compprog/clib/suffixArray.cc"
 
 struct SuffixArray {
 private:
@@ -83,6 +84,7 @@ public:
 // ---- end suffixArray.cc
 
 // @@ !! LIM -- end mark --
+#line 7 "suffixArray_skel.cc"
 
 
 int main(int argc, char *argv[]) {

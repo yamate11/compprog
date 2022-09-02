@@ -29,7 +29,8 @@ using namespace std;
 
         CombA cb(1000);     // args upto 1000, inclusive
         FpA x = cb.fact(1000);       // factorial
-        FpA y = cb.comb(500, 300);   // combination (binom)
+        FpA y = cb.binom(500, 300);  // combination
+        FpA yy = cb.binom_dup(300, 500); // combination with duplicate (== binom(300+500-1, 500))
         FpA z = cb.perm(500, 300);   // permutation
  */
 
@@ -165,10 +166,11 @@ public:
     for (int i = nMax; i >= 1; i--) vInvFact.at(i-1) = i * vInvFact.at(i);
   }
   FpG<mod> fact(int n) { return vFact.at(n); }
-  FpG<mod> comb(int n, int r) {
+  FpG<mod> binom(int n, int r) {
     if (r < 0 || r > n) return 0;
     return vFact.at(n) * vInvFact.at(r) * vInvFact.at(n-r);
   }
+  FpG<mod> binom_dup(int n, int r) { return binom(n + r - 1, r); }
   // The number of permutation extracting r from n.
   FpG<mod> perm(int n, int r) {
     return vFact.at(n) * vInvFact.at(n-r);

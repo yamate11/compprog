@@ -6,6 +6,7 @@ using namespace std;
 // @@ !! LIM(ipoint)
 
 // ---- inserted library file ipoint.cc
+#line 32 "/home/y-tanabe/proj/compprog/clib/ipoint.cc"
 
 struct IPoint {
   ll x;
@@ -84,6 +85,7 @@ namespace std {
 // ---- end ipoint.cc
 
 // @@ !! LIM -- end mark --
+#line 7 "ipoint_skel.cc"
 
 int main() {
 

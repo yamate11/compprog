@@ -1,16 +1,23 @@
 #include <bits/stdc++.h>
 #include <cassert>
-typedef long long int ll;
 using namespace std;
+using ll = long long int;
+using pll = pair<ll, ll>;
 // #include <atcoder/all>
 // using namespace atcoder;
-#define REP2(i, a, b) for (ll i = (a); i < (b); i++)
-#define REP2R(i, a, b) for (ll i = (a); i >= (b); i--)
-#define REP(i, b) REP2(i, 0, b)
+#define REP(i, a, b) for (ll i = (a); i < (b); i++)
+#define REPrev(i, a, b) for (ll i = (a); i >= (b); i--)
 #define ALL(coll) (coll).begin(), (coll).end()
 #define SIZE(v) ((ll)((v).size()))
+#define REPOUT(i, a, b, exp, sep) REP(i, (a), (b)) { if (i != (a)) cout << (sep); cout << (exp); } cout << "\n"
 
-// @@ !! LIM(debug f:updMaxMin)
+// @@ !! LIM(input debug)
+
+// ---- inserted library file input.cc
+
+// The contents are empty.
+
+// ---- end input.cc
 
 // ---- inserted function f:<< from util.cc
 template <typename T1, typename T2>
@@ -251,19 +258,6 @@ void dbgLog(bool with_nl, Head&& head, Tail&&... tail)
 
 // ---- end debug.cc
 
-// ---- inserted function f:updMaxMin from util.cc
-template<typename T>
-bool updMax(T& tmax, const T& x) {
-  if (x > tmax) { tmax = x; return true;  }
-  else          {           return false; }
-}
-template<typename T>
-bool updMin(T& tmin, const T& x) {
-  if (x < tmin) { tmin = x; return true;  }
-  else          {           return false; }
-}
-// ---- end f:updMaxMin
-
 // @@ !! LIM -- end mark --
 
 int main(/* int argc, char *argv[] */) {
@@ -272,62 +266,86 @@ int main(/* int argc, char *argv[] */) {
   cout << setprecision(20);
 
   ll N, M, K, L; cin >> N >> M >> K >> L;
-  vector<ll> A(N), B(L);
-  REP(i, N) { cin >> A[i]; A[i]--; }
-  REP(i, L) { cin >> B[i]; B[i]--; }
-  using sta = pair<ll, ll>;
-  vector<vector<sta>> nbr(N);
-  REP(i, M) {
-    ll u, v, c; cin >> u >> v >> c; u--; v--;
+  // @InpVec(N, A, dec=1) [2RjhLO1M]
+  auto A = vector(N, ll());
+  for (int i = 0; i < N; i++) { ll v; cin >> v; v -= 1; A[i] = v; }
+  // @End [2RjhLO1M]
+  // @InpVec(L, B, dec=1) [ehS5jtEb]
+  auto B = vector(L, ll());
+  for (int i = 0; i < L; i++) { ll v; cin >> v; v -= 1; B[i] = v; }
+  // @End [ehS5jtEb]
+  // @InpNbrList(N, M, nbr, read=c, dec=1) [aYryeSwb]
+  struct nbr_t {
+    int nd;
+    ll c;
+    nbr_t() {}
+    nbr_t(int nd_, ll c_) : nd(nd_), c(c_) {}
+  };
+  auto nbr = vector(N, vector(0, nbr_t()));
+  for (int i = 0; i < M; i++) {
+    int u, v; cin >> u >> v; u -= 1; v -= 1;
+    ll c; cin >> c;
     nbr[u].emplace_back(v, c);
     nbr[v].emplace_back(u, c);
   }
-  const ll big = 1e18;
-  vector<ll> dist1(N, big), dist2(N, big), from1(N, -1), from2(N, -1);
-  using stb = tuple<ll, ll, ll>;  // dist, to, from_country
-  priority_queue<stb, vector<stb>, greater<stb>> pque;
-  for (ll b : B) {
-    pque.emplace(0, b, A[b]);
-    dist1[b] = 0;
-    from1[b] = A[b];
+  // @End [aYryeSwb]
+  ll big = 1e18;
+  pll pbig(big, -1);
+  auto dist1 = vector<pll>(N, pbig);
+  auto dist2 = vector<pll>(N, pbig);
+  using sta = tuple<ll, ll, ll>;
+  priority_queue<sta, vector<sta>, greater<sta>> pque;
+  REP(i, 0, L) {
+    ll p = B[i];
+    ll n = A[p];
+    dist1[p] = pll(0, n);
+    pque.emplace(0, p, n);
   }
+  auto updDist = [&](ll p, ll newD, ll n) -> bool {
+    auto [d1, n1] = dist1[p];
+    if (n1 == n) {
+      if (newD >= d1) return false;
+      dist1[p].first = newD;
+      return true;
+    }
+    auto [d2, n2] = dist2[p];
+    if (n2 == n) {
+      if (newD >= d2) return false;
+      dist2[p].first = newD;
+      if (newD < d1) swap(dist1[p], dist2[p]);
+      return true;
+    }
+    if (newD < d1) {
+      dist2[p] = dist1[p];
+      dist1[p] = pll(newD, n);
+      return true;
+    }
+    if (newD < d2) {
+      dist2[p] = pll(newD, n);
+      return true;
+    }
+    return false;
+  };
+
+  DLOGK(pque);
   while (not pque.empty()) {
-    auto [d, t, fc] = pque.top(); pque.pop();
-    DLOGKL("from queue", d, t, fc);
-    if (not ((from1[t] == fc and dist1[t] == d) or (from2[t] == fc and dist2[t] == d))) continue;
-    DLOG("conf");
-    for (auto [s, dd] : nbr[t]) {
-      ll newD = d + dd;
-      DLOGKL("  nbr", s, dd, newD);
-      if ([&]() -> bool {
-        if (from1[s] == fc) return updMin(dist1[s], newD);
-        if (from2[s] == fc) {
-          bool b = updMin(dist2[s], newD);
-          if (not b) return false;
-          if (newD < dist1[s]) { swap(dist1[s], dist2[s]); swap(from1[s], from2[s]); }
-          return true;
-        }
-        if (dist2[s] <= newD) return false;
-        if (dist1[s] <= newD) {
-          dist2[s] = newD; from2[s] = fc;
-          return true;
-        }
-        dist2[s] = dist1[s]; from2[s] = from1[s];
-        dist1[s] = newD; from1[s] = fc;
-        return true;
-      }()) {
-        DLOGKL("  to queue", newD, s, fc);
-        pque.emplace(newD, s, fc);
+    auto [d, p, n] = pque.top(); pque.pop();
+    DLOGKL("popped", d, p, n);
+    if (dist2[p] == pll(d, n) or dist1[p] == pll(d, n)) {
+      for (auto uc: nbr[p]) {
+        ll u = uc.nd;
+        ll newD = d + uc.c;
+        if (updDist(u, newD, n)) pque.emplace(newD, u, n);
       }
-#if DEBUG
-      REP(i, N) DLOGKL("      - ", i, dist1[i], from1[i], dist2[i], from2[i]);
-#endif
     }
   }
-  auto out = [&](ll v) { cout << (v < big ? v : -1) << " "; };
-  REP(i, N) out(from1[i] == A[i] ? dist2[i] : dist1[i]);
-  cout << endl;
-
+  DLOGK(dist1);
+  DLOGK(dist2);
+  auto f = [&](ll i) -> ll {
+    ll e = (dist1[i].second != A[i]) ? dist1[i].first : dist2[i].first;
+    return e >= big ? -1 : e;
+  };
+  REPOUT(i, 0, N, f(i), ' ');
   return 0;
 }
 

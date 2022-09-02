@@ -6,6 +6,7 @@ using namespace std;
 // @@ !! LIM(dinic)
 
 // ---- inserted library file dinic.cc
+#line 32 "/home/y-tanabe/proj/compprog/clib/dinic.cc"
 
 struct Edge {
   int dst;  // destination
@@ -97,6 +98,7 @@ public:
 // ---- end dinic.cc
 
 // @@ !! LIM -- end mark --
+#line 7 "dinic_skel.cc"
 
 int main() {
 

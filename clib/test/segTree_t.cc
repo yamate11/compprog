@@ -173,6 +173,7 @@ ostream& operator<< (ostream& os, int8_t x) {
 // ---- end f:<<
 
 // ---- inserted library file debug.cc
+#line 42 "/home/y-tanabe/proj/compprog/clib/debug.cc"
 template <class... Args>
 string dbgFormat(const char* fmt, Args... args) {
   size_t len = snprintf(nullptr, 0, fmt, args...);
@@ -245,6 +246,7 @@ void dbgLog(bool with_nl, Head&& head, Tail&&... tail)
 // ---- end debug.cc
 
 // ---- inserted library file segTree.cc
+#line 43 "/home/y-tanabe/proj/compprog/clib/segTree.cc"
 
 // It seems that we should keep the size power of two,
 // considering the binary search.
@@ -448,6 +450,7 @@ auto make_seg_tree(DAT unit_dat, OP unit_op,
 // ---- end segTree.cc
 
 // @@ !! LIM -- end mark --
+#line 7 "segTree_skel.cc"
 
 
 mt19937 rng;

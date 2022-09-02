@@ -6,6 +6,7 @@ using namespace std;
 // @@ !! LIM(dijkstra)
 
 // ---- inserted library file dijkstra.cc
+#line 79 "/home/y-tanabe/proj/compprog/clib/dijkstra.cc"
 
 template <typename T>
 struct Dijkstra {
@@ -139,6 +140,7 @@ struct DijkstraM {
 // ---- end dijkstra.cc
 
 // @@ !! LIM -- end mark --
+#line 7 "dijkstra_skel.cc"
 
 
 using Point = pair<ll, ll>;

@@ -6,6 +6,7 @@ using namespace std;
 // @@ !! LIM(binsearch)
 
 // ---- inserted library file binsearch.cc
+#line 50 "/home/y-tanabe/proj/compprog/clib/binsearch.cc"
 
 template<typename T>
 T binsearch_i(auto check, T yes, T no, T err = (T)1) {
@@ -49,6 +50,7 @@ ll border_with_hint(ll t, auto pred, auto hint) {
 // ---- end binsearch.cc
 
 // @@ !! LIM -- end mark --
+#line 7 "binsearch_skel.cc"
 
 int main(int argc, char *argv[]) {
   ios_base::sync_with_stdio(false);

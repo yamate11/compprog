@@ -11,6 +11,7 @@ using namespace std;
 // @@ !! LIM(forall)
 
 // ---- inserted library file forall.cc
+#line 32 "/home/y-tanabe/proj/compprog/clib/forall.cc"
 
 #define EX_REP_LL(i, from, to) for (ll i = from; i < to; i++)
 #define EX_REP_RB(x, coll) for (auto x : coll)
@@ -34,6 +35,7 @@ using namespace std;
 // ---- end forall.cc
 
 // @@ !! LIM -- end mark --
+#line 12 "forall_skel.cc"
 
 int main(/* int argc, char *argv[] */) {
   ios_base::sync_with_stdio(false);

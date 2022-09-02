@@ -6,6 +6,7 @@ using namespace std;
 // @@ !! LIM(bit)
 
 // ---- inserted library file bit.cc
+#line 19 "/home/y-tanabe/proj/compprog/clib/bit.cc"
 
 template <class T>
 class BIT {
@@ -37,6 +38,7 @@ public:
 // ---- end bit.cc
 
 // @@ !! LIM -- end mark --
+#line 7 "bit_skel.cc"
 
 int main() {
   BIT<long long> t(10); // a_1 = a_2 = ... = a_10 = 0

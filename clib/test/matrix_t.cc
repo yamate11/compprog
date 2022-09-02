@@ -7,6 +7,7 @@ using namespace std;
 // @@ !! LIM(algOp power mod matrix)
 
 // ---- inserted library file algOp.cc
+#line 105 "/home/y-tanabe/proj/compprog/clib/algOp.cc"
 
 // Common definitions
 //    zero, one, inverse
@@ -163,6 +164,7 @@ struct MyAlg {
 // ---- end algOp.cc
 
 // ---- inserted library file power.cc
+#line 16 "/home/y-tanabe/proj/compprog/clib/power.cc"
 
 template<typename T>
 T power(const T& a, ll b) {
@@ -257,6 +259,7 @@ ll crt(vector<ll> as, vector<ll> xs) {
 // ---- end f:gcd
 
 // ---- inserted library file mod.cc
+#line 40 "/home/y-tanabe/proj/compprog/clib/mod.cc"
 
 template<int mod=0>
 struct FpG {   // G for General
@@ -386,10 +389,11 @@ public:
     for (int i = nMax; i >= 1; i--) vInvFact.at(i-1) = i * vInvFact.at(i);
   }
   FpG<mod> fact(int n) { return vFact.at(n); }
-  FpG<mod> comb(int n, int r) {
+  FpG<mod> binom(int n, int r) {
     if (r < 0 || r > n) return 0;
     return vFact.at(n) * vInvFact.at(r) * vInvFact.at(n-r);
   }
+  FpG<mod> binom_dup(int n, int r) { return binom(n + r - 1, r); }
   // The number of permutation extracting r from n.
   FpG<mod> perm(int n, int r) {
     return vFact.at(n) * vInvFact.at(n-r);
@@ -406,6 +410,7 @@ using CombB = CombG<primeB>;
 // ---- end mod.cc
 
 // ---- inserted library file matrix.cc
+#line 73 "/home/y-tanabe/proj/compprog/clib/matrix.cc"
 
 template <typename T>
 struct Matrix {
@@ -692,6 +697,7 @@ struct Matrix {
 // ---- end matrix.cc
 
 // @@ !! LIM -- end mark --
+#line 8 "matrix_skel.cc"
 
 int main() {
   random_device rd;

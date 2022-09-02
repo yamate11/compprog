@@ -6,6 +6,7 @@ using namespace std;
 // @@ !! LIM(coordCompr)
 
 // ---- inserted library file coordCompr.cc
+#line 41 "/home/y-tanabe/proj/compprog/clib/coordCompr.cc"
 
 class CoordCompr {
   bool built;
@@ -57,6 +58,7 @@ public:
 // ---- end coordCompr.cc
 
 // @@ !! LIM -- end mark --
+#line 7 "coordCompr_skel.cc"
 
 
 int main(int argc, char *argv[]) {

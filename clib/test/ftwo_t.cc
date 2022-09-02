@@ -173,6 +173,7 @@ ostream& operator<< (ostream& os, int8_t x) {
 // ---- end f:<<
 
 // ---- inserted library file debug.cc
+#line 42 "/home/y-tanabe/proj/compprog/clib/debug.cc"
 template <class... Args>
 string dbgFormat(const char* fmt, Args... args) {
   size_t len = snprintf(nullptr, 0, fmt, args...);
@@ -245,6 +246,7 @@ void dbgLog(bool with_nl, Head&& head, Tail&&... tail)
 // ---- end debug.cc
 
 // ---- inserted library file algOp.cc
+#line 105 "/home/y-tanabe/proj/compprog/clib/algOp.cc"
 
 // Common definitions
 //    zero, one, inverse
@@ -401,6 +403,7 @@ struct MyAlg {
 // ---- end algOp.cc
 
 // ---- inserted library file power.cc
+#line 16 "/home/y-tanabe/proj/compprog/clib/power.cc"
 
 template<typename T>
 T power(const T& a, ll b) {
@@ -417,6 +420,7 @@ T power(const T& a, ll b) {
 // ---- end power.cc
 
 // ---- inserted library file matrix.cc
+#line 73 "/home/y-tanabe/proj/compprog/clib/matrix.cc"
 
 template <typename T>
 struct Matrix {
@@ -703,6 +707,7 @@ struct Matrix {
 // ---- end matrix.cc
 
 // ---- inserted library file ftwo.cc
+#line 18 "/home/y-tanabe/proj/compprog/clib/ftwo.cc"
 
 struct Ftwo {
   int8_t val;
@@ -805,6 +810,7 @@ vector<ll> getF2Basis(const vector<ll>& vs) {
 // ---- end ftwo.cc
 
 // @@ !! LIM -- end mark --
+#line 7 "ftwo_skel.cc"
 
 int main() {
 

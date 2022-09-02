@@ -1,0 +1,105 @@
+#!/home/y-tanabe/.venv_10/bin/python
+
+# Create Virtual Contest in Atcoder Problems
+#
+# No guarantee
+# No copyright
+
+from selenium import webdriver
+from selenium.webdriver.common.by import By
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
+from selenium.webdriver.common.keys import Keys
+from selenium.webdriver.support.ui import Select
+
+from datetime import datetime, timedelta
+from dateutil.parser import parse
+import time, sys, re, subprocess, os, argparse
+
+import json
+
+def put_text(elem, txt):
+    elem.clear()
+    elem.send_keys(txt)
+
+driver = webdriver.Chrome()
+driver.get('https://github.com/login')
+with open('c:/tmp/test1.json', 'r') as fp:
+    js = json.load(fp)
+fld = driver.find_element(By.ID, 'login_field')
+put_text(fld, js['user'])
+fld = driver.find_element(By.ID, 'password')
+put_text(fld, js['password'])
+but = driver.find_element(By.NAME, 'commit')
+but.click()
+with open('c:/tmp/test2.json', 'r', encoding='UTF-8') as fp2:
+    ci = json.load(fp2)
+driver.get('https://kenkoooo.com/atcoder/#/contest/recent')
+account_link = driver.find_element(By.PARTIAL_LINK_TEXT, 'Login')
+account_link.click()
+buttons = driver.find_elements(By.TAG_NAME, 'button')
+for b in buttons:
+    if "Create New Contest" in b.text:
+        b.click()
+        break
+for f in driver.find_elements(By.TAG_NAME, 'input'):
+    if f.get_attribute('placeholder') == 'Contest Title':
+        put_text(f, 'test contest')
+        break
+for f in driver.find_elements(By.TAG_NAME, 'textarea'):
+    if f.get_attribute('placeholder') == 'Description':
+        put_text(f, 'コンテスト記述のテストです．')
+        break
+for f in driver.find_elements(By.TAG_NAME, 'button'):
+    if "Public" in f.text and not (f.get_attribute('role') == 'menuitem'):
+        break
+f.click()
+for f in driver.find_elements(By.TAG_NAME, 'button'):
+    if "Private" in f.text and f.get_attribute('role') == 'menuitem':
+        f.click()
+        break
+def find_time_setting(s):
+    for dive in driver.find_elements(By.CLASS_NAME, 'my-2'):
+        for lab in dive.find_elements(By.TAG_NAME, 'label'):
+            if s in lab.text:
+                return dive
+    return None
+def set_time(dive, year, month, day, hour, minute):
+    for t in dive.find_elements(By.TAG_NAME, 'input'):
+        if t.get_attribute('type') == 'date':
+            t.clear()
+            t.send_keys(f'00{year:04d}{month:02d}{day:02d}')
+            break
+    (e1, e2) = dive.find_elements(By.TAG_NAME, 'select')
+    so1 = Select(e1)
+    so1.select_by_value(str(hour))
+    so2 = Select(e2)
+    so2.select_by_value(str(minute))
+dive = find_time_setting('Start Time')
+set_time(dive, 2022, 8, 30, 10, 20)
+dive = find_time_setting('End Time')
+set_time(dive, 2022, 8, 30, 11, 20)
+problems = ['https://atcoder.jp/contests/abc266/tasks/abc266_a', 
+            'https://atcoder.jp/contests/abc264/tasks/abc264_a',
+            'https://atcoder.jp/contests/abc264/tasks/abc264_c'
+           ]
+def add_problem(p):
+    def sub():
+        for dive in driver.find_elements(By.CLASS_NAME, 'my-2'):
+            for t in dive.find_elements(By.TAG_NAME, 'input'):
+                ph = t.get_attribute('placeholder')
+                if ph and 'Search here to add problems' in ph:
+                    return (dive, t)
+    (dive, t) = sub()
+    t.send_keys(p)
+    elem = dive.find_element(By.TAG_NAME, 'h5')
+    elem.click()
+
+for p in problems:
+    add_problem(p)
+
+for t in driver.find_elements(By.TAG_NAME, 'button'):
+    if "Create Contest" in t.text:
+        t.click()
+        break
+    

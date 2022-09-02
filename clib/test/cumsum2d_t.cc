@@ -6,6 +6,7 @@ using namespace std;
 // @@ !! LIM(ipoint cumsum2d)
 
 // ---- inserted library file ipoint.cc
+#line 32 "/home/y-tanabe/proj/compprog/clib/ipoint.cc"
 
 struct IPoint {
   ll x;
@@ -84,6 +85,7 @@ namespace std {
 // ---- end ipoint.cc
 
 // ---- inserted library file cumsum2d.cc
+#line 127 "/home/y-tanabe/proj/compprog/clib/cumsum2d.cc"
 
 // #define CUM_SUM_INT 1
 #if CUM_SUM_INT
@@ -175,6 +177,7 @@ ostream& operator <<(ostream& os, const CumSum2D& s) {
 // ---- end cumsum2d.cc
 
 // @@ !! LIM -- end mark --
+#line 7 "cumsum2d_skel.cc"
 
 
 int main() {

@@ -68,8 +68,11 @@ int main() {
     Comb cb(6);
     assert(cb.fact(4) == Fp(24));
     assert(cb.perm(5,3) == Fp(60));
-    assert(cb.comb(6,2) == Fp(15));
-    assert(cb.comb(6,4) == Fp(15));
+    assert(cb.binom(6,2) == Fp(15));
+    assert(cb.binom(6,4) == Fp(15));
+    assert(cb.binom(6,-1) == Fp(0));
+    assert(cb.binom(6,7) == Fp(0));
+    assert(cb.binom_dup(2, 4) == Fp(5));
   }
 
   cout << "ok" << endl;

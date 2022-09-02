@@ -6,6 +6,7 @@ using namespace std;
 // @@ !! LIM(rollingHash)
 
 // ---- inserted library file rollingHash.cc
+#line 52 "/home/y-tanabe/proj/compprog/clib/rollingHash.cc"
 
 // By keymoon
 //     https://qiita.com/keymoon/items/11fac5627672a6d6a9f6
@@ -94,6 +95,7 @@ RollingHash make_rolling_hash(mt19937 rng) {
 // ---- end rollingHash.cc
 
 // @@ !! LIM -- end mark --
+#line 7 "rollingHash_skel.cc"
 
 struct WeakRH {
   static constexpr u64 mod = (1ULL << 31) - 1;
