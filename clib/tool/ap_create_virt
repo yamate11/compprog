@@ -1,0 +1,308 @@
+#!/usr/bin/env python3
+
+# ap_create_virt
+#      AtCoder Problem のバーチャルコンテストを作成する．
+
+# 環境
+#   新しめの Python3 がインストールされていること
+#   Python に Selenium パッケージがインストールされていること
+#   Selenium の Chrome driver がインストールされていること
+
+# 準備
+#
+#   GitHub のアカウント情報を，JSON ファイルとして用意する．
+#      {"user": "myusername", "password": "mySecretPassword"}
+#
+#   コンテスト情報を，JSON ファイルとして用意する．
+#      {"title": "練習9/3",
+#       "description": "灰茶緑",
+#       "private": 1,                      # public なら，値を 0 とする．
+#       "start": [2022, 9, 3, 13, 30],     # 開始時刻．年月日時分．
+#       "end": [2022, 9, 3, 13, 40],       # 終了時刻．年月日時分．
+#       "problems": ["https://atcoder.jp/contests/abc254/tasks/abc254_a",
+#                    "https://atcoder.jp/contests/abc257/tasks/abc257_c",
+#                    "https://atcoder.jp/contests/abc236/tasks/abc236_d"]}
+#             # 問題としては，AtCoderの問題ページのURLのリストを指定する
+
+# 起動
+#    ap_create_virt [-q] [--with-window] gi.json ci.json
+#       -q: 寡黙モード
+#       --with-window: Chromeブラウザに表示
+#       gi.json: GitHubアカウント情報ファイル
+#       ci.json: コンテスト情報ファイル
+
+# 注意事項
+# ・無保証．何が起こっても知りません．
+#   ソースを読んで理解できる人だけが使ってください．
+# ・著作権は放棄します．好きに改変してください．
+
+# Tips(?)
+#   --with-window を指定すると動作が目に見えるようになる．デバッグ用．
+
+
+from selenium import webdriver
+from selenium.webdriver.common.by import By
+from selenium.webdriver.common.keys import Keys
+from selenium.webdriver.support.ui import Select
+from selenium.common.exceptions import NoSuchElementException
+
+from datetime import datetime, timedelta
+from dateutil.parser import parse
+import time, sys, re, subprocess, os, argparse
+
+import json
+
+args = None
+driver = None
+
+def debug(*m):
+    if 0:
+        print(*m, file=sys.stderr, flush=True)
+
+def msg(*m):
+    if args.quiet:
+        return
+    print(*m, file=sys.stderr, flush=True)
+
+def fatal(*msg):
+    print('Fatal: ', *msg, file=sys.stderr)
+    sys.exit(1)
+
+def wait_get(func):
+    '''decorator.  修飾される関数がエラーく None でないオブジェクトを返す
+まで繰返し呼び出す．
+(ただし，現状では，decorator としては使っておらず，明示的に呼んでいる．)
+'''
+    def wrapper(*args, **kwargs):
+        retry = 10        # 失敗しても10回までリトライする
+        while retry > 0:
+            try:
+                elem = func(*args, **kwargs)
+                if elem:
+                    return elem
+            except NoSuchElementException as e:
+                pass
+            time.sleep(0.2)   # 次のリトライまで 0.2秒待つ
+            retry -= 1
+        raise Exception(f"Function {func.__name__} fails after retries.")
+    return wrapper
+
+def wait_find_element(rng, by, s):
+    '''範囲 rng において by と s で指定される文書要素を返す．
+みつからなければしばらく待ってリトライする．
+'''
+    return wait_get(rng.find_element)(by, s)
+
+def get_elem_cond(rng, by, s, cond):
+    '''範囲 rng において by と s で指定される文書要素のうち，
+条件 cond を満たすもの (最初にみつかったもの) を返す． 
+みつからなければ None を返す．
+'''
+
+    for e in rng.find_elements(by, s):
+        if cond(e):
+            return e
+    return None
+
+def wait_get_elem_cond(rng, by, s, cond):
+    '''範囲 rng において by と s で指定される文書要素のうち，
+条件 cond を満たすもの (最初にみつかったもの) を返す． 
+みつからなければしばらく待ってリトライする．
+'''
+    return wait_get(get_elem_cond)(rng, by, s, cond)
+
+def put_text(elem, txt):
+    '''文書要素 elem に 文字列 txt を入力する'''
+    elem.clear()
+    elem.send_keys(txt)
+
+def check_keys(dic, kws, file):
+    for kw in kws:
+        if not kw in dic:
+            fatal(f'No {kw} in {file}')
+
+def get_github_info():
+    '''GitHubログイン情報を読む'''
+    file = args.github_info
+    with open(file, 'r') as fp:
+        gi = json.load(fp)
+    check_keys(gi, 'user password'.split(), file)
+    return gi
+
+def get_contest_info():
+    '''コンテスト情報を読む'''
+    file = args.contest_info
+    with open(file, 'r', encoding='UTF-8') as fp:
+        ci = json.load(fp)
+    check_keys(ci, 'title description private start end problems'.split(),
+               file)
+    return ci
+
+def login_github(gi):
+    '''GitHubにログインする'''
+    driver.get('https://github.com/login')
+    fld = wait_find_element(driver, By.ID, 'login_field')
+    put_text(fld, gi['user'])
+    fld = wait_find_element(driver, By.ID, 'password')
+    put_text(fld, gi['password'])
+    but = wait_find_element(driver, By.NAME, 'commit')
+    but.click()
+
+def login_acproblems():
+    '''AtCoder Problems で，Login ボタンを押す'''
+    driver.get('https://kenkoooo.com/atcoder/#/contest/recent')
+    # Login ボタンはあるとは思うが，ひょっとすると最初から Account ボタン
+    # になってしまっているかもしれない．そこで，一応念のため，隣にある
+    # Training が現れるまで待つ．その時点で Login ボタンがなければ，
+    # (Account ボタンになっていると考えて) 先に進む．
+    wait_find_element(driver, By.PARTIAL_LINK_TEXT, 'Training')
+    links = driver.find_elements(By.PARTIAL_LINK_TEXT, 'Login')
+    if links:
+        links[0].click()
+
+def start_selenium():
+    '''Selenium を開始する'''
+    if args.with_window:
+        return webdriver.Chrome()
+    else:
+        options = webdriver.ChromeOptions()
+        options.add_argument('--headless')
+        # 画面が十分広くないと Login メニューの位置が変わってしまう．
+        options.add_argument('window-size=1920,1080')
+        return webdriver.Chrome(options=options)
+
+def open_contest_page():
+    '''Create New Contest ボタンを押してコンテスト情報の入力ページを開く'''
+    b = wait_get_elem_cond(driver, By.TAG_NAME, 'button',
+                           lambda b: "Create New Contest" in b.text)
+    b.click()
+
+def set_private(ci):
+    '''Public/Private を設定する'''
+    # デフォルトは Public なので，Private にする必要があるときだけ変更する．
+    if 'private' in ci and ci['private']:
+        # 'Public' ボタンを押してメニューを出す．
+        f1 = wait_get_elem_cond(
+            driver, By.TAG_NAME, 'button',
+            lambda f: 'Public' in f.text
+                       and not (f.get_attribute('role') == 'menuitem'))
+        f1.click()
+        # 現れたメニューの中から 'Private' を選ぶ．
+        f2 = wait_get_elem_cond(
+            driver, By.TAG_NAME, 'button',
+            lambda f: 'Private' in f.text
+                      and f.get_attribute('role') == 'menuitem')
+        f2.click()
+
+def find_time_setting(s):
+    '''日時入力要素をみつける．'''
+    # <label> タグであって，そのテキストに引数 s の文字列を含むようなものを
+    # みつけ，そのタグを含むようなクラス my-2 のタグを返す．
+    return wait_get_elem_cond(
+        driver, By.CLASS_NAME, 'my-2', 
+        lambda d: any([s in lab.text
+                       for lab in d.find_elements(By.TAG_NAME, 'label')]))
+
+def set_time(elem, year, month, day, hour, minute):
+    '''日時を設定する'''
+    # elem には，find_time_setting でみつけた要素が設定されている．
+
+    # 年月日フィールドをみつけてクリアする
+    t = get_elem_cond(elem, By.TAG_NAME, 'input',
+                      lambda t: t.get_attribute('type') == 'date')
+    t.clear()
+
+    # 年月日フィールドに入力する．
+    # なぜかわからないが，年フィールドには6桁の数が入力できるように
+    # なっているので，4桁の年の先頭に 00 を付加して入力する．
+    t.send_keys(f'00{year:04d}{month:02d}{day:02d}')
+
+    # 時分の選択肢から適当なものを選ぶ．
+    (e_h, e_m) = elem.find_elements(By.TAG_NAME, 'select')
+    Select(e_h).select_by_value(str(hour))
+    Select(e_m).select_by_value(str(minute))
+
+def add_problems(ps):
+    '''問題を設定する'''
+    def find_problem_box():
+        '''Search here to add problems と書かれているテキスト
+入力域 t と，それを含む クラス my-2 のdiv要素 elem を返す．
+'''
+        def cond(t):
+            ph = t.get_attribute('placeholder')
+            return ph and 'Search here to add problems' in ph
+        for elem in driver.find_elements(By.CLASS_NAME, 'my-2'):
+            t = get_elem_cond(elem, By.TAG_NAME, 'input', cond)
+            if t:
+                return (t, elem)
+        fatal('Failed to find a place for specifying problems.')
+
+    for (i, p) in enumerate(ps, 1):
+        msg(f'  Problem #{i}')
+        (box, elem) = find_problem_box()
+
+        # テキスト入力域に URL を入力する．
+        box.send_keys(p)
+
+        # H5 タグをクリックすることで登録される．
+        # (ENTERキーを押してもダメなようである．)
+        h5 = wait_find_element(elem, By.TAG_NAME, 'h5')
+        h5.click()
+    
+def put_contest_info(ci):
+    '''コンテスト情報を入力する．'''
+    t = wait_get_elem_cond(
+        driver, By.TAG_NAME, 'input',
+        lambda t: t.get_attribute('placeholder') == 'Contest Title')
+    put_text(t, ci['title'])
+    t = wait_get_elem_cond(
+        driver, By.TAG_NAME, 'textarea',
+        lambda t: t.get_attribute('placeholder') == 'Description')
+    put_text(t, ci['description'])
+    set_private(ci)
+    set_time(find_time_setting('Start Time'), *ci['start'])
+    set_time(find_time_setting('End Time'), *ci['end'])
+    add_problems(ci['problems'])
+
+def create_contest():
+    '''コンテスト作成ボタンを押す'''
+    b = wait_get_elem_cond(driver, By.TAG_NAME, 'button',
+                           lambda b: "Create Contest" in b.text)
+    b.click()
+
+def run_all():
+    global driver
+    gi = get_github_info()
+    ci = get_contest_info()
+    msg('Initializing')
+    driver = start_selenium()
+    msg('Logging in GitHub')
+    login_github(gi)
+    msg('Logging in Atcoder Problems')
+    login_acproblems()
+    msg('Opening Contest Page')
+    open_contest_page()
+    msg('Entering Contest Info')
+    put_contest_info(ci)
+    create_contest()
+    msg('Done')
+
+def parseArgs():
+    global args
+    parser = argparse.ArgumentParser(
+        description='''AtCoder Problems バーチャルコンテストを作成する''')
+    parser.add_argument('-q', '--quiet', action='store_true',
+                        help='寡黙モード')
+    parser.add_argument('--with-window', action='store_true',
+                        help='Chromeブラウザに表示する')
+    parser.add_argument('github_info', metavar='github-info', type=str,
+                        help='GitHub ログイン情報ファイル')
+    parser.add_argument('contest_info', metavar='contest-info', type=str,
+                        help='コンテスト情報ファイル')
+    args = parser.parse_args()
+
+def main():
+    parseArgs()
+    run_all()
+
+main()
