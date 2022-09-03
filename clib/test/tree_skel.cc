@@ -35,7 +35,6 @@ int main(int argc, char *argv[]) {
   assert(t3.lca(7,8) == 6);
   assert(t3.lca(8,13) == 0);
   assert(t3.lca(7,10) == 3);
-  assert(t3.diameter() == 9);
 
   vector<TreeEdge>
     edge4({{0,1}, {1,2}, {3,4}, {0,3}, {3,5}, {6,7}, {6,8}, {6,1}});
@@ -54,6 +53,32 @@ int main(int argc, char *argv[]) {
   assert(t4.parent(2) == 1);
   assert(t4.parent(6) == 1);
   assert(t4.parent(8) == 6);
+
+  {
+    Tree tr(6);
+    tr.add_edge(0, 1);
+    tr.add_edge(0, 2);
+    tr.add_edge(0, 4);
+    tr.add_edge(1, 3);
+    tr.add_edge(4, 5);
+    auto [diam, ep0, ep1, ct0, ct1] = tr.diameter();
+    assert(diam == 4 and ep0 == 3 and ep1 == 5 and ct0 == 0 and ct1 == 0);
+    tr.change_root(3);
+    tie (diam, ep0, ep1, ct0, ct1) = tr.diameter();
+    assert(diam == 4 and ep0 == 5 and ep1 == 3 and ct0 == 0 and ct1 == 0);
+    Tree tr2(7);
+    tr2.add_edge(0, 1);
+    tr2.add_edge(0, 2);
+    tr2.add_edge(0, 4);
+    tr2.add_edge(1, 3);
+    tr2.add_edge(4, 5);
+    tr2.add_edge(5, 6);
+    tie (diam, ep0, ep1, ct0, ct1) = tr2.diameter();
+    assert(diam == 5 and ep0 == 6 and ep1 == 3 and ct0 == 4 and ct1 == 0);
+    tr2.change_root(4);
+    tie (diam, ep0, ep1, ct0, ct1) = tr2.diameter();
+    assert(diam == 5 and ep0 == 3 and ep1 == 6 and ct0 == 0 and ct1 == 4);
+  }
 
   // The length of the longest simple path that goes through the node
   using T5 = pair<ll, ll>;

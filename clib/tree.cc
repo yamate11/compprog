@@ -29,12 +29,16 @@ using namespace std;
     int depth(int x);
     int lca(int x, int y);   // lowest common ancestor    
     vector<int> nnpath(int x, int y)  // path (list of nodes) between x and y, inclusive.
-    int acestorDep(int x, int dep)   // the ancestor of x whose depth is dep
+    int ancestorDep(int x, int dep)   // the ancestor of x whose depth is dep
     int edgeIdx(int x, int y)    // the edge index connecting x and y
                                  // if no such edge exists, -1 is returned.
     Edge node2edge(int x, int y)   // the edge connecting x and y
                                    // the edge should exist.
-    int diameter()           // diameter
+    tuple<int, int, int, int, int> diameter()
+      // returns (diam, nd0, nd1, ct0, ct1).  diam is the length of the diameter.  
+      // nd0 and nd1 are end points of diameter.  
+      // ct0 and ct1 are the centers near nd1 and nd2 (if diam is even, ct0 == ct1).
+    void change_root(int newRoot)  // change the root
   internal member functions
     void set_parent_child();  // change the order of _nbr so that _nbr[u][0] is the parent of u.  Also good_nbr := true
                               // Note that _nbr[root][0] == -1
@@ -229,20 +233,55 @@ struct Tree {
 
 #pragma GCC diagnostic push
 #pragma GCC diagnostic ignored "-Wunused-but-set-variable"    
-  int diameter() {
+  tuple<int, int, int, int, int> diameter() {
     set_parent_child();
-    ll nd0 = max_element(_depth.begin(), _depth.end()) - _depth.begin();
-    auto dfs2 = [&](auto rF, int nd, int pt, int dp) -> int {
-      int ret = 0;
+    if (numNodes == 1) return {0, 0, 0, 0, 0};
+    if (numNodes == 2) return {1, 0, 1, 0, 1};
+    int nd0 = max_element(_depth.begin(), _depth.end()) - _depth.begin();
+    int nd1 = -1, ct0 = -1, ct1 = -1;
+    int diam = 0;
+    auto dfs2 = [&](auto rF, int nd, int dp, int pt) -> bool {
+      bool ret = false;
+      ll numChildren = 0;
       for (ll cld : _nbr[nd]) {
         if (cld < 0 or cld == pt) continue;
-        ret = max(ret, 1 + rF(rF, cld, nd, dp + 1));
+        numChildren++;
+        bool bbb = rF(rF, cld, dp + 1, nd);
+        ret = ret || bbb;
+      }
+      if (numChildren > 0) {
+        if (ret) {
+          if (diam % 2 == 0) {
+            if (dp == diam / 2) ct0 = ct1 = nd;
+          }else {
+            if (dp == diam / 2) ct0 = nd;
+            else if (dp == diam / 2 + 1) ct1 = nd;
+          }
+        }
+      }else {
+        if (dp > diam) {
+          diam = dp;
+          nd1 = nd;
+          ret = true;
+        }
       }
       return ret;
     };
-    return dfs2(dfs2, nd0, -1, 0);
+    dfs2(dfs2, nd0, 0, -1);
+    return {diam, nd0, nd1, ct0, ct1};
   }
 #pragma GCC diagnostic pop
+
+  void change_root(int newRoot) {
+    pPnt.resize(0);
+    if (good_nbr) {
+      size_t t = _nbr[root].size();
+      swap(_nbr[root][0], _nbr[root][t - 1]);
+      _nbr[root].pop_back();
+      good_nbr = false;
+    }
+    root = newRoot;
+  }
 
 };
 
