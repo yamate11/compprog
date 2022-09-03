@@ -3,7 +3,7 @@ EXES = UnionFind binsearch bit board cht cmpNaive coordCompr \
        guessPoly ipoint intervalSet matrix minCostFlow misc mod \
        perm rerror rollingHash scc segTree dynSegTree sieve strSearch \
        suffixArray tree trie util interactive polynomial sortedIndex \
-       forall mapget mypair digitplace topord
+       forall mapget mypair digitplace topord cycledetect
 
 CXX = g++-9
 CXXCOMMONFLAGS = -std=gnu++17 -Wall -Wno-format-security -Wshadow -fconcepts -DCMPNAIVE

@@ -6,7 +6,7 @@ using namespace std;
 // @@ !! LIM(tree)
 
 // ---- inserted library file tree.cc
-#line 93 "/home/y-tanabe/proj/compprog/clib/tree.cc"
+#line 97 "/home/y-tanabe/proj/compprog/clib/tree.cc"
 
 using TreeEdge = pair<int, int>;
 
@@ -146,20 +146,55 @@ struct Tree {
 
 #pragma GCC diagnostic push
 #pragma GCC diagnostic ignored "-Wunused-but-set-variable"    
-  int diameter() {
+  tuple<int, int, int, int, int> diameter() {
     set_parent_child();
-    ll nd0 = max_element(_depth.begin(), _depth.end()) - _depth.begin();
-    auto dfs2 = [&](auto rF, int nd, int pt, int dp) -> int {
-      int ret = 0;
+    if (numNodes == 1) return {0, 0, 0, 0, 0};
+    if (numNodes == 2) return {1, 0, 1, 0, 1};
+    int nd0 = max_element(_depth.begin(), _depth.end()) - _depth.begin();
+    int nd1 = -1, ct0 = -1, ct1 = -1;
+    int diam = 0;
+    auto dfs2 = [&](auto rF, int nd, int dp, int pt) -> bool {
+      bool ret = false;
+      ll numChildren = 0;
       for (ll cld : _nbr[nd]) {
         if (cld < 0 or cld == pt) continue;
-        ret = max(ret, 1 + rF(rF, cld, nd, dp + 1));
+        numChildren++;
+        bool bbb = rF(rF, cld, dp + 1, nd);
+        ret = ret || bbb;
+      }
+      if (numChildren > 0) {
+        if (ret) {
+          if (diam % 2 == 0) {
+            if (dp == diam / 2) ct0 = ct1 = nd;
+          }else {
+            if (dp == diam / 2) ct0 = nd;
+            else if (dp == diam / 2 + 1) ct1 = nd;
+          }
+        }
+      }else {
+        if (dp > diam) {
+          diam = dp;
+          nd1 = nd;
+          ret = true;
+        }
       }
       return ret;
     };
-    return dfs2(dfs2, nd0, -1, 0);
+    dfs2(dfs2, nd0, 0, -1);
+    return {diam, nd0, nd1, ct0, ct1};
   }
 #pragma GCC diagnostic pop
+
+  void change_root(int newRoot) {
+    pPnt.resize(0);
+    if (good_nbr) {
+      size_t t = _nbr[root].size();
+      swap(_nbr[root][0], _nbr[root][t - 1]);
+      _nbr[root].pop_back();
+      good_nbr = false;
+    }
+    root = newRoot;
+  }
 
 };
 
@@ -239,7 +274,6 @@ int main(int argc, char *argv[]) {
   assert(t3.lca(7,8) == 6);
   assert(t3.lca(8,13) == 0);
   assert(t3.lca(7,10) == 3);
-  assert(t3.diameter() == 9);
 
   vector<TreeEdge>
     edge4({{0,1}, {1,2}, {3,4}, {0,3}, {3,5}, {6,7}, {6,8}, {6,1}});
@@ -258,6 +292,32 @@ int main(int argc, char *argv[]) {
   assert(t4.parent(2) == 1);
   assert(t4.parent(6) == 1);
   assert(t4.parent(8) == 6);
+
+  {
+    Tree tr(6);
+    tr.add_edge(0, 1);
+    tr.add_edge(0, 2);
+    tr.add_edge(0, 4);
+    tr.add_edge(1, 3);
+    tr.add_edge(4, 5);
+    auto [diam, ep0, ep1, ct0, ct1] = tr.diameter();
+    assert(diam == 4 and ep0 == 3 and ep1 == 5 and ct0 == 0 and ct1 == 0);
+    tr.change_root(3);
+    tie (diam, ep0, ep1, ct0, ct1) = tr.diameter();
+    assert(diam == 4 and ep0 == 5 and ep1 == 3 and ct0 == 0 and ct1 == 0);
+    Tree tr2(7);
+    tr2.add_edge(0, 1);
+    tr2.add_edge(0, 2);
+    tr2.add_edge(0, 4);
+    tr2.add_edge(1, 3);
+    tr2.add_edge(4, 5);
+    tr2.add_edge(5, 6);
+    tie (diam, ep0, ep1, ct0, ct1) = tr2.diameter();
+    assert(diam == 5 and ep0 == 6 and ep1 == 3 and ct0 == 4 and ct1 == 0);
+    tr2.change_root(4);
+    tie (diam, ep0, ep1, ct0, ct1) = tr2.diameter();
+    assert(diam == 5 and ep0 == 3 and ep1 == 6 and ct0 == 0 and ct1 == 4);
+  }
 
   // The length of the longest simple path that goes through the node
   using T5 = pair<ll, ll>;
