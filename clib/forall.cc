@@ -16,6 +16,7 @@ using namespace std;
     if (EXISTS(i, 0, N, vec[i] < 0)) cout << "There exists a negative." << endl;
     cout << "with i = " << EXFIND(i, 0, N, vec[i] < 0) << endl;
     cout << "with i = " << EXFIND_D(i, 0, N, vec[i] < 0, -1LL) << endl;
+    // EXFIND(i, 0, N, cond) returns the least i where cond holds; fails if there is no such i.
     // EXFIND_D(i, 0, N, cond, def) returns the least i where cond holds; or returns def if there is no such i.
 
     if (FORALL_C(x, vec, x < 0)) cout << "All elements are negative." << endl;

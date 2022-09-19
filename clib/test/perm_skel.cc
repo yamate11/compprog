@@ -3,8 +3,7 @@
 typedef long long int ll;
 using namespace std;
 
-// @@ !! LIM(debug perm)
-
+// @@ !! LIM(perm)
 
 int cmp_vec(const auto& v1, const auto& v2) {
   ll m = min(v1.size(), v2.size());
@@ -19,11 +18,11 @@ int cmp_vec(const auto& v1, const auto& v2) {
 
 void sanity_perm(auto& perm, int exp_cnt) {
     int cnt = 1;
-    auto prev = perm.get();
+    auto prev = perm.vec_view();
     while (true) {
-      if (!perm.next()) break;
+      if (!perm.get()) break;
       cnt++;
-      auto cur = perm.get();
+      auto cur = perm.vec_view();
       assert(cmp_vec(prev, cur) == -1);
       prev = move(cur);
     }
@@ -38,59 +37,90 @@ int main() {
 
   {
     IntPerm ip(6, 4);
+    ip.get();
     sanity_perm(ip, 6*5*4*3);
   }
   {
-    IntPerm ip(5);
+    IntPerm ip(5, 5);
+    ip.get();
     sanity_perm(ip, 5*4*3*2*1);
   }
   {
-    vector<int> v(4);
-    iota(v.begin(), v.end(), 1);
-    IterPerm<vector<int>> itp(v, 2);
-    sanity_perm(itp, 4*3);
-  }
-  {
-    string s("xcde");
-    IterPerm<string> itp(s);
-    int cnt = 1;
-    while (true) {
-      if (!itp.next()) break;
-      cnt++;
-    }
-    assert(cnt == 4*3*2*1);
-  }
-  {
     IntComb ic(5, 2);
+    ic.get();
     sanity_perm(ic, (5*4)/(2*1));
   }
+
+  using vvi = vector<vector<int>>;
+  auto get_all = [&](auto& p) -> vvi {
+    vvi ret;
+    while (p.get()) ret.push_back(p.vec_view());
+    return ret;
+  };
+
   {
-    DupIntPerm dip(3, 5);
-    const auto& vec = dip.get();
-    assert(vec.size() == 5);
-    int i = 0;
-    do {
-      int x = i;
-      for (int j = 0; j < 5; j++) {
-        assert(x % 3 == vec[4 - j]);
-        x /= 3;
-      }
-      i++;
-    }while (dip.next());
+    IntPerm p1(3, 2);
+    assert(get_all(p1) == vvi({      {0,1},{0,2},{1,0},      {1,2},{2,0},{2,1}      }));
+    IntComb p2(3, 2);
+    assert(get_all(p2) == vvi({      {0,1},{0,2},            {1,2},                 }));
+    IntDupPerm p3(3, 2);
+    assert(get_all(p3) == vvi({{0,0},{0,1},{0,2},{1,0},{1,1},{1,2},{2,0},{2,1},{2,2}}));
+    IntDupComb p4(3, 2);
+    assert(get_all(p4) == vvi({{0,0},{0,1},{0,2},      {1,1},{1,2},            {2,2}}));
   }
   {
-    vector<int> vec({5, 10, 3, 6});
-    IterComb itc(vec, 2);
-    vector<vector<int>> exp({{5,10},{5,3},{5,6},{10,3},{10,6},{3,6}});
-    int i = 0;
-    const auto& v = itc.get();
-    do {
-      assert(v == exp.at(i++));
-    }while (itc.next());
-    assert(i == 6);
+    IntDupPerm p1(2, 3);
+    assert(get_all(p1) == vvi({{0,0,0},{0,0,1},{0,1,0},{0,1,1},{1,0,0},{1,0,1},{1,1,0},{1,1,1}}));
+    IntDupComb p2(2, 3);
+    assert(get_all(p2) == vvi({{0,0,0},{0,0,1},{0,1,1},{1,1,1}}));
+    IntDupComb p3(3, 3);
+    assert(get_all(p3) == vvi({{0,0,0},{0,0,1},{0,0,2},{0,1,1},{0,1,2},{0,2,2},{1,1,1},{1,1,2},{1,2,2},{2,2,2}}));
   }
 
+  auto test_is_empty = [&](auto p) -> void { assert(get_all(p) == vvi{}); };
+  auto test_is_single = [&](auto p) -> void { assert(get_all(p) == vvi{{}}); };
+  {
+    test_is_empty(IntPerm(-3, 2));
+    test_is_empty(IntComb(-3, 2));
+    test_is_empty(IntDupPerm(-3, 2));
+    test_is_empty(IntDupComb(-3, 2));
+    test_is_empty(IntPerm(3, -2));
+    test_is_empty(IntComb(3, -2));
+    test_is_empty(IntDupPerm(3, -2));
+    test_is_empty(IntDupComb(3, -2));
+    test_is_empty(IntPerm(3, 5));
+    test_is_empty(IntComb(3, 5));
+    test_is_single(IntPerm(0, 0));
+    test_is_single(IntComb(0, 0));
+    test_is_single(IntDupPerm(0, 0));
+    test_is_single(IntDupComb(0, 0));
+    test_is_single(IntPerm(5, 0));
+    test_is_single(IntComb(5, 0));
+    test_is_single(IntDupPerm(5, 0));
+    test_is_single(IntDupComb(5, 0));
+  }
 
-  cerr << "Test Done.\n";
+  auto test_double = [&](auto p) -> void {
+    vector<vector<int>> res1, res2;
+    while (p.get()) {
+      vector<int> v;
+      for (int i = 0; i < p.r; i++) v.push_back(p.at(i));
+      res1.push_back(move(v));
+    }
+    while (p.get()) {
+      vector<int> v;
+      for (int i = 0; i < p.r; i++) v.push_back(p.at(i));
+      res2.push_back(move(v));
+    }
+    assert(res1 == res2);
+  };
+  {
+    test_double(IntPerm(3, 2));
+    test_double(IntComb(7, 3));
+    test_double(IntDupPerm(7, 3));
+    test_double(IntDupComb(7, 3));
+  }
+
+  cerr << "ok\n";
 
 }

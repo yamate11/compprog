@@ -12,7 +12,8 @@ int main(int argc, char *argv[]) {
   cout << setprecision(20);
 
   vector<TreeEdge> edge1({{0,1}, {0,2}, {1,3}, {1,4}, {2,5}, {2,6}});
-  Tree t1(7, edge1);
+  Tree t1(7);
+  for (auto [x,y] : edge1) t1.add_edge(x, y);
   assert(t1.nnpath(1, 2) == vector<int>({1,0,2}));
   assert(t1.nnpath(3, 2) == vector<int>({3,1,0,2}));
   assert(t1.nnpath(6, 0) == vector<int>({6,2,0}));
@@ -28,7 +29,8 @@ int main(int argc, char *argv[]) {
   vector<TreeEdge>
     edge3({{0,1}, {1,2}, {2,3}, {3,4}, {4,5}, {5,6}, {6,7},
 	   {6,8}, {3,9}, {9,10}, {0,11}, {11,12}, {11,13}});
-  Tree t3(14, edge3);
+  Tree t3(14);
+  for (auto [x,y] : edge3) t3.add_edge(x, y);
   assert(t3.nnpath(1,5) == vector<int>({1,2,3,4,5}));
   assert(t3.nnpath(7,2) == vector<int>({7,6,5,4,3,2}));
   for (int i = 0; i <=7; i++) assert(t3.ancestorDep(7,i) == i);
@@ -38,7 +40,8 @@ int main(int argc, char *argv[]) {
 
   vector<TreeEdge>
     edge4({{0,1}, {1,2}, {3,4}, {0,3}, {3,5}, {6,7}, {6,8}, {6,1}});
-  Tree t4(9, edge4);
+  Tree t4(9);
+  for (auto [x,y] : edge4) t4.add_edge(x, y);
   auto sub4 = [](Tree t, int i)  {
     auto v = t.child(i);
     return set<int>(v.begin(), v.end());
@@ -84,7 +87,8 @@ int main(int argc, char *argv[]) {
   using T5 = pair<ll, ll>;
   vector<TreeEdge> edge5({{0,1}, {0,2}, {0,3}, {1,4}, {1,5}, {2,6}, {2,7}});
   vector<ll> len5({10,6,3,5,3,2,1});
-  Tree t5(8, edge5);
+  Tree t5(8);
+  for (auto [x,y] : edge5) t5.add_edge(x, y);
   auto add5 = [&](T5 p1, T5 p2) -> T5 {
     ll a1 = p1.first;
     ll a2 = p2.first;
@@ -135,7 +139,8 @@ int main(int argc, char *argv[]) {
   vector<TreeEdge> edge7({{1,0},{2,1},{1,3},{3,4},{3,5},{6,5}});
   vector<ll> time({2,3,5,1,4,6});
   for (ll rt = 0; rt < 7; rt++) {
-    Tree t7(7, edge7, rt);
+    Tree t7(7, rt);
+    for (auto [x,y] : edge7) t7.add_edge(x, y);
     using T7 = pair<ll, ll>;
     const T7 unitT7 = make_pair(0, 0);
     auto  add7 = [&](const T7& tt1, const T7& tt2) -> T7 {

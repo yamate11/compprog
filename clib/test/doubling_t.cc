@@ -1,133 +1,142 @@
 #include <bits/stdc++.h>
 #include <cassert>
-typedef long long int ll;
 using namespace std;
+using ll = long long int;
+using pll = pair<ll, ll>;
+// #include <atcoder/all>
+// using namespace atcoder;
+#define REP(i, a, b) for (ll i = (a); i < (b); i++)
+#define REPrev(i, a, b) for (ll i = (a); i >= (b); i--)
+#define ALL(coll) (coll).begin(), (coll).end()
+#define SIZE(v) ((ll)((v).size()))
+#define REPOUT(i, a, b, exp, sep) REP(i, (a), (b)) { if (i != (a)) cout << (sep); cout << (exp); } cout << "\n"
 
 // @@ !! LIM(doubling)
 
 // ---- inserted library file doubling.cc
-#line 49 "/home/y-tanabe/proj/compprog/clib/doubling.cc"
+#line 40 "/home/y-tanabe/proj/compprog/clib/doubling.cc"
 
-template <typename T, typename Fop>
-struct Doubling {
-  vector<int> nxt;   // g |-> nxt[g]
-  int size;
-  vector<T> alpha;
-  T unit; // monoid unit
-  Fop op; // monoid operation   op :: T -> T -> T
-  int height;
-  vector<vector<int>> tblP;
-  vector<vector<T>> tblQ;
+struct DoublingFRel { // from functional relation
+  int n;
+  vector<vector<int>> tbl;
 
-  void precalc() {
-    tblP = vector(height, vector<int>(size));
-    tblP[0] = move(nxt);
-    tblQ = vector(height, vector<T>(size));
-    tblQ[0] = move(alpha);
-    for (ll i = 1; i < height; i++) {
-      for (ll j = 0; j < size; j++) {
-	ll x = tblP[i-1][j];
-	tblP[i][j] = tblP[i-1][x];
-	tblQ[i][j] = op(tblQ[i-1][j], tblQ[i-1][x]);
-      }
-    }
-    /*
-    DLOG("height=", height);
-    DLOG("tblP=", tblP);
-    DLOG("tblQ=", tblQ);
-    */
+  void _init(long long lim, auto frel) {
+    int K = 64 - __builtin_clzll(lim);
+    tbl.resize(K, vector<int>(n));
+    for (int i = 0; i < n; i++) tbl[0][i] = frel(i);
+    for (int k = 0; k + 1 < K; k++) for (int i = 0; i < n; i++) tbl[k + 1][i] = tbl[k][tbl[k][i]];
   }
 
-  Doubling(ll lim_, vector<int>&& nxt_, vector<T>&& alpha_, T unit_, Fop op_)
-    : nxt(nxt_), size(nxt.size()), alpha(alpha_),
-      unit(unit_), op(op_), height(64 - __builtin_clzll(lim_)) {
-    precalc();
-  }
+  DoublingFRel(long long lim, int n_, auto frel) : n(n_) { _init(lim, frel); }
 
-  Doubling(ll lim_, const vector<int>& nxt_, const vector<T>& alpha_,
-	   T unit_, Fop op_)
-    : nxt(nxt_), size(nxt.size()), alpha(alpha_),
-      unit(unit_), op(op_), height(64 - __builtin_clzll(lim_)) {
-    precalc();
-  }
-
-  T calc(int x, ll y) {
-    int cur = x;
-    T sum = unit;
-    ll hy = 64 - __builtin_clzll(y);
-    if (hy > height) {
-      cerr << "Fatal: calc(): hy (" << hy << ") > height("
-	   << height << ")" << endl;
-      exit(1);
-    }
-    for (ll i = 0; i < hy; i++) {
-      if ((y >> i) & 1) {
-	sum = op(sum, tblQ[i][cur]);
-	cur = tblP[i][cur];
-      }
-    }
-    return sum;
+  int val(long long x, int i) { // Calculates frel^{(x)}(i).  Should be x <= lim.
+    for (int k = 0; x > 0; x >>= 1, k++) if (x & 1) i = tbl[k][i];
+    return i;
   }
 };
+  
+template <typename T>
+struct DoublingCum {
+  const DoublingFRel& d;
+  vector<vector<T>> tbl;
 
-template<typename T>
-auto make_doubling(ll lim, auto&& nxt, auto&& alpha, T unit, auto op)
-  -> Doubling<T, decltype(op)> {
-  return Doubling(lim, move(nxt), move(alpha), unit, op);
-}
+  void _init(auto mapping) {
+    int K = d.tbl.size();
+    tbl.resize(K, vector<T>(d.n));
+    for (int i = 0; i < d.n; i++) tbl[0][i] = mapping(i);
+    for (int k = 0; k + 1 < K; k++) for (int i = 0; i < d.n; i++) tbl[k + 1][i] = tbl[k][i] + tbl[k][d.tbl[k][i]];
+  }
 
-template<typename T>
-auto make_doubling(ll lim, const auto& nxt, const auto& alpha, T unit, auto op)
-  -> Doubling<T, decltype(op)> {
-  return Doubling(lim, nxt, alpha, unit, op);
-}
+  DoublingCum(const DoublingFRel& d_, auto mapping) : d(d_) { _init(mapping); }
+
+  T val(long long x, int i) { // the monoid sum of x objs from i.  i.e. from i to i + x - 1.
+    T ret = T();
+    for (int k = 0; x > 0; x >>= 1, k++) if (x & 1) {
+        ret = ret + tbl[k][i];
+        i = d.tbl[k][i];
+      }
+    return ret;
+  }
+};
 
 // ---- end doubling.cc
 
 // @@ !! LIM -- end mark --
-#line 7 "doubling_skel.cc"
+#line 15 "doubling_skel.cc"
 
 int main(/* int argc, char *argv[] */) {
   ios_base::sync_with_stdio(false);
   cin.tie(nullptr);
   cout << setprecision(20);
+  
+  random_device rd;
+  mt19937 rng(rd());
+  auto randrange = [&rng](ll i, ll j) -> ll {
+    uniform_int_distribution<ll> dist(i, j - 1);
+    return dist(rng);
+  };
 
   { // ABC179-E  
-
-    auto func = [&](ll N, ll X, ll M) -> ll {
-      vector<int> nxt(M);
-      using T = ll;
-      vector<T> alpha(M);
-      for (ll i = 0; i < M; i++) {
-	nxt[i] = i * i % M;
-	alpha[i] = i;
-      }
-      auto op = [](T x, T y) { return x + y; };
-      auto dbl = make_doubling(N, move(nxt), move(alpha), 0LL, op);
-      return dbl.calc(X, N);
+    using vll = vector<ll>;
+    auto func = [&](ll N, ll K, const vll& A) -> ll {
+      auto d1 = DoublingFRel(K, N, [&](int i) -> int { return (i + A[i]) % N; });
+      auto d2 = DoublingCum<ll>(d1, [&](int i) -> ll { return A[i]; });
+      return d2.val(K, 0);
     };
-    auto naive = [&](ll N, ll X, ll M) -> ll {
-      ll sum = 0;
-      ll cur = X;
-      for (ll i = 1; i <= N; i++) {
-	sum += cur;
-	cur = cur * cur % M;
-      }
-      return sum;
-    };
+    assert(func(5, 3, vll({2, 1, 6, 3, 1})) == 11);
+    assert(func(10, 1000000000000, vll({260522, 914575, 436426, 979445, 648772, 690081, 933447, 190629, 703497, 47202})));
+  }
 
-    assert(func(6, 2, 1001) == 1369);
-    assert(func(1000, 2, 16) == 6);
-    assert(func(10000, 418, 725) == 11140);
-    for (ll n = 1; n <= 20; n++) {
-      for (ll m = 1; m < 20; m++) {
-	for (ll x = 0; x < m; x++) {
-	  assert(func(n, x, m) == naive(n, x, m));
-	}
+  {
+    ll n = 10;
+    ll K = 100;
+    ll rep = 1000;
+    vector<ll> A(n), B(n);
+    REP(i, 0, n) {
+      A[i] = randrange(0, n);
+      B[i] = randrange(0, (ll)1e9);
+    }
+    auto naive = [&](ll r, ll x) -> ll {
+      REP(i, 0, r) x = A[x];
+      return x;
+    };
+    auto naive2 = [&](ll r, ll x) -> ll {
+      ll s = 0;
+      REP(i, 0, r) {
+        s += B[x];
+        x = A[x];
       }
+      return s;
+    };
+    auto d = DoublingFRel(K, n, [&](int i) -> int { return A[i]; });
+    auto d2 = DoublingCum<ll>(d, [&](int i) -> ll { return B[i]; });
+    REP(i, 0, rep) {
+      ll r = randrange(0, K + 1);
+      ll x = randrange(0, n);
+      assert(naive(r, x) == d.val(r, x));
+    }
+    REP(i, 0, rep) {
+      ll r = randrange(0, K + 1);
+      ll x = randrange(0, n);
+      assert(naive2(r, x) == d2.val(r, x));
+    }
+    REP(i, 0, rep) {
+      ll k = randrange(1, K + 1);
+      ll x = randrange(0, n);
+      auto d3 = DoublingFRel(k, n, [&](int j) -> int { return A[j]; });
+      assert(naive(k, x) == d3.val(k, x));
+    }
+    REP(i, 0, rep) {
+      ll k = randrange(1, K + 1);
+      ll x = randrange(0, n);
+      auto d4 = DoublingFRel(k, n, [&](int j) -> int { return A[j]; });
+      auto d5 = DoublingCum<ll>(d4, [&](int j) -> ll { return B[j]; });
+      assert(naive2(k, x) == d5.val(k, x));
     }
 
   }
+
+  cout << "ok" << endl;
   return 0;
 }
 

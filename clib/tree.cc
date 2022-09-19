@@ -21,7 +21,6 @@ using namespace std;
             // pPnt[t][n] == parent^{2^t}(n)   (but parent(root) == root here, unlike the member function)
   constructors
     Tree(int numNodes_, int root_ = 0);
-    Tree(int numNodes_, const auto& edge_, int root_ = 0);
   member functions
     int add_edge(int x, int y);  // Adds an edge.  Returns the edge index.
     int parent(int x);           // parent(root) == -1
@@ -62,7 +61,7 @@ using namespace std;
     };
     dfs(dfs, tr.root);
     
-  Rerooting a tree.  
+  Rerooting a tree (also see https://yamate11.github.io/blog/posts/2022/08-17-rerooting/)
     Let C^n_i be the set of children of node i where the root node is n.
     Let us also assume that some value v[n] of type T is defined by:
       v[n] = v^n[n], 
@@ -114,9 +113,9 @@ struct Tree {
 
   Tree(int numNodes_, int root_ = 0) : numNodes(numNodes_), root(root_), _nbr(numNodes_) {}
 
-  Tree(int numNodes_, const auto& edge_, int root_ = 0) : numNodes(numNodes_), root(root_), _nbr(numNodes_) {
-    for (size_t i = 0; i < edge_.size(); i++) add_edge(edge_[i].first, edge_[i].second);
-  }
+  // Implementation note:
+  // Adding Tree(int, const vector<pair<int, int>>, int) is not a good idea.  If it were added,
+  // Tree tr(n, x); would fail when x is long long.  You need to write Tree tr(n, (int)x), then.
 
   void set_parent_child() {
     if (good_nbr) return;
