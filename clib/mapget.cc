@@ -7,6 +7,7 @@ using namespace std;
   // mapget, mapset
 
   map<A, B> mp;
+  // or   unorderd_map<A, B> mp;
 
   * mapget(mp, a, def=B()) returns mp[a] if it exists; returns def otherwise
   * mapset(mp, a, b, def=B()) usually sets b as mp[a]; but erases a if b == def.

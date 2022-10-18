@@ -257,7 +257,7 @@ def mk_fields_list(param):
         else:   raise MyExc(f'Unexpected list of length >= 3 in fields {f}')
     return c_fields
 
-def mkstruct(namebase, c_fields, idx, order, istr):
+def mkstruct(namebase, c_fields, idx, order, istr, ostr):
     tp = namebase + '_t'
     out = f'struct {tp} {{'
     out += '\n' + '\n'.join([f'  {t} {v};' for (v, t) in c_fields])
@@ -266,6 +266,7 @@ def mkstruct(namebase, c_fields, idx, order, istr):
     plist = ', '.join([f'{t} {v}_' for (v, t) in c_fields])
     init_list = ', '.join([f'{v}({v}_)' for (v, t) in c_fields])
     read_list = ' >> '.join([f't.{v}' for (v, t) in c_fields])
+    write_list = ' << ", " << '.join([f't.{v}' for (v, t) in c_fields])
     
     out += f'''
   {tp}() {{}}
@@ -276,6 +277,11 @@ def mkstruct(namebase, c_fields, idx, order, istr):
         out += f'''\n  friend istream& operator>>(istream& istr, {tp}& t) {{
     istr >> {read_list};
     return istr;
+  }}'''
+    if ostr:
+        out += f'''\n  friend ostream& operator<<(ostream& ostr, const {tp}& t) {{
+    ostr << "(" << {write_list} << ")";
+    return ostr;
   }}'''
     if order:
         out += f'\n  bool operator<(const {tp}& o) const {{'
@@ -295,7 +301,8 @@ def g_inpNbrList(param):
     def get_vec_decl(name):
         return f'auto {name} = vector({szNode}, vector(0, {tp}()));'
     d = mkdic(param, [('sizeNode', None), ('sizeEdge', None), ('varname', None)],
-              {'dir': False, 'bwd': None, 'dec': None, 'read': None, 'idx': None, 'ord': None, 'istr': False})
+              {'dir': False, 'bwd': None, 'dec': None, 'read': None, 'idx': None, 'ord': None,
+               'istr': False, 'ostr': False})
     sdec = mksdec('u', d["dec"]) + ' ' + mksdec('v', d["dec"]);
     vn = d['varname']
     szNode = d['sizeNode']
@@ -308,7 +315,7 @@ def g_inpNbrList(param):
     if d['read'] or d['idx']:
         c_fields_R = mk_fields_list(d['read'])
         lst = [('nd', 'int')] + c_fields_R
-        struct = mkstruct(vn, lst, idx=d['idx'], order=mk_hered_list(d['ord']), istr=d['istr'])
+        struct = mkstruct(vn, lst, idx=d['idx'], order=mk_hered_list(d['ord']), istr=d['istr'], ostr=d['ostr'])
         tp = vn + '_t'
         for (n, t) in c_fields_R:
             i_read += f'\n  {t} {n}; cin >> {n};'
@@ -330,9 +337,10 @@ def g_inpNbrList(param):
     return gen
 
 def g_defStruct(param):
-    d = mkdic(param, [('structname', None), ('fields', None)], {'idx': None, 'ord': None, 'istr': True})
+    d = mkdic(param, [('structname', None), ('fields', None)],
+              {'idx': None, 'ord': None, 'istr': True, 'ostr': True})
     struct = mkstruct(d['structname'], mk_fields_list(d['fields']), idx=d['idx'],
-                      order=mk_hered_list(d['ord']), istr=d['istr'])
+                      order=mk_hered_list(d['ord']), istr=d['istr'], ostr=d['ostr'])
     return struct
 
 

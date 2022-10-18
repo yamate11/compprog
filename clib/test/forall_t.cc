@@ -11,9 +11,9 @@ using namespace std;
 // @@ !! LIM(forall)
 
 // ---- inserted library file forall.cc
-#line 33 "/home/y-tanabe/proj/compprog/clib/forall.cc"
+#line 35 "/home/y-tanabe/proj/compprog/clib/forall.cc"
 
-#define EX_REP_LL(i, from, to) for (ll i = from; i < to; i++)
+#define EX_REP_LL(i, from, to) for (ll i = (from); i < (to); i++)
 #define EX_REP_RB(x, coll) for (auto x : coll)
 #define EXGEN(rep_part, cond, yes, no_behaviour) ([&]() { rep_part if (cond) return (yes); no_behaviour; }())
 #define EXISTS_BASE(rep_part, cond) EXGEN(rep_part, cond, true, return false)
@@ -29,6 +29,10 @@ using namespace std;
 #define FORALL_C(x, coll, cond) (not EXISTS_C(x, coll, not (cond)))
 #define EXFIND_C(x, coll, cond) EXFIND_BASE(EX_REP_RB(x, coll), cond, x)
 #define EXFIND_D_C(x, coll, cond, def) EXFIND_D_BASE(EX_REP_RB(x, coll), cond, x, def)
+
+#define COUNT_BASE(rep_part, cond) ([&](){ ll ret = 0; rep_part if (cond) ret++; return ret; }())
+#define COUNT(i, from, to, cond) COUNT_BASE(EX_REP_LL(i, from, to), cond)
+#define COUNT_C(x, coll, cond) COUNT_BASE(EX_REP_RB(x, coll), cond)
 
 #define IMPLIES(a, b) (not (a) or (b))
 
@@ -49,8 +53,10 @@ int main(/* int argc, char *argv[] */) {
     assert(EXISTS(i, 0, SIZE(vec1), vec1[i] <= -6));
     assert(not EXISTS(i, 0, SIZE(vec1), vec1[i] < -6));
     assert(EXFIND(i, 0, SIZE(vec1), vec1[i] < 0) == 1);
-    assert(EXFIND_D(i, 0, SIZE(vec1), vec1[i] < -10, -1LL) == -1);
+    assert(EXFIND_D(i, 0, SIZE(vec1), vec1[i] < -10, -1LL) == -1LL);
     assert(not FORALL(i, 0, SIZE(vec1), -6 <= vec1[i] and vec1[i] <= 5));
+    assert(COUNT(i, 0, SIZE(vec1), vec1[i] % 2 == 0) == 4);
+    assert(COUNT(i, 0, SIZE(vec1) - 1, vec1[i] < vec1[i + 1]) == 3);
   }
   {
     vector<ll> vec1 = {10, -5, 3, 4, -6, 2};

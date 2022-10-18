@@ -22,8 +22,10 @@ int main(/* int argc, char *argv[] */) {
     assert(EXISTS(i, 0, SIZE(vec1), vec1[i] <= -6));
     assert(not EXISTS(i, 0, SIZE(vec1), vec1[i] < -6));
     assert(EXFIND(i, 0, SIZE(vec1), vec1[i] < 0) == 1);
-    assert(EXFIND_D(i, 0, SIZE(vec1), vec1[i] < -10, -1LL) == -1);
+    assert(EXFIND_D(i, 0, SIZE(vec1), vec1[i] < -10, -1LL) == -1LL);
     assert(not FORALL(i, 0, SIZE(vec1), -6 <= vec1[i] and vec1[i] <= 5));
+    assert(COUNT(i, 0, SIZE(vec1), vec1[i] % 2 == 0) == 4);
+    assert(COUNT(i, 0, SIZE(vec1) - 1, vec1[i] < vec1[i + 1]) == 3);
   }
   {
     vector<ll> vec1 = {10, -5, 3, 4, -6, 2};

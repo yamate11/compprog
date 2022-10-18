@@ -52,7 +52,8 @@ using namespace std;
       char v3; cin >> v3; v3 -= '0'; C[i] = v3;
     }
 
-  @InpNbrList(sizeNode, sizeEdge, varname, dir=False, bwd=None, dec=None, read=None, idx=None, ord=None, istr=False)
+  @InpNbrList(sizeNode, sizeEdge, varname, 
+              dir=False, bwd=None, dec=None, read=None, idx=None, ord=None, istr=False, ostr=False)
 
     Reads edges and store them in a neibour list.
       If dir is True, then the graph is regarded as directed.  
@@ -64,6 +65,7 @@ using namespace std;
       Parameter ord is the same as in that of @DefStruct.
       If istr is True, then friend operator>>(istream&, T&) is defined.  This is problematic because 
         the struct is local.  If you use this option, move the definition of the struct to the top level.
+      The same applies to ostr.
 
     // @InpNbrList(N, M, nbr1, dec=1)
     auto nbr1 = vector(N, vector(0, int()));
@@ -108,7 +110,7 @@ using namespace std;
       nbr3[v].emplace_back(u, cost, desc, i);
     }
 
-  @DefStruct(structname, fields, idx=None, ord=None, istr=True) 
+  @DefStruct(structname, fields, idx=None, ord=None, istr=True, ostr=True) 
 
     Define a struct.  It is recommended to put this in the top level.
     Parameter filelds are list of either a field name or a pair of field name and its type.
@@ -128,6 +130,10 @@ using namespace std;
       friend istream& operator>>(istream& istr, SS2_t& t) {
         istr >> t.a >> t.c;
         return istr;
+      }
+      friend ostream& operator<<(ostream& istr, const SS2_t& t) {
+        ostr << "(" << t.a << ", " << t.c << ")";
+        return ostr;
       }
       bool operator<(const SS2_t& o) const {
         if (c > o.c) return true;

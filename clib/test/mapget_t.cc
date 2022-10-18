@@ -6,7 +6,7 @@ using namespace std;
 // @@ !! LIM(mapget)
 
 // ---- inserted library file mapget.cc
-#line 21 "/home/y-tanabe/proj/compprog/clib/mapget.cc"
+#line 22 "/home/y-tanabe/proj/compprog/clib/mapget.cc"
 
 template<typename MP>
 typename MP::mapped_type mapget(MP& mp,
