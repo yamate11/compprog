@@ -18,6 +18,19 @@ int main(/* int argc, char *argv[] */) {
   cin.tie(nullptr);
   cout << setprecision(20);
 
+  ll N, K; cin >> N >> K;
+  double ans = 0;
+  ll i = 0;
+  ll p = 1;
+  REPrev(n, N, 1) {
+    while (p * n < K) {
+      p *= 2;
+      i++;
+    }
+    ans += 1.0/p;
+  }
+  ans /= N;
+  cout << ans << endl;
   return 0;
 }
 

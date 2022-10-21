@@ -259,52 +259,32 @@ int main(/* int argc, char *argv[] */) {
   cin.tie(nullptr);
   cout << setprecision(20);
 
-  ll N, Q; cin >> N >> Q;
-  vector<ll> pt(N);
-  vector<ll> nc(N);
-  // vector cld(N, vector<ll>());
-  REP(i, 1, N) {
-    ll p; cin >> p; p--;
-    pt[i] = p;
-    nc[p]++;
-  }
-  pt[0] = N;
-  DLOGK(pt, nc);
-  ll cnt = 0;
-  vector<bool> W(N + 1);
-  vector<ll> numCH(N);
-  REP(_q, 0, Q) {
-    ll M; cin >> M;
-    vector<ll> V;
-    REP(i, 0, M) {
-      ll v; cin >> v; v--;
-      V.push_back(v);
-      W[v] = true;
-    }
-    vector<ll> posNumCH;
-    for (ll v : V) {
-      ll p = pt[v];
-      DLOGKL("    ", p);
-      if (W[p]) {
-        if (numCH[p] == 0) {
-          DLOGKL("     xx", p);
-          posNumCH.push_back(p);
-          DLOGKL("     xx", posNumCH);
-        }
-        numCH[p]++;
+  ll N, M; cin >> N >> M;
+  // @InpVec(N, A) [9Piz8xdx]
+  auto A = vector(N, ll());
+  for (int i = 0; i < N; i++) { ll v; cin >> v; A[i] = v; }
+  // @End [9Piz8xdx]
+  vector<ll> cnt(N + 1);
+  priority_queue<ll, vector<ll>, greater<ll>> pque;
+  REP(i, 0, N + 1) pque.push(i);
+  ll ans = N + 1;
+  REP(i, 0, N) {
+    DLOGK(i, cnt, pque);
+    cnt[A[i]]++;
+    if (i < M - 1) continue;
+    while (true) {
+      ll j = pque.top();
+      if (cnt[j] == 0) {
+        ans = min(ans, j);
+        break;
       }
-      else cnt++;
-      DLOGKL("  ", v, numCH, posNumCH);
+      pque.pop();
     }
-    DLOGK(cnt, V, W, numCH, posNumCH);
-    for (ll p : posNumCH) {
-      cnt += nc[p] - numCH[p];
-      numCH[p] = 0;
-    }
-    cout << cnt << "\n";
-    for (ll v : V) W[v] = false;
+    ll a = A[i - M + 1];
+    cnt[a]--;
+    if (cnt[a] == 0) pque.push(a);
   }
-  
+  cout << ans << endl;
 
   return 0;
 }

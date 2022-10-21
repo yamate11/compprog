@@ -259,52 +259,64 @@ int main(/* int argc, char *argv[] */) {
   cin.tie(nullptr);
   cout << setprecision(20);
 
-  ll N, Q; cin >> N >> Q;
-  vector<ll> pt(N);
-  vector<ll> nc(N);
-  // vector cld(N, vector<ll>());
-  REP(i, 1, N) {
-    ll p; cin >> p; p--;
-    pt[i] = p;
-    nc[p]++;
+  ll N, L; cin >> N >> L;
+  // @InpMVec(N, (X, (D, type=char))) [N7pRe5IW]
+  auto X = vector(N, ll());
+  auto D = vector(N, char());
+  for (int i = 0; i < N; i++) {
+    ll v1; cin >> v1; X[i] = v1;
+    char v2; cin >> v2; D[i] = v2;
   }
-  pt[0] = N;
-  DLOGK(pt, nc);
-  ll cnt = 0;
-  vector<bool> W(N + 1);
-  vector<ll> numCH(N);
-  REP(_q, 0, Q) {
-    ll M; cin >> M;
-    vector<ll> V;
-    REP(i, 0, M) {
-      ll v; cin >> v; v--;
-      V.push_back(v);
-      W[v] = true;
-    }
-    vector<ll> posNumCH;
-    for (ll v : V) {
-      ll p = pt[v];
-      DLOGKL("    ", p);
-      if (W[p]) {
-        if (numCH[p] == 0) {
-          DLOGKL("     xx", p);
-          posNumCH.push_back(p);
-          DLOGKL("     xx", posNumCH);
-        }
-        numCH[p]++;
+  // @End [N7pRe5IW]
+
+  auto getcount = [&](char dir, auto& vec, ll bnd) -> ll {
+    ll ret = 0;
+    if (dir == 'L') {
+      REP(i, 0, SIZE(vec)) {
+        ret += vec[i] - bnd - 1 - i;
       }
-      else cnt++;
-      DLOGKL("  ", v, numCH, posNumCH);
+    }else if (dir == 'R') {
+      REP(i, 0, SIZE(vec)) {
+        ret += bnd - vec[i] - 1 - i;
+      }
     }
-    DLOGK(cnt, V, W, numCH, posNumCH);
-    for (ll p : posNumCH) {
-      cnt += nc[p] - numCH[p];
-      numCH[p] = 0;
+    DLOGK(dir, vec, bnd, ret);
+    return ret;
+  };
+
+  ll ans = 0;
+
+  ll i = 0;
+  if (D[0] == 'L') {
+    vector<ll> P;
+    while (i < N and D[i] == 'L') {
+      P.push_back(X[i]);
+      i++;
     }
-    cout << cnt << "\n";
-    for (ll v : V) W[v] = false;
+    ll x = getcount('L', P, 0);
+    ans = x;
   }
-  
+  while (i < N) {
+    vector<ll> P, Q;
+    while (i < N and D[i] == 'R') {
+      P.push_back(X[i]);
+      i++;
+    }
+    ll i0 = i;
+    if (i == N) {
+      ll x = getcount('R', P, L + 1);
+      ans += x;
+      break;
+    }
+    while (i < N and D[i] == 'L') {
+      Q.push_back(X[i]);
+      i++;
+    }
+    ll x1 = getcount('R', P, X[i0]);
+    ll x2 = getcount('L', Q, X[i0 - 1]);
+    ans += max(x1, x2);
+  }
+  cout << ans << endl;
 
   return 0;
 }

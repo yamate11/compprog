@@ -18,6 +18,24 @@ int main(/* int argc, char *argv[] */) {
   cin.tie(nullptr);
   cout << setprecision(20);
 
+  ll K; cin >> K;
+  vector<ll> tbl(201, -1LL);
+  auto f = [&](ll x) -> ll {
+    ll& ret = tbl[x];
+    if (ret < 0) {
+      ret = 0;
+      REP(c, 1, K + 1) ret += gcd(x, c);
+    }
+    return ret;
+  };
+
+  ll sum = 0;
+  REP(a, 1, K + 1) REP(b, 1, K + 1) {
+    ll gab = gcd(a, b);
+    sum += f(gab);
+  }
+  cout << sum << endl;
+
   return 0;
 }
 

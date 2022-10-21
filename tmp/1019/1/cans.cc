@@ -18,6 +18,11 @@ int main(/* int argc, char *argv[] */) {
   cin.tie(nullptr);
   cout << setprecision(20);
 
+  ll K; cin >> K;
+  ll sum = 0;
+  REP(a, 1, K + 1) REP(b, 1, K + 1) REP(c, 1, K + 1) sum += gcd(gcd(a, b), c);
+  cout << sum << endl;
+
   return 0;
 }
 

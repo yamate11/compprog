@@ -18,6 +18,17 @@ int main(/* int argc, char *argv[] */) {
   cin.tie(nullptr);
   cout << setprecision(20);
 
+  ll N, X; cin >> N >> X;
+  ll t = 0;
+  REP(i, 0, N) {
+    ll v, p; cin >> v >> p;
+    t += v * p;
+    if (t > X * 100) {
+      cout << i + 1 << endl;
+      return 0;
+    }
+  }
+  cout << -1 << endl;
   return 0;
 }
 
