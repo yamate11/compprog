@@ -51,123 +51,87 @@ struct itv_set_cell {
 template<typename T>
 struct itv_set {
   
-  auto get_it(ll x) {
-    auto it = repl.upper_bound(x);
+  auto get_iter(ll x) {
+    auto it = impl.upper_bound(x);
     return std::prev(it);
   }
 
-  auto get_it(ll x) const {
-    auto it = repl.upper_bound(x);
+  auto get_iter(ll x) const {
+    auto it = impl.upper_bound(x);
     return std::prev(it);
   }
 
   auto divide(ll x) {
-    auto it_nxt = repl.upper_bound(x);
+    auto it_nxt = impl.upper_bound(x);
     auto it = std::prev(it_nxt);
     if (it->first == x) return it;
     auto& [_, t] = *it;
-    auto [it3, rc] = repl.emplace_hint(it_nxt, x, t);
+    auto [it3, rc] = impl.emplace_hint(it_nxt, x, t);
     assert(rc);
     return it3;
   }
 
-  map<ll, T> repl;  // repl always has (LLONG_MIN, *) and (LLONG_MAX, *) as centinels.
+  map<ll, T> impl;  // impl always has (LLONG_MIN, *) and (LLONG_MAX, *) as centinels.
 
-  itv_set(const T& t) {
-    repl[LLONG_MIN] = t;
-    repl[LLONG_MAX] = T();
+  itv_set(const T& t = T()) {
+    impl[LLONG_MIN] = t;
+    impl[LLONG_MAX] = T();
   }
 
-  void put(ll l, ll r, T t) {
+  void put(ll l, ll r, const T& t) {
     if (l >= r) throw runtime_error("itv_set.put: l >= r");
-    auto it0_nxt = repl.upper_bound(l);
-    auto it0 = std::prev(it0_nxt);
-    auto it;
-    if (it0->first == l or it0->second == t) it = it0;
-    else {
-      auto [it1, _] = repl.emplace_hint(it0_nxt, l, t);
-      it = it1;
-    }
-
-
-    auto it1 = divide(l);
-    auto it0 = std::prev(it1);
-    
-
-    auto it2 = divide(r);
-    auto it = it1;
-    it->second = t;
-    for (it++; it != it2; it = repl.erase(it));
-    if (it0->second == it1->second) repl.erase(it1);
-    auto it3 = std::next(it2);
-    if (it2->second == it3->second) repl.erase(it3);
+    if (l == LLONG_MIN) throw runtime_error("itv_set.put: l == LLONG_MIN");
+    if (r == LLONG_MAX) throw runtime_error("itv_set.put: l == LLONG_MAX");
+    auto it0 = divide(l);
+    auto it1 = divide(r);
+    it0->second = t;
+    for (auto it = std::next(it0); it != it1; it = impl.erase(it));
+    auto it2 = std::prev(it0);
+    if (it0->second == it1) impl.erase(it1);
+    if (it2->second == it0->second) impl.erase(it0);
   }
 
-  void put(ll x, T t) { put(x, x + 1, t); }
+  void put(ll x, const T& t) { put(x, x + 1, t); }
 
-  T get(ll x) const {
-    auto it = get_it(x);
-    return it->second;
+  void put_at_end(ll x, const T& t) {
+    auto it2 = std::prev(impl.end());
+    auto it1 = std::prev(it2);
+    if (it1->second != t) impl.emplace_hint(it2, x, t);
   }
 
-  vector<tuple<ll, ll, T>> get(ll l, ll r) const {
-    vector<tuple<ll, ll, T>> ret;
-    auto it = get_it(l);
-    ll l1 = l;
+  const T& get_val(ll x) const { return get_iter(x)->second; }
+
+  pair<ll, ll> get_itvl(ll x) {
+    auto it = impl.upper_bound(x);
+    return {std::prev(it)->first, it->first};
+  }
+
+  pair<ll, pair<ll, ll>> get(ll x) {
+    auto it = impl.upper_bound(x);
+    return {it->second, {std::prev(it)->first, it->first}};
+  }
+
+  template<typename F>
+  itv_set apply(F f, itv_set x, itv_set y) {
+    auto itx = x.impl.begin();
+    auto ity = y.impl.begin();
+    itv_set ret(f(itx->second, ity->second));
+    auto itcc = ret->impl.begin();
+    auto itce = std::next(itcc);
     while (true) {
-      auto it2 = next(it);
-      if (r <= it2->first) {
-        ret.emplace_back(l1, r, it->second);
-        return ret;
-      }
-      ret.emplace_back(l1, it2->first, it->second);
-      it = it2;
-      l1 = it->first;
-    }
-  }
-
-  tuple<ll, ll, T> get_itv(ll x) const {
-    auto it = get_it(x);
-    auto it2 = next(it);
-    return {max(l0, it->first), min(r0, it2->first), it->second};
-  }
-
-  void normalize() {
-    auto it = repl.begin();
-    while (true) {
-      auto itX = std::next(it);
-      while (true) {
-        if (itX == repl.end()) return;
-        if (it->second != itX->second) break;
-        itX = repl.erase(itX);
-      }
-      it = itX;
-    }
-  }
-
-  void update(auto upd, const itv_set& o) {
-    if (l0 != o.l0 or r0 != o.r0) throw runtime_error("itv_set.apply: the intervals do not match.");
-    auto itO = o.repl.begin();
-    auto itT = repl.begin();
-    while (itO->first < LLONG_MAX) {
-      /*
-      DLOGK(itT->first, itO->first);
-      DLOGKL("before", repl);
-      DLOGKL("after ", repl);
-      */
-      if (std::next(itO)->first < std::next(itT)->first) {
-        auto it_nxt = divide(std::next(itO)->first);
-        upd(itT->second, itO->second);
-        itT = it_nxt;
-        itO++;
-      }else if (std::next(itO)->first > std::next(itT)->first) {
-        upd(itT->second, itO->second);
-        itT++;
-      }else { // std::next(itO)->first == std::next(itT)->first
-        upd(itT->second, itO->second);
-        itT++;
-        itO++;
-      }
+      ll t;
+      tie(t, itx, ity) = [&]() {
+        auto nitx = std::next(itx);
+        auto nity = std::next(ity);
+        if      (nitx->first <  nity->first) return {nitx->first, nitx,  ity};
+        else if (nitx->first >  nity->first) return {nity->first,  ity, nitx};
+        else if (nitx->first < LLONG_MAX)    return {nitx->first, nitx, nity};
+        else                                 return {-1,          nitx, nity};
+      }();
+      if (t == -1) break;
+      T ncur = f(itx->second, ity->second);
+      bool dummy;
+      if (ncur != itcc->second) tie(itcc, dummy) = ret.impl.emplace_hint(itce, t, move(ncur));
     }
   }
 };

@@ -23,6 +23,19 @@ int main(int argc, char *argv[]) {
     assert(mp.find(7) == mp.end());
   }
   {
+    map<ll, ll> mp;
+    mapset(mp, 1, 1); // constant
+    ll x = 2;
+    mapset(mp, 2, x); // l-value
+    const ll y = 3;
+    mapset(mp, 3, y); // const l-value
+    mapset(mp, 4, move(x)); // r-value
+    assert(mapget(mp, 1) == 1);
+    assert(mapget(mp, 2) == 2);
+    assert(mapget(mp, 3) == 3);
+    assert(mapget(mp, 4) == 2);
+  }
+  {
     using vi = vector<int>;
     map<int, vi> mp;
     mapset(mp, 3, vi{1, 2, 3});

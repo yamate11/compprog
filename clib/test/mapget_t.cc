@@ -6,7 +6,7 @@ using namespace std;
 // @@ !! LIM(mapget)
 
 // ---- inserted library file mapget.cc
-#line 22 "/home/y-tanabe/proj/compprog/clib/mapget.cc"
+#line 25 "/home/y-tanabe/proj/compprog/clib/mapget.cc"
 
 template<typename MP>
 typename MP::mapped_type mapget(MP& mp,
@@ -17,13 +17,13 @@ typename MP::mapped_type mapget(MP& mp,
 }
 
 
-template<typename MP>
+template<typename MP, typename T>
 void mapset(MP& mp,
             const typename MP::key_type& a,
-            typename MP::mapped_type&& val,
+            T&& val,
             const typename MP::mapped_type& def = typename MP::mapped_type()) {
   if (val == def) mp.erase(a);
-  else mp[a] = forward<typename MP::mapped_type>(val);
+  else mp[a] = forward<T>(val);
 }
 
 // ---- end mapget.cc
@@ -47,6 +47,19 @@ int main(int argc, char *argv[]) {
     mapset(mp, 7, 0);
     assert(mapget(mp, 7) == 0);
     assert(mp.find(7) == mp.end());
+  }
+  {
+    map<ll, ll> mp;
+    mapset(mp, 1, 1); // constant
+    ll x = 2;
+    mapset(mp, 2, x); // l-value
+    const ll y = 3;
+    mapset(mp, 3, y); // const l-value
+    mapset(mp, 4, move(x)); // r-value
+    assert(mapget(mp, 1) == 1);
+    assert(mapget(mp, 2) == 2);
+    assert(mapget(mp, 3) == 3);
+    assert(mapget(mp, 4) == 2);
   }
   {
     using vi = vector<int>;
