@@ -264,25 +264,14 @@ int main(/* int argc, char *argv[] */) {
   auto A = vector(N, ll());
   for (int i = 0; i < N; i++) { ll v; cin >> v; A[i] = v; }
   // @End [9Piz8xdx]
-  vector<ll> cnt(N + 1);
-  priority_queue<ll, vector<ll>, greater<ll>> pque;
-  REP(i, 0, N + 1) pque.push(i);
-  ll ans = N + 1;
-  REP(i, 0, N) {
-    DLOGK(i, cnt, pque);
-    cnt[A[i]]++;
-    if (i < M - 1) continue;
-    while (true) {
-      ll j = pque.top();
-      if (cnt[j] == 0) {
-        ans = min(ans, j);
-        break;
-      }
-      pque.pop();
-    }
-    ll a = A[i - M + 1];
-    cnt[a]--;
-    if (cnt[a] == 0) pque.push(a);
+  vector<ll> C(N + 1);
+  REP(i, 0, M) C[A[i]]++;
+  ll ans = 0;
+  for (; C[ans] > 0; ans++);
+  REP(i, M, N) {
+    C[A[i]]++;
+    ll t = A[i - M];
+    if (--C[t] == 0 and t < ans) ans = t;
   }
   cout << ans << endl;
 
