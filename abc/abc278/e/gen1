@@ -1,0 +1,14 @@
+#!/usr/bin/env python3
+
+from random import randrange
+
+H = 300
+W = 300
+N = 300
+h = 1
+w = 1
+print(H, W, N, h, w)
+for r in range(H):
+    print(' '.join(map(str, [randrange(1, N + 1) for w in range(W)])))
+    
+        

@@ -186,8 +186,9 @@ ostream& operator<< (ostream& os, int8_t x) {
 // considering the binary search.
 
 template <typename DAT, typename OP,
-	  typename Fadd, typename Fcomp, typename Fappl> 
-struct SegTree {
+	  typename ADD_t, typename COMP_t, typename APPL_t, bool lazy> 
+struct GenSegTree {
+  int orig_size;     // size of initdat
   int size;	     // power of two; >= 2
   int height;        // size = 1 << height;
   vector<DAT> node;  // vector of size 2*size.
@@ -199,180 +200,228 @@ struct SegTree {
                      // (already applied to this node)
   DAT unit_dat;
   OP unit_op;
-  Fadd add;
-  Fcomp comp;
-  Fappl appl;
-  bool range_update;
+  ADD_t add;
+  COMP_t comp;
+  APPL_t appl;
     
-  SegTree(DAT unit_dat_, OP unit_op_, Fadd add_, Fcomp comp_, Fappl appl_,
-	  bool range_update_)
-    // , vector<DAT> initdat) 
-    : unit_dat(unit_dat_), unit_op(unit_op_), add(add_), comp(comp_),
-      appl(appl_), range_update(range_update_) {}
+  GenSegTree(DAT unit_dat_, OP unit_op_, ADD_t add_, COMP_t comp_, APPL_t appl_, const vector<DAT>& initdat)
+    : orig_size(initdat.size()), unit_dat(unit_dat_), unit_op(unit_op_),
+      add(add_), comp(comp_), appl(appl_) { _set_data(initdat); }
 
-  void set_data(vector<DAT> initdat) {
+  void _set_data(const vector<DAT>& initdat) {
     if (initdat.size() <= 0) {
       cerr << "the size of initial vector must be >= 1" << endl;
       abort();
     }
-    if (initdat.size() == 1) {
-      height = 0;
-    }else {
-      height = sizeof(int) * 8 - __builtin_clz(initdat.size() - 1);
-    }
+    if (initdat.size() == 1) height = 0;
+    else   height = sizeof(int) * 8 - __builtin_clz(initdat.size() - 1);
     size = 1 << height;
     node.resize(2*size, unit_dat);
-    for (int i = 0; i < (int)initdat.size(); i++) {
-      node.at(size + i) = initdat.at(i);
-    }
-    for (int t = size - 1; t >= 1; t--) {
-      node.at(t) = add(node.at(t<<1|0), node.at(t<<1|1));
-    }
+    for (int i = 0; i < (int)initdat.size(); i++) node[size + i] = initdat[i];
+    for (int t = size - 1; t >= 1; t--) node[t] = add(node[t<<1|0], node[t<<1|1]);
     susp.resize(size, unit_op);
   }
 
-  void child_updated_sub(int k, int t) {
-    node.at(t) = appl(k, susp.at(t),
-		      add(node.at(t<<1|0), node.at(t<<1|1)));
+  void child_updated_sub(int t) {
+    node[t] = appl(susp[t], add(node[t<<1|0], node[t<<1|1]));
   }
 
   void child_updated(int l, int r) {
-    int k = 1;
     r--;
     while (l > 1) {
       l >>= 1;
       r >>= 1;
-      k *= 2;
-      child_updated_sub(k, l);
-      if (l < r) child_updated_sub(k, r);
+      child_updated_sub(l);
+      if (l < r) child_updated_sub(r);
     }
   }
 
-  void node_op(int i, int k, OP f) {
-    node.at(i) = appl(k, f, node.at(i));
-    if (i < size) susp.at(i) = comp(f, susp.at(i));
+  void node_op(int i, OP f) {
+    node[i] = appl(f, node[i]);
+    if (i < size) susp[i] = comp(f, susp[i]);
   }
 
-  void push_one(int i, int k) {
-    node_op(i<<1|0, k / 2, susp.at(i));
-    node_op(i<<1|1, k / 2, susp.at(i));
-    susp.at(i) = unit_op;
+  // Note that susp[i] HAS ALREADY BEEN APPLIED TO node[i].
+  // When push_one(i) is called, susp[j] is updated (for j : i's child) and it is applied to node[j].
+  void push_one(int i) {
+    node_op(i<<1|0, susp[i]);
+    node_op(i<<1|1, susp[i]);
+    susp[i] = unit_op;
   }
 
   void push_upto(int l, int r) {
     for (int s = height; s >= 1; s--) {
       int lz = l >> s;
       int rz = (r-1) >> s;
-      int k = 1 << s;
-      push_one(lz, k);
-      if (lz < rz) push_one(rz, k);
+      push_one(lz);
+      if (lz < rz) push_one(rz);
     }
   }
 
   DAT query(int l, int r) {
-    // DLOG("l=", l, "r=", r);
     if (l >= r) return unit_dat;
     DAT ret_l = unit_dat;
     DAT ret_r = unit_dat;
-    // DLOG("1: ret_l=", ret_l, "ret_r", ret_r);
     l += size;
     r += size;
-    if (range_update) push_upto(l, r);
+    if constexpr(lazy) push_upto(l, r);
     while (l < r) {
       if (l & 1) {
-	ret_l = add(ret_l, node.at(l));
-	// DLOG("l=", l, "ret_l=", ret_l);
+	ret_l = add(ret_l, node[l]);
 	l++;
       }
       if (r & 1) {
-	ret_r = add(node.at(r-1), ret_r);
-	// DLOG("r=", r, "ret_r=", ret_r);
+	ret_r = add(node[r-1], ret_r);
       }
       l >>= 1;
       r >>= 1;
     }
     DAT ret = add(ret_l, ret_r);
-    // DLOG("ret_l=", ret_l, "ret_r", ret_r, "ret", ret);
     return ret;
   }
 
-  void single_update(int i, OP f) {
-    update(i, i+1, f);
+  template<bool xx = lazy> enable_if_t<! xx> update(int i, DAT t) {
+    ll x = size + i;
+    node[x] = t;
+    for (x >>= 1; x >= 1; x >>= 1) node[x] = add(node[x<<1|0], node[x<<1|1]);
   }
 
-  void update(int l, int r, OP f) {
-    // DLOG("update. 1. node=", node);
+  template<bool xx = lazy> enable_if_t<xx> update(int l, int r, OP f) {
     if (l >= r) return;
-    if ((! range_update) && (l + 1 < r)) {
-      cerr << "FATAL: r - l >= 2 without setting range_update." << endl;
-      abort();
-    }
     l += size;
     r += size;
-    if (range_update) push_upto(l, r);
-    // DLOG("update. 2. node=", node);
+    push_upto(l, r);
     int l0 = l, r0 = r;
-    int k = 1;
     while (l < r) {
       if (l & 1) {
-	node_op(l, k, f);
+	node_op(l, f);
 	l++;
       }
       if (r & 1) {
-	node_op(r-1, k, f);
+	node_op(r-1, f);
       }
       l >>= 1;
       r >>= 1;
-      k *= 2;
     }
-    // DLOG("update. 3. node=", node);
     child_updated(l0, r0);
-    // DLOG("node=", node);
-    // DLOG("susp=", susp);
   }
 
+  /*
+  void _gen_update(int l, int r, OP f) {
+    if (l >= r) return;
+    l += size;
+    r += size;
+    if constexpr(lazy) push_upto(l, r);
+    int l0 = l, r0 = r;
+    while (l < r) {
+      if (l & 1) {
+	if constexpr(lazy) node_op(l, f);
+	l++;
+      }
+      if (r & 1) {
+	if constexpr(lazy) node_op(r-1, f);
+      }
+      l >>= 1;
+      r >>= 1;
+    }
+    child_updated(l0, r0);
+  }
+  */
 
-  // Returns the least r >= l s.t. check(Add(v[l], ..., v[r-1])) == true,
-  //    where check :: DAT -> bool
-  // If there is no such r, returns -1.
-  int binsearch_l(const auto& check, int l) {
-    // DLOG("binsearch_l; l=", l);
-    int x = l + size;
+  const DAT& operator[](int i) const { return node[size + i]; }
+
+  int binsearch_r_until(const auto& check, int l) {
+    // DLOGKL("in: binsearch_r_until", l);
+    if (not check(unit_dat)) return l - 1;
+    if (l == orig_size) return l;
     DAT val = unit_dat;
-    if (check(val)) return l;
-    // DLOG("pt1");
-    if (range_update) push_upto(x, x+1);
-    int k = 1;
+    int x = l + size;
+    if constexpr(lazy) push_upto(x, x + 1);
     while (true) {
-      DAT t = add(val, node.at(x));
-      if (check(t)) break;
       if (x & 1) {
-	val = t;
-	x++;
-	if (__builtin_popcount(x) == 1) return -1;
+        DAT t = add(val, node[x]);
+        if (not check(t)) break;
+        val = t;
+        x++;
+        if (__builtin_popcountll(x) == 1) return orig_size;
       }
       x >>= 1;
-      k <<= 1;
-      // DLOG("  x=", x, "val=", val);
+      // DLOGKL("1: ", x, val);
     }
-    // DLOG("pt2; x=", x, "k=", k);
-    while (k > 1) {
-      if (range_update) push_one(x, k);
-      DAT t = add(val, node.at(x<<1|0));
+    while (x < size) {
+      if constexpr(lazy) push_one(x);
+      x <<= 1;
+      DAT t = add(val, node[x]);
       if (check(t)) {
-	x = (x<<1|0);
-      }else {
-	x = (x<<1|1);
-	val = t;
+        x++;
+        val = t;
       }
-      k >>= 1;
+      // DLOGKL("2: ", x, val);
     }
-    // DLOG("pt3; x=", x, "k=", k);
+    // DLOGKL("3: ", x - size, orig_size);
+    return min(x - size, orig_size);
+  }
+
+  int binsearch_r_from(const auto& check, int l) {
+    return binsearch_r_until([&](DAT x) { return not check(x); }, l) + 1;
+  }
+
+  int binsearch_l_until(const auto& check, int r) {
+    if (not check(unit_dat)) return r + 1;
+    if (r == 0) return 0;
+    DAT val = unit_dat;
+    int x = r + size;
+    if (x == 2 * size) {
+      if (check(node[1])) return 0;
+      x = 1;
+    }else {
+      if constexpr(lazy) push_upto(x - 1, x);
+      while (true) {
+        if (x & 1) {
+          x--;
+          DAT t = add(node[x], val);
+          if (not check(t)) break;
+          val = t;
+          if (__builtin_popcountll(x) == 1) return 0;
+        }
+        x >>= 1;
+      }
+    }
+    while (x < size) {
+      if constexpr(lazy) push_one(x);
+      x = x << 1 | 1;
+      DAT t = add(node[x], val);
+      if (check(t)) {
+        val = t;
+        x--;
+      }
+    }
     return x + 1 - size;
+  }
+
+  int binsearch_l_from(const auto& check, int r) {
+    return binsearch_l_until([&](DAT x) { return not check(x); }, r) - 1;
   }
 
 };
 
+template<typename DAT, typename OP>
+auto make_seg_tree_lazy(DAT unit_dat, OP unit_op, auto add, auto comp, auto appl, const vector<DAT>& initdat) {
+// -> GenSegTree<DAT, OP, decltype(add), decltype(comp), decltype(appl), true> {
+  using ret_t = GenSegTree<DAT, OP, decltype(add), decltype(comp), decltype(appl), true>;
+  return ret_t(unit_dat, unit_op, add, comp, appl, initdat);
+}
+
+template<typename DAT>
+auto make_seg_tree(DAT unit_dat, auto add, const vector<DAT>& initdat) {
+  //  -> GenSegTree<DAT, void *, decltype(add), decltype(comp), decltype(appl), true> {
+  auto dummy_comp = [](void* x, void* y) -> void* { return nullptr; };
+  auto dummy_appl = [](void* f, DAT x) -> DAT { return DAT(); };
+  using ret_t = GenSegTree<DAT, void*, decltype(add), decltype(dummy_comp), decltype(dummy_appl), false>;
+  return ret_t(unit_dat, nullptr, add, dummy_comp, dummy_appl, initdat);
+}
+
+/*
 template<typename DAT, typename OP>
 auto make_seg_tree(DAT unit_dat, OP unit_op,
 		   auto add, auto comp, auto appl,
@@ -380,6 +429,7 @@ auto make_seg_tree(DAT unit_dat, OP unit_op,
   -> SegTree<DAT, OP, decltype(add), decltype(comp), decltype(appl)> {
   return SegTree(unit_dat, unit_op, add, comp, appl, range_update);
 }
+*/
 
 // ---- end segTree.cc
 
@@ -864,16 +914,8 @@ int main(/* int argc, char *argv[] */) {
   }
 
   using DAT = pll;
-  using OP = pll;
-  const DAT unit_dat = pll(0, 0);
-  const OP unit_op = pll(0, 0);
   auto xAdd = [](DAT x, DAT y) -> DAT { return pll(x.first + y.first, x.second + y.second); };
-  auto xAppl = [](int k, OP f, DAT x) -> DAT { return pll(k * f.first + x.first, k * f.second + x.second); };
-  auto xComp = [](OP h, OP g) -> OP { return pll(h.first + g.first, h.second + g.second); };
-  auto st = make_seg_tree(unit_dat, unit_op, xAdd, xComp, xAppl, false);
-  
-  vector<pll> init_vec(N);
-  st.set_data(init_vec);
+  auto st = make_seg_tree<DAT>(DAT(), xAdd, vector<DAT>(N));
 
   Fp gsum = 0;
   REP(i, 0, N) {
@@ -886,7 +928,7 @@ int main(/* int argc, char *argv[] */) {
     ll z = (i + 1) * (i + 1);
     DLOGK(i, gsum);
     cout << gsum / Fp(z) << "\n";
-    st.update(ii, ii + 1, pll(1, a));
+    st.update(ii, DAT(1, a));
   }
   
 

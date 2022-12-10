@@ -10,11 +10,12 @@ using namespace std;
     int numNodes;
     int root;
     int numEdges;   // must be (numNodes - 1) once the initial construction finishes
-    bool good_nbr;  // initially false.  set true when parent-children analysis finishes.
+    bool pc_built;  // initially false.  set true when parent-children analysis finishes.
     vector<vector<int>> _nbr;
-        // If (u, v) is the idx-th edge, then _nbr[u] has v and _nbr[v] has u.
-        // When good_nbr is true, then _nbr[u][0] is the parent.  (_nbr[root][0] is -1)
+        // If (u, v) is an edge, then _nbr[u] has v and _nbr[v] has u.
     vector<int> _depth;
+    vector<int> _parent;
+    vector<vector<int>> _children;
     unordered_map<int, map<int, int>> _node2edgeIdx;
     vector<vector<int>> pPnt;     // power parent
             // pPnt[0][n] == parent of n (or root if n is root)
@@ -24,7 +25,7 @@ using namespace std;
   member functions
     int add_edge(int x, int y);  // Adds an edge.  Returns the edge index.
     int parent(int x);           // parent(root) == -1
-    vector<int> child(int x);
+    const vector<int>& children(int x);
     int depth(int x);
     int lca(int x, int y);   // lowest common ancestor    
     vector<int> nnpath(int x, int y)  // path (list of nodes) between x and y, inclusive.
@@ -39,8 +40,7 @@ using namespace std;
       // ct0 and ct1 are the centers near nd1 and nd2 (if diam is even, ct0 == ct1).
     void change_root(int newRoot)  // change the root
   internal member functions
-    void set_parent_child();  // change the order of _nbr so that _nbr[u][0] is the parent of u.  Also good_nbr := true
-                              // Note that _nbr[root][0] == -1
+    void set_parent_child();
     void preparePPnt();       // sets vector pPnt for lca etc
 
 
@@ -101,11 +101,12 @@ struct Tree {
   int numNodes;
   int root;
   int numEdges = 0;
-  bool good_nbr = false;
+  bool pc_built = false;
   vector<vector<int>> _nbr;
-      // if (u, v) is the idx-th edge, then _nbr[u] has v and _nbr[v] has u.
-      // when good_nbr is true, then _nbr[u][0] is the parent.  (_nbr[root][0] is -1)
+      // if (u, v) is an edge, then _nbr[u] has v and _nbr[v] has u.
   vector<int> _depth;
+  vector<int> _parent;
+  vector<vector<int>> _children;
   unordered_map<int, map<int, int>> _node2edgeIdx;
   vector<vector<int>> pPnt;   
           // pPnt[0][n] == parent of n (or root if n is root)
@@ -118,23 +119,19 @@ struct Tree {
   // Tree tr(n, x); would fail when x is long long.  You need to write Tree tr(n, (int)x), then.
 
   void set_parent_child() {
-    if (good_nbr) return;
+    if (pc_built) return;
+    pc_built = true;
     if (numNodes != numEdges + 1) throw range_error("numNodes and numEdges");
-    good_nbr = true;
     _depth.resize(numNodes);
+    _parent.resize(numNodes);
+    _children.resize(numNodes);
     auto dfs = [&](auto rF, int nd, int pt, int d) -> void {
       _depth[nd] = d;
-      int sz = _nbr[nd].size();
-      int ip = -1;
-      for (int i = 0; i < sz; i++) {
-        if (_nbr[nd][i] == pt) ip = i;
-        else                  rF(rF, _nbr[nd][i], nd, d + 1);
-      }
-      if (nd == root) {
-        ip = _nbr[nd].size();
-        _nbr[nd].push_back(-1);
-      }
-      if (ip > 0) swap(_nbr[nd][0], _nbr[nd][ip]);
+      _parent[nd] = pt;
+      for (int c : _nbr[nd]) if (c != pt) {
+          _children[nd].push_back(c);
+          rF(rF, c, nd, d + 1);
+        }
     };
     dfs(dfs, root, -1, 0);
   }
@@ -143,7 +140,7 @@ struct Tree {
     set_parent_child();
     if (not pPnt.empty()) return;
     vector<int> vec_parent(numNodes);
-    for (int i = 0; i < numNodes; i++) vec_parent[i] = i == root ? i : _nbr[i][0];
+    for (int i = 0; i < numNodes; i++) vec_parent[i] = i == root ? i : _parent[i];
     pPnt.push_back(move(vec_parent));
     for (int t = 0; true; t++) {
       bool done = true;
@@ -168,14 +165,12 @@ struct Tree {
   // parent(root) == -1
   int parent(int x) {
     set_parent_child();
-    return _nbr[x][0];
+    return _parent[x];
   }
 
-  vector<int> child(int x) { 
+  const vector<int>& children(int x) { 
     set_parent_child();
-    vector<int> ret(_nbr[x].size() - 1);
-    copy(_nbr[x].begin() + 1, _nbr[x].end(), ret.begin());
-    return ret;
+    return _children[x];
   }
 
   int depth(int x) {
@@ -243,7 +238,7 @@ struct Tree {
       bool ret = false;
       ll numChildren = 0;
       for (ll cld : _nbr[nd]) {
-        if (cld < 0 or cld == pt) continue;
+        if (cld == pt) continue;
         numChildren++;
         bool bbb = rF(rF, cld, dp + 1, nd);
         ret = ret || bbb;
@@ -273,11 +268,11 @@ struct Tree {
 
   void change_root(int newRoot) {
     pPnt.resize(0);
-    if (good_nbr) {
-      size_t t = _nbr[root].size();
-      swap(_nbr[root][0], _nbr[root][t - 1]);
-      _nbr[root].pop_back();
-      good_nbr = false;
+    if (pc_built) {
+      pc_built = false;
+      _depth.resize(0);
+      _parent.resize(0);
+      _children.resize(0);
     }
     root = newRoot;
   }
@@ -291,7 +286,7 @@ vector<T> reroot(Tree& tree, const T& unit, auto add, auto mod) {
   vector<vector<T>> sum_excl(tree.numNodes);
   
   auto dfs1 = [&](const auto& recF, int n) -> void {
-    const auto cld = tree.child(n);
+    const auto& cld = tree.children(n);
     int k = cld.size();
     vector<T> right(k+1), m(k+1);
     T g = right[k] = unit;
@@ -313,7 +308,7 @@ vector<T> reroot(Tree& tree, const T& unit, auto add, auto mod) {
 
   auto dfs2 = [&](const auto& recF, int n, T t) -> void {
     result[n] = add(sum[n], t);
-    const auto cld = tree.child(n);
+    const auto& cld = tree.children(n);
     int k = cld.size();
     for (int i = 0; i < k; i++) {
       int c = cld[i];

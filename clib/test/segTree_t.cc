@@ -2,6 +2,7 @@
 #include <cassert>
 typedef long long int ll;
 using namespace std;
+using pll = pair<ll, ll>;
 
 // @@ !! LIM(debug segTree)
 
@@ -246,14 +247,15 @@ void dbgLog(bool with_nl, Head&& head, Tail&&... tail)
 // ---- end debug.cc
 
 // ---- inserted library file segTree.cc
-#line 43 "/home/y-tanabe/proj/compprog/clib/segTree.cc"
+#line 66 "/home/y-tanabe/proj/compprog/clib/segTree.cc"
 
 // It seems that we should keep the size power of two,
 // considering the binary search.
 
 template <typename DAT, typename OP,
-	  typename Fadd, typename Fcomp, typename Fappl> 
-struct SegTree {
+	  typename ADD_t, typename COMP_t, typename APPL_t, bool lazy> 
+struct GenSegTree {
+  int orig_size;     // size of initdat
   int size;	     // power of two; >= 2
   int height;        // size = 1 << height;
   vector<DAT> node;  // vector of size 2*size.
@@ -265,180 +267,231 @@ struct SegTree {
                      // (already applied to this node)
   DAT unit_dat;
   OP unit_op;
-  Fadd add;
-  Fcomp comp;
-  Fappl appl;
-  bool range_update;
+  ADD_t add;
+  COMP_t comp;
+  APPL_t appl;
     
-  SegTree(DAT unit_dat_, OP unit_op_, Fadd add_, Fcomp comp_, Fappl appl_,
-	  bool range_update_)
-    // , vector<DAT> initdat) 
-    : unit_dat(unit_dat_), unit_op(unit_op_), add(add_), comp(comp_),
-      appl(appl_), range_update(range_update_) {}
+  GenSegTree(DAT unit_dat_, OP unit_op_, ADD_t add_, COMP_t comp_, APPL_t appl_, const vector<DAT>& initdat)
+    : orig_size(initdat.size()), unit_dat(unit_dat_), unit_op(unit_op_),
+      add(add_), comp(comp_), appl(appl_) { _set_data(initdat); }
 
-  void set_data(vector<DAT> initdat) {
+  void _set_data(const vector<DAT>& initdat) {
     if (initdat.size() <= 0) {
       cerr << "the size of initial vector must be >= 1" << endl;
       abort();
     }
-    if (initdat.size() == 1) {
-      height = 0;
-    }else {
-      height = sizeof(int) * 8 - __builtin_clz(initdat.size() - 1);
-    }
+    if (initdat.size() == 1) height = 0;
+    else   height = sizeof(int) * 8 - __builtin_clz(initdat.size() - 1);
     size = 1 << height;
     node.resize(2*size, unit_dat);
-    for (int i = 0; i < (int)initdat.size(); i++) {
-      node.at(size + i) = initdat.at(i);
-    }
-    for (int t = size - 1; t >= 1; t--) {
-      node.at(t) = add(node.at(t<<1|0), node.at(t<<1|1));
-    }
+    for (int i = 0; i < (int)initdat.size(); i++) node[size + i] = initdat[i];
+    for (int t = size - 1; t >= 1; t--) node[t] = add(node[t<<1|0], node[t<<1|1]);
     susp.resize(size, unit_op);
   }
 
-  void child_updated_sub(int k, int t) {
-    node.at(t) = appl(k, susp.at(t),
-		      add(node.at(t<<1|0), node.at(t<<1|1)));
+  void child_updated_sub(int t) {
+    node[t] = appl(susp[t], add(node[t<<1|0], node[t<<1|1]));
   }
 
   void child_updated(int l, int r) {
-    int k = 1;
     r--;
     while (l > 1) {
       l >>= 1;
       r >>= 1;
-      k *= 2;
-      child_updated_sub(k, l);
-      if (l < r) child_updated_sub(k, r);
+      child_updated_sub(l);
+      if (l < r) child_updated_sub(r);
     }
   }
 
-  void node_op(int i, int k, OP f) {
-    node.at(i) = appl(k, f, node.at(i));
-    if (i < size) susp.at(i) = comp(f, susp.at(i));
+  void node_op(int i, OP f) {
+    node[i] = appl(f, node[i]);
+    if (i < size) susp[i] = comp(f, susp[i]);
   }
 
-  void push_one(int i, int k) {
-    node_op(i<<1|0, k / 2, susp.at(i));
-    node_op(i<<1|1, k / 2, susp.at(i));
-    susp.at(i) = unit_op;
+  // Note that susp[i] HAS ALREADY BEEN APPLIED TO node[i].
+  // When push_one(i) is called, susp[j] is updated (for j : i's child) and it is applied to node[j].
+  void push_one(int i) {
+    node_op(i<<1|0, susp[i]);
+    node_op(i<<1|1, susp[i]);
+    susp[i] = unit_op;
   }
 
   void push_upto(int l, int r) {
     for (int s = height; s >= 1; s--) {
       int lz = l >> s;
       int rz = (r-1) >> s;
-      int k = 1 << s;
-      push_one(lz, k);
-      if (lz < rz) push_one(rz, k);
+      push_one(lz);
+      if (lz < rz) push_one(rz);
     }
   }
 
   DAT query(int l, int r) {
-    // DLOG("l=", l, "r=", r);
     if (l >= r) return unit_dat;
     DAT ret_l = unit_dat;
     DAT ret_r = unit_dat;
-    // DLOG("1: ret_l=", ret_l, "ret_r", ret_r);
     l += size;
     r += size;
-    if (range_update) push_upto(l, r);
+    if constexpr(lazy) push_upto(l, r);
     while (l < r) {
       if (l & 1) {
-	ret_l = add(ret_l, node.at(l));
-	// DLOG("l=", l, "ret_l=", ret_l);
+	ret_l = add(ret_l, node[l]);
 	l++;
       }
       if (r & 1) {
-	ret_r = add(node.at(r-1), ret_r);
-	// DLOG("r=", r, "ret_r=", ret_r);
+	ret_r = add(node[r-1], ret_r);
       }
       l >>= 1;
       r >>= 1;
     }
     DAT ret = add(ret_l, ret_r);
-    // DLOG("ret_l=", ret_l, "ret_r", ret_r, "ret", ret);
     return ret;
   }
 
-  void single_update(int i, OP f) {
-    update(i, i+1, f);
+  template<bool xx = lazy> enable_if_t<! xx> update(int i, DAT t) {
+    ll x = size + i;
+    node[x] = t;
+    for (x >>= 1; x >= 1; x >>= 1) node[x] = add(node[x<<1|0], node[x<<1|1]);
   }
 
-  void update(int l, int r, OP f) {
-    // DLOG("update. 1. node=", node);
+  template<bool xx = lazy> enable_if_t<xx> update(int l, int r, OP f) {
     if (l >= r) return;
-    if ((! range_update) && (l + 1 < r)) {
-      cerr << "FATAL: r - l >= 2 without setting range_update." << endl;
-      abort();
-    }
     l += size;
     r += size;
-    if (range_update) push_upto(l, r);
-    // DLOG("update. 2. node=", node);
+    push_upto(l, r);
     int l0 = l, r0 = r;
-    int k = 1;
     while (l < r) {
       if (l & 1) {
-	node_op(l, k, f);
+	node_op(l, f);
 	l++;
       }
       if (r & 1) {
-	node_op(r-1, k, f);
+	node_op(r-1, f);
       }
       l >>= 1;
       r >>= 1;
-      k *= 2;
     }
-    // DLOG("update. 3. node=", node);
     child_updated(l0, r0);
-    // DLOG("node=", node);
-    // DLOG("susp=", susp);
   }
 
+  /*
+  void _gen_update(int l, int r, OP f) {
+    if (l >= r) return;
+    l += size;
+    r += size;
+    if constexpr(lazy) push_upto(l, r);
+    int l0 = l, r0 = r;
+    while (l < r) {
+      if (l & 1) {
+	if constexpr(lazy) node_op(l, f);
+	l++;
+      }
+      if (r & 1) {
+	if constexpr(lazy) node_op(r-1, f);
+      }
+      l >>= 1;
+      r >>= 1;
+    }
+    child_updated(l0, r0);
+  }
+  */
 
-  // Returns the least r >= l s.t. check(Add(v[l], ..., v[r-1])) == true,
-  //    where check :: DAT -> bool
-  // If there is no such r, returns -1.
-  int binsearch_l(const auto& check, int l) {
-    // DLOG("binsearch_l; l=", l);
-    int x = l + size;
+  const DAT& operator[](int i) {
+    if constexpr(lazy) push_upto(size + i, size + i + 1);
+    return node[size + i];
+  }
+
+  int binsearch_r_until(const auto& check, int l) {
+    // DLOGKL("in: binsearch_r_until", l);
+    if (not check(unit_dat)) return l - 1;
+    if (l == orig_size) return l;
     DAT val = unit_dat;
-    if (check(val)) return l;
-    // DLOG("pt1");
-    if (range_update) push_upto(x, x+1);
-    int k = 1;
+    int x = l + size;
+    if constexpr(lazy) push_upto(x, x + 1);
     while (true) {
-      DAT t = add(val, node.at(x));
-      if (check(t)) break;
       if (x & 1) {
-	val = t;
-	x++;
-	if (__builtin_popcount(x) == 1) return -1;
+        DAT t = add(val, node[x]);
+        if (not check(t)) break;
+        val = t;
+        x++;
+        if (__builtin_popcountll(x) == 1) return orig_size;
       }
       x >>= 1;
-      k <<= 1;
-      // DLOG("  x=", x, "val=", val);
+      // DLOGKL("1: ", x, val);
     }
-    // DLOG("pt2; x=", x, "k=", k);
-    while (k > 1) {
-      if (range_update) push_one(x, k);
-      DAT t = add(val, node.at(x<<1|0));
+    while (x < size) {
+      if constexpr(lazy) push_one(x);
+      x <<= 1;
+      DAT t = add(val, node[x]);
       if (check(t)) {
-	x = (x<<1|0);
-      }else {
-	x = (x<<1|1);
-	val = t;
+        x++;
+        val = t;
       }
-      k >>= 1;
+      // DLOGKL("2: ", x, val);
     }
-    // DLOG("pt3; x=", x, "k=", k);
+    // DLOGKL("3: ", x - size, orig_size);
+    return min(x - size, orig_size);
+  }
+
+  int binsearch_r_from(const auto& check, int l) {
+    return binsearch_r_until([&](DAT x) { return not check(x); }, l) + 1;
+  }
+
+  int binsearch_l_until(const auto& check, int r) {
+    if (not check(unit_dat)) return r + 1;
+    if (r == 0) return 0;
+    DAT val = unit_dat;
+    int x = r + size;
+    if (x == 2 * size) {
+      if (check(node[1])) return 0;
+      x = 1;
+    }else {
+      if constexpr(lazy) push_upto(x - 1, x);
+      while (true) {
+        if (x & 1) {
+          x--;
+          DAT t = add(node[x], val);
+          if (not check(t)) break;
+          val = t;
+          if (__builtin_popcountll(x) == 1) return 0;
+        }
+        x >>= 1;
+      }
+    }
+    while (x < size) {
+      if constexpr(lazy) push_one(x);
+      x = x << 1 | 1;
+      DAT t = add(node[x], val);
+      if (check(t)) {
+        val = t;
+        x--;
+      }
+    }
     return x + 1 - size;
+  }
+
+  int binsearch_l_from(const auto& check, int r) {
+    return binsearch_l_until([&](DAT x) { return not check(x); }, r) - 1;
   }
 
 };
 
+template<typename DAT, typename OP>
+auto make_seg_tree_lazy(DAT unit_dat, OP unit_op, auto add, auto comp, auto appl, const vector<DAT>& initdat) {
+// -> GenSegTree<DAT, OP, decltype(add), decltype(comp), decltype(appl), true> {
+  using ret_t = GenSegTree<DAT, OP, decltype(add), decltype(comp), decltype(appl), true>;
+  return ret_t(unit_dat, unit_op, add, comp, appl, initdat);
+}
+
+template<typename DAT>
+auto make_seg_tree(DAT unit_dat, auto add, const vector<DAT>& initdat) {
+  //  -> GenSegTree<DAT, void *, decltype(add), decltype(comp), decltype(appl), true> {
+  auto dummy_comp = [](void* x, void* y) -> void* { return nullptr; };
+  auto dummy_appl = [](void* f, DAT x) -> DAT { return DAT(); };
+  using ret_t = GenSegTree<DAT, void*, decltype(add), decltype(dummy_comp), decltype(dummy_appl), false>;
+  return ret_t(unit_dat, nullptr, add, dummy_comp, dummy_appl, initdat);
+}
+
+/*
 template<typename DAT, typename OP>
 auto make_seg_tree(DAT unit_dat, OP unit_op,
 		   auto add, auto comp, auto appl,
@@ -446,289 +499,333 @@ auto make_seg_tree(DAT unit_dat, OP unit_op,
   -> SegTree<DAT, OP, decltype(add), decltype(comp), decltype(appl)> {
   return SegTree(unit_dat, unit_op, add, comp, appl, range_update);
 }
+*/
 
 // ---- end segTree.cc
 
 // @@ !! LIM -- end mark --
-#line 7 "segTree_skel.cc"
+#line 8 "segTree_skel.cc"
 
-
-mt19937 rng;
-
-template <typename DAT, typename OP,
-	  typename Fadd, typename Fcomp, typename Fappl> 
+random_device rd;
+mt19937_64 rng(rd());
+ll randrange(ll i, ll j) {
+  uniform_int_distribution<ll> dist(i, j - 1);
+  return dist(rng);
+}
+  
+template <typename DAT, typename OP, typename Fadd, typename Fappl>
 struct Naive {
-  int size;
-  vector<DAT> vec;
   DAT unit_dat;
   Fadd add;
   Fappl appl;
+  vector<DAT> vec;
+  int size;
 
-  Naive(const SegTree<DAT, OP, Fadd, Fcomp, Fappl>& segt)
-    : unit_dat(segt.unit_dat), add(segt.add), appl(segt.appl) {}
-
-  void set_data(vector<DAT> initdat) {
-    size = initdat.size();
-    vec = initdat;
-  }
+  Naive(DAT unit_dat_, Fadd add_, Fappl appl_, const vector<DAT>& vec_)
+    : unit_dat(unit_dat_), add(add_), appl(appl_), vec(vec_), size(vec_.size()) {}
 
   DAT query(int l, int r) {
     DAT ret = unit_dat;
-    for (int i = l; i < r; i++) ret = add(ret, vec.at(i));
+    for (int i = l; i < r; i++) ret = add(ret, vec[i]);
     return ret;
   }
 
   void update(int l, int r, OP f) {
-    for (int i = l; i < r; i++) vec.at(i) = appl(1, f, vec.at(i));
+    for (int i = l; i < r; i++) vec[i] = appl(f, vec[i]);
   }
 
-  int search(const auto& check, int l) {
+  int search_r_until(const auto& check, int l) {
     ll val = unit_dat;
+    if (not check(val)) return l - 1;
     for (ll i = l; i < size; i++) {
-      if (check(val)) return i;
-      val = add(val, vec.at(i));
+      val = add(val, vec[i]);
+      if (not check(val)) return i;
     }
-    if (check(val)) return size;
+    return size;
+  }
+
+  int search_r_from(const auto& check, int l) {
+    ll val = unit_dat;
+    if (check(val)) return l;
+    for (ll i = l; i < size; i++) {
+      val = add(val, vec[i]);
+      if (check(val)) return i + 1;
+    }
+    return size + 1;
+  }
+
+  int search_l_until(const auto& check, int r) {
+    ll val = unit_dat;
+    if (not check(val)) return r + 1;
+    for (ll i = r - 1; i >= 0; i--) {
+      val = add(vec[i], val);
+      if (not check(val)) return i + 1;
+    }
+    return 0;
+  }
+
+  int search_l_from(const auto& check, int r) {
+    ll val = unit_dat;
+    if (check(val)) return r;
+    for (ll i = r - 1; i >= 0; i--) {
+      val = add(vec[i], val);
+      if (check(val)) return i;
+    }
     return -1;
   }
+
 };
 
-struct RandSpec {
-  int rep1;     // segment tree creation time
-  int rep2;     // num of update/query pairs in a run
-  int vecsize;
-  ll val_min;
-  ll val_max;
-  ll op_min;
-  ll op_max;
-};
 
-template <typename DAT, typename OP,
-	  typename Fadd, typename Fcomp, typename Fappl, typename FF> 
-void cmp_naive(SegTree<DAT, OP, Fadd, Fcomp, Fappl>& st,
-	       const RandSpec& rs, auto ll2OP, optional<FF> opt_check) {
-  assert(rs.vecsize >= 2);
-  Naive naive(st);
-  uniform_int_distribution<ll>
-    dist_d(rs.val_min, rs.val_max), dist_o(rs.op_min, rs.op_max),
-    dist_i(0, rs.vecsize), dist_i1(0, rs.vecsize-1);
-  auto rnd2 = [&](bool wide_range) -> pair<int, int> {
-    if (wide_range) {
-      int x = 0, y = 0;
-      while (x == y) {
-	x = dist_i(rng);
-	y = dist_i(rng);
-      }
-      if (x > y) swap(x, y);
-      return {x, y};
-    }else {
-      int x = dist_i1(rng);
-      return {x, x+1};
-    }
-  };
-  for (int r1 = 0; r1 < rs.rep1; r1++) {
-    vector<DAT> vec(rs.vecsize);
-    for (int i = 0; i < rs.vecsize; i++) vec.at(i) = dist_d(rng);
-    st.set_data(vec);
-    naive.set_data(vec);
-    // DLOG("vec=", vec);
-    for (int r2 = 0; r2 < rs.rep2; r2++) {
-      if (r2 > 0) {
-	auto [i, j] = rnd2(st.range_update);
-	OP f = ll2OP(dist_o(rng));
-	st.update(i, j, f);
-	naive.update(i, j, f);
-      }
-      if (true) {
-	auto [i, j] = rnd2(true);
-	DAT d_st = st.query(i, j);
-	DAT d_nv = naive.query(i, j);
-	if (d_st != d_nv) {
-	  cerr << "query: SegTree and Naive retuns different results:" <<
-	    "i = " << i << ", j = " << j << ", d_st = " << d_st <<
-	    ", d_naive = " << d_nv << endl;
-	  abort();
-	}
-      }
-      if (opt_check.has_value()) {
-	const auto& check = opt_check.value();
-	int k = dist_i1(rng);
-	int i_st = st.binsearch_l(check, k);
-	int i_nv = naive.search(check, k);
-	if (i_st != i_nv) {
-	  cerr << "binsearch: SegTree and Naive behave differently: " <<
-	    "k = " << k << ", i_st = " << i_st << ", i_naive = " <<
-	    i_nv << endl;
-	  abort();
-	}
-      }
-    }
+void test1() {
+
+  {
+    auto add = [&](ll x, ll y) -> ll { return min(x, y); };
+    vector<ll> init_vec{5, 1, 2, 3, 7};
+    auto st = make_seg_tree(LLONG_MAX, add, init_vec);
+
+    assert(st.query(0, 5) == 1);
+    assert(st.query(0, 3) == 1);
+    assert(st.query(3, 5) == 3);
+    assert(st.query(2, 5) == 2);
+    assert(st[2] == 2);
+    st.update(1, 10);
+    assert(st[1] == 10);
+    assert(st.query(0, 2) == 5);
+    assert(st.query(0, 5) == 2);
+    st.update(2, 20);
+    assert(st.query(0, 5) == 3);
+  }
+
+  {
+    using OP = optional<ll>;
+    auto add = [&](ll x, ll y) -> ll { return min(x, y); };
+    auto comp = [&](OP h, OP g) -> OP { return h.has_value() ? h : g; };
+    auto apply = [&](OP f, ll x) -> ll { return f.value_or(x); };
+    vector<ll> init_vec{5, 1, 2, 3, 7};
+    auto st = make_seg_tree_lazy(LLONG_MAX, OP(), add, comp, apply, init_vec);
+
+    assert(st.query(0, 5) == 1);
+    assert(st[2] == 2);
+    st.update(1, 4, 10);
+    assert(st.query(0, 5) == 5);
+    assert(st.query(1, 5) == 7);
+  }
+
+  {
+    auto st = make_seg_tree(0, plus<int>(), vector<int>{0, 1, 2, 3, 4, 5});
+    ll lim = 0;
+    auto check_GE = [&](int x) -> bool { return x >= lim; };
+    auto check_LE = [&](int x) -> bool { return x <= lim; };
+    lim = 9;
+    assert(st.binsearch_r_from(check_GE, 2) == 5);
+    lim = 10000;
+    assert(st.binsearch_r_from(check_GE, 2) == 7);
+    lim = 5;
+    assert(st.binsearch_r_until(check_LE, 2) == 4);
+    lim = -1000;
+    assert(st.binsearch_r_until(check_LE, 2) == 1);
+
+    auto st2 = make_seg_tree(0, plus<int>(), vector<int>{1, 1, 1, 1, 1});
+    lim = 2;
+    assert(st2.binsearch_l_until(check_LE, 3) == 1);
+    lim = -1000;
+    assert(st2.binsearch_l_until(check_LE, 3) == 4);
+    lim = 2;
+    assert(st2.binsearch_l_from(check_GE, 3) == 1);
+    lim = 10000;
+    assert(st2.binsearch_l_from(check_GE, 3) == -1);
+
+    auto st3 = make_seg_tree(0, plus<int>(), vector<int>{1, 0, 0, 0, 1});
+    lim = 0;
+    assert(st3.binsearch_r_from(check_LE, 1) == 1);
+    assert(st3.binsearch_r_until(check_LE, 1) == 4);
+    st3.update(4, 0);
+    assert(st3.binsearch_r_until(check_LE, 1) == 5);
   }
 }
 
-// Just an easy testing
-void test1() {
-  using DAT = ll;
-  using OP = optional<ll>;
-  const DAT unit_dat = LLONG_MAX;
-  const OP unit_op = nullopt;
-  auto xAdd = [](DAT x, DAT y) -> DAT { return min(x, y); };
-  auto xAppl = [](int k, OP f, DAT x) -> DAT { return f.value_or(x); };
-  auto xComp = [](OP h, OP g) -> OP { return h.has_value() ? h : g; };
-  auto st = make_seg_tree(unit_dat, unit_op, xAdd, xComp, xAppl, false);
-
-  vector<DAT> init_vec;
-  for (ll i = 0; i < 4; i++) init_vec.push_back(i + 100);
-  st.set_data(init_vec);
-  
-  assert(st.query(0, 4) == 100);
-  assert(st.query(1, 2) == 101);
-  // DLOG("b12");
-  st.update(1, 2, 10);
-  // DLOG("b13");
-  assert(st.query(0, 4) == 10);
-
-  auto check1 = [&](DAT x) -> bool { return x <= 10; };
-  assert(st.binsearch_l(check1, 0) == 2);
-  assert(st.binsearch_l(check1, 1) == 2);
-  assert(st.binsearch_l(check1, 2) == -1);
-
-  init_vec.push_back(104);
-  init_vec.push_back(105);
-  init_vec.push_back(106);
-  st.set_data(init_vec);
-  assert(st.query(0, 7) == 100);
-  assert(st.query(4, 7) == 104);
-  st.update(5, 6, 10);
-  assert(st.query(1, 6) == 10);
-
-  // interval update
-  auto st3 = make_seg_tree(unit_dat, unit_op, xAdd, xComp, xAppl, true);
-  st3.set_data(init_vec);
-  st3.update(0, 3, 20);
-  assert(st3.query(1, 4) == 20);
-  st3.update(3, 6, 10);
-  assert(st3.query(1, 4) == 10);
-
-  // num of elements == 1
-  vector<DAT> iv2({100});
-  auto st4 = make_seg_tree(unit_dat, unit_op, xAdd, xComp, xAppl, false);
-  st4.set_data(vector<DAT>({100}));
-  assert(st4.query(0, 1) == 100);
-  st4.update(0, 1, 50);
-  assert(st4.query(0, 1) == 50);
-}
-
-// Update: substitution
-// Query: minimum
-void test2(const RandSpec& rs) {
-  using DAT = ll;
-  using OP = optional<ll>;
-  const DAT unit_dat = LLONG_MAX;
-  const OP unit_op = nullopt;
-  auto xAdd = [](DAT x, DAT y) -> DAT { return min(x, y); };
-  auto xAppl = [](int k, OP f, DAT x) -> DAT { return f.value_or(x); };
-  auto xComp = [](OP h, OP g) -> OP { return h.has_value() ? h : g; };
-  auto st = make_seg_tree(unit_dat, unit_op, xAdd, xComp, xAppl, false);
-
-  auto ll2OP = [](int x) -> OP { return {x}; };
-  auto check = [](DAT x) -> bool { return x < -5; };
-  cmp_naive(st, rs, ll2OP, optional(check));
-  auto st2 = make_seg_tree(unit_dat, unit_op, xAdd, xComp, xAppl, true);
-  cmp_naive(st, rs, ll2OP, optional(check));
-}
-
-// Update: increment
-// Query: sum
-void test3(const RandSpec& rs) {
-  using DAT = ll;
-  using OP = ll;
-  const DAT unit_dat = 0;
-  const OP unit_op = 0;
-  auto xAdd = [](DAT x, DAT y) -> DAT { return x + y; };
-  auto xAppl = [](int k, OP f, DAT x) -> DAT { return k * f + x; };
-  auto xComp = [](OP h, OP g) -> OP { return h + g; };
-  auto st = make_seg_tree(unit_dat, unit_op, xAdd, xComp, xAppl, false);
-
-  auto ll2OP = [](int x) -> OP { return x; };
-  typedef bool (*dummy_t)(DAT);
-  optional<dummy_t> dummy(nullopt);
-  cmp_naive(st, rs, ll2OP, dummy);
-  auto st2 = make_seg_tree(unit_dat, unit_op, xAdd, xComp, xAppl, true);
-  cmp_naive(st, rs, ll2OP, dummy);
-}
-void test3a(const RandSpec& rs) {
-  using DAT = ll;
-  using OP = ll;
-  const DAT unit_dat = 0;
-  const OP unit_op = 0;
-  auto xAdd = [](DAT x, DAT y) -> DAT { return x + y; };
-  auto xAppl = [](int k, OP f, DAT x) -> DAT { return k * f + x; };
-  auto xComp = [](OP h, OP g) -> OP { return h + g; };
-  auto st = make_seg_tree(unit_dat, unit_op, xAdd, xComp, xAppl, false);
-
-  auto ll2OP = [](int x) -> OP { return x; };
-  auto check = [](DAT x) -> bool { return x >= 40; };
-  cmp_naive(st, rs, ll2OP, optional(check));
-  auto st2 = make_seg_tree(unit_dat, unit_op, xAdd, xComp, xAppl, true);
-  cmp_naive(st, rs, ll2OP, optional(check));
-}
-
-// Update: substitution
-// Query: sum
-void test4(const RandSpec& rs) {
-  using DAT = ll;
-  using OP = optional<ll>;
-  const DAT unit_dat = 0;
-  const OP unit_op = nullopt;
-  auto xAdd = [](DAT x, DAT y) -> DAT { return x + y; };
-  auto xAppl = [](int k, OP f, DAT x) -> DAT {
-    return f.has_value() ? k * f.value() : x;
+void test2() {
+  auto sub = [&](auto& ivec) {
+    ll sz = ivec.size();
+    auto add = plus<int>();
+    auto appl = [&](ll f, ll x) -> ll { return f; };
+    auto st = make_seg_tree<ll>(0, add, ivec);
+    Naive<ll, ll, decltype(add), decltype(appl)> nv(0, add, appl, ivec);
+    ll rep = 1000;
+    for (ll r = 0; r < rep; r++) {
+      ll i = randrange(0, sz);
+      {
+        ll x = randrange(0, 4);
+        st.update(i, x);
+        nv.update(i, i + 1, x);
+      }
+      ll j = randrange(0, sz);
+      ll k = randrange(j, sz);
+      assert(st.query(j, k) == nv.query(j, k));
+      ll jj = randrange(0, sz);
+      assert(st[jj] == nv.query(jj, jj + 1));
+      ll lim = randrange(0, 19);
+      auto checkLE = [&](ll x) -> bool { return x <= lim; };
+      auto checkGE = [&](ll x) -> bool { return x >= lim; };
+      ll p = randrange(0, sz + 1);
+      assert(st.binsearch_r_until(checkLE, p) == nv.search_r_until(checkLE, p));
+      p = randrange(0, sz + 1);
+      assert(st.binsearch_l_until(checkLE, p) == nv.search_l_until(checkLE, p));
+      p = randrange(0, sz + 1);
+      assert(st.binsearch_r_from(checkGE, p) == nv.search_r_from(checkGE, p));
+      p = randrange(0, sz + 1);
+      assert(st.binsearch_l_from(checkGE, p) == nv.search_l_from(checkGE, p));
+    }
   };
-  auto xComp = [](OP h, OP g) -> OP { return h.has_value() ? h : g; };
-  auto st = make_seg_tree(unit_dat, unit_op, xAdd, xComp, xAppl, false);
-
-  auto ll2OP = [](int x) -> OP { return x; };
-  typedef bool (*dummy_t)(DAT);
-  optional<dummy_t> dummy(nullopt);
-  cmp_naive(st, rs, ll2OP, dummy);
-  auto st2 = make_seg_tree(unit_dat, unit_op, xAdd, xComp, xAppl, true);
-  cmp_naive(st, rs, ll2OP, dummy);
+  auto ivec = vector<ll>(5, 0LL);
+  sub(ivec);
+  ivec = vector<ll>(8, 0LL);
+  sub(ivec);
 }
+
+void test3() {
+  using DAT = pair<ll, ll>;
+  using OP = optional<ll>;
+
+  auto sub = [&](ll sz) {
+
+    auto init_vec = vector<ll>(sz);
+
+    auto add = [](DAT x, DAT y) -> DAT { return DAT(x.first + y.first, x.second + y.second); };
+    auto comp = [](OP f, OP g) -> OP { return f ? f : g; };
+    auto appl = [](OP f, DAT x) -> DAT { return f ? DAT(*f * x.second, x.second) : x; };
+    auto dat_init = vector<DAT>();
+    for (int i = 0; i < (int)init_vec.size(); i++) dat_init.emplace_back(init_vec[i], 1);
+    auto st = make_seg_tree_lazy<DAT, OP>(DAT(), OP(), add, comp, appl, dat_init);
+
+    auto appl_nv = [&](OP f, ll x) -> ll { return f ? *f : x; };
+    Naive<ll, OP, decltype(plus<ll>()), decltype(appl_nv)> nv(0, plus<ll>(), appl_nv, init_vec);
+    ll rep = 1000;
+    for (ll r = 0; r < rep; r++) {
+      {
+        ll i0 = randrange(0, sz);
+        ll i1 = randrange(i0, sz);
+        ll x = randrange(0, 4);
+        st.update(i0, i1, x);
+        nv.update(i0, i1, x);
+      }
+      // DLOGK(nv.vec);
+      // DLOGK(st.node);
+      // DLOGK(st.susp);
+      ll j = randrange(0, sz);
+      ll k = randrange(j, sz);
+      // DLOGK(j, k, st.query(j, k), nv.query(j, k));
+      assert(st.query(j, k).first == nv.query(j, k));
+      ll jj = randrange(0, sz);
+      assert(st[jj].first == nv.query(jj, jj + 1));
+      ll lim = randrange(0, 19);
+      auto checkLE_st = [&](DAT x) -> bool { return x.first <= lim; };
+      auto checkGE_st = [&](DAT x) -> bool { return x.first >= lim; };
+      auto checkLE_nv = [&](ll x) -> bool { return x <= lim; };
+      auto checkGE_nv = [&](ll x) -> bool { return x >= lim; };
+      ll p = randrange(0, sz + 1);
+      assert(st.binsearch_r_until(checkLE_st, p) == nv.search_r_until(checkLE_nv, p));
+      p = randrange(0, sz + 1);
+      assert(st.binsearch_l_until(checkLE_st, p) == nv.search_l_until(checkLE_nv, p));
+      p = randrange(0, sz + 1);
+      assert(st.binsearch_r_from(checkGE_st, p) == nv.search_r_from(checkGE_nv, p));
+      p = randrange(0, sz + 1);
+      assert(st.binsearch_l_from(checkGE_st, p) == nv.search_l_from(checkGE_nv, p));
+    }
+  };
+  sub(5);
+  sub(8);
+}
+
+void test4() {
+  auto sub = [&](ll sz) {
+    auto ivec = vector<ll>(sz);
+    auto add = [](ll x, ll y) -> ll { return min(x, y); };
+    auto st = make_seg_tree<ll>(LLONG_MAX, add, ivec);
+    auto appl_nv = [](ll f, ll x) -> ll { return f; };
+    Naive<ll, ll, decltype(add), decltype(appl_nv)> nv(LLONG_MAX, add, appl_nv, ivec);
+    ll rep = 1000;
+    for (ll r = 0; r < rep; r++) {
+      ll i = randrange(0, sz);
+      {
+        ll x = randrange(0, 4);
+        st.update(i, x);
+        nv.update(i, i + 1, x);
+      }
+      ll j = randrange(0, sz);
+      ll k = randrange(j, sz);
+      assert(st.query(j, k) == nv.query(j, k));
+      ll lim = randrange(-1, 5);
+      auto checkLE = [&](ll x) -> bool { return x <= lim; };
+      auto checkGE = [&](ll x) -> bool { return x >= lim; };
+      ll p = randrange(0, sz + 1);
+      assert(st.binsearch_r_until(checkGE, p) == nv.search_r_until(checkGE, p));
+      p = randrange(0, sz + 1);
+      assert(st.binsearch_l_until(checkGE, p) == nv.search_l_until(checkGE, p));
+      p = randrange(0, sz + 1);
+      assert(st.binsearch_r_from(checkLE, p) == nv.search_r_from(checkLE, p));
+      p = randrange(0, sz + 1);
+      assert(st.binsearch_l_from(checkLE, p) == nv.search_l_from(checkLE, p));
+    }
+  };
+  sub(5);
+  sub(8);
+}
+
+void test5() {
+  using OP = optional<ll>;
+  auto sub = [&](ll sz) {
+    auto ivec = vector<ll>(sz);
+    auto add = [](ll x, ll y) -> ll { return min(x, y); };
+    auto comp = [](OP f, OP g) -> OP { return f ? f : g; };
+    auto appl_st = [](OP f, ll x) -> ll { return f ? *f : x; };
+    auto appl_nv = [&](OP f, ll x) -> ll { return f ? *f : x; };
+    auto st = make_seg_tree_lazy<ll, OP>(LLONG_MAX, OP(), add, comp, appl_st, ivec);
+    Naive<ll, OP, decltype(add), decltype(appl_nv)> nv(LLONG_MAX, add, appl_nv, ivec);
+    ll rep = 1000;
+    for (ll r = 0; r < rep; r++) {
+      {
+        ll i0 = randrange(0, sz);
+        ll i1 = randrange(i0, sz);
+        ll x = randrange(0, 4);
+        st.update(i0, i1, x);
+        nv.update(i0, i1, x);
+      }
+      ll j = randrange(0, sz);
+      ll k = randrange(j, sz);
+      DLOGK(j, k, nv.vec, st.node, st.query(j, k), nv.query(j, k));
+      assert(st.query(j, k) == nv.query(j, k));
+
+      ll lim = randrange(-1, 5);
+      auto checkLE = [&](ll x) -> bool { return x <= lim; };
+      auto checkGE = [&](ll x) -> bool { return x >= lim; };
+      ll p = randrange(0, sz + 1);
+      assert(st.binsearch_r_until(checkGE, p) == nv.search_r_until(checkGE, p));
+      p = randrange(0, sz + 1);
+      assert(st.binsearch_l_until(checkGE, p) == nv.search_l_until(checkGE, p));
+      p = randrange(0, sz + 1);
+      assert(st.binsearch_r_from(checkLE, p) == nv.search_r_from(checkLE, p));
+      p = randrange(0, sz + 1);
+      assert(st.binsearch_l_from(checkLE, p) == nv.search_l_from(checkLE, p));
+    }
+  };
+  sub(5);
+  sub(8);
+}
+
+
 
 int main(int argc, char *argv[]) {
   ios_base::sync_with_stdio(false);
   cin.tie(nullptr);
   cout << setprecision(20);
 
-  rng.seed(time(0));
-  // rng.seed(0);
-
-  RandSpec rs;
-  rs.rep1 = 100;
-  rs.rep2 = 100;
-  rs.vecsize = 52;
-  // rs.vecsize = 4;
-  rs.val_min = -10;
-  rs.val_max = 10;
-  rs.op_min = -15;
-  rs.op_max = 15;
-
-  RandSpec rsPos;
-  rsPos.rep1 = 100;
-  rsPos.rep2 = 100;
-  rsPos.vecsize = 52;
-  // rsPos.vecsize = 4;
-  rsPos.val_min = 1;
-  rsPos.val_max = 20;
-  rsPos.op_min = 1;
-  rsPos.op_max = 30;
-
   test1();
-  test2(rs);
-  test3(rs);
-  test3a(rsPos);
-  test4(rs);
+  test2();
+  test3();
+  test4();
+  test5();
 
   cout << "Test done." << endl;
   return 0;

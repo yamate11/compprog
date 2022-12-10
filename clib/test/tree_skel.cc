@@ -43,7 +43,7 @@ int main(int argc, char *argv[]) {
   Tree t4(9);
   for (auto [x,y] : edge4) t4.add_edge(x, y);
   auto sub4 = [](Tree t, int i)  {
-    auto v = t.child(i);
+    const auto& v = t.children(i);
     return set<int>(v.begin(), v.end());
   };
   assert(sub4(t4, 0) == set<int>({1,3}));
