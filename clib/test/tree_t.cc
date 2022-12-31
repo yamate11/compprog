@@ -6,7 +6,7 @@ using namespace std;
 // @@ !! LIM(tree)
 
 // ---- inserted library file tree.cc
-#line 96 "/home/y-tanabe/proj/compprog/clib/tree.cc"
+#line 98 "/home/y-tanabe/proj/compprog/clib/tree.cc"
 
 using TreeEdge = pair<int, int>;
 
@@ -18,6 +18,7 @@ struct Tree {
   bool pc_built = false;
   vector<vector<int>> _nbr;
       // if (u, v) is an edge, then _nbr[u] has v and _nbr[v] has u.
+  vector<int> _stsize;
   vector<int> _depth;
   vector<int> _parent;
   vector<vector<int>> _children;
@@ -36,15 +37,18 @@ struct Tree {
     if (pc_built) return;
     pc_built = true;
     if (numNodes != numEdges + 1) throw range_error("numNodes and numEdges");
+    _stsize.resize(numNodes);
     _depth.resize(numNodes);
     _parent.resize(numNodes);
     _children.resize(numNodes);
     auto dfs = [&](auto rF, int nd, int pt, int d) -> void {
+      _stsize[nd] = 1;
       _depth[nd] = d;
       _parent[nd] = pt;
       for (int c : _nbr[nd]) if (c != pt) {
           _children[nd].push_back(c);
           rF(rF, c, nd, d + 1);
+          _stsize[nd] += _stsize[c];
         }
     };
     dfs(dfs, root, -1, 0);
@@ -85,6 +89,11 @@ struct Tree {
   const vector<int>& children(int x) { 
     set_parent_child();
     return _children[x];
+  }
+
+  int stsize(int x) {
+    set_parent_child();
+    return _stsize[x];
   }
 
   int depth(int x) {
@@ -245,14 +254,28 @@ int main(int argc, char *argv[]) {
   cin.tie(nullptr);
   cout << setprecision(20);
 
-  vector<TreeEdge> edge1({{0,1}, {0,2}, {1,3}, {1,4}, {2,5}, {2,6}});
-  Tree t1(7);
-  for (auto [x,y] : edge1) t1.add_edge(x, y);
-  assert(t1.nnpath(1, 2) == vector<int>({1,0,2}));
-  assert(t1.nnpath(3, 2) == vector<int>({3,1,0,2}));
-  assert(t1.nnpath(6, 0) == vector<int>({6,2,0}));
-  assert(t1.nnpath(4, 2) == vector<int>({4,1,0,2}));
-  assert(t1.nnpath(2, 4) == vector<int>({2,0,1,4}));
+  {
+    vector<TreeEdge> edge1({{0,1}, {0,2}, {1,3}, {1,4}, {2,5}, {2,6}});
+    Tree t1(7);
+    for (auto [x,y] : edge1) t1.add_edge(x, y);
+    assert(t1.nnpath(1, 2) == vector<int>({1,0,2}));
+    assert(t1.nnpath(3, 2) == vector<int>({3,1,0,2}));
+    assert(t1.nnpath(6, 0) == vector<int>({6,2,0}));
+    assert(t1.nnpath(4, 2) == vector<int>({4,1,0,2}));
+    assert(t1.nnpath(2, 4) == vector<int>({2,0,1,4}));
+    assert(t1.parent(0) == -1);
+    assert(t1.parent(1) == 0);
+    assert(t1.parent(6) == 2);
+    auto v = t1.children(0);
+    sort(v.begin(), v.end());
+    assert(v == vector<int>({1, 2}));
+    assert(t1.stsize(0) == 7);
+    assert(t1.stsize(2) == 3);
+    assert(t1.stsize(5) == 1);
+    assert(t1.depth(0) == 0);
+    assert(t1.depth(1) == 1);
+    assert(t1.depth(4) == 2);
+  }
 
   Tree t2(3);
   t2.add_edge(0, 1);

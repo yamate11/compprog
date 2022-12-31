@@ -373,31 +373,19 @@ struct GenSegTree {
     child_updated(l0, r0);
   }
 
-  /*
-  void _gen_update(int l, int r, OP f) {
-    if (l >= r) return;
-    l += size;
-    r += size;
-    if constexpr(lazy) push_upto(l, r);
-    int l0 = l, r0 = r;
-    while (l < r) {
-      if (l & 1) {
-	if constexpr(lazy) node_op(l, f);
-	l++;
-      }
-      if (r & 1) {
-	if constexpr(lazy) node_op(r-1, f);
-      }
-      l >>= 1;
-      r >>= 1;
-    }
-    child_updated(l0, r0);
-  }
-  */
-
   const DAT& operator[](int i) {
     if constexpr(lazy) push_upto(size + i, size + i + 1);
     return node[size + i];
+  }
+
+  friend ostream& operator<<(ostream& os, GenSegTree& st) {
+    os << '[';
+    for (int i = 0; i < st.orig_size; i++) {
+      if (i > 0) os << ", ";
+      os << st[i];
+    }
+    os << ']';
+    return os;
   }
 
   int binsearch_r_until(const auto& check, int l) {
@@ -491,15 +479,6 @@ auto make_seg_tree(DAT unit_dat, auto add, const vector<DAT>& initdat) {
   return ret_t(unit_dat, nullptr, add, dummy_comp, dummy_appl, initdat);
 }
 
-/*
-template<typename DAT, typename OP>
-auto make_seg_tree(DAT unit_dat, OP unit_op,
-		   auto add, auto comp, auto appl,
-		   bool range_update)
-  -> SegTree<DAT, OP, decltype(add), decltype(comp), decltype(appl)> {
-  return SegTree(unit_dat, unit_op, add, comp, appl, range_update);
-}
-*/
 
 // ---- end segTree.cc
 
@@ -595,6 +574,10 @@ void test1() {
     assert(st.query(0, 5) == 2);
     st.update(2, 20);
     assert(st.query(0, 5) == 3);
+
+    stringstream ss;
+    ss << st;
+    assert(ss.str() == "[5, 10, 20, 3, 7]");
   }
 
   {

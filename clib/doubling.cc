@@ -4,6 +4,8 @@ typedef long long int ll;
 using namespace std;
 
 /*
+    See https://yamate11.github.io/blog/posts/2022/12-10-doubling/
+
     Doubling:
       (1) Usually, this lib is used to calculate frel^{(r)}(i) for r in [0, R] and i in [0, N).
           frel: [0, N) -> [0, N).  Typical sizes are 
@@ -16,7 +18,7 @@ using namespace std;
           the default constructor for the unit, say:
              struct M {
                ll v;
-               M() : v(LLONG_MIN) {}
+               M(ll v_ = LLONG_MIN) : v(v_) {}
                M operator+(const M& o) const { return M(max(v, o.v)); }
              };
 

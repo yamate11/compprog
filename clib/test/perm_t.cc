@@ -99,7 +99,7 @@ struct IntComb : IntPermBase<false> {
     for (; i >= 0 and vec[i] == n - r + i; i--);
     if (i < 0) return finish();
     vec[i]++;
-    for (int j = i + 1; j < r; j++) vec[j] = vec[i] + 1;
+    for (int j = i + 1; j < r; j++) vec[j] = vec[j - 1] + 1;
     return true;
   }
 };
@@ -204,6 +204,101 @@ int main() {
     IntDupComb p3(3, 3);
     assert(get_all(p3) == vvi({{0,0,0},{0,0,1},{0,0,2},{0,1,1},{0,1,2},{0,2,2},{1,1,1},{1,1,2},{1,2,2},{2,2,2}}));
   }
+
+  {
+    auto chkPerm = [&](ll n, ll r) -> void {
+      IntPerm ip(n, r);
+      set<string> ss;
+      while (ip.get()) {
+        string s;
+        vector<bool> v(n);
+        for (ll i = 0; i < r; i++) {
+          assert(0 <= ip.at(i) and ip.at(i) < n);
+          assert(not v[ip.at(i)]);
+          v[ip.at(i)] = true;
+          s += 'a' + ip.at(i);
+        }
+        assert(ss.find(s) == ss.end());
+        ss.insert(s);
+      }
+      ll num = 1;
+      for (ll i = 0; i < r; i++) num = num * (n - i);
+      assert((ll)ss.size() == num);
+    };
+    chkPerm(6, 3);
+    chkPerm(8, 5);
+  }
+  {
+    auto chkComb = [&](ll n, ll r) -> void {
+      IntComb ic(n, r);
+      set<string> ss;
+      while (ic.get()) {
+        string s;
+        ll last = -1;
+        for (ll i = 0; i < r; i++) {
+          assert(0 <= ic.at(i) and ic.at(i) < n);
+          assert(last < ic.at(i));
+          last = ic.at(i);
+          s += 'a' + ic.at(i);
+        }
+        assert(ss.find(s) == ss.end());
+        ss.insert(s);
+      }
+      ll num = 1;
+      for (ll i = 0; i < r; i++) num = num * (n - i);
+      for (ll i = 0; i < r; i++) num = num / (r - i);
+      assert((ll)ss.size() == num);
+    };
+    chkComb(6, 4);
+    chkComb(8, 6);
+  }
+  {
+    auto chkDupPerm = [&](ll n, ll r) -> void {
+      IntDupPerm idp(n, r);
+      set<string> ss;
+      while (idp.get()) {
+        string s;
+        for (ll i = 0; i < r; i++) {
+          assert(0 <= idp.at(i) and idp.at(i) < n);
+          s += 'a' + idp.at(i);
+        }
+        assert(ss.find(s) == ss.end());
+        ss.insert(s);
+      }
+      ll num = 1;
+      for (ll i = 0; i < r; i++) num = num * n;
+      assert((ll)ss.size() == num);
+    };
+    chkDupPerm(6, 3);
+    chkDupPerm(8, 5);
+    chkDupPerm(3, 8);
+  }
+  {
+    auto chkDupComb = [&](ll n, ll r) -> void {
+      IntDupComb idc(n, r);
+      set<string> ss;
+      while (idc.get()) {
+        string s;
+        ll last = -1;
+        for (ll i = 0; i < r; i++) {
+          assert(0 <= idc.at(i) and idc.at(i) < n);
+          assert(last <= idc.at(i));
+          last = idc.at(i);
+          s += 'a' + idc.at(i);
+        }
+        assert(ss.find(s) == ss.end());
+        ss.insert(s);
+      }
+      ll num = 1;
+      for (ll i = 0; i < r; i++) num = num * (n + r - 1 - i);
+      for (ll i = 0; i < r; i++) num = num / (r - i);
+      assert((ll)ss.size() == num);
+    };
+    chkDupComb(6, 3);
+    chkDupComb(8, 5);
+    chkDupComb(3, 8);
+  }
+
 
   auto test_is_empty = [&](auto p) -> void { assert(get_all(p) == vvi{}); };
   auto test_is_single = [&](auto p) -> void { assert(get_all(p) == vvi{{}}); };

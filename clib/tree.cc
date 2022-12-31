@@ -13,6 +13,7 @@ using namespace std;
     bool pc_built;  // initially false.  set true when parent-children analysis finishes.
     vector<vector<int>> _nbr;
         // If (u, v) is an edge, then _nbr[u] has v and _nbr[v] has u.
+    vector<int> _stsize;
     vector<int> _depth;
     vector<int> _parent;
     vector<vector<int>> _children;
@@ -26,6 +27,7 @@ using namespace std;
     int add_edge(int x, int y);  // Adds an edge.  Returns the edge index.
     int parent(int x);           // parent(root) == -1
     const vector<int>& children(int x);
+    int stsize(int x);           // the size of the subtree
     int depth(int x);
     int lca(int x, int y);   // lowest common ancestor    
     vector<int> nnpath(int x, int y)  // path (list of nodes) between x and y, inclusive.
@@ -104,6 +106,7 @@ struct Tree {
   bool pc_built = false;
   vector<vector<int>> _nbr;
       // if (u, v) is an edge, then _nbr[u] has v and _nbr[v] has u.
+  vector<int> _stsize;
   vector<int> _depth;
   vector<int> _parent;
   vector<vector<int>> _children;
@@ -122,15 +125,18 @@ struct Tree {
     if (pc_built) return;
     pc_built = true;
     if (numNodes != numEdges + 1) throw range_error("numNodes and numEdges");
+    _stsize.resize(numNodes);
     _depth.resize(numNodes);
     _parent.resize(numNodes);
     _children.resize(numNodes);
     auto dfs = [&](auto rF, int nd, int pt, int d) -> void {
+      _stsize[nd] = 1;
       _depth[nd] = d;
       _parent[nd] = pt;
       for (int c : _nbr[nd]) if (c != pt) {
           _children[nd].push_back(c);
           rF(rF, c, nd, d + 1);
+          _stsize[nd] += _stsize[c];
         }
     };
     dfs(dfs, root, -1, 0);
@@ -171,6 +177,11 @@ struct Tree {
   const vector<int>& children(int x) { 
     set_parent_child();
     return _children[x];
+  }
+
+  int stsize(int x) {
+    set_parent_child();
+    return _stsize[x];
   }
 
   int depth(int x) {

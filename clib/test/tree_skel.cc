@@ -11,14 +11,28 @@ int main(int argc, char *argv[]) {
   cin.tie(nullptr);
   cout << setprecision(20);
 
-  vector<TreeEdge> edge1({{0,1}, {0,2}, {1,3}, {1,4}, {2,5}, {2,6}});
-  Tree t1(7);
-  for (auto [x,y] : edge1) t1.add_edge(x, y);
-  assert(t1.nnpath(1, 2) == vector<int>({1,0,2}));
-  assert(t1.nnpath(3, 2) == vector<int>({3,1,0,2}));
-  assert(t1.nnpath(6, 0) == vector<int>({6,2,0}));
-  assert(t1.nnpath(4, 2) == vector<int>({4,1,0,2}));
-  assert(t1.nnpath(2, 4) == vector<int>({2,0,1,4}));
+  {
+    vector<TreeEdge> edge1({{0,1}, {0,2}, {1,3}, {1,4}, {2,5}, {2,6}});
+    Tree t1(7);
+    for (auto [x,y] : edge1) t1.add_edge(x, y);
+    assert(t1.nnpath(1, 2) == vector<int>({1,0,2}));
+    assert(t1.nnpath(3, 2) == vector<int>({3,1,0,2}));
+    assert(t1.nnpath(6, 0) == vector<int>({6,2,0}));
+    assert(t1.nnpath(4, 2) == vector<int>({4,1,0,2}));
+    assert(t1.nnpath(2, 4) == vector<int>({2,0,1,4}));
+    assert(t1.parent(0) == -1);
+    assert(t1.parent(1) == 0);
+    assert(t1.parent(6) == 2);
+    auto v = t1.children(0);
+    sort(v.begin(), v.end());
+    assert(v == vector<int>({1, 2}));
+    assert(t1.stsize(0) == 7);
+    assert(t1.stsize(2) == 3);
+    assert(t1.stsize(5) == 1);
+    assert(t1.depth(0) == 0);
+    assert(t1.depth(1) == 1);
+    assert(t1.depth(4) == 2);
+  }
 
   Tree t2(3);
   t2.add_edge(0, 1);

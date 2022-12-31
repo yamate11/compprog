@@ -95,6 +95,10 @@ void test1() {
     assert(st.query(0, 5) == 2);
     st.update(2, 20);
     assert(st.query(0, 5) == 3);
+
+    stringstream ss;
+    ss << st;
+    assert(ss.str() == "[5, 10, 20, 3, 7]");
   }
 
   {

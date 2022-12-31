@@ -1,0 +1,13 @@
+#!/usr/bin/env python3
+
+from random import randrange
+
+t = 10000
+n = 20
+# n = 10
+print(t)
+for _t in range(t):
+    print(n)
+    lstA = [randrange(1, n + 1) for i in range(n)]
+    print(' '.join(map(str, lstA)))
+    

@@ -137,7 +137,7 @@ struct IntComb : IntPermBase<false> {
     for (; i >= 0 and vec[i] == n - r + i; i--);
     if (i < 0) return finish();
     vec[i]++;
-    for (int j = i + 1; j < r; j++) vec[j] = vec[i] + 1;
+    for (int j = i + 1; j < r; j++) vec[j] = vec[j - 1] + 1;
     return true;
   }
 };

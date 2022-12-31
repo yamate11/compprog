@@ -14,7 +14,7 @@ using pll = pair<ll, ll>;
 // @@ !! LIM(doubling)
 
 // ---- inserted library file doubling.cc
-#line 40 "/home/y-tanabe/proj/compprog/clib/doubling.cc"
+#line 42 "/home/y-tanabe/proj/compprog/clib/doubling.cc"
 
 struct DoublingFRel { // from functional relation
   int n;

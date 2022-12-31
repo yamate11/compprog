@@ -6,44 +6,45 @@ using namespace std;
 // @@ !! LIM(coordCompr)
 
 // ---- inserted library file coordCompr.cc
-#line 41 "/home/y-tanabe/proj/compprog/clib/coordCompr.cc"
+#line 52 "/home/y-tanabe/proj/compprog/clib/coordCompr.cc"
 
+template<typename T = ll, typename MAP = unordered_map<T, int>>
 class CoordCompr {
   bool built;
-  unordered_map<ll, int> mp;
+  MAP mp;
                        // map from an original value to a compressed value
-  vector<ll> rev;      // vector of original values
+  vector<T> rev;      // vector of original values
 
   void build() {
     built = true;
     sort(rev.begin(), rev.end());
     rev.erase(unique(rev.begin(), rev.end()), rev.end());
-    mp = unordered_map<ll, int>();
+    mp = MAP();
     for (size_t i = 0; i < rev.size(); i++) mp[rev[i]] = i;
   }
 
 public:
 
   CoordCompr() : built(false) {}
-  CoordCompr(const vector<ll>& vec) : built(false), rev(vec) {}
-  CoordCompr(vector<ll>&& vec) : built(false), rev(move(vec)) {}
+  CoordCompr(const vector<T>& vec) : built(false), rev(vec) {}
+  CoordCompr(vector<T>&& vec) : built(false), rev(move(vec)) {}
 
-  void add(ll x) {
+  void add(const T& x) {
     rev.push_back(x);
     built = false;
   }
 
-  void add(const vector<ll>& vec) {
-    for (ll x : vec) rev.push_back(x);
+  void add(const vector<T>& vec) {
+    for (const T& x : vec) rev.push_back(x);
     built = false;
   }
 
-  int c(ll x) {
+  int c(const T& x) {
     if (! built) build();
     return mp[x];
   }
 
-  ll d(int i) {
+  T d(int i) {
     if (! built) build();
     return rev[i];
   }
@@ -96,6 +97,31 @@ int main(int argc, char *argv[]) {
   {
     CoordCompr cc(vector<ll>{0,0,0,10});
     assert(cc.size() == 2);   // Immediately after construction
+  }
+  {
+    CoordCompr<string> cc;
+    cc.add("abc");
+    cc.add("xyz");
+    cc.add("lmn");
+    cc.add("bbb");
+    assert(cc.size() == 4);
+    assert(cc.c("abc") == 0);
+    assert(cc.c("xyz") == 3);
+    assert(cc.d(1) == "bbb");
+  }
+
+  {
+    using pll = pair<ll, ll>;
+    CoordCompr<pll, map<pll, int>> cc;
+    cc.add({5, 1});
+    cc.add({2, 4});
+    cc.add({3, 3});
+    cc.add({3, 4});
+    cc.add({2, 4});
+    assert(cc.size() == 4);
+    assert(cc.c({3, 3}) == 1);
+    assert(cc.c({3, 4}) == 2);
+    assert(cc.d(3) == pll(5, 1));
   }
   
 
