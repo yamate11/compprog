@@ -43,6 +43,7 @@ void naiveCompare(int n, int repeat) {
 
   UnionFind uf(n);
   myRandom rand;
+  // cerr << "before start" << endl;
   for (int _rep = 0; _rep < repeat; _rep++) {
     int k1, k2; rand.two(n, k1, k2);
     uf.merge(k1, k2);
@@ -54,7 +55,7 @@ void naiveCompare(int n, int repeat) {
     bool res_uf = uf.leader(k3) == uf.leader(k4);
     int gsize_uf = uf.groupSize(k3);
     // cerr << "reachable " << k3 << " " << k4 << " " << res_uf
-    //      << " " << res_naive << endl;
+    //        << " " << res_naive << endl;
     assert(res_uf == res_naive);
     // cerr << "gsize " << k3 << " " << k4 << " "
     //      << gsize_uf << " " << gsize_naive << endl;
