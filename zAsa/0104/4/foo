@@ -1,0 +1,10 @@
+from random import randrange, choice
+
+n = randrange(1, 10)
+print(n)
+ws = []
+for i in range(n):
+    m = randrange(1, 10)
+    lst = [choice("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz,.") for j in range(m)]
+    ws.append(''.join(lst))
+print(' '.join(ws))
