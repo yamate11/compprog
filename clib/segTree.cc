@@ -3,13 +3,13 @@
 
   Typical Usage:
 
-  st = make_seg_tree<DAT>(unit_dat, add, init_vec);
+  auto st = make_seg_tree<DAT>(unit_dat, add, init_vec);
 
   st.update(i, x);
   DAT x = st.query(il, ir);
   DAT x = st[i];   // This is equivalent to st.query(i, i + 1);
 
-  st = make_seg_tree_lazy<DAT, OP>(unit_dat, unit_op, add, comp, apply, init_vec);
+  auto st = make_seg_tree_lazy<DAT, OP>(unit_dat, unit_op, add, comp, apply, init_vec);
   // It must be hold:
   //       - apply(h, add(x, y)) = add(apply(h, x), apply(h, y)) 
   //       - apply(unit_op, x) = x
@@ -58,6 +58,11 @@
       REP(i, 0, init_vec.size()) dat_init.emplace_back(init_vec[i], 1);
       auto st = make_seg_tree_lazy<DAT, OP>(DAT(), OP(), add, comp, appl, dat_init);
 
+  If you want to have a vector of segment trees, try something like:
+
+     auto st = make_seg_tree<ll>(0, plus<ll>(), vector<ll>(N, 0LL));
+     vector segTrees(26, st);
+
  */
 
 //////////////////////////////////////////////////////////////////////
@@ -91,11 +96,7 @@ struct GenSegTree {
       add(add_), comp(comp_), appl(appl_) { _set_data(initdat); }
 
   void _set_data(const vector<DAT>& initdat) {
-    if (initdat.size() <= 0) {
-      cerr << "the size of initial vector must be >= 1" << endl;
-      abort();
-    }
-    if (initdat.size() == 1) height = 0;
+    if (initdat.size() <= 1) height = 0;
     else   height = sizeof(int) * 8 - __builtin_clz(initdat.size() - 1);
     size = 1 << height;
     node.resize(2*size, unit_dat);

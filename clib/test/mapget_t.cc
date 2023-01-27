@@ -6,12 +6,12 @@ using namespace std;
 // @@ !! LIM(mapget)
 
 // ---- inserted library file mapget.cc
-#line 25 "/home/y-tanabe/proj/compprog/clib/mapget.cc"
+#line 33 "/home/y-tanabe/proj/compprog/clib/mapget.cc"
 
 template<typename MP>
-typename MP::mapped_type mapget(MP& mp,
+const typename MP::mapped_type& mapget(MP& mp,
             const typename MP::key_type& a,
-            const typename MP::mapped_type& def = typename MP::mapped_type()) {
+            const typename MP::mapped_type& def) {
   auto it = mp.find(a);
   return it == mp.end() ? def : it->second;
 }
@@ -21,7 +21,7 @@ template<typename MP, typename T>
 void mapset(MP& mp,
             const typename MP::key_type& a,
             T&& val,
-            const typename MP::mapped_type& def = typename MP::mapped_type()) {
+            const typename MP::mapped_type& def) {
   if (val == def) mp.erase(a);
   else mp[a] = forward<T>(val);
 }
@@ -38,41 +38,42 @@ int main(int argc, char *argv[]) {
 
   {
     map<ll, ll> mp{{1, 5}, {7, -1}};
-    assert(mapget(mp, 1) == 5);
-    assert(mapget(mp, 7) == -1);
-    assert(mapget(mp, 100) == 0);
+    assert(mapget(mp, 1, 0) == 5);
+    assert(mapget(mp, 7, 0) == -1);
+    assert(mapget(mp, 100, 0) == 0);
     assert(mp.find(100) == mp.end());
-    mapset(mp, 4, 2);
-    assert(mapget(mp, 4) == 2);
-    mapset(mp, 7, 0);
-    assert(mapget(mp, 7) == 0);
+    mapset(mp, 4, 2, 0);
+    assert(mapget(mp, 4, 0) == 2);
+    mapset(mp, 7, 0, 0);
+    assert(mapget(mp, 7, 0) == 0);
     assert(mp.find(7) == mp.end());
   }
   {
     map<ll, ll> mp;
-    mapset(mp, 1, 1); // constant
+    mapset(mp, 1, 1, 0); // constant
     ll x = 2;
-    mapset(mp, 2, x); // l-value
+    mapset(mp, 2, x, 0); // l-value
     const ll y = 3;
-    mapset(mp, 3, y); // const l-value
-    mapset(mp, 4, move(x)); // r-value
-    assert(mapget(mp, 1) == 1);
-    assert(mapget(mp, 2) == 2);
-    assert(mapget(mp, 3) == 3);
-    assert(mapget(mp, 4) == 2);
+    mapset(mp, 3, y, 0); // const l-value
+    mapset(mp, 4, move(x), 0); // r-value
+    assert(mapget(mp, 1, 0) == 1);
+    assert(mapget(mp, 2, 0) == 2);
+    assert(mapget(mp, 3, 0) == 3);
+    assert(mapget(mp, 4, 0) == 2);
   }
   {
     using vi = vector<int>;
+    vi vzero;
     map<int, vi> mp;
-    mapset(mp, 3, vi{1, 2, 3});
-    mapset(mp, 7, move(vi{-1, -2}));
-    mapset(mp, 10, vi{});
-    assert(mapget(mp, 3) == (vi{1, 2, 3}));
-    assert(mapget(mp, 7) == (vi{-1, -2}));
-    assert(mapget(mp, 10) == vi{});
-    assert(mapget(mp, 100000) == vi{});
+    mapset(mp, 3, vi{1, 2, 3}, vzero);
+    mapset(mp, 7, move(vi{-1, -2}), vzero);
+    mapset(mp, 10, vi{}, vzero);
+    assert(mapget(mp, 3, vzero) == (vi{1, 2, 3}));
+    assert(mapget(mp, 7, vzero) == (vi{-1, -2}));
+    assert(mapget(mp, 10, vzero) == vi{});
+    assert(mapget(mp, 100000, vzero) == vi{});
     assert(mp.find(10) == mp.end());
-    mapset(mp, 7, vi{});
+    mapset(mp, 7, vi{}, vzero);
     assert(mp.size() == 1);
   }
   {

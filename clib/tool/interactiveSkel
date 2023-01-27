@@ -27,6 +27,9 @@ def ask(prompt, default=None):
 
 def main():
 
+    print('This script is obsolete.  Use interrun instead.')
+    return
+
     check_cans_cc()
     ask_type = ask('''Type of your output for interaction, with variable names,
 as in the function declaration

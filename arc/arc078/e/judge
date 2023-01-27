@@ -1,0 +1,23 @@
+#!/usr/bin/env python3
+
+import sys
+
+def main():
+    n = int(input())
+    while True:
+        tp, x = input().split()
+        if tp == '?':
+            m = int(x)
+            if (n <= m and str(n) <= x) or (n > m and str(n) > x):
+                print('Y')
+            else:
+                print('N')
+        elif tp == '!':
+            m = int(x)
+            if n == m:
+                print('# OK')
+            else:
+                print('# NG')
+            break
+
+main()

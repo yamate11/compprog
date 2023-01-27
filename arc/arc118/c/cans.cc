@@ -1,9 +1,15 @@
 #include <bits/stdc++.h>
 #include <cassert>
-typedef long long int ll;
 using namespace std;
+using ll = long long int;
+using pll = pair<ll, ll>;
 // #include <atcoder/all>
 // using namespace atcoder;
+#define REP(i, a, b) for (ll i = (a); i < (b); i++)
+#define REPrev(i, a, b) for (ll i = (a); i >= (b); i--)
+#define ALL(coll) (coll).begin(), (coll).end()
+#define SIZE(v) ((ll)((v).size()))
+#define REPOUT(i, a, b, exp, sep) REP(i, (a), (b)) cout << (exp) << (i + 1 == (b) ? "" : (sep)); cout << "\n"
 
 // @@ !! LIM()
 
@@ -13,19 +19,15 @@ int main(/* int argc, char *argv[] */) {
   cout << setprecision(20);
 
   ll N; cin >> N;
-  cout << 3*5*7*11 << " " << 6 << " " << 10;
-
-  ll cnt = 3;
-  for (ll i = 2; i < 10000; i++) {
-    if (cnt == N) break;
-    if (i % 2 == 1) continue;
-    if (i == 6 || i == 10) continue;
-    if (i % 3 == 0 || i % 5 == 0 || i % 7 == 0 || i % 11 == 0) {
-      cout << " " << i;
-      cnt++;
+  vector<ll> ans{6, 10, 15};
+  REP(i, 16, 10001) {
+    if (SIZE(ans) == N) break;
+    if (i % 6 == 0 or i % 10 == 0 or i % 15 == 0) {
+      ans.push_back(i);
     }
   }
-  cout << endl;
+  assert(SIZE(ans) == N);
+  REPOUT(i, 0, N, ans[i], " ");
 
   return 0;
 }

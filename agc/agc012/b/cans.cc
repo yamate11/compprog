@@ -1,88 +1,68 @@
 #include <bits/stdc++.h>
 #include <cassert>
-typedef long long int ll;
 using namespace std;
+using ll = long long int;
+using pll = pair<ll, ll>;
+// #include <atcoder/all>
+// using namespace atcoder;
+#define REP(i, a, b) for (ll i = (a); i < (b); i++)
+#define REPrev(i, a, b) for (ll i = (a); i >= (b); i--)
+#define ALL(coll) (coll).begin(), (coll).end()
+#define SIZE(v) ((ll)((v).size()))
+#define REPOUT(i, a, b, exp, sep) REP(i, (a), (b)) cout << (exp) << (i + 1 == (b) ? "" : (sep)); cout << "\n"
 
-#if defined(DEBUG)
+// @@ !! LIM(input)
 
-#include <unistd.h>
-#include <sys/fcntl.h>
-#define DLOG(...)        cerr << dbgFormat(__VA_ARGS__) << endl
-#define DCALL(func, ...) func(__VA_ARGS__)
+// ---- inserted library file input.cc
 
-template <class... Args>
-string dbgFormat(const char* fmt, Args... args) {
-  size_t len = snprintf(nullptr, 0, fmt, args...);
-  char buf[len + 1];
-  snprintf(buf, len + 1, fmt, args...);
-  return string(buf);
-}
+// The contents are empty.
 
-#else  // defined(DEBUG)
+// ---- end input.cc
 
-#define DLOG(...)
-#define DCALL(func, ...)
+// @@ !! LIM -- end mark --
 
-#endif // defined(DEBUG)
-// ----------------------------------------------------------------------
-
-template<typename F>
-class FixPoint : private F {
-public:
-  explicit constexpr FixPoint(F&& f) noexcept : F(forward<F>(f)) {}
-
-  template<typename... Args>
-  constexpr decltype(auto) operator()(Args&&... args) const {
-    return F::operator()(*this, forward<Args>(args)...);
-  }
-};
-
-template<typename F>
-static inline constexpr decltype(auto) fix(F&& f) noexcept {
-  return FixPoint<F>{forward<F>(f)};
-}
-
-// ----------------------------------------------------------------------
-
-int main(int argc, char *argv[]) {
-#if defined(DEBUG)
-  // GDB on Cygwin ignores redirection at run command.
-  if (argc == 2) dup2(open(argv[1], 0), 0);
-#else
-  // For performance.  We should not use C-style stdio functions
+int main(/* int argc, char *argv[] */) {
   ios_base::sync_with_stdio(false);
   cin.tie(nullptr);
-#endif
   cout << setprecision(20);
 
-  int N, M; cin >> N >> M;
-  vector<vector<int>> nbr(N);
+  ll N, M; cin >> N >> M;
+  // @InpNbrList(N, M, nbr, dec=1) [YtKad084]
+  auto nbr = vector(N, vector(0, int()));
   for (int i = 0; i < M; i++) {
-    int a, b; cin >> a >> b; a--; b--;
-    nbr.at(a).push_back(b);
-    nbr.at(b).push_back(a);
+    int u, v; cin >> u >> v; u -= 1; v -= 1;
+    nbr[u].emplace_back(v);
+    nbr[v].emplace_back(u);
   }
-  int Q; cin >> Q;
-  vector<int> V(Q), D(Q), C(Q);
-  for (int i = 0; i < Q; i++) {
-    int v, d, c; cin >> v >> d >> c; v--;
-    V.at(i) = v;
-    D.at(i) = d;
-    C.at(i) = c;
+  // @End [YtKad084]
+  vector ans(N, -1LL);
+  vector H(N, vector<pll>());
+  vector rec(N, vector<ll>(11));
+  ll Q; cin >> Q;
+  vector C(N, -1LL);
+  vector D(N, -1LL);
+  vector V(Q, -1LL);
+
+  auto put = 
+
+  REP(q, 0, Q) {
+    ll v, d, c; cin >> v >> d >> c; v--;
+    V[q] = v;
+    C[v] = c;
+    D[v] = d;
+    put(v, d);
   }
-  vector<int> rad(N, -1), col(N);
-  for (int i = Q-1; i >= 0; i--) {
-    auto paint = fix([&](auto recF, int v, int d) -> void {
-	if (rad.at(v) >= d) return;
-	rad.at(v) = d;
-	if (col.at(v) == 0) col.at(v) = C.at(i);
-	if (d == 0) return;
-	for (int w : nbr.at(v)) recF(w, d-1);
-      });
-    paint(V.at(i), D.at(i));
-  }
-  for (int i = 0; i < N; i++) {
-    cout << col.at(i) << "\n";
+  REPrev(q, Q - 1, 0) {
+    n = V[q];
+    for (auto [m, _d] : H(n)) {
+      if (ans[m] < 0) {
+        REP(d, 1, 11) {
+          if (rec[d] >= 0) {
+            for (ll p : nbr[m]) put(rec[d], d - 1);
+          }
+        }
+      }
+    }
   }
 
   return 0;

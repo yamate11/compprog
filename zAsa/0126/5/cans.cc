@@ -1,0 +1,175 @@
+#include <bits/stdc++.h>
+#include <cassert>
+using namespace std;
+using ll = long long int;
+using pll = pair<ll, ll>;
+// #include <atcoder/all>
+// using namespace atcoder;
+#define REP(i, a, b) for (ll i = (a); i < (b); i++)
+#define REPrev(i, a, b) for (ll i = (a); i >= (b); i--)
+#define ALL(coll) (coll).begin(), (coll).end()
+#define SIZE(v) ((ll)((v).size()))
+#define REPOUT(i, a, b, exp, sep) REP(i, (a), (b)) cout << (exp) << (i + 1 == (b) ? "" : (sep)); cout << "\n"
+
+// @@ !! LIM(UnionFind)
+
+// ---- inserted library file UnionFind.cc
+
+template<typename T = ll, typename oplus_t = decltype(plus<T>()), typename onegate_t = decltype(negate<T>())>
+struct UnionFind {
+  int size;
+  T zero;
+  oplus_t oplus;
+  onegate_t onegate;
+  vector<pair<int, T>> _leader;
+  vector<int> _gsize;
+  bool built_groups;
+  vector<vector<int>> _groups;
+  bool built_grouppots;
+  vector<map<T, vector<int>>> _grouppots;
+  
+  
+  UnionFind(int size_, T zero_ = (T)0, oplus_t oplus_ = plus<T>(), onegate_t onegate_ = negate<T>())
+    : size(size_), zero(zero_), oplus(oplus_), onegate(onegate_), _gsize(size, 1),
+      built_groups(false), built_grouppots(false) {
+    for (int i = 0; i < size; i++) _leader.emplace_back(i, (T)0);
+  }
+
+  int merge(int i, int j, const T& p = (T)0) {
+    built_groups = built_grouppots = false;
+    auto [li, pi] = leaderpot(i);
+    auto [lj, pj] = leaderpot(j);
+    if (li == lj) {
+      if (oplus(p, pj) == pi) return li;
+      else return -1;
+    }
+    int new_leader;
+    if (_gsize[li] < _gsize[lj]) {
+      new_leader = lj;
+      _gsize[new_leader] += _gsize[li];
+      _leader[li].first = new_leader;
+      _leader[li].second = oplus(p, oplus(pj, onegate(pi)));
+    }else {
+      new_leader = li;
+      _gsize[new_leader] += _gsize[lj];
+      _leader[lj].first = new_leader;
+      _leader[lj].second = onegate(oplus(p, oplus(pj, onegate(pi))));
+    }
+    return new_leader;
+  }
+
+  pair<int, T> leaderpot(int i) {
+    int cur = i;
+    vector<pair<int, T>> seen;
+    {
+      auto [nxt, p] = _leader[cur];
+      while (cur != nxt) {
+        seen.emplace_back(cur, p);
+        cur = nxt;
+        tie(nxt, p) = _leader[cur];
+      }
+    }
+    T pp = zero;
+    while (not seen.empty()) {
+      auto [j, p] = seen.back(); seen.pop_back();
+      pp = oplus(pp, p);
+      _leader[j] = {cur, pp};
+    }
+    return {cur, pp};
+  }
+
+  int leader(int i) { return leaderpot(i).first; }
+  int pot(int i) { return leaderpot(i).second; }
+
+  int groupSize(int i) { return _gsize[leader(i)]; }
+
+  const vector<int>& group(int i) {
+    if (not built_groups) {
+      _groups.resize(size);
+      for (int j = 0; j < size; j++) _groups[j].resize(0);
+      for (int j = 0; j < size; j++) _groups[leader(j)].push_back(j);
+      built_groups = true;
+    }
+    return _groups[leader(i)];
+  }
+
+  const vector<int>& grouppot(int i, const T& p) {
+    if (not built_grouppots) {
+      _grouppots.resize(size);
+      for (int j = 0; j < size; j++) _grouppots[j].clear();
+      for (int j = 0; j < size; j++) {
+        auto [ld, pp] = leaderpot(j);
+        _grouppots[ld][pp].push_back(j);
+      }
+      built_grouppots = true;
+    }
+    return _grouppots[leader(i)][p];
+  }
+
+};
+
+template<typename T = ll>
+auto makeUnionFind(int size, T zero, auto oplus, auto onegate) {
+  return UnionFind<T, decltype(oplus), decltype(onegate)>(size, zero, oplus, onegate);
+}
+
+// ---- end UnionFind.cc
+
+// @@ !! LIM -- end mark --
+
+int main(/* int argc, char *argv[] */) {
+  ios_base::sync_with_stdio(false);
+  cin.tie(nullptr);
+  cout << setprecision(20);
+
+  ll N, M, E; cin >> N >> M >> E;
+  // @InpMVec(E, ((U, dec=1), (V, dec=1))) [2Q36DhhZ]
+  auto U = vector(E, ll());
+  auto V = vector(E, ll());
+  for (int i = 0; i < E; i++) {
+    ll v1; cin >> v1; v1 -= 1; U[i] = v1;
+    ll v2; cin >> v2; v2 -= 1; V[i] = v2;
+  }
+  // @End [2Q36DhhZ]
+  ll Q; cin >> Q;
+  // @InpVec(Q, X, dec=1) [PHDLFLP9]
+  auto X = vector(Q, ll());
+  for (int i = 0; i < Q; i++) { ll v; cin >> v; v -= 1; X[i] = v; }
+  // @End [PHDLFLP9]
+  vector<bool> inX(E, false);
+  REP(i, 0, Q) inX[X[i]] = true;
+
+  UnionFind uf(N + M);
+  vector pow(N + M, false);
+  REP(i, 0, M) pow[N + i] = true;
+  vector town(N + M, 0LL);
+  REP(i, 0, N) town[i] = 1;
+  ll cnt = 0;
+  vector<ll> ans(Q);
+  auto mymerge = [&](ll u, ll v) -> void {
+    u = uf.leader(u);
+    v = uf.leader(v);
+    if (u == v) return;
+    ll newL = uf.merge(u, v);
+    if (pow[u] and pow[v]) {
+    }else if (pow[u]) {
+      cnt += town[v];
+      pow[newL] = true;
+    }else if (pow[v]) {
+      cnt += town[u];
+      pow[newL] = true;
+    }else {
+    }
+    town[newL] = town[u] + town[v];
+  };
+  REP(i, 0, E) if (not inX[i]) mymerge(U[i], V[i]);
+  ans[Q - 1] = cnt;
+  REPrev(q, Q - 1, 0) {
+    mymerge(U[X[q]], V[X[q]]);
+    if (q >= 1) ans[q - 1] = cnt;
+  }
+  REPOUT(i, 0, Q, ans[i], "\n");
+
+  return 0;
+}
+

@@ -1,0 +1,38 @@
+#!/usr/bin/env python3
+
+import sys
+
+def main():
+    f = input()
+    with open(f) as fp:
+        n = int(fp.readline())
+        print("judge, n=", n, file=sys.stderr)
+        brd = [[0 for _ in range(n)] for __ in range(n)]
+        for i in range(n):
+            line = fp.readline().strip()
+            for j in range(n):
+                brd[i][j] = 1 if line[j] == '#' else 0
+    print("judge, n out, n=", n, file=sys.stderr)
+    print(n, flush=True)
+    while True:
+        line = sys.stdin.readline().rstrip()
+        if line[0] == '?':
+            a, b, c, d = map(int, line[1:].strip().split())
+            t = 0
+            for i in range(a - 1, b):
+                for j in range(c - 1, d):
+                    t += brd[i][j]
+            print(t, flush=True)
+        elif line[0] == '!':
+            x, y = map(int, line[1:].strip().split())
+            x -= 1
+            y -= 1
+            k = sum([brd[x][i] for i in range(n)])
+            m = sum([brd[i][y] for i in range(n)])
+            if k == 0 and m == 0:
+                print('# AC', flush=True)
+            else:
+                print('# WA', flush=True)
+            break
+
+main()

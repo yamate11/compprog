@@ -1,0 +1,9 @@
+#!/usr/bin/env python3
+
+import time
+
+def main():
+    time.sleep(1)
+    print(f'JUDGE\nsnd\nlast\n', end='')
+
+main()

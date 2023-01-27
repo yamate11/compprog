@@ -1,0 +1,104 @@
+#!/usr/bin/env python3
+
+import argparse, sys
+from random import randrange, choice, shuffle, random
+
+def show_list(lst):
+    return ' '.join(map(str,lst))
+
+# Function generate() should yield test cases of type string repeatedly.
+# E.g.,
+
+def generate_seq():
+    for x in range(1, 10):
+        for cdir in ['N', 'E', 'S', 'W']:
+            yield f'{x}\n{cdir}\n'
+
+# or E.g.,
+
+def generate_random():
+
+    # This is the function you should edit.
+    # You can use prcase() to print the value to the case
+    def onecase():
+        p = 0.2
+        n = randrange(2, 10)
+        m = 0
+        v = [[0 for i in range(n)] for j in range(n)]
+        for i in range(1, n):
+            j = randrange(0, i)
+            v[j][i] = 1
+            v[i][j] = 1
+            m += 1
+        e = []
+        for i in range(0, n):
+            for j in range(i + 1, n):
+                if v[i][j]:
+                    e.append((i, j))
+                    continue
+                if random() > p:
+                    continue
+                v[i][j] = 1
+                v[j][i] = 1
+                m += 1
+                e.append((i, j))
+        xs = []
+        for (seq, (i, j)) in enumerate(e):
+            if random() > 0.5:
+                xs.append(seq)
+        if len(xs) == 0:
+            xs.append(0)
+        prcase(n, m)
+        for (i, j) in e:
+            prcase(i + 1, j + 1)
+        prcase(len(xs))
+        prcase(show_list([x + 1 for x in xs]))
+
+
+    # do not edit
+    def prcase(*args):
+        nonlocal case
+        for i, a in enumerate(args):
+            if i > 0:
+                case += ' '
+            case += str(a)
+        case += '\n'
+
+    # do not edit
+    while True:
+        case = ''
+        onecase()
+        yield case
+
+# generate = generate_seq
+generate = generate_random
+
+######################################################################
+# Hope that you need not edit the following code.
+
+end_mark = '^__=end=__^'
+end_file_mark = '^__=end_file=__^'
+
+def main():
+    ap = argparse.ArgumentParser();
+    ap.add_argument('-r', '--repeat', action='store_true',
+                    help='Repeatedly generates cases',)
+    args = ap.parse_args()
+
+    try:
+        if args.repeat:
+            for s in generate():
+                print(s.rstrip())
+                print(end_mark)
+            print(end_file_mark)
+        else:
+            for (i, s) in enumerate(generate()):
+                print(s.rstrip())
+                print(end_mark)
+                if (i == 4):
+                    break
+    except BrokenPipeError as e:
+        # print('caught: BrokenPipeError', file=sys.stderr)
+        pass
+
+main()

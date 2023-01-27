@@ -1,0 +1,36 @@
+#!/usr/bin/env python3
+
+import sys
+
+def ok():
+    print("OK")
+    sys.exit(0)
+
+def ng():
+    print("NG")
+    sys.exit(0)
+
+def check(b):
+    if not b:
+        ng()
+
+def main():
+    N = int(input())
+    A = list(map(int, input().split()))
+    tp = input()
+    if tp == "No":
+        ok()
+    else:
+        check(tp == "Yes")
+    X = list(map(int, input().split()))
+    check(len(X) == N)
+    s = 0
+    for (a, x) in zip(A, X):
+        s += a * x
+    check(s == 0)
+    for i in range(len(X) - 1):
+        check(X[i] < X[i + 1])
+    ok()
+
+main()
+

@@ -1,0 +1,23 @@
+#!/usr/bin/env python3
+
+from subprocess import Popen, PIPE
+from selectors import DefaultSelector, EVENT_READ
+
+p_judge = Popen(['./t_judge'], encoding='UTF-8', stdin=PIPE, stdout=PIPE)
+p_cans = Popen(['./t_cans'], encoding='UTF-8', stdin=PIPE, stdout=PIPE)
+
+sel = DefaultSelector()
+sel.register(p_judge.stdout, EVENT_READ, 1)
+# sel.register(p_cans.stdout, EVENT_READ, 2)
+print('---')
+while True:
+    lst = sel.select(1.0)
+    print(lst)
+    s,e = lst[0]
+    line = s.fileobj.readline()
+    if line == '':
+        print('$')
+        break
+    print('@ ', line, end='')
+print('---')
+

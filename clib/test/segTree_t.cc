@@ -247,7 +247,7 @@ void dbgLog(bool with_nl, Head&& head, Tail&&... tail)
 // ---- end debug.cc
 
 // ---- inserted library file segTree.cc
-#line 66 "/home/y-tanabe/proj/compprog/clib/segTree.cc"
+#line 71 "/home/y-tanabe/proj/compprog/clib/segTree.cc"
 
 // It seems that we should keep the size power of two,
 // considering the binary search.
@@ -276,11 +276,7 @@ struct GenSegTree {
       add(add_), comp(comp_), appl(appl_) { _set_data(initdat); }
 
   void _set_data(const vector<DAT>& initdat) {
-    if (initdat.size() <= 0) {
-      cerr << "the size of initial vector must be >= 1" << endl;
-      abort();
-    }
-    if (initdat.size() == 1) height = 0;
+    if (initdat.size() <= 1) height = 0;
     else   height = sizeof(int) * 8 - __builtin_clz(initdat.size() - 1);
     size = 1 << height;
     node.resize(2*size, unit_dat);
@@ -797,7 +793,16 @@ void test5() {
   sub(8);
 }
 
-
+void test6() {
+  // zero-size init vector
+  auto st0 = make_seg_tree<ll>(0LL, plus<ll>(), vector<ll>());
+  assert(st0.query(0, 0) == 0);
+  // one-size init vector
+  auto st1 = make_seg_tree<ll>(0LL, plus<ll>(), vector<ll>({5}));
+  assert(st1.query(0, 1) == 5);
+  st1.update(0, -100);
+  assert(st1.query(0, 1) == -100);
+}
 
 int main(int argc, char *argv[]) {
   ios_base::sync_with_stdio(false);
@@ -809,6 +814,7 @@ int main(int argc, char *argv[]) {
   test3();
   test4();
   test5();
+  test6();
 
   cout << "Test done." << endl;
   return 0;

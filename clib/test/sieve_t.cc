@@ -220,7 +220,7 @@ struct ItRange {
 // ---- end f:itrange
 
 // ---- inserted library file sieve.cc
-#line 40 "/home/y-tanabe/proj/compprog/clib/sieve.cc"
+#line 44 "/home/y-tanabe/proj/compprog/clib/sieve.cc"
 
 // sieve(upto) returns the list of prime numbers up to upto.
 //   Size: upto(1e8).size() ... 5.7e6,  upto(1e9).size() ... 5.1e7
@@ -310,7 +310,7 @@ vector<pair<int, int>> prfacDivSieve(int n, const vector<int>& divSieve) {
  */
 
 // _gdsub ... aux function used in getDivisors()
-vector<ll> _gdsub(int i, auto fs) {
+vector<ll> _gdsub(int i, const auto& fs) {
   if (i == (int)fs.size()) { return vector<ll>({1}); }
   auto part = _gdsub(i+1, fs);
   auto [p, r] = fs[i];

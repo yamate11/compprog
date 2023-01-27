@@ -23,6 +23,10 @@ using namespace std;
     // The latter is naturally faster.
     // primes should contain prime numbers at least up to sqrt(m)
     // divSieve should contain divisors upto m.
+    // Performance of `` REP(i, 1, N) prfac(i, primes) ''
+    //   i = 1<<17 (1.3e5) ... 40 ms,  i = 1<<20 (1.0e6) ... 510 ms,   i = 1<<22 (4.2e6) ... 2900 ms
+    // Performance of `` REP(i, 1, N) prfacDivSieve(i, divSieve) ''
+    //   i = 1<<17 (1.3e5) ... 13 ms,  i = 1<<20 (1.0e6) ... 110 ms,   i = 1<<22 (4.2e6) ... 450 ms
 
   vector<ll>  divs = getDivisors(m);
   vector<ll>  divs = getDivisors(m, primes);
@@ -126,7 +130,7 @@ vector<pair<int, int>> prfacDivSieve(int n, const vector<int>& divSieve) {
  */
 
 // _gdsub ... aux function used in getDivisors()
-vector<ll> _gdsub(int i, auto fs) {
+vector<ll> _gdsub(int i, const auto& fs) {
   if (i == (int)fs.size()) { return vector<ll>({1}); }
   auto part = _gdsub(i+1, fs);
   auto [p, r] = fs[i];

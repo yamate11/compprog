@@ -318,7 +318,16 @@ void test5() {
   sub(8);
 }
 
-
+void test6() {
+  // zero-size init vector
+  auto st0 = make_seg_tree<ll>(0LL, plus<ll>(), vector<ll>());
+  assert(st0.query(0, 0) == 0);
+  // one-size init vector
+  auto st1 = make_seg_tree<ll>(0LL, plus<ll>(), vector<ll>({5}));
+  assert(st1.query(0, 1) == 5);
+  st1.update(0, -100);
+  assert(st1.query(0, 1) == -100);
+}
 
 int main(int argc, char *argv[]) {
   ios_base::sync_with_stdio(false);
@@ -330,6 +339,7 @@ int main(int argc, char *argv[]) {
   test3();
   test4();
   test5();
+  test6();
 
   cout << "Test done." << endl;
   return 0;
