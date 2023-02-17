@@ -1,5 +1,5 @@
 (setq atcoder-library-list
-      '("NONE" "cmpNaive" "UnionFind" "bit" "cht" "coordCompr" "debug"
+      '("NONE" "cmpNaive" "UnionFind" "UnionFindRel" "bit" "cht" "coordCompr" "debug"
 	"dinic" "fix"
 	"integer" "matrix" "misc" "mod" "segTree" "sieve" "strSearch"
 	"util" "scc" "geometry" "binsearch" "dijkstra" "rerror"

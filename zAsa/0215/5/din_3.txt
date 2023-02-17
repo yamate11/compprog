@@ -1,0 +1,6 @@
+5 10
+Push 1 2
+Top
+Pop 1
+Top
+Size

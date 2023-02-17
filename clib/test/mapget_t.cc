@@ -3,86 +3,269 @@
 typedef long long int ll;
 using namespace std;
 
-// @@ !! LIM(mapget)
+// @@ !! LIM(mapget f:perfmeas)
 
 // ---- inserted library file mapget.cc
-#line 33 "/home/y-tanabe/proj/compprog/clib/mapget.cc"
+#line 24 "/home/y-tanabe/proj/compprog/clib/mapget.cc"
 
 template<typename MP>
-const typename MP::mapped_type& mapget(MP& mp,
-            const typename MP::key_type& a,
-            const typename MP::mapped_type& def) {
-  auto it = mp.find(a);
-  return it == mp.end() ? def : it->second;
-}
+struct mgs : MP {
+  using Key = typename MP::key_type;
+  using T = typename MP::mapped_type;
 
+  T def;
 
-template<typename MP, typename T>
-void mapset(MP& mp,
-            const typename MP::key_type& a,
-            T&& val,
-            const typename MP::mapped_type& def) {
-  if (val == def) mp.erase(a);
-  else mp[a] = forward<T>(val);
-}
+  mgs(const T& def_ = T()) : MP(), def(def_) {}
+  mgs(const mgs& o) : MP(o), def(o.def) {}
+  mgs(mgs&& o) : MP(move(o)), def(move(o.def)) {}
+  mgs& operator =(const mgs& o) {
+    MP::operator=(o);
+    def = o.def;
+    return *this;
+  }
+  mgs& operator =(mgs&& o) {
+    MP::operator=(move(o));
+    def = move(o.def);
+    return *this;
+  }
+
+  const T& get(const Key& k) const {
+    auto it = this->find(k);
+    if (it == this->end()) return def;
+    else return it->second;
+  }
+
+  template<typename T1>
+  void set(const Key& k, T1&& t) {
+    if (t == def) this->erase(k);
+    else (*this)[k] = forward<T1>(t);
+  }
+};
 
 // ---- end mapget.cc
+
+// ---- inserted function f:perfmeas from util.cc
+
+// For performance measurement.
+// Returns seconds from the epoch in double
+double get_time_sec() {
+  using namespace std::chrono;
+  return static_cast<double>(duration_cast<nanoseconds>(steady_clock::now().time_since_epoch()).count())/1000000000;
+}
+
+// ---- end f:perfmeas
 
 // @@ !! LIM -- end mark --
 #line 7 "mapget_skel.cc"
 
-int main(int argc, char *argv[]) {
+int main() {
   ios_base::sync_with_stdio(false);
   cin.tie(nullptr);
   cout << setprecision(20);
 
   {
-    map<ll, ll> mp{{1, 5}, {7, -1}};
-    assert(mapget(mp, 1, 0) == 5);
-    assert(mapget(mp, 7, 0) == -1);
-    assert(mapget(mp, 100, 0) == 0);
+
+    mgs<map<ll, ll>> mp;
+    mp[0] = 1;
+    mp[10] = 3;
+    mp[100] = 5;
+
+    assert(mp.get(10) == 3);
+    assert(mp.get(20) == 0);
+    assert(mp.find(20) == mp.end());
+
+    mgs<map<ll, ll>> mp1(mp);
+    mp1[1000] = 7;
+
+    assert(mp1.get(100) == 5);
+    assert(mp1.get(1000) == 7);
+    assert(mp1.get(30) == 0);
+    assert(mp1.find(30) == mp1.end());
+
+    mgs<map<ll, ll>> mp2(move(mp1));
+    mp2[10000] = 9;
+
+    assert(mp2.get(1000) == 7);
+    assert(mp2.get(10000) == 9);
+    assert(mp2.get(40) == 0);
+
+    mp2.set(10, -3);
+    assert(mp2.get(10) == -3);
+    mp2.set(100, 0);
+    assert(mp2.get(100) == 0);
+    assert(mp2.find(100) == mp2.end());
+
+  }
+
+  {
+    mgs<unordered_map<ll, ll>> mp;
+    mp[0] = 1;
+    mp[10] = 3;
+    mp[100] = 5;
+
+    assert(mp.get(10) == 3);
+    assert(mp.get(20) == 0);
+    assert(mp.find(20) == mp.end());
+
+    mgs<unordered_map<ll, ll>> mp1(mp);
+    mp1[1000] = 7;
+
+    assert(mp1.get(100) == 5);
+    assert(mp1.get(1000) == 7);
+    assert(mp1.get(30) == 0);
+    assert(mp1.find(30) == mp1.end());
+
+    mgs<unordered_map<ll, ll>> mp2(move(mp1));
+    mp2[10000] = 9;
+
+    assert(mp2.get(1000) == 7);
+    assert(mp2.get(10000) == 9);
+    assert(mp2.get(40) == 0);
+
+    mp2.set(10, -3);
+    assert(mp2.get(10) == -3);
+    mp2.set(100, 0);
+    assert(mp2.get(100) == 0);
+    assert(mp2.find(100) == mp2.end());
+
+  }
+
+  {  // move constructor
+    ll lim = 3000;
+    mgs<map<ll, vector<ll>>> mp;
+    for (ll i = 0; i < lim; i++) mp[i] = vector(lim, 0LL);
+    double t0 = get_time_sec();
+    mgs<map<ll, vector<ll>>> mp1(mp);
+    double t1 = get_time_sec();
+    mgs<map<ll, vector<ll>>> mp2(move(mp));
+    double t2 = get_time_sec();
+    assert((t1 - t0) > 3 * (t2 - t1));
+  }
+
+  {  // get returns a reference, not a copy
+    mgs<map<ll, vector<ll>>> mp;
+    ll lim = 3000;
+    for (ll i = 0; i < lim; i++) mp.set(i, vector<ll>(lim));
+    double t0 = get_time_sec();
+    ll s = 0;
+    for (ll i = 0; i < lim; i++) {
+      auto& v = mp.get(i);
+      s += v[i];
+    }
+    double t1 = get_time_sec();
+    s = 0;
+    for (ll i = 0; i < lim; i++) {
+      auto v = mp.get(i);
+      s += v[i];
+    }
+    double t2 = get_time_sec();
+    assert((t2 - t1) > 3 * (t1 - t0));
+  }
+
+  { // set employs the move semantics
+    mgs<map<ll, vector<ll>>> mp;
+    ll lim = 3000;
+    vector vec(lim, vector(lim, 0LL));
+    double t0 = get_time_sec();
+    for (ll i = 0; i < lim; i++) mp.set(i, vec[i]);
+    double t1 = get_time_sec();
+    for (ll i = 0; i < lim; i++) mp.set(i, move(vec[i]));
+    double t2 = get_time_sec();
+    assert((t1 - t0) > 3 * (t2 - t1));
+  }
+
+  { // substitution
+    mgs<map<ll, ll>> mp1(0);
+    mp1.set(10, 100);
+    mp1.set(20, 400);
+    mgs<map<ll, ll>> mp2(-1);
+    mp2.set(30, 900);
+    assert((mp2.get(0) == -1));
+    assert((mp2.get(30) == 900));
+    mp2 = mp1;
+    assert((mp2.get(0) == 0));
+    assert((mp2.get(30) == 0));
+    assert((mp2.get(10) == 100));
+  }
+
+  { // move substitution
+    mgs<map<ll, ll>> mp1(0);
+    mp1.set(10, 100);
+    mp1.set(20, 400);
+    mgs<map<ll, ll>> mp2(-1);
+    mp2.set(30, 900);
+    assert((mp2.get(0) == -1));
+    assert((mp2.get(30) == 900));
+    mp2 = move(mp1);
+    assert((mp2.get(0) == 0));
+    assert((mp2.get(30) == 0));
+    assert((mp2.get(10) == 100));
+
+    // move semantics check by performance
+    ll lim = 3000;
+    mgs<map<ll, vector<ll>>> mp;
+    for (ll i = 0; i < lim; i++) mp[i] = vector(lim, 0LL);
+    double t0 = get_time_sec();
+    auto mp3 = mp;
+    double t1 = get_time_sec();
+    auto mp4 = move(mp);
+    double t2 = get_time_sec();
+    assert((t1 - t0) > 3 * (t2 - t1));
+  }
+
+  // translation from older testsets
+  {
+    mgs<map<ll, ll>> mp;
+    mp.set(1, 5);
+    mp.set(7, -1);
+    assert(mp.get(1) == 5);
+    assert(mp.get(7) == -1);
+    assert(mp.get(100) == 0);
     assert(mp.find(100) == mp.end());
-    mapset(mp, 4, 2, 0);
-    assert(mapget(mp, 4, 0) == 2);
-    mapset(mp, 7, 0, 0);
-    assert(mapget(mp, 7, 0) == 0);
+    mp.set(4, 2);
+    assert(mp.get(4) == 2);
+    mp.set(7, 0);
+    assert(mp.get(7) == 0);
     assert(mp.find(7) == mp.end());
   }
   {
-    map<ll, ll> mp;
-    mapset(mp, 1, 1, 0); // constant
+    mgs<map<ll, ll>> mp;
+    mp.set(1, 1); // constant
     ll x = 2;
-    mapset(mp, 2, x, 0); // l-value
+    mp.set(2, x); // l-value
     const ll y = 3;
-    mapset(mp, 3, y, 0); // const l-value
-    mapset(mp, 4, move(x), 0); // r-value
-    assert(mapget(mp, 1, 0) == 1);
-    assert(mapget(mp, 2, 0) == 2);
-    assert(mapget(mp, 3, 0) == 3);
-    assert(mapget(mp, 4, 0) == 2);
+    mp.set(3, y); // const l-value
+    mp.set(4, move(x)); // r-value
+    assert(mp.get(1) == 1);
+    assert(mp.get(2) == 2);
+    assert(mp.get(3) == 3);
+    assert(mp.get(4) == 2);
   }
   {
     using vi = vector<int>;
-    vi vzero;
-    map<int, vi> mp;
-    mapset(mp, 3, vi{1, 2, 3}, vzero);
-    mapset(mp, 7, move(vi{-1, -2}), vzero);
-    mapset(mp, 10, vi{}, vzero);
-    assert(mapget(mp, 3, vzero) == (vi{1, 2, 3}));
-    assert(mapget(mp, 7, vzero) == (vi{-1, -2}));
-    assert(mapget(mp, 10, vzero) == vi{});
-    assert(mapget(mp, 100000, vzero) == vi{});
+    mgs<map<int, vi>> mp;
+    mp.set(3, vi{1, 2, 3});
+    mp.set(7, move(vi{-1, -2}));
+    mp.set(10, vi{});
+    assert(mp.get(3) == (vi{1, 2, 3}));
+    assert(mp.get(7) == (vi{-1, -2}));
+    assert(mp.get(10) == vi{});
+    assert(mp.get(100000) == vi{});
     assert(mp.find(10) == mp.end());
-    mapset(mp, 7, vi{}, vzero);
+    mp.set(7, vi{});
     assert(mp.size() == 1);
   }
   {
-    using mis = map<int, string>;
-    map<int, string> mp{{5, "hello"}, {2, "world"}};
-    mapset(mp, 4, "", "---");
-    mapset(mp, 7, "---", "---");
-    assert(mapget<mis>(mp, 2, string("---")) == "world");
-    assert(mapget<mis>(mp, 7, string("---")) == "---");
-    assert(mapget<mis>(mp, -10, string("---")) == "---");
+    mgs<map<int, string>> mp("---");
+    mp.set(4, "");
+    mp.set(5, "hello");
+    mp.set(2, "world");
+    mp.set(7, "---");
+    assert(mp.get(2) == "world");
+    assert(mp.get(7) == "---");
+    assert(mp.get(-10) == "---");
   }
+
+  return 0;
 }
+

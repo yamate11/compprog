@@ -1,0 +1,492 @@
+#include <bits/stdc++.h>
+#include <cassert>
+using namespace std;
+using ll = long long int;
+using pll = pair<ll, ll>;
+// #include <atcoder/all>
+// using namespace atcoder;
+#define REP(i, a, b) for (ll i = (a); i < (b); i++)
+#define REPrev(i, a, b) for (ll i = (a); i >= (b); i--)
+#define ALL(coll) (coll).begin(), (coll).end()
+#define SIZE(v) ((ll)((v).size()))
+#define REPOUT(i, a, b, exp, sep) REP(i, (a), (b)) cout << (exp) << (i + 1 == (b) ? "" : (sep)); cout << "\n"
+
+// @@ !! LIM(debug)
+
+// ---- inserted function f:<< from util.cc
+template <typename T1, typename T2>
+ostream& operator<< (ostream& os, const pair<T1,T2>& p) {
+  os << "(" << p.first << ", " << p.second << ")";
+  return os;
+}
+
+template <typename T1, typename T2, typename T3>
+ostream& operator<< (ostream& os, const tuple<T1,T2,T3>& t) {
+  os << "(" << get<0>(t) << ", " << get<1>(t)
+     << ", " << get<2>(t) << ")";
+  return os;
+}
+
+template <typename T1, typename T2, typename T3, typename T4>
+ostream& operator<< (ostream& os, const tuple<T1,T2,T3,T4>& t) {
+  os << "(" << get<0>(t) << ", " << get<1>(t)
+     << ", " << get<2>(t) << ", " << get<3>(t) << ")";
+  return os;
+}
+
+template <typename T>
+ostream& operator<< (ostream& os, const vector<T>& v) {
+  os << '[';
+  for (auto it = v.begin(); it != v.end(); it++) {
+    if (it != v.begin()) os << ", ";
+    os << *it;
+  }
+  os << ']';
+
+  return os;
+}
+
+template <typename T, typename C>
+ostream& operator<< (ostream& os, const set<T, C>& v) {
+  os << '{';
+  for (auto it = v.begin(); it != v.end(); it++) {
+    if (it != v.begin()) os << ", ";
+    os << *it;
+  }
+  os << '}';
+
+  return os;
+}
+
+template <typename T, typename C>
+ostream& operator<< (ostream& os, const unordered_set<T, C>& v) {
+  os << '{';
+  for (auto it = v.begin(); it != v.end(); it++) {
+    if (it != v.begin()) os << ", ";
+    os << *it;
+  }
+  os << '}';
+
+  return os;
+}
+
+template <typename T, typename C>
+ostream& operator<< (ostream& os, const multiset<T, C>& v) {
+  os << '{';
+  for (auto it = v.begin(); it != v.end(); it++) {
+    if (it != v.begin()) os << ", ";
+    os << *it;
+  }
+  os << '}';
+
+  return os;
+}
+
+template <typename T1, typename T2, typename C>
+ostream& operator<< (ostream& os, const map<T1, T2, C>& mp) {
+  os << '[';
+  for (auto it = mp.begin(); it != mp.end(); it++) {
+    if (it != mp.begin()) os << ", ";
+    os << it->first << ": " << it->second;
+  }
+  os << ']';
+
+  return os;
+}
+
+template <typename T1, typename T2, typename C>
+ostream& operator<< (ostream& os, const unordered_map<T1, T2, C>& mp) {
+  os << '[';
+  for (auto it = mp.begin(); it != mp.end(); it++) {
+    if (it != mp.begin()) os << ", ";
+    os << it->first << ": " << it->second;
+  }
+  os << ']';
+
+  return os;
+}
+
+template <typename T, typename T2>
+ostream& operator<< (ostream& os, const queue<T, T2>& orig) {
+  queue<T, T2> que(orig);
+  bool first = true;
+  os << '[';
+  while (!que.empty()) {
+    T x = que.front(); que.pop();
+    if (!first) os << ", ";
+    os << x;
+    first = false;
+  }
+  return os << ']';
+}
+
+template <typename T, typename T2>
+ostream& operator<< (ostream& os, const deque<T, T2>& orig) {
+  deque<T, T2> que(orig);
+  bool first = true;
+  os << '[';
+  while (!que.empty()) {
+    T x = que.front(); que.pop_front();
+    if (!first) os << ", ";
+    os << x;
+    first = false;
+  }
+  return os << ']';
+}
+
+template <typename T, typename T2, typename T3>
+ostream& operator<< (ostream& os, const priority_queue<T, T2, T3>& orig) {
+  priority_queue<T, T2, T3> pq(orig);
+  bool first = true;
+  os << '[';
+  while (!pq.empty()) {
+    T x = pq.top(); pq.pop();
+    if (!first) os << ", ";
+    os << x;
+    first = false;
+  }
+  return os << ']';
+}
+
+template <typename T>
+ostream& operator<< (ostream& os, const stack<T>& st) {
+  stack<T> tmp(st);
+  os << '[';
+  bool first = true;
+  while (!tmp.empty()) {
+    T& t = tmp.top();
+    if (first) first = false;
+    else os << ", ";
+    os << t;
+    tmp.pop();
+  }
+  os << ']';
+  return os;
+}
+
+#if __cplusplus >= 201703L
+template <typename T>
+ostream& operator<< (ostream& os, const optional<T>& t) {
+  if (t.has_value()) os << "v(" << t.value() << ")";
+  else               os << "nullopt";
+  return os;
+}
+#endif
+
+ostream& operator<< (ostream& os, int8_t x) {
+  os << (int32_t)x;
+  return os;
+}
+
+// ---- end f:<<
+
+// ---- inserted library file debug.cc
+template <class... Args>
+string dbgFormat(const char* fmt, Args... args) {
+  size_t len = snprintf(nullptr, 0, fmt, args...);
+  char buf[len + 1];
+  snprintf(buf, len + 1, fmt, args...);
+  return string(buf);
+}
+
+template <class Head>
+void dbgLog(bool with_nl, Head&& head) {
+  cerr << head;
+  if (with_nl) cerr << endl;
+}
+
+template <class Head, class... Tail>
+void dbgLog(bool with_nl, Head&& head, Tail&&... tail)
+{
+  cerr << head << " ";
+  dbgLog(with_nl, forward<Tail>(tail)...);
+}
+
+#if DEBUG
+  #define DLOG(...)        dbgLog(true, __VA_ARGS__)
+  #define DLOGNNL(...)     dbgLog(false, __VA_ARGS__)
+  #define DFMT(...)        cerr << dbgFormat(__VA_ARGS__) << endl
+  #define DCALL(func, ...) func(__VA_ARGS__)
+#else
+  #define DLOG(...)
+  #define DLOGNNL(...)
+  #define DFMT(...)
+  #define DCALL(func, ...)
+#endif
+
+/*
+#if DEBUG_LIB
+  #define DLOG_LIB(...)        dbgLog(true, __VA_ARGS__)
+  #define DLOGNNL_LIB(...)     dbgLog(false, __VA_ARGS__)
+  #define DFMT_LIB(...)        cerr << dbgFormat(__VA_ARGS__) << endl
+  #define DCALL_LIB(func, ...) func(__VA_ARGS__)
+#else
+  #define DLOG_LIB(...)
+  #define DFMT_LIB(...)
+  #define DCALL_LIB(func, ...)
+#endif
+*/
+
+#define DUP1(E1)       #E1 "=", E1
+#define DUP2(E1,E2)    DUP1(E1), DUP1(E2)
+#define DUP3(E1,...)   DUP1(E1), DUP2(__VA_ARGS__)
+#define DUP4(E1,...)   DUP1(E1), DUP3(__VA_ARGS__)
+#define DUP5(E1,...)   DUP1(E1), DUP4(__VA_ARGS__)
+#define DUP6(E1,...)   DUP1(E1), DUP5(__VA_ARGS__)
+#define DUP7(E1,...)   DUP1(E1), DUP6(__VA_ARGS__)
+#define DUP8(E1,...)   DUP1(E1), DUP7(__VA_ARGS__)
+#define DUP9(E1,...)   DUP1(E1), DUP8(__VA_ARGS__)
+#define DUP10(E1,...)   DUP1(E1), DUP9(__VA_ARGS__)
+#define DUP11(E1,...)   DUP1(E1), DUP10(__VA_ARGS__)
+#define DUP12(E1,...)   DUP1(E1), DUP11(__VA_ARGS__)
+#define GET_MACRO(_1,_2,_3,_4,_5,_6,_7,_8,_9,_10,_11,_12,NAME,...) NAME
+#define DUP(...)          GET_MACRO(__VA_ARGS__, DUP12, DUP11, DUP10, DUP9, DUP8, DUP7, DUP6, DUP5, DUP4, DUP3, DUP2, DUP1)(__VA_ARGS__)
+#define DLOGK(...)        DLOG(DUP(__VA_ARGS__))
+#define DLOGKL(lab, ...)  DLOG(lab, DUP(__VA_ARGS__))
+
+#if DEBUG_LIB
+  #define DLOG_LIB   DLOG
+  #define DLOGK_LIB  DLOGK
+  #define DLOGKL_LIB DLOGKL
+#endif
+
+// ---- end debug.cc
+
+// @@ !! LIM -- end mark --
+
+template<typename T, typename D, bool obt_max>
+struct CHT {
+  enum {E_ORD, E_MAX, E_A_DUM};
+  struct Data {
+    T a;
+    T b;
+    D bnd;
+    int eff; // E_ORD: (ordinary), E_MAX: (bnd is maximum), E_A_DUM: (a is dummy)
+    Data(T a_ = T(), T b_ = T(), D bnd_ = D(), int eff_ = 0) : a(a_), b(b_), bnd(bnd_), eff(eff_) {}
+    bool operator <(const Data& o) const {
+      if (eff == 2 or o.eff == 2) return eff != 1 and (o.eff == 1 or bnd < o.bnd);
+      else return a < o.a;
+    }
+    bool operator >(const Data& o) const { return o > *this; }
+    bool operator <=(const Data& o) const { return not (*this > o); }
+    bool operator >=(const Data& o) const { return not (*this < o); }
+    friend ostream& operator <<(ostream& ostr, const Data& cht) {
+      ostr << "[" << cht.a << ", " << cht.b << ", " << cht.bnd << ", " << cht.eff << "]";
+      return ostr;
+    }
+  };
+  set<Data> ds;
+  // For example, if ds = {{a1, b1, d1, 0}, {a2, b2, d2, 0}, {a3, b3, dummy, 1}}, then there are three
+  // lines li: y = ai x + bi.  l1 is max(min) on (-\infty, d), l2 on (d1, d2), l3 on (d2, \infty).
+
+  bool compare(D x, D y) { return x < y; };
+
+  static pair<D, D> _intersection(T a, T b, T c, T d) {
+    D x = - (D)(b - d) / (D)(a - c);
+    D y = (D)(a * d - b * c) / (D)(a - c);
+    return {x, y};
+  };
+
+  bool _effective(auto it, T a, T b) {
+    if (it == ds.end()) return true;
+    if (it->a == a) return compare((D)it->b, (D)b);
+    if (it == ds.begin()) return true;
+    auto it2 = prev(it);
+    auto [p, q] = _intersection(it2->a, it2->b, it->a, it->b);
+    return compare(q, a * p + b);
+  }
+
+  bool _it_move(auto& it, bool up) {
+    if (up) {
+      it++;
+      return it != ds.end();
+    }else {
+      if (it == ds.begin()) return false;
+      it--;
+      return true;
+    }
+  }
+
+  auto _refresh(auto it, T a, T b, bool up) {
+    // DLOGKL("refresh in", a, b, up, *it);
+    while (true) {
+      auto it2 = it;
+      if (not _it_move(it2, up)) break;
+      auto [p, q] = _intersection(a, b, it2->a, it2->b);
+      // DLOGKL("refresh", a, b, it2->a, it2->b, p, q);
+      if (compare(q, it->a * p + it->b)) break;
+      ds.erase(it);
+      it = it2;
+    }
+    auto [p, q] = _intersection(a, b, it->a, it->b);
+    return make_pair(it, p);
+  }
+
+  /*
+  void show_it(string msg, auto it) {
+    if (it == ds.end()) DLOG(msg + "  it == ds.end()");
+    else DLOGKL(msg, *it);
+  }
+  */
+
+  void insert(T a, T b) {
+    if (not obt_max) { a = -a; b = -b; }
+
+    auto it = ds.lower_bound(Data(a, b, D()));
+    // auto it = ds.end();
+
+    // show_it("show_it 1", it);
+    bool rc = _effective(it, a, b);
+    if (not rc) return;
+    if (it != ds.end() and it->a == a) {
+      it = ds.erase(it);
+      // show_it("show_it 2", it);
+    }
+    // DLOGKL("insert1", ds);
+    // bool dummy;
+
+    if (it == ds.end()) {
+      it = ds.emplace_hint(it, a, b, D(), E_MAX);
+      // tie(it, dummy) = ds.emplace(a, b, D(), E_MAX);
+      // show_it("show_it 3", it);
+    } else {
+      // show_it("show_it 4", it);
+      auto [it4, p] = _refresh(it, a, b, true);
+      // show_it("show_it 5", it4);
+      it = ds.emplace_hint(it4, a, b, p);
+      // tie(it, dummy) = ds.emplace(a, b, p);
+      // show_it("show_it 6", it);
+    }
+    // DLOGKL("insert2", ds);
+    if (it != ds.begin()) {
+      auto [it2, p] = _refresh(prev(it), a, b, false);
+      auto [aa, bb, _1, _2] = *it2;
+      ds.erase(it2);
+      ds.emplace_hint(it, aa, bb, p);
+      // ds.emplace(aa, bb, p);
+    }
+    // DLOGKL("insert3", ds);
+  }
+
+  T query(T x) {
+    auto it = ds.lower_bound(Data(T(), T(), (D)x, E_A_DUM));
+    // DLOGK(x, it->a, it->b, it->bnd);
+    T ret = it->a * x + it->b;
+    if (not obt_max) { ret = -ret; }
+    return ret;
+  }
+};
+
+template<typename T, typename D, bool obt_max>
+struct NaiveCHT {
+  vector<T> vecA;
+  vector<T> vecB;
+  
+  bool compare(D x, D y) {
+    if constexpr (obt_max) return less<D>()(x, y);
+    else                   return greater<D>()(x, y);
+  }
+
+  void insert(T a, T b) {
+    vecA.push_back(a);
+    vecB.push_back(b);
+  }
+
+  T query(T x) {
+    T ans = vecA[0] * x + vecB[0];
+    for (size_t i = 1; i < vecA.size(); i++) {
+      T v = vecA[i] * x + vecB[i];
+      if (compare(ans, v)) ans = v;
+    }
+    return ans;
+  }
+};
+  
+
+random_device rd;
+mt19937_64 rng(rd());
+ll randrange(ll i, ll j) {
+  uniform_int_distribution<ll> dist(i, j - 1);
+  return dist(rng);
+}
+  
+template<bool dir>
+void test_rnd() {
+  const ll rep_out = 500;
+  const ll rep_in = 500;
+  const double ratio = 0.4;
+  for (size_t i = 0; i < rep_out; i++) {
+    CHT<ll, double, dir> cht;
+    NaiveCHT<ll, double, dir> ncht;
+    const ll range_min = randrange(-100, 101);
+    const ll range_size = randrange(1, 100);
+    auto g = [&]() -> ll { return randrange(range_min, range_min + range_size); };
+    // DLOG("---------------");
+    for (size_t j = 0; j < rep_in; j++) {
+      if (j == 0 or randrange(0, 100000) < ratio * 100000) {
+        ll a = g(), b = g();
+        cht.insert(a, b);
+        ncht.insert(a, b);
+        // DLOGKL("** insert **", a, b);
+      }else {
+        ll x = g();
+        if (cht.query(x) != ncht.query(x)) {
+          DLOGKL("****** different ******", x, cht.query(x), ncht.query(x));
+          assert(0);
+        }
+      }
+    }
+  }
+}
+
+void test() {
+
+  {
+    CHT<ll, double, true> cht;
+    cht.insert(2, 0);
+    cht.insert(-2, 60);
+    cht.insert(0, 40);
+    assert(cht.query(3) == 54);
+    assert(cht.query(15) == 40);
+    assert(cht.query(21) == 42);
+
+    CHT<ll, double, false> chtMin;
+    chtMin.insert(2, 0);
+    chtMin.insert(-2, 60);
+    chtMin.insert(0, 40);
+    assert(chtMin.query(3) == 6);
+    assert(chtMin.query(15) == 30);
+    assert(chtMin.query(21) == 18);
+  }
+
+}
+
+
+int main(/* int argc, char *argv[] */) {
+  ios_base::sync_with_stdio(false);
+  cin.tie(nullptr);
+  cout << setprecision(20);
+
+#if 0  
+  test();
+  test_rnd<true>();
+  test_rnd<false>();
+#endif
+
+  ll N, M; cin >> N >> M;
+  // @InpVec(N, B) [7nhVhQ3g]
+  auto B = vector(N, ll());
+  for (int i = 0; i < N; i++) { ll v; cin >> v; B[i] = v; }
+  // @End [7nhVhQ3g]
+  // @InpVec(M, C) [nbn9fxMg]
+  auto C = vector(M, ll());
+  for (int i = 0; i < M; i++) { ll v; cin >> v; C[i] = v; }
+  // @End [nbn9fxMg]
+  sort(ALL(B), greater<ll>());
+  CHT<ll, double, true> cht;
+  REP(i, 1, N + 1) cht.insert(i, i * B[i - 1]);
+  REP(j, 0, M) cout << cht.query(C[j]) << "\n";
+
+  return 0;
+}
+

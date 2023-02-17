@@ -1,629 +1,194 @@
 #include <bits/stdc++.h>
 #include <cassert>
-typedef long long int ll;
 using namespace std;
+using ll = long long int;
+using pll = pair<ll, ll>;
 // #include <atcoder/all>
 // using namespace atcoder;
+#define REP(i, a, b) for (ll i = (a); i < (b); i++)
+#define REPrev(i, a, b) for (ll i = (a); i >= (b); i--)
+#define ALL(coll) (coll).begin(), (coll).end()
+#define SIZE(v) ((ll)((v).size()))
+#define REPOUT(i, a, b, exp, sep) REP(i, (a), (b)) cout << (exp) << (i + 1 == (b) ? "" : (sep)); cout << "\n"
 
-// @@ !! LIM(segTree cmpNaive UnionFind)
+// @@ !! LIM(UnionFindRel)
 
-// ---- inserted function f:<< from util.cc
-template <typename T1, typename T2>
-ostream& operator<< (ostream& os, const pair<T1,T2>& p) {
-  os << "(" << p.first << ", " << p.second << ")";
-  return os;
-}
+// ---- inserted library file UnionFindRel.cc
 
-template <typename T1, typename T2, typename T3>
-ostream& operator<< (ostream& os, const tuple<T1,T2,T3>& t) {
-  os << "(" << get<0>(t) << ", " << get<1>(t)
-     << ", " << get<2>(t) << ")";
-  return os;
-}
+template<typename T, typename add_t, typename neg_t, typename mult_t, typename div_t>
+struct UnionFindRel {
 
-template <typename T1, typename T2, typename T3, typename T4>
-ostream& operator<< (ostream& os, const tuple<T1,T2,T3,T4>& t) {
-  os << "(" << get<0>(t) << ", " << get<1>(t)
-     << ", " << get<2>(t) << ", " << get<3>(t) << ")";
-  return os;
-}
+  using rel_t = pair<T, T>;
 
-template <typename T>
-ostream& operator<< (ostream& os, const vector<T>& v) {
-  os << '[';
-  for (auto it = v.begin(); it != v.end(); it++) {
-    if (it != v.begin()) os << ", ";
-    os << *it;
+  int size;
+  T zero;
+  T one;
+  add_t add;
+  neg_t neg;
+  mult_t mult;
+  div_t div;
+  vector<int> _leader;
+  vector<rel_t> _rel;    
+  vector<optional<T>> _v;
+  // when l = _leader[i] and _v[l] is defined,  _v[i] = apply(_rel[i], _v[l])
+  vector<int> _gsize;
+  bool built_groups;
+  vector<vector<int>> _groups;
+  
+  UnionFindRel(int size_, T zero_, T one_, add_t add_, neg_t neg_, mult_t mult_, div_t div_)
+    : size(size_), zero(zero_), one(one_), add(add_), neg(neg_), mult(mult_), div(div_),
+      _v(size), _gsize(size, 1), built_groups(false) {
+    for (int i = 0; i < size; i++) {
+      _leader.emplace_back(i);
+      _rel.emplace_back(one, zero);
+    }
   }
-  os << ']';
 
-  return os;
-}
-
-template <typename T, typename C>
-ostream& operator<< (ostream& os, const set<T, C>& v) {
-  os << '{';
-  for (auto it = v.begin(); it != v.end(); it++) {
-    if (it != v.begin()) os << ", ";
-    os << *it;
+  rel_t comp(rel_t r2, rel_t r1) {
+    auto [a, b] = r1;
+    auto [c, d] = r2;
+    return {mult(a, c), add(mult(b, c), d)};
   }
-  os << '}';
-
-  return os;
-}
-
-template <typename T, typename C>
-ostream& operator<< (ostream& os, const unordered_set<T, C>& v) {
-  os << '{';
-  for (auto it = v.begin(); it != v.end(); it++) {
-    if (it != v.begin()) os << ", ";
-    os << *it;
-  }
-  os << '}';
-
-  return os;
-}
-
-template <typename T, typename C>
-ostream& operator<< (ostream& os, const multiset<T, C>& v) {
-  os << '{';
-  for (auto it = v.begin(); it != v.end(); it++) {
-    if (it != v.begin()) os << ", ";
-    os << *it;
-  }
-  os << '}';
-
-  return os;
-}
-
-template <typename T1, typename T2, typename C>
-ostream& operator<< (ostream& os, const map<T1, T2, C>& mp) {
-  os << '[';
-  for (auto it = mp.begin(); it != mp.end(); it++) {
-    if (it != mp.begin()) os << ", ";
-    os << it->first << ": " << it->second;
-  }
-  os << ']';
-
-  return os;
-}
-
-template <typename T1, typename T2, typename C>
-ostream& operator<< (ostream& os, const unordered_map<T1, T2, C>& mp) {
-  os << '[';
-  for (auto it = mp.begin(); it != mp.end(); it++) {
-    if (it != mp.begin()) os << ", ";
-    os << it->first << ": " << it->second;
-  }
-  os << ']';
-
-  return os;
-}
-
-template <typename T, typename T2>
-ostream& operator<< (ostream& os, const queue<T, T2>& orig) {
-  queue<T, T2> que(orig);
-  bool first = true;
-  os << '[';
-  while (!que.empty()) {
-    T x = que.front(); que.pop();
-    if (!first) os << ", ";
-    os << x;
-    first = false;
-  }
-  return os << ']';
-}
-
-template <typename T, typename T2>
-ostream& operator<< (ostream& os, const deque<T, T2>& orig) {
-  deque<T, T2> que(orig);
-  bool first = true;
-  os << '[';
-  while (!que.empty()) {
-    T x = que.front(); que.pop_front();
-    if (!first) os << ", ";
-    os << x;
-    first = false;
-  }
-  return os << ']';
-}
-
-template <typename T, typename T2, typename T3>
-ostream& operator<< (ostream& os, const priority_queue<T, T2, T3>& orig) {
-  priority_queue<T, T2, T3> pq(orig);
-  bool first = true;
-  os << '[';
-  while (!pq.empty()) {
-    T x = pq.top(); pq.pop();
-    if (!first) os << ", ";
-    os << x;
-    first = false;
-  }
-  return os << ']';
-}
-
-template <typename T>
-ostream& operator<< (ostream& os, const stack<T>& st) {
-  stack<T> tmp(st);
-  os << '[';
-  bool first = true;
-  while (!tmp.empty()) {
-    T& t = tmp.top();
-    if (first) first = false;
-    else os << ", ";
-    os << t;
-    tmp.pop();
-  }
-  os << ']';
-  return os;
-}
-
-#if __cplusplus >= 201703L
-template <typename T>
-ostream& operator<< (ostream& os, const optional<T>& t) {
-  if (t.has_value()) os << "v(" << t.value() << ")";
-  else               os << "nullopt";
-  return os;
-}
-#endif
-
-ostream& operator<< (ostream& os, int8_t x) {
-  os << (int32_t)x;
-  return os;
-}
-
-// ---- end f:<<
-
-// ---- inserted library file segTree.cc
-
-// It seems that we should keep the size power of two,
-// considering the binary search.
-
-template <typename DAT, typename OP,
-	  typename Fadd, typename Fcomp, typename Fappl> 
-struct SegTree {
-  int size;	     // power of two; >= 2
-  int height;        // size = 1 << height;
-  vector<DAT> node;  // vector of size 2*size.
-                     // 0                 : unused
-                     // 1    ... size-1   : interval
-                     // size ... 2*size-1 : leaf
-  vector<OP> susp;   // vector of size size.
-                     // suspended operation FOR CHILDREN
-                     // (already applied to this node)
-  DAT unit_dat;
-  OP unit_op;
-  Fadd add;
-  Fcomp comp;
-  Fappl appl;
-  bool range_update;
     
-  SegTree(DAT unit_dat_, OP unit_op_, Fadd add_, Fcomp comp_, Fappl appl_,
-	  bool range_update_)
-    // , vector<DAT> initdat) 
-    : unit_dat(unit_dat_), unit_op(unit_op_), add(add_), comp(comp_),
-      appl(appl_), range_update(range_update_) {}
-
-  void set_data(vector<DAT> initdat) {
-    if (initdat.size() <= 0) {
-      cerr << "the size of initial vector must be >= 1" << endl;
-      abort();
-    }
-    if (initdat.size() == 1) {
-      height = 0;
-    }else {
-      height = sizeof(int) * 8 - __builtin_clz(initdat.size() - 1);
-    }
-    size = 1 << height;
-    node.resize(2*size, unit_dat);
-    for (int i = 0; i < (int)initdat.size(); i++) {
-      node.at(size + i) = initdat.at(i);
-    }
-    for (int t = size - 1; t >= 1; t--) {
-      node.at(t) = add(node.at(t<<1|0), node.at(t<<1|1));
-    }
-    susp.resize(size, unit_op);
+  rel_t inv(rel_t r) {
+    auto [a, b] = r;
+    return {div(one, a).value(), div(neg(b), a).value()};
+    // This means that r.first should have the inverse.
   }
 
-  void child_updated_sub(int k, int t) {
-    node.at(t) = appl(k, susp.at(t),
-		      add(node.at(t<<1|0), node.at(t<<1|1)));
-  }
+  T apply(rel_t r, T x) { return add(mult(r.first, x), r.second); }
 
-  void child_updated(int l, int r) {
-    int k = 1;
-    r--;
-    while (l > 1) {
-      l >>= 1;
-      r >>= 1;
-      k *= 2;
-      child_updated_sub(k, l);
-      if (l < r) child_updated_sub(k, r);
-    }
-  }
-
-  void node_op(int i, int k, OP f) {
-    node.at(i) = appl(k, f, node.at(i));
-    if (i < size) susp.at(i) = comp(f, susp.at(i));
-  }
-
-  void push_one(int i, int k) {
-    node_op(i<<1|0, k / 2, susp.at(i));
-    node_op(i<<1|1, k / 2, susp.at(i));
-    susp.at(i) = unit_op;
-  }
-
-  void push_upto(int l, int r) {
-    for (int s = height; s >= 1; s--) {
-      int lz = l >> s;
-      int rz = (r-1) >> s;
-      int k = 1 << s;
-      push_one(lz, k);
-      if (lz < rz) push_one(rz, k);
-    }
-  }
-
-  DAT query(int l, int r) {
-    // DLOG("l=", l, "r=", r);
-    if (l >= r) return unit_dat;
-    DAT ret_l = unit_dat;
-    DAT ret_r = unit_dat;
-    // DLOG("1: ret_l=", ret_l, "ret_r", ret_r);
-    l += size;
-    r += size;
-    if (range_update) push_upto(l, r);
-    while (l < r) {
-      if (l & 1) {
-	ret_l = add(ret_l, node.at(l));
-	// DLOG("l=", l, "ret_l=", ret_l);
-	l++;
-      }
-      if (r & 1) {
-	ret_r = add(node.at(r-1), ret_r);
-	// DLOG("r=", r, "ret_r=", ret_r);
-      }
-      l >>= 1;
-      r >>= 1;
-    }
-    DAT ret = add(ret_l, ret_r);
-    // DLOG("ret_l=", ret_l, "ret_r", ret_r, "ret", ret);
-    return ret;
-  }
-
-  void single_update(int i, OP f) {
-    update(i, i+1, f);
-  }
-
-  void update(int l, int r, OP f) {
-    // DLOG("update. 1. node=", node);
-    if (l >= r) return;
-    if ((! range_update) && (l + 1 < r)) {
-      cerr << "FATAL: r - l >= 2 without setting range_update." << endl;
-      abort();
-    }
-    l += size;
-    r += size;
-    if (range_update) push_upto(l, r);
-    // DLOG("update. 2. node=", node);
-    int l0 = l, r0 = r;
-    int k = 1;
-    while (l < r) {
-      if (l & 1) {
-	node_op(l, k, f);
-	l++;
-      }
-      if (r & 1) {
-	node_op(r-1, k, f);
-      }
-      l >>= 1;
-      r >>= 1;
-      k *= 2;
-    }
-    // DLOG("update. 3. node=", node);
-    child_updated(l0, r0);
-    // DLOG("node=", node);
-    // DLOG("susp=", susp);
-  }
-
-
-  // Returns the least r >= l s.t. check(Add(v[l], ..., v[r-1])) == true,
-  //    where check :: DAT -> bool
-  // If there is no such r, returns -1.
-  int binsearch_l(const auto& check, int l) {
-    // DLOG("binsearch_l; l=", l);
-    int x = l + size;
-    DAT val = unit_dat;
-    if (check(val)) return l;
-    // DLOG("pt1");
-    if (range_update) push_upto(x, x+1);
-    int k = 1;
-    while (true) {
-      DAT t = add(val, node.at(x));
-      if (check(t)) break;
-      if (x & 1) {
-	val = t;
-	x++;
-	if (__builtin_popcount(x) == 1) return -1;
-      }
-      x >>= 1;
-      k <<= 1;
-      // DLOG("  x=", x, "val=", val);
-    }
-    // DLOG("pt2; x=", x, "k=", k);
-    while (k > 1) {
-      if (range_update) push_one(x, k);
-      DAT t = add(val, node.at(x<<1|0));
-      if (check(t)) {
-	x = (x<<1|0);
+  int merge(int i, int j, const rel_t& r) { // v_i = a * v_j + b, where r = {a, b}
+    built_groups = false;
+    auto [li, ri] = leader_rel(i);
+    auto [lj, rj] = leader_rel(j);
+    if (li == lj) {
+      if (_v[li].has_value()) {
+        return (_v[i].value() == _v[j].value()) ? li : -1;
       }else {
-	x = (x<<1|1);
-	val = t;
+        rel_t c = comp(r, rj);
+        if (ri == c) return i;
+        if (ri.first == c.first) return -1;
+        optional<T> x = div(add(c.second, neg(ri.second)), add(ri.first, neg(c.first)));
+        if (not x.has_value()) return -1;
+        _v[li] = x;
+        _v[i] = apply(ri, *x);
+        _v[j] = apply(rj, *x);
+        return li;
       }
-      k >>= 1;
     }
-    // DLOG("pt3; x=", x, "k=", k);
-    return x + 1 - size;
+    int new_leader, old_leader;
+    
+    if (_gsize[li] < _gsize[lj]) {
+      new_leader = lj;
+      old_leader = li;
+      _rel[li] = comp(inv(ri), comp(r, rj));
+    }else {
+      new_leader = li;
+      old_leader = lj;
+      _rel[lj] = comp(inv(comp(r, rj)), ri);
+    }
+    _gsize[new_leader] += _gsize[old_leader];
+    _leader[old_leader] = new_leader;
+    if (_v[new_leader].has_value() and _v[old_leader].has_value()) {
+      if (apply(_rel[old_leader], _v[new_leader].value()) != _v[old_leader].value()) return -1;
+    }else if (_v[old_leader].has_value()) {
+      _v[new_leader] = apply(inv(_rel[old_leader]), _v[old_leader].value());
+    }
+    return new_leader;
+  }
+
+  pair<int, rel_t> leader_rel(int i) {
+    int cur = i;
+    vector<int> seen;
+    rel_t r(one, zero);
+    while (true) {
+      ll nxt = _leader[cur];
+      if (cur == nxt) break;
+      seen.push_back(cur);
+      cur = nxt;
+    }
+    int ld = cur;
+    while (not seen.empty()) {
+      ll j = seen.back(); seen.pop_back();
+      r = comp(_rel[j], r);
+      _leader[j] = ld;
+      _rel[j] = r;
+    }
+    return {ld, r};
+  }
+
+  int leader(int i) { return leader_rel(i).first; }
+  rel_t rel(int i) { return leader_rel(i).second; }
+
+  optional<T> get_val(int i) {
+    if (_v[i].has_value()) return _v[i];
+    ll ld = leader(i);
+    if (_v[ld].has_value()) {
+      _v[i] = apply(_rel[i], _v[ld].value());
+      return _v[i];
+    }
+    return nullopt;
+  }
+
+  int groupSize(int i) { return _gsize[leader(i)]; }
+
+  const vector<int>& group(int i) {
+    if (not built_groups) {
+      _groups.resize(size);
+      for (int j = 0; j < size; j++) _groups[j].resize(0);
+      for (int j = 0; j < size; j++) _groups[leader(j)].push_back(j);
+      built_groups = true;
+    }
+    return _groups[leader(i)];
   }
 
 };
 
-template<typename DAT, typename OP>
-auto make_seg_tree(DAT unit_dat, OP unit_op,
-		   auto add, auto comp, auto appl,
-		   bool range_update)
-  -> SegTree<DAT, OP, decltype(add), decltype(comp), decltype(appl)> {
-  return SegTree(unit_dat, unit_op, add, comp, appl, range_update);
+template<typename T>
+auto makeUnionFindRel(int size, T zero, T one, auto add, auto neg, auto mult, auto div) {
+  return UnionFindRel<T, decltype(add), decltype(neg), decltype(mult), decltype(div)>
+    (size, zero, one, add, neg, mult, div);
 }
 
-// ---- end segTree.cc
-
-// ---- inserted library file cmpNaive.cc
-
-const string end_mark("^__=end=__^");
-
-int naive(istream& cin, ostream& cout);
-int body(istream& cin, ostream& cout);
-
-void cmpNaive() {
-  while (true) {
-    string s;
-    getline(cin, s);
-    bool run_body;
-    if (s.at(0) == 'Q') {
-      return;
-    }else if (s.at(0) == 'B') {
-      run_body = true;
-    }else if (s.at(0) == 'N') {
-      run_body = false;
-    }else {
-      cerr << "Unknown body/naive specifier.\n";
-      exit(1);
-    }
-    string input_s;
-    while (true) {
-      getline(cin, s);
-      if (s == end_mark) break;
-      input_s += s;
-      input_s += "\n";
-    }
-    stringstream ss_in(move(input_s));
-    stringstream ss_out;
-    if (run_body) {
-      body(ss_in, ss_out);
-    }else {
-      naive(ss_in, ss_out);
-    }
-    cout << ss_out.str() << end_mark << endl;
-  }
+template<typename I>
+optional<I> mydivide(I a, I b) {
+  if (b == 0 or a % b != 0) return nullopt;
+  return a / b;
 }
 
-int main(int argc, char *argv[]) {
+// ---- end UnionFindRel.cc
+
+// @@ !! LIM -- end mark --
+
+int main(/* int argc, char *argv[] */) {
   ios_base::sync_with_stdio(false);
   cin.tie(nullptr);
   cout << setprecision(20);
 
-#if CMPNAIVE
-  if (argc == 2) {
-    if (strcmp(argv[1], "cmpNaive") == 0) {
-      cmpNaive();
-    }else if (strcmp(argv[1], "naive") == 0) {
-      naive(cin, cout);
-    }else if (strcmp(argv[1], "skip") == 0) {
-      exit(0);
-    }else {
-      cerr << "Unknown argument.\n";
-      exit(1);
-    }
-  }else {
-#endif
-    body(cin, cout);
-#if CMPNAIVE
-  }
-#endif
-  return 0;
-}
-
-/*
-int naive(istream& cin, ostream& cout) {
-  return 0;
-}
-int body(istream& cin, ostream& cout) {
-  return 0;
-}
-*/
-
-// ---- end cmpNaive.cc
-
-// ---- inserted library file UnionFind.cc
-
-class UnionFind {
-protected:
-  int size;
-  vector<int> _leader;
-  vector<int> _rank;
-  vector<int> _gsize;
-  unordered_map<int, vector<int>> _groups;
-  
-public:
-  UnionFind(int s);
-  int leader(int i);
-  int merge(int i, int j);
-  int groupSize(int i);
-  const unordered_map<int, vector<int>>& groups();
-  const vector<int>& group(int i);
-};
-
-UnionFind::UnionFind(int s) {
-  size = s;
-  _leader = vector<int>(size);
-  for (int i = 0; i < size; i++) { _leader.at(i) = i; }
-  _rank = vector<int>(size, 1);
-  _gsize = vector<int>(size, 1);
-}
-
-int UnionFind::leader(int i) {
-  int cur = i;
-  int nxt = _leader.at(cur);
-  vector<int> seen;
-  while (cur != nxt) {
-    seen.push_back(cur);
-    cur = nxt;
-    nxt = _leader.at(cur);
-  }
-  for (auto j : seen) _leader.at(j) = cur;
-  return cur;
-}
-
-int UnionFind::merge(int i0, int j0) {
-  if (!_groups.empty()) {
-    cerr << "merge() cannot be called after group() or groups()." << endl;
-    exit(1);
-  }
-  int li = leader(i0);
-  int lj = leader(j0);
-  if (li == lj) return li;
-  int ri = _rank.at(li);
-  int rj = _rank.at(lj);
-  int rep = li;
-  int other = lj;
-  if      (ri <  rj) swap(rep, other);
-  else if (ri == rj) _rank.at(rep)++;
-  _leader.at(other) = rep;
-  _gsize.at(rep) += _gsize.at(other);
-  return rep;
-}
-
-int UnionFind::groupSize(int i) {
-  return _gsize.at(leader(i));
-}
-
-const unordered_map<int, vector<int>>& UnionFind::groups() {
-  if (_groups.empty()) {
-    for (int i = 0; i < size; i++) _groups[leader(i)].push_back(i);
-  }
-  return _groups;  
-}
-
-const vector<int>& UnionFind::group(int i) { return groups().at(leader(i)); }
-
-
-
-// ---- end UnionFind.cc
-
-// @@ !! LIM -- end mark --
-
-int naive(istream& cin, ostream& cout) {
   ll N; cin >> N;
+  auto uf = makeUnionFindRel<ll>(N, 0LL, 1LL, plus<ll>(), negate<ll>(), multiplies<ll>(), mydivide<ll>);
   ll Q; cin >> Q;
-  
-  vector<ll> bsum(N, -1);
-  for (; Q > 0; Q--) {
-    ll t, x, y, v; cin >> t >> x >> y >> v;
-    if (t == 0) {
-      bsum[x] = v;
-    }else {
-      ll w = v;
-      ll i = x;
-      while (true) {
-        if (i == y) {
-          cout << w << "\n";
-          break;
-        }
-        if (y < x) i--;
-        if (bsum[i] < 0) {
-          cout << "Ambiguous\n";
-          break;
-        }
-        w = bsum[i] - w;
-        if (x < y) i++;
-      }
-    }
-  }
-  return 0;
-}
-
-int body(istream& cin, ostream& cout) {
-
-  ll N; cin >> N;
-  ll Q; cin >> Q;
-
-  using DAT = ll;
-  using OP = optional<ll>;
-  const DAT unit_dat = 0;
-  const OP unit_op = nullopt;
-  auto xAdd = [](DAT x, DAT y) -> DAT { return x + y; };
-  auto xAppl = [](int k, OP f, DAT x) -> DAT {
-    return f.has_value() ? k * f.value() : x;
-  };
-  auto xComp = [](OP h, OP g) -> OP { return h.has_value() ? h : g; };
-
-  auto st0 = make_seg_tree(unit_dat, unit_op, xAdd, xComp, xAppl, false);
-  auto st1 = make_seg_tree(unit_dat, unit_op, xAdd, xComp, xAppl, false);
-  vector<ll> init0(N), init1(N);
-  ll big = 1e10;
-  for (ll i = 0; i < N-1; i++) {
-    if (i % 2 == 0) init0[i] = -big;
-    else            init1[i] = -big;
-  }
-  st0.set_data(init0);
-  st1.set_data(init1);
-
-  UnionFind uf(N);
-  for (; Q > 0; Q--) {
-    ll t, x, y, v; cin >> t >> x >> y >> v; x--; y--;
-    if (t == 0) {
-      if (x % 2 == 0) st0.update(x, x + 1, v);
-      else            st1.update(x, x + 1, v);
-      uf.merge(x, x+1);
-    }else {
-      ll a = -1;
-      if (x == y) {
-        cout << v << "\n";
+  REP(_q, 0, Q) {
+    ll tp, x, y, v; cin >> tp >> x >> y >> v; x--; y--;
+    if (tp == 0) {
+      uf.merge(y, x, {-1, v});
+    }else if (tp == 1) {
+      auto w1 = uf.get_val(y);
+      if (w1) {
+        cout << *w1 << "\n";
       }else {
-        if (uf.leader(x) != uf.leader(y)) {
+        ll ly = uf.leader(y);
+        ll lx = uf.leader(x);
+        if (ly != lx) {
           cout << "Ambiguous\n";
         }else {
-          ll p = min(x, y);
-          ll q = max(x, y);
-          ll s0 = st0.query(p, q);
-          ll s1 = st1.query(p, q);
-          if (x < y) {
-            if (y % 2 == 0) a = s1 - s0;
-            else            a = s0 - s1;
-            if ((x + y) % 2 == 0) a += v;
-            else                  a -= v;
-          }else if (y < x) {
-            if (y % 2 == 0) a = s0 - s1;
-            else            a = s1 - s0;
-            if ((x + y) % 2 == 0) a += v;
-            else                  a -= v;
-          }
-          cout << a << "\n";
+          ll w = uf.apply(uf.rel(y), uf.apply(uf.inv(uf.rel(x)), v));
+          cout << w << "\n";
         }
       }
-    }
+    }else assert(0);
   }
-
   return 0;
 }
 
