@@ -11,7 +11,7 @@ using pll = pair<ll, ll>;
 #define SIZE(v) ((ll)((v).size()))
 #define REPOUT(i, a, b, exp, sep) REP(i, (a), (b)) cout << (exp) << (i + 1 == (b) ? "" : (sep)); cout << "\n"
 
-// @@ !! LIM(debug)
+// @@ !! LIM(debug cht)
 
 // ---- inserted function f:<< from util.cc
 template <typename T1, typename T2>
@@ -252,7 +252,7 @@ void dbgLog(bool with_nl, Head&& head, Tail&&... tail)
 
 // ---- end debug.cc
 
-// @@ !! LIM -- end mark --
+// ---- inserted library file cht.cc
 
 template<typename T, typename D, bool obt_max>
 struct CHT {
@@ -277,7 +277,7 @@ struct CHT {
   };
   set<Data> ds;
   // For example, if ds = {{a1, b1, d1, 0}, {a2, b2, d2, 0}, {a3, b3, dummy, 1}}, then there are three
-  // lines li: y = ai x + bi.  l1 is max(min) on (-\infty, d), l2 on (d1, d2), l3 on (d2, \infty).
+  // lines li: y = ai x + bi.  l1 is max(min) on (-\infty, d1), l2 on (d1, d2), l3 on (d2, \infty).
 
   bool compare(D x, D y) { return x < y; };
 
@@ -308,12 +308,10 @@ struct CHT {
   }
 
   auto _refresh(auto it, T a, T b, bool up) {
-    // DLOGKL("refresh in", a, b, up, *it);
     while (true) {
       auto it2 = it;
       if (not _it_move(it2, up)) break;
       auto [p, q] = _intersection(a, b, it2->a, it2->b);
-      // DLOGKL("refresh", a, b, it2->a, it2->b, p, q);
       if (compare(q, it->a * p + it->b)) break;
       ds.erase(it);
       it = it2;
@@ -322,156 +320,47 @@ struct CHT {
     return make_pair(it, p);
   }
 
-  /*
-  void show_it(string msg, auto it) {
-    if (it == ds.end()) DLOG(msg + "  it == ds.end()");
-    else DLOGKL(msg, *it);
-  }
-  */
-
   void insert(T a, T b) {
     if (not obt_max) { a = -a; b = -b; }
 
     auto it = ds.lower_bound(Data(a, b, D()));
-    // auto it = ds.end();
 
-    // show_it("show_it 1", it);
     bool rc = _effective(it, a, b);
     if (not rc) return;
     if (it != ds.end() and it->a == a) {
       it = ds.erase(it);
-      // show_it("show_it 2", it);
     }
-    // DLOGKL("insert1", ds);
-    // bool dummy;
 
     if (it == ds.end()) {
       it = ds.emplace_hint(it, a, b, D(), E_MAX);
-      // tie(it, dummy) = ds.emplace(a, b, D(), E_MAX);
-      // show_it("show_it 3", it);
     } else {
-      // show_it("show_it 4", it);
       auto [it4, p] = _refresh(it, a, b, true);
-      // show_it("show_it 5", it4);
       it = ds.emplace_hint(it4, a, b, p);
-      // tie(it, dummy) = ds.emplace(a, b, p);
-      // show_it("show_it 6", it);
     }
-    // DLOGKL("insert2", ds);
     if (it != ds.begin()) {
       auto [it2, p] = _refresh(prev(it), a, b, false);
       auto [aa, bb, _1, _2] = *it2;
       ds.erase(it2);
       ds.emplace_hint(it, aa, bb, p);
-      // ds.emplace(aa, bb, p);
     }
-    // DLOGKL("insert3", ds);
   }
 
   T query(T x) {
     auto it = ds.lower_bound(Data(T(), T(), (D)x, E_A_DUM));
-    // DLOGK(x, it->a, it->b, it->bnd);
     T ret = it->a * x + it->b;
     if (not obt_max) { ret = -ret; }
     return ret;
   }
 };
 
-template<typename T, typename D, bool obt_max>
-struct NaiveCHT {
-  vector<T> vecA;
-  vector<T> vecB;
-  
-  bool compare(D x, D y) {
-    if constexpr (obt_max) return less<D>()(x, y);
-    else                   return greater<D>()(x, y);
-  }
+// ---- end cht.cc
 
-  void insert(T a, T b) {
-    vecA.push_back(a);
-    vecB.push_back(b);
-  }
-
-  T query(T x) {
-    T ans = vecA[0] * x + vecB[0];
-    for (size_t i = 1; i < vecA.size(); i++) {
-      T v = vecA[i] * x + vecB[i];
-      if (compare(ans, v)) ans = v;
-    }
-    return ans;
-  }
-};
-  
-
-random_device rd;
-mt19937_64 rng(rd());
-ll randrange(ll i, ll j) {
-  uniform_int_distribution<ll> dist(i, j - 1);
-  return dist(rng);
-}
-  
-template<bool dir>
-void test_rnd() {
-  const ll rep_out = 500;
-  const ll rep_in = 500;
-  const double ratio = 0.4;
-  for (size_t i = 0; i < rep_out; i++) {
-    CHT<ll, double, dir> cht;
-    NaiveCHT<ll, double, dir> ncht;
-    const ll range_min = randrange(-100, 101);
-    const ll range_size = randrange(1, 100);
-    auto g = [&]() -> ll { return randrange(range_min, range_min + range_size); };
-    // DLOG("---------------");
-    for (size_t j = 0; j < rep_in; j++) {
-      if (j == 0 or randrange(0, 100000) < ratio * 100000) {
-        ll a = g(), b = g();
-        cht.insert(a, b);
-        ncht.insert(a, b);
-        // DLOGKL("** insert **", a, b);
-      }else {
-        ll x = g();
-        if (cht.query(x) != ncht.query(x)) {
-          DLOGKL("****** different ******", x, cht.query(x), ncht.query(x));
-          assert(0);
-        }
-      }
-    }
-  }
-}
-
-void test() {
-
-  {
-    CHT<ll, double, true> cht;
-    cht.insert(2, 0);
-    cht.insert(-2, 60);
-    cht.insert(0, 40);
-    assert(cht.query(3) == 54);
-    assert(cht.query(15) == 40);
-    assert(cht.query(21) == 42);
-
-    CHT<ll, double, false> chtMin;
-    chtMin.insert(2, 0);
-    chtMin.insert(-2, 60);
-    chtMin.insert(0, 40);
-    assert(chtMin.query(3) == 6);
-    assert(chtMin.query(15) == 30);
-    assert(chtMin.query(21) == 18);
-  }
-
-}
-
+// @@ !! LIM -- end mark --
 
 int main(/* int argc, char *argv[] */) {
   ios_base::sync_with_stdio(false);
   cin.tie(nullptr);
   cout << setprecision(20);
-
-#if 0  
-  test();
-  test_rnd<true>();
-  test_rnd<false>();
-#endif
 
   ll N, M; cin >> N >> M;
   // @InpVec(N, B) [7nhVhQ3g]

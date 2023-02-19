@@ -66,6 +66,11 @@ int main(int argc, char *argv[]) {
   };
 
   {
+    // to suppress warning for not using randrange
+    assert(randrange(0, 1) < 10);
+  }
+
+  {
     auto uf = makeUnionFindRel<ll>(6, 0, 1, plus<ll>(), negate<ll>(), multiplies<ll>(), mydivide<ll>);
     uf.merge(1, 0, {-1, 10});
     uf.merge(2, 1, {-1, 30});
