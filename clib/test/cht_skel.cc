@@ -5,52 +5,111 @@ using namespace std;
 
 // @@ !! LIM(cht)
 
-int main() {
+template<typename T, typename D, bool obt_max>
+struct NaiveCHT {
+  vector<T> vecA;
+  vector<T> vecB;
+  
+  bool compare(D x, D y) {
+    if constexpr (obt_max) return less<D>()(x, y);
+    else                   return greater<D>()(x, y);
+  }
 
-  CHT<int> cht1(vector<int>({-10, 0, 10}));
-  cht1.put(0, 3);
-  assert(cht1.get(0) == 3);
-  cht1.put(-1, 4);
-  assert(cht1.get(0) == 4);
-  assert(cht1.get(10) == 3);
-  assert(cht1.get(-10) == 14);
-  cht1.put(1, 2);
-  assert(cht1.get(0) == 4);
-  assert(cht1.get(10) == 12);
-  assert(cht1.get(-10) == 14);
+  void insert(T a, T b) {
+    vecA.push_back(a);
+    vecB.push_back(b);
+  }
 
-  // Compare the results with naively computed values
-  mt19937_64 mt(1234);
-  uniform_int_distribution<int> randN(2, 1000), randD(0, 1);
-  uniform_real_distribution<double> randA(-1, 1), randB(-1, 1), randX(0, 1);
-  for (int zz = 0; zz < 100; zz++) {
-    int n = randN(mt);
-    vector<double> as(n), bs(n), xs(n);
-    vector<bool> eff(n);
-    for (int i = 0; i < n; i++) {
-      as.at(i) = randA(mt);
-      bs.at(i) = randB(mt);
-      xs.at(i) = randX(mt);
+  T query(T x) {
+    T ans = vecA[0] * x + vecB[0];
+    for (size_t i = 1; i < vecA.size(); i++) {
+      T v = vecA[i] * x + vecB[i];
+      if (compare(ans, v)) ans = v;
     }
-    CHT<double> chtC(xs);
-    for (int i = 0; i < n; i++) {
-      if (i == 0 || randD(mt) == 0) {
-	chtC.put(as.at(i), bs.at(i));
-	eff.at(i) = true;
-      }
-      if (randD(mt) == 0) {
-	double x = xs.at(i);
-	double v = 0;
-	for (int j = 0; j <= i; j++) {
-	  if (!eff.at(j)) continue;
-	  double y = as.at(j) * x + bs.at(j);
-	  if (j == 0) v = y;
-	  else        v = max(v, y);
-	}
-	assert(v == chtC.get(x));
+    return ans;
+  }
+};
+  
+
+random_device rd;
+mt19937_64 rng(rd());
+ll randrange(ll i, ll j) {
+  uniform_int_distribution<ll> dist(i, j - 1);
+  return dist(rng);
+}
+  
+template<bool dir>
+void test_rnd() {
+  const ll rep_out = 500;
+  const ll rep_in = 500;
+  const double ratio = 0.4;
+  for (size_t i = 0; i < rep_out; i++) {
+    CHT<ll, double, dir> cht;
+    NaiveCHT<ll, double, dir> ncht;
+    const ll range_min = randrange(-100, 101);
+    const ll range_size = randrange(1, 100);
+    auto g = [&]() -> ll { return randrange(range_min, range_min + range_size); };
+    // DLOG("---------------");
+    for (size_t j = 0; j < rep_in; j++) {
+      if (j == 0 or randrange(0, 100000) < ratio * 100000) {
+        ll a = g(), b = g();
+        cht.insert(a, b);
+        ncht.insert(a, b);
+        // DLOGKL("** insert **", a, b);
+      }else {
+        ll x = g();
+        if (cht.query(x) != ncht.query(x)) {
+          cerr << "****** different ******  " << x << " " <<  cht.query(x) << " " <<  ncht.query(x) << endl;
+          assert(0);
+        }
       }
     }
   }
-  
+}
+
+void test() {
+
+  {
+    CHT<ll, double, true> cht;
+    cht.insert(2, 0);
+    cht.insert(-2, 60);
+    cht.insert(0, 40);
+    assert(cht.query(3) == 54);
+    assert(cht.query(15) == 40);
+    assert(cht.query(21) == 42);
+
+    CHT<ll, double, false> chtMin;
+    chtMin.insert(2, 0);
+    chtMin.insert(-2, 60);
+    chtMin.insert(0, 40);
+    assert(chtMin.query(3) == 6);
+    assert(chtMin.query(15) == 30);
+    assert(chtMin.query(21) == 18);
+  }
+
+}
+
+void test2() {
+  CHT<int, double, true> cht;
+  cht.insert(0, 3);
+  assert(cht.query(0) == 3);
+  cht.insert(-1, 4);
+  assert(cht.query(0) == 4);
+  assert(cht.query(10) == 3);
+  assert(cht.query(-10) == 14);
+  cht.insert(1, 2);
+  assert(cht.query(0) == 4);
+  assert(cht.query(10) == 12);
+  assert(cht.query(-10) == 14);
+}
+
+
+int main() {
+
+  test();
+  test2();
+  test_rnd<true>();
+  test_rnd<false>();
+
   return 0;
 }
