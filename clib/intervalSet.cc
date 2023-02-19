@@ -17,6 +17,7 @@ using namespace std;
 
   API:
 
+  template<typename T>
   itv_set(T t = T())  ... constant function f(x) = t for x \in [LLONG_MIN, LLONG_MAX)
   
   void put(ll x, T t) ... f(x) := t

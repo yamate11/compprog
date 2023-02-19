@@ -18,6 +18,27 @@ int main(/* int argc, char *argv[] */) {
   cin.tie(nullptr);
   cout << setprecision(20);
 
+  ll N; cin >> N;
+  // @InpVec(N, A) [iZdNZfY0]
+  auto A = vector(N, ll());
+  for (int i = 0; i < N; i++) { ll v; cin >> v; A[i] = v; }
+  // @End [iZdNZfY0]
+  // @InpVec(N, B) [3mGxRa25]
+  auto B = vector(N, ll());
+  for (int i = 0; i < N; i++) { ll v; cin >> v; B[i] = v; }
+  // @End [3mGxRa25]
+  vector<ll> ord(N);
+  REP(i, 0, N) ord[i] = i;
+  sort(ALL(ord), [&](ll i, ll j) -> bool { return A[i] < A[j]; });
+  vector<ll> vec;
+  REP(i, 0, N) {
+    ll j = B[ord[i]];
+    ll idx = lower_bound(ALL(vec), j) - vec.begin();
+    if (idx == SIZE(vec)) vec.push_back(j);
+    else vec[idx] = j;
+  }
+  cout << N + SIZE(vec) << endl;
+
   return 0;
 }
 

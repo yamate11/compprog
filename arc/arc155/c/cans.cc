@@ -79,16 +79,30 @@ int main(/* int argc, char *argv[] */) {
     };
     bool mA = EXISTS(i, 0, N, act_odd(i, A));
     bool mB = EXISTS(i, 0, N, act_odd(i, B));
-    if (mA and mB) return true;
     if (mA != mB) return false;
+    if (mA and mB) {
+      if (ne != 2) return true;
+      ll feA, feB;
+      REP(i, 0, N) if (A[i] % 2 == 0) { feA = A[i]; break; }
+      REP(i, 0, N) if (B[i] % 2 == 0) { feB = B[i]; break; }
+      return feA == feB;
+    }
     vector<ll> oA, oB;
     oA.push_back(-1); oB.push_back(-1);
     REP(i, 0, N) if (A[i] % 2 != 0) oA.push_back(i);
     REP(i, 0, N) if (B[i] % 2 != 0) oB.push_back(i);
     oA.push_back(N); oB.push_back(N);
+    auto match = [&](ll p, ll q) -> bool {
+      vector<ll> vA, vB;
+      REP(j, p, q) { vA.push_back(A[j]); vB.push_back(B[j]); }
+      if (q - p <= 2) return vA == vB;
+      sort(ALL(vA));
+      sort(ALL(vB));
+      return vA == vB;
+    };
+    if (oA != oB) return false;
     if (EXISTS_C(i, oA, i >= 0 and i < N and A[i] != B[i])) return false;
-    if (EXISTS(j, 0, SIZE(oA) - 1,
-               oA[j + 1] - oA[j] <= 2 and EXISTS(k, oA[j] + 1, oA[j + 1], A[k] != B[k]))) return false;
+    if (EXISTS(j, 0, SIZE(oA) - 1, not match(oA[j] + 1, oA[j + 1]))) return false;
     return true;
   };
   cout << (solve() ? "Yes\n" : "No\n");
