@@ -1,25 +1,17 @@
 #include <bits/stdc++.h>
 #include <cassert>
-typedef long long int ll;
 using namespace std;
+using ll = long long int;
+using pll = pair<ll, ll>;
 // #include <atcoder/all>
 // using namespace atcoder;
+#define REP(i, a, b) for (ll i = (a); i < (b); i++)
+#define REPrev(i, a, b) for (ll i = (a); i >= (b); i--)
+#define ALL(coll) (coll).begin(), (coll).end()
+#define SIZE(v) ((ll)((v).size()))
+#define REPOUT(i, a, b, exp, sep) REP(i, (a), (b)) cout << (exp) << (i + 1 == (b) ? "" : (sep)); cout << "\n"
 
-// @@ !! LIM(f:updMaxMin)
-// --> f:updMaxMin
-// ---- inserted function updMaxMin from util.cc
-template<typename T>
-bool updMax(T& tmax, const T& x) {
-  if (x > tmax) { tmax = x; return true;  }
-  else          {           return false; }
-}
-template<typename T>
-bool updMin(T& tmin, const T& x) {
-  if (x < tmin) { tmin = x; return true;  }
-  else          {           return false; }
-}
-// ---- end updMaxMin
-// @@ !! LIM  -- end mark --
+// @@ !! LIM()
 
 int main(/* int argc, char *argv[] */) {
   ios_base::sync_with_stdio(false);
@@ -27,36 +19,40 @@ int main(/* int argc, char *argv[] */) {
   cout << setprecision(20);
 
   ll N, K; cin >> N >> K;
-  auto W = vector(N, vector(N, 0LL));
-  for(ll i = 0; i < N; i++) {
-    for (ll j = 0; j < N; j++) cin >> W[i][j];
-  }
-
-  ll pow = 1LL << N;
-  vector<ll> grpsum(pow);
-  for (ll x = 1; x < pow; x++) {
-    ll t = 63 - __builtin_clzll(x);
+  // @InpGrid(N, N, W) [0cG7GNvD]
+  auto W = vector(N, vector(N, ll()));
+  for (int i = 0; i < N; i++) for (int j = 0; j < N; j++) { ll v; cin >> v; W[i][j] = v; }
+  // @End [0cG7GNvD]
+  vector<ll> d(1LL << N, 0LL);
+  REP(x, 1, 1LL << N) {
+    ll t = __builtin_ctzll(x);
     ll y = x & ~(1LL << t);
-    ll s = grpsum[y];
-    for (ll i = 0; i < t; i++) { 
-      if ((y >> i) & 1) { s += W[t][i]; }
-    }
-    grpsum[x] = s;
+    ll r = 0;
+    REP(s, t + 1, N) if (x >> s & 1) r += W[t][s];
+    d[x] = d[y] + r;
   }
-  
-  ll univ = pow - 1;
-  vector<ll> altscore(pow);
-  for (ll x = 1; x < pow; x++) {
-    ll s = K + grpsum[x];
-    ll y = x & (x - 1);
-    while (y > 0) {
-      ll z = x & ~y;
-      updMax(s, altscore[y] + altscore[z]);
-      y = x & (y - 1);
+  vector<ll> tbl(1LL << N, -1LL);
+  auto f = [&](auto rF, ll x) -> ll {
+    ll& ret = tbl[x];
+    if (ret < 0) {
+      if (x == 0) ret = 0;
+      else if (__builtin_popcountll(x) == 1) ret = K;
+      else {
+        ll v = K + d[x];
+        ll y = (x - 1) & x;
+        while (true) {
+          if (y == 0) break;
+          ll vv = K + d[y] + rF(rF, x & ~y);
+          v = max(v, vv);
+          y = (y - 1) & x;
+        }
+        ret = v;
+      }
     }
-    altscore[x] = s;
-  }
-  cout << altscore[univ] - grpsum[univ] << endl;
+    return ret;
+  };
+  ll ans = f(f, (1LL << N) - 1) - d[(1LL << N) - 1];
+  cout << ans << endl;
 
   return 0;
 }

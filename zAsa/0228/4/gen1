@@ -1,0 +1,24 @@
+#!/usr/bin/env python3
+
+from random import randrange
+
+n = 13
+m = 13
+q = 50
+print(n, m, q)
+ss = set()
+for _q in range(q):
+    while True:
+        a = randrange(1, n + 1)
+        b = randrange(1, n + 1)
+        if a == b:
+            continue
+        if a > b:
+            a, b = b, a
+        c = randrange(0, m)
+        if (a, b, c) in ss:
+            continue
+        ss.add((a, b, c))
+        d = randrange(1, 1e5 + 1)
+        print(a, b, c, d)
+        break

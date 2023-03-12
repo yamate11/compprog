@@ -38,6 +38,9 @@ using namespace std;
 
     // When ip.get() returns false, it's internal has gone back to the
     // init state, so you can continue the next round.
+
+   For Debugging:
+      const vector<int>& vec_view() const;
 */
 
 // @@ !! LIM()
