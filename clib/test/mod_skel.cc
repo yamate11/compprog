@@ -75,6 +75,18 @@ int main() {
     assert(cb.binom_dup(2, 4) == Fp(5));
   }
 
+  {
+    using Fp = FpG<100>;
+    Fp a = Fp(50) / Fp(7); // should be OK
+    try {
+      if (a != Fp(50) / Fp(75));  // should generate a runtime error as (75, 100) != 1
+      cerr << "Should not reach here." << endl;
+      assert(0);
+    }catch(const runtime_error& e) {
+      // as expected
+    }
+  }
+
   cout << "ok" << endl;
 }
 

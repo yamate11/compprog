@@ -87,10 +87,9 @@ struct FpG {   // G for General
   }
 
   FpG inv() const {
-    if (val == 0) {
-      throw runtime_error("FpG::inv(): called for zero.");
-    }
+    if (val == 0) { throw runtime_error("FpG::inv(): called for zero."); }
     auto [g, u, v] = eGCD(val, getMod());
+    if (g != 1) { throw runtime_error("FpG::inv(): not co-prime."); }
     return FpG(u);
   }
 
