@@ -2,11 +2,12 @@
 #include <cassert>
 typedef long long int ll;
 using namespace std;
+using pll = pair<ll, ll>;
 
 // @@ !! LIM(intervalSet)
 
 // ---- inserted library file intervalSet.cc
-#line 36 "/home/y-tanabe/proj/compprog/clib/intervalSet.cc"
+#line 39 "/home/y-tanabe/proj/compprog/clib/intervalSet.cc"
 
 template<typename T>
 struct itv_set_cell {
@@ -67,40 +68,41 @@ struct itv_set {
     return {std::prev(it)->first, it->first};
   }
 
-  pair<ll, pair<ll, ll>> get(ll x) {
+  pair<T, pair<ll, ll>> get(ll x) {
     auto it = impl.upper_bound(x);
     return {std::prev(it)->second, {std::prev(it)->first, it->first}};
   }
 
-  template<typename F>
-  friend itv_set itv_apply(F f, itv_set x, itv_set y) {
-    auto itx = x.impl.begin();
-    auto ity = y.impl.begin();
-    itv_set ret(f(itx->second, ity->second));
-    auto itcc = ret.impl.begin();
-    auto itce = std::next(itcc);
-    while (true) {
-      ll t;
-      tie(t, itx, ity) = [&]() -> tuple<ll, decltype(itx), decltype(ity)> {
-        auto nitx = std::next(itx);
-        auto nity = std::next(ity);
-        if      (nitx->first <  nity->first) return {nitx->first, nitx,  ity};
-        else if (nitx->first >  nity->first) return {nity->first,  itx, nity};
-        else if (nitx->first < LLONG_MAX)    return {nitx->first, nitx, nity};
-        else                                 return {-1,          nitx, nity};
-      }();
-      if (t == -1) break;
-      T ncur = f(itx->second, ity->second);
-      if (ncur != itcc->second) itcc = ret.impl.emplace_hint(itce, t, move(ncur));
-    }
-    return ret;
-  }
 };
+
+template<typename x_t, typename y_t, typename res_t, typename f_t>
+itv_set<res_t> itv_apply(f_t f, const itv_set<x_t>& x, const itv_set<y_t>& y) {
+  auto itx = x.impl.begin();
+  auto ity = y.impl.begin();
+  itv_set<res_t> ret(f(itx->second, ity->second));
+  auto itcc = ret.impl.begin();
+  auto itce = std::next(itcc);
+  while (true) {
+    ll t;
+    tie(t, itx, ity) = [&]() -> tuple<ll, decltype(itx), decltype(ity)> {
+      auto nitx = std::next(itx);
+      auto nity = std::next(ity);
+      if      (nitx->first <  nity->first) return {nitx->first, nitx,  ity};
+      else if (nitx->first >  nity->first) return {nity->first,  itx, nity};
+      else if (nitx->first < LLONG_MAX)    return {nitx->first, nitx, nity};
+      else                                 return {-1,          nitx, nity};
+    }();
+    if (t == -1) break;
+    res_t ncur = f(itx->second, ity->second);
+    if (ncur != itcc->second) itcc = ret.impl.emplace_hint(itce, t, move(ncur));
+  }
+  return ret;
+}
 
 // ---- end intervalSet.cc
 
 // @@ !! LIM -- end mark --
-#line 7 "intervalSet_skel.cc"
+#line 8 "intervalSet_skel.cc"
 
 int main(/* int argc, char *argv[] */) {
   ios_base::sync_with_stdio(false);
@@ -230,7 +232,8 @@ int main(/* int argc, char *argv[] */) {
           isB.put(l, r, x);
           for (ll j = l; j < r; j++) vecB[j] = x;
         }else {
-          isA = itv_apply([](bool p, bool q) -> bool { return p ^ q; }, isA, isB);
+          auto ff = [](bool p, bool q) -> bool { return p ^ q; };
+          isA = itv_apply<bool, bool, bool, decltype(ff)>(ff, isA, isB);
           for (ll j = 0; j < sz; j++) vecA[j] = vecA[j] ^ vecB[j];
         }
       }
@@ -264,8 +267,8 @@ int main(/* int argc, char *argv[] */) {
     isB.put_at_end(40, 300);
     isB.put_at_end(60, 200);
     isB.put_at_end(80, 100);
-    auto op = [&](int& x, int y) -> int { return x + y; };
-    auto isC = itv_apply(op, isA, isB);
+    auto op = [&](int x, int y) -> int { return x + y; };
+    auto isC = itv_apply<int, int, int, decltype(op)>(op, isA, isB);
     itv_set<int> isD(0);
     isD.put_at_end(30, 5000);
     isD.put_at_end(40, 5300);
@@ -273,6 +276,22 @@ int main(/* int argc, char *argv[] */) {
     isD.put_at_end(80, 6100);
     assert(isC.impl == isD.impl);
   }
+
+  {
+    itv_set<pll> isA;
+    itv_set<pll> isB;
+    isA.put(10, 20, pll{3, 4});
+    isA.put(20, 30, pll{5, 6});
+    isB.put(5, 15, pll{10, 20});
+    isB.put(15, 25, pll{30, 40});
+    auto myadd = [&](pll p1, pll p2) -> pll { return pll{p1.first + p2.first, p1.second + p2.second}; };
+    auto isC = itv_apply<pll, pll, pll, decltype(myadd)>(myadd, isA, isB);
+    auto [t1, lr] = isC.get(12);
+    assert(t1 == pll(13, 24) and lr == pll(10, 15));
+    assert(isC.get_val(17) == pll(33, 44));
+    assert(isC.get_itvl(22) == pll(20, 25));
+  }
+
 
   cout << "ok\n";
 }

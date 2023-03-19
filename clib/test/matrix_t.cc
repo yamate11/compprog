@@ -182,41 +182,44 @@ T power(const T& a, ll b) {
 
 // ---- inserted function f:gcd from util.cc
 
-tuple<ll, ll, ll> mut_div(ll a, ll b, ll c, bool eff_c = true) {
-  // auto [g, s, t] = mut_div(a, b, c, eff_c)
-  //    If eff_c is true (default),
-  //        g == gcd(|a|, |b|) and as + bt == c, if such s,t exists
-  //        (g, s, t) == (-1, -1, -1)            otherwise
-  //    If eff_c is false,                                 
-  //        g == gcd(|a|, |b|) and as + bt == g           
-  //    N.b.  gcd(0, t) == gcd(t, 0) == t.
-  if (a == 0) {
-    if (eff_c) {
-      if (c % b != 0) return {-1, -1, -1};
-      else            return {abs(b), 0, c / b};
-    }else {
-      if (b < 0) return {-b, 0, -1};
-      else       return { b, 0,  1};
-    }
-  }else {
-    auto [g, t, u] = mut_div(b % a, a, c, eff_c);
-    // DLOGK(b%a, a, c, g, t, u);
-    if (g == -1) return {-1, -1, -1};
-    return {g, u - (b / a) * t, t};
+// auto [g, s, t] = eGCD(a, b)
+//     g == gcd(|a|, |b|) and as + bt == g           
+//     |a| and |b| must be less than 2^31.
+tuple<ll, ll, ll> eGCD(ll a, ll b) {
+#if DEBUG
+  if (abs(a) >= (1LL << 31) or abs(b) >= (1LL << 31)) throw runtime_error("eGCD: not within the range");
+#endif    
+  array<ll, 50> vec;  // Sufficiently large for a, b < 2^31.
+  ll idx = 0;
+  while (a != 0) {
+    ll x = b / a;
+    ll y = b % a;
+    vec[idx++] = x;
+    b = a;
+    a = y;
   }
+  ll g, s, t;
+  if (b < 0) { g = -b; s = 0; t = -1; }
+  else       { g =  b; s = 0; t =  1; }
+  while (idx > 0) {
+    ll x = vec[--idx];
+    ll old_t = t;
+    t = s;
+    s = old_t - x * s;
+  }
+  return {g, s, t};
 }
-
-// auto [g, s, t] = eGCD(a, b)  --->  sa + tb == g == gcd(|a|, |b|)
-//    N.b.  gcd(0, t) == gcd(t, 0) == t.
-tuple<ll, ll, ll> eGCD(ll a, ll b) { return mut_div(a, b, 0, false); }
 
 pair<ll, ll> crt_sub(ll a1, ll x1, ll a2, ll x2) {
   // DLOGKL("crt_sub", a1, x1, a2, x2);
   a1 = a1 % x1;
   a2 = a2 % x2;
-  auto [g, s, t] = mut_div(x1, -x2, a2 - a1);
-  // DLOGK(g, s, t);
-  if (g == -1) return {-1, -1};
+  auto [g, s, t] = eGCD(x1, -x2);
+  ll gq = (a2 - a1) / g;
+  ll gr = (a2 - a1) % g;
+  if (gr != 0) return {-1, -1};
+  s *= gq;
+  t *= gq;
   ll z = x1 / g * x2;
   // DLOGK(z);
   s = s % (x2 / g);
@@ -310,10 +313,9 @@ struct FpG {   // G for General
   }
 
   FpG inv() const {
-    if (val == 0) {
-      throw runtime_error("FpG::inv(): called for zero.");
-    }
+    if (val == 0) { throw runtime_error("FpG::inv(): called for zero."); }
     auto [g, u, v] = eGCD(val, getMod());
+    if (g != 1) { throw runtime_error("FpG::inv(): not co-prime."); }
     return FpG(u);
   }
 

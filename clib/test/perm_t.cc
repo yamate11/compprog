@@ -6,7 +6,7 @@ using namespace std;
 // @@ !! LIM(perm)
 
 // ---- inserted library file perm.cc
-#line 48 "/home/y-tanabe/proj/compprog/clib/perm.cc"
+#line 51 "/home/y-tanabe/proj/compprog/clib/perm.cc"
 
 template <bool dup>
 struct IntPermBase {
