@@ -2,6 +2,7 @@
 #include <cassert>
 typedef long long int ll;
 using namespace std;
+using pll = pair<ll, ll>;
 
 // @@ !! LIM(intervalSet)
 
@@ -133,7 +134,8 @@ int main(/* int argc, char *argv[] */) {
           isB.put(l, r, x);
           for (ll j = l; j < r; j++) vecB[j] = x;
         }else {
-          isA = itv_apply([](bool p, bool q) -> bool { return p ^ q; }, isA, isB);
+          auto ff = [](bool p, bool q) -> bool { return p ^ q; };
+          isA = itv_apply<bool, bool, bool, decltype(ff)>(ff, isA, isB);
           for (ll j = 0; j < sz; j++) vecA[j] = vecA[j] ^ vecB[j];
         }
       }
@@ -167,8 +169,8 @@ int main(/* int argc, char *argv[] */) {
     isB.put_at_end(40, 300);
     isB.put_at_end(60, 200);
     isB.put_at_end(80, 100);
-    auto op = [&](int& x, int y) -> int { return x + y; };
-    auto isC = itv_apply(op, isA, isB);
+    auto op = [&](int x, int y) -> int { return x + y; };
+    auto isC = itv_apply<int, int, int, decltype(op)>(op, isA, isB);
     itv_set<int> isD(0);
     isD.put_at_end(30, 5000);
     isD.put_at_end(40, 5300);
@@ -176,6 +178,22 @@ int main(/* int argc, char *argv[] */) {
     isD.put_at_end(80, 6100);
     assert(isC.impl == isD.impl);
   }
+
+  {
+    itv_set<pll> isA;
+    itv_set<pll> isB;
+    isA.put(10, 20, pll{3, 4});
+    isA.put(20, 30, pll{5, 6});
+    isB.put(5, 15, pll{10, 20});
+    isB.put(15, 25, pll{30, 40});
+    auto myadd = [&](pll p1, pll p2) -> pll { return pll{p1.first + p2.first, p1.second + p2.second}; };
+    auto isC = itv_apply<pll, pll, pll, decltype(myadd)>(myadd, isA, isB);
+    auto [t1, lr] = isC.get(12);
+    assert(t1 == pll(13, 24) and lr == pll(10, 15));
+    assert(isC.get_val(17) == pll(33, 44));
+    assert(isC.get_itvl(22) == pll(20, 25));
+  }
+
 
   cout << "ok\n";
 }

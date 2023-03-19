@@ -27,7 +27,10 @@ using namespace std;
   pair<ll, ll> get_itvl(ll x) ... returns (y1, y2) where y1 <= x < y2 and y1 and y2 are defined point
   pair<ll, pair<ll, ll>> get(ll x) ... returns (t, (y1, y2)) where f(x) = t and y1 <= x < y2 and y1 and y2 are defined point.
 
-  friend itv_set itv_apply(F f, itv_set x, itv_set y) ... ret(i) := f(x(i), y(i))
+  template<typename x_t, typename y_t, typename res_t, typename f_t>
+  itv_set<res_t> itv_apply(f_t f, const itv_set<x_t>& x, const itv_set<y_t>& y)
+       // Meaning  ... ret(i) := f(x(i), y(i))
+       // Usage ...    auto res = itv_apply<x_t, y_t, res_t, decltype(f)>(f, x, y);
  */
 
 //////////////////////////////////////////////////////////////////////
@@ -93,35 +96,36 @@ struct itv_set {
     return {std::prev(it)->first, it->first};
   }
 
-  pair<ll, pair<ll, ll>> get(ll x) {
+  pair<T, pair<ll, ll>> get(ll x) {
     auto it = impl.upper_bound(x);
     return {std::prev(it)->second, {std::prev(it)->first, it->first}};
   }
 
-  template<typename F>
-  friend itv_set itv_apply(F f, itv_set x, itv_set y) {
-    auto itx = x.impl.begin();
-    auto ity = y.impl.begin();
-    itv_set ret(f(itx->second, ity->second));
-    auto itcc = ret.impl.begin();
-    auto itce = std::next(itcc);
-    while (true) {
-      ll t;
-      tie(t, itx, ity) = [&]() -> tuple<ll, decltype(itx), decltype(ity)> {
-        auto nitx = std::next(itx);
-        auto nity = std::next(ity);
-        if      (nitx->first <  nity->first) return {nitx->first, nitx,  ity};
-        else if (nitx->first >  nity->first) return {nity->first,  itx, nity};
-        else if (nitx->first < LLONG_MAX)    return {nitx->first, nitx, nity};
-        else                                 return {-1,          nitx, nity};
-      }();
-      if (t == -1) break;
-      T ncur = f(itx->second, ity->second);
-      if (ncur != itcc->second) itcc = ret.impl.emplace_hint(itce, t, move(ncur));
-    }
-    return ret;
-  }
 };
+
+template<typename x_t, typename y_t, typename res_t, typename f_t>
+itv_set<res_t> itv_apply(f_t f, const itv_set<x_t>& x, const itv_set<y_t>& y) {
+  auto itx = x.impl.begin();
+  auto ity = y.impl.begin();
+  itv_set<res_t> ret(f(itx->second, ity->second));
+  auto itcc = ret.impl.begin();
+  auto itce = std::next(itcc);
+  while (true) {
+    ll t;
+    tie(t, itx, ity) = [&]() -> tuple<ll, decltype(itx), decltype(ity)> {
+      auto nitx = std::next(itx);
+      auto nity = std::next(ity);
+      if      (nitx->first <  nity->first) return {nitx->first, nitx,  ity};
+      else if (nitx->first >  nity->first) return {nity->first,  itx, nity};
+      else if (nitx->first < LLONG_MAX)    return {nitx->first, nitx, nity};
+      else                                 return {-1,          nitx, nity};
+    }();
+    if (t == -1) break;
+    res_t ncur = f(itx->second, ity->second);
+    if (ncur != itcc->second) itcc = ret.impl.emplace_hint(itce, t, move(ncur));
+  }
+  return ret;
+}
 
 // @@ !! END ---- intervalSet.cc
 
