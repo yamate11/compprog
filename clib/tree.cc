@@ -34,8 +34,7 @@ using namespace std;
     int ancestorDep(int x, int dep)   // the ancestor of x whose depth is dep
     int edgeIdx(int x, int y)    // the edge index connecting x and y
                                  // if no such edge exists, -1 is returned.
-    Edge node2edge(int x, int y)   // the edge connecting x and y
-                                   // the edge should exist.
+    pair<int, int> nodesOfEdge(int e)  // the two nodes of the e-th edge.
     tuple<int, int, int, int, int> diameter()
       // returns (diam, nd0, nd1, ct0, ct1).  diam is the length of the diameter.  
       // nd0 and nd1 are end points of diameter.  
@@ -96,8 +95,6 @@ using namespace std;
 // See help of libins command for dependency spec syntax.
 // @@ !! BEGIN() ---- tree.cc
 
-using TreeEdge = pair<int, int>;
-
 struct Tree {
 
   int numNodes;
@@ -111,6 +108,7 @@ struct Tree {
   vector<int> _parent;
   vector<vector<int>> _children;
   unordered_map<int, map<int, int>> _node2edgeIdx;
+  vector<pair<int, int>> _edges;
   vector<vector<int>> pPnt;   
           // pPnt[0][n] == parent of n (or root if n is root)
           // pPnt[t][n] == parent^{2^t}[n]
@@ -165,6 +163,7 @@ struct Tree {
     _nbr[x].push_back(y);
     _nbr[y].push_back(x);
     _node2edgeIdx[x][y] = _node2edgeIdx[y][x] = numEdges;
+    _edges.emplace_back(x, y);
     return numEdges++;
   }
 
@@ -235,6 +234,8 @@ struct Tree {
     if (ity == itx->second.end()) return -1;
     return ity->second;
   }
+
+  pair<int, int> nodesOfEdge(int e) { return _edges[e]; }
 
 #pragma GCC diagnostic push
 #pragma GCC diagnostic ignored "-Wunused-but-set-variable"    

@@ -11,6 +11,8 @@ int main(int argc, char *argv[]) {
   cin.tie(nullptr);
   cout << setprecision(20);
 
+  using TreeEdge = pair<int, int>;
+
   {
     vector<TreeEdge> edge1({{0,1}, {0,2}, {1,3}, {1,4}, {2,5}, {2,6}});
     Tree t1(7);
@@ -34,11 +36,16 @@ int main(int argc, char *argv[]) {
     assert(t1.depth(4) == 2);
   }
 
-  Tree t2(3);
-  t2.add_edge(0, 1);
-  t2.add_edge(0, 2);
-  assert(t2.edgeIdx(0,1) == 0);
-  assert(t2.edgeIdx(2,0) == 1);
+  {
+    using pii = pair<int, int>;
+    Tree t2(3);
+    t2.add_edge(0, 1);
+    t2.add_edge(0, 2);
+    assert(t2.edgeIdx(0,1) == 0);
+    assert(t2.edgeIdx(2,0) == 1);
+    assert(t2.nodesOfEdge(0) == pii(0, 1));
+    assert(t2.nodesOfEdge(1) == pii(0, 2));
+  }
 
   vector<TreeEdge>
     edge3({{0,1}, {1,2}, {2,3}, {3,4}, {4,5}, {5,6}, {6,7},
