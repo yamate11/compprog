@@ -9,7 +9,7 @@ using pll = pair<ll, ll>;
 #define REPrev(i, a, b) for (ll i = (a); i >= (b); i--)
 #define ALL(coll) (coll).begin(), (coll).end()
 #define SIZE(v) ((ll)((v).size()))
-#define REPOUT(i, a, b, exp, sep) REP(i, (a), (b)) { if (i != (a)) cout << (sep); cout << (exp); } cout << "\n"
+#define REPOUT(i, a, b, exp, sep) REP(i, (a), (b)) cout << (exp) << (i + 1 == (b) ? "" : (sep)); cout << "\n"
 
 // @@ !! LIM(mod debug)
 
@@ -171,41 +171,44 @@ struct MyAlg {
 
 // ---- inserted function f:gcd from util.cc
 
-tuple<ll, ll, ll> mut_div(ll a, ll b, ll c, bool eff_c = true) {
-  // auto [g, s, t] = mut_div(a, b, c, eff_c)
-  //    If eff_c is true (default),
-  //        g == gcd(|a|, |b|) and as + bt == c, if such s,t exists
-  //        (g, s, t) == (-1, -1, -1)            otherwise
-  //    If eff_c is false,                                 
-  //        g == gcd(|a|, |b|) and as + bt == g           
-  //    N.b.  gcd(0, t) == gcd(t, 0) == t.
-  if (a == 0) {
-    if (eff_c) {
-      if (c % b != 0) return {-1, -1, -1};
-      else            return {abs(b), 0, c / b};
-    }else {
-      if (b < 0) return {-b, 0, -1};
-      else       return { b, 0,  1};
-    }
-  }else {
-    auto [g, t, u] = mut_div(b % a, a, c, eff_c);
-    // DLOGK(b%a, a, c, g, t, u);
-    if (g == -1) return {-1, -1, -1};
-    return {g, u - (b / a) * t, t};
+// auto [g, s, t] = eGCD(a, b)
+//     g == gcd(|a|, |b|) and as + bt == g           
+//     |a| and |b| must be less than 2^31.
+tuple<ll, ll, ll> eGCD(ll a, ll b) {
+#if DEBUG
+  if (abs(a) >= (1LL << 31) or abs(b) >= (1LL << 31)) throw runtime_error("eGCD: not within the range");
+#endif    
+  array<ll, 50> vec;  // Sufficiently large for a, b < 2^31.
+  ll idx = 0;
+  while (a != 0) {
+    ll x = b / a;
+    ll y = b % a;
+    vec[idx++] = x;
+    b = a;
+    a = y;
   }
+  ll g, s, t;
+  if (b < 0) { g = -b; s = 0; t = -1; }
+  else       { g =  b; s = 0; t =  1; }
+  while (idx > 0) {
+    ll x = vec[--idx];
+    ll old_t = t;
+    t = s;
+    s = old_t - x * s;
+  }
+  return {g, s, t};
 }
-
-// auto [g, s, t] = eGCD(a, b)  --->  sa + tb == g == gcd(|a|, |b|)
-//    N.b.  gcd(0, t) == gcd(t, 0) == t.
-tuple<ll, ll, ll> eGCD(ll a, ll b) { return mut_div(a, b, 0, false); }
 
 pair<ll, ll> crt_sub(ll a1, ll x1, ll a2, ll x2) {
   // DLOGKL("crt_sub", a1, x1, a2, x2);
   a1 = a1 % x1;
   a2 = a2 % x2;
-  auto [g, s, t] = mut_div(x1, -x2, a2 - a1);
-  // DLOGK(g, s, t);
-  if (g == -1) return {-1, -1};
+  auto [g, s, t] = eGCD(x1, -x2);
+  ll gq = (a2 - a1) / g;
+  ll gr = (a2 - a1) % g;
+  if (gr != 0) return {-1, -1};
+  s *= gq;
+  t *= gq;
   ll z = x1 / g * x2;
   // DLOGK(z);
   s = s % (x2 / g);
@@ -298,10 +301,9 @@ struct FpG {   // G for General
   }
 
   FpG inv() const {
-    if (val == 0) {
-      throw runtime_error("FpG::inv(): called for zero.");
-    }
+    if (val == 0) { throw runtime_error("FpG::inv(): called for zero."); }
     auto [g, u, v] = eGCD(val, getMod());
+    if (g != 1) { throw runtime_error("FpG::inv(): not co-prime."); }
     return FpG(u);
   }
 
@@ -377,10 +379,11 @@ public:
     for (int i = nMax; i >= 1; i--) vInvFact.at(i-1) = i * vInvFact.at(i);
   }
   FpG<mod> fact(int n) { return vFact.at(n); }
-  FpG<mod> comb(int n, int r) {
+  FpG<mod> binom(int n, int r) {
     if (r < 0 || r > n) return 0;
     return vFact.at(n) * vInvFact.at(r) * vInvFact.at(n-r);
   }
+  FpG<mod> binom_dup(int n, int r) { return binom(n + r - 1, r); }
   // The number of permutation extracting r from n.
   FpG<mod> perm(int n, int r) {
     return vFact.at(n) * vInvFact.at(n-r);
@@ -645,31 +648,75 @@ int main(/* int argc, char *argv[] */) {
   cout << setprecision(20);
 
   ll N, D; cin >> N >> D;
+  // @InpVec(N, P) [IrwHRnI4]
   auto P = vector(N, ll());
   for (int i = 0; i < N; i++) { ll v; cin >> v; P[i] = v; }
+  // @End [IrwHRnI4]
+  // @InpVec(N, Q) [NTwR6Y3r]
   auto Q = vector(N, ll());
   for (int i = 0; i < N; i++) { ll v; cin >> v; Q[i] = v; }
-  vector tbl(N + 1, vector(D + 1, vector<optional<Fp>>(D + 1)));
-  auto f = [&](auto rF, ll n, ll s, ll t) -> Fp {
-    optional<Fp>& ret = tbl[n][s][t];
-    if (not ret) {
-      if (n == N) {
-        if (s == 0 and t == 0) ret = 1;
-        else ret = 0;
-      }else {
-        ll left = max(P[n] - s, Q[n] - t);
-        ll right = min(P[n] + s, Q[n] + t);
-        Fp a = 0;
-        REP(x, left, right + 1) {
-          a += rF(rF, n + 1, s - abs(x - P[n]), t - abs(x - Q[n]));
-        }
-        ret = a;
+  // @End [NTwR6Y3r]
+
+  auto myget = [&](const auto& vv, ll s, ll t) -> Fp { return vv[D + s][t]; };
+  auto myadd = [&](auto& vv, ll s, ll t, Fp val) -> void { vv[D + s][t] += val; };
+
+  auto tbl_init = vector(2*D + 2, vector(2*D + 1, Fp(0)));
+  auto tbl = tbl_init;
+  myadd(tbl, 0, 0, 1);
+  REP(i, 0, N) {
+    auto prev = move(tbl);
+    tbl = tbl_init;
+    ll d = abs(P[i] - Q[i]);
+    auto diffS = tbl_init;
+    auto diffT = tbl_init;
+    REP(s, -D, D + 1) REP(t, 0, 2*D + 1) {
+      Fp v = myget(prev, s, t);
+      if (t + d <= 2*D) {
+        if (s + d + 1 >= -D) myadd(diffS, max(s - d, -D), t + d, v);
+        if (s + d + 1 <= D) myadd(diffS, s + d + 1, t + d, -v);
+      }
+      if (t + d + 1 <= 2*D) {
+        if (-D <= s - d and s - d <= D) myadd(diffT, s - d, t + d + 1, v);
+        if (-D <= s + d and s + d <= D) myadd(diffT, s + d, t + d + 1, v);
       }
     }
-    return *ret;
-  };
+    REP(t, 0, 2*D + 1) {
+      Fp w = 0;
+      REP(s, -D, D + 1) {
+        w += myget(diffS, s, t);
+        myadd(tbl, s, t, w);
+      }
+    }
+    REP(s, -D, D + 1) {
+      Fp w = 0;
+      REP(t, 0, 2*D + 1) {
+        w += myget(diffT, s, t);
+        myadd(tbl, s, t, w);
+      }
+    }
+    DLOGK(i);
+#if DEBUG
+    REP(t, 0, 2*D + 1) {
+      REP(s, -D, D + 1) cerr << setw(4) << myget(diffS, s, t);
+      cerr << endl;
+    }
+    cerr << endl;
+    REP(t, 0, 2*D + 1) {
+      REP(s, -D, D + 1) cerr << setw(4) << myget(diffT, s, t);
+      cerr << endl;
+    }
+    cerr << endl;
+    REP(t, 0, 2*D + 1) {
+      REP(s, -D, D + 1) cerr << setw(4) << myget(tbl, s, t);
+      cerr << endl;
+    }
+    cerr << endl;
+#endif
+  }
   Fp ans = 0;
-  REP(i, 0, D + 1) REP(j, 0, D + 1) ans += f(f, 0, i, j);
+  REP(s, -D, D + 1) REP(t, 0, 2*D + 1) {
+    if (s + t >= 0 and s + t <= 2*D and t - s >= 0 and t - s <= 2*D) ans += myget(tbl, s, t);
+  }
   cout << ans << endl;
 
   return 0;

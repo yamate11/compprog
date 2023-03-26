@@ -15,8 +15,6 @@ using pll = pair<ll, ll>;
 
 // ---- inserted library file tree.cc
 
-using TreeEdge = pair<int, int>;
-
 struct Tree {
 
   int numNodes;
@@ -30,6 +28,7 @@ struct Tree {
   vector<int> _parent;
   vector<vector<int>> _children;
   unordered_map<int, map<int, int>> _node2edgeIdx;
+  vector<pair<int, int>> _edges;
   vector<vector<int>> pPnt;   
           // pPnt[0][n] == parent of n (or root if n is root)
           // pPnt[t][n] == parent^{2^t}[n]
@@ -84,6 +83,7 @@ struct Tree {
     _nbr[x].push_back(y);
     _nbr[y].push_back(x);
     _node2edgeIdx[x][y] = _node2edgeIdx[y][x] = numEdges;
+    _edges.emplace_back(x, y);
     return numEdges++;
   }
 
@@ -154,6 +154,8 @@ struct Tree {
     if (ity == itx->second.end()) return -1;
     return ity->second;
   }
+
+  pair<int, int> nodesOfEdge(int e) { return _edges[e]; }
 
 #pragma GCC diagnostic push
 #pragma GCC diagnostic ignored "-Wunused-but-set-variable"    
@@ -738,23 +740,23 @@ int main(/* int argc, char *argv[] */) {
     DLOGK(i, u, v, w);
     tr.add_edge(u, v);
     W.push_back(w);
-    U[i] = u;
-    V[i] = v;
   }
   
   vector<ll> inI(N);
   vector<ll> outI(N);
-  vector<ll> init(2*(N - 1));
-  ll iidx = 0;
+  vector<ll> init(2 * N);
+  ll iidx = 1;
   auto dfs = [&](auto rF, ll nd) -> void {
-    inI[nd] = iidx;
     for (ll cld : tr.children(nd)) {
       ll ei = tr.edgeIdx(nd, cld);
-      init[iidx++] = W[ei];
+      inI[cld] = iidx;
+      init[iidx] = W[ei];
+      iidx++;
       rF(rF, cld);
-      init[iidx++] = -W[ei];
+      outI[cld] = iidx;
+      init[iidx] = -W[ei];
+      iidx++;
     }
-    outI[nd] = iidx;
   };
   dfs(dfs, 0);
   auto st = make_seg_tree<ll>(0LL, plus<ll>(), init);
@@ -767,9 +769,9 @@ int main(/* int argc, char *argv[] */) {
     ll tp; cin >> tp;
     if (tp == 1) {
       ll i, w; cin >> i >> w; i--;
-      ll u = U[i], v= V[i];
+      auto [u, v] = tr.nodesOfEdge(i);
       if (tr.depth(u) > tr.depth(v)) swap(u, v);
-      ll a = inI[v] - 1;
+      ll a = inI[v];
       ll b = outI[v];
       st.update(a, w);
       st.update(b, -w);
@@ -777,8 +779,8 @@ int main(/* int argc, char *argv[] */) {
     }else if (tp == 2) {
       ll u, v; cin >> u >> v; u--; v--;
       ll z = tr.lca(u, v);
-      ll p1 = st.query(inI[z], inI[u]);
-      ll p2 = st.query(inI[z], inI[v]);
+      ll p1 = st.query(inI[z] + 1, inI[u] + 1);
+      ll p2 = st.query(inI[z] + 1, inI[v] + 1);
       cout << p1 + p2 << "\n";
     }else assert(0);
   }

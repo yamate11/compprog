@@ -6,9 +6,7 @@ using namespace std;
 // @@ !! LIM(tree)
 
 // ---- inserted library file tree.cc
-#line 98 "/home/y-tanabe/proj/compprog/clib/tree.cc"
-
-using TreeEdge = pair<int, int>;
+#line 97 "/home/y-tanabe/proj/compprog/clib/tree.cc"
 
 struct Tree {
 
@@ -23,6 +21,7 @@ struct Tree {
   vector<int> _parent;
   vector<vector<int>> _children;
   unordered_map<int, map<int, int>> _node2edgeIdx;
+  vector<pair<int, int>> _edges;
   vector<vector<int>> pPnt;   
           // pPnt[0][n] == parent of n (or root if n is root)
           // pPnt[t][n] == parent^{2^t}[n]
@@ -77,6 +76,7 @@ struct Tree {
     _nbr[x].push_back(y);
     _nbr[y].push_back(x);
     _node2edgeIdx[x][y] = _node2edgeIdx[y][x] = numEdges;
+    _edges.emplace_back(x, y);
     return numEdges++;
   }
 
@@ -147,6 +147,8 @@ struct Tree {
     if (ity == itx->second.end()) return -1;
     return ity->second;
   }
+
+  pair<int, int> nodesOfEdge(int e) { return _edges[e]; }
 
 #pragma GCC diagnostic push
 #pragma GCC diagnostic ignored "-Wunused-but-set-variable"    
@@ -254,6 +256,8 @@ int main(int argc, char *argv[]) {
   cin.tie(nullptr);
   cout << setprecision(20);
 
+  using TreeEdge = pair<int, int>;
+
   {
     vector<TreeEdge> edge1({{0,1}, {0,2}, {1,3}, {1,4}, {2,5}, {2,6}});
     Tree t1(7);
@@ -277,11 +281,16 @@ int main(int argc, char *argv[]) {
     assert(t1.depth(4) == 2);
   }
 
-  Tree t2(3);
-  t2.add_edge(0, 1);
-  t2.add_edge(0, 2);
-  assert(t2.edgeIdx(0,1) == 0);
-  assert(t2.edgeIdx(2,0) == 1);
+  {
+    using pii = pair<int, int>;
+    Tree t2(3);
+    t2.add_edge(0, 1);
+    t2.add_edge(0, 2);
+    assert(t2.edgeIdx(0,1) == 0);
+    assert(t2.edgeIdx(2,0) == 1);
+    assert(t2.nodesOfEdge(0) == pii(0, 1));
+    assert(t2.nodesOfEdge(1) == pii(0, 2));
+  }
 
   vector<TreeEdge>
     edge3({{0,1}, {1,2}, {2,3}, {3,4}, {4,5}, {5,6}, {6,7},

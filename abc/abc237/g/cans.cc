@@ -1,16 +1,17 @@
 #include <bits/stdc++.h>
 #include <cassert>
-typedef long long int ll;
 using namespace std;
+using ll = long long int;
+using pll = pair<ll, ll>;
 // #include <atcoder/all>
 // using namespace atcoder;
-#define REP2(i, a, b) for (ll i = (a); i < (b); i++)
-#define REP2R(i, a, b) for (ll i = (a); i >= (b); i--)
-#define REP(i, b) REP2(i, 0, b)
+#define REP(i, a, b) for (ll i = (a); i < (b); i++)
+#define REPrev(i, a, b) for (ll i = (a); i >= (b); i--)
 #define ALL(coll) (coll).begin(), (coll).end()
 #define SIZE(v) ((ll)((v).size()))
+#define REPOUT(i, a, b, exp, sep) REP(i, (a), (b)) cout << (exp) << (i + 1 == (b) ? "" : (sep)); cout << "\n"
 
-// @@ !! LIM(segTree debug f:<<)
+// @@ !! LIM(debug)
 
 // ---- inserted function f:<< from util.cc
 template <typename T1, typename T2>
@@ -179,209 +180,6 @@ ostream& operator<< (ostream& os, int8_t x) {
 
 // ---- end f:<<
 
-// ---- inserted library file segTree.cc
-
-// It seems that we should keep the size power of two,
-// considering the binary search.
-
-template <typename DAT, typename OP,
-	  typename Fadd, typename Fcomp, typename Fappl> 
-struct SegTree {
-  int size;	     // power of two; >= 2
-  int height;        // size = 1 << height;
-  vector<DAT> node;  // vector of size 2*size.
-                     // 0                 : unused
-                     // 1    ... size-1   : interval
-                     // size ... 2*size-1 : leaf
-  vector<OP> susp;   // vector of size size.
-                     // suspended operation FOR CHILDREN
-                     // (already applied to this node)
-  DAT unit_dat;
-  OP unit_op;
-  Fadd add;
-  Fcomp comp;
-  Fappl appl;
-  bool range_update;
-    
-  SegTree(DAT unit_dat_, OP unit_op_, Fadd add_, Fcomp comp_, Fappl appl_,
-	  bool range_update_)
-    // , vector<DAT> initdat) 
-    : unit_dat(unit_dat_), unit_op(unit_op_), add(add_), comp(comp_),
-      appl(appl_), range_update(range_update_) {}
-
-  void set_data(vector<DAT> initdat) {
-    if (initdat.size() <= 0) {
-      cerr << "the size of initial vector must be >= 1" << endl;
-      abort();
-    }
-    if (initdat.size() == 1) {
-      height = 0;
-    }else {
-      height = sizeof(int) * 8 - __builtin_clz(initdat.size() - 1);
-    }
-    size = 1 << height;
-    node.resize(2*size, unit_dat);
-    for (int i = 0; i < (int)initdat.size(); i++) {
-      node.at(size + i) = initdat.at(i);
-    }
-    for (int t = size - 1; t >= 1; t--) {
-      node.at(t) = add(node.at(t<<1|0), node.at(t<<1|1));
-    }
-    susp.resize(size, unit_op);
-  }
-
-  void child_updated_sub(int k, int t) {
-    node.at(t) = appl(k, susp.at(t),
-		      add(node.at(t<<1|0), node.at(t<<1|1)));
-  }
-
-  void child_updated(int l, int r) {
-    int k = 1;
-    r--;
-    while (l > 1) {
-      l >>= 1;
-      r >>= 1;
-      k *= 2;
-      child_updated_sub(k, l);
-      if (l < r) child_updated_sub(k, r);
-    }
-  }
-
-  void node_op(int i, int k, OP f) {
-    node.at(i) = appl(k, f, node.at(i));
-    if (i < size) susp.at(i) = comp(f, susp.at(i));
-  }
-
-  void push_one(int i, int k) {
-    node_op(i<<1|0, k / 2, susp.at(i));
-    node_op(i<<1|1, k / 2, susp.at(i));
-    susp.at(i) = unit_op;
-  }
-
-  void push_upto(int l, int r) {
-    for (int s = height; s >= 1; s--) {
-      int lz = l >> s;
-      int rz = (r-1) >> s;
-      int k = 1 << s;
-      push_one(lz, k);
-      if (lz < rz) push_one(rz, k);
-    }
-  }
-
-  DAT query(int l, int r) {
-    // DLOG("l=", l, "r=", r);
-    if (l >= r) return unit_dat;
-    DAT ret_l = unit_dat;
-    DAT ret_r = unit_dat;
-    // DLOG("1: ret_l=", ret_l, "ret_r", ret_r);
-    l += size;
-    r += size;
-    if (range_update) push_upto(l, r);
-    while (l < r) {
-      if (l & 1) {
-	ret_l = add(ret_l, node.at(l));
-	// DLOG("l=", l, "ret_l=", ret_l);
-	l++;
-      }
-      if (r & 1) {
-	ret_r = add(node.at(r-1), ret_r);
-	// DLOG("r=", r, "ret_r=", ret_r);
-      }
-      l >>= 1;
-      r >>= 1;
-    }
-    DAT ret = add(ret_l, ret_r);
-    // DLOG("ret_l=", ret_l, "ret_r", ret_r, "ret", ret);
-    return ret;
-  }
-
-  void single_update(int i, OP f) {
-    update(i, i+1, f);
-  }
-
-  void update(int l, int r, OP f) {
-    // DLOG("update. 1. node=", node);
-    if (l >= r) return;
-    if ((! range_update) && (l + 1 < r)) {
-      cerr << "FATAL: r - l >= 2 without setting range_update." << endl;
-      abort();
-    }
-    l += size;
-    r += size;
-    if (range_update) push_upto(l, r);
-    // DLOG("update. 2. node=", node);
-    int l0 = l, r0 = r;
-    int k = 1;
-    while (l < r) {
-      if (l & 1) {
-	node_op(l, k, f);
-	l++;
-      }
-      if (r & 1) {
-	node_op(r-1, k, f);
-      }
-      l >>= 1;
-      r >>= 1;
-      k *= 2;
-    }
-    // DLOG("update. 3. node=", node);
-    child_updated(l0, r0);
-    // DLOG("node=", node);
-    // DLOG("susp=", susp);
-  }
-
-
-  // Returns the least r >= l s.t. check(Add(v[l], ..., v[r-1])) == true,
-  //    where check :: DAT -> bool
-  // If there is no such r, returns -1.
-  int binsearch_l(const auto& check, int l) {
-    // DLOG("binsearch_l; l=", l);
-    int x = l + size;
-    DAT val = unit_dat;
-    if (check(val)) return l;
-    // DLOG("pt1");
-    if (range_update) push_upto(x, x+1);
-    int k = 1;
-    while (true) {
-      DAT t = add(val, node.at(x));
-      if (check(t)) break;
-      if (x & 1) {
-	val = t;
-	x++;
-	if (__builtin_popcount(x) == 1) return -1;
-      }
-      x >>= 1;
-      k <<= 1;
-      // DLOG("  x=", x, "val=", val);
-    }
-    // DLOG("pt2; x=", x, "k=", k);
-    while (k > 1) {
-      if (range_update) push_one(x, k);
-      DAT t = add(val, node.at(x<<1|0));
-      if (check(t)) {
-	x = (x<<1|0);
-      }else {
-	x = (x<<1|1);
-	val = t;
-      }
-      k >>= 1;
-    }
-    // DLOG("pt3; x=", x, "k=", k);
-    return x + 1 - size;
-  }
-
-};
-
-template<typename DAT, typename OP>
-auto make_seg_tree(DAT unit_dat, OP unit_op,
-		   auto add, auto comp, auto appl,
-		   bool range_update)
-  -> SegTree<DAT, OP, decltype(add), decltype(comp), decltype(appl)> {
-  return SegTree(unit_dat, unit_op, add, comp, appl, range_update);
-}
-
-// ---- end segTree.cc
-
 // ---- inserted library file debug.cc
 template <class... Args>
 string dbgFormat(const char* fmt, Args... args) {
@@ -456,77 +254,142 @@ void dbgLog(bool with_nl, Head&& head, Tail&&... tail)
 
 // @@ !! LIM -- end mark --
 
+template<typename T>
+struct itv_set_cell {
+};
+
+template<typename T>
+struct itv_set {
+  
+  auto get_iter(ll x) {
+    auto it = impl.upper_bound(x);
+    return std::prev(it);
+  }
+
+  auto get_iter(ll x) const {
+    auto it = impl.upper_bound(x);
+    return std::prev(it);
+  }
+
+  auto divide(ll x) {
+    auto it_nxt = impl.upper_bound(x);
+    auto it = std::prev(it_nxt);
+    if (it->first == x) return it;
+    return impl.emplace_hint(it_nxt, x, it->second);
+  }
+
+  map<ll, T> impl;  // impl always has (LLONG_MIN, *) and (LLONG_MAX, *) as centinels.
+
+  itv_set(const T& t = T()) {
+    impl[LLONG_MIN] = t;
+    impl[LLONG_MAX] = T();
+  }
+
+  void put(ll l, ll r, const T& t) {
+    if (l >= r) return;
+    if (l == LLONG_MIN) throw runtime_error("itv_set.put: l == LLONG_MIN");
+    if (r == LLONG_MAX) throw runtime_error("itv_set.put: l == LLONG_MAX");
+    auto it0 = divide(l);
+    auto it1 = divide(r);
+    it0->second = t;
+    for (auto it = std::next(it0); it != it1; it = impl.erase(it));
+    auto it2 = std::prev(it0);
+    if (it0->second == it1->second) impl.erase(it1);
+    if (it2->second == it0->second) impl.erase(it0);
+  }
+
+  void put(ll x, const T& t) { put(x, x + 1, t); }
+
+  void put_at_end(ll x, const T& t) {
+    auto it2 = std::prev(impl.end());
+    auto it1 = std::prev(it2);
+    if (it1->second != t) impl.emplace_hint(it2, x, t);
+  }
+
+  const T& get_val(ll x) const { return get_iter(x)->second; }
+
+  pair<ll, ll> get_itvl(ll x) {
+    auto it = impl.upper_bound(x);
+    return {std::prev(it)->first, it->first};
+  }
+
+  pair<T, pair<ll, ll>> get(ll x) {
+    auto it = impl.upper_bound(x);
+    return {std::prev(it)->second, {std::prev(it)->first, it->first}};
+  }
+
+  T sum(ll l0, ll r0) {
+    T ret = T();
+    ll i = l0;
+    while (true) {
+      const auto& [t, lr] = get(i);
+      const auto& [l, r] = lr;
+      ret += (min(r, r0) - i) * t;
+      if (r0 <= r) return ret;
+      i = r;
+    }
+  }
+
+};
+
+template<typename x_t, typename y_t, typename res_t, typename f_t>
+itv_set<res_t> itv_apply(f_t f, const itv_set<x_t>& x, const itv_set<y_t>& y) {
+  auto itx = x.impl.begin();
+  auto ity = y.impl.begin();
+  itv_set<res_t> ret(f(itx->second, ity->second));
+  auto itcc = ret.impl.begin();
+  auto itce = std::next(itcc);
+  while (true) {
+    ll t;
+    tie(t, itx, ity) = [&]() -> tuple<ll, decltype(itx), decltype(ity)> {
+      auto nitx = std::next(itx);
+      auto nity = std::next(ity);
+      if      (nitx->first <  nity->first) return {nitx->first, nitx,  ity};
+      else if (nitx->first >  nity->first) return {nity->first,  itx, nity};
+      else if (nitx->first < LLONG_MAX)    return {nitx->first, nitx, nity};
+      else                                 return {-1,          nitx, nity};
+    }();
+    if (t == -1) break;
+    res_t ncur = f(itx->second, ity->second);
+    if (ncur != itcc->second) itcc = ret.impl.emplace_hint(itce, t, move(ncur));
+  }
+  return ret;
+}
+
+
 int main(/* int argc, char *argv[] */) {
   ios_base::sync_with_stdio(false);
   cin.tie(nullptr);
   cout << setprecision(20);
 
-  ll N, Q, X; cin >> N >> Q >> X;
-  X--;
-  vector<ll> P(N);
-  REP(i, N) { cin >> P[i]; P[i]--; }
-  vector<ll> C(Q), L(Q), R(Q);
-  REP(q, Q) {
-    cin >> C[q] >> L[q] >> R[q];
-    L[q]--;
+  ll N, Q, X; cin >> N >> Q >> X; X--;
+  // @InpVec(N, P, dec=1) [7zcBK9KI]
+  auto P = vector(N, ll());
+  for (int i = 0; i < N; i++) { ll v; cin >> v; v -= 1; P[i] = v; }
+  // @End [7zcBK9KI]
+
+  itv_set<ll> is;
+  ll cur = -1;
+  REP(i, 0, N) {
+    if (P[i] < X) is.put(i, 1);
+    else if (P[i] == X) cur = i;
   }
-    
-  
-  auto func = [&](ll Z) -> vector<ll> {
-    using DAT = ll;
-    using OP = optional<ll>;
-    const DAT unit_dat = 0;
-    const OP unit_op = nullopt;
-    auto xAdd = [](DAT x, DAT y) -> DAT { return x + y; };
-    auto xAppl = [](int k, OP f, DAT x) -> DAT {
-      return f.has_value() ? k * f.value() : x;
-    };
-    auto xComp = [](OP h, OP g) -> OP { return h.has_value() ? h : g; };
-    auto st = make_seg_tree(unit_dat, unit_op, xAdd, xComp, xAppl, true);
-    vector<DAT> init(N);
-
-    REP(i, N) if (P[i] <= Z) init[i] = 1; else init[i] = 0;
-    st.set_data(init);
-
-    auto showst = [&]() -> void {
-#if DEBUG
-      vector<ll> v(N);
-      REP(i, N) v[i] = st.query(i, i + 1);
-      DLOGK(v);
-#endif      
-    };
-
-    showst();
-    REP(q, Q) {
-      DLOGK(q);
-      ll c = C[q], l = L[q], r = R[q];
-      if (c == 1) {
-        ll n = st.query(l, r);
-        st.update(l, l + n, 1);
-        st.update(l + n, r, 0);
-        DLOGK(c, n, l, l+n, r);
-      }else if (c == 2) {
-        ll n = st.query(l, r);
-        st.update(l, r - n, 0);
-        st.update(r - n, r, 1);
-        DLOGK(c, n, l, r-n, r);
-      }
-      showst();
-    }
-    vector<ll> ret(N);
-    REP(i, N) ret[i] = st.query(i, i + 1);
-    return ret;
-  };
-
-  auto vec1 = func(X);
-  DLOG("");
-  auto vec2 = func(X - 1);
-  DLOGK(vec1);
-  DLOGK(vec2);
-  REP(i, N) if (vec1[i] != vec2[i]) {
-    cout << i + 1 << endl;
-    return 0;
+  DLOGK(is.impl);
+  REP(_q, 0, Q) {
+    ll c, l, r; cin >> c >> l >> r; l--;
+    ll t = is.sum(l, r);
+    if (c == 1) {
+      is.put(l, l + t, 1);
+      is.put(l + t, r, 0);
+      if (l <= cur and cur < r) cur = l + t;
+    }else if (c == 2) {
+      is.put(l, r - t, 0);
+      is.put(r - t, r, 1);
+      if (l <= cur and cur < r) cur = r - t - 1;
+    }else assert(0);
+    DLOGK(c, l, r, is.impl, cur);
   }
+  cout << cur + 1 << endl;
 
   return 0;
 }
