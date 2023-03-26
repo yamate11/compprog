@@ -194,6 +194,19 @@ int main(/* int argc, char *argv[] */) {
     assert(isC.get_itvl(22) == pll(20, 25));
   }
 
+  {
+    itv_set<int> is(10);
+    is.put(15, 20, 2);
+    is.put(25, 30, 1);
+    assert(is.sum(10, 15) == 50);
+    assert(is.sum(15, 20) == 10);
+    assert(is.sum(14, 16) == 12);
+    assert(is.sum(12, 32) == 3 * 10 + 5 * 2 + 5 * 10 + 5 * 1 + 2 * 10);
+    is.put(27, 27, 1000);
+    is.put(27, 25, 2000);
+    assert(is.get_val(27) == 1);
+    assert(is.get_itvl(27) == pll(25, 30));
+  }
 
   cout << "ok\n";
 }

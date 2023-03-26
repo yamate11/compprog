@@ -26,7 +26,8 @@ using namespace std;
   T get_val(ll x) ... returns f(x)
   pair<ll, ll> get_itvl(ll x) ... returns (y1, y2) where y1 <= x < y2 and y1 and y2 are defined point
   pair<ll, pair<ll, ll>> get(ll x) ... returns (t, (y1, y2)) where f(x) = t and y1 <= x < y2 and y1 and y2 are defined point.
-
+  T sum(ll l, ll r) ... returns \sum_{i = l}^{r - 1} f(i)．  Note that T must have "+" and "*", and "ll" should be 
+                        convertible into T.
   template<typename x_t, typename y_t, typename res_t, typename f_t>
   itv_set<res_t> itv_apply(f_t f, const itv_set<x_t>& x, const itv_set<y_t>& y)
        // Meaning  ... ret(i) := f(x(i), y(i))
@@ -69,7 +70,7 @@ struct itv_set {
   }
 
   void put(ll l, ll r, const T& t) {
-    if (l >= r) throw runtime_error("itv_set.put: l >= r");
+    if (l >= r) return;
     if (l == LLONG_MIN) throw runtime_error("itv_set.put: l == LLONG_MIN");
     if (r == LLONG_MAX) throw runtime_error("itv_set.put: l == LLONG_MAX");
     auto it0 = divide(l);
@@ -99,6 +100,18 @@ struct itv_set {
   pair<T, pair<ll, ll>> get(ll x) {
     auto it = impl.upper_bound(x);
     return {std::prev(it)->second, {std::prev(it)->first, it->first}};
+  }
+
+  T sum(ll l0, ll r0) {
+    T ret = T();
+    ll i = l0;
+    while (true) {
+      const auto& [t, lr] = get(i);
+      const auto& [l, r] = lr;
+      ret += (min(r, r0) - i) * t;
+      if (r0 <= r) return ret;
+      i = r;
+    }
   }
 
 };
