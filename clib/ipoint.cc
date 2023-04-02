@@ -19,6 +19,10 @@
   IPoint q, r; cin >> q >> r; cout << q << r;
   map<IPoint, ll> mp;
   unordered_map<IPoint, ll> ump;
+
+  vector<IPoint> vec; ...; 
+  sort(ALL(vec), IPoint::lt_arg);  // sort by argument [0, 2pi)
+
  */
 
 #include <bits/stdc++.h>
@@ -80,6 +84,16 @@ struct IPoint {
     if (x != o.x) return x < o.x;
     else return y < o.y;
   }
+
+  static bool lt_arg(const IPoint& p1, const IPoint& p2) {
+    if ((p1.x == 0 and p1.y == 0) or (p2.x == 0 and p2.y == 0)) return false;
+    if (p2.y == 0 and p2.x > 0) return false;
+    if (p1.y == 0 and p1.x > 0) return true;
+    if (p2.y == 0) return p1.y > 0;
+    if (p1.y == 0) return p2.y < 0;
+    if ((p1.y > 0) != (p2.y > 0)) return p1.y > 0;
+    return p1.x * p2.y > p1.y * p2.x;
+  };
 
 };
     
