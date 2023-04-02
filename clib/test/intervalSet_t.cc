@@ -7,7 +7,7 @@ using pll = pair<ll, ll>;
 // @@ !! LIM(intervalSet)
 
 // ---- inserted library file intervalSet.cc
-#line 39 "/home/y-tanabe/proj/compprog/clib/intervalSet.cc"
+#line 40 "/home/y-tanabe/proj/compprog/clib/intervalSet.cc"
 
 template<typename T>
 struct itv_set_cell {
@@ -41,7 +41,7 @@ struct itv_set {
   }
 
   void put(ll l, ll r, const T& t) {
-    if (l >= r) throw runtime_error("itv_set.put: l >= r");
+    if (l >= r) return;
     if (l == LLONG_MIN) throw runtime_error("itv_set.put: l == LLONG_MIN");
     if (r == LLONG_MAX) throw runtime_error("itv_set.put: l == LLONG_MAX");
     auto it0 = divide(l);
@@ -71,6 +71,18 @@ struct itv_set {
   pair<T, pair<ll, ll>> get(ll x) {
     auto it = impl.upper_bound(x);
     return {std::prev(it)->second, {std::prev(it)->first, it->first}};
+  }
+
+  T sum(ll l0, ll r0) {
+    T ret = T();
+    ll i = l0;
+    while (true) {
+      const auto& [t, lr] = get(i);
+      const auto& [l, r] = lr;
+      ret += (min(r, r0) - i) * t;
+      if (r0 <= r) return ret;
+      i = r;
+    }
   }
 
 };
@@ -292,6 +304,19 @@ int main(/* int argc, char *argv[] */) {
     assert(isC.get_itvl(22) == pll(20, 25));
   }
 
+  {
+    itv_set<int> is(10);
+    is.put(15, 20, 2);
+    is.put(25, 30, 1);
+    assert(is.sum(10, 15) == 50);
+    assert(is.sum(15, 20) == 10);
+    assert(is.sum(14, 16) == 12);
+    assert(is.sum(12, 32) == 3 * 10 + 5 * 2 + 5 * 10 + 5 * 1 + 2 * 10);
+    is.put(27, 27, 1000);
+    is.put(27, 25, 2000);
+    assert(is.get_val(27) == 1);
+    assert(is.get_itvl(27) == pll(25, 30));
+  }
 
   cout << "ok\n";
 }

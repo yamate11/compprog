@@ -11,7 +11,7 @@ using pll = pair<ll, ll>;
 #define SIZE(v) ((ll)((v).size()))
 #define REPOUT(i, a, b, exp, sep) REP(i, (a), (b)) cout << (exp) << (i + 1 == (b) ? "" : (sep)); cout << "\n"
 
-// @@ !! LIM(debug)
+// @@ !! LIM(debug intervalSet)
 
 // ---- inserted function f:<< from util.cc
 template <typename T1, typename T2>
@@ -252,7 +252,7 @@ void dbgLog(bool with_nl, Head&& head, Tail&&... tail)
 
 // ---- end debug.cc
 
-// @@ !! LIM -- end mark --
+// ---- inserted library file intervalSet.cc
 
 template<typename T>
 struct itv_set_cell {
@@ -356,6 +356,9 @@ itv_set<res_t> itv_apply(f_t f, const itv_set<x_t>& x, const itv_set<y_t>& y) {
   return ret;
 }
 
+// ---- end intervalSet.cc
+
+// @@ !! LIM -- end mark --
 
 int main(/* int argc, char *argv[] */) {
   ios_base::sync_with_stdio(false);
