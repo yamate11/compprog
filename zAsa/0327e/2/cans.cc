@@ -66,6 +66,16 @@ struct IPoint {
     else return y < o.y;
   }
 
+  static bool lt_arg(const IPoint& p1, const IPoint& p2) {
+    if ((p1.x == 0 and p1.y == 0) or (p2.x == 0 and p2.y == 0)) return false;
+    if (p2.y == 0 and p2.x > 0) return false;
+    if (p1.y == 0 and p1.x > 0) return true;
+    if (p2.y == 0) return p1.y > 0;
+    if (p1.y == 0) return p2.y < 0;
+    if ((p1.y > 0) != (p2.y > 0)) return p1.y > 0;
+    return p1.x * p2.y > p1.y * p2.x;
+  };
+
 };
     
 IPoint operator *(ll k, const IPoint& p) { return p * k; }
@@ -386,32 +396,23 @@ int main(/* int argc, char *argv[] */) {
   for (int i = 0; i < N; i++) { IPoint v; cin >> v; P[i] = v; }
   // @End [9BbMJSRH]
   
-  auto arg_prec = [&](IPoint p1, IPoint p2) -> bool {
-    if ((p1.x == 0 and p1.y == 0) or (p2.x == 0 and p2.y == 0)) return false;
-    if (p2.y == 0 and p2.x > 0) return false;
-    if (p1.y == 0 and p1.x > 0) return true;
-    if (p2.y == 0) return p1.y > 0;
-    if (p1.y == 0) return p2.y < 0;
-    if ((p1.y > 0) != (p2.y > 0)) return p1.y > 0;
-    return p1.x * p2.y > p1.y * p2.x;
-  };
   ll nRect = 0, nObt = 0;
   REP(i, 0, N) {
     vector<IPoint> vec;
     REP(j, 0, N) if (j != i) vec.push_back(P[j] - P[i]);
-    sort(ALL(vec), arg_prec);
+    sort(ALL(vec), IPoint::lt_arg);
     DLOGK(i, vec);
     REP(j, 0, N - 1) {
       IPoint q1 = vec[j].rotate(1);
       IPoint q2 = vec[j].rotate(2);
       auto check1 = [&](ll k) -> bool {
-        bool b = not arg_prec(vec[k], q1);
+        bool b = not IPoint::lt_arg(vec[k], q1);
         DLOGKL("  ", k, q1, vec[k], b);
         return b;
       };
-      auto check2 = [&](ll k) -> bool { return arg_prec(q1, vec[k]); };
+      auto check2 = [&](ll k) -> bool { return IPoint::lt_arg(q1, vec[k]); };
       auto check3 = [&](ll k) -> bool {
-        bool b = arg_prec(q2, vec[k]);
+        bool b = IPoint::lt_arg(q2, vec[k]);
         // DLOGKL("  ", k, q2, vec[k], b);
         return b;
       };
@@ -424,9 +425,9 @@ int main(/* int argc, char *argv[] */) {
       // DLOGKL("bs3 end", k3);
       ll tRect = k2 - k1;
       ll tObt = -1;
-      if (arg_prec(vec[j], IPoint(-1, 0))) {
+      if (IPoint::lt_arg(vec[j], IPoint(-1, 0))) {
         tObt = k3 - k2;
-      }else if (arg_prec(vec[j], IPoint(0, -1))) {
+      }else if (IPoint::lt_arg(vec[j], IPoint(0, -1))) {
         tObt = (N - 1 - k2) + k3;
       }else {
         tObt = k3 - k2;

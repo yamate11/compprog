@@ -6,7 +6,7 @@ using namespace std;
 // @@ !! LIM(ipoint)
 
 // ---- inserted library file ipoint.cc
-#line 32 "/home/y-tanabe/proj/compprog/clib/ipoint.cc"
+#line 36 "/home/y-tanabe/proj/compprog/clib/ipoint.cc"
 
 struct IPoint {
   ll x;
@@ -58,6 +58,16 @@ struct IPoint {
     if (x != o.x) return x < o.x;
     else return y < o.y;
   }
+
+  static bool lt_arg(const IPoint& p1, const IPoint& p2) {
+    if ((p1.x == 0 and p1.y == 0) or (p2.x == 0 and p2.y == 0)) return false;
+    if (p2.y == 0 and p2.x > 0) return false;
+    if (p1.y == 0 and p1.x > 0) return true;
+    if (p2.y == 0) return p1.y > 0;
+    if (p1.y == 0) return p2.y < 0;
+    if ((p1.y > 0) != (p2.y > 0)) return p1.y > 0;
+    return p1.x * p2.y > p1.y * p2.x;
+  };
 
 };
     
@@ -126,6 +136,21 @@ int main() {
     assert(it3 != ump.end() && it3->second == 50);
     auto it4 = ump.find(IPoint(5, 3));
     assert(it4 == ump.end());
+  }
+
+  {
+    IPoint p00(0, 0), p0p(0, 2), p0n(0, -3), pp0(1, 0), pn0(-2, 0), p1(2, 3), p2(-3, 1), p3(-2, -5), p4(1, -4);
+    vector<IPoint> vec{p0p, p0n, pp0, pn0, p1,   p2,   p3,   p4};
+    vector<double> arg{0.5, 1.5, 0,   1,   0.25, 0.75, 1.25, 1.75};
+
+    assert(not IPoint::lt_arg(p00, p00));
+    for (const auto& p : vec) assert(not IPoint::lt_arg(p00, p));
+    for (const auto& p : vec) assert(not IPoint::lt_arg(p, p00));
+    for (size_t i = 0; i < vec.size(); i++) {
+      for (size_t j = 0; j < vec.size(); j++) {
+        assert(IPoint::lt_arg(vec[i], vec[j]) == (arg[i] < arg[j]));
+      }
+    }
   }
 
   cerr << "ok" << endl;
