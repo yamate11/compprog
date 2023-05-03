@@ -244,7 +244,7 @@ ll crt(vector<ll> as, vector<ll> xs) {
 // ---- end f:gcd
 
 // ---- inserted library file mod.cc
-#line 40 "/home/y-tanabe/proj/compprog/clib/mod.cc"
+#line 38 "/home/y-tanabe/proj/compprog/clib/mod.cc"
 
 template<int mod=0>
 struct FpG {   // G for General
@@ -360,27 +360,27 @@ struct FpG {   // G for General
 template<int mod>
 ll FpG<mod>::dyn_mod;
 
-template<int mod=0>
-class CombG {
+template<typename T>
+class Comb {
   int nMax;
-  vector<FpG<mod>> vFact;
-  vector<FpG<mod>> vInvFact;
+  vector<T> vFact;
+  vector<T> vInvFact;
 public:
-  CombG(int nm) : nMax(nm), vFact(nm+1), vInvFact(nm+1) {
-    vFact.at(0) = 1;
-    for (int i = 1; i <= nMax; i++) vFact.at(i) = i * vFact.at(i-1);
-    vInvFact.at(nMax) = vFact.at(nMax).inv();
-    for (int i = nMax; i >= 1; i--) vInvFact.at(i-1) = i * vInvFact.at(i);
+  Comb(int nm) : nMax(nm), vFact(nm+1), vInvFact(nm+1) {
+    vFact[0] = 1;
+    for (int i = 1; i <= nMax; i++) vFact[i] = i * vFact[i-1];
+    vInvFact.at(nMax) = (T)1 / vFact[nMax];
+    for (int i = nMax; i >= 1; i--) vInvFact[i-1] = i * vInvFact[i];
   }
-  FpG<mod> fact(int n) { return vFact.at(n); }
-  FpG<mod> binom(int n, int r) {
-    if (r < 0 || r > n) return 0;
-    return vFact.at(n) * vInvFact.at(r) * vInvFact.at(n-r);
+  T fact(int n) { return vFact[n]; }
+  T binom(int n, int r) {
+    if (r < 0 || r > n) return (T)0;
+    return vFact[n] * vInvFact[r] * vInvFact[n-r];
   }
-  FpG<mod> binom_dup(int n, int r) { return binom(n + r - 1, r); }
+  T binom_dup(int n, int r) { return binom(n + r - 1, r); }
   // The number of permutation extracting r from n.
-  FpG<mod> perm(int n, int r) {
-    return vFact.at(n) * vInvFact.at(n-r);
+  T perm(int n, int r) {
+    return vFact[n] * vInvFact[n-r];
   }
 };
 
@@ -388,8 +388,6 @@ constexpr int primeA = 1'000'000'007;
 constexpr int primeB = 998'244'353;          // '
 using FpA = FpG<primeA>;
 using FpB = FpG<primeB>;
-using CombA = CombG<primeA>;
-using CombB = CombG<primeB>;
 
 // ---- end mod.cc
 
@@ -472,8 +470,7 @@ int main() {
 
   {
     using Fp = FpG<97>;
-    using Comb = CombG<97>;
-    Comb cb(6);
+    Comb<Fp> cb(6);
     assert(cb.fact(4) == Fp(24));
     assert(cb.perm(5,3) == Fp(60));
     assert(cb.binom(6,2) == Fp(15));
@@ -481,6 +478,11 @@ int main() {
     assert(cb.binom(6,-1) == Fp(0));
     assert(cb.binom(6,7) == Fp(0));
     assert(cb.binom_dup(2, 4) == Fp(5));
+
+    Comb<double> cb2(8);
+    assert(cb2.fact(8) == 8 * 7 * 6 * 5 * 4 * 3 * 2 * 1);
+    assert(cb2.binom(7, 3) == 7 * 6 * 5 / 3 / 2 / 1);
+
   }
 
   {
