@@ -1,0 +1,22 @@
+#!/usr/bin/env python3
+
+from random import randrange
+
+def main():
+    R = 3000
+    C = 3000
+    K = 200000
+    print(R, C, K)
+    ss = set()
+    for k in range(K):
+        while True:
+            r = randrange(1, R + 1)
+            c = randrange(1, C + 1)
+            v = randrange(1, 10**9)
+            if not (r, c) in ss:
+                ss.add((r, c))
+                print(r, c, v)
+                break
+
+
+main()

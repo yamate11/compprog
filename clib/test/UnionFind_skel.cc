@@ -9,29 +9,36 @@ template<typename T = int>
 struct NaiveUnionFind {
   int size;
   vector<int> _leader;
-  vector<T> _pot;
+  vector<optional<T>> _pot;
   vector<vector<int>> _member;
 
   NaiveUnionFind(int size_) : size(size_), _leader(size), _pot(size), _member(size) {
     for (int i = 0; i < size; i++) {
       _leader[i] = i;
-      _pot[i] = 0;
+      _pot[i] = (T)0;
       _member[i].push_back(i);
     }
   }
-  int merge(int i, int j, const T& p = (T)0) {
-    DLOGK("naive merge", i, j);
+  int merge(int i, int j, optional<T> p = nullopt) {
+    DLOGK("naive merge", i, j, p);
     int new_leader = _leader[j];
     int old_leader = _leader[i];
-    if (new_leader == _leader[i]) {
-      if (_pot[i] == _pot[j] + p) return new_leader;
-      else return -1;
+    if (new_leader == old_leader and not _pot[i]) {
+      if (not p or *_pot[i] != *_pot[j] + *p) {
+        for (int x : _member[new_leader]) _pot[x] = nullopt;
+      }
+      return new_leader;
     }
-    T pdiff = p + _pot[j] - _pot[i];
+    bool pot_consis = p and _pot[j] and _pot[i];
+    T pdiff = pot_consis ? *p + *_pot[j] - *_pot[i] : (T)0;
+    if (not pot_consis) {
+      for (int x : _member[new_leader]) _pot[x] = nullopt;
+    }
     for (int x : _member[old_leader]) {
       _leader[x] = new_leader;
       _member[new_leader].push_back(x);
-      _pot[x] = _pot[x] + pdiff;
+      if (pot_consis) _pot[x] = *_pot[x] + pdiff;
+      else _pot[x] = nullopt;
     }
     _member[old_leader].resize(0);
     DLOG("naive merge result");
@@ -41,7 +48,9 @@ struct NaiveUnionFind {
     return new_leader;
   }
 
-  pair<int, T> leaderpot(int i) { return {_leader[i], _pot[i]}; }
+  pair<int, optional<T>> leaderpot(int i) {
+    return {_leader[i], _pot[i]};
+  }
 
   int leader(int i) { return _leader[i]; }
 
@@ -103,7 +112,7 @@ int main(int argc, char *argv[]) {
         assert ((la == lb) == (nla == nlb));
         if (la == lb) {
           DLOGKL("equiv", a, b, la, lb, pa, pb, npa, npb);
-          assert(pa - pb == npa - npb);
+          assert(pa and pb and npa and npb and *pa - *pb == *npa - *npb);
         }else {
           int p = randrange(-10, 11);
           DLOGKL("merge", b, a, p);
@@ -134,9 +143,9 @@ int main(int argc, char *argv[]) {
     assert(ld >= 0);
     auto [ld3, p3] = uf.leaderpot(3);
     auto [ld0, p0] = uf.leaderpot(0);
-    assert(ld3 == ld0 and p3 - p0 == 30);
-    int rc = uf.merge(3, 0, 40);
-    assert(rc == -1);
+    assert(ld3 == ld0 and *p3 - *p0 == 30);
+    uf.merge(3, 0, 40);
+    assert(not uf.pot(0) and not uf.pot(3));
   }
 
   {
@@ -167,13 +176,11 @@ int main(int argc, char *argv[]) {
     assert(uf.leader(5) == uf.leader(8));
     assert(uf.leader(5) == uf.leader(9));
     assert(uf.leader(5) != uf.leader(10));
-    assert(uf.pot(0) - uf.pot(3) == 5);
-    assert(uf.pot(8) - uf.pot(6) == 4);
-    assert(uf.pot(4) - uf.pot(0) == -1);
+    assert(*uf.pot(0) - *uf.pot(3) == 5);
+    assert(*uf.pot(8) - *uf.pot(6) == 4);
+    assert(*uf.pot(4) - *uf.pot(0) == -1);
     vector<int> v1(uf.group(3));
     for (int i = 0; i < 13; i++) assert(uf.groupSize(i) == (int)uf.group(i).size());
-    assert(uf.grouppot(0, uf.pot(4)) == vector<int>{4});
-    assert(uf.grouppot(8, uf.pot(5)) == (vector<int>{5, 7}) or uf.grouppot(8, uf.pot(5)) == (vector<int>{7, 5}));
   }
 
 

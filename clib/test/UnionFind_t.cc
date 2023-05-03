@@ -6,7 +6,7 @@ using namespace std;
 // @@ !! LIM(UnionFind ftwo debug)
 
 // ---- inserted library file UnionFind.cc
-#line 36 "/home/y-tanabe/proj/compprog/clib/UnionFind.cc"
+#line 34 "/home/y-tanabe/proj/compprog/clib/UnionFind.cc"
 
 template<typename T = ll, typename oplus_t = decltype(plus<T>()), typename onegate_t = decltype(negate<T>())>
 struct UnionFind {
@@ -14,46 +14,51 @@ struct UnionFind {
   T zero;
   oplus_t oplus;
   onegate_t onegate;
-  vector<pair<int, T>> _leader;
+  vector<pair<int, optional<T>>> _leader;
   vector<int> _gsize;
   bool built_groups;
   vector<vector<int>> _groups;
-  bool built_grouppots;
-  vector<map<T, vector<int>>> _grouppots;
-  
   
   UnionFind(int size_, T zero_ = (T)0, oplus_t oplus_ = plus<T>(), onegate_t onegate_ = negate<T>())
-    : size(size_), zero(zero_), oplus(oplus_), onegate(onegate_), _gsize(size, 1),
-      built_groups(false), built_grouppots(false) {
-    for (int i = 0; i < size; i++) _leader.emplace_back(i, (T)0);
+    : size(size_), zero(zero_), oplus(oplus_), onegate(onegate_), _gsize(size, 1), built_groups(false) {
+    for (int i = 0; i < size; i++) _leader.emplace_back(i, zero);
   }
 
-  int merge(int i, int j, const T& p = (T)0) {
-    built_groups = built_grouppots = false;
+  int merge(int i, int j, optional<T> p = nullopt) {
+    built_groups = false;
     auto [li, pi] = leaderpot(i);
     auto [lj, pj] = leaderpot(j);
     if (li == lj) {
-      if (oplus(p, pj) == pi) return li;
-      else return -1;
+      if (not p.has_value()) _leader[li].second = nullopt;
+      else if (pi.has_value() and oplus(*p, *pj) != *pi) _leader[li].second = nullopt;
+      return li;
     }
-    int new_leader;
+    int new_leader, obs_leader; bool chg_sign;
     if (_gsize[li] < _gsize[lj]) {
       new_leader = lj;
-      _gsize[new_leader] += _gsize[li];
-      _leader[li].first = new_leader;
-      _leader[li].second = oplus(p, oplus(pj, onegate(pi)));
+      obs_leader = li;
+      chg_sign = false;
     }else {
       new_leader = li;
-      _gsize[new_leader] += _gsize[lj];
-      _leader[lj].first = new_leader;
-      _leader[lj].second = onegate(oplus(p, oplus(pj, onegate(pi))));
+      obs_leader = lj;
+      chg_sign = true;
+    }
+    _gsize[new_leader] += _gsize[obs_leader];
+    _leader[obs_leader].first = new_leader;
+    if (p.has_value() and pi.has_value() and pj.has_value()) {
+      T new_pot = oplus(*p, oplus(*pj, onegate(*pi)));
+      if (chg_sign) new_pot = onegate(new_pot);
+      _leader[obs_leader].second = new_pot;
+    }else {
+      _leader[new_leader].second = nullopt;  // Note this is for new_leader
     }
     return new_leader;
   }
 
-  pair<int, T> leaderpot(int i) {
+  pair<int, optional<T>> leaderpot(int i) {
     int cur = i;
-    vector<pair<int, T>> seen;
+    vector<pair<int, optional<T>>> seen;
+    optional<T> pp;
     {
       auto [nxt, p] = _leader[cur];
       while (cur != nxt) {
@@ -61,18 +66,18 @@ struct UnionFind {
         cur = nxt;
         tie(nxt, p) = _leader[cur];
       }
+      pp = p;
     }
-    T pp = zero;
     while (not seen.empty()) {
       auto [j, p] = seen.back(); seen.pop_back();
-      pp = oplus(pp, p);
+      if (pp.has_value()) pp = oplus(pp.value(), p.value());
       _leader[j] = {cur, pp};
     }
     return {cur, pp};
   }
 
   int leader(int i) { return leaderpot(i).first; }
-  int pot(int i) { return leaderpot(i).second; }
+  optional<T> pot(int i) { return leaderpot(i).second; }
 
   int groupSize(int i) { return _gsize[leader(i)]; }
 
@@ -84,19 +89,6 @@ struct UnionFind {
       built_groups = true;
     }
     return _groups[leader(i)];
-  }
-
-  const vector<int>& grouppot(int i, const T& p) {
-    if (not built_grouppots) {
-      _grouppots.resize(size);
-      for (int j = 0; j < size; j++) _grouppots[j].clear();
-      for (int j = 0; j < size; j++) {
-        auto [ld, pp] = leaderpot(j);
-        _grouppots[ld][pp].push_back(j);
-      }
-      built_grouppots = true;
-    }
-    return _grouppots[leader(i)][p];
   }
 
 };
@@ -114,7 +106,7 @@ auto makeUnionFind(int size, T zero, auto oplus, auto onegate) {
 struct Ftwo {
   int8_t val;
 
-  Ftwo(ll t = 0) { val = (t == 0) ? 0 : 1; }
+  Ftwo(ll t = 0) { val = t & 1; }
   Ftwo(const Ftwo& t) : val(t.val) {}
   Ftwo& operator =(const Ftwo& t) { val = t.val; return *this; }
   Ftwo& operator =(ll t) { val = (t == 0) ? 0 : 1; return *this; }
@@ -468,29 +460,36 @@ template<typename T = int>
 struct NaiveUnionFind {
   int size;
   vector<int> _leader;
-  vector<T> _pot;
+  vector<optional<T>> _pot;
   vector<vector<int>> _member;
 
   NaiveUnionFind(int size_) : size(size_), _leader(size), _pot(size), _member(size) {
     for (int i = 0; i < size; i++) {
       _leader[i] = i;
-      _pot[i] = 0;
+      _pot[i] = (T)0;
       _member[i].push_back(i);
     }
   }
-  int merge(int i, int j, const T& p = (T)0) {
-    DLOGK("naive merge", i, j);
+  int merge(int i, int j, optional<T> p = nullopt) {
+    DLOGK("naive merge", i, j, p);
     int new_leader = _leader[j];
     int old_leader = _leader[i];
-    if (new_leader == _leader[i]) {
-      if (_pot[i] == _pot[j] + p) return new_leader;
-      else return -1;
+    if (new_leader == old_leader and not _pot[i]) {
+      if (not p or *_pot[i] != *_pot[j] + *p) {
+        for (int x : _member[new_leader]) _pot[x] = nullopt;
+      }
+      return new_leader;
     }
-    T pdiff = p + _pot[j] - _pot[i];
+    bool pot_consis = p and _pot[j] and _pot[i];
+    T pdiff = pot_consis ? *p + *_pot[j] - *_pot[i] : (T)0;
+    if (not pot_consis) {
+      for (int x : _member[new_leader]) _pot[x] = nullopt;
+    }
     for (int x : _member[old_leader]) {
       _leader[x] = new_leader;
       _member[new_leader].push_back(x);
-      _pot[x] = _pot[x] + pdiff;
+      if (pot_consis) _pot[x] = *_pot[x] + pdiff;
+      else _pot[x] = nullopt;
     }
     _member[old_leader].resize(0);
     DLOG("naive merge result");
@@ -500,7 +499,9 @@ struct NaiveUnionFind {
     return new_leader;
   }
 
-  pair<int, T> leaderpot(int i) { return {_leader[i], _pot[i]}; }
+  pair<int, optional<T>> leaderpot(int i) {
+    return {_leader[i], _pot[i]};
+  }
 
   int leader(int i) { return _leader[i]; }
 
@@ -562,7 +563,7 @@ int main(int argc, char *argv[]) {
         assert ((la == lb) == (nla == nlb));
         if (la == lb) {
           DLOGKL("equiv", a, b, la, lb, pa, pb, npa, npb);
-          assert(pa - pb == npa - npb);
+          assert(pa and pb and npa and npb and *pa - *pb == *npa - *npb);
         }else {
           int p = randrange(-10, 11);
           DLOGKL("merge", b, a, p);
@@ -593,9 +594,9 @@ int main(int argc, char *argv[]) {
     assert(ld >= 0);
     auto [ld3, p3] = uf.leaderpot(3);
     auto [ld0, p0] = uf.leaderpot(0);
-    assert(ld3 == ld0 and p3 - p0 == 30);
-    int rc = uf.merge(3, 0, 40);
-    assert(rc == -1);
+    assert(ld3 == ld0 and *p3 - *p0 == 30);
+    uf.merge(3, 0, 40);
+    assert(not uf.pot(0) and not uf.pot(3));
   }
 
   {
@@ -626,13 +627,11 @@ int main(int argc, char *argv[]) {
     assert(uf.leader(5) == uf.leader(8));
     assert(uf.leader(5) == uf.leader(9));
     assert(uf.leader(5) != uf.leader(10));
-    assert(uf.pot(0) - uf.pot(3) == 5);
-    assert(uf.pot(8) - uf.pot(6) == 4);
-    assert(uf.pot(4) - uf.pot(0) == -1);
+    assert(*uf.pot(0) - *uf.pot(3) == 5);
+    assert(*uf.pot(8) - *uf.pot(6) == 4);
+    assert(*uf.pot(4) - *uf.pot(0) == -1);
     vector<int> v1(uf.group(3));
     for (int i = 0; i < 13; i++) assert(uf.groupSize(i) == (int)uf.group(i).size());
-    assert(uf.grouppot(0, uf.pot(4)) == vector<int>{4});
-    assert(uf.grouppot(8, uf.pot(5)) == (vector<int>{5, 7}) or uf.grouppot(8, uf.pot(5)) == (vector<int>{7, 5}));
   }
 
 

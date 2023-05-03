@@ -1,0 +1,24 @@
+#!/usr/bin/env python3
+
+import re
+
+def main():
+    tm = {}
+    lb = {}
+    with open('perf.log', 'r') as fp:
+        for line in fp:
+            mo = re.match('(\d+) (...)\.(...) (.*)', line.strip())
+            if mo[3] not in tm:
+                tm[mo[3]] = {}
+            if mo[2] not in tm[mo[3]]:
+                tm[mo[3]][mo[2]] = 0.0
+            tm[mo[3]][mo[2]] += float(mo[4])
+            if mo[3] not in lb:
+                lb[mo[3]] = {}
+            lb[mo[3]][mo[2]] = mo[1]
+    for s1 in tm:
+        for s2 in tm[s1]:
+            tm[s1][s2] /= 5
+            print(lb[s1][s2], s1, s2, f'{tm[s1][s2]:.2f}')
+
+main()

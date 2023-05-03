@@ -1,54 +1,214 @@
 #include <bits/stdc++.h>
 #include <cassert>
-typedef long long int ll;
 using namespace std;
+using ll = long long int;
+using pll = pair<ll, ll>;
 // #include <atcoder/all>
 // using namespace atcoder;
-#define REP2(i, a, b) for (ll i = (a); i < (b); i++)
-#define REP2R(i, a, b) for (ll i = (a); i >= (b); i--)
-#define REP(i, b) REP2(i, 0, b)
+#define REP(i, a, b) for (ll i = (a); i < (b); i++)
+#define REPrev(i, a, b) for (ll i = (a); i >= (b); i--)
 #define ALL(coll) (coll).begin(), (coll).end()
 #define SIZE(v) ((ll)((v).size()))
+#define REPOUT(i, a, b, exp, sep) REP(i, (a), (b)) cout << (exp) << (i + 1 == (b) ? "" : (sep)); cout << "\n"
 
-// @@ !! LIM(mod f:power)
+// @@ !! LIM(mod sieve power debug)
+
+// ---- inserted library file algOp.cc
+
+// Common definitions
+//    zero, one, inverse
+
+template<typename T>
+constexpr T zero(const T& t) {
+  if constexpr (is_integral_v<T> || is_floating_point_v<T>) { return (T)0; }
+  else { return t.zero(); }
+}
+
+template<typename T>
+constexpr T one(const T& t) {
+  if constexpr (is_integral_v<T> || is_floating_point_v<T>) { return (T)1; }
+  else { return t.one(); }
+}
+
+template<typename T>
+constexpr T inverse(const T& t) {
+  if constexpr (is_floating_point_v<T>) { return 1.0 / t; }
+  else { return t.inverse(); }
+}
+
+// begin -- detection ideom
+//    cf. https://blog.tartanllama.xyz/detection-idiom/
+
+namespace detail {
+  template <template <class...> class Trait, class Enabler, class... Args>
+  struct is_detected : false_type{};
+
+  template <template <class...> class Trait, class... Args>
+  struct is_detected<Trait, void_t<Trait<Args...>>, Args...> : true_type{};
+}
+
+template <template <class...> class Trait, class... Args>
+using is_detected = typename detail::is_detected<Trait, void, Args...>::type;
+
+// end -- detection ideom
+
+
+template<typename T>
+// using subst_add_t = decltype(T::subst_add(declval<typename T::value_type &>(), declval<typename T::value_type>()));
+using subst_add_t = decltype(T::subst_add);
+template<typename T>
+using has_subst_add = is_detected<subst_add_t, T>;
+
+template<typename T>
+using add_t = decltype(T::add);
+template<typename T>
+using has_add = is_detected<add_t, T>;
+
+template<typename T>
+using subst_mult_t = decltype(T::subst_mult);
+template<typename T>
+using has_subst_mult = is_detected<subst_mult_t, T>;
+
+template<typename T>
+using mult_t = decltype(T::mult);
+template<typename T>
+using has_mult = is_detected<mult_t, T>;
+
+template<typename T>
+using subst_subt_t = decltype(T::subst_subt);
+template<typename T>
+using has_subst_subt = is_detected<subst_subt_t, T>;
+
+template<typename T>
+using subt_t = decltype(T::subt);
+template<typename T>
+using has_subt = is_detected<subt_t, T>;
+
+template <typename Opdef>
+struct MyAlg {
+  using T = typename Opdef::value_type;
+  using value_type = T;
+  T v;
+  MyAlg() {}
+  MyAlg(const T& v_) : v(v_) {}
+  MyAlg(T&& v_) : v(move(v_)) {}
+  bool operator==(MyAlg o) const { return v == o.v; }
+  bool operator!=(MyAlg o) const { return v != o.v; }
+  operator T() const { return v; }
+  MyAlg zero() const { return MyAlg(Opdef::zero(v)); }
+  MyAlg one() const { return MyAlg(Opdef::one(v)); }
+  MyAlg inverse() const { return MyAlg(Opdef::inverse(v)); }
+  MyAlg operator/=(const MyAlg& o) { return *this *= o.inverse(); }
+  MyAlg operator/(const MyAlg& o) const { return (*this) * o.inverse(); }
+  MyAlg operator-() const { return zero() - *this; }
+
+  MyAlg& operator +=(const MyAlg& o) { 
+    if constexpr (has_subst_add<Opdef>::value) {
+      Opdef::subst_add(v, o.v);
+      return *this;
+    }else if constexpr (has_add<Opdef>::value) {
+      v = Opdef::add(v, o.v);
+      return *this;
+    }else static_assert("either subst_add or add is needed.");
+
+  }
+  MyAlg operator +(const MyAlg& o) const { 
+    if constexpr (has_add<Opdef>::value) {
+      return MyAlg(Opdef::add(v, o.v));
+    }else if constexpr (has_subst_add<Opdef>::value) {
+      MyAlg ret(v);
+      Opdef::subst_add(ret.v, o.v);
+      return ret;
+    }else static_assert("either subst_add or add is needed.");
+  }
+  MyAlg& operator *=(const MyAlg& o) { 
+    if constexpr (has_subst_mult<Opdef>::value) {
+      Opdef::subst_mult(v, o.v);
+      return *this;
+    }else if constexpr (has_mult<Opdef>::value) {
+      v = Opdef::mult(v, o.v);
+      return *this;
+    }else static_assert("either subst_mult or mult is needed.");
+
+  }
+  MyAlg operator *(const MyAlg& o) const { 
+    if constexpr (has_mult<Opdef>::value) {
+      return MyAlg(Opdef::mult(v, o.v));
+    }else if constexpr (has_subst_mult<Opdef>::value) {
+      MyAlg ret(v);
+      Opdef::subst_mult(ret.v, o.v);
+      return ret;
+    }else static_assert("either subst_mult or mult is needed.");
+  }
+  MyAlg& operator -=(const MyAlg& o) { 
+    if constexpr (has_subst_subt<Opdef>::value) {
+      Opdef::subst_subt(v, o.v);
+      return *this;
+    }else if constexpr (has_subt<Opdef>::value) {
+      v = Opdef::subt(v, o.v);
+      return *this;
+    }else static_assert("either subst_subt or subt is needed.");
+
+  }
+  MyAlg operator -(const MyAlg& o) const { 
+    if constexpr (has_subt<Opdef>::value) {
+      return MyAlg(Opdef::subt(v, o.v));
+    }else if constexpr (has_subst_subt<Opdef>::value) {
+      MyAlg ret(v);
+      Opdef::subst_subt(ret.v, o.v);
+      return ret;
+    }else static_assert("either subst_subt or subt is needed.");
+  }
+  friend istream& operator >>(istream& is, MyAlg& t)       { is >> t.v; return is; }
+  friend ostream& operator <<(ostream& os, const MyAlg& t) { os << t.v; return os; }
+};
+
+
+
+
+
+// ---- end algOp.cc
 
 // ---- inserted function f:gcd from util.cc
 
-tuple<ll, ll, ll> mut_div(ll a, ll b, ll c, bool eff_c = true) {
-  // auto [g, s, t] = mut_div(a, b, c, eff_c)
-  //    If eff_c is true (default),
-  //        g == gcd(|a|, |b|) and as + bt == c, if such s,t exists
-  //        (g, s, t) == (-1, -1, -1)            otherwise
-  //    If eff_c is false,                                 
-  //        g == gcd(|a|, |b|) and as + bt == g           
-  //    N.b.  gcd(0, t) == gcd(t, 0) == t.
-  if (a == 0) {
-    if (eff_c) {
-      if (c % b != 0) return {-1, -1, -1};
-      else            return {abs(b), 0, c / b};
-    }else {
-      if (b < 0) return {-b, 0, -1};
-      else       return { b, 0,  1};
-    }
-  }else {
-    auto [g, t, u] = mut_div(b % a, a, c, eff_c);
-    // DLOGK(b%a, a, c, g, t, u);
-    if (g == -1) return {-1, -1, -1};
-    return {g, u - (b / a) * t, t};
+// auto [g, s, t] = eGCD(a, b)
+//     g == gcd(|a|, |b|) and as + bt == g           
+//     |a| and |b| must be less than 2^31.
+tuple<ll, ll, ll> eGCD(ll a, ll b) {
+#if DEBUG
+  if (abs(a) >= (1LL << 31) or abs(b) >= (1LL << 31)) throw runtime_error("eGCD: not within the range");
+#endif    
+  array<ll, 50> vec;  // Sufficiently large for a, b < 2^31.
+  ll idx = 0;
+  while (a != 0) {
+    ll x = b / a;
+    ll y = b % a;
+    vec[idx++] = x;
+    b = a;
+    a = y;
   }
+  ll g, s, t;
+  if (b < 0) { g = -b; s = 0; t = -1; }
+  else       { g =  b; s = 0; t =  1; }
+  while (idx > 0) {
+    ll x = vec[--idx];
+    ll old_t = t;
+    t = s;
+    s = old_t - x * s;
+  }
+  return {g, s, t};
 }
-
-// auto [g, s, t] = eGCD(a, b)  --->  sa + tb == g == gcd(|a|, |b|)
-//    N.b.  gcd(0, t) == gcd(t, 0) == t.
-tuple<ll, ll, ll> eGCD(ll a, ll b) { return mut_div(a, b, 0, false); }
 
 pair<ll, ll> crt_sub(ll a1, ll x1, ll a2, ll x2) {
   // DLOGKL("crt_sub", a1, x1, a2, x2);
   a1 = a1 % x1;
   a2 = a2 % x2;
-  auto [g, s, t] = mut_div(x1, -x2, a2 - a1);
-  // DLOGK(g, s, t);
-  if (g == -1) return {-1, -1};
+  auto [g, s, t] = eGCD(x1, -x2);
+  ll gq = (a2 - a1) / g;
+  ll gr = (a2 - a1) % g;
+  if (gr != 0) return {-1, -1};
+  s *= gq;
+  t *= gq;
   ll z = x1 / g * x2;
   // DLOGK(z);
   s = s % (x2 / g);
@@ -141,12 +301,15 @@ struct FpG {   // G for General
   }
 
   FpG inv() const {
-    if (val == 0) {
-      throw runtime_error("FpG::inv(): called for zero.");
-    }
+    if (val == 0) { throw runtime_error("FpG::inv(): called for zero."); }
     auto [g, u, v] = eGCD(val, getMod());
+    if (g != 1) { throw runtime_error("FpG::inv(): not co-prime."); }
     return FpG(u);
   }
+
+  FpG zero() const { return (FpG)0; }
+  FpG one() const { return (FpG)1; }
+  FpG inverse() const { return inv(); }
 
   FpG& operator /=(const FpG& t) {
     return (*this) *= t.inv();
@@ -216,10 +379,11 @@ public:
     for (int i = nMax; i >= 1; i--) vInvFact.at(i-1) = i * vInvFact.at(i);
   }
   FpG<mod> fact(int n) { return vFact.at(n); }
-  FpG<mod> comb(int n, int r) {
+  FpG<mod> binom(int n, int r) {
     if (r < 0 || r > n) return 0;
     return vFact.at(n) * vInvFact.at(r) * vInvFact.at(n-r);
   }
+  FpG<mod> binom_dup(int n, int r) { return binom(n + r - 1, r); }
   // The number of permutation extracting r from n.
   FpG<mod> perm(int n, int r) {
     return vFact.at(n) * vInvFact.at(n-r);
@@ -235,38 +399,416 @@ using CombB = CombG<primeB>;
 
 // ---- end mod.cc
 
-// ---- inserted function f:power from util.cc
-/* *** WARNING ***  
-      ll x = power(10, 12) 
-   does not work since it is interpreted as 
-      ll x = power<int>((int)10, 12)
-   Use power<ll>(10, 12) or power(10LL, 12).
- */
-template<typename T>
-T power(T a, ll b) {
-  T twoPow = a;
-  T rv(1);
-  while (b > 0) {
-    if (b & 1LL) rv *= twoPow;
-    twoPow *= twoPow;
-    b >>= 1;
+// ---- inserted function f:itrange from util.cc
+
+struct ItRange {
+  ll st;
+  ll en;
+
+  struct Itr {
+    using iterator_category = input_iterator_tag;
+    using value_type = ll;
+    using difference_type = ptrdiff_t;
+    using reference = value_type const&;
+    using pointer = value_type const*;
+
+    ll val;
+
+    bool operator ==(const Itr& o) const { return val == o.val; }
+    bool operator !=(const Itr& o) const { return val != o.val; }
+
+    reference operator *() const { return val; }
+    pointer operator ->() const { return &val; }
+
+    Itr& operator ++() {
+      val++;
+      return *this;
+    }
+    Itr operator ++(int) {
+      Itr const tmp(*this);
+      ++*this;
+      return tmp;
+    }
+
+  };
+
+  using iterator = Itr;
+
+  ItRange(ll v_start, ll v_end): st(v_start), en(v_end) {}
+  Itr begin() { return Itr({st}); }
+  Itr end() { return Itr({en}); }
+};
+
+#define ALLIR(a, b) ItRange(a, b).begin(), ItRange(a, b).end()
+
+// Imitation to Python range operator....
+
+
+// ---- end f:itrange
+
+// ---- inserted library file sieve.cc
+
+// sieve(upto) returns the list of prime numbers up to upto.
+//   Size: upto(1e8).size() ... 5.7e6,  upto(1e9).size() ... 5.1e7
+//   Performance: upto(1e8) ... 0.7sec,   upto(1e9) ... 9.2sec
+vector<int> sieve(int upto) {
+  vector<int> res;
+  vector<bool> tbl(upto+1);
+  ll lim = (int)(sqrt((double)upto)) + 1;
+  for (int x = 2; x <= upto; x++) {
+    if (tbl[x]) continue;
+    res.push_back(x);
+    if (x <= lim) {
+      for (int y = x * x; y <= upto; y += x) tbl[y] = true;
+    }
   }
-  return rv;
+  return res;
 }
 
-// ad-hoc power function
-template<typename T, typename Op>
-T ah_power(T a, ll b, const T& unit_t, Op op) {
-  T two_pow = a;
-  T ret = unit_t;
+vector<int> divisorSieve(int upto) {
+  vector<int> tbl(upto+1);
+  iota(tbl.begin(), tbl.end(), 0);
+  ll lim = (int)(sqrt((double)upto)) + 1;
+  for (int x = 2; x <= lim; x++) {
+    if (tbl[x] < x) continue;
+    for (int y = x * x; y <= upto; y += x) if (tbl[y] == y) tbl[y] = x;
+  }
+  return tbl;
+}
+
+/*
+  Prime Factorization
+    Two versions:
+      - prfac(n)
+      - prfac(n, primes)
+            primes should contain prime numbers at least up to sqrt(n)
+ */
+
+vector<pair<ll, int>> _prfac_sub(ll n, const auto& it_beg, const auto& it_end) {
+  vector<pair<ll, int>> res;
+  ll x = n;
+  for (auto it = it_beg; it != it_end and *it * *it <= x; it++) {
+    ll p = *it;
+    int r = 0;
+    while (x % p == 0) {
+      x /= p;
+      r++;
+    }
+    if (r > 0) res.push_back(make_pair(p, r));
+  }
+  if (x > 1) res.push_back(make_pair(x, 1));
+  return res;
+}
+
+vector<pair<ll, int>> prfac(ll n) {
+  ItRange itr(2, n + 1);
+  return _prfac_sub(n, itr.begin(), itr.end());
+}
+vector<pair<ll, int>> prfac(ll n, const vector<int>& primes) {
+  return _prfac_sub(n, primes.begin(), primes.end());
+}
+
+vector<pair<int, int>> prfacDivSieve(int n, const vector<int>& divSieve) {
+  vector<pair<int, int>> ret;
+  int p = -1;
+  int r = 0;
+  while (n > 1) {
+    int q = divSieve[n];
+    if (p == q) {
+      r++;
+    }else {
+      if (p > 0) ret.emplace_back(p, r);
+      p = q;
+      r = 1;
+    }
+    n /= p;
+  }
+  if (p > 0) ret.emplace_back(p, r);
+  return ret;
+}
+
+/*
+    List of divisors
+      - getDivisors(n)
+      - getDivisors(n, primes)
+            primes should contain prime numbers at least up to sqrt(n)
+    Note: the results are NOT sorted
+ */
+
+// _gdsub ... aux function used in getDivisors()
+vector<ll> _gdsub(int i, const auto& fs) {
+  if (i == (int)fs.size()) { return vector<ll>({1}); }
+  auto part = _gdsub(i+1, fs);
+  auto [p, r] = fs[i];
+  ll pp = p;    // pp = p^m, for m \in [1, r]
+  int partOrigLen = part.size();
+  for (int m = 1; m <= r; m++) {
+    for (int j = 0; j < partOrigLen; j++) part.push_back(pp * part[j]);
+    pp *= p;
+  }
+  return part;
+}
+
+vector<ll> getDivisors(ll n) { return _gdsub(0, prfac(n)); }
+vector<ll> getDivisors(ll n, const vector<int>& primes) { return _gdsub(0, prfac(n, primes)); }
+vector<ll> getDivisorsDivSieve(ll n, const vector<int>& divSieve) { return _gdsub(0, prfacDivSieve(n, divSieve)); }
+
+// ---- end sieve.cc
+
+// ---- inserted library file power.cc
+
+template<typename T>
+T power(const T& a, ll b) {
+  auto two_pow = a;
+  auto ret = one<T>(a);
   while (b > 0) {
-    if (b & 1LL) ret = op(ret, two_pow);
-    two_pow = op(two_pow, two_pow);
+    if (b & 1LL) ret *= two_pow;
+    two_pow *= two_pow;
     b >>= 1;
   }
   return ret;
 }
-// ---- end f:power
+
+// ---- end power.cc
+
+// ---- inserted function f:<< from util.cc
+template <typename T1, typename T2>
+ostream& operator<< (ostream& os, const pair<T1,T2>& p) {
+  os << "(" << p.first << ", " << p.second << ")";
+  return os;
+}
+
+template <typename T1, typename T2, typename T3>
+ostream& operator<< (ostream& os, const tuple<T1,T2,T3>& t) {
+  os << "(" << get<0>(t) << ", " << get<1>(t)
+     << ", " << get<2>(t) << ")";
+  return os;
+}
+
+template <typename T1, typename T2, typename T3, typename T4>
+ostream& operator<< (ostream& os, const tuple<T1,T2,T3,T4>& t) {
+  os << "(" << get<0>(t) << ", " << get<1>(t)
+     << ", " << get<2>(t) << ", " << get<3>(t) << ")";
+  return os;
+}
+
+template <typename T>
+ostream& operator<< (ostream& os, const vector<T>& v) {
+  os << '[';
+  for (auto it = v.begin(); it != v.end(); it++) {
+    if (it != v.begin()) os << ", ";
+    os << *it;
+  }
+  os << ']';
+
+  return os;
+}
+
+template <typename T, typename C>
+ostream& operator<< (ostream& os, const set<T, C>& v) {
+  os << '{';
+  for (auto it = v.begin(); it != v.end(); it++) {
+    if (it != v.begin()) os << ", ";
+    os << *it;
+  }
+  os << '}';
+
+  return os;
+}
+
+template <typename T, typename C>
+ostream& operator<< (ostream& os, const unordered_set<T, C>& v) {
+  os << '{';
+  for (auto it = v.begin(); it != v.end(); it++) {
+    if (it != v.begin()) os << ", ";
+    os << *it;
+  }
+  os << '}';
+
+  return os;
+}
+
+template <typename T, typename C>
+ostream& operator<< (ostream& os, const multiset<T, C>& v) {
+  os << '{';
+  for (auto it = v.begin(); it != v.end(); it++) {
+    if (it != v.begin()) os << ", ";
+    os << *it;
+  }
+  os << '}';
+
+  return os;
+}
+
+template <typename T1, typename T2, typename C>
+ostream& operator<< (ostream& os, const map<T1, T2, C>& mp) {
+  os << '[';
+  for (auto it = mp.begin(); it != mp.end(); it++) {
+    if (it != mp.begin()) os << ", ";
+    os << it->first << ": " << it->second;
+  }
+  os << ']';
+
+  return os;
+}
+
+template <typename T1, typename T2, typename C>
+ostream& operator<< (ostream& os, const unordered_map<T1, T2, C>& mp) {
+  os << '[';
+  for (auto it = mp.begin(); it != mp.end(); it++) {
+    if (it != mp.begin()) os << ", ";
+    os << it->first << ": " << it->second;
+  }
+  os << ']';
+
+  return os;
+}
+
+template <typename T, typename T2>
+ostream& operator<< (ostream& os, const queue<T, T2>& orig) {
+  queue<T, T2> que(orig);
+  bool first = true;
+  os << '[';
+  while (!que.empty()) {
+    T x = que.front(); que.pop();
+    if (!first) os << ", ";
+    os << x;
+    first = false;
+  }
+  return os << ']';
+}
+
+template <typename T, typename T2>
+ostream& operator<< (ostream& os, const deque<T, T2>& orig) {
+  deque<T, T2> que(orig);
+  bool first = true;
+  os << '[';
+  while (!que.empty()) {
+    T x = que.front(); que.pop_front();
+    if (!first) os << ", ";
+    os << x;
+    first = false;
+  }
+  return os << ']';
+}
+
+template <typename T, typename T2, typename T3>
+ostream& operator<< (ostream& os, const priority_queue<T, T2, T3>& orig) {
+  priority_queue<T, T2, T3> pq(orig);
+  bool first = true;
+  os << '[';
+  while (!pq.empty()) {
+    T x = pq.top(); pq.pop();
+    if (!first) os << ", ";
+    os << x;
+    first = false;
+  }
+  return os << ']';
+}
+
+template <typename T>
+ostream& operator<< (ostream& os, const stack<T>& st) {
+  stack<T> tmp(st);
+  os << '[';
+  bool first = true;
+  while (!tmp.empty()) {
+    T& t = tmp.top();
+    if (first) first = false;
+    else os << ", ";
+    os << t;
+    tmp.pop();
+  }
+  os << ']';
+  return os;
+}
+
+#if __cplusplus >= 201703L
+template <typename T>
+ostream& operator<< (ostream& os, const optional<T>& t) {
+  if (t.has_value()) os << "v(" << t.value() << ")";
+  else               os << "nullopt";
+  return os;
+}
+#endif
+
+ostream& operator<< (ostream& os, int8_t x) {
+  os << (int32_t)x;
+  return os;
+}
+
+// ---- end f:<<
+
+// ---- inserted library file debug.cc
+template <class... Args>
+string dbgFormat(const char* fmt, Args... args) {
+  size_t len = snprintf(nullptr, 0, fmt, args...);
+  char buf[len + 1];
+  snprintf(buf, len + 1, fmt, args...);
+  return string(buf);
+}
+
+template <class Head>
+void dbgLog(bool with_nl, Head&& head) {
+  cerr << head;
+  if (with_nl) cerr << endl;
+}
+
+template <class Head, class... Tail>
+void dbgLog(bool with_nl, Head&& head, Tail&&... tail)
+{
+  cerr << head << " ";
+  dbgLog(with_nl, forward<Tail>(tail)...);
+}
+
+#if DEBUG
+  #define DLOG(...)        dbgLog(true, __VA_ARGS__)
+  #define DLOGNNL(...)     dbgLog(false, __VA_ARGS__)
+  #define DFMT(...)        cerr << dbgFormat(__VA_ARGS__) << endl
+  #define DCALL(func, ...) func(__VA_ARGS__)
+#else
+  #define DLOG(...)
+  #define DLOGNNL(...)
+  #define DFMT(...)
+  #define DCALL(func, ...)
+#endif
+
+/*
+#if DEBUG_LIB
+  #define DLOG_LIB(...)        dbgLog(true, __VA_ARGS__)
+  #define DLOGNNL_LIB(...)     dbgLog(false, __VA_ARGS__)
+  #define DFMT_LIB(...)        cerr << dbgFormat(__VA_ARGS__) << endl
+  #define DCALL_LIB(func, ...) func(__VA_ARGS__)
+#else
+  #define DLOG_LIB(...)
+  #define DFMT_LIB(...)
+  #define DCALL_LIB(func, ...)
+#endif
+*/
+
+#define DUP1(E1)       #E1 "=", E1
+#define DUP2(E1,E2)    DUP1(E1), DUP1(E2)
+#define DUP3(E1,...)   DUP1(E1), DUP2(__VA_ARGS__)
+#define DUP4(E1,...)   DUP1(E1), DUP3(__VA_ARGS__)
+#define DUP5(E1,...)   DUP1(E1), DUP4(__VA_ARGS__)
+#define DUP6(E1,...)   DUP1(E1), DUP5(__VA_ARGS__)
+#define DUP7(E1,...)   DUP1(E1), DUP6(__VA_ARGS__)
+#define DUP8(E1,...)   DUP1(E1), DUP7(__VA_ARGS__)
+#define DUP9(E1,...)   DUP1(E1), DUP8(__VA_ARGS__)
+#define DUP10(E1,...)   DUP1(E1), DUP9(__VA_ARGS__)
+#define DUP11(E1,...)   DUP1(E1), DUP10(__VA_ARGS__)
+#define DUP12(E1,...)   DUP1(E1), DUP11(__VA_ARGS__)
+#define GET_MACRO(_1,_2,_3,_4,_5,_6,_7,_8,_9,_10,_11,_12,NAME,...) NAME
+#define DUP(...)          GET_MACRO(__VA_ARGS__, DUP12, DUP11, DUP10, DUP9, DUP8, DUP7, DUP6, DUP5, DUP4, DUP3, DUP2, DUP1)(__VA_ARGS__)
+#define DLOGK(...)        DLOG(DUP(__VA_ARGS__))
+#define DLOGKL(lab, ...)  DLOG(lab, DUP(__VA_ARGS__))
+
+#if DEBUG_LIB
+  #define DLOG_LIB   DLOG
+  #define DLOGK_LIB  DLOGK
+  #define DLOGKL_LIB DLOGKL
+#endif
+
+// ---- end debug.cc
 
 // @@ !! LIM -- end mark --
 
@@ -278,28 +820,33 @@ int main(/* int argc, char *argv[] */) {
   cout << setprecision(20);
 
   ll N, K; cin >> N >> K;
-  ll M = max(llround(ceil(sqrt(N))), K);
-  vector<ll> A(M + 1), B(K), cnt(M + 1), primes;
-  iota(ALL(A), 0);
-  REP(i, K) B[i] = N - i;
-  REP2(i, 2, M+1) {
-    if (A[i] == i) {
-      primes.push_back(i);
-      for (ll j = i*i; j < M+1; j += i) A[j] = i;
-      for (ll n = N % i; n < K; n += i) {
-        while (B[n] % i == 0) {
-          cnt[i] += 1;
-          B[n] /= i;
+  if (N - K < K) K = N - K;
+  ll lim = max(K, llround(ceil(sqrt(N))));
+  auto primes = sieve(lim);
+
+  vector<ll> hi(K);
+  vector<ll> lo(K + 1);
+  REP(k, 0, K) hi[k] = N - k;
+  REP(k, 1, K + 1) lo[k] = k;
+  Fp ans = Fp(1);
+  for (ll p : primes) {
+    ll pow = 0;
+    for (ll q = p; q <= N; q *= p) {
+      for (ll r = q; r <= K; r += q) {
+        lo[r] /= p;
+        pow--;
+      }
+      for (ll r = ((N - K) / q) * q; r <= N; r += q) {
+        if (N - K < r) {
+          hi[N - r] /= p;
+          pow++;
         }
       }
     }
-    if (i <= K) for (ll j = i; j > 1; j /= A[j]) cnt[A[j]] -= 1;
+    ans *= pow + 1;
   }
-  Fp ans = 1;
-  for (ll p : primes) ans *= (cnt[p] + 1);
-  ll t = 0; REP(i, K) if (B[i] > 1) t++;
-  ans *= power<Fp>(Fp(2), t);
-  // REP(i, K) if (B[i] > 1) ans *= 2;
+  REP(k, 0, K) if (hi[k] > 1) ans *= 2;
+
   cout << ans << endl;
 
   return 0;

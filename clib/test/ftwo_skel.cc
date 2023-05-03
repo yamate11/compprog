@@ -153,6 +153,12 @@ int main() {
     }
   }
 
+  {
+    Ftwo e1(0), e2(1), e3(10), e4(11), e5(-26), e6(-29);
+    assert(e1 == e3 and e1 == e5 and e2 == e4 and e2 == e6);
+    assert(e1 == e2 + e4 and e2 + e2 + e2 == e2 + e4 + e6);
+  }
+
   cerr << "Test Done.\n";
 
 }

@@ -1,0 +1,42 @@
+#!/usr/bin/env python3
+
+import sys
+
+def msg(*m):
+    print(*m, file=sys.stderr, flush=True)
+
+def resp(*m):
+    print(*m, file=sys.stdout, flush=True)
+
+def main():
+    N = int(input())
+    P = list(map(int, input().split()))
+    resp(N)
+    cnt = 0
+    while True:
+        line = input().rstrip()
+        if line[0] == '?':
+            cnt += 1
+            if cnt > 25000:
+                msg('# WA: num of q exceeds the limit')
+                resp(-1)
+                sys.exit(1)
+            (i, j, k) = map(int, line.split()[1:])
+            i -= 1
+            j -= 1
+            k -= 1
+            if P[i] + P[j] > P[k]:
+                resp('Yes')
+            else:
+                resp('No')
+        elif line[0] == '!':
+            A = list(map(int, line.split()[1:]))
+            if A == P:
+                msg('# AC')
+                sys.exit(0)
+            else:
+                msg('# WA')
+                msg(A)
+                sys.exit(1)
+
+main()

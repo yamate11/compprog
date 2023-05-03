@@ -33,25 +33,25 @@
 	<meta property="twitter:title" content="D - XOR Game" />
 
 	<link href="//fonts.googleapis.com/css?family=Lato:400,700" rel="stylesheet" type="text/css">
-	<link rel="stylesheet" type="text/css" href="//img.atcoder.jp/public/87ad3e1/css/bootstrap.min.css">
-	<link rel="stylesheet" type="text/css" href="//img.atcoder.jp/public/87ad3e1/css/base.css">
+	<link rel="stylesheet" type="text/css" href="//img.atcoder.jp/public/8db1cc5/css/bootstrap.min.css">
+	<link rel="stylesheet" type="text/css" href="//img.atcoder.jp/public/8db1cc5/css/base.css">
 	<link rel="shortcut icon" type="image/png" href="//img.atcoder.jp/assets/favicon.png">
 	<link rel="apple-touch-icon" href="//img.atcoder.jp/assets/atcoder.png">
-	<script src="//img.atcoder.jp/public/87ad3e1/js/lib/jquery-1.9.1.min.js"></script>
-	<script src="//img.atcoder.jp/public/87ad3e1/js/lib/bootstrap.min.js"></script>
-	<script src="//img.atcoder.jp/public/87ad3e1/js/cdn/js.cookie.min.js"></script>
-	<script src="//img.atcoder.jp/public/87ad3e1/js/cdn/moment.min.js"></script>
-	<script src="//img.atcoder.jp/public/87ad3e1/js/cdn/moment_js-ja.js"></script>
+	<script src="//img.atcoder.jp/public/8db1cc5/js/lib/jquery-1.9.1.min.js"></script>
+	<script src="//img.atcoder.jp/public/8db1cc5/js/lib/bootstrap.min.js"></script>
+	<script src="//img.atcoder.jp/public/8db1cc5/js/cdn/js.cookie.min.js"></script>
+	<script src="//img.atcoder.jp/public/8db1cc5/js/cdn/moment.min.js"></script>
+	<script src="//img.atcoder.jp/public/8db1cc5/js/cdn/moment_js-ja.js"></script>
 	<script>
 		var LANG = "en";
 		var userScreenName = "yamate11";
-		var csrfToken = "bbGHp/IoaZLdV62K37yw+UNbvk2zftukEBXBmm5Ug0E="
+		var csrfToken = "Ti6x+UGvWTCWI4eLSmRaO3ipfV7O40LHqtBlEgJjNXQ="
 	</script>
-	<script src="//img.atcoder.jp/public/87ad3e1/js/utils.js"></script>
+	<script src="//img.atcoder.jp/public/8db1cc5/js/utils.js"></script>
 	
 	
-		<script src="//img.atcoder.jp/public/87ad3e1/js/contest.js"></script>
-		<link href="//img.atcoder.jp/public/87ad3e1/css/contest.css" rel="stylesheet" />
+		<script src="//img.atcoder.jp/public/8db1cc5/js/contest.js"></script>
+		<link href="//img.atcoder.jp/public/8db1cc5/css/contest.css" rel="stylesheet" />
 		<script>
 			var contestScreenName = "arc122";
 			var remainingText = "Remaining Time";
@@ -64,34 +64,48 @@ font-size: 240%;
 }</style>
 	
 	
-		<script type="text/x-mathjax-config">MathJax.Hub.Config({messageStyle:"none",tex2jax:{skipTags:["script","noscript","style","textarea","code"],inlineMath:[['\\(','\\)']]},delayStartupUntil:"onload"});</script>
-		<script src="//cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+		<link href="//img.atcoder.jp/public/8db1cc5/css/cdn/select2.min.css" rel="stylesheet" />
+		<link href="//img.atcoder.jp/public/8db1cc5/css/cdn/select2-bootstrap.min.css" rel="stylesheet" />
+		<script src="//img.atcoder.jp/public/8db1cc5/js/lib/select2.min.js"></script>
+	
+	
+		<link rel="stylesheet" href="//img.atcoder.jp/public/8db1cc5/css/cdn/codemirror.min.css">
+		<script src="//img.atcoder.jp/public/8db1cc5/js/cdn/codemirror.min.js"></script>
+		<script src="//img.atcoder.jp/public/8db1cc5/js/codeMirror/merged.js"></script>
+	
+	
+		<script src="//img.atcoder.jp/public/8db1cc5/js/cdn/run_prettify.js"></script>
+	
+	
+		<link rel="stylesheet" href="//img.atcoder.jp/public/8db1cc5/css/cdn/katex.min.css">
+		<script defer src="//img.atcoder.jp/public/8db1cc5/js/cdn/katex.min.js"></script>
+		<script defer src="//img.atcoder.jp/public/8db1cc5/js/cdn/auto-render.min.js"></script>
 		<script>$(function(){$('var').each(function(){var html=$(this).html().replace(/<sub>/g,'_{').replace(/<\/sub>/g,'}');$(this).html('\\('+html+'\\)');});});</script>
-	
-	
-		<link href="//img.atcoder.jp/public/87ad3e1/css/cdn/select2.min.css" rel="stylesheet" />
-		<link href="//img.atcoder.jp/public/87ad3e1/css/cdn/select2-bootstrap.min.css" rel="stylesheet" />
-		<script src="//img.atcoder.jp/public/87ad3e1/js/lib/select2.min.js"></script>
-	
-	
-		<link rel="stylesheet" href="//img.atcoder.jp/public/87ad3e1/css/cdn/codemirror.min.css">
-		<script src="//img.atcoder.jp/public/87ad3e1/js/cdn/codemirror.min.js"></script>
-		<script src="//img.atcoder.jp/public/87ad3e1/js/codeMirror/merged.js"></script>
-	
-	
-		<script src="//img.atcoder.jp/public/87ad3e1/js/cdn/run_prettify.js"></script>
-	
-	
-	
-	
+		<script>
+			var katexOptions = {
+				delimiters: [
+					{left: "$$", right: "$$", display: true},
+					
+					{left: "\\(", right: "\\)", display: false},
+					{left: "\\[", right: "\\]", display: true}
+				],
+      	ignoredTags: ["script", "noscript", "style", "textarea", "code", "option"],
+				ignoredClasses: ["prettyprint", "source-code-for-copy"],
+				throwOnError: false
+			};
+			document.addEventListener("DOMContentLoaded", function() { renderMathInElement(document.body, katexOptions);});
+		</script>
 	
 	
 	
 	
 	
 	
-	<script src="//img.atcoder.jp/public/87ad3e1/js/base.js"></script>
-	<script src="//img.atcoder.jp/public/87ad3e1/js/ga.js"></script>
+	
+	
+	
+	<script src="//img.atcoder.jp/public/8db1cc5/js/base.js"></script>
+	<script src="//img.atcoder.jp/public/8db1cc5/js/ga.js"></script>
 </head>
 
 <body>
@@ -192,7 +206,7 @@ font-size: 240%;
 	</nav>
 
 	<form method="POST" name="form_logout" action="/logout?continue=https%3A%2F%2Fatcoder.jp%2Fcontests%2Farc122%2Ftasks%2Farc122_d">
-		<input type="hidden" name="csrf_token" value="bbGHp/IoaZLdV62K37yw&#43;UNbvk2zftukEBXBmm5Ug0E=" />
+		<input type="hidden" name="csrf_token" value="Ti6x&#43;UGvWTCWI4eLSmRaO3ipfV7O40LHqtBlEgJjNXQ=" />
 	</form>
 	<div id="main-container" class="container"
 		 	style="padding-top:50px;">
@@ -229,7 +243,7 @@ font-size: 240%;
 			<li>
 				<a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false"><span class="glyphicon glyphicon-list" aria-hidden="true"></span> Results<span class="caret"></span></a>
 				<ul class="dropdown-menu">
-					
+					<li><a href="/contests/arc122/submissions"><span class="glyphicon glyphicon-globe" aria-hidden="true"></span> All Submissions</a></li>
 					
 						<li><a href="/contests/arc122/submissions/me"><span class="glyphicon glyphicon-user" aria-hidden="true"></span> My Submissions</a></li>
 						<li class="divider"></li>
@@ -245,12 +259,18 @@ font-size: 240%;
 					<li><a href="/contests/arc122/standings"><span class="glyphicon glyphicon-sort-by-attributes-alt" aria-hidden="true"></span> Standings</a></li>
 				
 			
+				
+					<li><a href="/contests/arc122/standings/virtual"><span class="glyphicon glyphicon-sort-by-attributes-alt" aria-hidden="true"></span> Virtual Standings</a></li>
+				
+			
 		
 
 		
 			<li><a href="/contests/arc122/custom_test"><span class="glyphicon glyphicon-wrench" aria-hidden="true"></span> Custom Test</a></li>
 		
 
+		
+			<li><a href="/contests/arc122/editorial"><span class="glyphicon glyphicon-book" aria-hidden="true"></span> Editorial</a></li>
 		
 		
 			
@@ -265,7 +285,7 @@ font-size: 240%;
 	<div class="col-sm-12">
 		<span class="h2">
 			D - XOR Game
-			
+			<a class="btn btn-default btn-sm" href="/contests/arc122/tasks/arc122_d/editorial">Editorial</a>
 		</span>
 		<span id="task-lang-btn" class="pull-right"><span data-lang="ja"><img src='//img.atcoder.jp/assets/top/img/flag-lang/ja.png'></span> / <span data-lang="en"><img src='//img.atcoder.jp/assets/top/img/flag-lang/en.png'></span></span>
 		<script>
@@ -357,6 +377,7 @@ Alice の目標はスコアを最大化することで，Bob の目標はスコ�
 <pre><var>N</var>
 <var>A_1</var> <var>A_2</var> <var>\cdots</var> <var>A_{2N}</var>
 </pre>
+
 </section>
 </div>
 
@@ -373,6 +394,7 @@ Alice の目標はスコアを最大化することで，Bob の目標はスコ�
 <h3>入力例 1</h3><pre>2
 0 1 3 5
 </pre>
+
 </section>
 </div>
 
@@ -380,6 +402,7 @@ Alice の目標はスコアを最大化することで，Bob の目標はスコ�
 <section>
 <h3>出力例 1</h3><pre>4
 </pre>
+
 <p>例えば，以下のようなゲームの進行が考えられます．なお，この進行が最適な手順であるとは限りません．</p>
 <ul>
 <li>
@@ -399,7 +422,7 @@ Alice の目標はスコアを最大化することで，Bob の目標はスコ�
 </ul>
 </li>
 <li>
-<p>ゲームのスコアが <var>\max(1,4)=4</var> になる．</p>
+<p>ゲームのスコアが <var>\max(3,4)=4</var> になる．</p>
 </li>
 </ul>
 </section>
@@ -411,6 +434,7 @@ Alice の目標はスコアを最大化することで，Bob の目標はスコ�
 <h3>入力例 2</h3><pre>2
 0 0 0 0
 </pre>
+
 </section>
 </div>
 
@@ -418,6 +442,7 @@ Alice の目標はスコアを最大化することで，Bob の目標はスコ�
 <section>
 <h3>出力例 2</h3><pre>0
 </pre>
+
 </section>
 </div>
 
@@ -427,6 +452,7 @@ Alice の目標はスコアを最大化することで，Bob の目標はスコ�
 <h3>入力例 3</h3><pre>10
 974654030 99760550 750234695 255777344 907989127 917878091 818948631 690392797 579845317 549202360 511962375 203530861 491981716 64663831 561104719 541423175 301832976 252317904 471905694 350223945
 </pre>
+
 </section>
 </div>
 
@@ -474,6 +500,7 @@ Find the score of the game when both players play optimally under their objectiv
 <pre><var>N</var>
 <var>A_1</var> <var>A_2</var> <var>\cdots</var> <var>A_{2N}</var>
 </pre>
+
 </section>
 </div>
 
@@ -490,6 +517,7 @@ Find the score of the game when both players play optimally under their objectiv
 <h3>Sample Input 1</h3><pre>2
 0 1 3 5
 </pre>
+
 </section>
 </div>
 
@@ -497,6 +525,7 @@ Find the score of the game when both players play optimally under their objectiv
 <section>
 <h3>Sample Output 1</h3><pre>4
 </pre>
+
 <p>Below is one possible progress of the game (it may contain suboptimal choices).</p>
 <ul>
 <li>
@@ -516,7 +545,7 @@ Find the score of the game when both players play optimally under their objectiv
 </ul>
 </li>
 <li>
-<p>The score of the game is <var>\max(1,4)=4</var>.</p>
+<p>The score of the game is <var>\max(3,4)=4</var>.</p>
 </li>
 </ul>
 </section>
@@ -528,6 +557,7 @@ Find the score of the game when both players play optimally under their objectiv
 <h3>Sample Input 2</h3><pre>2
 0 0 0 0
 </pre>
+
 </section>
 </div>
 
@@ -535,6 +565,7 @@ Find the score of the game when both players play optimally under their objectiv
 <section>
 <h3>Sample Output 2</h3><pre>0
 </pre>
+
 </section>
 </div>
 
@@ -544,6 +575,7 @@ Find the score of the game when both players play optimally under their objectiv
 <h3>Sample Input 3</h3><pre>10
 974654030 99760550 750234695 255777344 907989127 917878091 818948631 690392797 579845317 549202360 511962375 203530861 491981716 64663831 561104719 541423175 301832976 252317904 471905694 350223945
 </pre>
+
 </section>
 </div>
 
@@ -554,6 +586,7 @@ Find the score of the game when both players play optimally under their objectiv
 </div>
 </span>
 </span>
+
 		</div>
 
 		
@@ -736,7 +769,7 @@ Find the score of the game when both players play optimally under their objectiv
 	<input id="input-open-file" type="file" style="display:none;">
 </div>
 
-			<input type="hidden" name="csrf_token" value="bbGHp/IoaZLdV62K37yw&#43;UNbvk2zftukEBXBmm5Ug0E=" />
+			<input type="hidden" name="csrf_token" value="Ti6x&#43;UGvWTCWI4eLSmRaO3ipfV7O40LHqtBlEgJjNXQ=" />
 			<div class="form-group">
 				<label class="control-label col-sm-2" for="submit"></label>
 				<div class="col-sm-5">

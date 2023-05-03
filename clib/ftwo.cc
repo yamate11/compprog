@@ -22,7 +22,7 @@
 struct Ftwo {
   int8_t val;
 
-  Ftwo(ll t = 0) { val = (t == 0) ? 0 : 1; }
+  Ftwo(ll t = 0) { val = t & 1; }
   Ftwo(const Ftwo& t) : val(t.val) {}
   Ftwo& operator =(const Ftwo& t) { val = t.val; return *this; }
   Ftwo& operator =(ll t) { val = (t == 0) ? 0 : 1; return *this; }

@@ -1,13 +1,23 @@
-CXX = g++-9
-CXXCOMMONFLAGS = -std=gnu++17 -Wall -Wno-format-security -Wshadow -fconcepts
-# CXXCOMMONFLAGS = -std=gnu++1y -Wall -Wno-format-security -Wshadow
-BOOSTINCLIB = -I/opt/boost/gcc/include -L/opt/boost/gcc/lib
-ifdef DEBUG
-  CXXFLAGS = -g -O0 $(CXXCOMMONFLAGS) -DDEBUG=$(DEBUG)
+
+CXX := g++
+
+ifeq ($(DEBUG),)
+  DEBUGFLAGS := -O2
 else
-  CXXFLAGS = -O2 $(CXXCOMMONFLAGS)
+  DEBUGFLAGS := -g -O0 -D_GLIBCXX_DEBUG -DDEBUG=1
+  ifneq ($(DEBUG_LIB),)
+    DEBUGFLAGS := $(DEBUGFLAGS) -DDEBUG_LIB=1
+  endif
 endif
-# CXXFLAGS = -O2 $(CXXCOMMONFLAGS) $(BOOSTINCLIB)
+
+WARNINGS := -Wall -Wno-format-security -Wshadow -fconcepts
+
+CXXFLAGS := -std=gnu++17 $(DEBUGFLAGS) $(WARNINGS)
+
+CXXFLAGS := $(CXXFLAGS) -I/home/y-tanabe/lib/boost_1_73_0
+CXXFLAGS := $(CXXFLAGS) -I/home/y-tanabe/proj/compprog/clib/ac-library
+CXXFLAGS := $(CXXFLAGS) $(if $(CMPNAIVE),-DCMPNAIVE=1)
+CXXFLAGS := $(CXXFLAGS)
 
 all: cans
 

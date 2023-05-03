@@ -712,7 +712,7 @@ struct Matrix {
 struct Ftwo {
   int8_t val;
 
-  Ftwo(ll t = 0) { val = (t == 0) ? 0 : 1; }
+  Ftwo(ll t = 0) { val = t & 1; }
   Ftwo(const Ftwo& t) : val(t.val) {}
   Ftwo& operator =(const Ftwo& t) { val = t.val; return *this; }
   Ftwo& operator =(ll t) { val = (t == 0) ? 0 : 1; return *this; }
@@ -968,6 +968,12 @@ int main() {
       for (ll b : bs0) assert(ss.find(b) != ss.end());
       for (ll j = 0; j < (ll)bs1.size() - 1; j++) assert(msb(bs1[j]) > msb(bs1[j + 1]));
     }
+  }
+
+  {
+    Ftwo e1(0), e2(1), e3(10), e4(11), e5(-26), e6(-29);
+    assert(e1 == e3 and e1 == e5 and e2 == e4 and e2 == e6);
+    assert(e1 == e2 + e4 and e2 + e2 + e2 == e2 + e4 + e6);
   }
 
   cerr << "Test Done.\n";

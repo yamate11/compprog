@@ -1,0 +1,42 @@
+#!/usr/bin/env python3
+
+from subprocess import run, PIPE
+
+def g(c):
+    return 4 if c == 'K' else c
+
+def func(spec, wlog):
+    o1 = g(spec[0])
+    o2 = g(spec[1])
+    o3 = g(spec[2])
+    p1 = spec[0].lower()
+    p2 = spec[1].lower()
+    p3 = spec[2].lower()
+    q1 = spec[4]
+    q2 = spec[5]
+    q3 = spec[6]
+    with open('myinc.h', 'w') as wfp:
+        src = f'''
+#include <string>
+
+std::string label = "{spec}";
+
+#define VDEF vector tbl({o1}, vector({o2}, vector({o3}, 0LL)));
+#define TBL(r, c, k) tbl[{p1}][{p2}][{p3}]
+#define LOOP LOOP_{q1} LOOP_{q2} LOOP_{q3}
+'''
+        print(src, file=wfp)
+    run(['make', 'DEBUG='])
+    for i in range(5):
+        cp = run(['./cans'], input="3000 3000 200000", encoding='UTF-8', stdout=PIPE)
+        print(cp.stdout, end='', flush=True, file=wlog)
+
+
+def main():
+    with open('perf.log', 'w') as wlog:
+        for s1 in ['RCK', 'RKC', 'CRK', 'CKR', 'KRC', 'KCR']:
+            for s2 in ['RCK', 'RKC', 'CRK', 'CKR', 'KRC', 'KCR']:
+                func(f'{s1}.{s2}', wlog)
+    
+
+main()

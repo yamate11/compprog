@@ -35,30 +35,35 @@ def main():
     name = [judge, cans]
     proc = [p_judge, p_cans]
     closed = []
-    while True:
+    all_closed = False
+    while not all_closed:
         lst = sel.select(1.0)
         if not lst:
             for i in range(2):
                 if i not in closed:
                     proc[i].kill()
             abort('timeout occurred.')
-        if len(lst) != 1:
-            abort('select length not 1')
-        (s, e) = lst[0]
-        msg = s.fileobj.readline()
-        if msg == '':
-            log(f'{name[s.data]} terminated.\n')
-            sel.unregister(s.fileobj)
-            closed.append(s.data)
-            if (len(closed) == 2):
-                break
-        elif msg[0] == '#':
-            log(f'(internal) {msg}')
-            print(msg, end='')
-        else:
-            peer = proc[1 - s.data]
-            log(f'{name[s.data]}->{name[1 - s.data]}: {msg}')
-            print(msg, file=peer.stdin, end='', flush=True)
+        # if len(lst) != 1:
+        #     abort('select length not 1')
+        for (s, e) in lst:
+            # (s, e) = lst[0]
+            msg = s.fileobj.readline()
+            if msg == '':
+                log(f'{name[s.data]} terminated.\n')
+                sel.unregister(s.fileobj)
+                closed.append(s.data)
+                if (len(closed) == 2):
+                    all_closed = True
+            elif msg[0] == '#':
+                log(f'(internal) {msg}')
+                print(msg, end='')
+            else:
+                peer = proc[1 - s.data]
+                log(f'{name[s.data]}->{name[1 - s.data]}: {msg}')
+                print(msg, file=peer.stdin, end='', flush=True)
+    p_judge.wait()
+    # log('*** ', p_judge.returncode, '\n')
+    sys.exit(p_judge.returncode)
     
 def parse_args():
     parser = argparse.ArgumentParser(

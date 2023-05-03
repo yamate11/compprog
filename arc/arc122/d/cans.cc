@@ -1,293 +1,179 @@
 #include <bits/stdc++.h>
 #include <cassert>
-typedef long long int ll;
 using namespace std;
+using ll = long long int;
+using pll = pair<ll, ll>;
 // #include <atcoder/all>
 // using namespace atcoder;
+#define REP(i, a, b) for (ll i = (a); i < (b); i++)
+#define REPrev(i, a, b) for (ll i = (a); i >= (b); i--)
+#define ALL(coll) (coll).begin(), (coll).end()
+#define SIZE(v) ((ll)((v).size()))
+#define REPOUT(i, a, b, exp, sep) REP(i, (a), (b)) cout << (exp) << (i + 1 == (b) ? "" : (sep)); cout << "\n"
 
-// @@ !! LIM(debug)
+// @@ !! LIM(cmpNaive)
 
-// ---- inserted function f:<< from util.cc
-template <typename T1, typename T2>
-ostream& operator<< (ostream& os, const pair<T1,T2>& p) {
-  os << "(" << p.first << ", " << p.second << ")";
-  return os;
-}
+// ---- inserted library file cmpNaive.cc
 
-template <typename T1, typename T2, typename T3>
-ostream& operator<< (ostream& os, const tuple<T1,T2,T3>& t) {
-  os << "(" << get<0>(t) << ", " << get<1>(t)
-     << ", " << get<2>(t) << ")";
-  return os;
-}
+const string end_mark("^__=end=__^");
 
-template <typename T1, typename T2, typename T3, typename T4>
-ostream& operator<< (ostream& os, const tuple<T1,T2,T3,T4>& t) {
-  os << "(" << get<0>(t) << ", " << get<1>(t)
-     << ", " << get<2>(t) << ", " << get<3>(t) << ")";
-  return os;
-}
+int naive(istream& cin, ostream& cout);
+int body(istream& cin, ostream& cout);
 
-template <typename T>
-ostream& operator<< (ostream& os, const vector<T>& v) {
-  os << '[';
-  for (auto it = v.begin(); it != v.end(); it++) {
-    if (it != v.begin()) os << ", ";
-    os << *it;
+void cmpNaive() {
+  while (true) {
+    string s;
+    getline(cin, s);
+    bool run_body;
+    if (s.at(0) == 'Q') {
+      return;
+    }else if (s.at(0) == 'B') {
+      run_body = true;
+    }else if (s.at(0) == 'N') {
+      run_body = false;
+    }else {
+      cerr << "Unknown body/naive specifier.\n";
+      exit(1);
+    }
+    string input_s;
+    while (true) {
+      getline(cin, s);
+      if (s == end_mark) break;
+      input_s += s;
+      input_s += "\n";
+    }
+    stringstream ss_in(move(input_s));
+    stringstream ss_out;
+    if (run_body) {
+      body(ss_in, ss_out);
+    }else {
+      naive(ss_in, ss_out);
+    }
+    cout << ss_out.str() << end_mark << endl;
   }
-  os << ']';
-
-  return os;
 }
 
-template <typename T, typename C>
-ostream& operator<< (ostream& os, const set<T, C>& v) {
-  os << '{';
-  for (auto it = v.begin(); it != v.end(); it++) {
-    if (it != v.begin()) os << ", ";
-    os << *it;
-  }
-  os << '}';
-
-  return os;
-}
-
-template <typename T, typename C>
-ostream& operator<< (ostream& os, const unordered_set<T, C>& v) {
-  os << '{';
-  for (auto it = v.begin(); it != v.end(); it++) {
-    if (it != v.begin()) os << ", ";
-    os << *it;
-  }
-  os << '}';
-
-  return os;
-}
-
-template <typename T, typename C>
-ostream& operator<< (ostream& os, const multiset<T, C>& v) {
-  os << '{';
-  for (auto it = v.begin(); it != v.end(); it++) {
-    if (it != v.begin()) os << ", ";
-    os << *it;
-  }
-  os << '}';
-
-  return os;
-}
-
-template <typename T1, typename T2, typename C>
-ostream& operator<< (ostream& os, const map<T1, T2, C>& mp) {
-  os << '[';
-  for (auto it = mp.begin(); it != mp.end(); it++) {
-    if (it != mp.begin()) os << ", ";
-    os << it->first << ": " << it->second;
-  }
-  os << ']';
-
-  return os;
-}
-
-template <typename T1, typename T2, typename C>
-ostream& operator<< (ostream& os, const unordered_map<T1, T2, C>& mp) {
-  os << '[';
-  for (auto it = mp.begin(); it != mp.end(); it++) {
-    if (it != mp.begin()) os << ", ";
-    os << it->first << ": " << it->second;
-  }
-  os << ']';
-
-  return os;
-}
-
-template <typename T, typename T2>
-ostream& operator<< (ostream& os, const queue<T, T2>& orig) {
-  queue<T, T2> que(orig);
-  bool first = true;
-  os << '[';
-  while (!que.empty()) {
-    T x = que.front(); que.pop();
-    if (!first) os << ", ";
-    os << x;
-    first = false;
-  }
-  return os << ']';
-}
-
-template <typename T, typename T2>
-ostream& operator<< (ostream& os, const deque<T, T2>& orig) {
-  deque<T, T2> que(orig);
-  bool first = true;
-  os << '[';
-  while (!que.empty()) {
-    T x = que.front(); que.pop_front();
-    if (!first) os << ", ";
-    os << x;
-    first = false;
-  }
-  return os << ']';
-}
-
-template <typename T, typename T2, typename T3>
-ostream& operator<< (ostream& os, const priority_queue<T, T2, T3>& orig) {
-  priority_queue<T, T2, T3> pq(orig);
-  bool first = true;
-  os << '[';
-  while (!pq.empty()) {
-    T x = pq.top(); pq.pop();
-    if (!first) os << ", ";
-    os << x;
-    first = false;
-  }
-  return os << ']';
-}
-
-template <typename T>
-ostream& operator<< (ostream& os, const stack<T>& st) {
-  stack<T> tmp(st);
-  os << '[';
-  bool first = true;
-  while (!tmp.empty()) {
-    T& t = tmp.top();
-    if (first) first = false;
-    else os << ", ";
-    os << t;
-    tmp.pop();
-  }
-  os << ']';
-  return os;
-}
-
-#if __cplusplus >= 201703L
-template <typename T>
-ostream& operator<< (ostream& os, const optional<T>& t) {
-  if (t.has_value()) os << "v(" << t.value() << ")";
-  else               os << "nullopt";
-  return os;
-}
-#endif
-
-ostream& operator<< (ostream& os, int8_t x) {
-  os << (int32_t)x;
-  return os;
-}
-
-// ---- end f:<<
-
-// ---- inserted library file debug.cc
-template <class... Args>
-string dbgFormat(const char* fmt, Args... args) {
-  size_t len = snprintf(nullptr, 0, fmt, args...);
-  char buf[len + 1];
-  snprintf(buf, len + 1, fmt, args...);
-  return string(buf);
-}
-
-template <class Head>
-void dbgLog(bool with_nl, Head&& head) {
-  cerr << head;
-  if (with_nl) cerr << endl;
-}
-
-template <class Head, class... Tail>
-void dbgLog(bool with_nl, Head&& head, Tail&&... tail)
-{
-  cerr << head << " ";
-  dbgLog(with_nl, forward<Tail>(tail)...);
-}
-
-#if DEBUG
-  #define DLOG(...)        dbgLog(true, __VA_ARGS__)
-  #define DLOGNNL(...)     dbgLog(false, __VA_ARGS__)
-  #define DFMT(...)        cerr << dbgFormat(__VA_ARGS__) << endl
-  #define DCALL(func, ...) func(__VA_ARGS__)
-#else
-  #define DLOG(...)
-  #define DLOGNNL(...)
-  #define DFMT(...)
-  #define DCALL(func, ...)
-#endif
-
-/*
-#if DEBUG_LIB
-  #define DLOG_LIB(...)        dbgLog(true, __VA_ARGS__)
-  #define DLOGNNL_LIB(...)     dbgLog(false, __VA_ARGS__)
-  #define DFMT_LIB(...)        cerr << dbgFormat(__VA_ARGS__) << endl
-  #define DCALL_LIB(func, ...) func(__VA_ARGS__)
-#else
-  #define DLOG_LIB(...)
-  #define DFMT_LIB(...)
-  #define DCALL_LIB(func, ...)
-#endif
-*/
-
-#define DUP1(E1)       #E1 "=", E1
-#define DUP2(E1,E2)    DUP1(E1), DUP1(E2)
-#define DUP3(E1,...)   DUP1(E1), DUP2(__VA_ARGS__)
-#define DUP4(E1,...)   DUP1(E1), DUP3(__VA_ARGS__)
-#define DUP5(E1,...)   DUP1(E1), DUP4(__VA_ARGS__)
-#define DUP6(E1,...)   DUP1(E1), DUP5(__VA_ARGS__)
-#define DUP7(E1,...)   DUP1(E1), DUP6(__VA_ARGS__)
-#define DUP8(E1,...)   DUP1(E1), DUP7(__VA_ARGS__)
-#define DUP9(E1,...)   DUP1(E1), DUP8(__VA_ARGS__)
-#define DUP10(E1,...)   DUP1(E1), DUP9(__VA_ARGS__)
-#define DUP11(E1,...)   DUP1(E1), DUP10(__VA_ARGS__)
-#define DUP12(E1,...)   DUP1(E1), DUP11(__VA_ARGS__)
-#define GET_MACRO(_1,_2,_3,_4,_5,_6,_7,_8,_9,_10,_11,_12,NAME,...) NAME
-#define DUP(...)          GET_MACRO(__VA_ARGS__, DUP12, DUP11, DUP10, DUP9, DUP8, DUP7, DUP6, DUP5, DUP4, DUP3, DUP2, DUP1)(__VA_ARGS__)
-#define DLOGK(...)        DLOG(DUP(__VA_ARGS__))
-#define DLOGKL(lab, ...)  DLOG(lab, DUP(__VA_ARGS__))
-
-#if DEBUG_LIB
-  #define DLOG_LIB   DLOG
-  #define DLOGK_LIB  DLOGK
-  #define DLOGKL_LIB DLOGKL
-#endif
-
-// ---- end debug.cc
-
-// @@ !! LIM -- end mark --
-
-pair<vector<ll>, vector<ll>> split(const vector<ll>& vec, ll m) {
-  vector<ll> vec0, vec1;
-  for (ll a : vec) {
-    if ((a >> m) & 1) vec1.push_back(a ^ (1LL << m));
-    else vec0.push_back(a);
-  }
-  return make_pair(move(vec0), move(vec1));
-}
-
-ll fB(const vector<ll>& vec0, const vector<ll>& vec1, ll m) {
-  if (m < 0) return 0;
-  auto [u0, u1] = split(vec0, m);
-  auto [v0, v1] = split(vec1, m);
-  if (u0.empty() && v1.empty()) return (1LL << m) | fB(v0, u1, m - 1);
-  if (u1.empty() && v0.empty()) return (1LL << m) | fB(v1, u0, m - 1);
-  ll ret = LLONG_MAX;
-  if ((! u0.empty() && ! v0.empty())) { ret = min(ret, fB(u0, v0, m - 1)); }
-  if ((! u1.empty() && ! v1.empty())) { ret = min(ret, fB(u1, v1, m - 1)); }
-  return ret;
-}
-
-ll fA(const vector<ll>& vec, ll m) {
-  if (m < 0) return 0;
-  auto [vec0, vec1] = split(vec, m);
-  DLOGKL("fA", m, vec0, vec1);
-  if (vec0.empty()) return fA(vec1, m-1);
-  else if (vec1.empty()) return fA(vec0, m-1);
-  else if (vec0.size() % 2 == 0) return max(fA(vec0, m-1), fA(vec1, m-1));
-  else return (1LL << m) | fB(vec0, vec1, m - 1);
-}
-
-int main(/* int argc, char *argv[] */) {
+int main(int argc, char *argv[]) {
   ios_base::sync_with_stdio(false);
   cin.tie(nullptr);
   cout << setprecision(20);
 
+#if CMPNAIVE
+  if (argc == 2) {
+    if (strcmp(argv[1], "cmpNaive") == 0) {
+      cmpNaive();
+    }else if (strcmp(argv[1], "naive") == 0) {
+      naive(cin, cout);
+    }else if (strcmp(argv[1], "skip") == 0) {
+      exit(0);
+    }else {
+      cerr << "Unknown argument.\n";
+      exit(1);
+    }
+  }else {
+#endif
+    body(cin, cout);
+#if CMPNAIVE
+  }
+#endif
+  return 0;
+}
+
+/*
+int naive(istream& cin, ostream& cout) {
+  return 0;
+}
+int body(istream& cin, ostream& cout) {
+  return 0;
+}
+*/
+
+// ---- end cmpNaive.cc
+
+// @@ !! LIM -- end mark --
+
+int naive(istream& cin, ostream& cout) {
   ll N; cin >> N;
-  vector<ll> A(2*N);
-  for (ll i = 0; i < 2*N; i++) cin >> A[i];
-  cout << fA(A, 29) << endl;
+  // @InpVec(2*N, A) [EoraEQlM]
+  auto A = vector(2*N, ll());
+  for (int i = 0; i < 2*N; i++) { ll v; cin >> v; A[i] = v; }
+  // @End [EoraEQlM]
+
+  auto f = [&](auto rF, auto& vec, ll sz, ll acc) -> ll {
+    if (sz == 0) return acc;
+    ll y = LLONG_MIN;
+    REP(i, 0, sz) {
+      ll v = vec[i];
+      ll w = vec[sz - 1];
+      vec[i] = w;
+      ll z = LLONG_MAX;
+      REP(j, 0, sz - 1) {
+        ll vv = vec[j];
+        ll ww = vec[sz - 2];
+        vec[j] = ww;
+        ll e = rF(rF, vec, sz - 2, max(acc, v ^ vv));
+        z = min(z, e);
+        vec[j] = vv;
+      }
+      y = max(y, z);
+      vec[i] = v;
+    }
+    return y;
+  };
+  cout << f(f, A, 2*N, 0) << endl;
+
+  return 0;
+}
+
+int body(istream& cin, ostream& cout) {
+  ll N; cin >> N;
+  // @InpVec(2*N, A) [EoraEQlM]
+  auto A = vector(2*N, ll());
+  for (int i = 0; i < 2*N; i++) { ll v; cin >> v; A[i] = v; }
+  // @End [EoraEQlM]
+
+  ll lim = 29;
+  ll pat = 0;
+  ll mask = 1LL << lim;
+  bool single = true;
+  ll score = 0;
+  REPrev(k, lim, 0) {
+    if (single) {
+      ll cnt = 0;
+      mask = 1LL << k;
+      REP(i, 0, 2 * N) if ((A[i] & mask) != 0) cnt++;
+      if (cnt % 2 == 0) {
+      }else {
+        single = false;
+        pat = 1LL << k;
+        score = 1LL << k;
+      }
+    }else {
+      mask |= 1LL << k;
+      ll pat1 = pat;
+      ll pat2 = pat | (1LL << k);
+      ll cnt1a = 0, cnt1b = 0, cnt2a = 0, cnt2b = 0;
+      REP(i, 0, 2*N) {
+        ll ma = A[i] & mask;
+        if      (ma == (  pat1  & mask)) cnt1a++;
+        else if (ma == ((~pat1) & mask)) cnt1b++;
+        else if (ma == (  pat2  & mask)) cnt2a++;
+        else if (ma == ((~pat2) & mask)) cnt2b++;
+      }
+      if (cnt1a + cnt1b == 2*N and cnt1a % 2 != 0) {
+        pat = pat1;
+        score |= 1LL << k;
+      }else if (cnt2a + cnt2b == 2*N and cnt2a % 2 != 0) {
+        pat = pat2;
+        score |= 1LL << k;
+      }else {
+        mask ^= 1LL << k;
+      }
+    }
+  }
+  cout << score << endl;
+
+
   return 0;
 }
 

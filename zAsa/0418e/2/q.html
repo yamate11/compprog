@@ -1,0 +1,837 @@
+
+
+
+
+
+
+
+
+<!DOCTYPE html>
+<html>
+<head>
+	<title>D - A &#43; B &gt; C ?</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+	<meta http-equiv="Content-Language" content="en">
+	<meta name="viewport" content="width=device-width,initial-scale=1.0">
+	<meta name="format-detection" content="telephone=no">
+	<meta name="google-site-verification" content="nXGC_JxO0yoP1qBzMnYD_xgufO6leSLw1kyNo2HZltM" />
+
+	
+	<meta name="description" content="AtCoder is a programming contest site for anyone from beginners to experts. We hold weekly programming contests online.">
+	<meta name="author" content="AtCoder Inc.">
+
+	<meta property="og:site_name" content="AtCoder">
+	
+	<meta property="og:title" content="D - A &#43; B &gt; C ?" />
+	<meta property="og:description" content="AtCoder is a programming contest site for anyone from beginners to experts. We hold weekly programming contests online." />
+	<meta property="og:type" content="website" />
+	<meta property="og:url" content="https://atcoder.jp/contests/arc154/tasks/arc154_d" />
+	<meta property="og:image" content="https://img.atcoder.jp/assets/atcoder.png" />
+	<meta name="twitter:card" content="summary" />
+	<meta name="twitter:site" content="@atcoder" />
+	
+	<meta property="twitter:title" content="D - A &#43; B &gt; C ?" />
+
+	<link href="//fonts.googleapis.com/css?family=Lato:400,700" rel="stylesheet" type="text/css">
+	<link rel="stylesheet" type="text/css" href="//img.atcoder.jp/public/ebfb237/css/bootstrap.min.css">
+	<link rel="stylesheet" type="text/css" href="//img.atcoder.jp/public/ebfb237/css/base.css">
+	<link rel="shortcut icon" type="image/png" href="//img.atcoder.jp/assets/favicon.png">
+	<link rel="apple-touch-icon" href="//img.atcoder.jp/assets/atcoder.png">
+	<script src="//img.atcoder.jp/public/ebfb237/js/lib/jquery-1.9.1.min.js"></script>
+	<script src="//img.atcoder.jp/public/ebfb237/js/lib/bootstrap.min.js"></script>
+	<script src="//img.atcoder.jp/public/ebfb237/js/cdn/js.cookie.min.js"></script>
+	<script src="//img.atcoder.jp/public/ebfb237/js/cdn/moment.min.js"></script>
+	<script src="//img.atcoder.jp/public/ebfb237/js/cdn/moment_js-ja.js"></script>
+	<script>
+		var LANG = "en";
+		var userScreenName = "yamate11";
+		var csrfToken = "2At/CsTquq4PG7i4SKsO6Rsrh6BmnkzeLx3z7ZVZWPo="
+	</script>
+	<script src="//img.atcoder.jp/public/ebfb237/js/utils.js"></script>
+	
+	
+		<script src="//img.atcoder.jp/public/ebfb237/js/contest.js"></script>
+		<link href="//img.atcoder.jp/public/ebfb237/css/contest.css" rel="stylesheet" />
+		<script>
+			var contestScreenName = "arc154";
+			var remainingText = "Remaining Time";
+			var countDownText = "Contest begins in";
+			var startTime = moment("2023-01-22T21:00:00+09:00");
+			var endTime = moment("2023-01-22T23:00:00+09:00");
+		</script>
+		<style></style>
+	
+	
+		<link href="//img.atcoder.jp/public/ebfb237/css/cdn/select2.min.css" rel="stylesheet" />
+		<link href="//img.atcoder.jp/public/ebfb237/css/cdn/select2-bootstrap.min.css" rel="stylesheet" />
+		<script src="//img.atcoder.jp/public/ebfb237/js/lib/select2.min.js"></script>
+	
+	
+		<link rel="stylesheet" href="//img.atcoder.jp/public/ebfb237/css/cdn/codemirror.min.css">
+		<script src="//img.atcoder.jp/public/ebfb237/js/cdn/codemirror.min.js"></script>
+		<script src="//img.atcoder.jp/public/ebfb237/js/codeMirror/merged.js"></script>
+	
+	
+		<script src="//img.atcoder.jp/public/ebfb237/js/cdn/run_prettify.js"></script>
+	
+	
+		<link rel="stylesheet" href="//img.atcoder.jp/public/ebfb237/css/cdn/katex.min.css">
+		<script defer src="//img.atcoder.jp/public/ebfb237/js/cdn/katex.min.js"></script>
+		<script defer src="//img.atcoder.jp/public/ebfb237/js/cdn/auto-render.min.js"></script>
+		<script>$(function(){$('var').each(function(){var html=$(this).html().replace(/<sub>/g,'_{').replace(/<\/sub>/g,'}');$(this).html('\\('+html+'\\)');});});</script>
+		<script>
+			var katexOptions = {
+				delimiters: [
+					{left: "$$", right: "$$", display: true},
+					
+					{left: "\\(", right: "\\)", display: false},
+					{left: "\\[", right: "\\]", display: true}
+				],
+      	ignoredTags: ["script", "noscript", "style", "textarea", "code", "option"],
+				ignoredClasses: ["prettyprint", "source-code-for-copy"],
+				throwOnError: false
+			};
+			document.addEventListener("DOMContentLoaded", function() { renderMathInElement(document.body, katexOptions);});
+		</script>
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	<script src="//img.atcoder.jp/public/ebfb237/js/base.js"></script>
+	<script src="//img.atcoder.jp/public/ebfb237/js/ga.js"></script>
+</head>
+
+<body>
+
+<script type="text/javascript">
+	var __pParams = __pParams || [];
+	__pParams.push({client_id: '468', c_1: 'atcodercontest', c_2: 'ClientSite'});
+</script>
+<script type="text/javascript" src="https://cdn.d2-apps.net/js/tr.js" async></script>
+
+
+<div id="modal-contest-start" class="modal fade" tabindex="-1" role="dialog">
+	<div class="modal-dialog" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+				<h4 class="modal-title">Contest started</h4>
+			</div>
+			<div class="modal-body">
+				<p>AtCoder Regular Contest 154 has begun.</p>
+			</div>
+			<div class="modal-footer">
+				
+					<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+				
+			</div>
+		</div>
+	</div>
+</div>
+<div id="modal-contest-end" class="modal fade" tabindex="-1" role="dialog">
+	<div class="modal-dialog" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+				<h4 class="modal-title">Contest is over</h4>
+			</div>
+			<div class="modal-body">
+				<p>AtCoder Regular Contest 154 has ended.</p>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+			</div>
+		</div>
+	</div>
+</div>
+<div id="main-div" class="float-container">
+
+
+	<nav class="navbar navbar-inverse navbar-fixed-top">
+		<div class="container-fluid">
+			<div class="navbar-header">
+				<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapse" aria-expanded="false">
+					<span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span>
+				</button>
+				<a class="navbar-brand" href="/home"></a>
+			</div>
+			<div class="collapse navbar-collapse" id="navbar-collapse">
+				<ul class="nav navbar-nav">
+				
+					<li><a class="contest-title" href="/contests/arc154">AtCoder Regular Contest 154</a></li>
+				
+				</ul>
+				<ul class="nav navbar-nav navbar-right">
+					
+					<li class="dropdown">
+						<a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
+							<img src='//img.atcoder.jp/assets/top/img/flag-lang/en.png'> English <span class="caret"></span>
+						</a>
+						<ul class="dropdown-menu">
+							<li><a href="/contests/arc154/tasks/arc154_d?lang=ja"><img src='//img.atcoder.jp/assets/top/img/flag-lang/ja.png'> 日本語</a></li>
+							<li><a href="/contests/arc154/tasks/arc154_d?lang=en"><img src='//img.atcoder.jp/assets/top/img/flag-lang/en.png'> English</a></li>
+						</ul>
+					</li>
+					
+					
+						<li class="dropdown">
+							<a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
+								<span class="glyphicon glyphicon-cog" aria-hidden="true"></span> yamate11 (Guest) <span class="caret"></span>
+							</a>
+							<ul class="dropdown-menu">
+								<li><a href="/users/yamate11"><span class="glyphicon glyphicon-user" aria-hidden="true"></span> My Profile</a></li>
+								<li class="divider"></li>
+								<li><a href="/settings"><span class="glyphicon glyphicon-wrench" aria-hidden="true"></span> General Settings</a></li>
+								<li><a href="/settings/icon"><span class="glyphicon glyphicon-picture" aria-hidden="true"></span> Change Photo</a></li>
+								<li><a href="/settings/password"><span class="glyphicon glyphicon-lock" aria-hidden="true"></span> Change Password</a></li>
+								<li><a href="/settings/fav"><span class="glyphicon glyphicon-star" aria-hidden="true"></span> Manage Fav</a></li>
+								
+								
+								
+								<li class="divider"></li>
+								<li><a href="javascript:void(form_logout.submit())"><span class="glyphicon glyphicon-log-out" aria-hidden="true"></span> Sign Out</a></li>
+							</ul>
+						</li>
+					
+				</ul>
+			</div>
+		</div>
+	</nav>
+
+	<form method="POST" name="form_logout" action="/logout?continue=https%3A%2F%2Fatcoder.jp%2Fcontests%2Farc154%2Ftasks%2Farc154_d">
+		<input type="hidden" name="csrf_token" value="2At/CsTquq4PG7i4SKsO6Rsrh6BmnkzeLx3z7ZVZWPo=" />
+	</form>
+	<div id="main-container" class="container"
+		 	style="padding-top:50px;">
+		
+
+
+<div class="row">
+	<div id="contest-nav-tabs" class="col-sm-12 mb-2 cnvtb-fixed">
+	<div>
+		<small class="contest-duration">
+			
+				Contest Duration:
+				<a href='http://www.timeanddate.com/worldclock/fixedtime.html?iso=20230122T2100&p1=248' target='blank'><time class='fixtime fixtime-full'>2023-01-22 21:00:00+0900</time></a> - <a href='http://www.timeanddate.com/worldclock/fixedtime.html?iso=20230122T2300&p1=248' target='blank'><time class='fixtime fixtime-full'>2023-01-22 23:00:00+0900</time></a> (local time)
+				(120 minutes)
+			
+		</small>
+		<small class="back-to-home pull-right"><a href="/home">Back to Home</a></small>
+	</div>
+	<ul class="nav nav-tabs">
+		<li><a href="/contests/arc154"><span class="glyphicon glyphicon-home" aria-hidden="true"></span> Top</a></li>
+		
+			<li class="active"><a href="/contests/arc154/tasks"><span class="glyphicon glyphicon-tasks" aria-hidden="true"></span> Tasks</a></li>
+		
+
+		
+			<li><a href="/contests/arc154/clarifications"><span class="glyphicon glyphicon-question-sign" aria-hidden="true"></span> Clarifications <span id="clar-badge" class="badge"></span></a></li>
+		
+
+		
+			<li><a href="/contests/arc154/submit?taskScreenName=arc154_d"><span class="glyphicon glyphicon-send" aria-hidden="true"></span> Submit</a></li>
+		
+
+		
+			<li>
+				<a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false"><span class="glyphicon glyphicon-list" aria-hidden="true"></span> Results<span class="caret"></span></a>
+				<ul class="dropdown-menu">
+					<li><a href="/contests/arc154/submissions"><span class="glyphicon glyphicon-globe" aria-hidden="true"></span> All Submissions</a></li>
+					
+						<li><a href="/contests/arc154/submissions/me"><span class="glyphicon glyphicon-user" aria-hidden="true"></span> My Submissions</a></li>
+						<li class="divider"></li>
+						<li><a href="/contests/arc154/score"><span class="glyphicon glyphicon-dashboard" aria-hidden="true"></span> My Score</a></li>
+					
+				</ul>
+			</li>
+		
+
+		
+			
+				
+					<li><a href="/contests/arc154/standings"><span class="glyphicon glyphicon-sort-by-attributes-alt" aria-hidden="true"></span> Standings</a></li>
+				
+			
+				
+					<li><a href="/contests/arc154/standings/virtual"><span class="glyphicon glyphicon-sort-by-attributes-alt" aria-hidden="true"></span> Virtual Standings</a></li>
+				
+			
+		
+
+		
+			<li><a href="/contests/arc154/custom_test"><span class="glyphicon glyphicon-wrench" aria-hidden="true"></span> Custom Test</a></li>
+		
+
+		
+			<li><a href="/contests/arc154/editorial"><span class="glyphicon glyphicon-book" aria-hidden="true"></span> Editorial</a></li>
+		
+		
+			
+			
+				<li><a href="https://codeforces.com/blog/entry/111719" target="_blank" rel="noopener"><span class="glyphicon glyphicon-comment" aria-hidden="true"></span> Discuss</a></li>
+			
+		
+
+		<li class="pull-right"><a id="fix-cnvtb" href="javascript:void(0)"><span class="glyphicon glyphicon-pushpin" aria-hidden="true"></span></a></li>
+	</ul>
+</div>
+	<div class="col-sm-12">
+		<span class="h2">
+			D - A &#43; B &gt; C ?
+			<a class="btn btn-default btn-sm" href="/contests/arc154/tasks/arc154_d/editorial">Editorial</a>
+		</span>
+		<span id="task-lang-btn" class="pull-right"><span data-lang="ja"><img src='//img.atcoder.jp/assets/top/img/flag-lang/ja.png'></span> / <span data-lang="en"><img src='//img.atcoder.jp/assets/top/img/flag-lang/en.png'></span></span>
+		<script>
+			$(function() {
+				var ts = $('#task-statement span.lang');
+				if (ts.children('span').size() <= 1) {
+					$('#task-lang-btn').hide();
+					ts.children('span').show();
+					return;
+				}
+				var REMEMBER_LB = 5;
+				var LS_KEY = 'task_lang';
+				var taskLang = getLS(LS_KEY) || '';
+				var changeTimes = 0;
+				if (taskLang == 'ja' || taskLang == 'en') {
+					changeTimes = REMEMBER_LB;
+				} else {
+					var changeTimes = parseInt(taskLang, 10);
+					if (isNaN(changeTimes)) {
+						changeTimes = 0;
+						delLS(LS_KEY);
+					}
+					changeTimes++;
+					taskLang = LANG;
+				}
+				ts.children('span.lang-' + taskLang).show();
+
+				$('#task-lang-btn span').click(function() {
+					var l = $(this).data('lang');
+					ts.children('span').hide();
+					ts.children('span.lang-' + l).show();
+					if (changeTimes < REMEMBER_LB) setLS(LS_KEY, changeTimes);
+					else setLS(LS_KEY, l);
+				});
+			});
+		</script>
+		<hr/>
+		<p>
+			Time Limit: 2 sec / Memory Limit: 1024 MB
+			
+		</p>
+
+		<div id="task-statement">
+			
+			<span class="lang">
+<span class="lang-ja">
+<p>配点 : <var>700</var> 点</p>
+
+<div class="part">
+<section>
+<h3>問題文</h3><p>PCT 君は <var>(1,2,\dots,N)</var> の順列 <var>(P_1,P_2,\dots,P_N)</var> を持っています。あなたには <var>N</var> のみが伝えられます。</p>
+<p>あなたは PCT 君に以下の質問を <var>25000</var> 回以下行うことができます。</p>
+<ul>
+<li><var>1 \le i,j,k \le N</var> を満たす整数の組 <var>(i,j,k)</var> を <var>1</var> 個指定し、<var>P_i + P_j &gt; P_k</var> かどうかを聞く。</li>
+</ul>
+<p><var>P_1,P_2,\dots,P_N</var> を全て求めてください。</p>
+</section>
+</div>
+
+<div class="part">
+<section>
+<h3>制約</h3><ul>
+<li><var>1 \le N \le 2000</var></li>
+<li><var>P</var> はプログラムとジャッジの対話の開始前に決定される。</li>
+</ul>
+</section>
+</div>
+
+<div class="part">
+<section>
+<h3>入出力</h3><p><strong>この問題はインタラクティブな問題</strong>（あなたの作成したプログラムとジャッジプログラムが入出力を介して対話を行う形式の問題）である。</p>
+<p>まず、あなたのプログラムに標準入力から順列の長さ <var>N</var> が与えられる。</p>
+<pre><var>N</var>
+</pre>
+<p>その後、あなたは質問を行うことが出来る。
+質問は標準出力に以下の形式で出力せよ。(末尾に改行を入れること。)</p>
+<pre>? <var>i</var> <var>j</var> <var>k</var>
+</pre>
+<p>質問が正当な場合、その質問の答え <var>ans</var> が標準入力から与えられる。</p>
+<pre><var>ans</var>
+</pre>
+<p>ここで、<var>ans</var> は <code>Yes</code> または <code>No</code> である。</p>
+<p>質問のフォーマットが間違っている、または質問を規定の回数より多く行ったという理由で質問が不正と判断された場合、<code>-1</code> が標準入力から与えられる。</p>
+<pre>-1
+</pre>
+<p>この時、提出はすでに不正解と判定されている。ジャッジプログラムはこの時点で対話を終了するため、あなたのプログラムも終了するのが望ましい。</p>
+<p><var>P_1,P_2,\dots,P_N</var> が全て分かったら、標準出力に以下の形式で出力せよ。(末尾に改行を入れること。)</p>
+<pre>! <var>P_1</var> <var>P_2</var> <var>\dots</var> <var>P_N</var>
+</pre>
+</section>
+</div>
+
+<div class="part">
+<section>
+<h3>ジャッジ</h3><ul>
+<li><span style = "color:red"><strong>出力を行うたびに、末尾に改行を入れて標準出力を flush せよ。そうしなかった場合、ジャッジ結果が <span class="label label-warning" data-toggle="tooltip" data-placement="top" title="" data-original-title="実行時間制限超過">TLE</span> となる可能性がある。</strong></span></li>
+<li>答えを出力したら(または <code>-1</code> を受け取ったら)直ちにプログラムを正常終了せよ。そうしなかった場合、ジャッジ結果は不定である。</li>
+<li>余計な改行は不正なフォーマットの出力とみなされることに注意せよ。</li>
+</ul>
+</section>
+</div>
+
+<div class="part">
+<section>
+<h3>入出力例</h3><p>以下は、<var>N = 4,P=(3,1,2,4)</var> の場合の入出力例です。</p>
+<table class="table table-bordered">
+
+<thead>
+<tr>
+<th>入力</th>
+<th>出力</th>
+<th>説明</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td><code>4</code></td>
+<td></td>
+<td><var>N</var> が与えられます。</td>
+</tr>
+
+<tr>
+<td></td>
+<td><code>?</code> <code>1</code> <code>2</code> <code>3</code></td>
+<td><var>1</var> 個目の質問として、<var>P_1 + P_2 > P_3</var> かどうかを聞きます。</td>
+</tr>
+
+<tr>
+<td><code>Yes</code></td>
+<td></td>
+<td><var>P_1 + P_2=4,P_3=2</var> であるため、返答は <code>Yes</code> です。</td>
+</tr>
+<tr>
+
+<tr>
+<td></td>
+<td><code>?</code> <code>2</code> <code>3</code> <code>3</code></td>
+<td><var>2</var> 個目の質問として、<var>P_2 + P_3 > P_3</var> かどうかを聞きます。</td>
+</tr>
+
+<tr>
+<td><code>Yes</code></td>
+<td></td>
+<td><var>P_2 + P_3=3,P_3=2</var> であるため、返答は <code>Yes</code> です。</td>
+</tr>
+<tr>
+
+<tr>
+<td></td>
+<td><code>?</code> <code>2</code> <code>3</code> <code>4</code></td>
+<td><var>3</var> 個目の質問として、<var>P_2 + P_3 > P_4</var> かどうかを聞きます。</td>
+</tr>
+
+<tr>
+<td><code>No</code></td>
+<td></td>
+<td><var>P_2 + P_3=3,P_4=4</var> であるため、返答は <code>No</code> です。</td>
+</tr>
+<tr>
+
+<tr>
+<td></td>
+<td><code>!</code> <code>3</code> <code>1</code> <code>2</code> <code>4</code></td>
+<td><var>P_1,P_2,P_3,P_4</var> を出力します。実際に、<var>P=(3,1,2,4)</var> であるため、<span class="label label-success" data-toggle="tooltip" data-placement="top" title="" data-original-title="正解">AC</span> となります。</td>
+</tr>
+<tr>
+
+</tbody>
+
+</table></section>
+</div>
+</span>
+<span class="lang-en">
+<p>Score : <var>700</var> points</p>
+
+<div class="part">
+<section>
+<h3>Problem Statement</h3><p>PCT has a permutation <var>(P_1,P_2,\dots,P_N)</var> of <var>(1,2,\dots,N)</var>. You are only informed of <var>N</var>.</p>
+<p>You can ask him at most <var>25000</var> questions of the following form.</p>
+<ul>
+<li>Specify a triple of integers <var>(i,j,k)</var> such that <var>1 \le i,j,k \le N</var> and ask whether <var>P_i + P_j &gt; P_k</var>.</li>
+</ul>
+<p>Find all of <var>P_1,P_2,\dots,P_N</var>.</p>
+</section>
+</div>
+
+<div class="part">
+<section>
+<h3>Constraints</h3><ul>
+<li><var>1 \le N \le 2000</var></li>
+<li><var>P</var> is decided before the start of the interaction of your program and the judge.</li>
+</ul>
+</section>
+</div>
+
+<div class="part">
+<section>
+<h3>Input and Output</h3><p><strong>This is an interactive task</strong>, where your program and the judge interact via input and output.</p>
+<p>First, your program is given <var>N</var>, the length of the permutation, from Standard Input:</p>
+<pre><var>N</var>
+</pre>
+<p>Then, you get to ask questions.
+Print your question to Standard Output in the following format: (There should be a newline at the end.)</p>
+<pre>? <var>i</var> <var>j</var> <var>k</var>
+</pre>
+<p>If the question is valid, the answer <var>ans</var> will be given from Standard Input:</p>
+<pre><var>ans</var>
+</pre>
+<p>Here, <var>ans</var> is <code>Yes</code> or <code>No</code>.</p>
+<p>If the question is malformed or judged invalid because you have asked more questions than allowed, <code>-1</code> will be given from Standard Input:</p>
+<pre>-1
+</pre>
+<p>Here, the submission has already been judged incorrect. The judge will end the interaction at this point; preferably, your program should also quit.</p>
+<p>Once you have identified all of <var>P_1, P_2, \dots, P_N</var>, print them to Standard Output in the following format: (There should be a newline at the end.)</p>
+<pre>! <var>P_1</var> <var>P_2</var> <var>\dots</var> <var>P_N</var>
+</pre>
+</section>
+</div>
+
+<div class="part">
+<section>
+<h3>Judging</h3><ul>
+<li><span style = "color:red"><strong>Each time you print something, end it with a newline and flush Standard Output. Otherwise, you might get a <span class="label label-warning" data-toggle="tooltip" data-placement="top" title="" data-original-title="Time Limit Exceeded">TLE</span> verdict.</strong></span></li>
+<li>After printing the answer (or receiving <code>-1</code>), immediately terminate the program normally. Otherwise, the verdict will be indeterminate.</li>
+<li>Note that unnecessary newlines will be considered as malformed output.</li>
+</ul>
+</section>
+</div>
+
+<div class="part">
+<section>
+<h3>Sample Interaction</h3><p>Below is an interaction with <var>N = 4</var> and <var>P=(3,1,2,4)</var>.</p>
+<table class="table table-bordered">
+
+<thead>
+<tr>
+<th>Input</th>
+<th>Output</th>
+<th>Description</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td><code>4</code></td>
+<td></td>
+<td><var>N</var> is given.</td>
+</tr>
+
+<tr>
+<td></td>
+<td><code>?</code> <code>1</code> <code>2</code> <code>3</code></td>
+<td>As the first question, you ask whether <var>P_1 + P_2 > P_3</var>.</td>
+</tr>
+
+<tr>
+<td><code>Yes</code></td>
+<td></td>
+<td>We have <var>P_1 + P_2=4</var> and <var>P_3=2</var>, so the answer is <code>Yes</code>.</td>
+</tr>
+<tr>
+
+<tr>
+<td></td>
+<td><code>?</code> <code>2</code> <code>3</code> <code>3</code></td>
+<td>As the second question, you ask whether <var>P_2 + P_3 > P_3</var>.</td>
+</tr>
+
+<tr>
+<td><code>Yes</code></td>
+<td></td>
+<td>We have <var>P_2 + P_3=3</var> and <var>P_3=2</var>, so the answer is <code>Yes</code>.</td>
+</tr>
+<tr>
+
+<tr>
+<td></td>
+<td><code>?</code> <code>2</code> <code>3</code> <code>4</code></td>
+<td>As the third question, you ask whether <var>P_2 + P_3 > P_4</var>.</td>
+</tr>
+
+<tr>
+<td><code>No</code></td>
+<td></td>
+<td>We have <var>P_2 + P_3=3</var> and <var>P_4=4</var>, so the answer is <code>No</code>.</td>
+</tr>
+<tr>
+
+<tr>
+<td></td>
+<td><code>!</code> <code>3</code> <code>1</code> <code>2</code> <code>4</code></td>
+<td>You print <var>P_1,P_2,P_3,P_4</var>. We do have <var>P=(3,1,2,4)</var>, so you get an <span class="label label-success" data-toggle="tooltip" data-placement="top" title="" data-original-title="Accepted">AC</span>.</td>
+</tr>
+<tr>
+
+</tbody>
+
+</table></section>
+</div>
+</span>
+</span>
+
+		</div>
+
+		
+
+		
+		<hr/>
+		<form class="form-horizontal form-code-submit" action="/contests/arc154/submit" method="POST">
+			<input type="hidden" name="data.TaskScreenName" value="arc154_d" />
+			
+			<div class="form-group ">
+				<label class="control-label col-sm-2" for="select-lang">Language</label>
+				<div id="select-lang" class="col-sm-5" data-name="data.LanguageId">
+					<select class="form-control current" data-placeholder="-" name="data.LanguageId" required>
+						<option></option>
+						
+							<option value="4001" data-mime="text/x-csrc">C (GCC 9.2.1)</option>
+						
+							<option value="4002" data-mime="text/x-csrc">C (Clang 10.0.0)</option>
+						
+							<option value="4003" data-mime="text/x-c&#43;&#43;src">C&#43;&#43; (GCC 9.2.1)</option>
+						
+							<option value="4004" data-mime="text/x-c&#43;&#43;src">C&#43;&#43; (Clang 10.0.0)</option>
+						
+							<option value="4005" data-mime="text/x-java">Java (OpenJDK 11.0.6)</option>
+						
+							<option value="4006" data-mime="text/x-python">Python (3.8.2)</option>
+						
+							<option value="4007" data-mime="text/x-sh">Bash (5.0.11)</option>
+						
+							<option value="4008" data-mime="text/x-bc">bc (1.07.1)</option>
+						
+							<option value="4009" data-mime="text/x-sh">Awk (GNU Awk 4.1.4)</option>
+						
+							<option value="4010" data-mime="text/x-csharp">C# (.NET Core 3.1.201)</option>
+						
+							<option value="4011" data-mime="text/x-csharp">C# (Mono-mcs 6.8.0.105)</option>
+						
+							<option value="4012" data-mime="text/x-csharp">C# (Mono-csc 3.5.0)</option>
+						
+							<option value="4013" data-mime="text/x-clojure">Clojure (1.10.1.536)</option>
+						
+							<option value="4014" data-mime="text/x-crystal">Crystal (0.33.0)</option>
+						
+							<option value="4015" data-mime="text/x-d">D (DMD 2.091.0)</option>
+						
+							<option value="4016" data-mime="text/x-d">D (GDC 9.2.1)</option>
+						
+							<option value="4017" data-mime="text/x-d">D (LDC 1.20.1)</option>
+						
+							<option value="4018" data-mime="application/dart">Dart (2.7.2)</option>
+						
+							<option value="4019" data-mime="text/x-dc">dc (1.4.1)</option>
+						
+							<option value="4020" data-mime="text/x-erlang">Erlang (22.3)</option>
+						
+							<option value="4021" data-mime="elixir">Elixir (1.10.2)</option>
+						
+							<option value="4022" data-mime="text/x-fsharp">F# (.NET Core 3.1.201)</option>
+						
+							<option value="4023" data-mime="text/x-fsharp">F# (Mono 10.2.3)</option>
+						
+							<option value="4024" data-mime="text/x-forth">Forth (gforth 0.7.3)</option>
+						
+							<option value="4025" data-mime="text/x-fortran">Fortran (GNU Fortran 9.2.1)</option>
+						
+							<option value="4026" data-mime="text/x-go">Go (1.14.1)</option>
+						
+							<option value="4027" data-mime="text/x-haskell">Haskell (GHC 8.8.3)</option>
+						
+							<option value="4028" data-mime="text/x-haxe">Haxe (4.0.3); js</option>
+						
+							<option value="4029" data-mime="text/x-haxe">Haxe (4.0.3); Java</option>
+						
+							<option value="4030" data-mime="text/javascript">JavaScript (Node.js 12.16.1)</option>
+						
+							<option value="4031" data-mime="text/x-julia">Julia (1.4.0)</option>
+						
+							<option value="4032" data-mime="text/x-kotlin">Kotlin (1.3.71)</option>
+						
+							<option value="4033" data-mime="text/x-lua">Lua (Lua 5.3.5)</option>
+						
+							<option value="4034" data-mime="text/x-lua">Lua (LuaJIT 2.1.0)</option>
+						
+							<option value="4035" data-mime="text/x-sh">Dash (0.5.8)</option>
+						
+							<option value="4036" data-mime="text/x-nim">Nim (1.0.6)</option>
+						
+							<option value="4037" data-mime="text/x-objectivec">Objective-C (Clang 10.0.0)</option>
+						
+							<option value="4038" data-mime="text/x-common-lisp">Common Lisp (SBCL 2.0.3)</option>
+						
+							<option value="4039" data-mime="text/x-ocaml">OCaml (4.10.0)</option>
+						
+							<option value="4040" data-mime="text/x-octave">Octave (5.2.0)</option>
+						
+							<option value="4041" data-mime="text/x-pascal">Pascal (FPC 3.0.4)</option>
+						
+							<option value="4042" data-mime="text/x-perl">Perl (5.26.1)</option>
+						
+							<option value="4043" data-mime="text/x-perl">Raku (Rakudo 2020.02.1)</option>
+						
+							<option value="4044" data-mime="text/x-php">PHP (7.4.4)</option>
+						
+							<option value="4045" data-mime="text/x-prolog">Prolog (SWI-Prolog 8.0.3)</option>
+						
+							<option value="4046" data-mime="text/x-python">PyPy2 (7.3.0)</option>
+						
+							<option value="4047" data-mime="text/x-python">PyPy3 (7.3.0)</option>
+						
+							<option value="4048" data-mime="text/x-racket">Racket (7.6)</option>
+						
+							<option value="4049" data-mime="text/x-ruby">Ruby (2.7.1)</option>
+						
+							<option value="4050" data-mime="text/x-rustsrc">Rust (1.42.0)</option>
+						
+							<option value="4051" data-mime="text/x-scala">Scala (2.13.1)</option>
+						
+							<option value="4052" data-mime="text/x-java">Java (OpenJDK 1.8.0)</option>
+						
+							<option value="4053" data-mime="text/x-scheme">Scheme (Gauche 0.9.9)</option>
+						
+							<option value="4054" data-mime="text/x-sml">Standard ML (MLton 20130715)</option>
+						
+							<option value="4055" data-mime="text/x-swift">Swift (5.2.1)</option>
+						
+							<option value="4056" data-mime="text/plain">Text (cat 8.28)</option>
+						
+							<option value="4057" data-mime="text/typescript">TypeScript (3.8)</option>
+						
+							<option value="4058" data-mime="text/x-vb">Visual Basic (.NET Core 3.1.101)</option>
+						
+							<option value="4059" data-mime="text/x-sh">Zsh (5.4.2)</option>
+						
+							<option value="4060" data-mime="text/x-cobol">COBOL - Fixed (OpenCOBOL 1.1.0)</option>
+						
+							<option value="4061" data-mime="text/x-cobol">COBOL - Free (OpenCOBOL 1.1.0)</option>
+						
+							<option value="4062" data-mime="text/x-brainfuck">Brainfuck (bf 20041219)</option>
+						
+							<option value="4063" data-mime="text/x-ada">Ada2012 (GNAT 9.2.1)</option>
+						
+							<option value="4064" data-mime="text/x-unlambda">Unlambda (2.0.0)</option>
+						
+							<option value="4065" data-mime="text/x-python">Cython (0.29.16)</option>
+						
+							<option value="4066" data-mime="text/x-sh">Sed (4.4)</option>
+						
+							<option value="4067" data-mime="text/x-vim">Vim (8.2.0460)</option>
+						
+					</select>
+					<span class="error"></span>
+				</div>
+			</div>
+			<script>var currentLang = getLS('defaultLang');</script>
+			
+			
+<div class="form-group">
+	<label class="control-label col-sm-2" for="sourceCode">Source Code</label>
+	<div class="col-sm-7" id="sourceCode">
+		<div class="div-editor">
+			<textarea class="form-control editor" name="sourceCode"></textarea>
+		</div>
+		<textarea class="form-control plain-textarea" style="display:none;"></textarea>
+		<p>
+			<span class="gray">* at most 512 KiB</span><br>
+			<span class="gray">* Your source code will be saved as Main.<i>extension</i>.</span>
+		</p>
+	</div>
+	<div class="col-sm-3 editor-buttons">
+		<p><button id="btn-open-file" type="button" class="btn btn-default btn-sm">
+			<span class="glyphicon glyphicon-folder-open" aria-hidden="true"></span> &nbsp; Open File
+		</button></p>
+		<p><button type="button" class="btn btn-default btn-sm btn-toggle-editor" data-toggle="button" aria-pressed="false" autocomplete="off">
+			Toggle Editor
+		</button></p>
+		<p><button type="button" class="btn btn-default btn-sm btn-auto-height" data-toggle="button" aria-pressed="false" autocomplete="off">
+			Auto Height
+		</button></p>
+	</div>
+	<input id="input-open-file" type="file" style="display:none;">
+</div>
+
+			<input type="hidden" name="csrf_token" value="2At/CsTquq4PG7i4SKsO6Rsrh6BmnkzeLx3z7ZVZWPo=" />
+			<div class="form-group">
+				<label class="control-label col-sm-2" for="submit"></label>
+				<div class="col-sm-5">
+					<button type="submit" class="btn btn-primary" id="submit">Submit</button>
+				</div>
+			</div>
+		</form>
+		
+	</div>
+</div>
+
+
+
+
+		
+			<hr>
+			
+			
+			
+<div class="a2a_kit a2a_kit_size_20 a2a_default_style pull-right" data-a2a-url="https://atcoder.jp/contests/arc154/tasks/arc154_d?lang=en" data-a2a-title="D - A &#43; B &gt; C ?">
+	<a class="a2a_button_facebook"></a>
+	<a class="a2a_button_twitter"></a>
+	
+		<a class="a2a_button_telegram"></a>
+	
+	<a class="a2a_dd" href="https://www.addtoany.com/share"></a>
+</div>
+
+		
+		<script async src="//static.addtoany.com/menu/page.js"></script>
+		
+	</div> 
+	<hr>
+</div> 
+
+	<div class="container" style="margin-bottom: 80px;">
+			<footer class="footer">
+			
+				<ul>
+					<li><a href="/contests/arc154/rules">Rule</a></li>
+					<li><a href="/contests/arc154/glossary">Glossary</a></li>
+					
+				</ul>
+			
+			<ul>
+				<li><a href="/tos">Terms of service</a></li>
+				<li><a href="/privacy">Privacy Policy</a></li>
+				<li><a href="/personal">Information Protection Policy</a></li>
+				<li><a href="/company">Company</a></li>
+				<li><a href="/faq">FAQ</a></li>
+				<li><a href="/contact">Contact</a></li>
+				
+			</ul>
+			<div class="text-center">
+					<small id="copyright">Copyright Since 2012 &copy;<a href="http://atcoder.co.jp">AtCoder Inc.</a> All rights reserved.</small>
+			</div>
+			</footer>
+	</div>
+	<p id="fixed-server-timer" class="contest-timer"></p>
+	<div id="scroll-page-top" style="display:none;"><span class="glyphicon glyphicon-arrow-up" aria-hidden="true"></span> Page Top</div>
+
+</body>
+</html>
+
+
