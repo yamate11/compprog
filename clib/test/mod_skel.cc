@@ -64,8 +64,7 @@ int main() {
 
   {
     using Fp = FpG<97>;
-    using Comb = CombG<97>;
-    Comb cb(6);
+    Comb<Fp> cb(6);
     assert(cb.fact(4) == Fp(24));
     assert(cb.perm(5,3) == Fp(60));
     assert(cb.binom(6,2) == Fp(15));
@@ -73,6 +72,11 @@ int main() {
     assert(cb.binom(6,-1) == Fp(0));
     assert(cb.binom(6,7) == Fp(0));
     assert(cb.binom_dup(2, 4) == Fp(5));
+
+    Comb<double> cb2(8);
+    assert(cb2.fact(8) == 8 * 7 * 6 * 5 * 4 * 3 * 2 * 1);
+    assert(cb2.binom(7, 3) == 7 * 6 * 5 / 3 / 2 / 1);
+
   }
 
   {

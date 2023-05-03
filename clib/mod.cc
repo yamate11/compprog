@@ -14,8 +14,6 @@ using namespace std;
         constexpr int primeB = 998'244'353;
         using FpA = FpG<primeA>;
         using FpB = FpG<primeB>;
-        using CombA = CombG<primeA>;
-        using CombB = CombG<primeB>;
 
   If you need to dynamically change the value of mod:
 
@@ -25,9 +23,9 @@ using namespace std;
 
   FpG<mod>::getMod() is also defined.
 
-  With CombG<mod>, you can do something like:
+  With Comb<T>, you can do something like:
 
-        CombA cb(1000);     // args upto 1000, inclusive
+        Comb<FpA> cb(1000);          // args upto 1000, inclusive
         FpA x = cb.fact(1000);       // factorial
         FpA y = cb.binom(500, 300);  // combination
         FpA yy = cb.binom_dup(300, 500); // combination with duplicate (== binom(300+500-1, 500))
@@ -152,27 +150,27 @@ struct FpG {   // G for General
 template<int mod>
 ll FpG<mod>::dyn_mod;
 
-template<int mod=0>
-class CombG {
+template<typename T>
+class Comb {
   int nMax;
-  vector<FpG<mod>> vFact;
-  vector<FpG<mod>> vInvFact;
+  vector<T> vFact;
+  vector<T> vInvFact;
 public:
-  CombG(int nm) : nMax(nm), vFact(nm+1), vInvFact(nm+1) {
-    vFact.at(0) = 1;
-    for (int i = 1; i <= nMax; i++) vFact.at(i) = i * vFact.at(i-1);
-    vInvFact.at(nMax) = vFact.at(nMax).inv();
-    for (int i = nMax; i >= 1; i--) vInvFact.at(i-1) = i * vInvFact.at(i);
+  Comb(int nm) : nMax(nm), vFact(nm+1), vInvFact(nm+1) {
+    vFact[0] = 1;
+    for (int i = 1; i <= nMax; i++) vFact[i] = i * vFact[i-1];
+    vInvFact.at(nMax) = (T)1 / vFact[nMax];
+    for (int i = nMax; i >= 1; i--) vInvFact[i-1] = i * vInvFact[i];
   }
-  FpG<mod> fact(int n) { return vFact.at(n); }
-  FpG<mod> binom(int n, int r) {
-    if (r < 0 || r > n) return 0;
-    return vFact.at(n) * vInvFact.at(r) * vInvFact.at(n-r);
+  T fact(int n) { return vFact[n]; }
+  T binom(int n, int r) {
+    if (r < 0 || r > n) return (T)0;
+    return vFact[n] * vInvFact[r] * vInvFact[n-r];
   }
-  FpG<mod> binom_dup(int n, int r) { return binom(n + r - 1, r); }
+  T binom_dup(int n, int r) { return binom(n + r - 1, r); }
   // The number of permutation extracting r from n.
-  FpG<mod> perm(int n, int r) {
-    return vFact.at(n) * vInvFact.at(n-r);
+  T perm(int n, int r) {
+    return vFact[n] * vInvFact[n-r];
   }
 };
 
@@ -180,8 +178,6 @@ constexpr int primeA = 1'000'000'007;
 constexpr int primeB = 998'244'353;          // '
 using FpA = FpG<primeA>;
 using FpB = FpG<primeB>;
-using CombA = CombG<primeA>;
-using CombB = CombG<primeB>;
 
 // @@ !! END ---- mod.cc
 
