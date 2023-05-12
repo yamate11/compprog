@@ -1,11 +1,19 @@
 #include <bits/stdc++.h>
 #include <cassert>
-typedef long long int ll;
 using namespace std;
+using ll = long long int;
+using pll = pair<ll, ll>;
+// #include <atcoder/all>
+// using namespace atcoder;
+#define REP(i, a, b) for (ll i = (a); i < (b); i++)
+#define REPrev(i, a, b) for (ll i = (a); i >= (b); i--)
+#define ALL(coll) (coll).begin(), (coll).end()
+#define SIZE(v) ((ll)((v).size()))
+#define REPOUT(i, a, b, exp, sep) REP(i, (a), (b)) cout << (exp) << (i + 1 == (b) ? "" : (sep)); cout << "\n"
 
 // @@ !! LIM(debug)
-// --> f:<< debug
-// ---- inserted function << from util.cc
+
+// ---- inserted function f:<< from util.cc
 template <typename T1, typename T2>
 ostream& operator<< (ostream& os, const pair<T1,T2>& p) {
   os << "(" << p.first << ", " << p.second << ")";
@@ -38,8 +46,8 @@ ostream& operator<< (ostream& os, const vector<T>& v) {
   return os;
 }
 
-template <typename T>
-ostream& operator<< (ostream& os, const set<T>& v) {
+template <typename T, typename C>
+ostream& operator<< (ostream& os, const set<T, C>& v) {
   os << '{';
   for (auto it = v.begin(); it != v.end(); it++) {
     if (it != v.begin()) os << ", ";
@@ -50,8 +58,8 @@ ostream& operator<< (ostream& os, const set<T>& v) {
   return os;
 }
 
-template <typename T>
-ostream& operator<< (ostream& os, const multiset<T>& v) {
+template <typename T, typename C>
+ostream& operator<< (ostream& os, const unordered_set<T, C>& v) {
   os << '{';
   for (auto it = v.begin(); it != v.end(); it++) {
     if (it != v.begin()) os << ", ";
@@ -62,8 +70,20 @@ ostream& operator<< (ostream& os, const multiset<T>& v) {
   return os;
 }
 
-template <typename T1, typename T2>
-ostream& operator<< (ostream& os, const map<T1, T2>& mp) {
+template <typename T, typename C>
+ostream& operator<< (ostream& os, const multiset<T, C>& v) {
+  os << '{';
+  for (auto it = v.begin(); it != v.end(); it++) {
+    if (it != v.begin()) os << ", ";
+    os << *it;
+  }
+  os << '}';
+
+  return os;
+}
+
+template <typename T1, typename T2, typename C>
+ostream& operator<< (ostream& os, const map<T1, T2, C>& mp) {
   os << '[';
   for (auto it = mp.begin(); it != mp.end(); it++) {
     if (it != mp.begin()) os << ", ";
@@ -74,8 +94,8 @@ ostream& operator<< (ostream& os, const map<T1, T2>& mp) {
   return os;
 }
 
-template <typename T1, typename T2>
-ostream& operator<< (ostream& os, const unordered_map<T1, T2>& mp) {
+template <typename T1, typename T2, typename C>
+ostream& operator<< (ostream& os, const unordered_map<T1, T2, C>& mp) {
   os << '[';
   for (auto it = mp.begin(); it != mp.end(); it++) {
     if (it != mp.begin()) os << ", ";
@@ -93,6 +113,20 @@ ostream& operator<< (ostream& os, const queue<T, T2>& orig) {
   os << '[';
   while (!que.empty()) {
     T x = que.front(); que.pop();
+    if (!first) os << ", ";
+    os << x;
+    first = false;
+  }
+  return os << ']';
+}
+
+template <typename T, typename T2>
+ostream& operator<< (ostream& os, const deque<T, T2>& orig) {
+  deque<T, T2> que(orig);
+  bool first = true;
+  os << '[';
+  while (!que.empty()) {
+    T x = que.front(); que.pop_front();
     if (!first) os << ", ";
     os << x;
     first = false;
@@ -139,7 +173,13 @@ ostream& operator<< (ostream& os, const optional<T>& t) {
 }
 #endif
 
-// ---- end <<
+ostream& operator<< (ostream& os, int8_t x) {
+  os << (int32_t)x;
+  return os;
+}
+
+// ---- end f:<<
+
 // ---- inserted library file debug.cc
 template <class... Args>
 string dbgFormat(const char* fmt, Args... args) {
@@ -150,29 +190,34 @@ string dbgFormat(const char* fmt, Args... args) {
 }
 
 template <class Head>
-void dbgLog(Head&& head) {
-  cerr << head << endl;
+void dbgLog(bool with_nl, Head&& head) {
+  cerr << head;
+  if (with_nl) cerr << endl;
 }
 
 template <class Head, class... Tail>
-void dbgLog(Head&& head, Tail&&... tail)
+void dbgLog(bool with_nl, Head&& head, Tail&&... tail)
 {
   cerr << head << " ";
-  dbgLog(forward<Tail>(tail)...);
+  dbgLog(with_nl, forward<Tail>(tail)...);
 }
 
 #if DEBUG
-  #define DLOG(...)        dbgLog(__VA_ARGS__)
+  #define DLOG(...)        dbgLog(true, __VA_ARGS__)
+  #define DLOGNNL(...)     dbgLog(false, __VA_ARGS__)
   #define DFMT(...)        cerr << dbgFormat(__VA_ARGS__) << endl
   #define DCALL(func, ...) func(__VA_ARGS__)
 #else
   #define DLOG(...)
+  #define DLOGNNL(...)
   #define DFMT(...)
   #define DCALL(func, ...)
 #endif
 
+/*
 #if DEBUG_LIB
-  #define DLOG_LIB(...)        dbgLog(__VA_ARGS__)
+  #define DLOG_LIB(...)        dbgLog(true, __VA_ARGS__)
+  #define DLOGNNL_LIB(...)     dbgLog(false, __VA_ARGS__)
   #define DFMT_LIB(...)        cerr << dbgFormat(__VA_ARGS__) << endl
   #define DCALL_LIB(func, ...) func(__VA_ARGS__)
 #else
@@ -180,18 +225,46 @@ void dbgLog(Head&& head, Tail&&... tail)
   #define DFMT_LIB(...)
   #define DCALL_LIB(func, ...)
 #endif
+*/
+
+#define DUP1(E1)       #E1 "=", E1
+#define DUP2(E1,E2)    DUP1(E1), DUP1(E2)
+#define DUP3(E1,...)   DUP1(E1), DUP2(__VA_ARGS__)
+#define DUP4(E1,...)   DUP1(E1), DUP3(__VA_ARGS__)
+#define DUP5(E1,...)   DUP1(E1), DUP4(__VA_ARGS__)
+#define DUP6(E1,...)   DUP1(E1), DUP5(__VA_ARGS__)
+#define DUP7(E1,...)   DUP1(E1), DUP6(__VA_ARGS__)
+#define DUP8(E1,...)   DUP1(E1), DUP7(__VA_ARGS__)
+#define DUP9(E1,...)   DUP1(E1), DUP8(__VA_ARGS__)
+#define DUP10(E1,...)   DUP1(E1), DUP9(__VA_ARGS__)
+#define DUP11(E1,...)   DUP1(E1), DUP10(__VA_ARGS__)
+#define DUP12(E1,...)   DUP1(E1), DUP11(__VA_ARGS__)
+#define GET_MACRO(_1,_2,_3,_4,_5,_6,_7,_8,_9,_10,_11,_12,NAME,...) NAME
+#define DUP(...)          GET_MACRO(__VA_ARGS__, DUP12, DUP11, DUP10, DUP9, DUP8, DUP7, DUP6, DUP5, DUP4, DUP3, DUP2, DUP1)(__VA_ARGS__)
+#define DLOGK(...)        DLOG(DUP(__VA_ARGS__))
+#define DLOGKL(lab, ...)  DLOG(lab, DUP(__VA_ARGS__))
+
+#if DEBUG_LIB
+  #define DLOG_LIB   DLOG
+  #define DLOGK_LIB  DLOGK
+  #define DLOGKL_LIB DLOGKL
+#endif
 
 // ---- end debug.cc
-// @@ !! LIM  -- end mark --
 
-struct TrNode {
-  vector<int> next;
-  int cont;
-  int term;
-  TrNode(int sz = 0) : next(sz, -1), cont(0), term(0) {}
-};
+// @@ !! LIM -- end mark --
 
+template <typename T>
 struct Trie {
+
+  struct TrNode {
+    vector<int> _next;
+    int _parent;
+    bool _exists;
+    T _user;
+    TrNode(int sz = 0, int _parent_ = -1) : _next(sz, -1), _parent(_parent_), _exists(false), _user() {}
+  };
+
   char from;
   int br_size;
   vector<TrNode> nodes;
@@ -199,37 +272,55 @@ struct Trie {
   Trie(char from_, char to_)
     : from(from_), br_size(to_ - from_ + 1), nodes(1, TrNode(br_size)) {}
 
-  int index(const string& s, int add = 0) {
+  int _index(const string& s, bool create) {
     int idx = 0;
     for (int i = 0; i < (int)s.size(); i++) {
-      nodes[idx].cont += add;
-      auto& nxt = nodes[idx].next;
-      char c = s[i] - from;
-      if (nxt[c] < 0) {
-	idx = nodes.size();
-	nxt[c] = idx;
-	nodes.emplace_back(br_size);
+      int c = s[i] - from;
+      if (nodes[idx]._next[c] < 0) {
+        if (not create) return -1;
+        nodes[idx]._next[c] = nodes.size();
+        nodes.emplace_back(br_size, idx);
+        idx = nodes.size() - 1;
       }else {
-	idx = nxt[c];
+	idx = nodes[idx]._next[c];
       }
     }
     return idx;
   }
 
-  void insert(const string& s) {
-    int idx = index(s, 1);
-    nodes[idx].term ++;
+  int insert(const string& s) {
+    int idx = _index(s, true);
+    nodes[idx]._exists = true;
+    return idx;
   }
+
+  bool erase(int idx) {
+    bool ret = nodes[idx]._exists;
+    nodes[idx]._exists = false;
+    return ret;
+  }
+
+  bool erase(const string& s) {
+    int idx = _index(s, false);
+    if (idx < 0) return false;
+    return erase(idx);
+  }
+
+  int index(const string& s) {
+    int idx = _index(s, false);
+    if (idx < 0 or not nodes[idx]._exists) return -1;
+    return idx;
+  }
+
+  int parent(int idx) { return nodes[idx]._parent; }
+
+  int child(int idx, char c) { return nodes[idx]._next[c - from]; }
+
+  bool exists(int idx) { return nodes[idx]._exists; }
+
+  T& user(int idx) { return nodes[idx]._user; }
+
 };
-
-ostream& operator<< (ostream& os, const Trie& trie) {
-  for (ll i = 0; i < (ll)trie.nodes.size(); i++) {
-    const auto& nd = trie.nodes[i];
-    os << i << "(c:" << nd.cont << ",t:" << nd.term << ") " << nd.next << "\n";
-  }
-  return os;
-}
-
 
 int main(/* int argc, char *argv[] */) {
   ios_base::sync_with_stdio(false);
@@ -237,59 +328,35 @@ int main(/* int argc, char *argv[] */) {
   cout << setprecision(20);
 
   ll N; cin >> N;
-  vector<string> S(N);
-  Trie trie('a', 'z');
-  for (ll i = 0; i < N; i++) {
-    string s; cin >> s;
-    reverse(s.begin(), s.end());
-    S[i] = s;
-    trie.insert(s);
+  // @InpVec(N, S, type=string) [QLqQueaJ]
+  auto S = vector(N, string());
+  for (int i = 0; i < N; i++) { string v; cin >> v; S[i] = v; }
+  // @End [QLqQueaJ]
+
+  Trie<vector<ll>> trie('a', 'z');
+  REP(i, 0, N) {
+    reverse(ALL(S[i]));
+    ll idx = trie.insert(S[i]);
+    vector<ll> vec(26);
+    REPrev(j, SIZE(S[i]) - 1, 0) {
+      vec[S[i][j] - 'a'] = 1;
+      idx = trie.parent(idx);
+      auto& v = trie.user(idx);
+      if (SIZE(v) == 0) v = vector<ll>(26);
+      REP(k, 0, 26) v[k] += vec[k];
+    }
   }
-
-  DLOG("trie=", trie);
-
-  ll tsz = trie.nodes.size();
-  vector char_cnt(tsz, vector(26, 0LL));
-  vector<ll> str_cnt(tsz);
-
-  auto dfs = [&](auto rF, int idx) -> void {
-    auto& nd = trie.nodes[idx];
-    for (ll c0 = 0; c0 < 26; c0++) {
-      ll cld = nd.next[c0];
-      if (cld == -1) continue;
-      rF(rF, cld);
-      for (ll c = 0; c < 26; c++) {
-	if (c == c0) char_cnt[idx][c] += str_cnt[cld];
-	else         char_cnt[idx][c] += char_cnt[cld][c];
-      }
-      str_cnt[idx] += str_cnt[cld];
-    }
-    str_cnt[idx] += nd.term;
-  };
-  dfs(dfs, 0);
-
-  DLOG("char_cnt=", char_cnt);
-  DLOG("str_cnt=", str_cnt);
-
   ll ans = 0;
-  for (ll i = 0; i < N; i++) {
-    string s = S[i];
-    ll slen = s.size();
-    ll idx = trie.index(s.substr(0, slen - 1));
-    char clast = s[slen - 1] - 'a';
-    DLOG("i=", i, "clast=", clast, "idx=", idx, "xx=", trie.nodes[idx].next);
-    for (ll c = 0; c < 26; c++) {
-      ll cld = trie.nodes[idx].next[c];
-      if (cld == -1) continue;
-      if (c == clast) {
-	ans += str_cnt[cld] - 1;
-      }else {
-	ans += char_cnt[cld][clast];
-      }
-    }
+  REP(i, 0, N) {
+    string t = S[i].substr(0, SIZE(S[i]) - 1);
+    ll idx = trie._index(t, false);
+    const auto& v = trie.user(idx);
+    ll w = v[S[i][SIZE(S[i]) - 1] - 'a'] - 1;
+    DLOGK(i, S[i], w);
+    ans += w;
   }
   cout << ans << endl;
-
+  
   return 0;
 }
 

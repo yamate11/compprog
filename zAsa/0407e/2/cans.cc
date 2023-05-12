@@ -11,7 +11,7 @@ using pll = pair<ll, ll>;
 #define SIZE(v) ((ll)((v).size()))
 #define REPOUT(i, a, b, exp, sep) REP(i, (a), (b)) cout << (exp) << (i + 1 == (b) ? "" : (sep)); cout << "\n"
 
-// @@ !! LIM(mod debug input)
+// @@ !! LIM(mod debug)
 
 // ---- inserted library file algOp.cc
 
@@ -366,27 +366,27 @@ struct FpG {   // G for General
 template<int mod>
 ll FpG<mod>::dyn_mod;
 
-template<int mod=0>
-class CombG {
+template<typename T>
+class Comb {
   int nMax;
-  vector<FpG<mod>> vFact;
-  vector<FpG<mod>> vInvFact;
+  vector<T> vFact;
+  vector<T> vInvFact;
 public:
-  CombG(int nm) : nMax(nm), vFact(nm+1), vInvFact(nm+1) {
-    vFact.at(0) = 1;
-    for (int i = 1; i <= nMax; i++) vFact.at(i) = i * vFact.at(i-1);
-    vInvFact.at(nMax) = vFact.at(nMax).inv();
-    for (int i = nMax; i >= 1; i--) vInvFact.at(i-1) = i * vInvFact.at(i);
+  Comb(int nm) : nMax(nm), vFact(nm+1), vInvFact(nm+1) {
+    vFact[0] = 1;
+    for (int i = 1; i <= nMax; i++) vFact[i] = i * vFact[i-1];
+    vInvFact.at(nMax) = (T)1 / vFact[nMax];
+    for (int i = nMax; i >= 1; i--) vInvFact[i-1] = i * vInvFact[i];
   }
-  FpG<mod> fact(int n) { return vFact.at(n); }
-  FpG<mod> binom(int n, int r) {
-    if (r < 0 || r > n) return 0;
-    return vFact.at(n) * vInvFact.at(r) * vInvFact.at(n-r);
+  T fact(int n) { return vFact[n]; }
+  T binom(int n, int r) {
+    if (r < 0 || r > n) return (T)0;
+    return vFact[n] * vInvFact[r] * vInvFact[n-r];
   }
-  FpG<mod> binom_dup(int n, int r) { return binom(n + r - 1, r); }
+  T binom_dup(int n, int r) { return binom(n + r - 1, r); }
   // The number of permutation extracting r from n.
-  FpG<mod> perm(int n, int r) {
-    return vFact.at(n) * vInvFact.at(n-r);
+  T perm(int n, int r) {
+    return vFact[n] * vInvFact[n-r];
   }
 };
 
@@ -394,8 +394,6 @@ constexpr int primeA = 1'000'000'007;
 constexpr int primeB = 998'244'353;          // '
 using FpA = FpG<primeA>;
 using FpB = FpG<primeB>;
-using CombA = CombG<primeA>;
-using CombB = CombG<primeB>;
 
 // ---- end mod.cc
 
@@ -638,29 +636,17 @@ void dbgLog(bool with_nl, Head&& head, Tail&&... tail)
 
 // ---- end debug.cc
 
-// ---- inserted library file input.cc
-
-// The contents are empty.
-
-// ---- end input.cc
-
 // @@ !! LIM -- end mark --
 
-template<typename T>
+template <typename T>
 struct Trie {
 
   struct TrNode {
     vector<int> _next;
     int _parent;
-    T udata;
-    TrNode(int sz = 0, int _parent_ = -1) : _next(sz, -1), _parent(_parent_), udata() {}
-
-    friend ostream& operator<< (ostream& os, const TrNode& nd) {
-      os << "_next: " << nd._next << "  _parent: " << nd._parent << "\n";
-      os << "udata: " << nd.udata << "\n";
-      return os;
-    }
-
+    bool _exists;
+    T _user;
+    TrNode(int sz = 0, int _parent_ = -1) : _next(sz, -1), _parent(_parent_), _exists(false), _user() {}
   };
 
   char from;
@@ -670,66 +656,58 @@ struct Trie {
   Trie(char from_, char to_)
     : from(from_), br_size(to_ - from_ + 1), nodes(1, TrNode(br_size)) {}
 
-  int _index(const string& s) {
-    DLOGKL("index", s);
+  int _index(const string& s, bool create) {
     int idx = 0;
     for (int i = 0; i < (int)s.size(); i++) {
-      auto& nxt = nodes[idx]._next;
       int c = s[i] - from;
-      if (nxt[c] < 0) {
-        int new_idx = nodes.size();
-        nxt[c] = new_idx;
-        nodes.emplace_back(br_size, idx);  // BEWARE! This may invalidate reference "nxt".
-        idx = new_idx;
-        DLOGK(*this);
+      if (nodes[idx]._next[c] < 0) {
+        if (not create) return -1;
+        nodes[idx]._next[c] = nodes.size();
+        nodes.emplace_back(br_size, idx);
+        idx = nodes.size() - 1;
       }else {
-	idx = nxt[c];
+	idx = nodes[idx]._next[c];
       }
     }
-    DLOGKL("return idx", idx);
     return idx;
   }
 
-  // If s is not in the trie, it will be inserted.
-  TrNode& node(const string& s) {
-    ll i = _index(s);
-    DLOGKL("val of i", i, nodes[i]);
-    return nodes[i];
+  int insert(const string& s) {
+    int idx = _index(s, true);
+    nodes[idx]._exists = true;
+    return idx;
   }
-  
-  TrNode& parent(const TrNode& nd) { return nodes[nd._parent]; }
-  TrNode& child(const TrNode& nd, char c) { return nodes[nd._next[c - from]]; }
+
+  bool erase(int idx) {
+    bool ret = nodes[idx]._exists;
+    nodes[idx]._exists = false;
+    return ret;
+  }
+
+  bool erase(const string& s) {
+    int idx = _index(s, false);
+    if (idx < 0) return false;
+    return erase(idx);
+  }
+
+  int index(const string& s) {
+    int idx = _index(s, false);
+    DLOGKL("index", s, idx);
+    if (idx < 0 or not nodes[idx]._exists) return -1;
+    return idx;
+  }
+
+  int parent(int idx) { return nodes[idx]._parent; }
+
+  int child(int idx, char c) { return nodes[idx]._next[c - from]; }
+
+  bool exists(int idx) { return nodes[idx]._exists; }
+
+  T& user(int idx) { return nodes[idx]._user; }
 
 };
-
-template<typename T>
-ostream& operator<< (ostream& os, const Trie<T>& trie) {
-  for (ll i = 0; i < (ll)trie.nodes.size(); i++) {
-    const auto& nd = trie.nodes[i];
-    os << i << " " << nd._next << "\n";
-  }
-  return os;
-}
-
-
 
 using Fp = FpB;
-
-// @DefStruct(myt, v) [LghEyZE4]
-struct myt_t {
-  ll v;
-  myt_t() : v(-1) {}
-  myt_t(ll v_) : v(v_) {}
-  friend istream& operator>>(istream& istr, myt_t& t) {
-    istr >> t.v;
-    return istr;
-  }
-  friend ostream& operator<<(ostream& ostr, const myt_t& t) {
-    ostr << "(" << t.v << ")";
-    return ostr;
-  }
-};
-// @End [LghEyZE4]
 
 int main(/* int argc, char *argv[] */) {
   ios_base::sync_with_stdio(false);
@@ -737,35 +715,33 @@ int main(/* int argc, char *argv[] */) {
   cout << setprecision(20);
 
   ll N; cin >> N;
-  vector<string> S(N);
-  Trie<myt_t> trie('a', 'z');
+  // @InpVec(N, S, type=string) [WXtAbXAg]
+  auto S = vector(N, string());
+  for (int i = 0; i < N; i++) { string v; cin >> v; S[i] = v; }
+  // @End [WXtAbXAg]
+
+  Trie<ll> trie('a', 'z');
   REP(i, 0, N) {
-    cin >> S[i];
-    auto nd = trie.node(S[i]);
-    nd.udata.v = i;
+    ll idx = trie.insert(S[i]);
+    trie.user(idx) = i;
   }
-  vector<ll> prefix(N), suffix(N);
+  vector<ll> suffix(N), prefix(N);
   REP(i, 0, N) {
-    DLOGK(i);
-    auto& cur = trie.node("");
-    DLOGKL("ja", cur);
-    DLOGK(S[i]);
-    DLOGKL("trie", trie);
-    for (char c : S[i]) {
-      DLOGK(c, cur);
-      cur = trie.child(cur, c);   // これが間違い．参照を正しく扱うのは難しい.....
-      if (cur.udata.v >= 0) {
+    ll idx = trie.index(S[i]);
+    DLOGK(i, S[i], idx);
+    for (idx = trie.parent(idx); idx >= 0; idx = trie.parent(idx)) {
+      if (trie.exists(idx)) {
         prefix[i]++;
-        suffix[cur.udata.v]++;
+        suffix[trie.user(idx)]++;
       }
     }
   }
   REP(i, 0, N) {
-    Fp a = Fp(1) + Fp(prefix[i]) + Fp(N - 1 - prefix[i] - suffix[i]) / Fp(2);
-    cout << a << "\n";
+    Fp a = Fp(1) + prefix[i] + (N - (1 + prefix[i] + suffix[i])) / Fp(2);
+    DLOGK(i, prefix[i], suffix[i]);
+    cout << a << endl;
   }
 
-    
   return 0;
 }
 

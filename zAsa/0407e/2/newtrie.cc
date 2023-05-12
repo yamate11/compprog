@@ -3,15 +3,13 @@
 typedef long long int ll;
 using namespace std;
 
-
-template<typename T>
 struct Trie {
 
   struct TrNode {
     vector<int> _next;
     int _parent;
-    T udata;
-    TrNode(int sz = 0, int _parent_ = -1) : _next(sz, -1), _parent(_parent_), udata() {}
+    bool exist;
+    TrNode(int sz = 0, int _parent_ = -1) : _next(sz, -1), _parent(_parent_), exist(false) {}
   };
 
   char from;
@@ -21,15 +19,16 @@ struct Trie {
   Trie(char from_, char to_)
     : from(from_), br_size(to_ - from_ + 1), nodes(1, TrNode(br_size)) {}
 
-  int _index(const string& s) {
+  int index(const string& s, bool create = false) {
     int idx = 0;
     for (int i = 0; i < (int)s.size(); i++) {
       auto& nxt = nodes[idx]._next;
       int c = s[i] - from;
       if (nxt[c] < 0) {
-	nodes.emplace_back(br_size, idx);
-	idx = nodes.size() - 1;
-	nxt[c] = idx;
+        if (not create) return -1;
+        nodes.emplace_back(br_size, idx);
+        idx = nodes.size() - 1;
+        nxt[c] = idx;
       }else {
 	idx = nxt[c];
       }
@@ -37,14 +36,27 @@ struct Trie {
     return idx;
   }
 
-  // If s is not in the trie, it will be inserted.
-  TrNode& node(const string& s) {
-    ll i = _index(s);
-    return nodes[i];
+  int insert(const string& s) {
+    int idx = _index(s, true);
+    nodes[idx].exist = true;
+    return idx;
   }
-  
-  TrNode& parent(const TrNode& nd) { return nodes[nd._parent]; }
-  TrNode& child(const TrNode& nd, char c) { return nodes[nd._next[c - from]]; }
+
+  bool erase(int idx) {
+    bool ret = nodes[idx].exist;
+    nodes[idx].exist = false;
+    return ret;
+  }
+
+  bool erase(const string& s) {
+    int idx = _index(s, false);
+    if (idx < 0) return false;
+    return erase(idx);
+  }
+
+  int parent(int idx) { return nodes[idx]._parent; }
+
+  int child(int idx, char c) { return nodes[idx]._next[c - from]; }
 
 };
 

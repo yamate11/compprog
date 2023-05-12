@@ -1,4 +1,0 @@
-S= [b, a, cba, c, d, ba]
-ss= {ba, a, d, b, c, cba}
-mp= [b: {0}, d: {4}, c: {3}, a: {1, 2, 5}]
-0
