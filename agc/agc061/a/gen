@@ -21,10 +21,18 @@ def generate_random():
     # This is the function you should edit.
     # You can use prcase() to print the value to the case
     def onecase():
-        prcase(1)
-        n = randrange(2, 80)
-        k = randrange(1, n + 1)
-        prcase(n, k)
+        t = 1
+        prcase(t)
+        for _ in range(t):
+            n = randrange(2, 17)
+            k = randrange(1, n + 1)
+            prcase(n, k)
+
+        # n = randrange(1, 11)
+        # prcase(n)
+        # prcase(show_list([randrange(1, 5) for _ in range(n)]))
+        # lst = [choice("NSEW") for _ in range(n)]
+        # prcase(show_list(lst))
 
     # do not edit
     def prcase(*args):

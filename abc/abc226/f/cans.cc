@@ -1,54 +1,214 @@
 #include <bits/stdc++.h>
 #include <cassert>
-typedef long long int ll;
 using namespace std;
+using ll = long long int;
+using pll = pair<ll, ll>;
 // #include <atcoder/all>
 // using namespace atcoder;
-#define REP2(i, a, b) for (ll i = (a); i < (b); i++)
-#define REP2R(i, a, b) for (ll i = (a); i >= (b); i--)
-#define REP(i, b) REP2(i, 0, b)
+#define REP(i, a, b) for (ll i = (a); i < (b); i++)
+#define REPrev(i, a, b) for (ll i = (a); i >= (b); i--)
 #define ALL(coll) (coll).begin(), (coll).end()
 #define SIZE(v) ((ll)((v).size()))
+#define REPOUT(i, a, b, exp, sep) REP(i, (a), (b)) cout << (exp) << (i + 1 == (b) ? "" : (sep)); cout << "\n"
 
-// @@ !! LIM(mod f:power debug)
+// @@ !! LIM(mod power debug)
+
+// ---- inserted library file algOp.cc
+
+// Common definitions
+//    zero, one, inverse
+
+template<typename T>
+constexpr T zero(const T& t) {
+  if constexpr (is_integral_v<T> || is_floating_point_v<T>) { return (T)0; }
+  else { return t.zero(); }
+}
+
+template<typename T>
+constexpr T one(const T& t) {
+  if constexpr (is_integral_v<T> || is_floating_point_v<T>) { return (T)1; }
+  else { return t.one(); }
+}
+
+template<typename T>
+constexpr T inverse(const T& t) {
+  if constexpr (is_floating_point_v<T>) { return 1.0 / t; }
+  else { return t.inverse(); }
+}
+
+// begin -- detection ideom
+//    cf. https://blog.tartanllama.xyz/detection-idiom/
+
+namespace detail {
+  template <template <class...> class Trait, class Enabler, class... Args>
+  struct is_detected : false_type{};
+
+  template <template <class...> class Trait, class... Args>
+  struct is_detected<Trait, void_t<Trait<Args...>>, Args...> : true_type{};
+}
+
+template <template <class...> class Trait, class... Args>
+using is_detected = typename detail::is_detected<Trait, void, Args...>::type;
+
+// end -- detection ideom
+
+
+template<typename T>
+// using subst_add_t = decltype(T::subst_add(declval<typename T::value_type &>(), declval<typename T::value_type>()));
+using subst_add_t = decltype(T::subst_add);
+template<typename T>
+using has_subst_add = is_detected<subst_add_t, T>;
+
+template<typename T>
+using add_t = decltype(T::add);
+template<typename T>
+using has_add = is_detected<add_t, T>;
+
+template<typename T>
+using subst_mult_t = decltype(T::subst_mult);
+template<typename T>
+using has_subst_mult = is_detected<subst_mult_t, T>;
+
+template<typename T>
+using mult_t = decltype(T::mult);
+template<typename T>
+using has_mult = is_detected<mult_t, T>;
+
+template<typename T>
+using subst_subt_t = decltype(T::subst_subt);
+template<typename T>
+using has_subst_subt = is_detected<subst_subt_t, T>;
+
+template<typename T>
+using subt_t = decltype(T::subt);
+template<typename T>
+using has_subt = is_detected<subt_t, T>;
+
+template <typename Opdef>
+struct MyAlg {
+  using T = typename Opdef::value_type;
+  using value_type = T;
+  T v;
+  MyAlg() {}
+  MyAlg(const T& v_) : v(v_) {}
+  MyAlg(T&& v_) : v(move(v_)) {}
+  bool operator==(MyAlg o) const { return v == o.v; }
+  bool operator!=(MyAlg o) const { return v != o.v; }
+  operator T() const { return v; }
+  MyAlg zero() const { return MyAlg(Opdef::zero(v)); }
+  MyAlg one() const { return MyAlg(Opdef::one(v)); }
+  MyAlg inverse() const { return MyAlg(Opdef::inverse(v)); }
+  MyAlg operator/=(const MyAlg& o) { return *this *= o.inverse(); }
+  MyAlg operator/(const MyAlg& o) const { return (*this) * o.inverse(); }
+  MyAlg operator-() const { return zero() - *this; }
+
+  MyAlg& operator +=(const MyAlg& o) { 
+    if constexpr (has_subst_add<Opdef>::value) {
+      Opdef::subst_add(v, o.v);
+      return *this;
+    }else if constexpr (has_add<Opdef>::value) {
+      v = Opdef::add(v, o.v);
+      return *this;
+    }else static_assert("either subst_add or add is needed.");
+
+  }
+  MyAlg operator +(const MyAlg& o) const { 
+    if constexpr (has_add<Opdef>::value) {
+      return MyAlg(Opdef::add(v, o.v));
+    }else if constexpr (has_subst_add<Opdef>::value) {
+      MyAlg ret(v);
+      Opdef::subst_add(ret.v, o.v);
+      return ret;
+    }else static_assert("either subst_add or add is needed.");
+  }
+  MyAlg& operator *=(const MyAlg& o) { 
+    if constexpr (has_subst_mult<Opdef>::value) {
+      Opdef::subst_mult(v, o.v);
+      return *this;
+    }else if constexpr (has_mult<Opdef>::value) {
+      v = Opdef::mult(v, o.v);
+      return *this;
+    }else static_assert("either subst_mult or mult is needed.");
+
+  }
+  MyAlg operator *(const MyAlg& o) const { 
+    if constexpr (has_mult<Opdef>::value) {
+      return MyAlg(Opdef::mult(v, o.v));
+    }else if constexpr (has_subst_mult<Opdef>::value) {
+      MyAlg ret(v);
+      Opdef::subst_mult(ret.v, o.v);
+      return ret;
+    }else static_assert("either subst_mult or mult is needed.");
+  }
+  MyAlg& operator -=(const MyAlg& o) { 
+    if constexpr (has_subst_subt<Opdef>::value) {
+      Opdef::subst_subt(v, o.v);
+      return *this;
+    }else if constexpr (has_subt<Opdef>::value) {
+      v = Opdef::subt(v, o.v);
+      return *this;
+    }else static_assert("either subst_subt or subt is needed.");
+
+  }
+  MyAlg operator -(const MyAlg& o) const { 
+    if constexpr (has_subt<Opdef>::value) {
+      return MyAlg(Opdef::subt(v, o.v));
+    }else if constexpr (has_subst_subt<Opdef>::value) {
+      MyAlg ret(v);
+      Opdef::subst_subt(ret.v, o.v);
+      return ret;
+    }else static_assert("either subst_subt or subt is needed.");
+  }
+  friend istream& operator >>(istream& is, MyAlg& t)       { is >> t.v; return is; }
+  friend ostream& operator <<(ostream& os, const MyAlg& t) { os << t.v; return os; }
+};
+
+
+
+
+
+// ---- end algOp.cc
 
 // ---- inserted function f:gcd from util.cc
 
-tuple<ll, ll, ll> mut_div(ll a, ll b, ll c, bool eff_c = true) {
-  // auto [g, s, t] = mut_div(a, b, c, eff_c)
-  //    If eff_c is true (default),
-  //        g == gcd(|a|, |b|) and as + bt == c, if such s,t exists
-  //        (g, s, t) == (-1, -1, -1)            otherwise
-  //    If eff_c is false,                                 
-  //        g == gcd(|a|, |b|) and as + bt == g           
-  //    N.b.  gcd(0, t) == gcd(t, 0) == t.
-  if (a == 0) {
-    if (eff_c) {
-      if (c % b != 0) return {-1, -1, -1};
-      else            return {abs(b), 0, c / b};
-    }else {
-      if (b < 0) return {-b, 0, -1};
-      else       return { b, 0,  1};
-    }
-  }else {
-    auto [g, t, u] = mut_div(b % a, a, c, eff_c);
-    // DLOGK(b%a, a, c, g, t, u);
-    if (g == -1) return {-1, -1, -1};
-    return {g, u - (b / a) * t, t};
+// auto [g, s, t] = eGCD(a, b)
+//     g == gcd(|a|, |b|) and as + bt == g           
+//     |a| and |b| must be less than 2^31.
+tuple<ll, ll, ll> eGCD(ll a, ll b) {
+#if DEBUG
+  if (abs(a) >= (1LL << 31) or abs(b) >= (1LL << 31)) throw runtime_error("eGCD: not within the range");
+#endif    
+  array<ll, 50> vec;  // Sufficiently large for a, b < 2^31.
+  ll idx = 0;
+  while (a != 0) {
+    ll x = b / a;
+    ll y = b % a;
+    vec[idx++] = x;
+    b = a;
+    a = y;
   }
+  ll g, s, t;
+  if (b < 0) { g = -b; s = 0; t = -1; }
+  else       { g =  b; s = 0; t =  1; }
+  while (idx > 0) {
+    ll x = vec[--idx];
+    ll old_t = t;
+    t = s;
+    s = old_t - x * s;
+  }
+  return {g, s, t};
 }
-
-// auto [g, s, t] = eGCD(a, b)  --->  sa + tb == g == gcd(|a|, |b|)
-//    N.b.  gcd(0, t) == gcd(t, 0) == t.
-tuple<ll, ll, ll> eGCD(ll a, ll b) { return mut_div(a, b, 0, false); }
 
 pair<ll, ll> crt_sub(ll a1, ll x1, ll a2, ll x2) {
   // DLOGKL("crt_sub", a1, x1, a2, x2);
   a1 = a1 % x1;
   a2 = a2 % x2;
-  auto [g, s, t] = mut_div(x1, -x2, a2 - a1);
-  // DLOGK(g, s, t);
-  if (g == -1) return {-1, -1};
+  auto [g, s, t] = eGCD(x1, -x2);
+  ll gq = (a2 - a1) / g;
+  ll gr = (a2 - a1) % g;
+  if (gr != 0) return {-1, -1};
+  s *= gq;
+  t *= gq;
   ll z = x1 / g * x2;
   // DLOGK(z);
   s = s % (x2 / g);
@@ -141,12 +301,15 @@ struct FpG {   // G for General
   }
 
   FpG inv() const {
-    if (val == 0) {
-      throw runtime_error("FpG::inv(): called for zero.");
-    }
+    if (val == 0) { throw runtime_error("FpG::inv(): called for zero."); }
     auto [g, u, v] = eGCD(val, getMod());
+    if (g != 1) { throw runtime_error("FpG::inv(): not co-prime."); }
     return FpG(u);
   }
+
+  FpG zero() const { return (FpG)0; }
+  FpG one() const { return (FpG)1; }
+  FpG inverse() const { return inv(); }
 
   FpG& operator /=(const FpG& t) {
     return (*this) *= t.inv();
@@ -203,26 +366,27 @@ struct FpG {   // G for General
 template<int mod>
 ll FpG<mod>::dyn_mod;
 
-template<int mod=0>
-class CombG {
+template<typename T>
+class Comb {
   int nMax;
-  vector<FpG<mod>> vFact;
-  vector<FpG<mod>> vInvFact;
+  vector<T> vFact;
+  vector<T> vInvFact;
 public:
-  CombG(int nm) : nMax(nm), vFact(nm+1), vInvFact(nm+1) {
-    vFact.at(0) = 1;
-    for (int i = 1; i <= nMax; i++) vFact.at(i) = i * vFact.at(i-1);
-    vInvFact.at(nMax) = vFact.at(nMax).inv();
-    for (int i = nMax; i >= 1; i--) vInvFact.at(i-1) = i * vInvFact.at(i);
+  Comb(int nm) : nMax(nm), vFact(nm+1), vInvFact(nm+1) {
+    vFact[0] = 1;
+    for (int i = 1; i <= nMax; i++) vFact[i] = i * vFact[i-1];
+    vInvFact.at(nMax) = (T)1 / vFact[nMax];
+    for (int i = nMax; i >= 1; i--) vInvFact[i-1] = i * vInvFact[i];
   }
-  FpG<mod> fact(int n) { return vFact.at(n); }
-  FpG<mod> comb(int n, int r) {
-    if (r < 0 || r > n) return 0;
-    return vFact.at(n) * vInvFact.at(r) * vInvFact.at(n-r);
+  T fact(int n) { return vFact[n]; }
+  T binom(int n, int r) {
+    if (r < 0 || r > n) return (T)0;
+    return vFact[n] * vInvFact[r] * vInvFact[n-r];
   }
+  T binom_dup(int n, int r) { return binom(n + r - 1, r); }
   // The number of permutation extracting r from n.
-  FpG<mod> perm(int n, int r) {
-    return vFact.at(n) * vInvFact.at(n-r);
+  T perm(int n, int r) {
+    return vFact[n] * vInvFact[n-r];
   }
 };
 
@@ -230,43 +394,24 @@ constexpr int primeA = 1'000'000'007;
 constexpr int primeB = 998'244'353;          // '
 using FpA = FpG<primeA>;
 using FpB = FpG<primeB>;
-using CombA = CombG<primeA>;
-using CombB = CombG<primeB>;
 
 // ---- end mod.cc
 
-// ---- inserted function f:power from util.cc
-/* *** WARNING ***  
-      ll x = power(10, 12) 
-   does not work since it is interpreted as 
-      ll x = power<int>((int)10, 12)
-   Use power<ll>(10, 12) or power(10LL, 12).
- */
-template<typename T>
-T power(T a, ll b) {
-  T twoPow = a;
-  T rv(1);
-  while (b > 0) {
-    if (b & 1LL) rv *= twoPow;
-    twoPow *= twoPow;
-    b >>= 1;
-  }
-  return rv;
-}
+// ---- inserted library file power.cc
 
-// ad-hoc power function
-template<typename T, typename Op>
-T ah_power(T a, ll b, const T& unit_t, Op op) {
-  T two_pow = a;
-  T ret = unit_t;
+template<typename T>
+T power(const T& a, ll b) {
+  auto two_pow = a;
+  auto ret = one<T>(a);
   while (b > 0) {
-    if (b & 1LL) ret = op(ret, two_pow);
-    two_pow = op(two_pow, two_pow);
+    if (b & 1LL) ret *= two_pow;
+    two_pow *= two_pow;
     b >>= 1;
   }
   return ret;
 }
-// ---- end f:power
+
+// ---- end power.cc
 
 // ---- inserted function f:<< from util.cc
 template <typename T1, typename T2>
@@ -510,7 +655,6 @@ void dbgLog(bool with_nl, Head&& head, Tail&&... tail)
 // @@ !! LIM -- end mark --
 
 using Fp = FpB;
-using Comb = CombB;
 
 int main(/* int argc, char *argv[] */) {
   ios_base::sync_with_stdio(false);
@@ -518,22 +662,21 @@ int main(/* int argc, char *argv[] */) {
   cout << setprecision(20);
 
   ll N, K; cin >> N >> K;
-  Comb cb(N + 10);
-  vector<map<ll, Fp>> tbl(N+1);
-  tbl[0][1] = 1;
-  REP2(i, 1, N+1) {
-    REP2(j, 1, i + 1) {
-      ll k = i - j;
-      ll p = cb.comb(i - 1, j - 1) * cb.fact(j - 1);
-      for (auto [e, n] : tbl[k]) {
-        ll lcm = j * e / gcd(j, e);
-        DLOGK(i, lcm, p*n);
-        tbl[i][lcm] += p * n;
+  Comb<Fp> cb(N);
+
+  vector tbl(N + 1, map<ll, Fp>());
+  tbl[0][0] = Fp(1);
+  REP(n, 1, N + 1) {
+    tbl[n][n] = cb.fact(n - 1);
+    REP(x, 1, n) {
+      for (auto [y, c] : tbl[n - x]) {
+        tbl[n][lcm(x, y)] += cb.fact(n - 1) / cb.fact(n - x) * c;
       }
     }
+    DLOGK(n, tbl[n]);
   }
   Fp ans = 0;
-  for (auto [e, n] : tbl[N]) ans += power<Fp>(e, K) * n;
+  for (auto [y, c] : tbl[N]) ans += power<Fp>(y, K) * c;
   cout << ans << endl;
 
   return 0;

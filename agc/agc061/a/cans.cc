@@ -11,7 +11,7 @@ using pll = pair<ll, ll>;
 #define SIZE(v) ((ll)((v).size()))
 #define REPOUT(i, a, b, exp, sep) REP(i, (a), (b)) cout << (exp) << (i + 1 == (b) ? "" : (sep)); cout << "\n"
 
-// @@ !! LIM(debug)
+// @@ !! LIM(debug cmpNaive)
 
 // ---- inserted function f:<< from util.cc
 template <typename T1, typename T2>
@@ -252,61 +252,142 @@ void dbgLog(bool with_nl, Head&& head, Tail&&... tail)
 
 // ---- end debug.cc
 
-// @@ !! LIM -- end mark --
+// ---- inserted library file cmpNaive.cc
 
-int main(/* int argc, char *argv[] */) {
+const string end_mark("^__=end=__^");
+
+int naive(istream& cin, ostream& cout);
+int body(istream& cin, ostream& cout);
+
+void cmpNaive() {
+  while (true) {
+    string s;
+    getline(cin, s);
+    bool run_body;
+    if (s.at(0) == 'Q') {
+      return;
+    }else if (s.at(0) == 'B') {
+      run_body = true;
+    }else if (s.at(0) == 'N') {
+      run_body = false;
+    }else {
+      cerr << "Unknown body/naive specifier.\n";
+      exit(1);
+    }
+    string input_s;
+    while (true) {
+      getline(cin, s);
+      if (s == end_mark) break;
+      input_s += s;
+      input_s += "\n";
+    }
+    stringstream ss_in(move(input_s));
+    stringstream ss_out;
+    if (run_body) {
+      body(ss_in, ss_out);
+    }else {
+      naive(ss_in, ss_out);
+    }
+    cout << ss_out.str() << end_mark << endl;
+  }
+}
+
+int main(int argc, char *argv[]) {
   ios_base::sync_with_stdio(false);
   cin.tie(nullptr);
   cout << setprecision(20);
 
-  ll special = 100;
-
-  auto g = [&](auto rF, ll i, ll j) -> ll {
-    DLOGKL("in", i, j);
-    ll ret;
-    if (i == 0) {
-      assert(j == 0);
-      return special;
-    }else if (i == 1) {
-      if (j == 0) ret = 1;
-      else if (j == 1) ret = -1;
-      else assert(0);
+#if CMPNAIVE
+  if (argc == 2) {
+    if (strcmp(argv[1], "cmpNaive") == 0) {
+      cmpNaive();
+    }else if (strcmp(argv[1], "naive") == 0) {
+      naive(cin, cout);
+    }else if (strcmp(argv[1], "skip") == 0) {
+      exit(0);
     }else {
-      ll m = 1;
-      while (2 * m <= i) m *= 2;
-      if (j < i - m) ret = rF(rF, i - m, j);
-      else if (m <= j) ret = rF(rF, i - m, j - m);
-      else {
-        if (i == m) {
-          if (j == 0) ret = special;
-          else if (j == m - 1) ret = 1;
-          else if (j % 2 == 0) ret = -2;
-          else ret = 2;
-        }else if (i - m < j) ret = 0;
-        else if ((i - m) % 2 == 0) ret = -2;
-        else ret = -1;
-      }
+      cerr << "Unknown argument.\n";
+      exit(1);
     }
-    DLOGKL("out", i, j, ret);
-    return ret;
-  };
+  }else {
+#endif
+    body(cin, cout);
+#if CMPNAIVE
+  }
+#endif
+  return 0;
+}
 
-  auto f = [&](ll i, ll j) -> ll {
-    ll p = g(g, i, j);
-    if (p == special) {
-      if (i == j) return -2;
-      else return 1;
-    }else return p;
-  };
+/*
+int naive(istream& cin, ostream& cout) {
+  return 0;
+}
+int body(istream& cin, ostream& cout) {
+  return 0;
+}
+*/
 
-  auto solve = [&]() -> void {
+// ---- end cmpNaive.cc
+
+// @@ !! LIM -- end mark --
+
+int naive(istream& cin, ostream& cout) {
+  ll T; cin >> T;
+  REP(t, 0, T) {
     ll N, K; cin >> N >> K;
-    cout << f(N - 1, K - 1) + K << "\n";
+    vector<ll> A(N); REP(i, 0, N) A[i] = i;
+    auto sol = [&](auto rF, ll l, ll r) -> void {
+      if (r == l + 1) swap(A[l], A[r]);
+      else {
+        rF(rF, l, r - 1);
+        rF(rF, l + 1, r);
+      }
+    };
+    sol(sol, 0, N - 1);
+    cout << A[K - 1] + 1 << "\n";
+  }
+
+  return 0;
+}
+int body(istream& cin, ostream& cout) {
+
+  auto len = [&](ll i) -> ll {
+    return 64 - __builtin_clzll(i);
+  };
+  auto reduce = [&](ll i) -> ll {
+    return i ^ (1LL << (len(i) - 1));
+  };
+  auto dest = [&](ll i, ll j) -> pll {
+    if (len(i) == len(j)) return pll(i, reduce(j));
+    else return pll(reduce(i), j);
+  };
+
+  auto diff = [&](auto rF, ll n, ll k) -> ll {
+    DLOGK(n, k);
+    if (k == 0) return 1;
+    if (k > n) return 0;
+    if (k == n) {
+      if (n % 2 == 1) return -1;
+      else return -2;
+    }
+    if (n == (1LL << (len(n) - 1))) {
+      if (k == n - 1) return 1;
+      else if (k % 2 == 0) return -2;
+      else return 2;
+    }
+    auto [a, b] = dest(n, k);
+    return rF(rF, a, b);
+  };
+
+  auto solve = [&](ll N, ll K) -> ll {
+    return K + diff(diff, N - 1, K - 1);
   };
 
   ll T; cin >> T;
-  REP(_t, 0, T) solve();
-
+  REP(t, 0, T) {
+    ll N, K; cin >> N >> K;
+    cout << solve(N, K) << "\n";
+  }
   return 0;
 }
 

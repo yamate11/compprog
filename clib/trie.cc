@@ -3,328 +3,191 @@
 typedef long long int ll;
 using namespace std;
 
+/**
+ * @file trie.cc
+ * @brief Trie木の実装
+
+ Trie木を実装したもの．
+
+ - ユーザデータは，T (テンプレートパラメタ) 型のデータとして格納できる．
+   アクセスは trie.user(idx)
+ - trie.index(s) は，インデックスを返すが，sがtrieの中に存在するときだけ．
+ - trie.index(s, false) とすると，s が trie の中になくてもインデックスを返す
+   (ノードは存在していないとダメ)
+
+ 典型的なコード:
+
+\code
+    Trie<ll> trie('a', 'z');
+    int idx1 = trie.insert("abcde");    
+    trie.user(idx1) = 0;
+    int idx2 = trie.insert("ab");       
+    trie.user(idx2) = 1;
+    int x = trie.index("abcde");       // x == idx1
+    int y = trie.index("abc");         // y == -1
+    int z = trie.index("abc", false);  // z >= 0    
+    ll w = trie.user(idx2);            // w == 1
+\endcode
+
+ */
+
 /*
   Trie 
 
-  Signatures:
+  Signature:
 
-    struct TrNode {
-      vector<int> next;      
-          // The size is (to - from + 1) if invoked as Trie(from, to)
-      int cont;
-          // The number of strings that pass through this node.
-          // This does not contain those that terminate here.
-      int term;
-          // The number of strings that terminate at this node.
-      TrNode(int sz = 0);
-    };
-    
+    template <typename T>
     struct Trie {
       char from;
       int br_size;
       vector<TrNode> nodes;
+
       Trie(char from_, char to_);
-      int index(const string& s, int add = 0);
-          // index of nodes
-          // parameter add should be 0 unless called from insert
-      void insert(const string& s);
+
+      int insert(const string& s);
+      bool erase(int idx);
+      bool erase(const string& s);
+      int index(const string& s, bool exists_only = true);
+      int parent(int idx);
+      int child(int idx, char c);
+      bool exists(int idx);
+      T& user(int idx);
+      vector<string> to_vector_string();   // for debugging
     };
-    
-    ostream& operator<< (ostream& os, const Trie& trie);
-
-
-  The following code:
-
-    Trie trie('a', 'd');
-
-    trie.insert(string("abcd"));
-    trie.insert(string("abc"));
-    trie.insert(string("acd"));
-    trie.insert(string("ba"));
-    DLOG(trie);
-
-  generates something like:
-
-                  'a' 'b' 'c' 'd'
-      0(c:4,t:0) [ 1,  7, -1, -1]
-      1(c:3,t:0) [-1,  2,  5, -1]
-      2(c:2,t:0) [-1, -1,  3, -1]
-      3(c:1,t:1) [-1, -1, -1,  4]
-      4(c:0,t:1) [-1, -1, -1, -1]
-      5(c:1,t:0) [-1, -1, -1,  6]
-      6(c:0,t:1) [-1, -1, -1, -1]
-      7(c:1,t:0) [ 8, -1, -1, -1]
-      8(c:0,t:1) [-1, -1, -1, -1]
-
-          0-8: index
-          c: the value of cont
-          t: the value of term
-
-  If you want to know the number of strings whose prefix is "ab":
-
-    int idx = trie.index("ab")
-    cout << trie.nodes[idx].cont + trie.nodes[idx].term << endl;
+    ostream& operator<<(ostream& ostr, Trie<T> trie);
 
 */
-
-
-// @@ !! LIM(debug)
-// --> f:<< debug
-// ---- inserted function << from util.cc
-template <typename T1, typename T2>
-ostream& operator<< (ostream& os, const pair<T1,T2>& p) {
-  os << "(" << p.first << ", " << p.second << ")";
-  return os;
-}
-
-template <typename T1, typename T2, typename T3>
-ostream& operator<< (ostream& os, const tuple<T1,T2,T3>& t) {
-  os << "(" << get<0>(t) << ", " << get<1>(t)
-     << ", " << get<2>(t) << ")";
-  return os;
-}
-
-template <typename T1, typename T2, typename T3, typename T4>
-ostream& operator<< (ostream& os, const tuple<T1,T2,T3,T4>& t) {
-  os << "(" << get<0>(t) << ", " << get<1>(t)
-     << ", " << get<2>(t) << ", " << get<3>(t) << ")";
-  return os;
-}
-
-template <typename T>
-ostream& operator<< (ostream& os, const vector<T>& v) {
-  os << '[';
-  for (auto it = v.begin(); it != v.end(); it++) {
-    if (it != v.begin()) os << ", ";
-    os << *it;
-  }
-  os << ']';
-
-  return os;
-}
-
-template <typename T>
-ostream& operator<< (ostream& os, const set<T>& v) {
-  os << '{';
-  for (auto it = v.begin(); it != v.end(); it++) {
-    if (it != v.begin()) os << ", ";
-    os << *it;
-  }
-  os << '}';
-
-  return os;
-}
-
-template <typename T>
-ostream& operator<< (ostream& os, const multiset<T>& v) {
-  os << '{';
-  for (auto it = v.begin(); it != v.end(); it++) {
-    if (it != v.begin()) os << ", ";
-    os << *it;
-  }
-  os << '}';
-
-  return os;
-}
-
-template <typename T1, typename T2>
-ostream& operator<< (ostream& os, const map<T1, T2>& mp) {
-  os << '[';
-  for (auto it = mp.begin(); it != mp.end(); it++) {
-    if (it != mp.begin()) os << ", ";
-    os << it->first << ": " << it->second;
-  }
-  os << ']';
-
-  return os;
-}
-
-template <typename T1, typename T2>
-ostream& operator<< (ostream& os, const unordered_map<T1, T2>& mp) {
-  os << '[';
-  for (auto it = mp.begin(); it != mp.end(); it++) {
-    if (it != mp.begin()) os << ", ";
-    os << it->first << ": " << it->second;
-  }
-  os << ']';
-
-  return os;
-}
-
-template <typename T, typename T2>
-ostream& operator<< (ostream& os, const queue<T, T2>& orig) {
-  queue<T, T2> que(orig);
-  bool first = true;
-  os << '[';
-  while (!que.empty()) {
-    T x = que.front(); que.pop();
-    if (!first) os << ", ";
-    os << x;
-    first = false;
-  }
-  return os << ']';
-}
-
-template <typename T, typename T2, typename T3>
-ostream& operator<< (ostream& os, const priority_queue<T, T2, T3>& orig) {
-  priority_queue<T, T2, T3> pq(orig);
-  bool first = true;
-  os << '[';
-  while (!pq.empty()) {
-    T x = pq.top(); pq.pop();
-    if (!first) os << ", ";
-    os << x;
-    first = false;
-  }
-  return os << ']';
-}
-
-template <typename T>
-ostream& operator<< (ostream& os, const stack<T>& st) {
-  stack<T> tmp(st);
-  os << '[';
-  bool first = true;
-  while (!tmp.empty()) {
-    T& t = tmp.top();
-    if (first) first = false;
-    else os << ", ";
-    os << t;
-    tmp.pop();
-  }
-  os << ']';
-  return os;
-}
-
-#if __cplusplus >= 201703L
-template <typename T>
-ostream& operator<< (ostream& os, const optional<T>& t) {
-  if (t.has_value()) os << "v(" << t.value() << ")";
-  else               os << "nullopt";
-  return os;
-}
-#endif
-
-// ---- end <<
-// ---- inserted library file debug.cc
-template <class... Args>
-string dbgFormat(const char* fmt, Args... args) {
-  size_t len = snprintf(nullptr, 0, fmt, args...);
-  char buf[len + 1];
-  snprintf(buf, len + 1, fmt, args...);
-  return string(buf);
-}
-
-template <class Head>
-void dbgLog(Head&& head) {
-  cerr << head << endl;
-}
-
-template <class Head, class... Tail>
-void dbgLog(Head&& head, Tail&&... tail)
-{
-  cerr << head << " ";
-  dbgLog(forward<Tail>(tail)...);
-}
-
-#if DEBUG
-  #define DLOG(...)        dbgLog(__VA_ARGS__)
-  #define DFMT(...)        cerr << dbgFormat(__VA_ARGS__) << endl
-  #define DCALL(func, ...) func(__VA_ARGS__)
-#else
-  #define DLOG(...)
-  #define DFMT(...)
-  #define DCALL(func, ...)
-#endif
-
-#if DEBUG_LIB
-  #define DLOG_LIB(...)        dbgLog(__VA_ARGS__)
-  #define DFMT_LIB(...)        cerr << dbgFormat(__VA_ARGS__) << endl
-  #define DCALL_LIB(func, ...) func(__VA_ARGS__)
-#else
-  #define DLOG_LIB(...)
-  #define DFMT_LIB(...)
-  #define DCALL_LIB(func, ...)
-#endif
-
-// ---- end debug.cc
-// @@ !! LIM  -- end mark --
-// --> f:<< debug
-
 
 
 //////////////////////////////////////////////////////////////////////
 // See help of libins command for dependency spec syntax.
 // @@ !! BEGIN() ---- trie.cc
 
-struct TrNode {
-  vector<int> next;
-  int cont;
-  int term;
-  TrNode(int sz = 0) : next(sz, -1), cont(0), term(0) {}
-};
-
+/**
+ * @brief Trie木
+ *
+ * テンプレートパラメタ T には，ユーザデータを格納するデータ型を指定する．
+ */
+template <typename T = ll>
 struct Trie {
+
+  /**
+   *  @brief Trie のノード
+   *
+   */
+  struct TrNode {
+    /** 1文字増えた文字列のインデックスを格納するベクトル．サイズは Trie の br_size */
+    vector<int> _next;
+    /** 1文字減った文字列のインデックス．ルートでは -1 が設定されている */
+    int _parent;
+    /** このノードに対応する文字列が Trie に格納されているか */
+    bool _exists;
+    /** ユーザデータ */
+    T _user;
+    /** コンストラクタ．Trie からは，sz は br_size で，_parent_ は適切に設定して呼び出される */
+    TrNode(int sz = 0, int _parent_ = -1) : _next(sz, -1), _parent(_parent_), _exists(false), _user() {}
+  };
+
+  /** 最初の文字 */
   char from;
+  /** 文字の種類数 */
   int br_size;
+  /** ノード */
   vector<TrNode> nodes;
 
+  /** コンストラクタ */
   Trie(char from_, char to_)
     : from(from_), br_size(to_ - from_ + 1), nodes(1, TrNode(br_size)) {}
 
-  int index(const string& s, int add = 0) {
+  int _index(const string& s, bool create) {
     int idx = 0;
     for (int i = 0; i < (int)s.size(); i++) {
-      nodes[idx].cont += add;
-      auto& nxt = nodes[idx].next;
-      char c = s[i] - from;
-      if (nxt[c] < 0) {
-	idx = nodes.size();
-	nxt[c] = idx;
-	nodes.emplace_back(br_size);
+      int c = s[i] - from;
+      if (nodes[idx]._next[c] < 0) {
+        if (not create) return -1;
+        nodes[idx]._next[c] = nodes.size();
+        nodes.emplace_back(br_size, idx);
+        idx = nodes.size() - 1;
       }else {
-	idx = nxt[c];
+	idx = nodes[idx]._next[c];
       }
     }
     return idx;
   }
 
-  void insert(const string& s) {
-    int idx = index(s, 1);
-    nodes[idx].term ++;
+  /** 文字列を Trie に挿入する */
+  int insert(const string& s) {
+    int idx = _index(s, true);
+    nodes[idx]._exists = true;
+    return idx;
   }
+
+  /** 指定したインデックスに対応する文字列を Trie から削除する */
+  bool erase(int idx) {
+    bool ret = nodes[idx]._exists;
+    nodes[idx]._exists = false;
+    return ret;
+  }
+
+  /** 文字列を Trie から削除する */
+  bool erase(const string& s) {
+    int idx = _index(s, false);
+    if (idx < 0) return false;
+    return erase(idx);
+  }
+
+  /** 
+      文字列のインデックスを返す．
+      @param s 文字列
+      @param exists_only これが true の場合には，s が Trie に存在している場合にのみ，有効なインデックス (非負)
+      が返り，存在していない場合には -1 が返る．false の場合には，s に対応するノードが存在すれば
+      そのインデックスが返る．
+  */
+  int index(const string& s, bool exists_only = true) {
+    int idx = _index(s, false);
+    if (idx < 0) return -1;
+    if (exists_only and not nodes[idx]._exists) return -1;
+    return idx;
+  }
+
+  /** 1文字少ない文字列のインデックス */
+  int parent(int idx) { return nodes[idx]._parent; }
+
+  /** 1文字多い文字列のインデックス．c はベクトルの添字ではなく文字であることに注意 */
+  int child(int idx, char c) { return nodes[idx]._next[c - from]; }
+
+  /** インデックス idx に対応する文字列が存在しているか．引数 idx はインデックスであることに注意 */
+  bool exists(int idx) { return nodes[idx]._exists; }
+
+  /** ユーザデータ */
+  T& user(int idx) { return nodes[idx]._user; }
+
+  /** 文字列ベクトルを返す．デバッグ用．*/
+  vector<string> to_vector_string() {
+    vector<string> vec;
+    auto sub = [&](auto rF, int idx, string& s) -> void {
+      if (nodes[idx]._exists) vec.push_back(s);
+      for (int i = 0; i < br_size; i++) {
+        int j = nodes[idx]._next[i];
+        if (j >= 0) {
+          s.push_back(from + i);
+          rF(rF, j, s);
+          s.pop_back();
+        }
+      }
+    };
+    string s = "";
+    sub(sub, 0, s);
+    return vec;
+  }
+
 };
 
-ostream& operator<< (ostream& os, const Trie& trie) {
-  for (ll i = 0; i < (ll)trie.nodes.size(); i++) {
-    const auto& nd = trie.nodes[i];
-    os << i << "(c:" << nd.cont << ",t:" << nd.term << ") " << nd.next << "\n";
-  }
-  return os;
+template <typename T>
+ostream& operator<<(ostream& ostr, Trie<T> trie) {
+  ostr << trie.to_vector_string();
+  return ostr;
 }
 
 
 // @@ !! END ---- trie.cc
-
-int main(int argc, char *argv[]) {
-  ios_base::sync_with_stdio(false);
-  cin.tie(nullptr);
-  cout << setprecision(20);
-
-  {
-    Trie trie('a', 'd');
-    trie.insert(string("abcd"));
-    trie.insert(string("abc"));
-    trie.insert(string("acd"));
-    trie.insert(string("ba"));
-    DLOG(trie);
-
-    assert(trie.nodes[0].cont == 4);
-
-    ll idx = trie.index("ab");
-    assert(trie.nodes[idx].cont == 2);
-    assert(trie.nodes[idx].term == 0);
-  }
-
-  cout << "ok\n";
-  return 0;
-}

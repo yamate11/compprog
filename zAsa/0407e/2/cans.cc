@@ -11,7 +11,7 @@ using pll = pair<ll, ll>;
 #define SIZE(v) ((ll)((v).size()))
 #define REPOUT(i, a, b, exp, sep) REP(i, (a), (b)) cout << (exp) << (i + 1 == (b) ? "" : (sep)); cout << "\n"
 
-// @@ !! LIM(mod debug)
+// @@ !! LIM(mod debug trie)
 
 // ---- inserted library file algOp.cc
 
@@ -636,9 +636,9 @@ void dbgLog(bool with_nl, Head&& head, Tail&&... tail)
 
 // ---- end debug.cc
 
-// @@ !! LIM -- end mark --
+// ---- inserted library file trie.cc
 
-template <typename T>
+template <typename T = ll>
 struct Trie {
 
   struct TrNode {
@@ -690,10 +690,10 @@ struct Trie {
     return erase(idx);
   }
 
-  int index(const string& s) {
+  int index(const string& s, bool exists_only = true) {
     int idx = _index(s, false);
-    DLOGKL("index", s, idx);
-    if (idx < 0 or not nodes[idx]._exists) return -1;
+    if (idx < 0) return -1;
+    if (exists_only and not nodes[idx]._exists) return -1;
     return idx;
   }
 
@@ -705,7 +705,38 @@ struct Trie {
 
   T& user(int idx) { return nodes[idx]._user; }
 
+  // for debugging
+  vector<string> to_vector_string() {
+    vector<string> vec;
+    auto sub = [&](auto rF, int idx, string& s) -> void {
+      if (nodes[idx]._exists) vec.push_back(s);
+      for (int i = 0; i < br_size; i++) {
+        int j = nodes[idx]._next[i];
+        if (j >= 0) {
+          s.push_back(from + i);
+          rF(rF, j, s);
+          s.pop_back();
+        }
+      }
+    };
+    string s = "";
+    sub(sub, 0, s);
+    return vec;
+  }
+
 };
+
+template <typename T>
+ostream& operator<<(ostream& ostr, Trie<T> trie) {
+  ostr << trie.to_vector_string();
+  return ostr;
+}
+
+
+// ---- end trie.cc
+
+// @@ !! LIM -- end mark --
+
 
 using Fp = FpB;
 

@@ -246,16 +246,19 @@ void dbgLog(bool with_nl, Head&& head, Tail&&... tail)
 // ---- end debug.cc
 
 // ---- inserted library file trie.cc
-#line 258 "/home/y-tanabe/proj/compprog/clib/trie.cc"
+#line 54 "/home/y-tanabe/proj/compprog/clib/trie.cc"
 
-struct TrNode {
-  vector<int> next;
-  int cont;
-  int term;
-  TrNode(int sz = 0) : next(sz, -1), cont(0), term(0) {}
-};
-
+template <typename T = ll>
 struct Trie {
+
+  struct TrNode {
+    vector<int> _next;
+    int _parent;
+    bool _exists;
+    T _user;
+    TrNode(int sz = 0, int _parent_ = -1) : _next(sz, -1), _parent(_parent_), _exists(false), _user() {}
+  };
+
   char from;
   int br_size;
   vector<TrNode> nodes;
@@ -263,35 +266,80 @@ struct Trie {
   Trie(char from_, char to_)
     : from(from_), br_size(to_ - from_ + 1), nodes(1, TrNode(br_size)) {}
 
-  int index(const string& s, int add = 0) {
+  int _index(const string& s, bool create) {
     int idx = 0;
     for (int i = 0; i < (int)s.size(); i++) {
-      nodes[idx].cont += add;
-      auto& nxt = nodes[idx].next;
-      char c = s[i] - from;
-      if (nxt[c] < 0) {
-	idx = nodes.size();
-	nxt[c] = idx;
-	nodes.emplace_back(br_size);
+      int c = s[i] - from;
+      if (nodes[idx]._next[c] < 0) {
+        if (not create) return -1;
+        nodes[idx]._next[c] = nodes.size();
+        nodes.emplace_back(br_size, idx);
+        idx = nodes.size() - 1;
       }else {
-	idx = nxt[c];
+	idx = nodes[idx]._next[c];
       }
     }
     return idx;
   }
 
-  void insert(const string& s) {
-    int idx = index(s, 1);
-    nodes[idx].term ++;
+  int insert(const string& s) {
+    int idx = _index(s, true);
+    nodes[idx]._exists = true;
+    return idx;
   }
+
+  bool erase(int idx) {
+    bool ret = nodes[idx]._exists;
+    nodes[idx]._exists = false;
+    return ret;
+  }
+
+  bool erase(const string& s) {
+    int idx = _index(s, false);
+    if (idx < 0) return false;
+    return erase(idx);
+  }
+
+  int index(const string& s, bool exists_only = true) {
+    int idx = _index(s, false);
+    if (idx < 0) return -1;
+    if (exists_only and not nodes[idx]._exists) return -1;
+    return idx;
+  }
+
+  int parent(int idx) { return nodes[idx]._parent; }
+
+  int child(int idx, char c) { return nodes[idx]._next[c - from]; }
+
+  bool exists(int idx) { return nodes[idx]._exists; }
+
+  T& user(int idx) { return nodes[idx]._user; }
+
+  // for debugging
+  vector<string> to_vector_string() {
+    vector<string> vec;
+    auto sub = [&](auto rF, int idx, string& s) -> void {
+      if (nodes[idx]._exists) vec.push_back(s);
+      for (int i = 0; i < br_size; i++) {
+        int j = nodes[idx]._next[i];
+        if (j >= 0) {
+          s.push_back(from + i);
+          rF(rF, j, s);
+          s.pop_back();
+        }
+      }
+    };
+    string s = "";
+    sub(sub, 0, s);
+    return vec;
+  }
+
 };
 
-ostream& operator<< (ostream& os, const Trie& trie) {
-  for (ll i = 0; i < (ll)trie.nodes.size(); i++) {
-    const auto& nd = trie.nodes[i];
-    os << i << "(c:" << nd.cont << ",t:" << nd.term << ") " << nd.next << "\n";
-  }
-  return os;
+template <typename T>
+ostream& operator<<(ostream& ostr, Trie<T> trie) {
+  ostr << trie.to_vector_string();
+  return ostr;
 }
 
 
@@ -307,18 +355,44 @@ int main(int argc, char *argv[]) {
   cout << setprecision(20);
 
   {
-    Trie trie('a', 'd');
-    trie.insert(string("abcd"));
-    trie.insert(string("abc"));
-    trie.insert(string("acd"));
-    trie.insert(string("ba"));
-    DLOG(trie);
-
-    assert(trie.nodes[0].cont == 4);
-
-    ll idx = trie.index("ab");
-    assert(trie.nodes[idx].cont == 2);
-    assert(trie.nodes[idx].term == 0);
+    Trie<ll> trie('a', 'd');
+    int i0 = trie.insert("abcd");
+    trie.user(i0) = 0;
+    int i1 = trie.insert("abc");
+    trie.user(i1) = 1;
+    int i2 = trie.insert("acd");
+    trie.user(i2) = 2;
+    int i3 = trie.insert("ba");
+    trie.user(i3) = 3;
+    assert((trie.to_vector_string() == vector<string>{"abc", "abcd", "acd", "ba"}));
+    assert(trie.from == 'a');
+    assert(trie.br_size == 4);
+    trie.erase("abc");
+    trie.user(i2) -= 2;
+    trie.erase(i3);
+    trie.user(i3) -= 3;
+    DLOGK(trie.to_vector_string());
+    assert((trie.to_vector_string() == vector<string>{"abcd", "acd"}));
+    assert(trie.index("abc") == -1);
+    assert(trie.index("ba") == -1);
+    assert(trie.parent(i0) == i1);
+    assert(trie.child(i1, 'd') == i0);
+    assert(trie.exists(i0));
+    assert(not trie.exists(i3));
+    assert(trie.user(i1) == 1);
+    assert(trie.user(i2) == 0);
+  }
+  {
+    stringstream ss1;
+    stringstream ss2;
+    Trie trie('a', 'z');
+    vector<string> vec{"xyz", "abcd", "a", "ae"};
+    for (string s : vec) trie.insert(s);
+    auto vec1 = vec;
+    sort(vec1.begin(), vec1.end());
+    ss1 << trie;
+    ss2 << vec1;
+    assert(ss1.str() == ss2.str());
   }
 
   cout << "ok\n";

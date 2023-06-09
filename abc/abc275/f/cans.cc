@@ -9,7 +9,7 @@ using pll = pair<ll, ll>;
 #define REPrev(i, a, b) for (ll i = (a); i >= (b); i--)
 #define ALL(coll) (coll).begin(), (coll).end()
 #define SIZE(v) ((ll)((v).size()))
-#define REPOUT(i, a, b, exp, sep) REP(i, (a), (b)) cout << (exp) << (i + 1 == (b) ? "\n" : (sep))
+#define REPOUT(i, a, b, exp, sep) REP(i, (a), (b)) cout << (exp) << (i + 1 == (b) ? "" : (sep)); cout << "\n"
 
 // @@ !! LIM(f:updMaxMin debug)
 
@@ -273,32 +273,34 @@ int main(/* int argc, char *argv[] */) {
   cout << setprecision(20);
 
   ll N, M; cin >> N >> M;
-  // @InpVec(N, A) [ygLnlbGA]
+  // @InpVec(N, A) [DVRuu3PR]
   auto A = vector(N, ll());
   for (int i = 0; i < N; i++) { ll v; cin >> v; A[i] = v; }
-  // @End [ygLnlbGA]
-  const ll big = 1e18;
-  auto tbl_init = vector(2, vector(M + 1, big));
-  auto tbl = tbl_init;
-  tbl[1][0] = 0;
-  REP(i, 0, N) {
-    auto prev = move(tbl);
-    tbl = tbl_init;
-    REP(x, 0, M + 1) {
-      if (x + A[i] <= M) {
-        updMin(tbl[1][x + A[i]], prev[1][x]);
-        updMin(tbl[1][x + A[i]], prev[0][x] + 1);
-      }
-      updMin(tbl[0][x], prev[1][x]);
-      updMin(tbl[0][x], prev[0][x]);
+  // @End [DVRuu3PR]
+
+  ll big = 1e18;
+  vector<ll> tbl_init(M + 1, big);
+  auto tbl1 = tbl_init;
+  auto tbl2 = tbl_init;
+  tbl1[A[0]] = 0;
+  tbl2[0] = 1;
+  REP(i, 1, N) {
+    auto prev1 = move(tbl1);
+    auto prev2 = move(tbl2);
+    tbl1 = tbl_init;
+    tbl2 = tbl_init;
+    REP(j, 0, M + 1) {
+      updMin(tbl2[j], prev1[j] + 1);
+      if (j + A[i] <= M) updMin(tbl1[j + A[i]], prev1[j]);
+      updMin(tbl2[j], prev2[j]);
+      if (j + A[i] <= M) updMin(tbl1[j + A[i]], prev2[j]);
     }
-    DLOGK(i, tbl[0]);
-    DLOGK(i, tbl[1]);
+    DLOGK(i, tbl1, tbl2);
   }
-  REP(x, 1, M + 1) {
-    ll t = min(tbl[0][x] + 1, tbl[1][x]);
-    if (t >= big) t = -1;
-    cout << t << "\n";
+  REP(i, 1, M + 1) {
+    ll x = min(tbl1[i], tbl2[i]);
+    if (x >= big) x = -1;
+    cout << x << endl;
   }
 
   return 0;

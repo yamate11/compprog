@@ -1,218 +1,62 @@
 #include <bits/stdc++.h>
 #include <cassert>
-typedef long long int ll;
 using namespace std;
+using ll = long long int;
+using pll = pair<ll, ll>;
+// #include <atcoder/all>
+// using namespace atcoder;
+#define REP(i, a, b) for (ll i = (a); i < (b); i++)
+#define REPrev(i, a, b) for (ll i = (a); i >= (b); i--)
+#define ALL(coll) (coll).begin(), (coll).end()
+#define SIZE(v) ((ll)((v).size()))
+#define REPOUT(i, a, b, exp, sep) REP(i, (a), (b)) cout << (exp) << (i + 1 == (b) ? "" : (sep)); cout << "\n"
 
-// @@ !! LIM(binsearch debug)
-// --> binsearch f:<< debug
+// @@ !! LIM(binsearch)
+
 // ---- inserted library file binsearch.cc
 
 template<typename T>
-T binsearch(auto check, T yes, T no, T err = (T)1) {
+T binsearch_i(auto check, T yes, T no, T err = (T)1) {
   while (abs(yes - no) > err) {
-    T mid = (yes + no) / (T)2;
+    T mid = (yes + no) / 2;
     if (check(mid)) yes = mid;
     else            no  = mid;
   }
   return yes;
 }
 
+template<typename T>
+T binsearch_r(auto check, T yes, T no, T err, bool rel = true) {
+  while (abs(yes - no) > err &&
+         (!rel || abs(yes - no) > abs(yes) * err)) {
+    T mid = (yes + no) / 2.0;
+    if (check(mid)) yes = mid;
+    else            no  = mid;
+  }
+  return yes;
+}
+
+ll border_with_hint(ll t, auto pred, auto hint) {
+  double y = hint(t);
+  double d = floor(y);
+  double e = ceil(y);
+  bool rd = pred(d, t);
+  bool re = pred(e, t);
+  if (rd && !re) return d;
+  if (!rd && re) return e;
+  for (ll i = 1; true; i++) {
+    bool rd_i = pred(d - i, t);
+    if (rd_i && !rd) return d - i;
+    if (!rd_i && rd) return d - (i - 1);
+    bool re_i = pred(e + i, t);
+    if (re_i && !re) return e + i;
+    if (!re_i && re) return e + (i - 1);
+  }
+}
+
 // ---- end binsearch.cc
-// ---- inserted function << from util.cc
-template <typename T1, typename T2>
-ostream& operator<< (ostream& os, const pair<T1,T2>& p) {
-  os << "(" << p.first << ", " << p.second << ")";
-  return os;
-}
 
-template <typename T1, typename T2, typename T3>
-ostream& operator<< (ostream& os, const tuple<T1,T2,T3>& t) {
-  os << "(" << get<0>(t) << ", " << get<1>(t)
-     << ", " << get<2>(t) << ")";
-  return os;
-}
-
-template <typename T1, typename T2, typename T3, typename T4>
-ostream& operator<< (ostream& os, const tuple<T1,T2,T3,T4>& t) {
-  os << "(" << get<0>(t) << ", " << get<1>(t)
-     << ", " << get<2>(t) << ", " << get<3>(t) << ")";
-  return os;
-}
-
-template <typename T>
-ostream& operator<< (ostream& os, const vector<T>& v) {
-  os << '[';
-  for (auto it = v.begin(); it != v.end(); it++) {
-    if (it != v.begin()) os << ", ";
-    os << *it;
-  }
-  os << ']';
-
-  return os;
-}
-
-template <typename T, typename C>
-ostream& operator<< (ostream& os, const set<T, C>& v) {
-  os << '{';
-  for (auto it = v.begin(); it != v.end(); it++) {
-    if (it != v.begin()) os << ", ";
-    os << *it;
-  }
-  os << '}';
-
-  return os;
-}
-
-template <typename T, typename C>
-ostream& operator<< (ostream& os, const unordered_set<T, C>& v) {
-  os << '{';
-  for (auto it = v.begin(); it != v.end(); it++) {
-    if (it != v.begin()) os << ", ";
-    os << *it;
-  }
-  os << '}';
-
-  return os;
-}
-
-template <typename T, typename C>
-ostream& operator<< (ostream& os, const multiset<T, C>& v) {
-  os << '{';
-  for (auto it = v.begin(); it != v.end(); it++) {
-    if (it != v.begin()) os << ", ";
-    os << *it;
-  }
-  os << '}';
-
-  return os;
-}
-
-template <typename T1, typename T2, typename C>
-ostream& operator<< (ostream& os, const map<T1, T2, C>& mp) {
-  os << '[';
-  for (auto it = mp.begin(); it != mp.end(); it++) {
-    if (it != mp.begin()) os << ", ";
-    os << it->first << ": " << it->second;
-  }
-  os << ']';
-
-  return os;
-}
-
-template <typename T1, typename T2, typename C>
-ostream& operator<< (ostream& os, const unordered_map<T1, T2, C>& mp) {
-  os << '[';
-  for (auto it = mp.begin(); it != mp.end(); it++) {
-    if (it != mp.begin()) os << ", ";
-    os << it->first << ": " << it->second;
-  }
-  os << ']';
-
-  return os;
-}
-
-template <typename T, typename T2>
-ostream& operator<< (ostream& os, const queue<T, T2>& orig) {
-  queue<T, T2> que(orig);
-  bool first = true;
-  os << '[';
-  while (!que.empty()) {
-    T x = que.front(); que.pop();
-    if (!first) os << ", ";
-    os << x;
-    first = false;
-  }
-  return os << ']';
-}
-
-template <typename T, typename T2, typename T3>
-ostream& operator<< (ostream& os, const priority_queue<T, T2, T3>& orig) {
-  priority_queue<T, T2, T3> pq(orig);
-  bool first = true;
-  os << '[';
-  while (!pq.empty()) {
-    T x = pq.top(); pq.pop();
-    if (!first) os << ", ";
-    os << x;
-    first = false;
-  }
-  return os << ']';
-}
-
-template <typename T>
-ostream& operator<< (ostream& os, const stack<T>& st) {
-  stack<T> tmp(st);
-  os << '[';
-  bool first = true;
-  while (!tmp.empty()) {
-    T& t = tmp.top();
-    if (first) first = false;
-    else os << ", ";
-    os << t;
-    tmp.pop();
-  }
-  os << ']';
-  return os;
-}
-
-#if __cplusplus >= 201703L
-template <typename T>
-ostream& operator<< (ostream& os, const optional<T>& t) {
-  if (t.has_value()) os << "v(" << t.value() << ")";
-  else               os << "nullopt";
-  return os;
-}
-#endif
-
-ostream& operator<< (ostream& os, int8_t x) {
-  os << (int32_t)x;
-  return os;
-}
-
-// ---- end <<
-// ---- inserted library file debug.cc
-template <class... Args>
-string dbgFormat(const char* fmt, Args... args) {
-  size_t len = snprintf(nullptr, 0, fmt, args...);
-  char buf[len + 1];
-  snprintf(buf, len + 1, fmt, args...);
-  return string(buf);
-}
-
-template <class Head>
-void dbgLog(Head&& head) {
-  cerr << head << endl;
-}
-
-template <class Head, class... Tail>
-void dbgLog(Head&& head, Tail&&... tail)
-{
-  cerr << head << " ";
-  dbgLog(forward<Tail>(tail)...);
-}
-
-#if DEBUG
-  #define DLOG(...)        dbgLog(__VA_ARGS__)
-  #define DFMT(...)        cerr << dbgFormat(__VA_ARGS__) << endl
-  #define DCALL(func, ...) func(__VA_ARGS__)
-#else
-  #define DLOG(...)
-  #define DFMT(...)
-  #define DCALL(func, ...)
-#endif
-
-#if DEBUG_LIB
-  #define DLOG_LIB(...)        dbgLog(__VA_ARGS__)
-  #define DFMT_LIB(...)        cerr << dbgFormat(__VA_ARGS__) << endl
-  #define DCALL_LIB(func, ...) func(__VA_ARGS__)
-#else
-  #define DLOG_LIB(...)
-  #define DFMT_LIB(...)
-  #define DCALL_LIB(func, ...)
-#endif
-
-// ---- end debug.cc
-// @@ !! LIM  -- end mark --
+// @@ !! LIM -- end mark --
 
 int main(/* int argc, char *argv[] */) {
   ios_base::sync_with_stdio(false);
@@ -220,36 +64,30 @@ int main(/* int argc, char *argv[] */) {
   cout << setprecision(20);
 
   ll N; cin >> N;
-  vector<ll> A(2 * N);
-  vector<ll> acc(2 * N + 1);
-  ll sum = 0;
-  for (ll i = 0; i < N; i++) {
-    ll a; cin >> a;
-    A[i] = A[N + i] = a;
-    sum += a;
-  }
-  DLOG("sum=", sum);
-  for (ll i = 0; i < 2 * N; i++) acc[i + 1] = acc[i] + A[i];
-  auto check = [&](ll x) -> bool {
-    ll q = 0, r = 0;
+  // @InpVec(N, A) [E0uDHuBS]
+  auto A = vector(N, ll());
+  for (int i = 0; i < N; i++) { ll v; cin >> v; A[i] = v; }
+  // @End [E0uDHuBS]
+  vector<ll> S(N + 1, 0LL); REP(i, 0, N) S[i + 1] = S[i] + A[i];
+  ll tot = S[N];
 
-    auto sub = [&](ll p) -> bool {
-      q = max(q, p);
-      while (q < p + N && acc[q] - acc[p] < x) q++;
-      if (acc[q] - acc[p] < x) return false;
-      r = max(r, q);
-      while (r < p + N && acc[r] - acc[q] < x) r++;
-      if (acc[r] - acc[q] < x) return false;
-      if (acc[p + N] - acc[r] < x) return false;
-      return true;
-    };
-
-    for (ll p = 0; p < N; p++) if (sub(p)) return true;
-    return false;
-
+  auto check = [&](ll t) -> bool {
+    if (3 * t > tot) return false;
+    ll a = 0, b = 0, c = 0;
+    while (true) {
+      ll vab = S[a] - S[b];
+      ll vbc = S[b] - S[c];
+      ll vca = tot - (vab + vbc);
+      if (vab >= t and vbc >= t and vca >= t) return true;
+      else if (vab < t and vca >= t) a++;
+      else if (vbc < t and vab >= t) b++;
+      else if (vca < t and vbc >= t) c++;
+      else assert(0);
+      if (a == N) return false;
+    }
   };
-  ll x = binsearch<ll>(check, 1, 1 + sum / 3);
-  cout << x << endl;
+  ll ans = binsearch_i<ll>(check, 1, (ll)(1e18));
+  cout << ans << endl;
 
   return 0;
 }
