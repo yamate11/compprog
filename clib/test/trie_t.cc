@@ -246,23 +246,41 @@ void dbgLog(bool with_nl, Head&& head, Tail&&... tail)
 // ---- end debug.cc
 
 // ---- inserted library file trie.cc
-#line 54 "/home/y-tanabe/proj/compprog/clib/trie.cc"
+#line 65 "/home/y-tanabe/proj/compprog/clib/trie.cc"
 
+/**
+ * @brief Trie木
+ *
+ * テンプレートパラメタ T には，ユーザデータを格納するデータ型を指定する．
+ */
 template <typename T = ll>
 struct Trie {
 
+  /**
+   *  @brief Trie のノード
+   *
+   */
   struct TrNode {
+    /** 1文字増えた文字列のインデックスを格納するベクトル．サイズは Trie の br_size */
     vector<int> _next;
+    /** 1文字減った文字列のインデックス．ルートでは -1 が設定されている */
     int _parent;
+    /** このノードに対応する文字列が Trie に格納されているか */
     bool _exists;
+    /** ユーザデータ */
     T _user;
+    /** コンストラクタ．Trie からは，sz は br_size で，_parent_ は適切に設定して呼び出される */
     TrNode(int sz = 0, int _parent_ = -1) : _next(sz, -1), _parent(_parent_), _exists(false), _user() {}
   };
 
+  /** 最初の文字 */
   char from;
+  /** 文字の種類数 */
   int br_size;
+  /** ノード */
   vector<TrNode> nodes;
 
+  /** コンストラクタ */
   Trie(char from_, char to_)
     : from(from_), br_size(to_ - from_ + 1), nodes(1, TrNode(br_size)) {}
 
@@ -282,24 +300,34 @@ struct Trie {
     return idx;
   }
 
+  /** 文字列を Trie に挿入する */
   int insert(const string& s) {
     int idx = _index(s, true);
     nodes[idx]._exists = true;
     return idx;
   }
 
+  /** 指定したインデックスに対応する文字列を Trie から削除する */
   bool erase(int idx) {
     bool ret = nodes[idx]._exists;
     nodes[idx]._exists = false;
     return ret;
   }
 
+  /** 文字列を Trie から削除する */
   bool erase(const string& s) {
     int idx = _index(s, false);
     if (idx < 0) return false;
     return erase(idx);
   }
 
+  /** 
+      文字列のインデックスを返す．
+      @param s 文字列
+      @param exists_only これが true の場合には，s が Trie に存在している場合にのみ，有効なインデックス (非負)
+      が返り，存在していない場合には -1 が返る．false の場合には，s に対応するノードが存在すれば
+      そのインデックスが返る．
+  */
   int index(const string& s, bool exists_only = true) {
     int idx = _index(s, false);
     if (idx < 0) return -1;
@@ -307,15 +335,19 @@ struct Trie {
     return idx;
   }
 
+  /** 1文字少ない文字列のインデックス */
   int parent(int idx) { return nodes[idx]._parent; }
 
+  /** 1文字多い文字列のインデックス．c はベクトルの添字ではなく文字であることに注意 */
   int child(int idx, char c) { return nodes[idx]._next[c - from]; }
 
+  /** インデックス idx に対応する文字列が存在しているか．引数 idx はインデックスであることに注意 */
   bool exists(int idx) { return nodes[idx]._exists; }
 
+  /** ユーザデータ */
   T& user(int idx) { return nodes[idx]._user; }
 
-  // for debugging
+  /** 文字列ベクトルを返す．デバッグ用．*/
   vector<string> to_vector_string() {
     vector<string> vec;
     auto sub = [&](auto rF, int idx, string& s) -> void {

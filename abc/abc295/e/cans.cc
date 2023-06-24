@@ -11,7 +11,7 @@ using pll = pair<ll, ll>;
 #define SIZE(v) ((ll)((v).size()))
 #define REPOUT(i, a, b, exp, sep) REP(i, (a), (b)) cout << (exp) << (i + 1 == (b) ? "" : (sep)); cout << "\n"
 
-// @@ !! LIM(mod)
+// @@ !! LIM(mod debug power)
 
 // ---- inserted library file algOp.cc
 
@@ -366,27 +366,27 @@ struct FpG {   // G for General
 template<int mod>
 ll FpG<mod>::dyn_mod;
 
-template<int mod=0>
-class CombG {
+template<typename T>
+class Comb {
   int nMax;
-  vector<FpG<mod>> vFact;
-  vector<FpG<mod>> vInvFact;
+  vector<T> vFact;
+  vector<T> vInvFact;
 public:
-  CombG(int nm) : nMax(nm), vFact(nm+1), vInvFact(nm+1) {
-    vFact.at(0) = 1;
-    for (int i = 1; i <= nMax; i++) vFact.at(i) = i * vFact.at(i-1);
-    vInvFact.at(nMax) = vFact.at(nMax).inv();
-    for (int i = nMax; i >= 1; i--) vInvFact.at(i-1) = i * vInvFact.at(i);
+  Comb(int nm) : nMax(nm), vFact(nm+1), vInvFact(nm+1) {
+    vFact[0] = 1;
+    for (int i = 1; i <= nMax; i++) vFact[i] = i * vFact[i-1];
+    vInvFact.at(nMax) = (T)1 / vFact[nMax];
+    for (int i = nMax; i >= 1; i--) vInvFact[i-1] = i * vInvFact[i];
   }
-  FpG<mod> fact(int n) { return vFact.at(n); }
-  FpG<mod> binom(int n, int r) {
-    if (r < 0 || r > n) return 0;
-    return vFact.at(n) * vInvFact.at(r) * vInvFact.at(n-r);
+  T fact(int n) { return vFact[n]; }
+  T binom(int n, int r) {
+    if (r < 0 || r > n) return (T)0;
+    return vFact[n] * vInvFact[r] * vInvFact[n-r];
   }
-  FpG<mod> binom_dup(int n, int r) { return binom(n + r - 1, r); }
+  T binom_dup(int n, int r) { return binom(n + r - 1, r); }
   // The number of permutation extracting r from n.
-  FpG<mod> perm(int n, int r) {
-    return vFact.at(n) * vInvFact.at(n-r);
+  T perm(int n, int r) {
+    return vFact[n] * vInvFact[n-r];
   }
 };
 
@@ -394,40 +394,320 @@ constexpr int primeA = 1'000'000'007;
 constexpr int primeB = 998'244'353;          // '
 using FpA = FpG<primeA>;
 using FpB = FpG<primeB>;
-using CombA = CombG<primeA>;
-using CombB = CombG<primeB>;
 
 // ---- end mod.cc
 
+// ---- inserted function f:<< from util.cc
+template <typename T1, typename T2>
+ostream& operator<< (ostream& os, const pair<T1,T2>& p) {
+  os << "(" << p.first << ", " << p.second << ")";
+  return os;
+}
+
+template <typename T1, typename T2, typename T3>
+ostream& operator<< (ostream& os, const tuple<T1,T2,T3>& t) {
+  os << "(" << get<0>(t) << ", " << get<1>(t)
+     << ", " << get<2>(t) << ")";
+  return os;
+}
+
+template <typename T1, typename T2, typename T3, typename T4>
+ostream& operator<< (ostream& os, const tuple<T1,T2,T3,T4>& t) {
+  os << "(" << get<0>(t) << ", " << get<1>(t)
+     << ", " << get<2>(t) << ", " << get<3>(t) << ")";
+  return os;
+}
+
+template <typename T>
+ostream& operator<< (ostream& os, const vector<T>& v) {
+  os << '[';
+  for (auto it = v.begin(); it != v.end(); it++) {
+    if (it != v.begin()) os << ", ";
+    os << *it;
+  }
+  os << ']';
+
+  return os;
+}
+
+template <typename T, typename C>
+ostream& operator<< (ostream& os, const set<T, C>& v) {
+  os << '{';
+  for (auto it = v.begin(); it != v.end(); it++) {
+    if (it != v.begin()) os << ", ";
+    os << *it;
+  }
+  os << '}';
+
+  return os;
+}
+
+template <typename T, typename C>
+ostream& operator<< (ostream& os, const unordered_set<T, C>& v) {
+  os << '{';
+  for (auto it = v.begin(); it != v.end(); it++) {
+    if (it != v.begin()) os << ", ";
+    os << *it;
+  }
+  os << '}';
+
+  return os;
+}
+
+template <typename T, typename C>
+ostream& operator<< (ostream& os, const multiset<T, C>& v) {
+  os << '{';
+  for (auto it = v.begin(); it != v.end(); it++) {
+    if (it != v.begin()) os << ", ";
+    os << *it;
+  }
+  os << '}';
+
+  return os;
+}
+
+template <typename T1, typename T2, typename C>
+ostream& operator<< (ostream& os, const map<T1, T2, C>& mp) {
+  os << '[';
+  for (auto it = mp.begin(); it != mp.end(); it++) {
+    if (it != mp.begin()) os << ", ";
+    os << it->first << ": " << it->second;
+  }
+  os << ']';
+
+  return os;
+}
+
+template <typename T1, typename T2, typename C>
+ostream& operator<< (ostream& os, const unordered_map<T1, T2, C>& mp) {
+  os << '[';
+  for (auto it = mp.begin(); it != mp.end(); it++) {
+    if (it != mp.begin()) os << ", ";
+    os << it->first << ": " << it->second;
+  }
+  os << ']';
+
+  return os;
+}
+
+template <typename T, typename T2>
+ostream& operator<< (ostream& os, const queue<T, T2>& orig) {
+  queue<T, T2> que(orig);
+  bool first = true;
+  os << '[';
+  while (!que.empty()) {
+    T x = que.front(); que.pop();
+    if (!first) os << ", ";
+    os << x;
+    first = false;
+  }
+  return os << ']';
+}
+
+template <typename T, typename T2>
+ostream& operator<< (ostream& os, const deque<T, T2>& orig) {
+  deque<T, T2> que(orig);
+  bool first = true;
+  os << '[';
+  while (!que.empty()) {
+    T x = que.front(); que.pop_front();
+    if (!first) os << ", ";
+    os << x;
+    first = false;
+  }
+  return os << ']';
+}
+
+template <typename T, typename T2, typename T3>
+ostream& operator<< (ostream& os, const priority_queue<T, T2, T3>& orig) {
+  priority_queue<T, T2, T3> pq(orig);
+  bool first = true;
+  os << '[';
+  while (!pq.empty()) {
+    T x = pq.top(); pq.pop();
+    if (!first) os << ", ";
+    os << x;
+    first = false;
+  }
+  return os << ']';
+}
+
+template <typename T>
+ostream& operator<< (ostream& os, const stack<T>& st) {
+  stack<T> tmp(st);
+  os << '[';
+  bool first = true;
+  while (!tmp.empty()) {
+    T& t = tmp.top();
+    if (first) first = false;
+    else os << ", ";
+    os << t;
+    tmp.pop();
+  }
+  os << ']';
+  return os;
+}
+
+#if __cplusplus >= 201703L
+template <typename T>
+ostream& operator<< (ostream& os, const optional<T>& t) {
+  if (t.has_value()) os << "v(" << t.value() << ")";
+  else               os << "nullopt";
+  return os;
+}
+#endif
+
+ostream& operator<< (ostream& os, int8_t x) {
+  os << (int32_t)x;
+  return os;
+}
+
+// ---- end f:<<
+
+// ---- inserted library file debug.cc
+template <class... Args>
+string dbgFormat(const char* fmt, Args... args) {
+  size_t len = snprintf(nullptr, 0, fmt, args...);
+  char buf[len + 1];
+  snprintf(buf, len + 1, fmt, args...);
+  return string(buf);
+}
+
+template <class Head>
+void dbgLog(bool with_nl, Head&& head) {
+  cerr << head;
+  if (with_nl) cerr << endl;
+}
+
+template <class Head, class... Tail>
+void dbgLog(bool with_nl, Head&& head, Tail&&... tail)
+{
+  cerr << head << " ";
+  dbgLog(with_nl, forward<Tail>(tail)...);
+}
+
+#if DEBUG
+  #define DLOG(...)        dbgLog(true, __VA_ARGS__)
+  #define DLOGNNL(...)     dbgLog(false, __VA_ARGS__)
+  #define DFMT(...)        cerr << dbgFormat(__VA_ARGS__) << endl
+  #define DCALL(func, ...) func(__VA_ARGS__)
+#else
+  #define DLOG(...)
+  #define DLOGNNL(...)
+  #define DFMT(...)
+  #define DCALL(func, ...)
+#endif
+
+/*
+#if DEBUG_LIB
+  #define DLOG_LIB(...)        dbgLog(true, __VA_ARGS__)
+  #define DLOGNNL_LIB(...)     dbgLog(false, __VA_ARGS__)
+  #define DFMT_LIB(...)        cerr << dbgFormat(__VA_ARGS__) << endl
+  #define DCALL_LIB(func, ...) func(__VA_ARGS__)
+#else
+  #define DLOG_LIB(...)
+  #define DFMT_LIB(...)
+  #define DCALL_LIB(func, ...)
+#endif
+*/
+
+#define DUP1(E1)       #E1 "=", E1
+#define DUP2(E1,E2)    DUP1(E1), DUP1(E2)
+#define DUP3(E1,...)   DUP1(E1), DUP2(__VA_ARGS__)
+#define DUP4(E1,...)   DUP1(E1), DUP3(__VA_ARGS__)
+#define DUP5(E1,...)   DUP1(E1), DUP4(__VA_ARGS__)
+#define DUP6(E1,...)   DUP1(E1), DUP5(__VA_ARGS__)
+#define DUP7(E1,...)   DUP1(E1), DUP6(__VA_ARGS__)
+#define DUP8(E1,...)   DUP1(E1), DUP7(__VA_ARGS__)
+#define DUP9(E1,...)   DUP1(E1), DUP8(__VA_ARGS__)
+#define DUP10(E1,...)   DUP1(E1), DUP9(__VA_ARGS__)
+#define DUP11(E1,...)   DUP1(E1), DUP10(__VA_ARGS__)
+#define DUP12(E1,...)   DUP1(E1), DUP11(__VA_ARGS__)
+#define GET_MACRO(_1,_2,_3,_4,_5,_6,_7,_8,_9,_10,_11,_12,NAME,...) NAME
+#define DUP(...)          GET_MACRO(__VA_ARGS__, DUP12, DUP11, DUP10, DUP9, DUP8, DUP7, DUP6, DUP5, DUP4, DUP3, DUP2, DUP1)(__VA_ARGS__)
+#define DLOGK(...)        DLOG(DUP(__VA_ARGS__))
+#define DLOGKL(lab, ...)  DLOG(lab, DUP(__VA_ARGS__))
+
+#if DEBUG_LIB
+  #define DLOG_LIB   DLOG
+  #define DLOGK_LIB  DLOGK
+  #define DLOGKL_LIB DLOGKL
+#endif
+
+// ---- end debug.cc
+
+// ---- inserted library file power.cc
+
+template<typename T>
+T power(const T& a, ll b) {
+  auto two_pow = a;
+  auto ret = one<T>(a);
+  while (b > 0) {
+    if (b & 1LL) ret *= two_pow;
+    two_pow *= two_pow;
+    b >>= 1;
+  }
+  return ret;
+}
+
+// ---- end power.cc
+
 // @@ !! LIM -- end mark --
 
+#if DEBUG
+// using Fp = double;
 using Fp = FpB;
+#else
+using Fp = FpB;
+#endif
 
 int main(/* int argc, char *argv[] */) {
   ios_base::sync_with_stdio(false);
   cin.tie(nullptr);
   cout << setprecision(20);
-
+  
   ll N, M, K; cin >> N >> M >> K;
-  // @InpVec(N, A) [f728Rya6]
+  // @InpVec(N, A) [7jqwjsTo]
   auto A = vector(N, ll());
   for (int i = 0; i < N; i++) { ll v; cin >> v; A[i] = v; }
-  // @End [f728Rya6]
-  vector<ll> cnt(M + 1);
-  REP(i, 0, N) cnt[A[i]]++;
-  ll C0 = cnt[0];
-  auto acc = cnt;
-  REP(i, 1, M + 1) acc[i] += acc[i - 1];
-  auto prob = [&](ll t) -> Fp {
-    if (t == 1) ??;
-    if (t == M) ??;
-    ll a = K - 1 - acc[t - 1];
-    ll b = N - K - (acc[M] - acc[t]);
-    return aprob[a][b];
-  };
+  // @End [7jqwjsTo]
+
+  vector cnt(M + 1, 0LL);
+  ll nZero = 0;
+  REP(i, 0, N) {
+    if (A[i] > 0) cnt[A[i]]++;
+    if (A[i] == 0) nZero++;
+  }
+  Comb<Fp> cb(nZero);
+  vector accCnt(M + 2, 0LL);
+  REP(i, 0, M + 1) accCnt[i + 1] = accCnt[i] + cnt[i];
+  DLOGK(accCnt);
+  vector vecF(M + 1, vector(nZero + 1, Fp(0)));
+  vector vecG(M + 1, vector(nZero + 2, Fp(0)));
+  vecF[0][0] = Fp(1);
+  REP(x, 1, M + 1) {
+    Fp cc = Fp(x) / Fp(M);
+    REP(xi, 0, nZero + 1) {
+      vecF[x][xi] = cb.binom(nZero, xi) * power<Fp>(cc, xi) * power<Fp>(1 - cc, nZero - xi);
+    }
+    DLOGK(x, vecF[x]);
+  }
+  REP(x, 0, M + 1) REP(xi, 0, nZero + 1) vecG[x][xi + 1] = vecG[x][xi] + vecF[x][xi];
+  DLOGK(vecG);
+  vector W(M + 1, Fp(0));
+  vector WW(M + 1, Fp(0));
+  REP(x, 1, M + 1) {
+    if (K <= accCnt[x]) W[x] = 0;
+    else W[x] = vecG[x - 1][K - accCnt[x]];
+  }
+  REP(x, 1, M) WW[x] = W[x] - W[x + 1];
+  WW[M] = W[M];
+  DLOGK(W);
+  DLOGK(WW);
   Fp ans = 0;
-  REP(t, 1, M + 1) ans += prob(t) * t;
+  REP(x, 1, M + 1) ans += x * WW[x];
   cout << ans << endl;
+
 
   return 0;
 }

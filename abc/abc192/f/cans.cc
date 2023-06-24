@@ -1,13 +1,19 @@
 #include <bits/stdc++.h>
 #include <cassert>
-typedef long long int ll;
 using namespace std;
+using ll = long long int;
+using pll = pair<ll, ll>;
 // #include <atcoder/all>
 // using namespace atcoder;
+#define REP(i, a, b) for (ll i = (a); i < (b); i++)
+#define REPrev(i, a, b) for (ll i = (a); i >= (b); i--)
+#define ALL(coll) (coll).begin(), (coll).end()
+#define SIZE(v) ((ll)((v).size()))
+#define REPOUT(i, a, b, exp, sep) REP(i, (a), (b)) cout << (exp) << (i + 1 == (b) ? "" : (sep)); cout << "\n"
 
-// @@ !! LIM(f:updMaxMin debug cmpNaive)
-// --> f:updMaxMin f:<< debug cmpNaive
-// ---- inserted function updMaxMin from util.cc
+// @@ !! LIM(f:updMaxMin debug)
+
+// ---- inserted function f:updMaxMin from util.cc
 template<typename T>
 bool updMax(T& tmax, const T& x) {
   if (x > tmax) { tmax = x; return true;  }
@@ -18,8 +24,9 @@ bool updMin(T& tmin, const T& x) {
   if (x < tmin) { tmin = x; return true;  }
   else          {           return false; }
 }
-// ---- end updMaxMin
-// ---- inserted function << from util.cc
+// ---- end f:updMaxMin
+
+// ---- inserted function f:<< from util.cc
 template <typename T1, typename T2>
 ostream& operator<< (ostream& os, const pair<T1,T2>& p) {
   os << "(" << p.first << ", " << p.second << ")";
@@ -184,7 +191,8 @@ ostream& operator<< (ostream& os, int8_t x) {
   return os;
 }
 
-// ---- end <<
+// ---- end f:<<
+
 // ---- inserted library file debug.cc
 template <class... Args>
 string dbgFormat(const char* fmt, Args... args) {
@@ -219,6 +227,7 @@ void dbgLog(bool with_nl, Head&& head, Tail&&... tail)
   #define DCALL(func, ...)
 #endif
 
+/*
 #if DEBUG_LIB
   #define DLOG_LIB(...)        dbgLog(true, __VA_ARGS__)
   #define DLOGNNL_LIB(...)     dbgLog(false, __VA_ARGS__)
@@ -229,6 +238,7 @@ void dbgLog(bool with_nl, Head&& head, Tail&&... tail)
   #define DFMT_LIB(...)
   #define DCALL_LIB(func, ...)
 #endif
+*/
 
 #define DUP1(E1)       #E1 "=", E1
 #define DUP2(E1,E2)    DUP1(E1), DUP1(E2)
@@ -247,137 +257,54 @@ void dbgLog(bool with_nl, Head&& head, Tail&&... tail)
 #define DLOGK(...)        DLOG(DUP(__VA_ARGS__))
 #define DLOGKL(lab, ...)  DLOG(lab, DUP(__VA_ARGS__))
 
+#if DEBUG_LIB
+  #define DLOG_LIB   DLOG
+  #define DLOGK_LIB  DLOGK
+  #define DLOGKL_LIB DLOGKL
+#endif
+
 // ---- end debug.cc
-// ---- inserted library file cmpNaive.cc
 
-const string end_mark("^__=end=__^");
+// @@ !! LIM -- end mark --
 
-int naive(istream& cin, ostream& cout);
-int body(istream& cin, ostream& cout);
-
-void cmpNaive() {
-  while (true) {
-    string s;
-    getline(cin, s);
-    bool run_body;
-    if (s.at(0) == 'Q') {
-      return;
-    }else if (s.at(0) == 'B') {
-      run_body = true;
-    }else if (s.at(0) == 'N') {
-      run_body = false;
-    }else {
-      cerr << "Unknown body/naive specifier.\n";
-      exit(1);
-    }
-    string input_s;
-    while (true) {
-      getline(cin, s);
-      if (s == end_mark) break;
-      input_s += s;
-      input_s += "\n";
-    }
-    stringstream ss_in(move(input_s));
-    stringstream ss_out;
-    if (run_body) {
-      body(ss_in, ss_out);
-    }else {
-      naive(ss_in, ss_out);
-    }
-    cout << ss_out.str() << end_mark << endl;
-  }
-}
-
-int main(int argc, char *argv[]) {
+int main(/* int argc, char *argv[] */) {
   ios_base::sync_with_stdio(false);
   cin.tie(nullptr);
   cout << setprecision(20);
 
-#if CMPNAIVE
-  if (argc == 2) {
-    if (strcmp(argv[1], "cmpNaive") == 0) {
-      cmpNaive();
-    }else if (strcmp(argv[1], "naive") == 0) {
-      naive(cin, cout);
-    }else if (strcmp(argv[1], "skip") == 0) {
-      exit(0);
-    }else {
-      cerr << "Unknown argument.\n";
-      exit(1);
-    }
-  }else {
-#endif
-    body(cin, cout);
-#if CMPNAIVE
-  }
-#endif
-  return 0;
-}
-
-/*
-int naive(istream& cin, ostream& cout) {
-  return 0;
-}
-int body(istream& cin, ostream& cout) {
-  return 0;
-}
-*/
-
-// ---- end cmpNaive.cc
-// @@ !! LIM  -- end mark --
-
-int naive(istream& cin, ostream& cout) {
   ll N, X; cin >> N >> X;
-  vector<ll> A(N);
-  for (ll i = 0; i < N; i++) cin >> A[i];
+  // @InpVec(N, A) [AjZibc9M]
+  auto A = vector(N, ll());
+  for (int i = 0; i < N; i++) { ll v; cin >> v; A[i] = v; }
+  // @End [AjZibc9M]
 
-  ll big = 1LL << 60;
+  ll big = 1e18;
   ll ans = big;
-  for (ll x = 0; x < (1LL << N); x++) {
-    ll sum = 0;
-    for (ll t = 0; t < N; t++) {
-      if ((x >> t) & 1) sum += A[t];
-    }
-    ll diff = X - sum;
-    ll k = __builtin_popcountll(x);
-    if (k == 0) continue;
-    if (diff < 0 || diff % k != 0) continue;
-    ll t = diff / k;
-    ans = min(ans, t);
-    
-  }
-  cout << ans << endl;
-  return 0;
-}
-int body(istream& cin, ostream& cout) {
-
-  ll N, X; cin >> N >> X;
-  vector<ll> A(N);
-  for (ll i = 0; i < N; i++) cin >> A[i];
-  ll big = 1LL << 60;
-  ll ans = big;
-  for (ll k = 1; k <= N; k++) {
-    vector tbl(N + 1, vector(k, vector(k + 1, -1LL)));
-    tbl[0][0][0] = 0;
-    for (ll i = 0; i < N; i++) {
-      for (ll t = 0; t < k; t++) {
-        for (ll m = 0; m <= k; m++) {
-          if (tbl[i][t][m] < 0) continue;
-          updMax(tbl[i+1][t][m], tbl[i][t][m]);
-          ll x = tbl[i][t][m] + A[i];
-          if (x > X) continue;
-          // updMax(tbl[i+1][(t + A[i]) % k][m + 1], x);
-          if (m + 1 <= k) updMax(tbl[i+1][x % k][m + 1], x);
+  REP(K, 1, N + 1) {
+    vector tbl(K + 1, vector(K, -1LL));
+    tbl[0][0] = 0;
+    REP(i, 0, N) {
+      auto prev = tbl;
+      REP(j, 0, K) {
+        REP(l, 0, K) {
+          if (prev[j][l] < 0) continue;
+          ll w = prev[j][l] + A[i];
+          updMax(tbl[j + 1][w % K], w);
         }
       }
-      DLOGK(i, tbl[i+1]);
     }
-    ll y = tbl[N][X % k][k];
-    if (y < 0) continue;
-    ll t = (X - y) / k;
-    DLOGK(k, y, t);
-    ans = min(ans, t);
+    ll u = tbl[K][X % K];
+    if (u >= 0) {
+      ll a = (X - u) / K;
+      DLOGK(K, a);
+#if DEBUG
+      REP(j, 1, K + 1) DLOGK(j, tbl[j]);
+#endif
+      updMin(ans, a);
+    }
   }
+
+
   cout << ans << endl;
 
   return 0;
