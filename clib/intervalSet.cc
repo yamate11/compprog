@@ -7,9 +7,9 @@ using namespace std;
   Interval Set
 
   The name might be misleading.  What is implemented here is managing
-  a function f : [LLONG_MIN, LLONG_MAX) -> T; assuming that a same value tends to
+  a function f : [lo, hi) -> T; assuming that a same value tends to
   continue.  Thus, the data structure is a map<ll, T>.  
-  ((x0, t0), (x1, t1), ..., (xn, tn)), where x0 == LLONG_MIN and xn == LLONG_MAX, means that for x \in [x_i, x_{i+1})
+  ((x0, t0), (x1, t1), ..., (xn, tn)), where x0 == lo and xn == hi, means that for x \in [x_i, x_{i+1})
   the value of f(x) is t_i.
   It is guaranteed that t_i != t_{i + 1}  (for i + 1 < n)
 
@@ -18,20 +18,26 @@ using namespace std;
   API:
 
   template<typename T>
-  itv_set(T t = T())  ... constant function f(x) = t for x \in [LLONG_MIN, LLONG_MAX)
+  itv_set(ll lo, ll hi, T t = T())  ... constant function f(x) = t for x \in [lo, hi)
   
   void put(ll x, T t) ... f(x) := t
   void put(ll l, ll r, T t) ...  f(x) := t for x \in [l, r)
-  void put_at_end(ll y, T t) ... f(x) := t for x >= y.  y must be the largest defined point (except for LLONG_MAX) 
   T get_val(ll x) ... returns f(x)
-  pair<ll, ll> get_itvl(ll x) ... returns (y1, y2) where y1 <= x < y2 and y1 and y2 are defined point
-  pair<ll, pair<ll, ll>> get(ll x) ... returns (t, (y1, y2)) where f(x) = t and y1 <= x < y2 and y1 and y2 are defined point.
+  tuple<ll, ll, T> get(ll x) ... returns (y1, y2, t) where f(x) = t and y1 <= x < y2 and y1 and y2 are defined point.
   T sum(ll l, ll r) ... returns \sum_{i = l}^{r - 1} f(i)．  Note that T must have "+" and "*", and "ll" should be 
                         convertible into T.
   template<typename x_t, typename y_t, typename res_t, typename f_t>
   itv_set<res_t> itv_apply(f_t f, const itv_set<x_t>& x, const itv_set<y_t>& y)
        // Meaning  ... ret(i) := f(x(i), y(i))
        // Usage ...    auto res = itv_apply<x_t, y_t, res_t, decltype(f)>(f, x, y);
+
+  Loop:
+    itv_set is(...);
+    for (const auto& [l, r, t] : is) { ... }
+
+  Debugging:
+    Use the impl member of type map<ll, T>.
+
  */
 
 //////////////////////////////////////////////////////////////////////
@@ -39,12 +45,50 @@ using namespace std;
 // @@ !! BEGIN() ---- intervalSet.cc
 
 template<typename T>
-struct itv_set_cell {
-};
-
-template<typename T>
 struct itv_set {
   
+  struct Itr {
+    using iterator_category = input_iterator_tag;
+    using value_type = tuple<ll, ll, T>;
+    // using difference_type = ptrdiff_t;
+    using reference = value_type const&;
+    // using pointer = value_type const*;
+
+    using impl_iterator = typename map<ll, T>::iterator;
+    impl_iterator it_impl;
+
+    Itr(impl_iterator it_impl_) : it_impl(it_impl_) {}
+
+    bool operator ==(const Itr& o) const { return it_impl == o.it_impl; }
+    bool operator !=(const Itr& o) const { return it_impl != o.it_impl; }
+    value_type operator *() const {
+      auto [l, t] = *it_impl;
+      auto [r, _dummy] = *(next(it_impl));
+      return value_type(l, r, t);
+    }
+    Itr& operator ++() { 
+      ++it_impl;
+      return *this;
+    }
+    Itr operator ++(int) {
+      Itr const tmp(*this);
+      ++*this;
+      return tmp;
+    }
+  };
+  using iterator = Itr;
+  Itr begin() { return Itr(impl.begin()); }
+  Itr end() { return Itr(prev(impl.end())); }
+
+  map<ll, T> impl;  
+  ll lo;
+  ll hi;
+
+  itv_set(ll lo_, ll hi_, const T& t = T()) : lo(lo_), hi(hi_) {
+    impl[lo] = t;
+    impl[hi] = t;  // the value is just a dummy.
+  }
+
   auto get_iter(ll x) {
     auto it = impl.upper_bound(x);
     return std::prev(it);
@@ -62,52 +106,47 @@ struct itv_set {
     return impl.emplace_hint(it_nxt, x, it->second);
   }
 
-  map<ll, T> impl;  // impl always has (LLONG_MIN, *) and (LLONG_MAX, *) as centinels.
-
-  itv_set(const T& t = T()) {
-    impl[LLONG_MIN] = t;
-    impl[LLONG_MAX] = T();
+  
+  void range_check(ll l, ll r) const {
+    if (l < lo or r > hi) throw runtime_error("intervalSet: out of range: " + to_string(l) + ", " + to_string(r));
+  }
+  void range_check(ll x) const {
+    if (x < lo or x > hi - 1) throw runtime_error("intervalSet: out of range: " + to_string(x));
   }
 
   void put(ll l, ll r, const T& t) {
+    range_check(l, r);
     if (l >= r) return;
-    if (l == LLONG_MIN) throw runtime_error("itv_set.put: l == LLONG_MIN");
-    if (r == LLONG_MAX) throw runtime_error("itv_set.put: l == LLONG_MAX");
     auto it0 = divide(l);
     auto it1 = divide(r);
     it0->second = t;
     for (auto it = std::next(it0); it != it1; it = impl.erase(it));
-    auto it2 = std::prev(it0);
-    if (it0->second == it1->second) impl.erase(it1);
-    if (it2->second == it0->second) impl.erase(it0);
+    if (std::next(it1) != impl.end() and it0->second == it1->second) impl.erase(it1);
+    if (it0 != impl.begin() and std::prev(it0)->second == it0->second) impl.erase(it0);
   }
 
-  void put(ll x, const T& t) { put(x, x + 1, t); }
-
-  void put_at_end(ll x, const T& t) {
-    auto it2 = std::prev(impl.end());
-    auto it1 = std::prev(it2);
-    if (it1->second != t) impl.emplace_hint(it2, x, t);
+  void put(ll x, const T& t) {
+    range_check(x);
+    put(x, x + 1, t);
   }
 
-  const T& get_val(ll x) const { return get_iter(x)->second; }
+  const T& get_val(ll x) const {
+    range_check(x);
+    return get_iter(x)->second;
+  }
 
-  pair<ll, ll> get_itvl(ll x) {
+  tuple<ll, ll, T> get(ll x) {
+    range_check(x);
     auto it = impl.upper_bound(x);
-    return {std::prev(it)->first, it->first};
-  }
-
-  pair<T, pair<ll, ll>> get(ll x) {
-    auto it = impl.upper_bound(x);
-    return {std::prev(it)->second, {std::prev(it)->first, it->first}};
+    return {std::prev(it)->first, it->first, std::prev(it)->second};
   }
 
   T sum(ll l0, ll r0) {
+    range_check(l0, r0);
     T ret = T();
     ll i = l0;
     while (true) {
-      const auto& [t, lr] = get(i);
-      const auto& [l, r] = lr;
+      const auto& [l, r, t] = get(i);
       ret += (min(r, r0) - i) * t;
       if (r0 <= r) return ret;
       i = r;
@@ -118,9 +157,10 @@ struct itv_set {
 
 template<typename x_t, typename y_t, typename res_t, typename f_t>
 itv_set<res_t> itv_apply(f_t f, const itv_set<x_t>& x, const itv_set<y_t>& y) {
+  if (x.lo != y.lo or x.hi != y.hi) throw runtime_error("intervalSet: range mismatch");
   auto itx = x.impl.begin();
   auto ity = y.impl.begin();
-  itv_set<res_t> ret(f(itx->second, ity->second));
+  itv_set<res_t> ret(x.lo, x.hi, f(itx->second, ity->second));
   auto itcc = ret.impl.begin();
   auto itce = std::next(itcc);
   while (true) {
@@ -130,7 +170,7 @@ itv_set<res_t> itv_apply(f_t f, const itv_set<x_t>& x, const itv_set<y_t>& y) {
       auto nity = std::next(ity);
       if      (nitx->first <  nity->first) return {nitx->first, nitx,  ity};
       else if (nitx->first >  nity->first) return {nity->first,  itx, nity};
-      else if (nitx->first < LLONG_MAX)    return {nitx->first, nitx, nity};
+      else if (nitx->first < x.hi)         return {nitx->first, nitx, nity};
       else                                 return {-1,          nitx, nity};
     }();
     if (t == -1) break;
