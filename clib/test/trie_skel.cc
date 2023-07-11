@@ -5,52 +5,63 @@ using namespace std;
 
 // @@ !! LIM(debug trie)
 
-
 int main(int argc, char *argv[]) {
   ios_base::sync_with_stdio(false);
   cin.tie(nullptr);
   cout << setprecision(20);
 
   {
-    Trie<ll> trie('a', 'd');
-    int i0 = trie.insert("abcd");
-    trie.user(i0) = 0;
-    int i1 = trie.insert("abc");
-    trie.user(i1) = 1;
-    int i2 = trie.insert("acd");
-    trie.user(i2) = 2;
-    int i3 = trie.insert("ba");
-    trie.user(i3) = 3;
-    assert((trie.to_vector_string() == vector<string>{"abc", "abcd", "acd", "ba"}));
-    assert(trie.from == 'a');
-    assert(trie.br_size == 4);
-    trie.erase("abc");
-    trie.user(i2) -= 2;
-    trie.erase(i3);
-    trie.user(i3) -= 3;
-    DLOGK(trie.to_vector_string());
-    assert((trie.to_vector_string() == vector<string>{"abcd", "acd"}));
-    assert(trie.index("abc") == -1);
-    assert(trie.index("ba") == -1);
-    assert(trie.parent(i0) == i1);
-    assert(trie.child(i1, 'd') == i0);
-    assert(trie.exists(i0));
-    assert(not trie.exists(i3));
-    assert(trie.user(i1) == 1);
-    assert(trie.user(i2) == 0);
-  }
-  {
-    stringstream ss1;
-    stringstream ss2;
-    Trie trie('a', 'z');
-    vector<string> vec{"xyz", "abcd", "a", "ae"};
-    for (string s : vec) trie.insert(s);
-    auto vec1 = vec;
-    sort(vec1.begin(), vec1.end());
-    ss1 << trie;
-    ss2 << vec1;
+    auto root = Trie<>::create_root('a', 'd');
+    root->insert("abcd");
+    root->insert("ac");
+    root->insert("add");
+    root->insert("add");
+    auto p1 = root->getNode("abcd");
+    assert(p1->exists(""));
+    assert(root->getNum("abcd") == 1);
+    assert(root->getNum("add") == 2);
+    bool b1 = root->erase("add");
+    assert(b1 and root->getNum("add") == 1);
+    bool b2 = root->erase("add", 1000);
+    assert(not b2 and root->getNum("add") == 0);
+    auto p2 = root->getNode("");
+    assert (root->info->from == 'a');
+    assert (root->info->br_size == 4);
+    assert (root->info->root == p2);
+    auto p3 = root->getNode("abcdd");
+    assert(not p3);
+    auto p4 = root->getNode("abcdd", true);
+    assert(p1->children[3] == p4);
+    assert(p1->getNode("d") == p4);
+    assert(p1->getNode('d') == p4);
+    p4->addVal(2);
+    assert(p4->num == 2);
+    auto p6 = root->addVal("abcdd", -2);
+    assert(p6 == p4 and p6->num == 0);
+    auto p7 = root->insert("ccc");
+    assert(p7->num == 1);
+    root->insert("ccc", 3);
+    assert(p7->num == 4);
+    root->erase("ccc", 2);
+    assert(p7->num == 2);
+    bool b9 = root->erase("ccc", 10);
+    assert(not b9 and p7->num == 0);
+    auto p10 = root->insert("cdc");
+    root->insert("cdca");
+    root->insert("cdcaa");
+    root->insert("cdcd");
+    assert(p10->size == 4);
+    assert(p7->node2str() == "ccc");
+    auto vec1 = p10->sub_stringSet("cdc");
+    auto vec2 = vector<string>{"cdc", "cdca", "cdcaa", "cdcd"};
+    assert(vec1 == vec2);
+    stringstream ss1, ss2;
+    ss1 << *root;
+    ss2 << root->stringSet();
     assert(ss1.str() == ss2.str());
   }
+
+
 
   cout << "ok\n";
   return 0;
