@@ -1,0 +1,10 @@
+abracadabra
+4
+b
+abra
+cad
+rac
+1
+10
+50
+100

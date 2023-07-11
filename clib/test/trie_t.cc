@@ -246,144 +246,174 @@ void dbgLog(bool with_nl, Head&& head, Tail&&... tail)
 // ---- end debug.cc
 
 // ---- inserted library file trie.cc
-#line 66 "/home/y-tanabe/proj/compprog/clib/trie.cc"
+#line 79 "/home/y-tanabe/proj/compprog/clib/trie.cc"
 
 /**
  * @brief Trie木
  *
  * テンプレートパラメタ T には，ユーザデータを格納するデータ型を指定する．
+ *   特に使わないときには，仮に，T = ll としておく．
  */
+
 template <typename T = ll>
 struct Trie {
+  struct Info {
+    /** 最初の文字 */
+    char from;
+    /** 文字の種類数 */
+    int br_size;
+    /** ノード */
+    Trie* root;
 
-  /**
-   *  @brief Trie のノード
-   *
-   */
-  struct TrNode {
-    /** 1文字増えた文字列のインデックスを格納するベクトル．サイズは Trie の br_size */
-    vector<int> _next;
-    /** 1文字減った文字列のインデックス．ルートでは -1 が設定されている */
-    int _parent;
-    /** このノードに対応する文字列が Trie に格納されているか */
-    bool _exists;
-    /** ユーザデータ */
-    T _user;
-    /** コンストラクタ．Trie からは，sz は br_size で，_parent_ は適切に設定して呼び出される */
-    TrNode(int sz = 0, int _parent_ = -1) : _next(sz, -1), _parent(_parent_), _exists(false), _user() {}
+    /** コンストラクタ */
+    Info(char from_, int br_size_) : from(from_), br_size(br_size_), root(nullptr) {}
+
   };
 
-  /** 最初の文字 */
-  char from;
-  /** 文字の種類数 */
-  int br_size;
-  /** ノード */
-  vector<TrNode> nodes;
+  /** Trie 全体の情報 */
+  Info* info;
+  /** 1文字増えたノードを格納するベクトル．サイズは Trie の br_size */
+  vector<Trie*> children;
+  /** 1文字減ったノード．ルートでは nullptr が設定されている */
+  Trie* parent;
+  /** このノードに対応する文字列が Trie に格納されている数 */
+  ll num;
+  /** このノード以下に存在する要素の数 */
+  ll size;
+  /** このノードの深さ */
+  int depth;
+  /** このノードが表す文字の，文字集合中の順番．parent->children[cidx] == this が成り立つ */
+  int cidx;
+  /** ユーザデータ */
+  T user;
 
   /** コンストラクタ */
-  Trie(char from_, char to_)
-    : from(from_), br_size(to_ - from_ + 1), nodes(1, TrNode(br_size)) {}
+  Trie(Info* info_, Trie* parent_ = nullptr, int depth_ = 0, int cidx_ = -1)
+    : info(info_), children(info->br_size, nullptr), parent(parent_),
+      num(0), size(0), depth(depth_), cidx(cidx_), user() {}
 
-  int _index(const string& s, bool create) {
-    int idx = 0;
+  static Trie* create_root(char from_, char to_) {
+    auto info = new Info(from_, to_ - from_ + 1);
+    auto root = new Trie(info, nullptr, 0, -1);
+    info->root = root;
+    return root;
+  }
+
+  /** 文字に対応するノードへのポインタを返す．
+      @param ch 文字．info->from <= ch < info->from + info->br_size である必要がある．
+      @param create これが true の場合に対応するノードがなければ作成される．falseの場合には，
+      ch に対応するノードが存在しない場合には，nullptr が返る．
+  */
+  Trie* getNode(char ch, bool create = false) {
+    int c = ch - info->from;
+    Trie* q = children[c];
+    if (q) return q;
+    else if (not create) return nullptr;
+    else return children[c] = new Trie(info, this, depth + 1, c);
+  }
+
+  /** 文字列に対応するノードへのポインタを返す．
+      文字列は，このノードを起点に (このノードが空文字列を表すと仮定して) 解釈される．
+      @param s 文字列
+      @param create これが true の場合には，s に対応するノードが存在しない場合には，(そこまでの)ノードが
+      作成される．false の場合には，s に対応するノードが存在しない場合には，nullptr が返る．
+   */
+  Trie* getNode(const string& s, bool create = false) {
+    auto p = this;
     for (int i = 0; i < (int)s.size(); i++) {
-      int c = s[i] - from;
-      if (nodes[idx]._next[c] < 0) {
-        if (not create) return -1;
-        nodes[idx]._next[c] = nodes.size();
-        nodes.emplace_back(br_size, idx);
-        idx = nodes.size() - 1;
-      }else {
-	idx = nodes[idx]._next[c];
-      }
+      p = p->getNode(s[i], create);
+      if (not p) return nullptr;
     }
-    return idx;
+    return p;
   }
 
-  /** 文字列を Trie に挿入する */
-  int insert(const string& s) {
-    int idx = _index(s, true);
-    nodes[idx]._exists = true;
-    return idx;
-  }
-
-  /** 指定したインデックスに対応する文字列を Trie から削除する */
-  bool erase(int idx) {
-    bool ret = nodes[idx]._exists;
-    nodes[idx]._exists = false;
+  /** 存在個数を増減する．負にはならない．指定通りに増減できたときに true を返す． */
+  bool addVal(ll diff) {
+    bool ret = true;
+    if (num + diff < 0) {
+      ret = false;
+      diff = -num;
+    }
+    num += diff;
+    for (auto p = this; p; p = p->parent) p->size += diff;
     return ret;
   }
 
-  /** 文字列を Trie から削除する */
-  bool erase(const string& s) {
-    int idx = _index(s, false);
-    if (idx < 0) return false;
-    return erase(idx);
+  /** 文字列の存在個数を増減する．負には鳴らない．その文字列を表すノードを返す */
+  Trie* addVal(const string& s, ll diff) {
+    Trie* p = getNode(s, true);
+    p->addVal(diff);
+    return p;
+  }
+
+  /** Trie に文字列を指定個数追加する その文字列を表すノードを返す． */
+  Trie* insert(const string& s, ll add_num = 1) { return addVal(s, add_num); }
+
+  /** Trie から文字列を (最大) 指定個数削除する．指定通り削除できたときに true を返す． */
+  bool erase(const string& s, ll del_num = 1) {
+    Trie* p = getNode(s);
+    if (not p) return false;
+    return p->addVal(-del_num);
+  }
+
+  /** 文字列がTrie中に存在している数を返す */
+  ll getNum(const string& s) {
+    Trie* p = getNode(s);
+    if (not p) return 0;
+    return p->num;
+  }
+
+  /** 文字列が Trie 中に1つ以上存在しているかどうかを返す */
+  bool exists(const string& s) {
+    return getNum(s) > 0;
+  }
+
+  /** Trie 中に存在する，prefix が指定されたものである文字列の数を返す */
+  ll numPrefix(const string& s) {
+    Trie* p = getNode(s);
+    if (not p) return 0;
+    return p->size;
+  }
+
+  /** ノードが表す文字列を返す． */
+  string node2str() {
+    string s(depth, ' ');
+    for (auto p = this; p->parent ; p = p->parent) s[p->depth - 1] = info->from + p->cidx;
+    return s;
   }
 
   /** 
-      文字列のインデックスを返す．
-      @param s 文字列
-      @param exists_only これが true の場合には，s が Trie に存在している場合にのみ，有効なインデックス (非負)
-      が返り，存在していない場合には -1 が返る．false の場合には，s に対応するノードが存在すれば
-      そのインデックスが返る．
+      このノード以下に存在する文字列一覧 (vector<string>) を返す．
+      基本的にはデバッグ用．
   */
-  int index(const string& s, bool exists_only = true) {
-    int idx = _index(s, false);
-    if (idx < 0) return -1;
-    if (exists_only and not nodes[idx]._exists) return -1;
-    return idx;
+  vector<string> stringSet() {
+    return sub_stringSet("");
   }
 
-  /** 1文字少ない文字列のインデックス 
-      idx にルート (0) を指定すると -1 が返される
-   */
-  int parent(int idx) { return nodes[idx]._parent; }
-
-  /** 1文字多い文字列のインデックス．c はベクトルの添字ではなく文字であることに注意 
-      子ノードが存在しないときには -1 を返す．
-   */
-  int child(int idx, char c) { return nodes[idx]._next[c - from]; }
-
-  /** インデックス idx に対応する文字列が存在しているか．引数 idx はインデックスであることに注意 */
-  bool exists(int idx) { return nodes[idx]._exists; }
-
-  /** ユーザデータ */
-  T& user(int idx) { return nodes[idx]._user; }
-
-  /** 文字列ベクトルを返す．デバッグ用．*/
-  vector<string> to_vector_string() {
-    vector<string> vec;
-    auto sub = [&](auto rF, int idx, string& s) -> void {
-      if (nodes[idx]._exists) vec.push_back(s);
-      for (int i = 0; i < br_size; i++) {
-        int j = nodes[idx]._next[i];
-        if (j >= 0) {
-          s.push_back(from + i);
-          rF(rF, j, s);
-          s.pop_back();
-        }
-      }
-    };
-    string s = "";
-    sub(sub, 0, s);
-    return vec;
-  }
-
+  vector<string> sub_stringSet(const string& prefix) {
+    vector<string> ret;
+    for (ll i = 0; i < num; i++) ret.push_back(prefix);
+    if (size == 0) return ret;
+    for (int i = 0; i < info->br_size; i++) {
+      auto q = children[i];
+      if (not q) continue;
+      auto vv = q->sub_stringSet(prefix + (char)(info->from + i));
+      copy(vv.begin(), vv.end(), back_inserter(ret));
+    }
+    return ret;
+  };
 };
 
 template <typename T>
 ostream& operator<<(ostream& ostr, Trie<T> trie) {
-  ostr << trie.to_vector_string();
+  ostr << trie.stringSet();
   return ostr;
 }
-
 
 // ---- end trie.cc
 
 // @@ !! LIM -- end mark --
 #line 7 "trie_skel.cc"
-
 
 int main(int argc, char *argv[]) {
   ios_base::sync_with_stdio(false);
@@ -391,45 +421,57 @@ int main(int argc, char *argv[]) {
   cout << setprecision(20);
 
   {
-    Trie<ll> trie('a', 'd');
-    int i0 = trie.insert("abcd");
-    trie.user(i0) = 0;
-    int i1 = trie.insert("abc");
-    trie.user(i1) = 1;
-    int i2 = trie.insert("acd");
-    trie.user(i2) = 2;
-    int i3 = trie.insert("ba");
-    trie.user(i3) = 3;
-    assert((trie.to_vector_string() == vector<string>{"abc", "abcd", "acd", "ba"}));
-    assert(trie.from == 'a');
-    assert(trie.br_size == 4);
-    trie.erase("abc");
-    trie.user(i2) -= 2;
-    trie.erase(i3);
-    trie.user(i3) -= 3;
-    DLOGK(trie.to_vector_string());
-    assert((trie.to_vector_string() == vector<string>{"abcd", "acd"}));
-    assert(trie.index("abc") == -1);
-    assert(trie.index("ba") == -1);
-    assert(trie.parent(i0) == i1);
-    assert(trie.child(i1, 'd') == i0);
-    assert(trie.exists(i0));
-    assert(not trie.exists(i3));
-    assert(trie.user(i1) == 1);
-    assert(trie.user(i2) == 0);
-  }
-  {
-    stringstream ss1;
-    stringstream ss2;
-    Trie trie('a', 'z');
-    vector<string> vec{"xyz", "abcd", "a", "ae"};
-    for (string s : vec) trie.insert(s);
-    auto vec1 = vec;
-    sort(vec1.begin(), vec1.end());
-    ss1 << trie;
-    ss2 << vec1;
+    auto root = Trie<>::create_root('a', 'd');
+    root->insert("abcd");
+    root->insert("ac");
+    root->insert("add");
+    root->insert("add");
+    auto p1 = root->getNode("abcd");
+    assert(p1->exists(""));
+    assert(root->getNum("abcd") == 1);
+    assert(root->getNum("add") == 2);
+    bool b1 = root->erase("add");
+    assert(b1 and root->getNum("add") == 1);
+    bool b2 = root->erase("add", 1000);
+    assert(not b2 and root->getNum("add") == 0);
+    auto p2 = root->getNode("");
+    assert (root->info->from == 'a');
+    assert (root->info->br_size == 4);
+    assert (root->info->root == p2);
+    auto p3 = root->getNode("abcdd");
+    assert(not p3);
+    auto p4 = root->getNode("abcdd", true);
+    assert(p1->children[3] == p4);
+    assert(p1->getNode("d") == p4);
+    assert(p1->getNode('d') == p4);
+    p4->addVal(2);
+    assert(p4->num == 2);
+    auto p6 = root->addVal("abcdd", -2);
+    assert(p6 == p4 and p6->num == 0);
+    auto p7 = root->insert("ccc");
+    assert(p7->num == 1);
+    root->insert("ccc", 3);
+    assert(p7->num == 4);
+    root->erase("ccc", 2);
+    assert(p7->num == 2);
+    bool b9 = root->erase("ccc", 10);
+    assert(not b9 and p7->num == 0);
+    auto p10 = root->insert("cdc");
+    root->insert("cdca");
+    root->insert("cdcaa");
+    root->insert("cdcd");
+    assert(p10->size == 4);
+    assert(p7->node2str() == "ccc");
+    auto vec1 = p10->sub_stringSet("cdc");
+    auto vec2 = vector<string>{"cdc", "cdca", "cdcaa", "cdcd"};
+    assert(vec1 == vec2);
+    stringstream ss1, ss2;
+    ss1 << *root;
+    ss2 << root->stringSet();
     assert(ss1.str() == ss2.str());
   }
+
+
 
   cout << "ok\n";
   return 0;
