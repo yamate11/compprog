@@ -22,16 +22,16 @@
   Binary Search:
   
   auto check = [&](DAT x) -> bool { ...; };
-  Case 1: check(query(x - delta_x, y + delta_y) holds => check(query(x, y)) holds
-     ir = st.binsearch_r_until(check, il)
-           check(query(il, x)) holds for x <= ir    (if there is no such x, ir = il - 1)
-     il = st.binsearch_l_until(check, ir)
-           check(query(y, ir)) holds for y >= il    (if there is no such y, il = ir + 1)
-  Case 2: check(query(x, y)) holds => check(query(x - delta_x, y + delta_y)) holds
-     ir = st.binsearch_r_from(check, il)
-           check(query(il, x)) holds for x >= ir    (if there is no such x, ir = size + 1)
-     il = st.binsearch_l_from(check, ir)
-           check(query(y, ir)) holds for y <= il    (if there is no such y, il = -1)
+  Case 1: check(query(x', y') holds => check(query(x, y)) holds for x' <= x < y <= y'
+     ir = st.binsearch_r_until(check, il)    means
+           check(query(il, y)) holds for y <= ir    (if there is no such y, ir = il - 1)
+     il = st.binsearch_l_until(check, ir)    means
+           check(query(x, ir)) holds for il <= x    (if there is no such x, il = ir + 1)
+  Case 2: check(query(x, y)) holds => check(query(x', y')) holds for x' <= x < y <= y'
+     ir = st.binsearch_r_from(check, il)     means
+           check(query(il, y)) holds for ir <= y    (if there is no such y, ir = size + 1)
+     il = st.binsearch_l_from(check, ir)     means
+           check(query(x, ir)) holds for x <= il    (if there is no such x, il = -1)
 
   Examples:
 
@@ -41,14 +41,14 @@
     Query: sum  (Update: point only)
       auto st = make_seg_tree<ll>(0LL, plus<ll>(), init_vec);
 
-    Query: minimum, Update: substitution (interval)
+    LAZY, Query: minimum, Update: substitution (interval)
       using OP = optional<ll>;
       auto add = [](ll x, ll y) -> ll { return min(x, y); };
       auto comp = [](OP f, OP g) -> OP { return f ? f : g; };
       auto appl = [](OP f, ll x) -> ll { return f ? *f : x; };
       auto st = make_seg_tree_lazy<ll, OP>(LLONG_MAX, OP(), add, comp, appl, init_vec);
        
-    Query: sum,  Update: substitution (interval)
+    LAZY, Query: sum,  Update: substitution (interval)
       using DAT = pair<ll, ll>;
       using OP = optional<ll>;
       auto add = [](DAT x, DAT y) -> DAT { return DAT(x.first + y.first, x.second + y.second); };

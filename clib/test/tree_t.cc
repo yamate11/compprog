@@ -2,8 +2,9 @@
 #include <cassert>
 typedef long long int ll;
 using namespace std;
+#define SIZE(v) ((ll)((v).size()))
 
-// @@ !! LIM(tree)
+// @@ !! LIM(tree debug)
 
 // ---- inserted library file tree.cc
 #line 97 "/home/y-tanabe/proj/compprog/clib/tree.cc"
@@ -247,14 +248,261 @@ vector<T> reroot(Tree& tree, const T& unit, auto add, auto mod) {
 
 // ---- end tree.cc
 
+// ---- inserted function f:<< from util.cc
+template <typename T1, typename T2>
+ostream& operator<< (ostream& os, const pair<T1,T2>& p) {
+  os << "(" << p.first << ", " << p.second << ")";
+  return os;
+}
+
+template <typename T1, typename T2, typename T3>
+ostream& operator<< (ostream& os, const tuple<T1,T2,T3>& t) {
+  os << "(" << get<0>(t) << ", " << get<1>(t)
+     << ", " << get<2>(t) << ")";
+  return os;
+}
+
+template <typename T1, typename T2, typename T3, typename T4>
+ostream& operator<< (ostream& os, const tuple<T1,T2,T3,T4>& t) {
+  os << "(" << get<0>(t) << ", " << get<1>(t)
+     << ", " << get<2>(t) << ", " << get<3>(t) << ")";
+  return os;
+}
+
+template <typename T>
+ostream& operator<< (ostream& os, const vector<T>& v) {
+  os << '[';
+  for (auto it = v.begin(); it != v.end(); it++) {
+    if (it != v.begin()) os << ", ";
+    os << *it;
+  }
+  os << ']';
+
+  return os;
+}
+
+template <typename T, typename C>
+ostream& operator<< (ostream& os, const set<T, C>& v) {
+  os << '{';
+  for (auto it = v.begin(); it != v.end(); it++) {
+    if (it != v.begin()) os << ", ";
+    os << *it;
+  }
+  os << '}';
+
+  return os;
+}
+
+template <typename T, typename C>
+ostream& operator<< (ostream& os, const unordered_set<T, C>& v) {
+  os << '{';
+  for (auto it = v.begin(); it != v.end(); it++) {
+    if (it != v.begin()) os << ", ";
+    os << *it;
+  }
+  os << '}';
+
+  return os;
+}
+
+template <typename T, typename C>
+ostream& operator<< (ostream& os, const multiset<T, C>& v) {
+  os << '{';
+  for (auto it = v.begin(); it != v.end(); it++) {
+    if (it != v.begin()) os << ", ";
+    os << *it;
+  }
+  os << '}';
+
+  return os;
+}
+
+template <typename T1, typename T2, typename C>
+ostream& operator<< (ostream& os, const map<T1, T2, C>& mp) {
+  os << '[';
+  for (auto it = mp.begin(); it != mp.end(); it++) {
+    if (it != mp.begin()) os << ", ";
+    os << it->first << ": " << it->second;
+  }
+  os << ']';
+
+  return os;
+}
+
+template <typename T1, typename T2, typename C>
+ostream& operator<< (ostream& os, const unordered_map<T1, T2, C>& mp) {
+  os << '[';
+  for (auto it = mp.begin(); it != mp.end(); it++) {
+    if (it != mp.begin()) os << ", ";
+    os << it->first << ": " << it->second;
+  }
+  os << ']';
+
+  return os;
+}
+
+template <typename T, typename T2>
+ostream& operator<< (ostream& os, const queue<T, T2>& orig) {
+  queue<T, T2> que(orig);
+  bool first = true;
+  os << '[';
+  while (!que.empty()) {
+    T x = que.front(); que.pop();
+    if (!first) os << ", ";
+    os << x;
+    first = false;
+  }
+  return os << ']';
+}
+
+template <typename T, typename T2>
+ostream& operator<< (ostream& os, const deque<T, T2>& orig) {
+  deque<T, T2> que(orig);
+  bool first = true;
+  os << '[';
+  while (!que.empty()) {
+    T x = que.front(); que.pop_front();
+    if (!first) os << ", ";
+    os << x;
+    first = false;
+  }
+  return os << ']';
+}
+
+template <typename T, typename T2, typename T3>
+ostream& operator<< (ostream& os, const priority_queue<T, T2, T3>& orig) {
+  priority_queue<T, T2, T3> pq(orig);
+  bool first = true;
+  os << '[';
+  while (!pq.empty()) {
+    T x = pq.top(); pq.pop();
+    if (!first) os << ", ";
+    os << x;
+    first = false;
+  }
+  return os << ']';
+}
+
+template <typename T>
+ostream& operator<< (ostream& os, const stack<T>& st) {
+  stack<T> tmp(st);
+  os << '[';
+  bool first = true;
+  while (!tmp.empty()) {
+    T& t = tmp.top();
+    if (first) first = false;
+    else os << ", ";
+    os << t;
+    tmp.pop();
+  }
+  os << ']';
+  return os;
+}
+
+#if __cplusplus >= 201703L
+template <typename T>
+ostream& operator<< (ostream& os, const optional<T>& t) {
+  if (t.has_value()) os << "v(" << t.value() << ")";
+  else               os << "nullopt";
+  return os;
+}
+#endif
+
+ostream& operator<< (ostream& os, int8_t x) {
+  os << (int32_t)x;
+  return os;
+}
+
+// ---- end f:<<
+
+// ---- inserted library file debug.cc
+#line 42 "/home/y-tanabe/proj/compprog/clib/debug.cc"
+template <class... Args>
+string dbgFormat(const char* fmt, Args... args) {
+  size_t len = snprintf(nullptr, 0, fmt, args...);
+  char buf[len + 1];
+  snprintf(buf, len + 1, fmt, args...);
+  return string(buf);
+}
+
+template <class Head>
+void dbgLog(bool with_nl, Head&& head) {
+  cerr << head;
+  if (with_nl) cerr << endl;
+}
+
+template <class Head, class... Tail>
+void dbgLog(bool with_nl, Head&& head, Tail&&... tail)
+{
+  cerr << head << " ";
+  dbgLog(with_nl, forward<Tail>(tail)...);
+}
+
+#if DEBUG
+  #define DLOG(...)        dbgLog(true, __VA_ARGS__)
+  #define DLOGNNL(...)     dbgLog(false, __VA_ARGS__)
+  #define DFMT(...)        cerr << dbgFormat(__VA_ARGS__) << endl
+  #define DCALL(func, ...) func(__VA_ARGS__)
+#else
+  #define DLOG(...)
+  #define DLOGNNL(...)
+  #define DFMT(...)
+  #define DCALL(func, ...)
+#endif
+
+/*
+#if DEBUG_LIB
+  #define DLOG_LIB(...)        dbgLog(true, __VA_ARGS__)
+  #define DLOGNNL_LIB(...)     dbgLog(false, __VA_ARGS__)
+  #define DFMT_LIB(...)        cerr << dbgFormat(__VA_ARGS__) << endl
+  #define DCALL_LIB(func, ...) func(__VA_ARGS__)
+#else
+  #define DLOG_LIB(...)
+  #define DFMT_LIB(...)
+  #define DCALL_LIB(func, ...)
+#endif
+*/
+
+#define DUP1(E1)       #E1 "=", E1
+#define DUP2(E1,E2)    DUP1(E1), DUP1(E2)
+#define DUP3(E1,...)   DUP1(E1), DUP2(__VA_ARGS__)
+#define DUP4(E1,...)   DUP1(E1), DUP3(__VA_ARGS__)
+#define DUP5(E1,...)   DUP1(E1), DUP4(__VA_ARGS__)
+#define DUP6(E1,...)   DUP1(E1), DUP5(__VA_ARGS__)
+#define DUP7(E1,...)   DUP1(E1), DUP6(__VA_ARGS__)
+#define DUP8(E1,...)   DUP1(E1), DUP7(__VA_ARGS__)
+#define DUP9(E1,...)   DUP1(E1), DUP8(__VA_ARGS__)
+#define DUP10(E1,...)   DUP1(E1), DUP9(__VA_ARGS__)
+#define DUP11(E1,...)   DUP1(E1), DUP10(__VA_ARGS__)
+#define DUP12(E1,...)   DUP1(E1), DUP11(__VA_ARGS__)
+#define GET_MACRO(_1,_2,_3,_4,_5,_6,_7,_8,_9,_10,_11,_12,NAME,...) NAME
+#define DUP(...)          GET_MACRO(__VA_ARGS__, DUP12, DUP11, DUP10, DUP9, DUP8, DUP7, DUP6, DUP5, DUP4, DUP3, DUP2, DUP1)(__VA_ARGS__)
+#define DLOGK(...)        DLOG(DUP(__VA_ARGS__))
+#define DLOGKL(lab, ...)  DLOG(lab, DUP(__VA_ARGS__))
+
+#if DEBUG_LIB
+  #define DLOG_LIB   DLOG
+  #define DLOGK_LIB  DLOGK
+  #define DLOGKL_LIB DLOGKL
+#endif
+
+// ---- end debug.cc
+
 // @@ !! LIM -- end mark --
-#line 7 "tree_skel.cc"
+#line 8 "tree_skel.cc"
 
 
 int main(int argc, char *argv[]) {
   ios_base::sync_with_stdio(false);
   cin.tie(nullptr);
   cout << setprecision(20);
+
+  random_device rd;
+  mt19937 rng(rd());
+  auto randrange = [&rng](ll i, ll j) -> ll {
+    uniform_int_distribution<ll> dist(i, j - 1);
+    return dist(rng);
+  };
 
   using TreeEdge = pair<int, int>;
 
@@ -347,6 +595,93 @@ int main(int argc, char *argv[]) {
     tr2.change_root(4);
     tie (diam, ep0, ep1, ct0, ct1) = tr2.diameter();
     assert(diam == 5 and ep0 == 3 and ep1 == 6 and ct0 == 0 and ct1 == 4);
+  }
+
+  {
+    ll repeat = 2000;
+    for (ll rep = 0; rep < repeat; rep++) {
+      ll N = randrange(1, 17);
+      ll root = randrange(0, N);
+      Tree tr(N, root);
+      vector conn(N, vector<bool>(N, false));
+      vector rec(N, 0LL);
+      for (ll i = 1; i < N; i++) {
+        ll j = randrange(0, i);
+        rec[i] = j;
+        conn[i][j] = conn[j][i] = true;
+        if (randrange(0, 100) < 50) tr.add_edge(i, j);
+        else                        tr.add_edge(j, i);
+      }
+      for (ll i = 0; i < N - 1; i++) {
+        auto [x, y] = tr.nodesOfEdge(i);
+        assert ((x == i + 1 and y == rec[i + 1]) or (x == rec[i + 1] and y == i + 1));
+      }
+      for (ll i = 0; i < N; i++) {
+        ll cnt = 0;
+        for (ll j = 0; j < N; j++) if (conn[i][j]) cnt++;
+        for (ll j : tr.children(i)) assert(conn[i][j]);
+        ll sts = 1; for (ll j : tr.children(i)) sts += tr.stsize(j);
+        assert(sts == tr.stsize(i));
+        if (i == root) {
+          assert (tr.parent(i) == -1);
+          assert ((ll)(tr.children(i).size()) == cnt);
+          assert (tr.depth(i) == 0);
+          assert (tr.stsize(i) == N);
+          assert (tr.ancestorDep(i, 0) == i);
+        }else {
+          assert (conn[i][tr.parent(i)]);
+          assert (SIZE(tr.children(i)) + 1 == cnt);
+          assert (tr.depth(i) == tr.depth(tr.parent(i)) + 1);
+          vector tmp(tr.depth(i) + 1, 0LL);
+          for (ll d = 0; d <= tr.depth(i); d++) tmp[d] = tr.ancestorDep(i, d);
+          for (ll d = 1; d <= tr.depth(i); d++) assert (tr.parent(tmp[d]) == tmp[d - 1]);
+        }
+      }
+      for (ll x = 0; x < N; x++) {
+        for (ll y = 0; y < N; y++) {
+          ll z = tr.lca(x, y);
+          ll dz = tr.depth(z);
+          ll dx = tr.depth(x);
+          ll dy = tr.depth(y);
+          assert (dx >= dz and tr.ancestorDep(x, dz) == z);
+          assert (dy >= dz and tr.ancestorDep(y, dz) == z);
+          if (dx > dz and dy > dz) assert(tr.ancestorDep(x, dz + 1) != tr.ancestorDep(y, dz + 1));
+          const auto vec = tr.nnpath(x, y);
+          for (ll i = 0; i < SIZE(vec); i++) for (ll j = i + 1; j < SIZE(vec); j++) assert(vec[i] != vec[j]);
+          assert (vec[0] == x and vec.back() == y);
+          for (ll i = 0; i < SIZE(vec) - 1; i++) assert(conn[vec[i]][vec[i + 1]]);
+          if (conn[x][y]) assert (tr.edgeIdx(x, y) == max(x, y) - 1);
+          else            assert (tr.edgeIdx(x, y) == -1);
+        }
+      }
+      {
+        auto [diam, nd0, nd1, ct0, ct1] = tr.diameter();
+        ll ndiam = 0;
+        for (ll x = 0; x < N; x++) for (ll y = x + 1; y < N; y++) ndiam = max(ndiam, SIZE(tr.nnpath(x, y)) - 1);
+        assert (diam == ndiam);
+        auto path = tr.nnpath(nd0, nd1);
+        assert (SIZE(path) - 1 == diam);
+        if (diam % 2 == 0) assert (ct0 == ct1 and ct0 == path[diam / 2]);
+        else assert(ct0 == path[diam / 2] and ct1 == path[diam / 2 + 1]);
+      }
+      ll newRoot = randrange(0, N);
+      tr.change_root(newRoot);
+      for (ll i = 0; i < N; i++) {
+        ll cnt = 0;
+        for (ll j = 0; j < N; j++) if (conn[i][j]) cnt++;
+        for (ll j : tr.children(i)) assert(conn[i][j]);
+        if (i == newRoot) {
+          assert (tr.parent(i) == -1);
+          assert ((ll)(tr.children(i).size()) == cnt);
+          assert (tr.depth(i) == 0);
+          assert (tr.stsize(i) == N);
+        }else {
+          assert (conn[i][tr.parent(i)]);
+          assert (SIZE(tr.children(i)) + 1 == cnt);
+          assert (tr.depth(i) == tr.depth(tr.parent(i)) + 1);
+        }
+      }
+    }
   }
 
   // The length of the longest simple path that goes through the node

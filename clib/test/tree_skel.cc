@@ -2,14 +2,22 @@
 #include <cassert>
 typedef long long int ll;
 using namespace std;
+#define SIZE(v) ((ll)((v).size()))
 
-// @@ !! LIM(tree)
+// @@ !! LIM(tree debug)
 
 
 int main(int argc, char *argv[]) {
   ios_base::sync_with_stdio(false);
   cin.tie(nullptr);
   cout << setprecision(20);
+
+  random_device rd;
+  mt19937 rng(rd());
+  auto randrange = [&rng](ll i, ll j) -> ll {
+    uniform_int_distribution<ll> dist(i, j - 1);
+    return dist(rng);
+  };
 
   using TreeEdge = pair<int, int>;
 
@@ -102,6 +110,93 @@ int main(int argc, char *argv[]) {
     tr2.change_root(4);
     tie (diam, ep0, ep1, ct0, ct1) = tr2.diameter();
     assert(diam == 5 and ep0 == 3 and ep1 == 6 and ct0 == 0 and ct1 == 4);
+  }
+
+  {
+    ll repeat = 2000;
+    for (ll rep = 0; rep < repeat; rep++) {
+      ll N = randrange(1, 17);
+      ll root = randrange(0, N);
+      Tree tr(N, root);
+      vector conn(N, vector<bool>(N, false));
+      vector rec(N, 0LL);
+      for (ll i = 1; i < N; i++) {
+        ll j = randrange(0, i);
+        rec[i] = j;
+        conn[i][j] = conn[j][i] = true;
+        if (randrange(0, 100) < 50) tr.add_edge(i, j);
+        else                        tr.add_edge(j, i);
+      }
+      for (ll i = 0; i < N - 1; i++) {
+        auto [x, y] = tr.nodesOfEdge(i);
+        assert ((x == i + 1 and y == rec[i + 1]) or (x == rec[i + 1] and y == i + 1));
+      }
+      for (ll i = 0; i < N; i++) {
+        ll cnt = 0;
+        for (ll j = 0; j < N; j++) if (conn[i][j]) cnt++;
+        for (ll j : tr.children(i)) assert(conn[i][j]);
+        ll sts = 1; for (ll j : tr.children(i)) sts += tr.stsize(j);
+        assert(sts == tr.stsize(i));
+        if (i == root) {
+          assert (tr.parent(i) == -1);
+          assert ((ll)(tr.children(i).size()) == cnt);
+          assert (tr.depth(i) == 0);
+          assert (tr.stsize(i) == N);
+          assert (tr.ancestorDep(i, 0) == i);
+        }else {
+          assert (conn[i][tr.parent(i)]);
+          assert (SIZE(tr.children(i)) + 1 == cnt);
+          assert (tr.depth(i) == tr.depth(tr.parent(i)) + 1);
+          vector tmp(tr.depth(i) + 1, 0LL);
+          for (ll d = 0; d <= tr.depth(i); d++) tmp[d] = tr.ancestorDep(i, d);
+          for (ll d = 1; d <= tr.depth(i); d++) assert (tr.parent(tmp[d]) == tmp[d - 1]);
+        }
+      }
+      for (ll x = 0; x < N; x++) {
+        for (ll y = 0; y < N; y++) {
+          ll z = tr.lca(x, y);
+          ll dz = tr.depth(z);
+          ll dx = tr.depth(x);
+          ll dy = tr.depth(y);
+          assert (dx >= dz and tr.ancestorDep(x, dz) == z);
+          assert (dy >= dz and tr.ancestorDep(y, dz) == z);
+          if (dx > dz and dy > dz) assert(tr.ancestorDep(x, dz + 1) != tr.ancestorDep(y, dz + 1));
+          const auto vec = tr.nnpath(x, y);
+          for (ll i = 0; i < SIZE(vec); i++) for (ll j = i + 1; j < SIZE(vec); j++) assert(vec[i] != vec[j]);
+          assert (vec[0] == x and vec.back() == y);
+          for (ll i = 0; i < SIZE(vec) - 1; i++) assert(conn[vec[i]][vec[i + 1]]);
+          if (conn[x][y]) assert (tr.edgeIdx(x, y) == max(x, y) - 1);
+          else            assert (tr.edgeIdx(x, y) == -1);
+        }
+      }
+      {
+        auto [diam, nd0, nd1, ct0, ct1] = tr.diameter();
+        ll ndiam = 0;
+        for (ll x = 0; x < N; x++) for (ll y = x + 1; y < N; y++) ndiam = max(ndiam, SIZE(tr.nnpath(x, y)) - 1);
+        assert (diam == ndiam);
+        auto path = tr.nnpath(nd0, nd1);
+        assert (SIZE(path) - 1 == diam);
+        if (diam % 2 == 0) assert (ct0 == ct1 and ct0 == path[diam / 2]);
+        else assert(ct0 == path[diam / 2] and ct1 == path[diam / 2 + 1]);
+      }
+      ll newRoot = randrange(0, N);
+      tr.change_root(newRoot);
+      for (ll i = 0; i < N; i++) {
+        ll cnt = 0;
+        for (ll j = 0; j < N; j++) if (conn[i][j]) cnt++;
+        for (ll j : tr.children(i)) assert(conn[i][j]);
+        if (i == newRoot) {
+          assert (tr.parent(i) == -1);
+          assert ((ll)(tr.children(i).size()) == cnt);
+          assert (tr.depth(i) == 0);
+          assert (tr.stsize(i) == N);
+        }else {
+          assert (conn[i][tr.parent(i)]);
+          assert (SIZE(tr.children(i)) + 1 == cnt);
+          assert (tr.depth(i) == tr.depth(tr.parent(i)) + 1);
+        }
+      }
+    }
   }
 
   // The length of the longest simple path that goes through the node

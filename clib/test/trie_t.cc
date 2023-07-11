@@ -246,7 +246,7 @@ void dbgLog(bool with_nl, Head&& head, Tail&&... tail)
 // ---- end debug.cc
 
 // ---- inserted library file trie.cc
-#line 65 "/home/y-tanabe/proj/compprog/clib/trie.cc"
+#line 66 "/home/y-tanabe/proj/compprog/clib/trie.cc"
 
 /**
  * @brief Trie木
@@ -335,10 +335,14 @@ struct Trie {
     return idx;
   }
 
-  /** 1文字少ない文字列のインデックス */
+  /** 1文字少ない文字列のインデックス 
+      idx にルート (0) を指定すると -1 が返される
+   */
   int parent(int idx) { return nodes[idx]._parent; }
 
-  /** 1文字多い文字列のインデックス．c はベクトルの添字ではなく文字であることに注意 */
+  /** 1文字多い文字列のインデックス．c はベクトルの添字ではなく文字であることに注意 
+      子ノードが存在しないときには -1 を返す．
+   */
   int child(int idx, char c) { return nodes[idx]._next[c - from]; }
 
   /** インデックス idx に対応する文字列が存在しているか．引数 idx はインデックスであることに注意 */
