@@ -214,7 +214,7 @@ ostream& operator<<(ostream& ostr, Trie<T> trie) {
 
 string ull2binstr(unsigned long long x, int len = 64) {
   string ret(len, ' ');
-  REP(i, 0, len) ret[i] = (x >> (len - 1 - i) & 1) ? '1' : '0';
+  for (int i = 0; i < len; i++) ret[i] = (x >> (len - 1 - i) & 1) ? '1' : '0';
   return ret;
 }
 

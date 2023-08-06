@@ -6,6 +6,8 @@ using namespace std;
 /*
   cycle detction  or  loop detection
 
+  Three types are supported: functional graph, directed graph, undirected graph.
+
   auto [vec, idx] = func_cycle_detect(n, init, f);
 
       f : {0, ..., n-1} -> {0, ..., n-1}  function

@@ -246,7 +246,7 @@ void dbgLog(bool with_nl, Head&& head, Tail&&... tail)
 // ---- end debug.cc
 
 // ---- inserted library file trie.cc
-#line 79 "/home/y-tanabe/proj/compprog/clib/trie.cc"
+#line 50 "/home/y-tanabe/proj/compprog/clib/trie.cc"
 
 /**
  * @brief Trie木
@@ -409,6 +409,21 @@ ostream& operator<<(ostream& ostr, Trie<T> trie) {
   ostr << trie.stringSet();
   return ostr;
 }
+
+/* Poorman's Binary Trie */
+
+string ull2binstr(unsigned long long x, int len = 64) {
+  string ret(len, ' ');
+  for (int i = 0; i < len; i++) ret[i] = (x >> (len - 1 - i) & 1) ? '1' : '0';
+  return ret;
+}
+
+unsigned long long binstr2ull(string s) {
+  unsigned long long ret = 0;
+  for (char c : s) ret = 2 * ret + (c - '0');
+  return ret;
+}
+
 
 // ---- end trie.cc
 
