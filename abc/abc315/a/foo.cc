@@ -14,10 +14,21 @@ using pll = pair<ll, ll>;
 // @@ !! LIM()
 
 int main(/* int argc, char *argv[] */) {
-  ios_base::sync_with_stdio(false);
-  cin.tie(nullptr);
-  cout << setprecision(20);
+
+  ll N, K; cin >> N >> K;
+  // @InpVec(N, A) [0guFRdrH]
+  auto A = vector(N, ll());
+  for (int i = 0; i < N; i++) { ll v; cin >> v; A[i] = v; }
+  // @End [0guFRdrH]
+
+  ll ans = 0;
+  ll q = 0;
+  ll prod = 1;
+  for (ll p = 0; p < N; p++) {
+    while (q < N and prod * A[q] <= K) prod *= A[q++];
+    ans = max(ans, q - p);
+    prod /= A[p];
+  }
 
   return 0;
 }
-
