@@ -25,6 +25,8 @@ def get_submit_form(soup):
                 jv = 'jv4'
             elif top_op == '4101':
                 jv = 'jv41'
+            elif top_op == '5001':
+                jv = 'jv5'
             else:
                 die('Unknown judge version')
             return (ftag, jv)
@@ -44,11 +46,11 @@ def get_lang_info(srcName, jv):
     if not mo[3]:
         die(f'No extension in source name {srcName}')
     li = {'cc': {'prog': './' + mo[2],
-                 'jv3': '3003', 'jv4': '4003', 'jv41': '4101'},
+                 'jv3': '3003', 'jv4': '4003', 'jv41': '4101', 'jv5': '5001'},
           'py': {'prog': './' + mo[1],
-                 'jv3': '3023', 'jv4': '4006', 'jv41': '4006'},
+                 'jv3': '3023', 'jv4': '4006', 'jv41': '4006', 'jv5': '5055'},
           'rs': {'prog': 'cargo run --quiet',
-                 'jv3': '3504', 'jv4': '4050', 'jv41': '4050'},
+                 'jv3': '3504', 'jv4': '4050', 'jv41': '4050', 'jv5': '5054'},
     }
     if mo[3] not in li:
         die(f'Extension {mo[1]} is not supported.')
