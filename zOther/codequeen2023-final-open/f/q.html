@@ -1,0 +1,1097 @@
+
+
+
+
+
+
+
+
+<!DOCTYPE html>
+<html>
+<head>
+	<title>F - Queen&#39;s Crown	</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+	<meta http-equiv="Content-Language" content="en">
+	<meta name="viewport" content="width=device-width,initial-scale=1.0">
+	<meta name="format-detection" content="telephone=no">
+	<meta name="google-site-verification" content="nXGC_JxO0yoP1qBzMnYD_xgufO6leSLw1kyNo2HZltM" />
+
+	
+	<script async src="https://www.googletagmanager.com/gtag/js?id=G-RC512FD18N"></script>
+	<script>
+		window.dataLayer = window.dataLayer || [];
+		function gtag(){dataLayer.push(arguments);}
+		gtag('js', new Date());
+
+		gtag('config', 'G-RC512FD18N');
+	</script>
+
+	
+	<meta name="description" content="AtCoder is a programming contest site for anyone from beginners to experts. We hold weekly programming contests online.">
+	<meta name="author" content="AtCoder Inc.">
+
+	<meta property="og:site_name" content="AtCoder">
+	
+	<meta property="og:title" content="F - Queen&#39;s Crown	" />
+	<meta property="og:description" content="AtCoder is a programming contest site for anyone from beginners to experts. We hold weekly programming contests online." />
+	<meta property="og:type" content="website" />
+	<meta property="og:url" content="https://atcoder.jp/contests/codequeen2023-final-open/tasks/codequeen2023_final_f" />
+	<meta property="og:image" content="https://img.atcoder.jp/assets/atcoder.png" />
+	<meta name="twitter:card" content="summary" />
+	<meta name="twitter:site" content="@atcoder" />
+	
+	<meta property="twitter:title" content="F - Queen&#39;s Crown	" />
+
+	<link href="//fonts.googleapis.com/css?family=Lato:400,700" rel="stylesheet" type="text/css">
+	<link rel="stylesheet" type="text/css" href="//img.atcoder.jp/public/d1b153e/css/bootstrap.min.css">
+	<link rel="stylesheet" type="text/css" href="//img.atcoder.jp/public/d1b153e/css/base.css">
+	<link rel="shortcut icon" type="image/png" href="//img.atcoder.jp/assets/favicon.png">
+	<link rel="apple-touch-icon" href="//img.atcoder.jp/assets/atcoder.png">
+	<script src="//img.atcoder.jp/public/d1b153e/js/lib/jquery-1.9.1.min.js"></script>
+	<script src="//img.atcoder.jp/public/d1b153e/js/lib/bootstrap.min.js"></script>
+	<script src="//img.atcoder.jp/public/d1b153e/js/cdn/js.cookie.min.js"></script>
+	<script src="//img.atcoder.jp/public/d1b153e/js/cdn/moment.min.js"></script>
+	<script src="//img.atcoder.jp/public/d1b153e/js/cdn/moment_js-ja.js"></script>
+	<script>
+		var LANG = "en";
+		var userScreenName = "yamate11";
+		var csrfToken = "oqK6yXkxXJtJc6lJQdvLdCR4CxpRkF/fEAX8P+IfgC4="
+	</script>
+	<script src="//img.atcoder.jp/public/d1b153e/js/utils.js"></script>
+	
+	
+		<script src="//img.atcoder.jp/public/d1b153e/js/contest.js"></script>
+		<link href="//img.atcoder.jp/public/d1b153e/css/contest.css" rel="stylesheet" />
+		<script>
+			var contestScreenName = "codequeen2023-final-open";
+			var remainingText = "Remaining Time";
+			var countDownText = "Contest begins in";
+			var startTime = moment("2023-08-06T13:30:00+09:00");
+			var endTime = moment("2023-08-06T15:30:00+09:00");
+		</script>
+		<style></style>
+	
+	
+		<link href="//img.atcoder.jp/public/d1b153e/css/cdn/select2.min.css" rel="stylesheet" />
+		<link href="//img.atcoder.jp/public/d1b153e/css/cdn/select2-bootstrap.min.css" rel="stylesheet" />
+		<script src="//img.atcoder.jp/public/d1b153e/js/lib/select2.min.js"></script>
+	
+	
+		<link rel="stylesheet" href="//img.atcoder.jp/public/d1b153e/css/cdn/codemirror.min.css">
+		<script src="//img.atcoder.jp/public/d1b153e/js/cdn/codemirror.min.js"></script>
+		<script src="//img.atcoder.jp/public/d1b153e/js/codeMirror/merged.js"></script>
+	
+	
+	
+		<script src="//img.atcoder.jp/public/d1b153e/js/cdn/run_prettify.js"></script>
+	
+	
+		<link rel="stylesheet" href="//img.atcoder.jp/public/d1b153e/css/cdn/katex.min.css">
+		<script defer src="//img.atcoder.jp/public/d1b153e/js/cdn/katex.min.js"></script>
+		<script defer src="//img.atcoder.jp/public/d1b153e/js/cdn/auto-render.min.js"></script>
+		<script>$(function(){$('var').each(function(){var html=$(this).html().replace(/<sub>/g,'_{').replace(/<\/sub>/g,'}');$(this).html('\\('+html+'\\)');});});</script>
+		<script>
+			var katexOptions = {
+				delimiters: [
+					{left: "$$", right: "$$", display: true},
+					
+					{left: "\\(", right: "\\)", display: false},
+					{left: "\\[", right: "\\]", display: true}
+				],
+      	ignoredTags: ["script", "noscript", "style", "textarea", "code", "option"],
+				ignoredClasses: ["prettyprint", "source-code-for-copy"],
+				throwOnError: false
+			};
+			document.addEventListener("DOMContentLoaded", function() { renderMathInElement(document.body, katexOptions);});
+		</script>
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	<script src="//img.atcoder.jp/public/d1b153e/js/base.js"></script>
+</head>
+
+<body>
+
+<script type="text/javascript">
+	var __pParams = __pParams || [];
+	__pParams.push({client_id: '468', c_1: 'atcodercontest', c_2: 'ClientSite'});
+</script>
+<script type="text/javascript" src="https://cdn.d2-apps.net/js/tr.js" async></script>
+
+
+<div id="modal-contest-start" class="modal fade" tabindex="-1" role="dialog">
+	<div class="modal-dialog" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+				<h4 class="modal-title">Contest started</h4>
+			</div>
+			<div class="modal-body">
+				<p>CodeQUEEN 2023 決勝（オープンコンテスト） has begun.</p>
+			</div>
+			<div class="modal-footer">
+				
+					<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+				
+			</div>
+		</div>
+	</div>
+</div>
+<div id="modal-contest-end" class="modal fade" tabindex="-1" role="dialog">
+	<div class="modal-dialog" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+				<h4 class="modal-title">Contest is over</h4>
+			</div>
+			<div class="modal-body">
+				<p>CodeQUEEN 2023 決勝（オープンコンテスト） has ended.</p>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+			</div>
+		</div>
+	</div>
+</div>
+<div id="main-div" class="float-container">
+
+
+	<nav class="navbar navbar-inverse navbar-fixed-top">
+		<div class="container-fluid">
+			<div class="navbar-header">
+				<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapse" aria-expanded="false">
+					<span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span>
+				</button>
+				<a class="navbar-brand" href="/home"></a>
+			</div>
+			<div class="collapse navbar-collapse" id="navbar-collapse">
+				<ul class="nav navbar-nav">
+				
+					<li><a class="contest-title" href="/contests/codequeen2023-final-open">CodeQUEEN 2023 決勝（オープンコンテスト）</a></li>
+				
+				</ul>
+				<ul class="nav navbar-nav navbar-right">
+					
+					<li class="dropdown">
+						<a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
+							<img src='//img.atcoder.jp/assets/top/img/flag-lang/en.png'> English <span class="caret"></span>
+						</a>
+						<ul class="dropdown-menu">
+							<li><a href="/contests/codequeen2023-final-open/tasks/codequeen2023_final_f?lang=ja"><img src='//img.atcoder.jp/assets/top/img/flag-lang/ja.png'> 日本語</a></li>
+							<li><a href="/contests/codequeen2023-final-open/tasks/codequeen2023_final_f?lang=en"><img src='//img.atcoder.jp/assets/top/img/flag-lang/en.png'> English</a></li>
+						</ul>
+					</li>
+					
+					
+						<li class="dropdown">
+							<a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
+								<span class="glyphicon glyphicon-cog" aria-hidden="true"></span> yamate11 (Guest) <span class="caret"></span>
+							</a>
+							<ul class="dropdown-menu">
+								<li><a href="/users/yamate11"><span class="glyphicon glyphicon-user" aria-hidden="true"></span> My Profile</a></li>
+								<li class="divider"></li>
+								<li><a href="/settings"><span class="glyphicon glyphicon-wrench" aria-hidden="true"></span> General Settings</a></li>
+								<li><a href="/settings/icon"><span class="glyphicon glyphicon-picture" aria-hidden="true"></span> Change Photo</a></li>
+								<li><a href="/settings/password"><span class="glyphicon glyphicon-lock" aria-hidden="true"></span> Change Password</a></li>
+								<li><a href="/settings/fav"><span class="glyphicon glyphicon-star" aria-hidden="true"></span> Manage Fav</a></li>
+								
+								
+								
+								<li class="divider"></li>
+								<li><a href="javascript:void(form_logout.submit())"><span class="glyphicon glyphicon-log-out" aria-hidden="true"></span> Sign Out</a></li>
+							</ul>
+						</li>
+					
+				</ul>
+			</div>
+		</div>
+	</nav>
+
+	<form method="POST" name="form_logout" action="/logout?continue=https%3A%2F%2Fatcoder.jp%2Fcontests%2Fcodequeen2023-final-open%2Ftasks%2Fcodequeen2023_final_f">
+		<input type="hidden" name="csrf_token" value="oqK6yXkxXJtJc6lJQdvLdCR4CxpRkF/fEAX8P&#43;IfgC4=" />
+	</form>
+	<div id="main-container" class="container"
+		 	style="padding-top:50px;">
+		
+
+
+<div class="row">
+	<div id="contest-nav-tabs" class="col-sm-12 mb-2 cnvtb-fixed">
+	<div>
+		<small class="contest-duration">
+			
+				Contest Duration:
+				<a href='http://www.timeanddate.com/worldclock/fixedtime.html?iso=20230806T1330&p1=248' target='blank'><time class='fixtime fixtime-full'>2023-08-06 13:30:00+0900</time></a> - <a href='http://www.timeanddate.com/worldclock/fixedtime.html?iso=20230806T1530&p1=248' target='blank'><time class='fixtime fixtime-full'>2023-08-06 15:30:00+0900</time></a> (local time)
+				(120 minutes)
+			
+		</small>
+		<small class="back-to-home pull-right"><a href="/home">Back to Home</a></small>
+	</div>
+	<ul class="nav nav-tabs">
+		<li><a href="/contests/codequeen2023-final-open"><span class="glyphicon glyphicon-home" aria-hidden="true"></span> Top</a></li>
+		
+			<li class="active"><a href="/contests/codequeen2023-final-open/tasks"><span class="glyphicon glyphicon-tasks" aria-hidden="true"></span> Tasks</a></li>
+		
+
+		
+			<li><a href="/contests/codequeen2023-final-open/clarifications"><span class="glyphicon glyphicon-question-sign" aria-hidden="true"></span> Clarifications <span id="clar-badge" class="badge"></span></a></li>
+		
+
+		
+			<li><a href="/contests/codequeen2023-final-open/submit?taskScreenName=codequeen2023_final_f"><span class="glyphicon glyphicon-send" aria-hidden="true"></span> Submit</a></li>
+		
+
+		
+			<li>
+				<a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false"><span class="glyphicon glyphicon-list" aria-hidden="true"></span> Results<span class="caret"></span></a>
+				<ul class="dropdown-menu">
+					<li><a href="/contests/codequeen2023-final-open/submissions"><span class="glyphicon glyphicon-globe" aria-hidden="true"></span> All Submissions</a></li>
+					
+						<li><a href="/contests/codequeen2023-final-open/submissions/me"><span class="glyphicon glyphicon-user" aria-hidden="true"></span> My Submissions</a></li>
+						<li class="divider"></li>
+						<li><a href="/contests/codequeen2023-final-open/score"><span class="glyphicon glyphicon-dashboard" aria-hidden="true"></span> My Score</a></li>
+					
+				</ul>
+			</li>
+		
+
+		
+			
+				
+					<li><a href="/contests/codequeen2023-final-open/standings"><span class="glyphicon glyphicon-sort-by-attributes-alt" aria-hidden="true"></span> Standings</a></li>
+				
+			
+				
+					<li><a href="/contests/codequeen2023-final-open/standings/virtual"><span class="glyphicon glyphicon-sort-by-attributes-alt" aria-hidden="true"></span> Virtual Standings</a></li>
+				
+			
+		
+
+		
+			<li><a href="/contests/codequeen2023-final-open/custom_test"><span class="glyphicon glyphicon-wrench" aria-hidden="true"></span> Custom Test</a></li>
+		
+
+		
+			<li><a href="/contests/codequeen2023-final-open/editorial"><span class="glyphicon glyphicon-book" aria-hidden="true"></span> Editorial</a></li>
+		
+		
+			
+			
+		
+
+		<li class="pull-right"><a id="fix-cnvtb" href="javascript:void(0)"><span class="glyphicon glyphicon-pushpin" aria-hidden="true"></span></a></li>
+	</ul>
+</div>
+	<div class="col-sm-12">
+		<span class="h2">
+			F - Queen&#39;s Crown	
+			<a class="btn btn-default btn-sm" href="/contests/codequeen2023-final-open/tasks/codequeen2023_final_f/editorial">Editorial</a>
+		</span>
+		<span id="task-lang-btn" class="pull-right"><span data-lang="ja"><img src='//img.atcoder.jp/assets/top/img/flag-lang/ja.png'></span> / <span data-lang="en"><img src='//img.atcoder.jp/assets/top/img/flag-lang/en.png'></span></span>
+		<script>
+			$(function() {
+				var ts = $('#task-statement span.lang');
+				if (ts.children('span').size() <= 1) {
+					$('#task-lang-btn').hide();
+					ts.children('span').show();
+					return;
+				}
+				var REMEMBER_LB = 5;
+				var LS_KEY = 'task_lang';
+				var taskLang = getLS(LS_KEY) || '';
+				var changeTimes = 0;
+				if (taskLang == 'ja' || taskLang == 'en') {
+					changeTimes = REMEMBER_LB;
+				} else {
+					var changeTimes = parseInt(taskLang, 10);
+					if (isNaN(changeTimes)) {
+						changeTimes = 0;
+						delLS(LS_KEY);
+					}
+					changeTimes++;
+					taskLang = LANG;
+				}
+				ts.children('span.lang-' + taskLang).show();
+
+				$('#task-lang-btn span').click(function() {
+					var l = $(this).data('lang');
+					ts.children('span').hide();
+					ts.children('span.lang-' + l).show();
+					if (changeTimes < REMEMBER_LB) setLS(LS_KEY, changeTimes);
+					else setLS(LS_KEY, l);
+				});
+			});
+		</script>
+		<hr/>
+		<p>
+			Time Limit: 2 sec / Memory Limit: 1024 MB
+			
+		</p>
+
+		<div id="task-statement">
+			
+			<span class="lang">
+<span class="lang-ja">
+<p>配点: <var>800</var> 点</p>
+
+<div class="part">
+<section>
+<h3>問題文</h3>
+<p>以下の条件を満たす様に二次元平面上に <var>N</var> 個の点 <var>P_1</var> , <var>P_2</var> , <var>\ldots</var> , <var>P_N</var> を置きます。この条件の元、<var>N</var> 角形 <var>P_1 P_2 \dots P_N</var> の面積の最大値を求めてください。ただし、原点と点 <var>P_i</var> を結ぶ直線の <var>x</var> 軸正の向きとのなす角を <var>\theta_i\ \mathrm{rad}</var> とします。</p>
+<ul>
+<li><var>i</var> 番目の点 <var>P_i</var> は原点を中心とする半径 <var>R_i</var> の円周上に存在する<ul>
+<li>与えられる <var>R</var> は、<var>\displaystyle R_1 = R_N</var> かつ <var>\displaystyle R_1, R_N \leq R_i</var> <var>(1 \leq i \leq N)</var> を満たすことが保証されます</li>
+</ul>
+</li>
+<li><var>\displaystyle \frac{\pi}{2N} \leq \theta_{i+1} -\theta_{i}</var> <var>(1 \leq i \leq N-1)</var> <span style="color:red;">(14:07 修正)</span></li>
+<li><var>\displaystyle \theta_1 = 0</var> , <var>\displaystyle \theta_N = \frac{2\pi}{3}</var></li>
+</ul>
+<details>
+<summary><var>\displaystyle x\ \mathrm{rad}</var> の定義</summary>
+半径が <var>1</var> で弧の長さが <var>x</var> である様な扇形の中心角を <var>\displaystyle x\ \mathrm{rad}</var> と定義します。
+<var>\displaystyle x\ \mathrm{rad}</var> は <var>\displaystyle \frac{180}{\pi} x</var> 度と等しい角度となります。
+</details>
+
+</section>
+</div>
+
+<div class="part">
+<section>
+<h3>制約</h3>
+<ul>
+<li>入力はすべて整数で与えられる</li>
+<li><var>3 \leq N \leq 100{,}000</var></li>
+<li><var>0&lt; R_i \leq 1{,}000</var> <var>(1 \leq i \leq N)</var></li>
+<li><var>R_1=R_N</var> かつ <var>R_1, R_N \leq R_i</var> <var>(1 \leq i \leq N)</var></li>
+</ul>
+</section>
+</div>
+
+<hr />
+<div class="io-style">
+<div class="part">
+<section>
+<h3>入力</h3>
+<p>入力は以下の形式で標準入力から与えられます。</p>
+<pre><var>N</var>
+<var>R_1</var> <var>R_2</var> <var>\ldots</var> <var>R_N</var>
+</pre>
+</section>
+</div>
+
+<div class="part">
+<section>
+<h3>出力</h3>
+<p>答えを出力してください。なお、真の解との絶対誤差または相対誤差が <var>10^{−6}</var> 以下であれば正解として扱われる事が保証されます。</p>
+</section>
+</div>
+</div>
+
+<hr />
+<div class="part">
+<section>
+<h3>入力例 1</h3>
+<pre>3
+1 1 1
+</pre>
+</section>
+</div>
+
+<div class="part">
+<section>
+<h3>出力例 1</h3>
+<pre>0.433012701892219
+</pre>
+<p><var>3</var> 個の点 <var>P_1</var> , <var>P_2</var> , <var>P_3</var> を ( <var>(1,0)</var> , <var>(\frac{1}{2},\frac{\sqrt{3}}{2})</var> , <var>(-\frac{1}{2},\frac{\sqrt{3}}{2})</var> ) と設定すると三角形 <var>P_1P_2P_3</var> の面積は <var>\frac{\sqrt{3}}{4}</var> となり、これは制約内における最大値となります。</p>
+<p><img alt="入力例１に対して面積が最大となる多角形" src="data:image/png;base64,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" /></p>
+</section>
+</div>
+
+<hr />
+<div class="part">
+<section>
+<h3>入力例 2</h3>
+<pre>7
+1 2 1 3 1 2 1
+</pre>
+</section>
+</div>
+
+<div class="part">
+<section>
+<h3>出力例 2</h3>
+<pre>2.147031208123904
+</pre>
+<p><var>7</var> 個の点　<var>P_1</var> , <var>P_2</var> , <var>\ldots</var> , <var>P_7</var> を適切に設定すると七角形 <var>P_1P_2\dots P_7</var> の面積は約 <var>2.147031208123904</var> となり、これは制約内における最大値となります。</p>
+<p><img alt="入力例１に対して面積が最大となる多角形" src="data:image/png;base64,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
+sLDwmv8HSgzF45qZBNoAAAAASUVORK5CYII=" /></p></section>
+</div>
+</span>
+</span>
+
+		</div>
+
+		
+
+		
+		<hr/>
+		<form class="form-horizontal form-code-submit" action="/contests/codequeen2023-final-open/submit" method="POST">
+			<input type="hidden" name="data.TaskScreenName" value="codequeen2023_final_f" />
+			
+			<div class="form-group ">
+				<label class="control-label col-sm-2" for="select-lang">Language</label>
+				<div id="select-lang" class="col-sm-5" data-name="data.LanguageId">
+					<select class="form-control current" data-placeholder="-" name="data.LanguageId" required>
+						<option></option>
+						
+							<option value="4001" data-mime="text/x-csrc">C (GCC 9.2.1)</option>
+						
+							<option value="4002" data-mime="text/x-csrc">C (Clang 10.0.0)</option>
+						
+							<option value="4003" data-mime="text/x-c&#43;&#43;src">C&#43;&#43; (GCC 9.2.1)</option>
+						
+							<option value="4004" data-mime="text/x-c&#43;&#43;src">C&#43;&#43; (Clang 10.0.0)</option>
+						
+							<option value="4005" data-mime="text/x-java">Java (OpenJDK 11.0.6)</option>
+						
+							<option value="4006" data-mime="text/x-python">Python (3.8.2)</option>
+						
+							<option value="4007" data-mime="text/x-sh">Bash (5.0.11)</option>
+						
+							<option value="4008" data-mime="text/x-bc">bc (1.07.1)</option>
+						
+							<option value="4009" data-mime="text/x-sh">Awk (GNU Awk 4.1.4)</option>
+						
+							<option value="4010" data-mime="text/x-csharp">C# (.NET Core 3.1.201)</option>
+						
+							<option value="4011" data-mime="text/x-csharp">C# (Mono-mcs 6.8.0.105)</option>
+						
+							<option value="4012" data-mime="text/x-csharp">C# (Mono-csc 3.5.0)</option>
+						
+							<option value="4013" data-mime="text/x-clojure">Clojure (1.10.1.536)</option>
+						
+							<option value="4014" data-mime="text/x-crystal">Crystal (0.33.0)</option>
+						
+							<option value="4015" data-mime="text/x-d">D (DMD 2.091.0)</option>
+						
+							<option value="4016" data-mime="text/x-d">D (GDC 9.2.1)</option>
+						
+							<option value="4017" data-mime="text/x-d">D (LDC 1.20.1)</option>
+						
+							<option value="4018" data-mime="application/dart">Dart (2.7.2)</option>
+						
+							<option value="4019" data-mime="text/x-dc">dc (1.4.1)</option>
+						
+							<option value="4020" data-mime="text/x-erlang">Erlang (22.3)</option>
+						
+							<option value="4021" data-mime="elixir">Elixir (1.10.2)</option>
+						
+							<option value="4022" data-mime="text/x-fsharp">F# (.NET Core 3.1.201)</option>
+						
+							<option value="4023" data-mime="text/x-fsharp">F# (Mono 10.2.3)</option>
+						
+							<option value="4024" data-mime="text/x-forth">Forth (gforth 0.7.3)</option>
+						
+							<option value="4025" data-mime="text/x-fortran">Fortran (GNU Fortran 9.2.1)</option>
+						
+							<option value="4026" data-mime="text/x-go">Go (1.14.1)</option>
+						
+							<option value="4027" data-mime="text/x-haskell">Haskell (GHC 8.8.3)</option>
+						
+							<option value="4028" data-mime="text/x-haxe">Haxe (4.0.3); js</option>
+						
+							<option value="4029" data-mime="text/x-haxe">Haxe (4.0.3); Java</option>
+						
+							<option value="4030" data-mime="text/javascript">JavaScript (Node.js 12.16.1)</option>
+						
+							<option value="4031" data-mime="text/x-julia">Julia (1.4.0)</option>
+						
+							<option value="4032" data-mime="text/x-kotlin">Kotlin (1.3.71)</option>
+						
+							<option value="4033" data-mime="text/x-lua">Lua (Lua 5.3.5)</option>
+						
+							<option value="4034" data-mime="text/x-lua">Lua (LuaJIT 2.1.0)</option>
+						
+							<option value="4035" data-mime="text/x-sh">Dash (0.5.8)</option>
+						
+							<option value="4036" data-mime="text/x-nim">Nim (1.0.6)</option>
+						
+							<option value="4037" data-mime="text/x-objectivec">Objective-C (Clang 10.0.0)</option>
+						
+							<option value="4038" data-mime="text/x-common-lisp">Common Lisp (SBCL 2.0.3)</option>
+						
+							<option value="4039" data-mime="text/x-ocaml">OCaml (4.10.0)</option>
+						
+							<option value="4040" data-mime="text/x-octave">Octave (5.2.0)</option>
+						
+							<option value="4041" data-mime="text/x-pascal">Pascal (FPC 3.0.4)</option>
+						
+							<option value="4042" data-mime="text/x-perl">Perl (5.26.1)</option>
+						
+							<option value="4043" data-mime="text/x-perl">Raku (Rakudo 2020.02.1)</option>
+						
+							<option value="4044" data-mime="text/x-php">PHP (7.4.4)</option>
+						
+							<option value="4045" data-mime="text/x-prolog">Prolog (SWI-Prolog 8.0.3)</option>
+						
+							<option value="4046" data-mime="text/x-python">PyPy2 (7.3.0)</option>
+						
+							<option value="4047" data-mime="text/x-python">PyPy3 (7.3.0)</option>
+						
+							<option value="4048" data-mime="text/x-racket">Racket (7.6)</option>
+						
+							<option value="4049" data-mime="text/x-ruby">Ruby (2.7.1)</option>
+						
+							<option value="4050" data-mime="text/x-rustsrc">Rust (1.42.0)</option>
+						
+							<option value="4051" data-mime="text/x-scala">Scala (2.13.1)</option>
+						
+							<option value="4052" data-mime="text/x-java">Java (OpenJDK 1.8.0)</option>
+						
+							<option value="4053" data-mime="text/x-scheme">Scheme (Gauche 0.9.9)</option>
+						
+							<option value="4054" data-mime="text/x-sml">Standard ML (MLton 20130715)</option>
+						
+							<option value="4055" data-mime="text/x-swift">Swift (5.2.1)</option>
+						
+							<option value="4056" data-mime="text/plain">Text (cat 8.28)</option>
+						
+							<option value="4057" data-mime="text/typescript">TypeScript (3.8)</option>
+						
+							<option value="4058" data-mime="text/x-vb">Visual Basic (.NET Core 3.1.101)</option>
+						
+							<option value="4059" data-mime="text/x-sh">Zsh (5.4.2)</option>
+						
+							<option value="4060" data-mime="text/x-cobol">COBOL - Fixed (OpenCOBOL 1.1.0)</option>
+						
+							<option value="4061" data-mime="text/x-cobol">COBOL - Free (OpenCOBOL 1.1.0)</option>
+						
+							<option value="4062" data-mime="text/x-brainfuck">Brainfuck (bf 20041219)</option>
+						
+							<option value="4063" data-mime="text/x-ada">Ada2012 (GNAT 9.2.1)</option>
+						
+							<option value="4064" data-mime="text/x-unlambda">Unlambda (2.0.0)</option>
+						
+							<option value="4065" data-mime="text/x-python">Cython (0.29.16)</option>
+						
+							<option value="4066" data-mime="text/x-sh">Sed (4.4)</option>
+						
+							<option value="4067" data-mime="text/x-vim">Vim (8.2.0460)</option>
+						
+					</select>
+					<span class="error"></span>
+				</div>
+			</div>
+			<script>var currentLang = getLS('defaultLang');</script>
+			
+			
+<div class="form-group">
+	<label class="control-label col-sm-2" for="sourceCode">Source Code</label>
+	<div class="col-sm-7" id="sourceCode">
+		<div class="div-editor">
+			<textarea class="form-control editor" name="sourceCode"></textarea>
+		</div>
+		<textarea class="form-control plain-textarea" style="display:none;"></textarea>
+		<p>
+			<span class="gray">* at most 512 KiB</span><br>
+			<span class="gray">* Your source code will be saved as Main.<i>extension</i>.</span>
+		</p>
+	</div>
+	<div class="col-sm-3 editor-buttons">
+		<p><button id="btn-open-file" type="button" class="btn btn-default btn-sm">
+			<span class="glyphicon glyphicon-folder-open" aria-hidden="true"></span> &nbsp; Open File
+		</button></p>
+		<p><button type="button" class="btn btn-default btn-sm btn-toggle-editor" data-toggle="button" aria-pressed="false" autocomplete="off">
+			Toggle Editor
+		</button></p>
+		<p><button type="button" class="btn btn-default btn-sm btn-auto-height" data-toggle="button" aria-pressed="false" autocomplete="off">
+			Auto Height
+		</button></p>
+	</div>
+	<input id="input-open-file" type="file" style="display:none;">
+</div>
+
+			<input type="hidden" name="csrf_token" value="oqK6yXkxXJtJc6lJQdvLdCR4CxpRkF/fEAX8P&#43;IfgC4=" />
+			<div class="form-group">
+				<label class="control-label col-sm-2" for="submit"></label>
+				<div class="col-sm-5">
+					<button type="submit" class="btn btn-primary" id="submit">Submit</button>
+				</div>
+			</div>
+		</form>
+		
+	</div>
+</div>
+
+
+
+
+		
+			<hr>
+			
+			
+			
+<div class="a2a_kit a2a_kit_size_20 a2a_default_style pull-right" data-a2a-url="https://atcoder.jp/contests/codequeen2023-final-open/tasks/codequeen2023_final_f?lang=en" data-a2a-title="F - Queen&#39;s Crown	">
+	<a class="a2a_button_facebook"></a>
+	<a class="a2a_button_twitter"></a>
+	
+		<a class="a2a_button_telegram"></a>
+	
+	<a class="a2a_dd" href="https://www.addtoany.com/share"></a>
+</div>
+
+		
+		<script async src="//static.addtoany.com/menu/page.js"></script>
+		
+	</div> 
+	<hr>
+</div> 
+
+	<div class="container" style="margin-bottom: 80px;">
+			<footer class="footer">
+			
+				<ul>
+					<li><a href="/contests/codequeen2023-final-open/rules">Rule</a></li>
+					<li><a href="/contests/codequeen2023-final-open/glossary">Glossary</a></li>
+					
+				</ul>
+			
+			<ul>
+				<li><a href="/tos">Terms of service</a></li>
+				<li><a href="/privacy">Privacy Policy</a></li>
+				<li><a href="/personal">Information Protection Policy</a></li>
+				<li><a href="/company">Company</a></li>
+				<li><a href="/faq">FAQ</a></li>
+				<li><a href="/contact">Contact</a></li>
+				
+			</ul>
+			<div class="text-center">
+					<small id="copyright">Copyright Since 2012 &copy;<a href="http://atcoder.co.jp">AtCoder Inc.</a> All rights reserved.</small>
+			</div>
+			</footer>
+	</div>
+	<p id="fixed-server-timer" class="contest-timer"></p>
+	<div id="scroll-page-top" style="display:none;"><span class="glyphicon glyphicon-arrow-up" aria-hidden="true"></span> Page Top</div>
+
+</body>
+</html>
+
+

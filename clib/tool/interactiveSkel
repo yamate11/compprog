@@ -27,7 +27,7 @@ def ask(prompt, default=None):
 
 def main():
 
-    print('This script is obsolete.  Use interrun instead.')
+    print('This script is obsolete.  See https://yamate11.github.io/blog/posts/2023/04-21-interactive-debug/')
     return
 
     check_cans_cc()

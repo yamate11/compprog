@@ -5,9 +5,7 @@ using namespace std;
 
 /*
   NOTE: This file is OBSOLETE.
-  Instead of using this file, you should run interactiveSkel located in
-  the tool directory.
-
+  Consult https://yamate11.github.io/blog/posts/2023/04-21-interactive-debug/
 
   OBSOLETE OBSOLETE
   interactive.cc -- skelton for interactive question
