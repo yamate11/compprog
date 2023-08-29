@@ -3,7 +3,7 @@
 typedef long long int ll;
 using namespace std;
 
-// @@ !! LIM(debug trie)
+// @@ !! LIM(f:<< trie)
 
 int main(int argc, char *argv[]) {
   ios_base::sync_with_stdio(false);
@@ -11,57 +11,62 @@ int main(int argc, char *argv[]) {
   cout << setprecision(20);
 
   {
-    auto root = Trie<>::create_root('a', 'd');
-    root->insert("abcd");
-    root->insert("ac");
-    root->insert("add");
-    root->insert("add");
-    auto p1 = root->getNode("abcd");
-    assert(p1->exists(""));
-    assert(root->getNum("abcd") == 1);
-    assert(root->getNum("add") == 2);
-    bool b1 = root->erase("add");
-    assert(b1 and root->getNum("add") == 1);
-    bool b2 = root->erase("add", 1000);
-    assert(not b2 and root->getNum("add") == 0);
-    auto p2 = root->getNode("");
-    assert (root->info->from == 'a');
-    assert (root->info->br_size == 4);
-    assert (root->info->root == p2);
-    auto p3 = root->getNode("abcdd");
-    assert(not p3);
-    auto p4 = root->getNode("abcdd", true);
-    assert(p1->children[3] == p4);
-    assert(p1->getNode("d") == p4);
-    assert(p1->getNode('d') == p4);
-    p4->addVal(2);
-    assert(p4->num == 2);
-    auto p6 = root->addVal("abcdd", -2);
-    assert(p6 == p4 and p6->num == 0);
-    auto p7 = root->insert("ccc");
-    assert(p7->num == 1);
-    root->insert("ccc", 3);
-    assert(p7->num == 4);
-    root->erase("ccc", 2);
-    assert(p7->num == 2);
-    bool b9 = root->erase("ccc", 10);
-    assert(not b9 and p7->num == 0);
-    auto p10 = root->insert("cdc");
-    root->insert("cdca");
-    root->insert("cdcaa");
-    root->insert("cdcd");
-    assert(p10->size == 4);
-    assert(p7->node2str() == "ccc");
-    auto vec1 = p10->sub_stringSet("cdc");
-    auto vec2 = vector<string>{"cdc", "cdca", "cdcaa", "cdcd"};
+    auto trie = create_trie('a', 'd');
+    assert (trie.from == 'a');
+    assert (trie.br_size == 4);
+
+    int p1 = trie.insert("abcd");
+    trie.insert("ac");
+    trie.insert("add");
+    trie.insert("add");
+    assert(trie.num_string("abcd") == 1);
+    assert(trie.num_string("add") == 2);
+    trie.erase("add");
+    assert(trie.num_string("add") == 1);
+    trie.erase("add");
+    assert(trie.num_string("add") == 0);
+    int p2 = trie.string_index("");
+    assert (p2 == 0);
+
+    int p3 = trie.string_index("abcdd");
+    assert(p3 < 0);
+    int p4 = trie.string_index("abcdd", true);
+    assert(trie.child_index(p1, 'd') == p4);
+    assert(trie.parent_index(p4) == p1);
+    assert(trie.prefixed_string_index(p1, "d") == p4);
+    int p10 = trie.insert("cdc");
+    trie.insert("cdca");
+    trie.insert("cdcaa");
+    trie.insert("cdcd");
+    assert(trie.num(p10) == 1);
+    assert(trie.size(p10) == 4);
+    int p11 = trie.string_index("ddddaaadd");
+    assert(trie.num(p11) == 0);
+    assert(trie.size(p11) == 0);
+  }
+  {
+    auto trie = create_trie('A', 'E');
+    trie.insert("ABC");
+    int p1 = trie.insert("ABD");
+    int p2 = trie.insert("ABEAB");
+    trie.insert("ABC");
+    assert(trie.node_to_str(p1) == "ABD");
+    assert(trie.node_to_str(p2) == "ABEAB");
+    assert(trie.num_prefix("A") == 4);
+    assert(trie.num_prefix("AB") == 4);
+    assert(trie.num_prefix("ABE") == 1);
+    auto vec1 = trie.string_set();
+    auto vec2 = vector<string>{"ABC", "ABC", "ABD", "ABEAB"};
     assert(vec1 == vec2);
     stringstream ss1, ss2;
-    ss1 << *root;
-    ss2 << root->stringSet();
+    ss1 << trie;
+    ss2 << trie.string_set();
     assert(ss1.str() == ss2.str());
   }
-
-
+  {
+    assert(ull2binstr(10, 4) == "1010");
+    assert(binstr2ull("10010") == 18);
+  }
 
   cout << "ok\n";
   return 0;
