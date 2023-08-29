@@ -1,0 +1,872 @@
+
+
+
+
+
+
+
+
+<!DOCTYPE html>
+<html>
+<head>
+	<title>F - A Certain Game</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+	<meta http-equiv="Content-Language" content="en">
+	<meta name="viewport" content="width=device-width,initial-scale=1.0">
+	<meta name="format-detection" content="telephone=no">
+	<meta name="google-site-verification" content="nXGC_JxO0yoP1qBzMnYD_xgufO6leSLw1kyNo2HZltM" />
+
+	
+	<script async src="https://www.googletagmanager.com/gtag/js?id=G-RC512FD18N"></script>
+	<script>
+		window.dataLayer = window.dataLayer || [];
+		function gtag(){dataLayer.push(arguments);}
+		gtag('js', new Date());
+
+		gtag('config', 'G-RC512FD18N');
+	</script>
+
+	
+	<meta name="description" content="AtCoder is a programming contest site for anyone from beginners to experts. We hold weekly programming contests online.">
+	<meta name="author" content="AtCoder Inc.">
+
+	<meta property="og:site_name" content="AtCoder">
+	
+	<meta property="og:title" content="F - A Certain Game" />
+	<meta property="og:description" content="AtCoder is a programming contest site for anyone from beginners to experts. We hold weekly programming contests online." />
+	<meta property="og:type" content="website" />
+	<meta property="og:url" content="https://atcoder.jp/contests/abc314/tasks/abc314_f" />
+	<meta property="og:image" content="https://img.atcoder.jp/assets/atcoder.png" />
+	<meta name="twitter:card" content="summary" />
+	<meta name="twitter:site" content="@atcoder" />
+	
+	<meta property="twitter:title" content="F - A Certain Game" />
+
+	<link href="//fonts.googleapis.com/css?family=Lato:400,700" rel="stylesheet" type="text/css">
+	<link rel="stylesheet" type="text/css" href="//img.atcoder.jp/public/d1b153e/css/bootstrap.min.css">
+	<link rel="stylesheet" type="text/css" href="//img.atcoder.jp/public/d1b153e/css/base.css">
+	<link rel="shortcut icon" type="image/png" href="//img.atcoder.jp/assets/favicon.png">
+	<link rel="apple-touch-icon" href="//img.atcoder.jp/assets/atcoder.png">
+	<script src="//img.atcoder.jp/public/d1b153e/js/lib/jquery-1.9.1.min.js"></script>
+	<script src="//img.atcoder.jp/public/d1b153e/js/lib/bootstrap.min.js"></script>
+	<script src="//img.atcoder.jp/public/d1b153e/js/cdn/js.cookie.min.js"></script>
+	<script src="//img.atcoder.jp/public/d1b153e/js/cdn/moment.min.js"></script>
+	<script src="//img.atcoder.jp/public/d1b153e/js/cdn/moment_js-ja.js"></script>
+	<script>
+		var LANG = "en";
+		var userScreenName = "yamate11";
+		var csrfToken = "aTLAoelRy4w+RQGSleBWww6HGxd16m19MZzmTBJ/lG0="
+	</script>
+	<script src="//img.atcoder.jp/public/d1b153e/js/utils.js"></script>
+	
+	
+		<script src="//img.atcoder.jp/public/d1b153e/js/contest.js"></script>
+		<link href="//img.atcoder.jp/public/d1b153e/css/contest.css" rel="stylesheet" />
+		<script>
+			var contestScreenName = "abc314";
+			var remainingText = "Remaining Time";
+			var countDownText = "Contest begins in";
+			var startTime = moment("2023-08-12T21:00:00+09:00");
+			var endTime = moment("2023-08-12T22:40:00+09:00");
+		</script>
+		<style>.red-text {
+  color: red;
+}
+</style>
+	
+	
+		<link href="//img.atcoder.jp/public/d1b153e/css/cdn/select2.min.css" rel="stylesheet" />
+		<link href="//img.atcoder.jp/public/d1b153e/css/cdn/select2-bootstrap.min.css" rel="stylesheet" />
+		<script src="//img.atcoder.jp/public/d1b153e/js/lib/select2.min.js"></script>
+	
+	
+		<link rel="stylesheet" href="//img.atcoder.jp/public/d1b153e/css/cdn/codemirror.min.css">
+		<script src="//img.atcoder.jp/public/d1b153e/js/cdn/codemirror.min.js"></script>
+		<script src="//img.atcoder.jp/public/d1b153e/js/codeMirror/merged.js"></script>
+	
+	
+	
+		<script src="//img.atcoder.jp/public/d1b153e/js/cdn/run_prettify.js"></script>
+	
+	
+		<link rel="stylesheet" href="//img.atcoder.jp/public/d1b153e/css/cdn/katex.min.css">
+		<script defer src="//img.atcoder.jp/public/d1b153e/js/cdn/katex.min.js"></script>
+		<script defer src="//img.atcoder.jp/public/d1b153e/js/cdn/auto-render.min.js"></script>
+		<script>$(function(){$('var').each(function(){var html=$(this).html().replace(/<sub>/g,'_{').replace(/<\/sub>/g,'}');$(this).html('\\('+html+'\\)');});});</script>
+		<script>
+			var katexOptions = {
+				delimiters: [
+					{left: "$$", right: "$$", display: true},
+					
+					{left: "\\(", right: "\\)", display: false},
+					{left: "\\[", right: "\\]", display: true}
+				],
+      	ignoredTags: ["script", "noscript", "style", "textarea", "code", "option"],
+				ignoredClasses: ["prettyprint", "source-code-for-copy"],
+				throwOnError: false
+			};
+			document.addEventListener("DOMContentLoaded", function() { renderMathInElement(document.body, katexOptions);});
+		</script>
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	<script src="//img.atcoder.jp/public/d1b153e/js/base.js"></script>
+</head>
+
+<body>
+
+<script type="text/javascript">
+	var __pParams = __pParams || [];
+	__pParams.push({client_id: '468', c_1: 'atcodercontest', c_2: 'ClientSite'});
+</script>
+<script type="text/javascript" src="https://cdn.d2-apps.net/js/tr.js" async></script>
+
+
+<div id="modal-contest-start" class="modal fade" tabindex="-1" role="dialog">
+	<div class="modal-dialog" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+				<h4 class="modal-title">Contest started</h4>
+			</div>
+			<div class="modal-body">
+				<p>AtCoder Beginner Contest 314 has begun.</p>
+			</div>
+			<div class="modal-footer">
+				
+					<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+				
+			</div>
+		</div>
+	</div>
+</div>
+<div id="modal-contest-end" class="modal fade" tabindex="-1" role="dialog">
+	<div class="modal-dialog" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+				<h4 class="modal-title">Contest is over</h4>
+			</div>
+			<div class="modal-body">
+				<p>AtCoder Beginner Contest 314 has ended.</p>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+			</div>
+		</div>
+	</div>
+</div>
+<div id="main-div" class="float-container">
+
+
+	<nav class="navbar navbar-inverse navbar-fixed-top">
+		<div class="container-fluid">
+			<div class="navbar-header">
+				<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapse" aria-expanded="false">
+					<span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span>
+				</button>
+				<a class="navbar-brand" href="/home"></a>
+			</div>
+			<div class="collapse navbar-collapse" id="navbar-collapse">
+				<ul class="nav navbar-nav">
+				
+					<li><a class="contest-title" href="/contests/abc314">AtCoder Beginner Contest 314</a></li>
+				
+				</ul>
+				<ul class="nav navbar-nav navbar-right">
+					
+					<li class="dropdown">
+						<a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
+							<img src='//img.atcoder.jp/assets/top/img/flag-lang/en.png'> English <span class="caret"></span>
+						</a>
+						<ul class="dropdown-menu">
+							<li><a href="/contests/abc314/tasks/abc314_f?lang=ja"><img src='//img.atcoder.jp/assets/top/img/flag-lang/ja.png'> 日本語</a></li>
+							<li><a href="/contests/abc314/tasks/abc314_f?lang=en"><img src='//img.atcoder.jp/assets/top/img/flag-lang/en.png'> English</a></li>
+						</ul>
+					</li>
+					
+					
+						<li class="dropdown">
+							<a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
+								<span class="glyphicon glyphicon-cog" aria-hidden="true"></span> yamate11 (Guest) <span class="caret"></span>
+							</a>
+							<ul class="dropdown-menu">
+								<li><a href="/users/yamate11"><span class="glyphicon glyphicon-user" aria-hidden="true"></span> My Profile</a></li>
+								<li class="divider"></li>
+								<li><a href="/settings"><span class="glyphicon glyphicon-wrench" aria-hidden="true"></span> General Settings</a></li>
+								<li><a href="/settings/icon"><span class="glyphicon glyphicon-picture" aria-hidden="true"></span> Change Photo</a></li>
+								<li><a href="/settings/password"><span class="glyphicon glyphicon-lock" aria-hidden="true"></span> Change Password</a></li>
+								<li><a href="/settings/fav"><span class="glyphicon glyphicon-star" aria-hidden="true"></span> Manage Fav</a></li>
+								
+								
+								
+								<li class="divider"></li>
+								<li><a href="javascript:void(form_logout.submit())"><span class="glyphicon glyphicon-log-out" aria-hidden="true"></span> Sign Out</a></li>
+							</ul>
+						</li>
+					
+				</ul>
+			</div>
+		</div>
+	</nav>
+
+	<form method="POST" name="form_logout" action="/logout?continue=https%3A%2F%2Fatcoder.jp%2Fcontests%2Fabc314%2Ftasks%2Fabc314_f">
+		<input type="hidden" name="csrf_token" value="aTLAoelRy4w&#43;RQGSleBWww6HGxd16m19MZzmTBJ/lG0=" />
+	</form>
+	<div id="main-container" class="container"
+		 	style="padding-top:50px;">
+		
+
+
+<div class="row">
+	<div id="contest-nav-tabs" class="col-sm-12 mb-2 cnvtb-fixed">
+	<div>
+		<small class="contest-duration">
+			
+				Contest Duration:
+				<a href='http://www.timeanddate.com/worldclock/fixedtime.html?iso=20230812T2100&p1=248' target='blank'><time class='fixtime fixtime-full'>2023-08-12 21:00:00+0900</time></a> - <a href='http://www.timeanddate.com/worldclock/fixedtime.html?iso=20230812T2240&p1=248' target='blank'><time class='fixtime fixtime-full'>2023-08-12 22:40:00+0900</time></a> (local time)
+				(100 minutes)
+			
+		</small>
+		<small class="back-to-home pull-right"><a href="/home">Back to Home</a></small>
+	</div>
+	<ul class="nav nav-tabs">
+		<li><a href="/contests/abc314"><span class="glyphicon glyphicon-home" aria-hidden="true"></span> Top</a></li>
+		
+			<li class="active"><a href="/contests/abc314/tasks"><span class="glyphicon glyphicon-tasks" aria-hidden="true"></span> Tasks</a></li>
+		
+
+		
+			<li><a href="/contests/abc314/clarifications"><span class="glyphicon glyphicon-question-sign" aria-hidden="true"></span> Clarifications <span id="clar-badge" class="badge"></span></a></li>
+		
+
+		
+			<li><a href="/contests/abc314/submit?taskScreenName=abc314_f"><span class="glyphicon glyphicon-send" aria-hidden="true"></span> Submit</a></li>
+		
+
+		
+			<li>
+				<a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false"><span class="glyphicon glyphicon-list" aria-hidden="true"></span> Results<span class="caret"></span></a>
+				<ul class="dropdown-menu">
+					<li><a href="/contests/abc314/submissions"><span class="glyphicon glyphicon-globe" aria-hidden="true"></span> All Submissions</a></li>
+					
+						<li><a href="/contests/abc314/submissions/me"><span class="glyphicon glyphicon-user" aria-hidden="true"></span> My Submissions</a></li>
+						<li class="divider"></li>
+						<li><a href="/contests/abc314/score"><span class="glyphicon glyphicon-dashboard" aria-hidden="true"></span> My Score</a></li>
+					
+				</ul>
+			</li>
+		
+
+		
+			
+				
+					<li><a href="/contests/abc314/standings"><span class="glyphicon glyphicon-sort-by-attributes-alt" aria-hidden="true"></span> Standings</a></li>
+				
+			
+				
+					<li><a href="/contests/abc314/standings/virtual"><span class="glyphicon glyphicon-sort-by-attributes-alt" aria-hidden="true"></span> Virtual Standings</a></li>
+				
+			
+		
+
+		
+			<li><a href="/contests/abc314/custom_test"><span class="glyphicon glyphicon-wrench" aria-hidden="true"></span> Custom Test</a></li>
+		
+
+		
+			<li><a href="/contests/abc314/editorial"><span class="glyphicon glyphicon-book" aria-hidden="true"></span> Editorial</a></li>
+		
+		
+			
+			
+				<li><a href="https://codeforces.com/blog/entry/119264" target="_blank" rel="noopener"><span class="glyphicon glyphicon-comment" aria-hidden="true"></span> Discuss</a></li>
+			
+		
+
+		<li class="pull-right"><a id="fix-cnvtb" href="javascript:void(0)"><span class="glyphicon glyphicon-pushpin" aria-hidden="true"></span></a></li>
+	</ul>
+</div>
+	<div class="col-sm-12">
+		<span class="h2">
+			F - A Certain Game
+			<a class="btn btn-default btn-sm" href="/contests/abc314/tasks/abc314_f/editorial">Editorial</a>
+		</span>
+		<span id="task-lang-btn" class="pull-right"><span data-lang="ja"><img src='//img.atcoder.jp/assets/top/img/flag-lang/ja.png'></span> / <span data-lang="en"><img src='//img.atcoder.jp/assets/top/img/flag-lang/en.png'></span></span>
+		<script>
+			$(function() {
+				var ts = $('#task-statement span.lang');
+				if (ts.children('span').size() <= 1) {
+					$('#task-lang-btn').hide();
+					ts.children('span').show();
+					return;
+				}
+				var REMEMBER_LB = 5;
+				var LS_KEY = 'task_lang';
+				var taskLang = getLS(LS_KEY) || '';
+				var changeTimes = 0;
+				if (taskLang == 'ja' || taskLang == 'en') {
+					changeTimes = REMEMBER_LB;
+				} else {
+					var changeTimes = parseInt(taskLang, 10);
+					if (isNaN(changeTimes)) {
+						changeTimes = 0;
+						delLS(LS_KEY);
+					}
+					changeTimes++;
+					taskLang = LANG;
+				}
+				ts.children('span.lang-' + taskLang).show();
+
+				$('#task-lang-btn span').click(function() {
+					var l = $(this).data('lang');
+					ts.children('span').hide();
+					ts.children('span.lang-' + l).show();
+					if (changeTimes < REMEMBER_LB) setLS(LS_KEY, changeTimes);
+					else setLS(LS_KEY, l);
+				});
+			});
+		</script>
+		<hr/>
+		<p>
+			Time Limit: 2 sec / Memory Limit: 1024 MB
+			
+		</p>
+
+		<div id="task-statement">
+			
+			<span class="lang">
+<span class="lang-ja">
+<p>配点 : <var>475</var> 点</p>
+
+<div class="part">
+<section>
+<h3>問題文</h3><p>とあるゲームの大会に、プレイヤー <var>1</var> 、プレイヤー <var>2</var> 、<var>\ldots</var> 、プレイヤー <var>N</var> の <var>N</var> 人のプレイヤーが参加します。
+大会の開始直前、各プレイヤーはそれぞれ <var>1</var> 人のみからなるチームをなし、全部で <var>N</var> 個のチームがあります。</p>
+<p>大会では全部で <var>N−1</var> 回の試合があり、各試合では <var>2</var> つの異なるチームが選ばれ、一方が先攻を、もう一方が後攻を受け持って対戦し、その結果ちょうど一方のチームが勝ちます。
+具体的には、<var>i = 1, 2, \ldots, N-1</var> について <var>i</var> 回目の試合は下記の通りに進行します。</p>
+<ul>
+<li>プレイヤー <var>p_i</var> の属するチームが先攻、プレイヤー <var>q_i</var> の属するチームが後攻として、対戦を行う。</li>
+<li>その結果、先攻チームの人数を <var>a</var> 、後攻チームの人数を <var>b</var> として、<var>\frac{a}{a+b}</var> の確率で先攻のチームが、<var>\frac{b}{a+b}</var> の確率で後攻のチームが勝つ。</li>
+<li>その後、勝負した <var>2</var> チームは <var>1</var> つのチームに併合される。</li>
+</ul>
+<p>なお、各試合の対戦結果は他の試合の対戦結果とは独立です。</p>
+<p><var>N</var> 人のプレイヤーそれぞれについて、大会全体で自分が所属するチームが勝つという出来事が起こる回数の期待値 <var>\text{mod } 998244353</var> を出力してください。</p>
+<details> <summary>期待値 <var>\text{mod } 998244353</var> の定義</summary>
+
+<p>この問題で求める期待値は必ず有理数になることが証明できます。 また、この問題の制約下では、求める期待値を既約分数 <var>\frac{y}{x}</var> で表したときに <var>x</var> が <var>998244353</var> で割り切れないことが保証されます。</p> <p>このとき <var>xz \equiv y \pmod{998244353}</var> を満たすような <var>0</var> 以上 <var>998244352</var> 以下の整数 <var>z</var> が一意に定まります。この <var>z</var> を答えてください。</p> </details>
+
+</section>
+</div>
+
+<div class="part">
+<section>
+<h3>制約</h3><ul>
+<li><var>2 \leq N \leq 2 \times 10^5</var></li>
+<li><var>1 \leq p_i, q_i \leq N</var></li>
+<li><var>i</var> 回目の試合の直前、プレイヤー <var>p_i</var> が属するチームとプレイヤー <var>q_i</var> が属するチームは異なる。</li>
+<li>入力はすべて整数</li>
+</ul>
+</section>
+</div>
+
+<hr />
+<div class="io-style">
+<div class="part">
+<section>
+<h3>入力</h3><p>入力は以下の形式で標準入力から与えられる。</p>
+<pre><var>N</var>
+<var>p_1</var> <var>q_1</var>
+<var>p_2</var> <var>q_2</var>
+<var>\vdots</var>
+<var>p_{N-1}</var> <var>q_{N-1}</var>
+</pre>
+</section>
+</div>
+
+<div class="part">
+<section>
+<h3>出力</h3><p>各 <var>i = 1, 2, \ldots, N</var> について、大会全体でプレイヤー <var>i</var> が所属するチームが勝つという出来事が起こる回数の期待値 <var>\text{mod } 998244353</var> である <var>E_i</var> を、
+下記の形式にしたがって空白区切りで出力せよ。</p>
+<pre><var>E_1</var> <var>E_2</var> <var>\ldots</var> <var>E_N</var>
+</pre>
+</section>
+</div>
+</div>
+
+<hr />
+<div class="part">
+<section>
+<h3>入力例 1</h3><pre>5
+1 2
+4 3
+5 3
+1 4
+</pre>
+</section>
+</div>
+
+<div class="part">
+<section>
+<h3>出力例 1</h3><pre>698771048 698771048 964969543 964969543 133099248
+</pre>
+<p>チームに所属するプレイヤーの番号が <var>x_1, x_2, \ldots, x_k</var> であるチームを、チーム <var>\lbrace x_1, x_2, \ldots, x_k \rbrace</var> と呼びます。</p>
+<ul>
+<li><var>1</var> 回目の試合では、プレイヤー <var>1</var> が所属するチーム <var>\lbrace 1 \rbrace</var> とプレイヤー <var>2</var> が所属するチーム <var>\lbrace 2 \rbrace</var> が対戦し、
+<var>\frac{1}{2}</var> の確率でチーム <var>\lbrace 1 \rbrace</var> が、<var>\frac{1}{2}</var> の確率でチーム <var>\lbrace 2 \rbrace</var> が勝ちます。
+その後、<var>2</var> つのチームは併合され、<var>1</var> つのチーム <var>\lbrace 1, 2 \rbrace</var> になります。</li>
+<li><var>2</var> 回目の試合では、プレイヤー <var>4</var> が所属するチーム <var>\lbrace 4 \rbrace</var> とプレイヤー <var>3</var> が所属するチーム <var>\lbrace 3 \rbrace</var> が対戦し、
+<var>\frac{1}{2}</var> の確率でチーム <var>\lbrace 4 \rbrace</var> が、<var>\frac{1}{2}</var> の確率でチーム <var>\lbrace 3 \rbrace</var> が勝ちます。
+その後、<var>2</var> つのチームは併合され、<var>1</var> つのチーム <var>\lbrace 3, 4 \rbrace</var> になります。</li>
+<li><var>3</var> 回目の試合では、プレイヤー <var>5</var> が所属するチーム <var>\lbrace 5 \rbrace</var> とプレイヤー <var>3</var> が所属するチーム <var>\lbrace 3, 4 \rbrace</var> が対戦し、
+<var>\frac{1}{3}</var> の確率でチーム <var>\lbrace 5 \rbrace</var> が、<var>\frac{2}{3}</var> の確率でチーム <var>\lbrace 3, 4 \rbrace</var> が勝ちます。
+その後、<var>2</var> つのチームは併合され、<var>1</var> つのチーム <var>\lbrace 3, 4, 5 \rbrace</var> になります。</li>
+<li><var>4</var> 回目の試合では、プレイヤー <var>1</var> が所属するチーム <var>\lbrace 1, 2 \rbrace</var> とプレイヤー <var>4</var> が所属するチーム <var>\lbrace 3, 4, 5 \rbrace</var> が対戦し、
+<var>\frac{2}{5}</var> の確率でチーム <var>\lbrace 1, 2 \rbrace</var> が、<var>\frac{3}{5}</var> の確率でチーム <var>\lbrace 3, 4, 5 \rbrace</var> が勝ちます。
+その後、<var>2</var> つのチームは併合され、<var>1</var> つのチーム <var>\lbrace 1, 2, 3, 4, 5 \rbrace</var> になります。</li>
+</ul>
+<p>プレイヤー <var>1, 2, 3, 4, 5</var> それぞれの、大会全体で自分が所属するチームが勝つという出来事が起こる回数の期待値 <var>E_1, E_2, E_3, E_4, E_5</var> は、それぞれ
+<var>\frac{9}{10}, \frac{9}{10}, \frac{53}{30}, \frac{53}{30}, \frac{14}{15}</var> です。</p>
+</section>
+</div>
+
+<hr />
+<div class="part">
+<section>
+<h3>入力例 2</h3><pre>15
+9 2
+8 10
+13 6
+12 11
+7 10
+4 10
+14 2
+5 4
+1 15
+15 2
+6 9
+8 11
+6 3
+2 8
+</pre>
+</section>
+</div>
+
+<div class="part">
+<section>
+<h3>出力例 2</h3><pre>43970290 310168785 806914186 501498951 950708909 272140427 335124893 168750835 310168785 168750835 280459129 280459129 272140427 476542843 43970290
+</pre></section>
+</div>
+</span>
+<span class="lang-en">
+<p>Score : <var>475</var> points</p>
+
+<div class="part">
+<section>
+<h3>Problem Statement</h3><p><var>N</var> players, player <var>1</var>, player <var>2</var>, ..., player <var>N</var>, participate in a game tournament. Just before the tournament starts, each player forms a one-person team, so there are <var>N</var> teams in total.</p>
+<p>The tournament has a total of <var>N-1</var> matches. In each match, two different teams are chosen. One team goes first, and the other goes second. Each match will result in exactly one team winning. Specifically, for each <var>i = 1, 2, \ldots, N-1</var>, the <var>i</var>-th match proceeds as follows.</p>
+<ul>
+<li>The team with player <var>p_i</var> goes first, and the team with player <var>q_i</var> goes second.</li>
+<li>Let <var>a</var> and <var>b</var> be the numbers of players in the first and second teams, respectively. The first team wins with probability <var>\frac{a}{a+b}</var>, and the second team wins with probability <var>\frac{b}{a+b}</var>.</li>
+<li>Then, the two teams are combined into a single team.</li>
+</ul>
+<p>The result of each match is independent of those of the others.</p>
+<p>For each of the <var>N</var> players, print the expected number of times the team with that player wins throughout the tournament, modulo <var>998244353</var>.</p>
+<details> <summary>How to print an expected value modulo <var>998244353</var></summary>
+
+<p>It can be proved that the sought expected value is always rational. Also, the constraints of this problem guarantee that if the sought expected value is expressed as an irreducible fraction <var>\frac{y}{x}</var>, then <var>x</var> is not divisible by <var>998244353</var>.</p> <p>Now, there is a unique integer <var>z</var> between <var>0</var> and <var>998244352</var>, inclusive, such that <var>xz \equiv y \pmod{998244353}</var>. Report this <var>z</var>.</p> </details>
+
+</section>
+</div>
+
+<div class="part">
+<section>
+<h3>Constraints</h3><ul>
+<li><var>2 \leq N \leq 2 \times 10^5</var></li>
+<li><var>1 \leq p_i, q_i \leq N</var></li>
+<li>Just before the <var>i</var>-th match, player <var>p_i</var> and player <var>q_i</var> belong to different teams.</li>
+<li>All input values are integers.</li>
+</ul>
+</section>
+</div>
+
+<hr />
+<div class="io-style">
+<div class="part">
+<section>
+<h3>Input</h3><p>The input is given from Standard Input in the following format:</p>
+<pre><var>N</var>
+<var>p_1</var> <var>q_1</var>
+<var>p_2</var> <var>q_2</var>
+<var>\vdots</var>
+<var>p_{N-1}</var> <var>q_{N-1}</var>
+</pre>
+</section>
+</div>
+
+<div class="part">
+<section>
+<h3>Output</h3><p>For each <var>i = 1, 2, \ldots, N</var>, print <var>E_i</var>, the expected number, modulo <var>998244353</var>, of times the team with player <var>i</var> wins throughout the tournament, separated by spaces, in the following format:</p>
+<pre><var>E_1</var> <var>E_2</var> <var>\ldots</var> <var>E_N</var>
+</pre>
+</section>
+</div>
+</div>
+
+<hr />
+<div class="part">
+<section>
+<h3>Sample Input 1</h3><pre>5
+1 2
+4 3
+5 3
+1 4
+</pre>
+</section>
+</div>
+
+<div class="part">
+<section>
+<h3>Sample Output 1</h3><pre>698771048 698771048 964969543 964969543 133099248
+</pre>
+<p>We call a team formed by player <var>x_1</var>, player <var>x_2</var>, <var>\ldots</var>, player <var>x_k</var> as team <var>\lbrace x_1, x_2, \ldots, x_k \rbrace</var>.</p>
+<ul>
+<li>The first match is played by team <var>\lbrace 1 \rbrace</var>, with player <var>1</var>, and team <var>\lbrace 2 \rbrace</var>, with player <var>2</var>. Team <var>\lbrace 1 \rbrace</var> wins with probability <var>\frac{1}{2}</var>, and team <var>\lbrace 2 \rbrace</var> wins with probability <var>\frac{1}{2}</var>. Then, the two teams are combined into a single team <var>\lbrace 1, 2 \rbrace</var>.</li>
+<li>The second match is played by team <var>\lbrace 4 \rbrace</var>, with player <var>4</var>, and team <var>\lbrace 3 \rbrace</var>, with player <var>3</var>. Team <var>\lbrace 4 \rbrace</var> wins with probability <var>\frac{1}{2}</var>, and team <var>\lbrace 3 \rbrace</var> wins with probability <var>\frac{1}{2}</var>. Then, the two teams are combined into a single team <var>\lbrace 3, 4 \rbrace</var>.</li>
+<li>The third match is played by team <var>\lbrace 5 \rbrace</var>, with player <var>5</var>, and team <var>\lbrace 3, 4 \rbrace</var>, with player <var>3</var>. Team <var>\lbrace 5 \rbrace</var> wins with probability <var>\frac{1}{3}</var>, and team <var>\lbrace 3, 4 \rbrace</var> wins with probability <var>\frac{2}{3}</var>. Then, the two teams are combined into a single team <var>\lbrace 3, 4, 5 \rbrace</var>.</li>
+<li>The fourth match is played by team <var>\lbrace 1, 2 \rbrace</var>, with player <var>1</var>, and team <var>\lbrace 3, 4, 5 \rbrace</var>, with player <var>4</var>. Team <var>\lbrace 1, 2 \rbrace</var> wins with probability <var>\frac{2}{5}</var>, and team <var>\lbrace 3, 4, 5 \rbrace</var> wins with probability <var>\frac{3}{5}</var>. Then, the two teams are combined into a single team <var>\lbrace 1, 2, 3, 4, 5 \rbrace</var>.</li>
+</ul>
+<p>The expected numbers of times the teams with players <var>1, 2, 3, 4, 5</var> win throughout the tournament, <var>E_1, E_2, E_3, E_4, E_5</var>, are <var>\frac{9}{10}, \frac{9}{10}, \frac{53}{30}, \frac{53}{30}, \frac{14}{15}</var>, respectively.</p>
+</section>
+</div>
+
+<hr />
+<div class="part">
+<section>
+<h3>Sample Input 2</h3><pre>15
+9 2
+8 10
+13 6
+12 11
+7 10
+4 10
+14 2
+5 4
+1 15
+15 2
+6 9
+8 11
+6 3
+2 8
+</pre>
+</section>
+</div>
+
+<div class="part">
+<section>
+<h3>Sample Output 2</h3><pre>43970290 310168785 806914186 501498951 950708909 272140427 335124893 168750835 310168785 168750835 280459129 280459129 272140427 476542843 43970290
+</pre></section>
+</div>
+</span>
+</span>
+
+		</div>
+
+		
+
+		
+		<hr/>
+		<form class="form-horizontal form-code-submit" action="/contests/abc314/submit" method="POST">
+			<input type="hidden" name="data.TaskScreenName" value="abc314_f" />
+			
+			<div class="form-group ">
+				<label class="control-label col-sm-2" for="select-lang">Language</label>
+				<div id="select-lang" class="col-sm-5" data-name="data.LanguageId">
+					<select class="form-control current" data-placeholder="-" name="data.LanguageId" required>
+						<option></option>
+						
+							<option value="5001" data-mime="text/x-c&#43;&#43; 20">C&#43;&#43; 20 (gcc 12.2)</option>
+						
+							<option value="5002" data-mime="text/x-go">Go (go 1.20.6)</option>
+						
+							<option value="5003" data-mime="text/x-c# 11.0">C# 11.0 (.NET 7.0.7)</option>
+						
+							<option value="5004" data-mime="text/x-kotlin">Kotlin (Kotlin/JVM 1.8.20)</option>
+						
+							<option value="5005" data-mime="text/x-java">Java (OpenJDK 17)</option>
+						
+							<option value="5006" data-mime="text/x-nim">Nim (Nim 1.6.14)</option>
+						
+							<option value="5007" data-mime="text/x-v">V (V 0.4)</option>
+						
+							<option value="5008" data-mime="text/x-zig">Zig (Zig 0.10.1)</option>
+						
+							<option value="5009" data-mime="text/x-javascript">JavaScript (Node.js 18.16.1)</option>
+						
+							<option value="5010" data-mime="text/x-javascript">JavaScript (Deno 1.35.1)</option>
+						
+							<option value="5011" data-mime="text/x-r">R (GNU R 4.2.1)</option>
+						
+							<option value="5012" data-mime="text/x-d">D (DMD 2.104.0)</option>
+						
+							<option value="5013" data-mime="text/x-d">D (LDC 1.32.2)</option>
+						
+							<option value="5014" data-mime="text/x-swift">Swift (swift 5.8.1)</option>
+						
+							<option value="5015" data-mime="text/x-dart">Dart (Dart 3.0.5)</option>
+						
+							<option value="5016" data-mime="text/x-php">PHP (php 8.2.8)</option>
+						
+							<option value="5017" data-mime="text/x-c">C (gcc 12.2.0)</option>
+						
+							<option value="5018" data-mime="text/x-ruby">Ruby (ruby 3.2.2)</option>
+						
+							<option value="5019" data-mime="text/x-crystal">Crystal (Crystal 1.9.1)</option>
+						
+							<option value="5020" data-mime="text/x-brainfuck">Brainfuck (bf 20041219)</option>
+						
+							<option value="5021" data-mime="text/x-f# 7.0">F# 7.0 (.NET 7.0.7)</option>
+						
+							<option value="5022" data-mime="text/x-julia">Julia (Julia 1.9.2)</option>
+						
+							<option value="5023" data-mime="text/x-bash">Bash (bash 5.2.2)</option>
+						
+							<option value="5024" data-mime="text/x-text">Text (cat 8.32)</option>
+						
+							<option value="5025" data-mime="text/x-haskell">Haskell (GHC 9.4.5)</option>
+						
+							<option value="5026" data-mime="text/x-fortran">Fortran (gfortran 12.2)</option>
+						
+							<option value="5027" data-mime="text/x-lua">Lua (LuaJIT 2.1.0-beta3)</option>
+						
+							<option value="5028" data-mime="text/x-c&#43;&#43; 23">C&#43;&#43; 23 (gcc 12.2)</option>
+						
+							<option value="5029" data-mime="text/x-common lisp">Common Lisp (SBCL 2.3.6)</option>
+						
+							<option value="5030" data-mime="text/x-cobol (free)">COBOL (Free) (GnuCOBOL 3.1.2)</option>
+						
+							<option value="5031" data-mime="text/x-c&#43;&#43; 23">C&#43;&#43; 23 (Clang 16.0.5)</option>
+						
+							<option value="5032" data-mime="text/x-zsh">Zsh (Zsh 5.9)</option>
+						
+							<option value="5033" data-mime="text/x-sagemath">SageMath (SageMath 9.5)</option>
+						
+							<option value="5034" data-mime="text/x-sed">Sed (GNU sed 4.8)</option>
+						
+							<option value="5035" data-mime="text/x-bc">bc (bc 1.07.1)</option>
+						
+							<option value="5036" data-mime="text/x-dc">dc (dc 1.07.1)</option>
+						
+							<option value="5037" data-mime="text/x-perl">Perl (perl  5.34)</option>
+						
+							<option value="5038" data-mime="text/x-awk">AWK (GNU Awk 5.0.1)</option>
+						
+							<option value="5039" data-mime="text/x-なでしこ">なでしこ (cnako3 3.4.20)</option>
+						
+							<option value="5040" data-mime="text/x-assembly x64">Assembly x64 (NASM 2.15.05)</option>
+						
+							<option value="5041" data-mime="text/x-pascal">Pascal (fpc 3.2.2)</option>
+						
+							<option value="5042" data-mime="text/x-c# 11.0 aot">C# 11.0 AOT (.NET 7.0.7)</option>
+						
+							<option value="5043" data-mime="text/x-lua">Lua (Lua 5.4.6)</option>
+						
+							<option value="5044" data-mime="text/x-prolog">Prolog (SWI-Prolog 9.0.4)</option>
+						
+							<option value="5045" data-mime="text/x-powershell">PowerShell (PowerShell 7.3.1)</option>
+						
+							<option value="5046" data-mime="text/x-scheme">Scheme (Gauche 0.9.12)</option>
+						
+							<option value="5047" data-mime="text/x-scala 3.3.0">Scala 3.3.0 (Scala Native 0.4.14)</option>
+						
+							<option value="5048" data-mime="text/x-visual basic 16.9">Visual Basic 16.9 (.NET 7.0.7)</option>
+						
+							<option value="5049" data-mime="text/x-forth">Forth (gforth 0.7.3)</option>
+						
+							<option value="5050" data-mime="text/x-clojure">Clojure (babashka 1.3.181)</option>
+						
+							<option value="5051" data-mime="text/x-erlang">Erlang (Erlang 26.0.2)</option>
+						
+							<option value="5052" data-mime="text/x-typescript 5.1">TypeScript 5.1 (Deno 1.35.1)</option>
+						
+							<option value="5053" data-mime="text/x-c&#43;&#43; 17">C&#43;&#43; 17 (gcc 12.2)</option>
+						
+							<option value="5054" data-mime="text/x-rust">Rust (rustc 1.70.0)</option>
+						
+							<option value="5055" data-mime="text/x-python">Python (CPython 3.11.4)</option>
+						
+							<option value="5056" data-mime="text/x-scala">Scala (Dotty 3.3.0)</option>
+						
+							<option value="5057" data-mime="text/x-koka">Koka (koka 2.4.0)</option>
+						
+							<option value="5058" data-mime="text/x-typescript 5.1">TypeScript 5.1 (Node.js 18.16.1)</option>
+						
+							<option value="5059" data-mime="text/x-ocaml">OCaml (ocamlopt 5.0.0)</option>
+						
+							<option value="5060" data-mime="text/x-raku">Raku (Rakudo 2023.06)</option>
+						
+							<option value="5061" data-mime="text/x-vim">Vim (vim 9.0.0242)</option>
+						
+							<option value="5062" data-mime="text/x-emacs lisp (native compile)">Emacs Lisp (Native Compile) (GNU Emacs 28.2)</option>
+						
+							<option value="5063" data-mime="text/x-python">Python (Mambaforge / CPython 3.10.10)</option>
+						
+							<option value="5064" data-mime="text/x-clojure">Clojure (clojure 1.11.1)</option>
+						
+							<option value="5065" data-mime="text/x-プロデル">プロデル (mono版プロデル 1.9.1182)</option>
+						
+							<option value="5066" data-mime="text/x-eclipse">ECLiPSe (ECLiPSe 7.1_13)</option>
+						
+							<option value="5067" data-mime="text/x-nibbles (literate form)">Nibbles (literate form) (nibbles 1.01)</option>
+						
+							<option value="5068" data-mime="text/x-ada">Ada (GNAT 12.2)</option>
+						
+							<option value="5069" data-mime="text/x-jq">jq (jq 1.6)</option>
+						
+							<option value="5070" data-mime="text/x-cyber">Cyber (Cyber v0.2-Latest)</option>
+						
+							<option value="5071" data-mime="text/x-carp">Carp (Carp 0.5.5)</option>
+						
+							<option value="5072" data-mime="text/x-c&#43;&#43; 17">C&#43;&#43; 17 (Clang 16.0.5)</option>
+						
+							<option value="5073" data-mime="text/x-c&#43;&#43; 20">C&#43;&#43; 20 (Clang 16.0.5)</option>
+						
+							<option value="5074" data-mime="text/x-llvm ir">LLVM IR (Clang 16.0.5)</option>
+						
+							<option value="5075" data-mime="text/x-emacs lisp (byte compile)">Emacs Lisp (Byte Compile) (GNU Emacs 28.2)</option>
+						
+							<option value="5076" data-mime="text/x-factor">Factor (Factor 0.98)</option>
+						
+							<option value="5077" data-mime="text/x-d">D (GDC 12.2)</option>
+						
+							<option value="5078" data-mime="text/x-python">Python (PyPy 3.10-v7.3.12)</option>
+						
+							<option value="5079" data-mime="text/x-whitespace">Whitespace (whitespacers 1.0.0)</option>
+						
+							<option value="5080" data-mime="text/x-&gt;&lt;&gt;">&gt;&lt;&gt; (fishr 0.1.0)</option>
+						
+							<option value="5081" data-mime="text/x-reasonml">ReasonML (reason 3.9.0)</option>
+						
+							<option value="5082" data-mime="text/x-python">Python (Cython 0.29.34)</option>
+						
+							<option value="5083" data-mime="text/x-octave">Octave (GNU Octave 8.2.0)</option>
+						
+							<option value="5084" data-mime="text/x-haxe (jvm)">Haxe (JVM) (Haxe 4.3.1)</option>
+						
+							<option value="5085" data-mime="text/x-elixir">Elixir (Elixir 1.15.2)</option>
+						
+							<option value="5086" data-mime="text/x-mercury">Mercury (Mercury 22.01.6)</option>
+						
+							<option value="5087" data-mime="text/x-seed7">Seed7 (Seed7 3.2.1)</option>
+						
+							<option value="5088" data-mime="text/x-emacs lisp (no compile)">Emacs Lisp (No Compile) (GNU Emacs 28.2)</option>
+						
+							<option value="5089" data-mime="text/x-unison">Unison (Unison M5b)</option>
+						
+							<option value="5090" data-mime="text/x-cobol">COBOL (GnuCOBOL(Fixed) 3.1.2)</option>
+						
+					</select>
+					<span class="error"></span>
+				</div>
+			</div>
+			<script>var currentLang = getLS('defaultLang');</script>
+			
+			
+<div class="form-group">
+	<label class="control-label col-sm-2" for="sourceCode">Source Code</label>
+	<div class="col-sm-7" id="sourceCode">
+		<div class="div-editor">
+			<textarea class="form-control editor" name="sourceCode"></textarea>
+		</div>
+		<textarea class="form-control plain-textarea" style="display:none;"></textarea>
+		<p>
+			<span class="gray">* at most 512 KiB</span><br>
+			<span class="gray">* Your source code will be saved as Main.<i>extension</i>.</span>
+		</p>
+	</div>
+	<div class="col-sm-3 editor-buttons">
+		<p><button id="btn-open-file" type="button" class="btn btn-default btn-sm">
+			<span class="glyphicon glyphicon-folder-open" aria-hidden="true"></span> &nbsp; Open File
+		</button></p>
+		<p><button type="button" class="btn btn-default btn-sm btn-toggle-editor" data-toggle="button" aria-pressed="false" autocomplete="off">
+			Toggle Editor
+		</button></p>
+		<p><button type="button" class="btn btn-default btn-sm btn-auto-height" data-toggle="button" aria-pressed="false" autocomplete="off">
+			Auto Height
+		</button></p>
+	</div>
+	<input id="input-open-file" type="file" style="display:none;">
+</div>
+
+			<input type="hidden" name="csrf_token" value="aTLAoelRy4w&#43;RQGSleBWww6HGxd16m19MZzmTBJ/lG0=" />
+			<div class="form-group">
+				<label class="control-label col-sm-2" for="submit"></label>
+				<div class="col-sm-5">
+					<button type="submit" class="btn btn-primary" id="submit">Submit</button>
+				</div>
+			</div>
+		</form>
+		
+	</div>
+</div>
+
+
+
+
+		
+			<hr>
+			
+			
+			
+<div class="a2a_kit a2a_kit_size_20 a2a_default_style pull-right" data-a2a-url="https://atcoder.jp/contests/abc314/tasks/abc314_f?lang=en" data-a2a-title="F - A Certain Game">
+	<a class="a2a_button_facebook"></a>
+	<a class="a2a_button_twitter"></a>
+	
+		<a class="a2a_button_telegram"></a>
+	
+	<a class="a2a_dd" href="https://www.addtoany.com/share"></a>
+</div>
+
+		
+		<script async src="//static.addtoany.com/menu/page.js"></script>
+		
+	</div> 
+	<hr>
+</div> 
+
+	<div class="container" style="margin-bottom: 80px;">
+			<footer class="footer">
+			
+				<ul>
+					<li><a href="/contests/abc314/rules">Rule</a></li>
+					<li><a href="/contests/abc314/glossary">Glossary</a></li>
+					
+				</ul>
+			
+			<ul>
+				<li><a href="/tos">Terms of service</a></li>
+				<li><a href="/privacy">Privacy Policy</a></li>
+				<li><a href="/personal">Information Protection Policy</a></li>
+				<li><a href="/company">Company</a></li>
+				<li><a href="/faq">FAQ</a></li>
+				<li><a href="/contact">Contact</a></li>
+				
+			</ul>
+			<div class="text-center">
+					<small id="copyright">Copyright Since 2012 &copy;<a href="http://atcoder.co.jp">AtCoder Inc.</a> All rights reserved.</small>
+			</div>
+			</footer>
+	</div>
+	<p id="fixed-server-timer" class="contest-timer"></p>
+	<div id="scroll-page-top" style="display:none;"><span class="glyphicon glyphicon-arrow-up" aria-hidden="true"></span> Page Top</div>
+
+</body>
+</html>
+
+

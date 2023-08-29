@@ -18,6 +18,21 @@ int main(/* int argc, char *argv[] */) {
   cin.tie(nullptr);
   cout << setprecision(20);
 
+  ll H, W; cin >> H >> W;
+  vector<string> C(H);
+  REP(i, 0, N) cin >> C[i];
+  vector<ll> nR(H);
+  vector<ll> nC(W);
+  vector<ll> cR(H);
+  vector<ll> cC(W);
+  vector mR(H, vector<ll>(26, 0LL));
+  vector mC(W, vector<ll>(26, 0LL));
+  
+  REP(i, 0, H) REP(j, 0, W) {
+    ll d = C[i][j] - 'a';
+    
+  }
+
   return 0;
 }
 

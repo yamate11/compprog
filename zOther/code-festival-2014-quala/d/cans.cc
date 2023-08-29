@@ -1,178 +1,135 @@
 #include <bits/stdc++.h>
 #include <cassert>
-typedef long long int ll;
 using namespace std;
+using ll = long long int;
+using pll = pair<ll, ll>;
 // #include <atcoder/all>
 // using namespace atcoder;
+#define REP(i, a, b) for (ll i = (a); i < (b); i++)
+#define REPrev(i, a, b) for (ll i = (a); i >= (b); i--)
+#define ALL(coll) (coll).begin(), (coll).end()
+#define SIZE(v) ((ll)((v).size()))
+#define REPOUT(i, a, b, exp, sep) REP(i, (a), (b)) cout << (exp) << (i + 1 == (b) ? "" : (sep)); cout << "\n"
 
-// @@ !! LIM(cmpNaive)
+// @@ !! LIM(binsearch forall)
 
-// ---- inserted library file cmpNaive.cc
+// ---- inserted library file binsearch.cc
 
-const string end_mark("^__=end=__^");
+template<typename T>
+T binsearch_i(auto check, T yes, T no, T err = (T)1) {
+  while (abs(yes - no) > err) {
+    T mid = (yes + no) / 2;
+    if (check(mid)) yes = mid;
+    else            no  = mid;
+  }
+  return yes;
+}
 
-int naive(istream& cin, ostream& cout);
-int body(istream& cin, ostream& cout);
+template<typename T>
+T binsearch_r(auto check, T yes, T no, T err, bool rel = true) {
+  while (abs(yes - no) > err &&
+         (!rel || abs(yes - no) > abs(yes) * err)) {
+    T mid = (yes + no) / 2.0;
+    if (check(mid)) yes = mid;
+    else            no  = mid;
+  }
+  return yes;
+}
 
-void cmpNaive() {
-  while (true) {
-    string s;
-    getline(cin, s);
-    bool run_body;
-    if (s.at(0) == 'Q') {
-      return;
-    }else if (s.at(0) == 'B') {
-      run_body = true;
-    }else if (s.at(0) == 'N') {
-      run_body = false;
-    }else {
-      cerr << "Unknown body/naive specifier.\n";
-      exit(1);
-    }
-    string input_s;
-    while (true) {
-      getline(cin, s);
-      if (s == end_mark) break;
-      input_s += s;
-      input_s += "\n";
-    }
-    stringstream ss_in(move(input_s));
-    stringstream ss_out;
-    if (run_body) {
-      body(ss_in, ss_out);
-    }else {
-      naive(ss_in, ss_out);
-    }
-    cout << ss_out.str() << end_mark << endl;
+ll border_with_hint(ll t, auto pred, auto hint) {
+  double y = hint(t);
+  double d = floor(y);
+  double e = ceil(y);
+  bool rd = pred(d, t);
+  bool re = pred(e, t);
+  if (rd && !re) return d;
+  if (!rd && re) return e;
+  for (ll i = 1; true; i++) {
+    bool rd_i = pred(d - i, t);
+    if (rd_i && !rd) return d - i;
+    if (!rd_i && rd) return d - (i - 1);
+    bool re_i = pred(e + i, t);
+    if (re_i && !re) return e + i;
+    if (!re_i && re) return e + (i - 1);
   }
 }
 
-int main(int argc, char *argv[]) {
+// ---- end binsearch.cc
+
+// ---- inserted library file forall.cc
+
+#define EX_REP_LL(i, from, to) for (ll i = (from); i < (to); i++)
+#define EX_REP_RB(x, coll) for (auto x : coll)
+#define EXGEN(rep_part, cond, yes, no_behaviour) ([&]() { rep_part if (cond) return (yes); no_behaviour; }())
+#define EXISTS_BASE(rep_part, cond) EXGEN(rep_part, cond, true, return false)
+#define EXFIND_BASE(rep_part, cond, t) EXGEN(rep_part, cond, t, assert(0))
+#define EXFIND_D_BASE(rep_part, cond, t, def) EXGEN(rep_part, cond, t, return def)
+
+#define EXISTS(i, from, to, cond) EXISTS_BASE(EX_REP_LL(i, from, to), cond)
+#define FORALL(i, from, to, cond) (not EXISTS(i, from, to, not (cond)))
+#define EXFIND(i, from, to, cond) EXFIND_BASE(EX_REP_LL(i, from, to), cond, i)
+#define EXFIND_D(i, from, to, cond, def) EXFIND_D_BASE(EX_REP_LL(i, from, to), cond, i, def)
+
+#define EXISTS_C(x, coll, cond) EXISTS_BASE(EX_REP_RB(x, coll), cond)
+#define FORALL_C(x, coll, cond) (not EXISTS_C(x, coll, not (cond)))
+#define EXFIND_C(x, coll, cond) EXFIND_BASE(EX_REP_RB(x, coll), cond, x)
+#define EXFIND_D_C(x, coll, cond, def) EXFIND_D_BASE(EX_REP_RB(x, coll), cond, x, def)
+
+#define COUNT_BASE(rep_part, cond) ([&](){ ll ret = 0; rep_part if (cond) ret++; return ret; }())
+#define COUNT(i, from, to, cond) COUNT_BASE(EX_REP_LL(i, from, to), cond)
+#define COUNT_C(x, coll, cond) COUNT_BASE(EX_REP_RB(x, coll), cond)
+
+#define IMPLIES(a, b) (not (a) or (b))
+
+// ---- end forall.cc
+
+// @@ !! LIM -- end mark --
+
+int main(/* int argc, char *argv[] */) {
   ios_base::sync_with_stdio(false);
   cin.tie(nullptr);
   cout << setprecision(20);
 
-#if CMPNAIVE
-  if (argc == 2) {
-    if (strcmp(argv[1], "cmpNaive") == 0) {
-      cmpNaive();
-    }else if (strcmp(argv[1], "naive") == 0) {
-      naive(cin, cout);
-    }else if (strcmp(argv[1], "skip") == 0) {
-      exit(0);
-    }else {
-      cerr << "Unknown argument.\n";
-      exit(1);
-    }
-  }else {
-#endif
-    body(cin, cout);
-#if CMPNAIVE
-  }
-#endif
-  return 0;
-}
+  // For each a \subseteq [0..9), calcs #{t | 1 <= t <= n and appear(t) = a}, where appear(t) is the set of digits
+  // that appears in t's base-10 representation
+  auto f = [&](ll n) -> vector<ll> {
+    vector<ll> ret(1LL << 10, 0LL);
+    if (n <= 0) return ret;
+    vector<ll> ds;
+    for (ll m = n; m > 0; m /= 10) ds.push_back(m % 10);
+    reverse(ALL(ds));
 
-/*
-int naive(istream& cin, ostream& cout) {
-  return 0;
-}
-int body(istream& cin, ostream& cout) {
-  return 0;
-}
-*/
-
-// ---- end cmpNaive.cc
-
-// @@ !! LIM -- end mark --
-
-int naive(istream& cin, ostream& cout) {
-  ll A; ll K; cin >> A >> K;
-  ll ans = 1e9;
-
-  auto used = [&](ll x) -> ll {
-    if (x == 0) return 1;
-    ll cnt = 0;
-    vector<bool> seen(10);
-    while (x > 0) {
-      ll y = x % 10;
-      if (! seen[y]) {
-        seen[y] = true;
-        cnt++;
-      }
-      x = x / 10;
-    }
-    return cnt;
-  };
-
-  for (ll x = 0; x <= 11111; x++) {
-    if (used(x) > K) continue;
-    ans = min(ans, abs(A - x));
-  }
-  cout << ans << endl;
-  return 0;
-}
-int body(istream& cin, ostream& cout) {
-
-  string A; cin >> A;
-  ll sz = A.size();
-  if (sz == 1) {
-    cout << 0 << endl;
-    return 0;
-  }
-
-  ll val_orig = stoll(A);
-  ll K; cin >> K;
-  const ll big = 1e16;
-
-  auto func = [&](ll t, bool isLower) -> ll {
-    vector<bool> used(10);
-    ll n_used = 0;
-    ll val = 0;
-
-    auto usable = [&](ll c, ll d) -> ll {
-      for (c += d; 0 <= c && c <= 9; c += d) {
-        if (used[c] || n_used < K) return c;
-      }
-      return -1;
-    };
-
-    auto use = [&](ll c) -> void {
-      val = val * 10 + c;
-      if (! used[c]) {
-        used[c] = true;
-        n_used++;
-      }
-    };
-
-    for (ll i = 0; i < t; i++) {
-      use(A[i] - '0');
-      if (n_used > K) return big;
-    }
-    if (t < sz) {
-      ll step = isLower ? -1 : 1;
-      {
-        ll c = usable(A[t] - '0', step);
-        if (c < 0) return big;
-        if (! (t == 0 && c == 0)) {
-          use(c);
+    vector tbl_init(2, vector(2, vector(1LL << 10, 0LL)));
+    auto tbl = tbl_init;
+    tbl[1][1][0] = 1;
+    for (ll d : ds) {
+      auto prev = move(tbl);
+      tbl = tbl_init;
+      REP(eq, 0, 2) REP(az, 0, 2) REP(x, 0, 1LL << 10) {
+        ll p_v = prev[eq][az][x];
+        if (p_v == 0) continue;
+        REP(e, 0, 10) {
+          if (eq and e > d) continue;
+          ll new_eq = eq and e == d;
+          ll new_az = az and e == 0;
+          ll new_x = az ? (1LL << e) : (x | (1LL << e));
+          tbl[new_eq][new_az][new_x] += p_v;
         }
       }
-      for (ll i = t + 1; i < sz; i++) {
-        ll c = usable(isLower ? 10 : -1, step);
-        assert(c >= 0);
-        use(c);
-      }
     }
-    return abs(val - val_orig);
+    REP(eq, 0, 2) REP(x, 0, 1LL << 10) ret[x] += tbl[eq][0][x];
+    return ret;
   };
 
-  ll ans = big;
-  for (ll t = 0; t <= sz; t++) {
-    ans = min(ans, func(t, true));
-    ans = min(ans, func(t, false));
-  }
-  cout << ans << endl;
+  ll A, K; cin >> A >> K;
+  
+  auto check = [&](ll w) -> bool {
+    auto vec1 = f(A + w);
+    auto vec2 = f(A - w - 1);
+    return EXISTS(x, 0, 1LL << 10, vec1[x] - vec2[x] > 0 and __builtin_popcountll(x) <= K);
+  };
+  ll w = binsearch_i<ll>(check, (ll)(1e16), -1);
+  cout << w << endl;
 
   return 0;
 }

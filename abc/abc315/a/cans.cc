@@ -18,18 +18,11 @@ int main(/* int argc, char *argv[] */) {
   cin.tie(nullptr);
   cout << setprecision(20);
 
+  set<char> vowel{'a', 'e', 'i', 'o', 'u'};
+
   string S; cin >> S;
   string ans;
-  vector<ll> judge(26);
-  judge['a' - 'a'] = true;
-  judge['e' - 'a'] = true;
-  judge['i' - 'a'] = true;
-  judge['o' - 'a'] = true;
-  judge['u' - 'a'] = true;
-  for (char c : S) {
-    if (judge[c - 'a']) ;
-    else ans.push_back(c);
-  }
+  for (char c : S) if (not vowel.contains(c)) ans.push_back(c);
   cout << ans << endl;
 
   return 0;
