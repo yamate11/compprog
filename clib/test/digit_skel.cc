@@ -19,7 +19,7 @@ int main() {
     assert(du.pow(1) == 10);
     assert(du.pow(6) == 1000000);
     assert(du.pow(18) == 1000000000000000000);
-    assert(du.width(0) == 0);
+    assert(du.width(0) == 1);
     assert(du.width(1) == 1);
     assert(du.width(2) == 1);
     assert(du.width(9) == 1);
