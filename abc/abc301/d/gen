@@ -21,11 +21,11 @@ def generate_random():
     # This is the function you should edit.
     # You can use prcase() to print the value to the case
     def onecase():
-        m = randrange(1, 4)
+        m = randrange(1, 10)
         lst = [choice("01?") for _ in range(m)]
         s = ''.join(lst)
         prcase(s)
-        n = randrange(1, 100)
+        n = randrange(1, 10)
         prcase(n)
 
         # for i in range(m):

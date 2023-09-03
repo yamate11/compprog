@@ -573,7 +573,7 @@ int body(istream& cin, ostream& cout) {
 
   digit_util du(2);
   ll L = 0;
-  REP(i, 0, N) L = max(L, du.width(A[i]));
+  REP(i, 0, N) L = max(L, du.width(A[i] + M));
 #if DEBUG
   REP(i, 0, N) {
     DLOGK(A[i], du.to_string(A[i]), du.width(A[i]));

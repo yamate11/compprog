@@ -21,11 +21,11 @@ def generate_random():
     # This is the function you should edit.
     # You can use prcase() to print the value to the case
     def onecase():
-        n = randrange(1, 10)
+        n = randrange(1, 4)
         k = randrange(1, n + 1)
-        m = randrange(0, 32)
+        m = randrange(0, 8)
         prcase(n, m, k)
-        lst = [randrange(0, 32) for _ in range(n)]
+        lst = [randrange(0, 8) for _ in range(n)]
         prcase(show_list(lst))
 
 

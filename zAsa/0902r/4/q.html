@@ -1,0 +1,780 @@
+
+
+
+
+
+
+
+
+<!DOCTYPE html>
+<html>
+<head>
+	<title>C - Keep Graph Connected</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+	<meta http-equiv="Content-Language" content="en">
+	<meta name="viewport" content="width=device-width,initial-scale=1.0">
+	<meta name="format-detection" content="telephone=no">
+	<meta name="google-site-verification" content="nXGC_JxO0yoP1qBzMnYD_xgufO6leSLw1kyNo2HZltM" />
+
+	
+	<script async src="https://www.googletagmanager.com/gtag/js?id=G-RC512FD18N"></script>
+	<script>
+		window.dataLayer = window.dataLayer || [];
+		function gtag(){dataLayer.push(arguments);}
+		gtag('js', new Date());
+
+		gtag('config', 'G-RC512FD18N');
+	</script>
+
+	
+	<meta name="description" content="AtCoder is a programming contest site for anyone from beginners to experts. We hold weekly programming contests online.">
+	<meta name="author" content="AtCoder Inc.">
+
+	<meta property="og:site_name" content="AtCoder">
+	
+	<meta property="og:title" content="C - Keep Graph Connected" />
+	<meta property="og:description" content="AtCoder is a programming contest site for anyone from beginners to experts. We hold weekly programming contests online." />
+	<meta property="og:type" content="website" />
+	<meta property="og:url" content="https://atcoder.jp/contests/arc108/tasks/arc108_c" />
+	<meta property="og:image" content="https://img.atcoder.jp/assets/atcoder.png" />
+	<meta name="twitter:card" content="summary" />
+	<meta name="twitter:site" content="@atcoder" />
+	
+	<meta property="twitter:title" content="C - Keep Graph Connected" />
+
+	<link href="//fonts.googleapis.com/css?family=Lato:400,700" rel="stylesheet" type="text/css">
+	<link rel="stylesheet" type="text/css" href="//img.atcoder.jp/public/e215330/css/bootstrap.min.css">
+	<link rel="stylesheet" type="text/css" href="//img.atcoder.jp/public/e215330/css/base.css">
+	<link rel="shortcut icon" type="image/png" href="//img.atcoder.jp/assets/favicon.png">
+	<link rel="apple-touch-icon" href="//img.atcoder.jp/assets/atcoder.png">
+	<script src="//img.atcoder.jp/public/e215330/js/lib/jquery-1.9.1.min.js"></script>
+	<script src="//img.atcoder.jp/public/e215330/js/lib/bootstrap.min.js"></script>
+	<script src="//img.atcoder.jp/public/e215330/js/cdn/js.cookie.min.js"></script>
+	<script src="//img.atcoder.jp/public/e215330/js/cdn/moment.min.js"></script>
+	<script src="//img.atcoder.jp/public/e215330/js/cdn/moment_js-ja.js"></script>
+	<script>
+		var LANG = "en";
+		var userScreenName = "yamate11";
+		var csrfToken = "HFKyUyDevpd7TyJHDl3jbI2JzC2dJoXCGmkGaap69ZM="
+	</script>
+	<script src="//img.atcoder.jp/public/e215330/js/utils.js"></script>
+	
+	
+		<script src="//img.atcoder.jp/public/e215330/js/contest.js"></script>
+		<link href="//img.atcoder.jp/public/e215330/css/contest.css" rel="stylesheet" />
+		<script>
+			var contestScreenName = "arc108";
+			var remainingText = "Remaining Time";
+			var countDownText = "Contest begins in";
+			var startTime = moment("2020-11-21T21:00:00+09:00");
+			var endTime = moment("2020-11-21T22:40:00+09:00");
+		</script>
+		<style></style>
+	
+	
+		<link href="//img.atcoder.jp/public/e215330/css/cdn/select2.min.css" rel="stylesheet" />
+		<link href="//img.atcoder.jp/public/e215330/css/cdn/select2-bootstrap.min.css" rel="stylesheet" />
+		<script src="//img.atcoder.jp/public/e215330/js/lib/select2.min.js"></script>
+	
+	
+		<script src="//img.atcoder.jp/public/e215330/js/ace/ace.js"></script>
+		<script src="//img.atcoder.jp/public/e215330/js/ace/ext-language_tools.js"></script>
+	
+	
+		<script src="//img.atcoder.jp/public/e215330/js/cdn/run_prettify.js"></script>
+	
+	
+		<link rel="stylesheet" href="//img.atcoder.jp/public/e215330/css/cdn/katex.min.css">
+		<script defer src="//img.atcoder.jp/public/e215330/js/cdn/katex.min.js"></script>
+		<script defer src="//img.atcoder.jp/public/e215330/js/cdn/auto-render.min.js"></script>
+		<script>$(function(){$('var').each(function(){var html=$(this).html().replace(/<sub>/g,'_{').replace(/<\/sub>/g,'}');$(this).html('\\('+html+'\\)');});});</script>
+		<script>
+			var katexOptions = {
+				delimiters: [
+					{left: "$$", right: "$$", display: true},
+					
+					{left: "\\(", right: "\\)", display: false},
+					{left: "\\[", right: "\\]", display: true}
+				],
+      	ignoredTags: ["script", "noscript", "style", "textarea", "code", "option"],
+				ignoredClasses: ["prettyprint", "source-code-for-copy"],
+				throwOnError: false
+			};
+			document.addEventListener("DOMContentLoaded", function() { renderMathInElement(document.body, katexOptions);});
+		</script>
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	<script src="//img.atcoder.jp/public/e215330/js/base.js"></script>
+</head>
+
+<body>
+
+<script type="text/javascript">
+	var __pParams = __pParams || [];
+	__pParams.push({client_id: '468', c_1: 'atcodercontest', c_2: 'ClientSite'});
+</script>
+<script type="text/javascript" src="https://cdn.d2-apps.net/js/tr.js" async></script>
+
+
+<div id="modal-contest-start" class="modal fade" tabindex="-1" role="dialog">
+	<div class="modal-dialog" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+				<h4 class="modal-title">Contest started</h4>
+			</div>
+			<div class="modal-body">
+				<p>AtCoder Regular Contest 108 has begun.</p>
+			</div>
+			<div class="modal-footer">
+				
+					<a class="btn btn-primary" href='/contests/arc108/tasks'>Go to the task list page</a>
+				
+			</div>
+		</div>
+	</div>
+</div>
+<div id="modal-contest-end" class="modal fade" tabindex="-1" role="dialog">
+	<div class="modal-dialog" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+				<h4 class="modal-title">Contest is over</h4>
+			</div>
+			<div class="modal-body">
+				<p>AtCoder Regular Contest 108 has ended.</p>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+			</div>
+		</div>
+	</div>
+</div>
+<div id="main-div" class="float-container">
+
+
+	<nav class="navbar navbar-inverse navbar-fixed-top">
+		<div class="container-fluid">
+			<div class="navbar-header">
+				<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapse" aria-expanded="false">
+					<span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span>
+				</button>
+				<a class="navbar-brand" href="/home"></a>
+			</div>
+			<div class="collapse navbar-collapse" id="navbar-collapse">
+				<ul class="nav navbar-nav">
+				
+					<li><a class="contest-title" href="/contests/arc108">AtCoder Regular Contest 108</a></li>
+				
+				</ul>
+				<ul class="nav navbar-nav navbar-right">
+					
+					<li class="dropdown">
+						<a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
+							<img src='//img.atcoder.jp/assets/top/img/flag-lang/en.png'> English <span class="caret"></span>
+						</a>
+						<ul class="dropdown-menu">
+							<li><a href="/contests/arc108/tasks/arc108_c?lang=ja"><img src='//img.atcoder.jp/assets/top/img/flag-lang/ja.png'> 日本語</a></li>
+							<li><a href="/contests/arc108/tasks/arc108_c?lang=en"><img src='//img.atcoder.jp/assets/top/img/flag-lang/en.png'> English</a></li>
+						</ul>
+					</li>
+					
+					
+						<li class="dropdown">
+							<a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
+								<span class="glyphicon glyphicon-cog" aria-hidden="true"></span> yamate11 (Contestant) <span class="caret"></span>
+							</a>
+							<ul class="dropdown-menu">
+								<li><a href="/users/yamate11"><span class="glyphicon glyphicon-user" aria-hidden="true"></span> My Profile</a></li>
+								<li class="divider"></li>
+								<li><a href="/settings"><span class="glyphicon glyphicon-wrench" aria-hidden="true"></span> General Settings</a></li>
+								<li><a href="/settings/icon"><span class="glyphicon glyphicon-picture" aria-hidden="true"></span> Change Photo</a></li>
+								<li><a href="/settings/password"><span class="glyphicon glyphicon-lock" aria-hidden="true"></span> Change Password</a></li>
+								<li><a href="/settings/fav"><span class="glyphicon glyphicon-star" aria-hidden="true"></span> Manage Fav</a></li>
+								
+								
+								
+								<li class="divider"></li>
+								<li><a href="javascript:void(form_logout.submit())"><span class="glyphicon glyphicon-log-out" aria-hidden="true"></span> Sign Out</a></li>
+							</ul>
+						</li>
+					
+				</ul>
+			</div>
+		</div>
+	</nav>
+
+	<form method="POST" name="form_logout" action="/logout?continue=https%3A%2F%2Fatcoder.jp%2Fcontests%2Farc108%2Ftasks%2Farc108_c">
+		<input type="hidden" name="csrf_token" value="HFKyUyDevpd7TyJHDl3jbI2JzC2dJoXCGmkGaap69ZM=" />
+	</form>
+	<div id="main-container" class="container"
+		 	style="padding-top:50px;">
+		
+
+
+<div class="row">
+	<div id="contest-nav-tabs" class="col-sm-12 mb-2 cnvtb-fixed">
+	<div>
+		<small class="contest-duration">
+			
+				Contest Duration:
+				<a href='http://www.timeanddate.com/worldclock/fixedtime.html?iso=20201121T2100&p1=248' target='blank'><time class='fixtime fixtime-full'>2020-11-21 21:00:00+0900</time></a> - <a href='http://www.timeanddate.com/worldclock/fixedtime.html?iso=20201121T2240&p1=248' target='blank'><time class='fixtime fixtime-full'>2020-11-21 22:40:00+0900</time></a> (local time)
+				(100 minutes)
+			
+		</small>
+		<small class="back-to-home pull-right"><a href="/home">Back to Home</a></small>
+	</div>
+	<ul class="nav nav-tabs">
+		<li><a href="/contests/arc108"><span class="glyphicon glyphicon-home" aria-hidden="true"></span> Top</a></li>
+		
+			<li class="active"><a href="/contests/arc108/tasks"><span class="glyphicon glyphicon-tasks" aria-hidden="true"></span> Tasks</a></li>
+		
+
+		
+			<li><a href="/contests/arc108/clarifications"><span class="glyphicon glyphicon-question-sign" aria-hidden="true"></span> Clarifications <span id="clar-badge" class="badge"></span></a></li>
+		
+
+		
+			<li><a href="/contests/arc108/submit?taskScreenName=arc108_c"><span class="glyphicon glyphicon-send" aria-hidden="true"></span> Submit</a></li>
+		
+
+		
+			<li>
+				<a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false"><span class="glyphicon glyphicon-list" aria-hidden="true"></span> Results<span class="caret"></span></a>
+				<ul class="dropdown-menu">
+					<li><a href="/contests/arc108/submissions"><span class="glyphicon glyphicon-globe" aria-hidden="true"></span> All Submissions</a></li>
+					
+						<li><a href="/contests/arc108/submissions/me"><span class="glyphicon glyphicon-user" aria-hidden="true"></span> My Submissions</a></li>
+						<li class="divider"></li>
+						<li><a href="/contests/arc108/score"><span class="glyphicon glyphicon-dashboard" aria-hidden="true"></span> My Score</a></li>
+					
+				</ul>
+			</li>
+		
+
+		
+			
+				
+					<li><a href="/contests/arc108/standings"><span class="glyphicon glyphicon-sort-by-attributes-alt" aria-hidden="true"></span> Standings</a></li>
+				
+			
+				
+					<li><a href="/contests/arc108/standings/virtual"><span class="glyphicon glyphicon-sort-by-attributes-alt" aria-hidden="true"></span> Virtual Standings</a></li>
+				
+			
+		
+
+		
+			<li><a href="/contests/arc108/custom_test"><span class="glyphicon glyphicon-wrench" aria-hidden="true"></span> Custom Test</a></li>
+		
+
+		
+			<li><a href="/contests/arc108/editorial"><span class="glyphicon glyphicon-book" aria-hidden="true"></span> Editorial</a></li>
+		
+		
+			
+			
+				<li><a href="https://codeforces.com/blog/entry/84852" target="_blank" rel="noopener"><span class="glyphicon glyphicon-comment" aria-hidden="true"></span> Discuss</a></li>
+			
+		
+
+		<li class="pull-right"><a id="fix-cnvtb" href="javascript:void(0)"><span class="glyphicon glyphicon-pushpin" aria-hidden="true"></span></a></li>
+	</ul>
+</div>
+	<div class="col-sm-12">
+		<span class="h2">
+			C - Keep Graph Connected
+			<a class="btn btn-default btn-sm" href="/contests/arc108/tasks/arc108_c/editorial">Editorial</a>
+		</span>
+		<span id="task-lang-btn" class="pull-right"><span data-lang="ja"><img src='//img.atcoder.jp/assets/top/img/flag-lang/ja.png'></span> / <span data-lang="en"><img src='//img.atcoder.jp/assets/top/img/flag-lang/en.png'></span></span>
+		<script>
+			$(function() {
+				var ts = $('#task-statement span.lang');
+				if (ts.children('span').size() <= 1) {
+					$('#task-lang-btn').hide();
+					ts.children('span').show();
+					return;
+				}
+				var REMEMBER_LB = 5;
+				var LS_KEY = 'task_lang';
+				var taskLang = getLS(LS_KEY) || '';
+				var changeTimes = 0;
+				if (taskLang == 'ja' || taskLang == 'en') {
+					changeTimes = REMEMBER_LB;
+				} else {
+					var changeTimes = parseInt(taskLang, 10);
+					if (isNaN(changeTimes)) {
+						changeTimes = 0;
+						delLS(LS_KEY);
+					}
+					changeTimes++;
+					taskLang = LANG;
+				}
+				ts.children('span.lang-' + taskLang).show();
+
+				$('#task-lang-btn span').click(function() {
+					var l = $(this).data('lang');
+					ts.children('span').hide();
+					ts.children('span.lang-' + l).show();
+					if (changeTimes < REMEMBER_LB) setLS(LS_KEY, changeTimes);
+					else setLS(LS_KEY, l);
+				});
+			});
+		</script>
+		<hr/>
+		<p>
+			Time Limit: 2 sec / Memory Limit: 1024 MB
+			
+		</p>
+
+		<div id="task-statement">
+			
+			<span class="lang">
+<span class="lang-ja">
+<p>配点 : <var>500</var> 点</p>
+
+<div class="part">
+<section>
+<h3>問題文</h3><p><var>1</var> から <var>N</var> の番号がついた <var>N</var> 個の頂点と <var>1</var> から <var>M</var> の番号がついた <var>M</var> 本の辺からなる連結な無向グラフが与えられます。
+このグラフに多重辺は存在するかもしれませんが、自己ループはありません。</p>
+<p>このグラフのそれぞれの辺には <var>1</var> 以上 <var>N</var> 以下の整数で表されるラベルがついています。
+辺 <var>i</var> はラベル <var>c_i</var> がついており、頂点 <var>u_i,v_i</var> を双方向につなぐ辺です。</p>
+<p>すぬけ君はそれぞれの頂点に <var>1</var> 以上 <var>N</var> 以下の整数を書き込んだのち(頂点に書き込まれた整数に重複があっても構いません)、以下の条件を満たす辺のみを残してそれ以外の辺を取り除くことにしました。</p>
+<p><strong>条件</strong>：辺の両端の頂点に書き込まれた整数を <var>x,y</var> として、<var>x,y</var> のいずれか一方<strong>のみ</strong>が辺についたラベルと等しい</p>
+<p>上記の条件を満たさない辺を取り除いたあとのグラフも連結のままであるような頂点への整数の書き込み方を <em>よい書き込み方</em> と呼びます。よい書き込み方が存在するかどうかを判定し、存在するならばその一例を示してください。</p>
+</section>
+</div>
+
+<div class="part">
+<section>
+<h3>制約</h3><ul>
+<li><var>2 \leq N \leq 10^5</var></li>
+<li><var>N-1 \leq M \leq 2 \times 10^5</var></li>
+<li><var>1 \leq u_i,v_i,c_i \leq N</var></li>
+<li>与えられるグラフは連結</li>
+<li>与えられるグラフに自己ループはない</li>
+</ul>
+</section>
+</div>
+
+<hr />
+
+<div class="io-style">
+<div class="part">
+<section>
+<h3>入力</h3><p>入力は以下の形式で標準入力から与えられる。</p>
+<pre><var>N</var> <var>M</var>
+<var>u_1</var> <var>v_1</var> <var>c_1</var>
+<var>\vdots</var>
+<var>u_M</var> <var>v_M</var> <var>c_M</var>
+</pre>
+
+</section>
+</div>
+
+<div class="part">
+<section>
+<h3>出力</h3><p>よい書き込み方が存在しないならば <code>No</code> を出力せよ。
+存在する場合、<var>N</var> 行出力せよ。<var>i</var> 行目には頂点 <var>i</var> に書き込む整数を出力せよ。
+この書き込み方がよい書き込み方ならば正解となる。</p>
+</section>
+</div>
+</div>
+
+<hr />
+
+<div class="part">
+<section>
+<h3>入力例 1</h3><pre>3 4
+1 2 1
+2 3 2
+3 1 3
+1 3 1
+</pre>
+
+</section>
+</div>
+
+<div class="part">
+<section>
+<h3>出力例 1</h3><pre>1
+2
+1
+</pre>
+
+<ul>
+<li>頂点 <var>1,2,3</var> にそれぞれ <var>1,2,1</var> を書き込みます。</li>
+<li>辺 <var>1</var> は頂点 <var>1,2</var> をつないでおり、ラベルが <var>1</var> です。<ul>
+<li>頂点 <var>1</var> に書き込まれた整数のみが辺についたラベルと等しいため辺 <var>1</var> は取り除かれません。</li>
+</ul>
+</li>
+<li>辺 <var>2</var> は頂点 <var>2,3</var> をつないでおり、ラベルが <var>2</var> です。<ul>
+<li>頂点 <var>2</var> に書き込まれた整数のみが辺についたラベルと等しいため辺 <var>2</var> は取り除かれません。</li>
+</ul>
+</li>
+<li>辺 <var>3</var> は頂点 <var>1,3</var> をつないでおり、ラベルが <var>3</var> です。<ul>
+<li>どちらの頂点に書き込まれた整数も辺についたラベルと異なるため辺 <var>3</var> は取り除かれます。</li>
+</ul>
+</li>
+<li>辺 <var>4</var> は頂点 <var>1,3</var> をつないでおり、ラベルが <var>1</var> です。<ul>
+<li>どちらの頂点に書き込まれた整数も辺についたラベルと等しいため辺 <var>4</var> は取り除かれます。</li>
+</ul>
+</li>
+<li>辺 <var>3,4</var> が取り除かれたあともグラフは連結なので、この書き込み方はよい書き込み方です。</li>
+</ul></section>
+</div>
+</span>
+<span class="lang-en">
+<p>Score : <var>500</var> points</p>
+
+<div class="part">
+<section>
+<h3>Problem Statement</h3><p>Given is an undirected connected graph with <var>N</var> vertices numbered <var>1</var> to <var>N</var>, and <var>M</var> edges numbered <var>1</var> to <var>M</var>.
+The given graph may contain multi-edges but not self loops.</p>
+<p>Each edge has an integer label between <var>1</var> and <var>N</var> (inclusive).
+Edge <var>i</var> has a label <var>c_i</var>, and it connects Vertex <var>u_i</var> and <var>v_i</var> bidirectionally.</p>
+<p>Snuke will write an integer between <var>1</var> and <var>N</var> (inclusive) on each vertex (multiple vertices may have the same integer written on them) and then keep only the edges satisfying the condition below, removing the other edges.</p>
+<p><strong>Condition</strong>: Let <var>x</var> and <var>y</var> be the integers written on the vertices that are the endpoints of the edge. <strong>Exactly</strong> one of <var>x</var> and <var>y</var> equals the label of the edge.</p>
+<p>We call a way of writing integers on the vertices <em>good</em> if (and only if) the graph is still connected after removing the edges not satisfying the condition above. Determine whether a good way of writing integers exists, and present one such way if it exists.</p>
+</section>
+</div>
+
+<div class="part">
+<section>
+<h3>Constraints</h3><ul>
+<li><var>2 \leq N \leq 10^5</var></li>
+<li><var>N-1 \leq M \leq 2 \times 10^5</var></li>
+<li><var>1 \leq u_i,v_i,c_i \leq N</var></li>
+<li>The given graph is connected and has no self-loops.</li>
+</ul>
+</section>
+</div>
+
+<hr />
+
+<div class="io-style">
+<div class="part">
+<section>
+<h3>Input</h3><p>Input is given from Standard Input in the following format:</p>
+<pre><var>N</var> <var>M</var>
+<var>u_1</var> <var>v_1</var> <var>c_1</var>
+<var>\vdots</var>
+<var>u_M</var> <var>v_M</var> <var>c_M</var>
+</pre>
+
+</section>
+</div>
+
+<div class="part">
+<section>
+<h3>Output</h3><p>If there is no good way of writing integers, print <code>No</code>.
+Otherwise, print <var>N</var> lines. The <var>i</var>-th line should contain the integer written on Vertex <var>i</var>.
+Any good way of writing integers will be accepted.</p>
+</section>
+</div>
+</div>
+
+<hr />
+
+<div class="part">
+<section>
+<h3>Sample Input 1</h3><pre>3 4
+1 2 1
+2 3 2
+3 1 3
+1 3 1
+</pre>
+
+</section>
+</div>
+
+<div class="part">
+<section>
+<h3>Sample Output 1</h3><pre>1
+2
+1
+</pre>
+
+<ul>
+<li>We write <var>1</var>, <var>2</var>, and <var>1</var> on Vertex <var>1</var>, <var>2</var>, and <var>3</var>, respectively.</li>
+<li>Edge <var>1</var> connects Vertex <var>1</var> and <var>2</var>, and its label is <var>1</var>.<ul>
+<li>Only the integer written on Vertex <var>1</var> equals the label, so this edge will not get removed.</li>
+</ul>
+</li>
+<li>Edge <var>2</var> connects Vertex <var>2</var> and <var>3</var>, and its label is <var>2</var>.<ul>
+<li>Only the integer written on Vertex <var>2</var> equals the label, so this edge will not be removed.</li>
+</ul>
+</li>
+<li>Edge <var>3</var> connects Vertex <var>1</var> and <var>3</var>, and its label is <var>3</var>.<ul>
+<li>Both integers written on the vertices differ from the label, so this edge will be removed.</li>
+</ul>
+</li>
+<li>Edge <var>4</var> connects Vertex <var>1</var> and <var>3</var>, and its label is <var>1</var>.<ul>
+<li>Both integers written on the vertices equal the label, so this edge will be removed.</li>
+</ul>
+</li>
+<li>After Edge <var>3</var> and <var>4</var> are removed, the graph will still be connected, so this is a good way of writing integers.</li>
+</ul></section>
+</div>
+</span>
+</span>
+
+		</div>
+
+		
+
+		
+		<hr/>
+		<form class="form-horizontal form-code-submit" action="/contests/arc108/submit" method="POST">
+			<input type="hidden" name="data.TaskScreenName" value="arc108_c" />
+			
+			<div class="form-group ">
+				<label class="control-label col-sm-3 col-md-2" for="select-lang">Language</label>
+				<div id="select-lang" class="col-sm-5" data-name="data.LanguageId">
+					<select class="form-control current" data-placeholder="-" name="data.LanguageId" required>
+						<option></option>
+						
+							<option value="4001" data-ace-mode="c_cpp">C (GCC 9.2.1)</option>
+						
+							<option value="4002" data-ace-mode="c_cpp">C (Clang 10.0.0)</option>
+						
+							<option value="4003" data-ace-mode="c_cpp">C&#43;&#43; (GCC 9.2.1)</option>
+						
+							<option value="4004" data-ace-mode="c_cpp">C&#43;&#43; (Clang 10.0.0)</option>
+						
+							<option value="4005" data-ace-mode="java">Java (OpenJDK 11.0.6)</option>
+						
+							<option value="4006" data-ace-mode="python">Python (3.8.2)</option>
+						
+							<option value="4007" data-ace-mode="sh">Bash (5.0.11)</option>
+						
+							<option value="4008" data-ace-mode="text">bc (1.07.1)</option>
+						
+							<option value="4009" data-ace-mode="sh">Awk (GNU Awk 4.1.4)</option>
+						
+							<option value="4010" data-ace-mode="csharp">C# (.NET Core 3.1.201)</option>
+						
+							<option value="4011" data-ace-mode="csharp">C# (Mono-mcs 6.8.0.105)</option>
+						
+							<option value="4012" data-ace-mode="csharp">C# (Mono-csc 3.5.0)</option>
+						
+							<option value="4013" data-ace-mode="clojure">Clojure (1.10.1.536)</option>
+						
+							<option value="4014" data-ace-mode="crystal">Crystal (0.33.0)</option>
+						
+							<option value="4015" data-ace-mode="d">D (DMD 2.091.0)</option>
+						
+							<option value="4016" data-ace-mode="d">D (GDC 9.2.1)</option>
+						
+							<option value="4017" data-ace-mode="d">D (LDC 1.20.1)</option>
+						
+							<option value="4018" data-ace-mode="dart">Dart (2.7.2)</option>
+						
+							<option value="4019" data-ace-mode="text">dc (1.4.1)</option>
+						
+							<option value="4020" data-ace-mode="erlang">Erlang (22.3)</option>
+						
+							<option value="4021" data-ace-mode="elixir">Elixir (1.10.2)</option>
+						
+							<option value="4022" data-ace-mode="fsharp">F# (.NET Core 3.1.201)</option>
+						
+							<option value="4023" data-ace-mode="fsharp">F# (Mono 10.2.3)</option>
+						
+							<option value="4024" data-ace-mode="text">Forth (gforth 0.7.3)</option>
+						
+							<option value="4025" data-ace-mode="fortran">Fortran (GNU Fortran 9.2.1)</option>
+						
+							<option value="4026" data-ace-mode="golang">Go (1.14.1)</option>
+						
+							<option value="4027" data-ace-mode="haskell">Haskell (GHC 8.8.3)</option>
+						
+							<option value="4028" data-ace-mode="haxe">Haxe (4.0.3); js</option>
+						
+							<option value="4029" data-ace-mode="haxe">Haxe (4.0.3); Java</option>
+						
+							<option value="4030" data-ace-mode="javascript">JavaScript (Node.js 12.16.1)</option>
+						
+							<option value="4031" data-ace-mode="julia">Julia (1.4.0)</option>
+						
+							<option value="4032" data-ace-mode="kotlin">Kotlin (1.3.71)</option>
+						
+							<option value="4033" data-ace-mode="lua">Lua (Lua 5.3.5)</option>
+						
+							<option value="4034" data-ace-mode="lua">Lua (LuaJIT 2.1.0)</option>
+						
+							<option value="4035" data-ace-mode="text">Dash (0.5.8)</option>
+						
+							<option value="4036" data-ace-mode="nim">Nim (1.0.6)</option>
+						
+							<option value="4037" data-ace-mode="objectivec">Objective-C (Clang 10.0.0)</option>
+						
+							<option value="4038" data-ace-mode="lisp">Common Lisp (SBCL 2.0.3)</option>
+						
+							<option value="4039" data-ace-mode="ocaml">OCaml (4.10.0)</option>
+						
+							<option value="4040" data-ace-mode="matlab">Octave (5.2.0)</option>
+						
+							<option value="4041" data-ace-mode="pascal">Pascal (FPC 3.0.4)</option>
+						
+							<option value="4042" data-ace-mode="perl">Perl (5.26.1)</option>
+						
+							<option value="4043" data-ace-mode="raku">Raku (Rakudo 2020.02.1)</option>
+						
+							<option value="4044" data-ace-mode="php">PHP (7.4.4)</option>
+						
+							<option value="4045" data-ace-mode="prolog">Prolog (SWI-Prolog 8.0.3)</option>
+						
+							<option value="4046" data-ace-mode="python">PyPy2 (7.3.0)</option>
+						
+							<option value="4047" data-ace-mode="python">PyPy3 (7.3.0)</option>
+						
+							<option value="4048" data-ace-mode="scheme">Racket (7.6)</option>
+						
+							<option value="4049" data-ace-mode="ruby">Ruby (2.7.1)</option>
+						
+							<option value="4050" data-ace-mode="rust">Rust (1.42.0)</option>
+						
+							<option value="4051" data-ace-mode="scala">Scala (2.13.1)</option>
+						
+							<option value="4052" data-ace-mode="java">Java (OpenJDK 1.8.0)</option>
+						
+							<option value="4053" data-ace-mode="scheme">Scheme (Gauche 0.9.9)</option>
+						
+							<option value="4054" data-ace-mode="ocaml">Standard ML (MLton 20130715)</option>
+						
+							<option value="4055" data-ace-mode="swift">Swift (5.2.1)</option>
+						
+							<option value="4056" data-ace-mode="text">Text (cat 8.28)</option>
+						
+							<option value="4057" data-ace-mode="typescript">TypeScript (3.8)</option>
+						
+							<option value="4058" data-ace-mode="vbscript">Visual Basic (.NET Core 3.1.101)</option>
+						
+							<option value="4059" data-ace-mode="sh">Zsh (5.4.2)</option>
+						
+							<option value="4060" data-ace-mode="cobol">COBOL - Fixed (OpenCOBOL 1.1.0)</option>
+						
+							<option value="4061" data-ace-mode="cobol">COBOL - Free (OpenCOBOL 1.1.0)</option>
+						
+							<option value="4062" data-ace-mode="text">Brainfuck (bf 20041219)</option>
+						
+							<option value="4063" data-ace-mode="ada">Ada2012 (GNAT 9.2.1)</option>
+						
+							<option value="4064" data-ace-mode="text">Unlambda (2.0.0)</option>
+						
+							<option value="4065" data-ace-mode="python">Cython (0.29.16)</option>
+						
+							<option value="4066" data-ace-mode="sh">Sed (4.4)</option>
+						
+							<option value="4067" data-ace-mode="text">Vim (8.2.0460)</option>
+						
+					</select>
+					<span class="error"></span>
+				</div>
+			</div>
+			<script>var currentLang = getLS('defaultLang');</script>
+			
+			
+<div class="form-group">
+	<div class="col-sm-3 col-md-2 editor-label">
+		<label class="control-label" for="sourceCode">Source Code</label>
+		<div class="editor-buttons">
+			<button id="btn-open-file" type="button" class="btn btn-default btn-sm">
+				<span class="glyphicon glyphicon-folder-open" aria-hidden="true"></span> &nbsp; Open File
+			</button>
+			<button id="btn-customize" type="button" class="btn btn-default btn-sm">
+				<span class="glyphicon glyphicon-cog" aria-hidden="true"></span> &nbsp; Customize
+			</button>
+			<button type="button" class="btn btn-default btn-sm btn-toggle-editor" data-toggle="button" autocomplete="off">
+				Toggle Editor
+			</button>
+			<button type="button" class="btn btn-default btn-sm btn-auto-height" data-toggle="button" autocomplete="off">
+				Auto Height
+			</button>
+		</div>
+	</div>
+	<div class="col-sm-9 col-md-10" id="sourceCode">
+		<div id="editor"></div>
+		<textarea id="plain-textarea" class="form-control" style="display:none;" name="sourceCode"></textarea>
+		<p>
+			<span class="gray">* at most 512 KiB</span><br>
+			<span class="gray">* Your source code will be saved as Main.<i>extension</i>.</span>
+		</p>
+	</div>
+	<input id="input-open-file" type="file" style="display:none;">
+</div>
+
+
+			<input type="hidden" name="csrf_token" value="HFKyUyDevpd7TyJHDl3jbI2JzC2dJoXCGmkGaap69ZM=" />
+			<div class="form-group">
+				<label class="control-label col-sm-3 col-md-2" for="submit"></label>
+				<div class="col-sm-5">
+					<button type="submit" class="btn btn-primary" id="submit">Submit</button>
+				</div>
+			</div>
+		</form>
+		
+	</div>
+</div>
+
+
+
+
+		
+			<hr>
+			
+			
+			
+<div class="a2a_kit a2a_kit_size_20 a2a_default_style pull-right" data-a2a-url="https://atcoder.jp/contests/arc108/tasks/arc108_c?lang=en" data-a2a-title="C - Keep Graph Connected">
+	<a class="a2a_button_facebook"></a>
+	<a class="a2a_button_twitter"></a>
+	
+		<a class="a2a_button_telegram"></a>
+	
+	<a class="a2a_dd" href="https://www.addtoany.com/share"></a>
+</div>
+
+		
+		<script async src="//static.addtoany.com/menu/page.js"></script>
+		
+	</div> 
+	<hr>
+</div> 
+
+	<div class="container" style="margin-bottom: 80px;">
+			<footer class="footer">
+			
+				<ul>
+					<li><a href="/contests/arc108/rules">Rule</a></li>
+					<li><a href="/contests/arc108/glossary">Glossary</a></li>
+					
+				</ul>
+			
+			<ul>
+				<li><a href="/tos">Terms of service</a></li>
+				<li><a href="/privacy">Privacy Policy</a></li>
+				<li><a href="/personal">Information Protection Policy</a></li>
+				<li><a href="/company">Company</a></li>
+				<li><a href="/faq">FAQ</a></li>
+				<li><a href="/contact">Contact</a></li>
+				
+			</ul>
+			<div class="text-center">
+					<small id="copyright">Copyright Since 2012 &copy;<a href="http://atcoder.co.jp">AtCoder Inc.</a> All rights reserved.</small>
+			</div>
+			</footer>
+	</div>
+	<p id="fixed-server-timer" class="contest-timer"></p>
+	<div id="scroll-page-top" style="display:none;"><span class="glyphicon glyphicon-arrow-up" aria-hidden="true"></span> Page Top</div>
+
+</body>
+</html>
+
+

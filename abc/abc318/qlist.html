@@ -1,0 +1,535 @@
+
+
+
+
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Tasks - THIRD PROGRAMMING CONTEST 2023 ALGO（AtCoder Beginner Contest 318）</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+	<meta http-equiv="Content-Language" content="en">
+	<meta name="viewport" content="width=device-width,initial-scale=1.0">
+	<meta name="format-detection" content="telephone=no">
+	<meta name="google-site-verification" content="nXGC_JxO0yoP1qBzMnYD_xgufO6leSLw1kyNo2HZltM" />
+
+	
+	<script async src="https://www.googletagmanager.com/gtag/js?id=G-RC512FD18N"></script>
+	<script>
+		window.dataLayer = window.dataLayer || [];
+		function gtag(){dataLayer.push(arguments);}
+		gtag('js', new Date());
+
+		gtag('config', 'G-RC512FD18N');
+	</script>
+
+	
+	<meta name="description" content="AtCoder is a programming contest site for anyone from beginners to experts. We hold weekly programming contests online.">
+	<meta name="author" content="AtCoder Inc.">
+
+	<meta property="og:site_name" content="AtCoder">
+	
+	<meta property="og:title" content="Tasks - THIRD PROGRAMMING CONTEST 2023 ALGO（AtCoder Beginner Contest 318）" />
+	<meta property="og:description" content="AtCoder is a programming contest site for anyone from beginners to experts. We hold weekly programming contests online." />
+	<meta property="og:type" content="website" />
+	<meta property="og:url" content="https://atcoder.jp/contests/abc318/tasks" />
+	<meta property="og:image" content="https://img.atcoder.jp/assets/atcoder.png" />
+	<meta name="twitter:card" content="summary" />
+	<meta name="twitter:site" content="@atcoder" />
+	
+	<meta property="twitter:title" content="Tasks - THIRD PROGRAMMING CONTEST 2023 ALGO（AtCoder Beginner Contest 318）" />
+
+	<link href="//fonts.googleapis.com/css?family=Lato:400,700" rel="stylesheet" type="text/css">
+	<link rel="stylesheet" type="text/css" href="//img.atcoder.jp/public/e215330/css/bootstrap.min.css">
+	<link rel="stylesheet" type="text/css" href="//img.atcoder.jp/public/e215330/css/base.css">
+	<link rel="shortcut icon" type="image/png" href="//img.atcoder.jp/assets/favicon.png">
+	<link rel="apple-touch-icon" href="//img.atcoder.jp/assets/atcoder.png">
+	<script src="//img.atcoder.jp/public/e215330/js/lib/jquery-1.9.1.min.js"></script>
+	<script src="//img.atcoder.jp/public/e215330/js/lib/bootstrap.min.js"></script>
+	<script src="//img.atcoder.jp/public/e215330/js/cdn/js.cookie.min.js"></script>
+	<script src="//img.atcoder.jp/public/e215330/js/cdn/moment.min.js"></script>
+	<script src="//img.atcoder.jp/public/e215330/js/cdn/moment_js-ja.js"></script>
+	<script>
+		var LANG = "en";
+		var userScreenName = "yamate11";
+		var csrfToken = "HFKyUyDevpd7TyJHDl3jbI2JzC2dJoXCGmkGaap69ZM="
+	</script>
+	<script src="//img.atcoder.jp/public/e215330/js/utils.js"></script>
+	
+	
+		<script src="//img.atcoder.jp/public/e215330/js/contest.js"></script>
+		<link href="//img.atcoder.jp/public/e215330/css/contest.css" rel="stylesheet" />
+		<script>
+			var contestScreenName = "abc318";
+			var remainingText = "Remaining Time";
+			var countDownText = "Contest begins in";
+			var startTime = moment("2023-09-02T21:00:00+09:00");
+			var endTime = moment("2023-09-02T22:40:00+09:00");
+		</script>
+		<style>#contest-statement {
+background-image: url(https://img.atcoder.jp/ahc007/background.png);
+background-repeat: no-repeat;
+background-attachment: fixed;
+background-position: right bottom;
+background-clip: border-box;
+}
+@media (min-width: 768px) {
+#contest-statement {
+background-image: url(https://img.atcoder.jp/ahc007/background800.png);
+background-repeat: no-repeat;
+background-attachment: fixed;
+background-position: center bottom;
+background-clip: border-box;
+background-size: 680px auto;
+}
+}
+@media (min-width: 992px) {
+#contest-statement {
+background-image: url(https://img.atcoder.jp/ahc007/background800.png);
+background-repeat: no-repeat;
+background-attachment: fixed;
+background-position: center bottom;
+background-clip: border-box;
+background-size: 890px auto;
+}
+}
+@media (min-width: 1200px) {
+#contest-statement {
+background-image: url(https://img.atcoder.jp/ahc007/background800.png);
+background-repeat: no-repeat;
+background-attachment: fixed;
+background-position: center bottom;
+background-clip: border-box;
+background-size: 1090px auto;
+}
+}
+#contest-statement td, #contest-statement th {
+padding: 2px;
+}
+.optional_color { animation: opt_color_anime 2s linear infinite; }
+.k1 { animation: f1 2s linear infinite; }
+.k2 { animation: f2 2s linear infinite; }
+.k3 { animation: f3 2s linear infinite; }
+.k4 { animation: f4 2s linear infinite; }
+.k5 { animation: f5 2s linear infinite; }
+.k6 { animation: f6 2s linear infinite; }
+.k7 { animation: f7 2s linear infinite; }
+.k8 { animation: f8 2s linear infinite; }
+.k9 { animation: f9 2s linear infinite; }
+.k10 { animation: f10 2s linear infinite; }
+.k11 { animation: f11 2s linear infinite; }
+.k12 { animation: f12 2s linear infinite; }
+.k13 { animation: f13 2s linear infinite; }
+.k14 { animation: f14 2s linear infinite; }
+.k15 { animation: f15 2s linear infinite; }
+.k16 { animation: f16 2s linear infinite; }
+.k17 { animation: f17 2s linear infinite; }
+@keyframes opt_color_anime { 0%, 30%, 100% { color: red; } 10% { color: green; } 20% { color: blue; } }
+@keyframes f1 { 0%, 4% { opacity: 1; } 2% { opacity: 0; } }
+@keyframes f2 { 2%, 6% { opacity: 1; } 4% { opacity: 0; } }
+@keyframes f3 { 4%, 8% { opacity: 1; } 6% { opacity: 0; } }
+@keyframes f4 { 6%, 10% { opacity: 1; } 8% { opacity: 0; } }
+@keyframes f5 { 8%, 12% { opacity: 1; } 10% { opacity: 0; } }
+@keyframes f6 { 10%, 14% { opacity: 1; } 12% { opacity: 0; } }
+@keyframes f7 { 12%, 16% { opacity: 1; } 14% { opacity: 0; } }
+@keyframes f8 { 14%, 18% { opacity: 1; } 16% { opacity: 0; } }
+@keyframes f9 { 16%, 20% { opacity: 1; } 18% { opacity: 0; } }
+@keyframes f10 { 18%, 22% { opacity: 1; } 20% { opacity: 0; } }
+@keyframes f11 { 20%, 24% { opacity: 1; } 22% { opacity: 0; } }
+@keyframes f12 { 22%, 26% { opacity: 1; } 24% { opacity: 0; } }
+@keyframes f13 { 24%, 28% { opacity: 1; } 26% { opacity: 0; } }
+@keyframes f14 { 26%, 30% { opacity: 1; } 28% { opacity: 0; } }
+@keyframes f15 { 28%, 32% { opacity: 1; } 30% { opacity: 0; } }
+@keyframes f16 { 30%, 34% { opacity: 1; } 32% { opacity: 0; } }
+@keyframes f17 { 32%, 36% { opacity: 1; } 34% { opacity: 0; } }
+</style>
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	<script src="//img.atcoder.jp/public/e215330/js/base.js"></script>
+</head>
+
+<body>
+
+<script type="text/javascript">
+	var __pParams = __pParams || [];
+	__pParams.push({client_id: '468', c_1: 'atcodercontest', c_2: 'ClientSite'});
+</script>
+<script type="text/javascript" src="https://cdn.d2-apps.net/js/tr.js" async></script>
+
+
+<div id="modal-contest-start" class="modal fade" tabindex="-1" role="dialog">
+	<div class="modal-dialog" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+				<h4 class="modal-title">Contest started</h4>
+			</div>
+			<div class="modal-body">
+				<p>THIRD PROGRAMMING CONTEST 2023 ALGO（AtCoder Beginner Contest 318） has begun.</p>
+			</div>
+			<div class="modal-footer">
+				
+					<a class="btn btn-primary" href='/contests/abc318/tasks'>Go to the task list page</a>
+				
+			</div>
+		</div>
+	</div>
+</div>
+<div id="modal-contest-end" class="modal fade" tabindex="-1" role="dialog">
+	<div class="modal-dialog" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+				<h4 class="modal-title">Contest is over</h4>
+			</div>
+			<div class="modal-body">
+				<p>THIRD PROGRAMMING CONTEST 2023 ALGO（AtCoder Beginner Contest 318） has ended.</p>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+			</div>
+		</div>
+	</div>
+</div>
+<div id="main-div" class="float-container">
+
+
+	<nav class="navbar navbar-inverse navbar-fixed-top">
+		<div class="container-fluid">
+			<div class="navbar-header">
+				<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapse" aria-expanded="false">
+					<span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span>
+				</button>
+				<a class="navbar-brand" href="/home"></a>
+			</div>
+			<div class="collapse navbar-collapse" id="navbar-collapse">
+				<ul class="nav navbar-nav">
+				
+					<li><a class="contest-title" href="/contests/abc318">THIRD PROGRAMMING CONTEST 2023 ALGO（AtCoder Beginner Contest 318）</a></li>
+				
+				</ul>
+				<ul class="nav navbar-nav navbar-right">
+					
+					<li class="dropdown">
+						<a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
+							<img src='//img.atcoder.jp/assets/top/img/flag-lang/en.png'> English <span class="caret"></span>
+						</a>
+						<ul class="dropdown-menu">
+							<li><a href="/contests/abc318/tasks?lang=ja"><img src='//img.atcoder.jp/assets/top/img/flag-lang/ja.png'> 日本語</a></li>
+							<li><a href="/contests/abc318/tasks?lang=en"><img src='//img.atcoder.jp/assets/top/img/flag-lang/en.png'> English</a></li>
+						</ul>
+					</li>
+					
+					
+						<li class="dropdown">
+							<a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
+								<span class="glyphicon glyphicon-cog" aria-hidden="true"></span> yamate11 (Contestant) <span class="caret"></span>
+							</a>
+							<ul class="dropdown-menu">
+								<li><a href="/users/yamate11"><span class="glyphicon glyphicon-user" aria-hidden="true"></span> My Profile</a></li>
+								<li class="divider"></li>
+								<li><a href="/settings"><span class="glyphicon glyphicon-wrench" aria-hidden="true"></span> General Settings</a></li>
+								<li><a href="/settings/icon"><span class="glyphicon glyphicon-picture" aria-hidden="true"></span> Change Photo</a></li>
+								<li><a href="/settings/password"><span class="glyphicon glyphicon-lock" aria-hidden="true"></span> Change Password</a></li>
+								<li><a href="/settings/fav"><span class="glyphicon glyphicon-star" aria-hidden="true"></span> Manage Fav</a></li>
+								
+								
+								
+								<li class="divider"></li>
+								<li><a href="javascript:void(form_logout.submit())"><span class="glyphicon glyphicon-log-out" aria-hidden="true"></span> Sign Out</a></li>
+							</ul>
+						</li>
+					
+				</ul>
+			</div>
+		</div>
+	</nav>
+
+	<form method="POST" name="form_logout" action="/logout?continue=https%3A%2F%2Fatcoder.jp%2Fcontests%2Fabc318%2Ftasks">
+		<input type="hidden" name="csrf_token" value="HFKyUyDevpd7TyJHDl3jbI2JzC2dJoXCGmkGaap69ZM=" />
+	</form>
+	<div id="main-container" class="container"
+		 	style="padding-top:50px;">
+		
+
+
+<div class="row">
+	<div id="contest-nav-tabs" class="col-sm-12 mb-2 cnvtb-fixed">
+	<div>
+		<small class="contest-duration">
+			
+				Contest Duration:
+				<a href='http://www.timeanddate.com/worldclock/fixedtime.html?iso=20230902T2100&p1=248' target='blank'><time class='fixtime fixtime-full'>2023-09-02 21:00:00+0900</time></a> - <a href='http://www.timeanddate.com/worldclock/fixedtime.html?iso=20230902T2240&p1=248' target='blank'><time class='fixtime fixtime-full'>2023-09-02 22:40:00+0900</time></a> (local time)
+				(100 minutes)
+			
+		</small>
+		<small class="back-to-home pull-right"><a href="/home">Back to Home</a></small>
+	</div>
+	<ul class="nav nav-tabs">
+		<li><a href="/contests/abc318"><span class="glyphicon glyphicon-home" aria-hidden="true"></span> Top</a></li>
+		
+			<li class="active"><a href="/contests/abc318/tasks"><span class="glyphicon glyphicon-tasks" aria-hidden="true"></span> Tasks</a></li>
+		
+
+		
+			<li><a href="/contests/abc318/clarifications"><span class="glyphicon glyphicon-question-sign" aria-hidden="true"></span> Clarifications <span id="clar-badge" class="badge"></span></a></li>
+		
+
+		
+			<li><a href="/contests/abc318/submit"><span class="glyphicon glyphicon-send" aria-hidden="true"></span> Submit</a></li>
+		
+
+		
+			<li>
+				<a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false"><span class="glyphicon glyphicon-list" aria-hidden="true"></span> Results<span class="caret"></span></a>
+				<ul class="dropdown-menu">
+					
+					
+						<li><a href="/contests/abc318/submissions/me"><span class="glyphicon glyphicon-user" aria-hidden="true"></span> My Submissions</a></li>
+						<li class="divider"></li>
+						<li><a href="/contests/abc318/score"><span class="glyphicon glyphicon-dashboard" aria-hidden="true"></span> My Score</a></li>
+					
+				</ul>
+			</li>
+		
+
+		
+			
+				
+					<li><a href="/contests/abc318/standings"><span class="glyphicon glyphicon-sort-by-attributes-alt" aria-hidden="true"></span> Standings</a></li>
+				
+			
+		
+
+		
+			<li><a href="/contests/abc318/custom_test"><span class="glyphicon glyphicon-wrench" aria-hidden="true"></span> Custom Test</a></li>
+		
+
+		
+		
+			
+			
+				<li><a href="https://codeforces.com/blog/entry/119948" target="_blank" rel="noopener"><span class="glyphicon glyphicon-comment" aria-hidden="true"></span> Discuss</a></li>
+			
+		
+
+		<li class="pull-right"><a id="fix-cnvtb" href="javascript:void(0)"><span class="glyphicon glyphicon-pushpin" aria-hidden="true"></span></a></li>
+	</ul>
+</div>
+	<div class="col-sm-12">
+		<h2>Tasks</h2>
+		<hr>
+		
+			<div class="panel panel-default table-responsive"><table class="table table-bordered table-striped">
+				<thead>
+					<tr>
+						<th width="3%" class="text-center"></th>
+						<th>Task Name</th>
+						<th width="10%" class="text-right no-break">Time Limit</th>
+						<th width="10%" class="text-right no-break">Memory Limit</th>
+						<th width="5%"></th>
+					</tr>
+				</thead>
+				<tbody>
+					
+						<tr>
+							<td class="text-center no-break"><a href="/contests/abc318/tasks/abc318_a">A</a></td>
+							<td><a href="/contests/abc318/tasks/abc318_a">Full Moon</a></td>
+							<td class="text-right">2 sec</td>
+							<td class="text-right">1024 MB</td>
+							
+								<td class="no-break text-center">
+									
+										<a href="/contests/abc318/submit?taskScreenName=abc318_a">Submit</a>
+									
+									
+								</td>
+							
+						</tr>
+					
+						<tr>
+							<td class="text-center no-break"><a href="/contests/abc318/tasks/abc318_b">B</a></td>
+							<td><a href="/contests/abc318/tasks/abc318_b">Overlapping sheets</a></td>
+							<td class="text-right">2 sec</td>
+							<td class="text-right">1024 MB</td>
+							
+								<td class="no-break text-center">
+									
+										<a href="/contests/abc318/submit?taskScreenName=abc318_b">Submit</a>
+									
+									
+								</td>
+							
+						</tr>
+					
+						<tr>
+							<td class="text-center no-break"><a href="/contests/abc318/tasks/abc318_c">C</a></td>
+							<td><a href="/contests/abc318/tasks/abc318_c">Blue Spring</a></td>
+							<td class="text-right">2 sec</td>
+							<td class="text-right">1024 MB</td>
+							
+								<td class="no-break text-center">
+									
+										<a href="/contests/abc318/submit?taskScreenName=abc318_c">Submit</a>
+									
+									
+								</td>
+							
+						</tr>
+					
+						<tr>
+							<td class="text-center no-break"><a href="/contests/abc318/tasks/abc318_d">D</a></td>
+							<td><a href="/contests/abc318/tasks/abc318_d">General Weighted Max Matching</a></td>
+							<td class="text-right">2 sec</td>
+							<td class="text-right">1024 MB</td>
+							
+								<td class="no-break text-center">
+									
+										<a href="/contests/abc318/submit?taskScreenName=abc318_d">Submit</a>
+									
+									
+								</td>
+							
+						</tr>
+					
+						<tr>
+							<td class="text-center no-break"><a href="/contests/abc318/tasks/abc318_e">E</a></td>
+							<td><a href="/contests/abc318/tasks/abc318_e">Sandwiches</a></td>
+							<td class="text-right">2 sec</td>
+							<td class="text-right">1024 MB</td>
+							
+								<td class="no-break text-center">
+									
+										<a href="/contests/abc318/submit?taskScreenName=abc318_e">Submit</a>
+									
+									
+								</td>
+							
+						</tr>
+					
+						<tr>
+							<td class="text-center no-break"><a href="/contests/abc318/tasks/abc318_f">F</a></td>
+							<td><a href="/contests/abc318/tasks/abc318_f">Octopus</a></td>
+							<td class="text-right">2 sec</td>
+							<td class="text-right">1024 MB</td>
+							
+								<td class="no-break text-center">
+									
+										<a href="/contests/abc318/submit?taskScreenName=abc318_f">Submit</a>
+									
+									
+								</td>
+							
+						</tr>
+					
+						<tr>
+							<td class="text-center no-break"><a href="/contests/abc318/tasks/abc318_g">G</a></td>
+							<td><a href="/contests/abc318/tasks/abc318_g">Typical Path Problem</a></td>
+							<td class="text-right">2 sec</td>
+							<td class="text-right">1024 MB</td>
+							
+								<td class="no-break text-center">
+									
+										<a href="/contests/abc318/submit?taskScreenName=abc318_g">Submit</a>
+									
+									
+								</td>
+							
+						</tr>
+					
+						<tr>
+							<td class="text-center no-break"><a href="/contests/abc318/tasks/abc318_h">Ex</a></td>
+							<td><a href="/contests/abc318/tasks/abc318_h">Count Strong Test Cases</a></td>
+							<td class="text-right">3 sec</td>
+							<td class="text-right">1024 MB</td>
+							
+								<td class="no-break text-center">
+									
+										<a href="/contests/abc318/submit?taskScreenName=abc318_h">Submit</a>
+									
+									
+								</td>
+							
+						</tr>
+					
+				</tbody>
+			</table></div>
+		
+		<p class="btn-text-group">
+			
+			
+				<a class="btn-text" href="/contests/abc318/score">My Score</a>
+				<span class="divider"></span>
+			
+			<a class="btn-text" href="/contests/abc318/tasks_print">Tasks for printing</a>
+		</p>
+		
+		
+		
+	</div>
+</div>
+
+
+
+
+		
+			<hr>
+			
+			
+			
+<div class="a2a_kit a2a_kit_size_20 a2a_default_style pull-right" data-a2a-url="https://atcoder.jp/contests/abc318/tasks?lang=en" data-a2a-title="Tasks - THIRD PROGRAMMING CONTEST 2023 ALGO（AtCoder Beginner Contest 318）">
+	<a class="a2a_button_facebook"></a>
+	<a class="a2a_button_twitter"></a>
+	
+		<a class="a2a_button_telegram"></a>
+	
+	<a class="a2a_dd" href="https://www.addtoany.com/share"></a>
+</div>
+
+		
+		<script async src="//static.addtoany.com/menu/page.js"></script>
+		
+	</div> 
+	<hr>
+</div> 
+
+	<div class="container" style="margin-bottom: 80px;">
+			<footer class="footer">
+			
+				<ul>
+					<li><a href="/contests/abc318/rules">Rule</a></li>
+					<li><a href="/contests/abc318/glossary">Glossary</a></li>
+					
+				</ul>
+			
+			<ul>
+				<li><a href="/tos">Terms of service</a></li>
+				<li><a href="/privacy">Privacy Policy</a></li>
+				<li><a href="/personal">Information Protection Policy</a></li>
+				<li><a href="/company">Company</a></li>
+				<li><a href="/faq">FAQ</a></li>
+				<li><a href="/contact">Contact</a></li>
+				
+			</ul>
+			<div class="text-center">
+					<small id="copyright">Copyright Since 2012 &copy;<a href="http://atcoder.co.jp">AtCoder Inc.</a> All rights reserved.</small>
+			</div>
+			</footer>
+	</div>
+	<p id="fixed-server-timer" class="contest-timer"></p>
+	<div id="scroll-page-top" style="display:none;"><span class="glyphicon glyphicon-arrow-up" aria-hidden="true"></span> Page Top</div>
+
+</body>
+</html>
+
+
