@@ -11,7 +11,7 @@ using pll = pair<ll, ll>;
 #define SIZE(v) ((ll)((v).size()))
 #define REPOUT(i, a, b, exp, sep) REP(i, (a), (b)) cout << (exp) << (i + 1 == (b) ? "" : (sep)); cout << "\n"
 
-// @@ !! LIM(debug tree)
+// @@ !! LIM(debug tree forall)
 
 // ---- inserted function f:<< from util.cc
 template <typename T1, typename T2>
@@ -493,6 +493,33 @@ vector<T> reroot(Tree& tree, const T& unit, auto add, auto mod) {
 
 // ---- end tree.cc
 
+// ---- inserted library file forall.cc
+
+#define EX_REP_LL(i, from, to) for (ll i = (from); i < (to); i++)
+#define EX_REP_RB(x, coll) for (auto x : coll)
+#define EXGEN(rep_part, cond, yes, no_behaviour) ([&]() { rep_part if (cond) return (yes); no_behaviour; }())
+#define EXISTS_BASE(rep_part, cond) EXGEN(rep_part, cond, true, return false)
+#define EXFIND_BASE(rep_part, cond, t) EXGEN(rep_part, cond, t, assert(0))
+#define EXFIND_D_BASE(rep_part, cond, t, def) EXGEN(rep_part, cond, t, return def)
+
+#define EXISTS(i, from, to, cond) EXISTS_BASE(EX_REP_LL(i, from, to), cond)
+#define FORALL(i, from, to, cond) (not EXISTS(i, from, to, not (cond)))
+#define EXFIND(i, from, to, cond) EXFIND_BASE(EX_REP_LL(i, from, to), cond, i)
+#define EXFIND_D(i, from, to, cond, def) EXFIND_D_BASE(EX_REP_LL(i, from, to), cond, i, def)
+
+#define EXISTS_C(x, coll, cond) EXISTS_BASE(EX_REP_RB(x, coll), cond)
+#define FORALL_C(x, coll, cond) (not EXISTS_C(x, coll, not (cond)))
+#define EXFIND_C(x, coll, cond) EXFIND_BASE(EX_REP_RB(x, coll), cond, x)
+#define EXFIND_D_C(x, coll, cond, def) EXFIND_D_BASE(EX_REP_RB(x, coll), cond, x, def)
+
+#define COUNT_BASE(rep_part, cond) ([&](){ ll ret = 0; rep_part if (cond) ret++; return ret; }())
+#define COUNT(i, from, to, cond) COUNT_BASE(EX_REP_LL(i, from, to), cond)
+#define COUNT_C(x, coll, cond) COUNT_BASE(EX_REP_RB(x, coll), cond)
+
+#define IMPLIES(a, b) (not (a) or (b))
+
+// ---- end forall.cc
+
 // @@ !! LIM -- end mark --
 
 struct lowlink {
@@ -787,6 +814,7 @@ int main(/* int argc, char *argv[] */) {
     au.add_edge(u, v);
   }
   au.build();
+  DLOGK(au.bcc);
   ll sz = au.bctree_nodes.size();
   ll node_a, node_b, node_c;
   REP(i, 0, SIZE(au.bcc)) {
@@ -804,9 +832,10 @@ int main(/* int argc, char *argv[] */) {
   for (auto [a, b] : au.bctree_edges) {
     tr.add_edge(a, b);
   }
-  if (tr.lca(node_a, node_c) == node_b) cout << "Yes\n";
+  ll x = tr.lca(node_a, node_c);
+  auto [tp, z] = au.bctree_nodes[x];
+  if ((tp == 0 and z == B) or (tp == 1 and EXISTS_C(i, au.bcc[z], i == B))) cout << "Yes\n";
   else cout << "No\n";
-  
 
   return 0;
 }

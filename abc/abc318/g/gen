@@ -21,7 +21,7 @@ def generate_random():
     # This is the function you should edit.
     # You can use prcase() to print the value to the case
     def onecase():
-        n = randrange(3, 5)
+        n = randrange(3, 10)
         m = randrange(n - 1, n * (n - 1) / 2 + 1)
         ss = list(range(1, n + 1))
         shuffle(ss)
