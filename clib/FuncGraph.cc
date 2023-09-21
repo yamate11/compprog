@@ -16,6 +16,7 @@ using ll = long long int;
     }
     fg.build();  // optional
 
+    numcc = fg.numcc();        // the number of connected components
     ccid = fg.ccid(i);         // the seq number of the connected component containing node i
     sz1 = fg.cc_size(i);       // the size of the connected component containing i
     sz2 = fg.cycle_size(i);    // the size of the cycle that is reachable from i
@@ -87,6 +88,11 @@ struct FuncGraph {
     }
     for (int i = 0; i < size; i++) _set_depth(i);
     _built = true;
+  }
+
+  int numcc() {
+    if (not _built) build();
+    return (int)_cc_size.size();
   }
 
   int ccid(int i) {

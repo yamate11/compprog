@@ -26,6 +26,9 @@ int main() {
     fg.add_edge(1, 3);
     fg.add_edge(2, 2);
     fg.add_edge(3, 1);
+    assert(fg.numcc() == 2);
+    assert(fg.ccid(0) == fg.ccid(1) and fg.ccid(1) == fg.ccid(3));
+    assert(fg.ccid(0) != fg.ccid(2));
     assert(fg.cc_size(0) == 3);
     assert(fg.cc_size(1) == 3);
     assert(fg.cc_size(2) == 1);
@@ -53,6 +56,7 @@ int main() {
     fg.add_edge(0, 1);
     fg.add_edge(1, 0);
     fg.add_edge(2, 1);
+    assert(fg.numcc() == 1);
     assert(fg.cc_size(0) == 3);
     assert(fg.cc_size(1) == 3);
     assert(fg.cc_size(2) == 3);
@@ -83,6 +87,8 @@ int main() {
         fg.add_edge(i, j);
         uf.merge(i, j);
       }
+      ll nuf = 0; for (int i = 0; i < size; i++) if (uf.leader(i) == i) nuf++;
+      assert(nuf == fg.numcc());
       for (int i = 0; i < size; i++) for (int j = i + 1; j < size; j++) {
           assert((uf.leader(i) == uf.leader(j)) == (fg.ccid(i) == fg.ccid(j)));
         }
