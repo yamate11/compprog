@@ -6,6 +6,57 @@ using namespace std;
 // @@ !! LIM(f:<< mod debug f:perfmeas polynomial)
 
 // ---- inserted function f:<< from util.cc
+
+// declarations
+
+template <typename T1, typename T2>
+ostream& operator<< (ostream& os, const pair<T1,T2>& p);
+
+template <typename T1, typename T2, typename T3>
+ostream& operator<< (ostream& os, const tuple<T1,T2,T3>& t);
+
+template <typename T1, typename T2, typename T3, typename T4>
+ostream& operator<< (ostream& os, const tuple<T1,T2,T3,T4>& t);
+
+template <typename T>
+ostream& operator<< (ostream& os, const vector<T>& v);
+
+template <typename T, typename C>
+ostream& operator<< (ostream& os, const set<T, C>& v);
+
+template <typename T, typename C>
+ostream& operator<< (ostream& os, const unordered_set<T, C>& v);
+
+template <typename T, typename C>
+ostream& operator<< (ostream& os, const multiset<T, C>& v);
+
+template <typename T1, typename T2, typename C>
+ostream& operator<< (ostream& os, const map<T1, T2, C>& mp);
+
+template <typename T1, typename T2, typename C>
+ostream& operator<< (ostream& os, const unordered_map<T1, T2, C>& mp);
+
+template <typename T, typename T2>
+ostream& operator<< (ostream& os, const queue<T, T2>& orig);
+
+template <typename T, typename T2>
+ostream& operator<< (ostream& os, const deque<T, T2>& orig);
+
+template <typename T, typename T2, typename T3>
+ostream& operator<< (ostream& os, const priority_queue<T, T2, T3>& orig);
+
+template <typename T>
+ostream& operator<< (ostream& os, const stack<T>& st);
+
+#if __cplusplus >= 201703L
+template <typename T>
+ostream& operator<< (ostream& os, const optional<T>& t);
+#endif
+
+ostream& operator<< (ostream& os, int8_t x);
+
+// definitions
+
 template <typename T1, typename T2>
 ostream& operator<< (ostream& os, const pair<T1,T2>& p) {
   os << "(" << p.first << ", " << p.second << ")";

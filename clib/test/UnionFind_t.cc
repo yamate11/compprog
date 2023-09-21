@@ -6,7 +6,7 @@ using namespace std;
 // @@ !! LIM(UnionFind ftwo debug)
 
 // ---- inserted library file UnionFind.cc
-#line 34 "/home/y-tanabe/proj/compprog/clib/UnionFind.cc"
+#line 35 "/home/y-tanabe/proj/compprog/clib/UnionFind.cc"
 
 template<typename T = ll, typename oplus_t = decltype(plus<T>()), typename onegate_t = decltype(negate<T>())>
 struct UnionFind {
@@ -17,6 +17,7 @@ struct UnionFind {
   vector<pair<int, optional<T>>> _leader;
   vector<int> _gsize;
   bool built_groups;
+  int _num_groups;
   vector<vector<int>> _groups;
   
   UnionFind(int size_, T zero_ = (T)0, oplus_t oplus_ = plus<T>(), onegate_t onegate_ = negate<T>())
@@ -81,13 +82,24 @@ struct UnionFind {
 
   int groupSize(int i) { return _gsize[leader(i)]; }
 
-  const vector<int>& group(int i) {
+  void build_groups() {
     if (not built_groups) {
+      _num_groups = 0;
+      for (int j = 0; j < size; j++) if (leader(j) == j) _num_groups++;
       _groups.resize(size);
       for (int j = 0; j < size; j++) _groups[j].resize(0);
       for (int j = 0; j < size; j++) _groups[leader(j)].push_back(j);
       built_groups = true;
     }
+  }
+
+  int numGroups() {
+    build_groups();
+    return _num_groups;
+  }
+
+  const vector<int>& group(int i) {
+    build_groups();
     return _groups[leader(i)];
   }
 
@@ -214,6 +226,57 @@ vector<ll> getF2Basis(const vector<ll>& vs) {
 // ---- end ftwo.cc
 
 // ---- inserted function f:<< from util.cc
+
+// declarations
+
+template <typename T1, typename T2>
+ostream& operator<< (ostream& os, const pair<T1,T2>& p);
+
+template <typename T1, typename T2, typename T3>
+ostream& operator<< (ostream& os, const tuple<T1,T2,T3>& t);
+
+template <typename T1, typename T2, typename T3, typename T4>
+ostream& operator<< (ostream& os, const tuple<T1,T2,T3,T4>& t);
+
+template <typename T>
+ostream& operator<< (ostream& os, const vector<T>& v);
+
+template <typename T, typename C>
+ostream& operator<< (ostream& os, const set<T, C>& v);
+
+template <typename T, typename C>
+ostream& operator<< (ostream& os, const unordered_set<T, C>& v);
+
+template <typename T, typename C>
+ostream& operator<< (ostream& os, const multiset<T, C>& v);
+
+template <typename T1, typename T2, typename C>
+ostream& operator<< (ostream& os, const map<T1, T2, C>& mp);
+
+template <typename T1, typename T2, typename C>
+ostream& operator<< (ostream& os, const unordered_map<T1, T2, C>& mp);
+
+template <typename T, typename T2>
+ostream& operator<< (ostream& os, const queue<T, T2>& orig);
+
+template <typename T, typename T2>
+ostream& operator<< (ostream& os, const deque<T, T2>& orig);
+
+template <typename T, typename T2, typename T3>
+ostream& operator<< (ostream& os, const priority_queue<T, T2, T3>& orig);
+
+template <typename T>
+ostream& operator<< (ostream& os, const stack<T>& st);
+
+#if __cplusplus >= 201703L
+template <typename T>
+ostream& operator<< (ostream& os, const optional<T>& t);
+#endif
+
+ostream& operator<< (ostream& os, int8_t x);
+
+// definitions
+
 template <typename T1, typename T2>
 ostream& operator<< (ostream& os, const pair<T1,T2>& p) {
   os << "(" << p.first << ", " << p.second << ")";
@@ -507,6 +570,12 @@ struct NaiveUnionFind {
 
   int groupSize(int i) { return _member[_leader[i]].size(); }
 
+  int numGroups() {
+    int ret = 0;
+    for (int i = 0; i < size; i++) if (_leader[i] == i) ret++;
+    return ret;
+  }
+
   const vector<int>& group(int i) { return _member[_leader[i]]; }
 
 };
@@ -528,11 +597,13 @@ int main(int argc, char *argv[]) {
     assert(uf1.leader(0) != uf1.leader(5));
     assert(uf1.groupSize(5) == 1);
     uf1.merge(0, 5);
+    assert(uf1.numGroups() == 5);
     assert(uf1.leader(0) == uf1.leader(5));
     assert(uf1.groupSize(5) == 2);
     assert(uf1.groupSize(0) == 2);
     uf1.merge(1, 3);
     uf1.merge(2, 5);
+    assert(uf1.numGroups() == 3);
     assert(uf1.groupSize(2) == 3);
     assert(uf1.leader(0) == uf1.leader(2));
     assert(uf1.leader(1) == uf1.leader(3));
@@ -574,6 +645,7 @@ int main(int argc, char *argv[]) {
         }
         if (_rep == n) {
           for (int i = 0; i < n; i++) {
+            assert(uf.numGroups() == nuf.numGroups());
             assert(uf.groupSize(i) == nuf.groupSize(i));
             auto v1 = uf.group(i);
             auto v2 = nuf.group(i);

@@ -248,7 +248,7 @@ int main(int argc, char *argv[]) {
   for (auto [x, y] : edge6) t6.add_edge(y, x);
   auto res6 = reroot(t6, unitT6, add6, mod6);
   vector<ll> ans6({40,280,840,120,120,504,72,72}); 
-  assert(t6.numNodes = 8);
+  assert(t6.numNodes == 8);
   for (ll i = 0; i < 8; i++) assert(res6[i].second == ans6[i]);
 
   // NJPC2017-E   https://njpc2017.contest.atcoder.jp/tasks/njpc2017_e
