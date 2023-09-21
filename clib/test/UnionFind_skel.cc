@@ -56,6 +56,12 @@ struct NaiveUnionFind {
 
   int groupSize(int i) { return _member[_leader[i]].size(); }
 
+  int numGroups() {
+    int ret = 0;
+    for (int i = 0; i < size; i++) if (_leader[i] == i) ret++;
+    return ret;
+  }
+
   const vector<int>& group(int i) { return _member[_leader[i]]; }
 
 };
@@ -77,11 +83,13 @@ int main(int argc, char *argv[]) {
     assert(uf1.leader(0) != uf1.leader(5));
     assert(uf1.groupSize(5) == 1);
     uf1.merge(0, 5);
+    assert(uf1.numGroups() == 5);
     assert(uf1.leader(0) == uf1.leader(5));
     assert(uf1.groupSize(5) == 2);
     assert(uf1.groupSize(0) == 2);
     uf1.merge(1, 3);
     uf1.merge(2, 5);
+    assert(uf1.numGroups() == 3);
     assert(uf1.groupSize(2) == 3);
     assert(uf1.leader(0) == uf1.leader(2));
     assert(uf1.leader(1) == uf1.leader(3));
@@ -123,6 +131,7 @@ int main(int argc, char *argv[]) {
         }
         if (_rep == n) {
           for (int i = 0; i < n; i++) {
+            assert(uf.numGroups() == nuf.numGroups());
             assert(uf.groupSize(i) == nuf.groupSize(i));
             auto v1 = uf.group(i);
             auto v2 = nuf.group(i);

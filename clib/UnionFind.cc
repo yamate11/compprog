@@ -17,6 +17,7 @@ using namespace std;
     n = uf.groupSize(i);   // the size of the group that i belongs to
 
     // Before the following operation after modification, the results are calculated with O(N \alpha(N))
+    ng = uf.numGroups();   // the number of groups
     for (int n: uf.group(i)) {..}   // loop over the group that i belongs to
 
   If you are to use adhoc operators:
@@ -41,6 +42,7 @@ struct UnionFind {
   vector<pair<int, optional<T>>> _leader;
   vector<int> _gsize;
   bool built_groups;
+  int _num_groups;
   vector<vector<int>> _groups;
   
   UnionFind(int size_, T zero_ = (T)0, oplus_t oplus_ = plus<T>(), onegate_t onegate_ = negate<T>())
@@ -105,13 +107,24 @@ struct UnionFind {
 
   int groupSize(int i) { return _gsize[leader(i)]; }
 
-  const vector<int>& group(int i) {
+  void build_groups() {
     if (not built_groups) {
+      _num_groups = 0;
+      for (int j = 0; j < size; j++) if (leader(j) == j) _num_groups++;
       _groups.resize(size);
       for (int j = 0; j < size; j++) _groups[j].resize(0);
       for (int j = 0; j < size; j++) _groups[leader(j)].push_back(j);
       built_groups = true;
     }
+  }
+
+  int numGroups() {
+    build_groups();
+    return _num_groups;
+  }
+
+  const vector<int>& group(int i) {
+    build_groups();
     return _groups[leader(i)];
   }
 
