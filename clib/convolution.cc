@@ -4,10 +4,6 @@ typedef long long int ll;
 using namespace std;
 
 /*
-  This file was copied from convolution.hpp in AtCoder Library,
-  and modified so that it works with my other library files.
-  (AtCoder Library is distributed under CC0 License.)
-
   template<mod>
   vector<Fp<mod>> convolution(vector<Fp<mod>> a, vector<Fp<mod>> b) 
     ... returns convolution  
@@ -21,6 +17,12 @@ using namespace std;
 //////////////////////////////////////////////////////////////////////
 // See help of libins command for dependency spec syntax.
 // @@ !! BEGIN(mod power) ---- convolution.cc
+
+/*
+  The following part has been copied from convolution.hpp in AtCoder Library,
+  and modified so that it works with my other library files.
+  (AtCoder Library is distributed under CC0 License.)
+*/
 
 #if ! defined(DLOG_LIB)
   #define DLOG_LIB(...)

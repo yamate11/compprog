@@ -11,7 +11,7 @@ using pll = pair<ll, ll>;
 #define SIZE(v) ((ll)((v).size()))
 #define REPOUT(i, a, b, exp, sep) REP(i, (a), (b)) cout << (exp) << (i + 1 == (b) ? "" : (sep)); cout << "\n"
 
-// @@ !! LIM(scc debug)
+// @@ !! LIM(scc debug cmpNaive perm)
 
 // ---- inserted library file scc.cc
 
@@ -443,12 +443,248 @@ void dbgLog(bool with_nl, Head&& head, Tail&&... tail)
 
 // ---- end debug.cc
 
-// @@ !! LIM -- end mark --
+// ---- inserted library file cmpNaive.cc
 
-int main(/* int argc, char *argv[] */) {
+const string end_mark("^__=end=__^");
+
+int naive(istream& cin, ostream& cout);
+int body(istream& cin, ostream& cout);
+
+void cmpNaive() {
+  while (true) {
+    string s;
+    getline(cin, s);
+    bool run_body;
+    if (s.at(0) == 'Q') {
+      return;
+    }else if (s.at(0) == 'B') {
+      run_body = true;
+    }else if (s.at(0) == 'N') {
+      run_body = false;
+    }else {
+      cerr << "Unknown body/naive specifier.\n";
+      exit(1);
+    }
+    string input_s;
+    while (true) {
+      getline(cin, s);
+      if (s == end_mark) break;
+      input_s += s;
+      input_s += "\n";
+    }
+    stringstream ss_in(move(input_s));
+    stringstream ss_out;
+    if (run_body) {
+      body(ss_in, ss_out);
+    }else {
+      naive(ss_in, ss_out);
+    }
+    cout << ss_out.str() << end_mark << endl;
+  }
+}
+
+int main(int argc, char *argv[]) {
   ios_base::sync_with_stdio(false);
   cin.tie(nullptr);
   cout << setprecision(20);
+
+#if CMPNAIVE
+  if (argc == 2) {
+    if (strcmp(argv[1], "cmpNaive") == 0) {
+      cmpNaive();
+    }else if (strcmp(argv[1], "naive") == 0) {
+      naive(cin, cout);
+    }else if (strcmp(argv[1], "skip") == 0) {
+      exit(0);
+    }else {
+      cerr << "Unknown argument.\n";
+      exit(1);
+    }
+  }else {
+#endif
+    body(cin, cout);
+#if CMPNAIVE
+  }
+#endif
+  return 0;
+}
+
+/*
+int naive(istream& cin, ostream& cout) {
+  return 0;
+}
+int body(istream& cin, ostream& cout) {
+  return 0;
+}
+*/
+
+// ---- end cmpNaive.cc
+
+// ---- inserted library file perm.cc
+
+template <bool dup>
+struct IntPermBase {
+  int n;
+  int r;
+  vector<int> vec;
+  bool started;
+
+  bool start_check() {
+    if constexpr (dup) { if (not ((1 <= n and 0 <= r) or (n == 0 and r == 0))) return false; }
+    else { if (not (0 <= n and 0 <= r and r <= n)) return false; }
+    started = true;
+    vec.resize(r, 0);
+    return true;
+  }
+
+  bool finish() {
+    vec.resize(0);
+    started = false;
+    return false;
+  }
+
+  IntPermBase(int n_, int r_) : n(n_), r(r_), started(false) {}
+
+  int at(int i) const { return vec[i]; }
+
+  const vector<int>& vec_view() const { return vec; }
+};
+
+struct IntPerm : IntPermBase<false> {
+  vector<vector<int>> cands;
+  vector<int> cidx;
+
+  bool start_check() {
+    if (not IntPermBase<false>::start_check()) return false;
+    iota(vec.begin(), vec.end(), 0);
+    cands.resize(r);
+    cidx.resize(r);
+    for (int i = 0; i < r; i++) {
+      for (int j = n - 1; j >= i; j--) cands[i].push_back(j);
+      cidx[i] = n - i - 1;
+    }
+    return true;
+  }
+
+  bool finish() {
+    cands.resize(0);
+    cidx.resize(0);
+    return IntPermBase<false>::finish();
+  }
+
+  IntPerm(int n_, int r_) : IntPermBase<false>(n_, r_) {}
+
+  bool get() {
+    if (not started) return start_check();
+    int i = r - 1;
+    for (; i >= 0 and cidx[i] == 0; i--);
+    if (i < 0) return finish();
+    vec[i] = cands[i][--cidx[i]];
+    for (int j = i + 1; j < r; j++) {
+      if (j == i + 1) {
+        cands[j].resize(0);
+        for (int k = 0; k < (int)cands[i].size(); k++) {
+          if (k == cidx[i]) continue;
+          cands[j].push_back(cands[i][k]);
+        }
+      }else {
+        cands[j] = cands[j - 1];
+        cands[j].pop_back();
+      }
+      cidx[j] = n - j - 1;
+      vec[j] = cands[j][cidx[j]];
+    }
+    return true;
+  }
+};
+
+struct IntComb : IntPermBase<false> {
+  bool start_check() {
+    if (not IntPermBase<false>::start_check()) return false;
+    iota(vec.begin(), vec.end(), 0);
+    return true;
+  }
+
+  IntComb(int n_, int r_) : IntPermBase<false>(n_, r_) {}
+
+  bool get() {
+    if (not started) return start_check();
+    int i = r - 1;
+    for (; i >= 0 and vec[i] == n - r + i; i--);
+    if (i < 0) return finish();
+    vec[i]++;
+    for (int j = i + 1; j < r; j++) vec[j] = vec[j - 1] + 1;
+    return true;
+  }
+};
+
+struct IntDupPerm : IntPermBase<true> {
+  IntDupPerm(int n_, int r_) : IntPermBase<true>(n_, r_) {}
+
+  bool get() {
+    if (not started) return start_check();
+    for (int i = r - 1; i >= 0; vec[i--] = 0) if (++vec[i] < n) return true;
+    return finish();
+  }
+};
+
+struct IntDupComb : IntPermBase<true> {
+  IntDupComb(int n_, int r_) : IntPermBase<true>(n_, r_) {}
+
+  bool get() {
+    if (not started) return start_check();
+    int i = r - 1;
+    for (; i >= 0 and vec[i] == n - 1; i--);
+    if (i < 0) return finish();
+    vec[i]++;
+    for (int j = i + 1; j < r; j++) vec[j] = vec[i];
+    return true;
+  }
+};
+
+// ---- end perm.cc
+
+// @@ !! LIM -- end mark --
+
+int naive(istream& cin, ostream& cout) {
+  
+  ll N, M; cin >> N >> M;
+  // @InpMVec(M, ((A, dec=1), (B, dec=1), (C, dec=1), (D, dec=1))) [gottT3OP]
+  auto A = vector(M, ll());
+  auto B = vector(M, ll());
+  auto C = vector(M, ll());
+  auto D = vector(M, ll());
+  for (int i = 0; i < M; i++) {
+    ll v1; cin >> v1; v1 -= 1; A[i] = v1;
+    ll v2; cin >> v2; v2 -= 1; B[i] = v2;
+    ll v3; cin >> v3; v3 -= 1; C[i] = v3;
+    ll v4; cin >> v4; v4 -= 1; D[i] = v4;
+  }
+  // @End [gottT3OP]
+
+  IntDupPerm dip(N, N);
+  while (dip.get()) {
+
+    auto ok = [&]() -> bool {
+      REP(i, 0, M) {
+        string s1, s2;
+        REP(j, A[i], B[i] + 1) s1.push_back('a' + dip.at(j));
+        REP(j, C[i], D[i] + 1) s2.push_back('a' + dip.at(j));
+        if (s1 >= s2) return false;
+      }
+      return true;
+    };
+
+    if (ok()) {
+      cout << "Yes\n";
+      return 0;
+    }
+  }
+  cout << "No\n";
+  
+  return 0;
+}
+int body(istream& cin, ostream& cout) {
 
   ll N, M; cin >> N >> M;
   // @InpMVec(M, ((A, dec=1), (B, dec=1), (C, dec=1), (D, dec=1))) [gottT3OP]
@@ -464,54 +700,32 @@ int main(/* int argc, char *argv[] */) {
   }
   // @End [gottT3OP]
 
-  auto eff = vector(M, true);
-  auto edges = vector<pll>();
-  REP(i, 0, M) {
-    if (A[i] != C[i]) edges.emplace_back(A[i], C[i]);
-    else if (B[i] < D[i]) eff[i] = false;
-    else {
-      cout << "No\n";
-      return 0;
+  auto solve = [&]() -> bool {
+    auto cids_init = vector(N, 0LL);
+    REP(i, 0, N) cids_init[i] = i;
+    auto cids = cids_init;
+    ll k = N;
+    while (true) {
+      SCC scc(k);
+      REP(i, 0, M) {
+        while (A[i] <= B[i] and C[i] <= D[i] and cids[A[i]] == cids[C[i]]) {
+          A[i]++;
+          C[i]++;
+        }
+        if (C[i] > D[i]) return false;
+        else if (A[i] <= B[i]) scc.addEdge(cids[A[i]], cids[C[i]]);
+      }
+      auto new_cids = cids_init;
+      REP(i, 0, N) {
+        new_cids[i] = scc.ccForNode(cids[i]);
+      }
+      cids = move(new_cids);
+      ll old_k = k;
+      k = scc.numComp();
+      if (k == old_k) return true;
     }
-  }
-  DLOG(edges);
-
-  while (true) {
-    bool added = false;
-    SCC scc(N);
-    for (auto [u, v] : edges) scc.addEdge(u, v);
-    scc.build();
-#if DEBUG
-    REP(j, 0, scc.numComp()) DLOGK(scc.nodesInCC(j));
-#endif
-    REP(i, 0, M) if (eff[i]) {
-      DLOGK(A[i], B[i], C[i], D[i]);
-      while (A[i] <= B[i] and C[i] <= D[i] and scc.ccForNode(A[i]) == scc.ccForNode(C[i])) {
-        A[i]++;
-        C[i]++;
-      }
-
-      if (scc.ccForNode(A[i]) != scc.ccForNode(C[i])) {
-        DLOG("   different");
-      } else if (C[i] == D[i]) {
-        cout << "No\n";
-        return 0;
-      }else if (A[i] == B[i]) {
-        DLOG("   ok, skipped");
-        eff[i] = false;
-      }
-      else {
-        A[i]++;
-        C[i]++;
-        edges.emplace_back(A[i], C[i]);
-        added = true;
-        DLOGKL("  added", A[i], C[i]);
-      }
-    }
-    DLOGK(edges, added);
-    if (not added) break;
-  }
-  cout << "Yes\n";
+  };
+  cout << (solve() ? "Yes\n" : "No\n");
 
   return 0;
 }

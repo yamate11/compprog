@@ -1,0 +1,4 @@
+3
+AAAB
+AAAC
+AABC

@@ -1,0 +1,5 @@
+4
+AAAB
+AACB
+ACBB
+CACC

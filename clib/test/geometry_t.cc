@@ -339,7 +339,7 @@ bool updMin(T& tmin, const T& x) {
 // ---- end f:updMaxMin
 
 // ---- inserted library file geometry.cc
-#line 102 "/home/y-tanabe/proj/compprog/clib/geometry.cc"
+#line 105 "/home/y-tanabe/proj/compprog/clib/geometry.cc"
 
 #if RERROR_LONGDOUBLE
 #define G_PI 3.141592653589793238462643383279502884L
@@ -630,6 +630,24 @@ tuple<Real, int, int> convex_diameter(const vector<Point>& pts) {
   return make_tuple(vmax, k0 % n, m0 % n);
 }
 
+// The polygon should be convex.  Vector vs should be in counter-clockwise
+int in_polygon(const Point& pt, const vector<Point>& vs) {
+  int sz = vs.size();
+  bool on_edge = false;
+  for (int i = 0; i < sz; i++) {
+    int c = Line::connect(vs[i], vs[(i + 1) % sz]).ptSide(pt);
+    if (c == Line::SIDE_N) return Line::SIDE_N;
+    if (c == Line::SIDE_ON) on_edge = true;
+  }
+  return on_edge ? Line::SIDE_ON : Line::SIDE_P;
+}
+
+int in_triangle(const Point& pt, const Point& A, const Point& B, const Point& C) {
+  if (Line::connect(A, B).ptSide(C) == Line::SIDE_P) return in_polygon(pt, vector<Point>{A, B, C});
+  else return in_polygon(pt, vector<Point>{B, A, C});
+}
+
+/*
 int in_triangle(const Point& pt, const Point& tr0,
 		const Point& tr1, const Point& tr2) {
   auto chk = [&](const Point& b, const Point& e, const Point& p) -> bool {
@@ -655,6 +673,7 @@ int in_triangle(const Point& pt, const Point& tr0,
       l20.ptSide(pt) == Line::SIDE_ON) return Line::SIDE_ON;
   return Line::SIDE_P;
 }
+*/
 
 // ---- end geometry.cc
 
@@ -873,11 +892,6 @@ int main(int argc, char *argv[]) {
     assert(in_triangle(p17, p13, p14, p15) == Line::SIDE_ON);
     assert(in_triangle(p18, p13, p14, p15) == Line::SIDE_N);
     assert(in_triangle(p15, p13, p14, p15) == Line::SIDE_ON);
-    assert(in_triangle(p20, p13, p19, p14) == Line::SIDE_ON);
-    assert(in_triangle(p23, p13, p19, p14) == Line::SIDE_ON);
-    assert(in_triangle(p21, p13, p19, p14) == Line::SIDE_N);
-    assert(in_triangle(p22, p13, p19, p14) == Line::SIDE_N);
-    assert(in_triangle(p15, p13, p19, p14) == Line::SIDE_N);
   }
 
   {

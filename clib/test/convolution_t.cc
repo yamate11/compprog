@@ -409,7 +409,13 @@ T power(const T& a, ll b) {
 // ---- end power.cc
 
 // ---- inserted library file convolution.cc
-#line 24 "/home/y-tanabe/proj/compprog/clib/convolution.cc"
+#line 20 "/home/y-tanabe/proj/compprog/clib/convolution.cc"
+
+/*
+  The following part has been copied from convolution.hpp in AtCoder Library,
+  and modified so that it works with my other library files.
+  (AtCoder Library is distributed under CC0 License.)
+*/
 
 #if ! defined(DLOG_LIB)
   #define DLOG_LIB(...)

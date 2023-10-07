@@ -47,40 +47,41 @@ int main(/* int argc, char *argv[] */) {
   cin.tie(nullptr);
   cout << setprecision(20);
 
-  ll HA, WA; cin >> HA >> WA;
-  // @InpVec(HA, A, type=string) [VZ3NbX6x]
-  auto A = vector(HA, string());
-  for (int i = 0; i < HA; i++) { string v; cin >> v; A[i] = v; }
-  // @End [VZ3NbX6x]
-  ll HB, WB; cin >> HB >> WB;
-  // @InpVec(HB, B, type=string) [0ngqBOQ6]
-  auto B = vector(HB, string());
-  for (int i = 0; i < HB; i++) { string v; cin >> v; B[i] = v; }
-  // @End [0ngqBOQ6]
-  ll HX, WX; cin >> HX >> WX;
-  // @InpVec(HX, X, type=string) [Wq7kEBXl]
-  auto X = vector(HX, string());
-  for (int i = 0; i < HX; i++) { string v; cin >> v; X[i] = v; }
-  // @End [Wq7kEBXl]
+  auto solve = [&]() -> bool {
 
-  vector XX(30, string(30, '.'));
-  REP(i, 0, HX) REP(j, 0, WX) XX[10 + i][10 + j] = X[i][j];
+    auto myread = [&]() {
+      ll H, W; cin >> H >> W;
+      // @InpVec(H, V, type=string) [Z4BSIGaI]
+      auto V = vector(H, string());
+      for (int i = 0; i < H; i++) { string v; cin >> v; V[i] = v; }
+      // @End [Z4BSIGaI]
+      ll x1 = 100, x2 = -100, y1 = 100, y2 = -100;
+      REP(i, 0, H) REP(j, 0, W) if (V[i][j] == '#') {
+        x1 = min(x1, i);
+        x2 = max(x2, i);
+        y1 = min(y1, j);
+        y2 = max(y2, j);
+      }
+      auto VV = vector(x2 - x1 + 1, vector(y2 - y1 + 1, ' '));
+      REP(i, x1, x2 + 1) REP(j, y1, y2 + 1) VV[i - x1][j - y1] = V[i][j];
+      return tuple<ll, ll, vector<vector<char>>>{x2 - x1 + 1, y2 - y1 + 1, move(VV)};
+    };
 
-  auto check = [&](ll dar, ll dac, ll dbr, ll dbc) -> bool {
-    vector Y(30, string(30, '.'));
-    REP(i, 0, HA) REP(j, 0, WA) Y[10 + dar + i][10 + dac + j] = A[i][j];
-    REP(i, 0, HB) REP(j, 0, WB) {
-      if (B[i][j] == '#') Y[10 + dbr + i][10 + dbc + j] = '#';
+    auto [ha, wa, A] = myread();
+    auto [hb, wb, B] = myread();
+    auto [hx, wx, X] = myread();
+  
+    if (ha > hx or wa > wx or hb > hx or wb > wx) return false;
+    REP(ax, 0, hx - ha + 1) REP(ay, 0, wx - wa + 1) REP(bx, 0, hx - hb + 1) REP(by, 0, wx - wb + 1) {
+      auto C = vector(hx, vector(wx, '.'));
+      REP(i, 0, ha) REP(j, 0, wa) if (A[i][j] == '#') C[ax + i][ay + j] = '#';
+      REP(i, 0, hb) REP(j, 0, wb) if (B[i][j] == '#') C[bx + i][by + j] = '#';
+      if (FORALL(i, 0, hx, FORALL(j, 0, wx, X[i][j] == C[i][j]))) return true;
     }
-    return XX == Y;
+    return false;
   };
+  cout << (solve() ? "Yes\n" : "No\n");
 
-  bool b = EXISTS(dar, -HA + 1, HA - 1 + 1,
-                  EXISTS(dac, -WA + 1, WA - 1 + 1,
-                         EXISTS(dbr, -HB + 1, HB - 1 + 1,
-                                EXISTS(dbc, -WB + 1, WB - 1 + 1, check(dar, dac, dbr, dbc)))));
-  cout << (b ? "Yes\n" : "No\n");
-    
   return 0;
 }
 
