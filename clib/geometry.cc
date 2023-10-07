@@ -87,12 +87,15 @@ using namespace std;
       // dist is the distance between the two.
       // ch must be convex, and sorted counter-clockwise.
       // I.e., ch must be what is returned from convex_hull.
-    int code = in_triangle(q, p1, p2, p3);
-      // Judges if Point q is in triangle p1-p2-p3.
+    int code = in_polygon(q, ps);  
+      // Judges if Point q is in polygon ps.  The points in ps should be listed counter-clockwise.
+      // The polygon should be CONVEX and has POSITIVE area.
       // Return Value: Line::SIDE_N ... outside
       //               Line::SIDE_P ... inside
       //               LINE::SIDE_ON ... boundary
-
+    int code = in_triangle(q, p1, p2, p3);
+      // Judges if Point q is in triangle p1-p2-p3.
+      // The order of p1-p2-p3 is arbitrary (not necessary counter-clockwise), but should have POSITIVE area.
  */
 
 
@@ -389,6 +392,24 @@ tuple<Real, int, int> convex_diameter(const vector<Point>& pts) {
   return make_tuple(vmax, k0 % n, m0 % n);
 }
 
+// The polygon should be convex.  Vector vs should be in counter-clockwise
+int in_polygon(const Point& pt, const vector<Point>& vs) {
+  int sz = vs.size();
+  bool on_edge = false;
+  for (int i = 0; i < sz; i++) {
+    int c = Line::connect(vs[i], vs[(i + 1) % sz]).ptSide(pt);
+    if (c == Line::SIDE_N) return Line::SIDE_N;
+    if (c == Line::SIDE_ON) on_edge = true;
+  }
+  return on_edge ? Line::SIDE_ON : Line::SIDE_P;
+}
+
+int in_triangle(const Point& pt, const Point& A, const Point& B, const Point& C) {
+  if (Line::connect(A, B).ptSide(C) == Line::SIDE_P) return in_polygon(pt, vector<Point>{A, B, C});
+  else return in_polygon(pt, vector<Point>{B, A, C});
+}
+
+/*
 int in_triangle(const Point& pt, const Point& tr0,
 		const Point& tr1, const Point& tr2) {
   auto chk = [&](const Point& b, const Point& e, const Point& p) -> bool {
@@ -414,5 +435,6 @@ int in_triangle(const Point& pt, const Point& tr0,
       l20.ptSide(pt) == Line::SIDE_ON) return Line::SIDE_ON;
   return Line::SIDE_P;
 }
+*/
 
 // @@ !! END ---- geometry.cc

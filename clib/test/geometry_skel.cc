@@ -217,11 +217,6 @@ int main(int argc, char *argv[]) {
     assert(in_triangle(p17, p13, p14, p15) == Line::SIDE_ON);
     assert(in_triangle(p18, p13, p14, p15) == Line::SIDE_N);
     assert(in_triangle(p15, p13, p14, p15) == Line::SIDE_ON);
-    assert(in_triangle(p20, p13, p19, p14) == Line::SIDE_ON);
-    assert(in_triangle(p23, p13, p19, p14) == Line::SIDE_ON);
-    assert(in_triangle(p21, p13, p19, p14) == Line::SIDE_N);
-    assert(in_triangle(p22, p13, p19, p14) == Line::SIDE_N);
-    assert(in_triangle(p15, p13, p19, p14) == Line::SIDE_N);
   }
 
   {
