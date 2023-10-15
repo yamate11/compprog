@@ -1,0 +1,16 @@
+#!/usr/bin/env python3
+
+from random import randrange
+
+n = 100000
+ss = set()
+print(n)
+for _ in range(n):
+    while True:
+        s = randrange(1, 10**9)
+        c = randrange(1, 10**9)
+        if not s in ss:
+            ss.add(s)
+            break
+    print(s, c)
+

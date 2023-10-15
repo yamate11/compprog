@@ -345,6 +345,24 @@ tuple<Real, int, int> convex_diameter(const vector<Point>& pts) {
   return make_tuple(vmax, k0 % n, m0 % n);
 }
 
+// The polygon should be convex.  Vector vs should be in counter-clockwise
+int in_polygon(const Point& pt, const vector<Point>& vs) {
+  int sz = vs.size();
+  bool on_edge = false;
+  for (int i = 0; i < sz; i++) {
+    int c = Line::connect(vs[i], vs[(i + 1) % sz]).ptSide(pt);
+    if (c == Line::SIDE_N) return Line::SIDE_N;
+    if (c == Line::SIDE_ON) on_edge = true;
+  }
+  return on_edge ? Line::SIDE_ON : Line::SIDE_P;
+}
+
+int in_triangle(const Point& pt, const Point& A, const Point& B, const Point& C) {
+  if (Line::connect(A, B).ptSide(C) == Line::SIDE_P) return in_polygon(pt, vector<Point>{A, B, C});
+  else return in_polygon(pt, vector<Point>{B, A, C});
+}
+
+/*
 int in_triangle(const Point& pt, const Point& tr0,
 		const Point& tr1, const Point& tr2) {
   auto chk = [&](const Point& b, const Point& e, const Point& p) -> bool {
@@ -370,6 +388,7 @@ int in_triangle(const Point& pt, const Point& tr0,
       l20.ptSide(pt) == Line::SIDE_ON) return Line::SIDE_ON;
   return Line::SIDE_P;
 }
+*/
 
 // ---- end geometry.cc
 
@@ -692,6 +711,7 @@ void dbgLog(bool with_nl, Head&& head, Tail&&... tail)
 
 // @@ !! LIM -- end mark --
 
+
 using VP = vector<Point>;
 
 int main(/* int argc, char *argv[] */) {
@@ -699,32 +719,94 @@ int main(/* int argc, char *argv[] */) {
   cin.tie(nullptr);
   cout << setprecision(20);
 
+  g_err = 1e-18;
+
+  random_device rd;
+  mt19937 rng(rd());
+  auto randrange = [&rng](ll i, ll j) -> ll {
+    uniform_int_distribution<ll> dist(i, j - 1);
+    return dist(rng);
+  };
+
+  auto dp = [&](Line l, Real r) -> Point { return l.base + r * l.dir; };
+
+  auto read_diffuse = [&]() -> Point {
+    double x, y; cin >> x >> y;
+    double a = (double)randrange(0, 1LL << 10) / (double)(1LL << 10);
+    return Point(x, y) + Point::polar(1e-10, a * 2 * M_PI);
+  };
+
   ll N, M; cin >> N >> M;
-  // @InpVec(N, P, type=Point) [VlSMYgNn]
-  auto P = vector(N, Point());
-  for (int i = 0; i < N; i++) { Point v; cin >> v; P[i] = v; }
-  // @End [VlSMYgNn]
-  // @InpVec(M, Q, type=Point) [xlCCosVg]
-  auto Q = vector(M, Point());
-  for (int i = 0; i < M; i++) { Point v; cin >> v; Q[i] = v; }
-  // @End [xlCCosVg]
-  
+  auto P = vector<Point>(N);
+  REP(i, 0, N) P[i] = read_diffuse();
+  auto Q = vector<Point>(M);
+  REP(i, 0, M) Q[i] = read_diffuse();
+
   vector<Line> edges;
 
   auto func = [&](const auto& ps, const auto& qs) -> void {
     ll szp = SIZE(ps);
     ll szq = SIZE(qs);
+    int cc = in_polygon(ps[0], qs);
+    assert(cc != Line::SIDE_ON);
+    bool b0 = cc == Line::SIDE_P;
+    bool b = b0;
     REP(i, 0, szp) {
       Line e = Line::connect(ps[i], ps[(i + 1) % szp]);
+      vector<Real> isp;
       REP(j, 0, szq) {
-        
+        Line f = Line::connect(qs[j], qs[(j + 1) % szq]);
+        auto [c, re, rf] = e.intersect_coeff(f);
+        assert(c == Line::IST_ONE);
+        if (0 < re and re < 1 and 0 < rf and rf < 1) isp.push_back(re);
       }
+      if (isp.empty()) {
+        if (b) edges.push_back(e);
+      }else if (size(isp) == 1) {
+        if (b) edges.push_back(Line::connect(dp(e, 0), dp(e, isp[0])));
+        else   edges.push_back(Line::connect(dp(e, isp[0]), dp(e, 1)));
+        b = not b;
+      }else if (size(isp) == 2) {
+        assert(not b);
+        Real r0 = isp[0];
+        Real r1 = isp[1];
+        if (r0 > r1) swap(r0, r1);
+        DLOGKL("   ", e, r0, r1, dp(e, r0), dp(e, r1));
+        edges.push_back(Line::connect(dp(e, r0), dp(e, r1)));
+      }else assert(0);
+      DLOGK(e, isp, b);
+      DLOGK(edges);
     }
+    assert(b == b0);
   };
 
+  DLOGK(edges);
   func(P, Q);
+  DLOGK(edges);
   func(Q, P);
-
+  DLOGK(edges);
+  ll sze = SIZE(edges);
+  if (sze == 0) {
+    cout << 0.0 << endl;
+    return 0;
+  }
+  Point pb = edges[0].base;
+  auto ord = vector(sze, 0LL); REP(i, 0, sze) ord[i] = i;
+  sort(ALL(ord),
+       [&](ll i, ll j) -> bool {
+         if (j == 0) return false;
+         if (i == 0) return true;
+         Real thi = edges[0].dir.angle(edges[i].base - pb);
+         Real thj = edges[0].dir.angle(edges[j].base - pb);
+         return thi < thj;
+       });
+  Real ans = 0;
+  REP(i, 1, sze - 1) {
+    Point a = edges[ord[i]].base - pb;
+    Point b = edges[ord[i + 1]].base - pb;
+    ans += 0.5 * abs(a.x * b.y - a.y * b.x);
+  }
+  cout << ans << endl;
   return 0;
 }
 

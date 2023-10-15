@@ -10,3 +10,4 @@ cans3
 *.d
 clib/test/*_t.cc
 clib/test/*_t
+clib/boost
