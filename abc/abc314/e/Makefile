@@ -4,7 +4,7 @@ CXX := g++
 ifeq ($(DEBUG),)
   DEBUGFLAGS := -O2
 else
-  DEBUGFLAGS := -g -O0 -D_GLIBCXX_DEBUG -DDEBUG=1
+  DEBUGFLAGS := -g -O0 -D_GLIBCXX_DEBUG -DDEBUG=1 -fsanitize=address,undefined -fno-sanitize-recover -fno-omit-frame-pointer
   ifneq ($(DEBUG_LIB),)
     DEBUGFLAGS := $(DEBUGFLAGS) -DDEBUG_LIB=1
   endif

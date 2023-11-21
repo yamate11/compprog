@@ -23,7 +23,7 @@
 
 //////////////////////////////////////////////////////////////////////
 // See help of libins command for dependency spec syntax.
-// @@ !! BEGIN()
+// @@ !! BEGIN()    ---- adjMatrix.cc
 
 template<typename T, typename IT> // IT is typically int or ll
 optional<vector<T>> adjMatEq(vector<pair<IT, IT>> adj, vector<T> bs) {

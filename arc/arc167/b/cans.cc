@@ -927,14 +927,12 @@ void dbgLog(bool with_nl, Head&& head, Tail&&... tail)
 
 using Fp = FpB;
 
-using lll = cpp_int(100);
-
 int naive(istream& cin, ostream& cout) {
   ll A, B; cin >> A >> B;
   ll C = 1;
   REP(i, 0, B) C *= A;
   auto divs = getDivisors(C);
-  lll prod = 1;
+  cpp_int prod = 1;
   for (ll d : divs) prod *= d;
   // DLOGK(C, prod);
   ll ans = 0;

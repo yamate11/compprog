@@ -22,7 +22,7 @@ using namespace std;
 
 //////////////////////////////////////////////////////////////////////
 // See help of libins command for dependency spec syntax.
-// @@ !! BEGIN()
+// @@ !! BEGIN()    ---- rbst.cc
 
 template <typename T>
 struct RBST {

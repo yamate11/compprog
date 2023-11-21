@@ -33,7 +33,7 @@ constexpr T inverse(const T& t) {
 // begin -- detection ideom
 //    cf. https://blog.tartanllama.xyz/detection-idiom/
 
-namespace detail {
+namespace tartan_detail {
   template <template <class...> class Trait, class Enabler, class... Args>
   struct is_detected : false_type{};
 
@@ -42,7 +42,7 @@ namespace detail {
 }
 
 template <template <class...> class Trait, class... Args>
-using is_detected = typename detail::is_detected<Trait, void, Args...>::type;
+using is_detected = typename tartan_detail::is_detected<Trait, void, Args...>::type;
 
 // end -- detection ideom
 

@@ -32,7 +32,7 @@ using namespace std;
 
 //////////////////////////////////////////////////////////////////////
 // See help of libins command for dependency spec syntax.
-// @@ !! BEGIN()
+// @@ !! BEGIN()    ---- ipoint.cc
 
 struct IPoint {
   ll x;

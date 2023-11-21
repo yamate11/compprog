@@ -62,6 +62,7 @@ void cmpNaive() {
     }
     stringstream ss_in(move(input_s));
     stringstream ss_out;
+    ss_out << setprecision(20);
     if (run_body) {
       body(ss_in, ss_out);
     }else {

@@ -17,7 +17,7 @@
 
 //////////////////////////////////////////////////////////////////////
 // See help of libins command for dependency spec syntax.
-// @@ !! BEGIN()
+// @@ !! BEGIN()    ---- ftwo.cc
 
 struct Ftwo {
   int8_t val;

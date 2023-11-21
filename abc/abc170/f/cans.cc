@@ -1,9 +1,15 @@
 #include <bits/stdc++.h>
 #include <cassert>
-typedef long long int ll;
 using namespace std;
+using ll = long long int;
+using pll = pair<ll, ll>;
 // #include <atcoder/all>
 // using namespace atcoder;
+#define REP(i, a, b) for (ll i = (a); i < (b); i++)
+#define REPrev(i, a, b) for (ll i = (a); i >= (b); i--)
+#define ALL(coll) (coll).begin(), (coll).end()
+#define SIZE(v) ((ll)((v).size()))
+#define REPOUT(i, a, b, exp, sep) REP(i, (a), (b)) cout << (exp) << (i + 1 == (b) ? "" : (sep)); cout << "\n"
 
 // @@ !! LIM(board)
 
@@ -34,14 +40,15 @@ struct BrdIdx {
 
   BrdIdx rotateQ() { return BrdIdx(-c, r); } // counter-clockwise
 
-  static vector<BrdIdx> nbr4, nbr5, nbr8, nbr9;
+  static vector<BrdIdx> nbr4, nbr4D, nbr5, nbr8, nbr9;
 };
 
 vector<BrdIdx>
-  BrdIdx::nbr4({      {1,0},      {0,1},       {-1,0},        {0,-1}       }),
-  BrdIdx::nbr5({{0,0},{1,0},      {0,1},       {-1,0},        {0,-1}       }),
-  BrdIdx::nbr8({      {1,0},{1,1},{0,1},{-1,1},{-1,0},{-1,-1},{0,-1},{1,-1}}),
-  BrdIdx::nbr9({{0,0},{1,0},{1,1},{0,1},{-1,1},{-1,0},{-1,-1},{0,-1},{1,-1}});
+  BrdIdx::nbr4 ({      {1,0},      {0,1},       {-1,0},        {0,-1}       }),
+  BrdIdx::nbr4D({            {1,1},      {-1,1},       {-1,-1},       {1,-1}}),
+  BrdIdx::nbr5 ({{0,0},{1,0},      {0,1},       {-1,0},        {0,-1}       }),
+  BrdIdx::nbr8 ({      {1,0},{1,1},{0,1},{-1,1},{-1,0},{-1,-1},{0,-1},{1,-1}}),
+  BrdIdx::nbr9 ({{0,0},{1,0},{1,1},{0,1},{-1,1},{-1,0},{-1,-1},{0,-1},{1,-1}});
 
 BrdIdx operator *(int k, const BrdIdx& o) { return o * k; }
 ostream& operator <<(ostream& os, const BrdIdx& i) {
@@ -50,75 +57,164 @@ ostream& operator <<(ostream& os, const BrdIdx& i) {
 }
 
 template <typename T>
-struct Board {
+class Board {
+
+  bool tr_rc;
+  bool tr_row;
+  bool tr_col;
+  const int nR;
+  const int nC;
+  const T def;
+  vector<T> data;
+  int dispWidth;
+
+  int enc(int r, int c) const {
+    if (tr_rc) swap(r, c);
+    if (tr_row) r = nR - 1 - r;
+    if (tr_col) c = nC - 1 - c;
+    if (r < 0 || nR <= r || c < 0 || nC <= c) return nC * nR;
+    return nC * r + c;
+  }
+  int enc(const BrdIdx& bi) const { return enc(bi.r, bi.c); }
+
+  static const vector<int> rotate_tbl;
+
+  void set_for_rotate() {
+    int x = (tr_rc << 2) | (tr_row << 1) | tr_col;
+    int y = rotate_tbl[x];
+    tr_rc  = (y >> 2) & 1;
+    tr_row = (y >> 1) & 1;
+    tr_col = (y >> 0) & 1;
+  }
+
+public:
+
+  Board(int nR_, int nC_, T def_)
+    : tr_rc(false), tr_row(false), tr_col(false),
+      nR(nR_), nC(nC_), def(def_), data(nR*nC + 1, def),
+      dispWidth(0) {}
+
+  int numRows() const { return tr_rc ? nC : nR; }
+  int numCols() const { return tr_rc ? nR : nC; }
+
+  bool in(int r, int c) const {
+    if (tr_rc) return 0 <= r && r < nC && 0 <= c && c < nR;
+    else       return 0 <= r && r < nR && 0 <= c && c < nC;
+  }
+
+  // Note: We cannot implemen T& at(r, c) in a perfect way.
+  //   When (r,c) is out of bounds, brd.at(r,c) returns brd.data[nR*nC]
+  //   and its value should equal to that of brd.def.  But once
+  //   "brd.at(r,c) = val;" (with (r,c) out of bounds) is executed,
+  //   this no longer holds.
+  //   If you need this sequence, you must use "brd.set(r,c,val);".
+  typename vector<T>::reference at(int r, int c) {
+    if (in(r, c)) return data[enc(r, c)];
+    if (data[nR*nC] == def) return data[nR*nC];
+    string msg = "Error: boards' __dummy holds an incorrect value.  Perhaps you should use get/set instead of at.";
+    throw runtime_error(msg);
+  }
+  typename vector<T>::const_reference at(int r, int c) const {
+    return in(r,c) ? data[enc(r, c)] : def;
+  }
+  void set(int r, int c, T t) { if (in(r, c)) data[enc(r, c)] = t; }
+  const T get(int r, int c) const { return in(r,c) ? data[enc(r, c)] : def; }
+
+  bool in(const BrdIdx& bi) const { return in(bi.r, bi.c); }
+  typename vector<T>::reference at(const BrdIdx& bi) { return at(bi.r, bi.c); }
+  typename vector<T>::const_reference
+      at(const BrdIdx& bi) const { return at(bi.r, bi.c); }
+  const T get(const BrdIdx& bi) const { return get(bi.r, bi.c); }
+  void set(const BrdIdx& bi, T t) { set(bi.r, bi.c, t); }
+
+  void transpose_inp() { tr_rc = !tr_rc; }
+  void reverse_row_inp() { tr_row = !tr_row; }
+  void reverse_col_inp() { tr_col = !tr_col; }
+  
+  void rotate_inp(int r) {
+    r = r % 4;
+    if (r < 0) r += 4;
+    for (; r > 0; r--) set_for_rotate();
+  }
+  Board transpose() const
+  { Board ret(*this); ret.transpose_inp(); return ret; }
+  Board reverse_row() const
+  { Board ret(*this); ret.reverse_row_inp(); return ret; }
+  Board reverse_col() const
+  { Board ret(*this); ret.reverse_col_inp(); return ret; }
+  Board rotate(int r) const
+  { Board ret(*this); ret.rotate_inp(r); return ret; }
+
+  void setDispWidth(int w) { dispWidth = w; }
 
   void readData(istream& is) {
-    for (int i = 0; i < nR; i++) {
-      for (int j = 0; j < nC; j++) {
+    for (int i = 0; i < numRows(); i++) {
+      for (int j = 0; j < numCols(); j++) {
 	T t; is >> t;
 	set(i, j, t);
       }
     }
   }
 
-  const int nR;
-  const int nC;
-  const T def;
-  vector<T> data;
-  int dispWidth;
-  T __dummy;
-
-  Board(int nR_, int nC_, T def_)
-    : nR(nR_), nC(nC_), def(def_), data(nR*nC, def),
-      dispWidth(0), __dummy(def_) {}
-  Board(istream& is, int nR_, int nC_, T def_)
-    : nR(nR_), nC(nC_), def(def_), data(nR*nC, def),
-      dispWidth(0), __dummy(def_) {
-    readData(is);
+  friend istream& operator >>(istream& is, Board& brd) {
+    brd.readData(is);
+    return is;
   }
-  BrdIdx bIdx(int r = 0, int c = 0) { return BrdIdx(r, c); }
-  int enc(int r, int c) const { return nC * r + c; }
-  int enc(const BrdIdx& bi) const { return nC * bi.r + bi.c; }
-  pair<int, int> dec(int i) const { return make_pair(i / nC, i % nC); }
-  BrdIdx decIdx(int i) const { return BrdIdx(i / nC, i % nC); }
-  bool in(int r, int c) const { return 0 <= r && r < nR && 0 <= c && c < nC; }
-  bool in(const BrdIdx& bi) const { return in(bi.r, bi.c); }
 
-  // Note: implementing T& at(r, c) is problematic.
-  //   When "brd.at(r,c) = value;" is executed, we need to provide some
-  //   object even when (r,c) is out of bounds.  But after that if the
-  //   user want the value at (r,c), there is no way to return the default
-  //   value.  Thus, there is no better alternative than providing get/set.
-  const T get(int r, int c) const {
-    return in(r, c) ? data.at(enc(r, c)) : def;
+  friend ostream& operator <<(ostream& os, const Board& brd) {
+    for (int r = 0; r < brd.numRows(); r++) {
+      for (int c = 0; c < brd.numCols(); c++) {
+        os << setw(brd.dispWidth) << brd.get(r, c);
+      }
+      if (r < brd.numRows() - 1) os << "\n";
+    }
+    return os;
   }
-  const T get(const BrdIdx& bi) const { return get(bi.r, bi.c); }
-  // Note: returning a reference (const T& get(...)) is problematic
-  //       when T is bool.  (vector<bool> is implemented in a specific way)
-  void set(int r, int c, T t) { if (in(r, c)) data.at(enc(r, c)) = t; }
-  void set(const BrdIdx& bi, T t) { set(bi.r, bi.c, t); }
 
-  T& at(int r, int c) {
-    if (in(r, c)) return data.at(enc(r, c));
-    if (__dummy == def) return __dummy;
-    string msg = "Error: boards' __dummy holds an incorrect value.  Perhaps you should use get/set instead of at.";
-    throw runtime_error(msg);
-  }
-  T& at(const BrdIdx& bi) { return at(bi.r, bi.c); }
-
-  void setDispWidth(int w) { dispWidth = w; }
 };
+template<typename T>
+const vector<int> Board<T>::rotate_tbl({5,4,7,6,2,3,0,1});
 
 template<typename T>
-ostream& operator <<(ostream& os, const Board<T>& brd) {
-  for (int r = 0; r < brd.nR; r++) {
-    for (int c = 0; c < brd.nC; c++) {
-      os << setw(brd.dispWidth) << brd.get(r, c);
+struct BoardRange {
+  const Board<T>& board;
+  struct Itr {
+    using iterator_category = input_iterator_tag;
+    using value_type = BrdIdx;
+    using difference_type = ptrdiff_t;
+    using reference = value_type&;
+    using pointer = value_type*;
+
+    int nC;
+    BrdIdx bi;
+
+    Itr(int nC_, int r = 0, int c = 0) : nC(nC_), bi(r, c) {}
+
+    bool operator ==(const Itr& o) const { return bi == o.bi; }
+    bool operator !=(const Itr& o) const { return bi != o.bi; }
+
+    reference operator *() { return bi; }
+    pointer operator ->() { return &bi; }
+
+    Itr& operator ++() {
+      if (++bi.c == nC) {
+        bi.c = 0;
+        ++bi.r;
+      }
+      return *this;
     }
-    if (r < brd.nR - 1) os << "\n";
-  }
-  return os;
-}
+    Itr operator ++(int) {
+      Itr const tmp(*this);
+      ++*this;
+      return tmp;
+    }
+  };
+
+  BoardRange(const Board<T>& board_) : board(board_) {}
+  Itr begin() { return Itr(board.numCols(), 0, 0); }
+  Itr end() { return Itr(board.numCols(), board.numRows(), 0); }
+};
+
 
 // ---- end board.cc
 
@@ -133,34 +229,51 @@ int main(/* int argc, char *argv[] */) {
   ll x1, y1, x2, y2; cin >> x1 >> y1 >> x2 >> y2; x1--; y1--; x2--; y2--;
   BrdIdx start(x1, y1);
   BrdIdx goal(x2, y2);
-  Board<char> brd(cin, H, W, '@');
-  ll big = 1e15;
-  Board<ll> dist(H, W, big);
-  // vector dist(4, Board<ll>(H, W, big));
-  using sta = pair<ll, BrdIdx>;
-  queue<sta> que;
-  for (ll i = 0; i < 4; i++) {
-    que.emplace(i, start);
+  Board<char> brd(H, W, '@');
+  cin >> brd;
+  pll big((ll)1e18, (ll)1e18);
+  auto dist = vector(H, vector(W, vector(4, big)));
+  using pos_t = pair<BrdIdx, ll>;
+  auto dist_ref = [&](const pos_t& p) -> pll& {
+    const auto& [bi, dir] = p;
+    return dist[bi.r][bi.c][dir];
+  };
+  using sta = pair<pll, pos_t>;
+  priority_queue<sta, vector<sta>, greater<sta>> pque;
+  REP(d, 0, 4) {
+    dist[start.r][start.c][d] = pll(0, K);
+    pque.emplace(pll(0, K), pos_t(start, d));
   }
-  dist.at(start) = 0;
-  while (!que.empty()) {
-    auto [dir, bi] = que.front(); que.pop();
-    ll d = dist.at(bi);
-    for (ll k = 1; k <= K; k++) {
-      BrdIdx bx = bi + BrdIdx::nbr4[dir] * k;
-      if (brd.at(bx) == '@') break;
-      if (bx == goal) {
-        cout << d + 1 << endl;
+  while (not pque.empty()) {
+    auto [d, p] = pque.top(); pque.pop();
+    auto [dn, dk] = d;
+    auto [bi, dir] = p;
+    if (dist_ref(p) == d) {
+      if (bi == goal) {
+        cout << dn << endl;
         return 0;
       }
-      if (d + 1 >= dist.at(bx)) continue;
-      dist.at(bx) = d + 1;
-      if (k == K) que.emplace(dir, bx);
-      que.emplace((dir + 1) % 4, bx);
-      que.emplace((dir + 3) % 4, bx);
+      REP(e, 0, 4) {
+        BrdIdx newdir = BrdIdx::nbr4[e];
+        pll newdist;
+        BrdIdx newbi;
+        if (e == dir) {
+          newbi = bi + newdir;
+          if (brd.at(newbi) != '.') continue;
+          newdist = (dk == K) ? pll(dn + 1, 1) : pll(dn, dk + 1);
+        }else {
+          newbi = bi;
+          newdist = pll(dn, K);
+        }
+        pos_t newpos(newbi, e);
+        if (newdist < dist_ref(newpos)) {
+          dist_ref(newpos) = newdist;
+          pque.emplace(newdist, newpos);
+        }
+      }
     }
   }
-  cout << -1 << endl;
+  cout << "-1\n";
 
   return 0;
 }

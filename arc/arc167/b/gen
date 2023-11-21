@@ -22,8 +22,8 @@ def generate_random():
     # You can use prcase() to print the value to the case
     def onecase():
         # a = choice([2, 3, 6, 12, 30, 18, 60])
-        a = randrange(2, 10)
-        b = randrange(0, 4)
+        a = randrange(2, 100)
+        b = randrange(0, 10**18)
         prcase(a, b)
 
         # n = randrange(1, 11)

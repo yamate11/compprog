@@ -12,7 +12,7 @@
 
 //////////////////////////////////////////////////////////////////////
 // See help of libins command for dependency spec syntax.
-// @@ !! BEGIN()
+// @@ !! BEGIN()    ---- bridge.cc
 
 struct lowlink {
   int size;

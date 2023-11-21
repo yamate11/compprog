@@ -19,7 +19,7 @@
 
 //////////////////////////////////////////////////////////////////////
 // See help of libins command for dependency spec syntax.
-// @@ !! BEGIN()
+// @@ !! BEGIN()    ---- mo.cc
 
 struct Mo {
   using vq_t = tuple<int, int, int>;

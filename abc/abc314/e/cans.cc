@@ -19,36 +19,36 @@ int main(/* int argc, char *argv[] */) {
   cout << setprecision(20);
 
   ll N, M; cin >> N >> M;
-  vector<ll> C(N);
-  vector<ll> P(N);
-  vector<vector<ll>> S(N);
+  vector C(N, 0LL);
+  vector P(N, 0LL);
+  vector S(N, vector<ll>());
   REP(i, 0, N) {
     cin >> C[i] >> P[i];
     S[i].resize(P[i]);
     REP(j, 0, P[i]) cin >> S[i][j];
   }
-
-  vector tbl(M + 1, -1.0);
-  auto e = [&](auto rF, ll m) -> double {
+  double big = 1e9;
+  vector tbl(M + 1, big);
+  auto f = [&](auto rF, ll m) -> double {
     if (m <= 0) return 0.0;
     double& ret = tbl[m];
-    if (ret < 0) {
-      ret = 1e18;
-      REP(i, 0, N) {
-        ll zero = 0;
-        double z = P[i] * C[i];
-        REP(j, 0, P[i]) {
-          if (S[i][j] == 0) zero++;
-          else z += rF(rF, m - S[i][j]);
+    if (ret > 0.99 * big) {
+      REP(_rep, 0, 100) {
+        REP(i, 0, N) {
+          double e = 0.0;
+          REP(j, 0, P[i]) {
+            if (S[i][j] == 0) e += ret;
+            else e += rF(rF, m - S[i][j]);
+          }
+          e /= P[i];
+          ret = min(ret, C[i] + e);
         }
-        double t = z / (P[i] - zero);
-        ret = min(ret, t);
       }
     }
     return ret;
   };
+  cout << f(f, M) << endl;
 
-  cout << e(e, M) << endl;
 
   return 0;
 }
