@@ -13,8 +13,10 @@ using namespace std;
 
   Usage:
 
-    using mymap = gp_hash_table<T_key, T_value, safe_custom_hash>;
-    // Now, mymap can be used almost same as unordered_map<T_key, T_value>
+###     NOT WORKING PROPERLY with user defined struct
+#    using mymap = gp_hash_table<T_key, T_value, safe_custom_hash>;
+#    // Now, mymap can be used almost same as unordered_map<T_key, T_value>
+###
     
     // The following also works, but maybe you do not need to do that.
     using mymap = unordered_map<T_key, T_value, safe_custom_hash>;
@@ -25,8 +27,10 @@ using namespace std;
 // See help of libins command for dependency spec syntax.
 // @@ !! BEGIN() ---- unordered_map.cc
 
+/*
 #include <ext/pb_ds/assoc_container.hpp>
 using namespace __gnu_pbds;
+*/
 
 struct safe_custom_hash {
     static uint64_t splitmix64(uint64_t x) {

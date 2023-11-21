@@ -1,27 +1,21 @@
 /*
   IPoint ... Integer Point
   
-  This is essentially a pair of long long int.  
-  But it supports addition, subtraction, scalar multiplication, 
-  and rotation of n * pi/2.  Can be stored in unordered_map etc.
+  * Properties ... x and y
 
-  IPoint p1(3, 5), p2(-2, 7), p3(6, 10);
-  IPoint p4 = p1 + p2; // (1, 12)
-  IPoint p5 = p1 - p2; // (5, -2)
-  IPoint p6 = 3 * p1; // (9, 15)
-  IPoint p7 = p1.rotate() // (-5, 3)
-  IPoint p8 = p1.rotate(2) // (-3, -5)
-  IPoint p9 = p1.rotate(-1) // (5, -3)
-  Ipoint p10 = p1.mirror_x() // (3, -5)
-  IPoint p11 = p1.mirror_y() // (-3, 5)
-  bool b1 = p1.parallel(p3) // true
+  * Operations
+      +, -, +=, -= ... with IPoint
+      *, *=        ... with ll
+      <            ... first x, then y
+      <<, >>       ... iostream      
 
-  IPoint q, r; cin >> q >> r; cout << q << r;
-  map<IPoint, ll> mp;
-  unordered_map<IPoint, ll> ump;
+  * can be stored in map / unordered_map
 
-  vector<IPoint> vec; ...; 
-  sort(ALL(vec), IPoint::lt_arg);  // sort by argument [0, 2pi)
+  * Methods
+    * bool lt_arg(IPoint p, IPoint q) ... argument (angle) comparison
+    * IPoint rotate(int r) ... rotate by pi/2 * r
+    * IPoint mirror_x()    ... mirror image w.r.p. x axis
+    * IPoint mirror_y()    ... mirror image w.r.p. y axis
 
  */
 
@@ -113,53 +107,13 @@ namespace std {
   template<>
   struct hash<IPoint> {
     std::size_t operator()(const IPoint& p) const {
-      return p.x * 37 + p.y * 41;
+      static const uint64_t frand = chrono::steady_clock::now().time_since_epoch().count();
+      static const uint64_t a = (frand ^ 0x9e3779b97f4a7c15) | 1;
+      static const uint64_t b = (frand ^ 0xbf58476d1ce4e5b9) | 1;
+      return a * (uint64_t)p.x + b * (uint64_t)p.y;
     }
   };
 }
 
 // @@ !! END ---- ipoint.cc
 
-int main() {
-
-  {
-    IPoint p1(3, 5), p2(-2, 7);
-    assert(p1 + p2 == IPoint(1, 12));
-    assert(p1 - p2 == IPoint(5, -2));
-    assert(3 * p1 == p1 * 3 && p1 * 3 == IPoint(9, 15));
-    assert(p1.rotate() == p1.rotate(1) && p1.rotate(1) == IPoint(-5, 3));
-    assert(p1.rotate(2) == p1.rotate(1).rotate(1) && p1.rotate(2) == IPoint(-3, -5));
-    assert(p1.rotate(-1) == p1.rotate(3) && p1.rotate(-6) == p1.rotate(2));
-    assert(p1.mirror_x() == IPoint(3, -5));
-    assert(p1.mirror_y() == IPoint(-3, 5));
-    assert(p1.mirror_x().mirror_y() == p1.rotate(2));
-    assert(p1.parallel(IPoint(-6, -10)));
-    assert(!p1.parallel(IPoint(6, 9)));
-  }
-  {
-    stringstream ss1("5 -2 0 -9 1 80");
-    IPoint p1, p2, p3; ss1 >> p1 >> p2 >> p3;
-    assert(p1 == IPoint(5, -2));
-    assert(p2 == IPoint(0, -9));
-    assert(p3 == IPoint(1, 80));
-    stringstream ss2;
-    ss2 << p1 << " " << p2 << " " << p3;
-    assert(ss2.str() == "(5, -2) (0, -9) (1, 80)");
-  }
-  {
-    map<IPoint, ll> mp;
-    mp[IPoint(2, -7)] = 99;
-    auto it1 = mp.find(IPoint(2, -7));
-    assert(it1 != mp.end() && it1->second == 99);
-    auto it2 = mp.find(IPoint(5, 3));
-    assert(it2 == mp.end());
-    unordered_map<IPoint, ll> ump;
-    ump[IPoint(4, -2)] = 50;
-    auto it3 = ump.find(IPoint(4, -2));
-    assert(it3 != ump.end() && it3->second == 50);
-    auto it4 = ump.find(IPoint(5, 3));
-    assert(it4 == ump.end());
-  }
-
-  cerr << "ok" << endl;
-}
