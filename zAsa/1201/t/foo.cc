@@ -806,6 +806,7 @@ void test7() {
   sg2_t sg2;
   sg2 = make_seg_treeA(0, plus<int>());
   sg2.set_data(vector<int>(100));
+  // added a comment
 }
 
 
