@@ -135,7 +135,7 @@ int main(/* int argc, char *argv[] */) {
           for (ll j = l; j < r; j++) vecB[j] = x;
         }else {
           auto ff = [](bool p, bool q) -> bool { return p ^ q; };
-          isA = itv_apply<bool, bool, bool, decltype(ff)>(ff, isA, isB);
+          isA = itv_apply(ff, isA, isB);
           for (ll j = 0; j < sz; j++) vecA[j] = vecA[j] ^ vecB[j];
         }
       }
@@ -165,7 +165,7 @@ int main(/* int argc, char *argv[] */) {
     isB.put(60, 80, 200);
     isB.put(80, 100, 100);
     auto op = [&](int x, int y) -> int { return x + y; };
-    auto isC = itv_apply<int, int, int, decltype(op)>(op, isA, isB);
+    auto isC = itv_apply(op, isA, isB);
     itv_set<int> isD(0, 100, 0);
     isD.put(30, 40, 5000);
     isD.put(40, 60, 5300);
@@ -182,7 +182,7 @@ int main(/* int argc, char *argv[] */) {
     isB.put(5, 15, pll{10, 20});
     isB.put(15, 25, pll{30, 40});
     auto myadd = [&](pll p1, pll p2) -> pll { return pll{p1.first + p2.first, p1.second + p2.second}; };
-    auto isC = itv_apply<pll, pll, pll, decltype(myadd)>(myadd, isA, isB);
+    auto isC = itv_apply(myadd, isA, isB);
     auto [l, r, t1] = isC.get(12);
     assert(t1 == pll(13, 24) and l == 10 and r == 15);
     assert(isC.get_val(17) == pll(33, 44));
@@ -201,6 +201,17 @@ int main(/* int argc, char *argv[] */) {
     assert(is.get_val(27) == 1);
     auto [l0, r0, t0] = is.get(27);
     assert(l0 == 25 and r0 == 30);
+  }
+  {
+    vector<itv_set<int>> vis(4);
+    vis[0].put(0, 10, 10);
+    vis[1].put(5, 20, 20);
+    vis[2].put(0, 5, 10);
+    vis[2].put(5, 10, 30);
+    vis[2].put(10, 20, 20);
+    vis[3] = itv_apply(plus<int>(), vis[0], vis[1]);
+    assert(vis[0] != vis[1]);
+    assert(vis[2] == vis[3]);
   }
 
   cout << "ok\n";

@@ -26,10 +26,9 @@ using namespace std;
   tuple<ll, ll, T> get(ll x) ... returns (y1, y2, t) where f(x) = t and y1 <= x < y2 and y1 and y2 are defined point.
   T sum(ll l, ll r) ... returns \sum_{i = l}^{r - 1} f(i)．  Note that T must have "+" and "*", and "ll" should be 
                         convertible into T.
-  template<typename x_t, typename y_t, typename res_t, typename f_t>
-  itv_set<res_t> itv_apply(f_t f, const itv_set<x_t>& x, const itv_set<y_t>& y)
-       // Meaning  ... ret(i) := f(x(i), y(i))
-       // Usage ...    auto res = itv_apply<x_t, y_t, res_t, decltype(f)>(f, x, y);
+  auto itv_apply(auto f, const auto& x, const auto& y)
+       // When x is itv_set<x_t>, y is itv_set<y_t> and f : x_t -> y_t -> res_t, 
+       //     itv_apply returns an itv_set<res_t> r such that r(i) = f(x(i), y(i))
 
   Loop:
     itv_set is(...);
@@ -46,6 +45,7 @@ using namespace std;
 
 template<typename T>
 struct itv_set {
+  using value_type = T;
   
   struct Itr {
     using iterator_category = input_iterator_tag;
@@ -84,10 +84,13 @@ struct itv_set {
   ll lo;
   ll hi;
 
-  itv_set(ll lo_, ll hi_, const T& t = T()) : lo(lo_), hi(hi_) {
+  itv_set(ll lo_ = LLONG_MIN, ll hi_ = LLONG_MAX, const T& t = T()) : lo(lo_), hi(hi_) {
     impl[lo] = t;
     impl[hi] = t;  // the value is just a dummy.
   }
+
+  bool operator==(const itv_set& o) const { return lo == o.lo and hi == o.hi and impl == o.impl; }
+  bool operator!=(const itv_set& o) const { return not (*this == o); }
 
   auto get_iter(ll x) {
     auto it = impl.upper_bound(x);
@@ -155,8 +158,11 @@ struct itv_set {
 
 };
 
-template<typename x_t, typename y_t, typename res_t, typename f_t>
-itv_set<res_t> itv_apply(f_t f, const itv_set<x_t>& x, const itv_set<y_t>& y) {
+auto itv_apply(auto f, const auto& x, const auto& y) {
+  using x_t = typename remove_reference_t<decltype(x)>::value_type;
+  using y_t = typename remove_reference_t<decltype(x)>::value_type;
+  using res_t = decltype(f(declval<x_t>(), declval<y_t>()));
+
   if (x.lo != y.lo or x.hi != y.hi) throw runtime_error("intervalSet: range mismatch");
   auto itx = x.impl.begin();
   auto ity = y.impl.begin();

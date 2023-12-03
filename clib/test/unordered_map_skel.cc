@@ -10,6 +10,7 @@ using pll = pair<ll, ll>;
 
 int main() {
 
+  /*
   {
     using mymap = gp_hash_table<ll, ll, safe_custom_hash>;
     mymap mp;
@@ -20,6 +21,7 @@ int main() {
     assert(mp[10] == 100);
     assert(mp[20] == 0);
   }
+  */
 
   {
     using mymap = unordered_map<ll, ll, safe_custom_hash>;

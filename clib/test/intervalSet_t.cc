@@ -7,10 +7,11 @@ using pll = pair<ll, ll>;
 // @@ !! LIM(intervalSet debug)
 
 // ---- inserted library file intervalSet.cc
-#line 46 "/home/y-tanabe/proj/compprog/clib/intervalSet.cc"
+#line 48 "/home/y-tanabe/proj/compprog/clib/intervalSet.cc"
 
 template<typename T>
 struct itv_set {
+  using value_type = T;
   
   struct Itr {
     using iterator_category = input_iterator_tag;
@@ -49,10 +50,13 @@ struct itv_set {
   ll lo;
   ll hi;
 
-  itv_set(ll lo_, ll hi_, const T& t = T()) : lo(lo_), hi(hi_) {
+  itv_set(ll lo_ = LLONG_MIN, ll hi_ = LLONG_MAX, const T& t = T()) : lo(lo_), hi(hi_) {
     impl[lo] = t;
     impl[hi] = t;  // the value is just a dummy.
   }
+
+  bool operator==(const itv_set& o) const { return lo == o.lo and hi == o.hi and impl == o.impl; }
+  bool operator!=(const itv_set& o) const { return not (*this == o); }
 
   auto get_iter(ll x) {
     auto it = impl.upper_bound(x);
@@ -120,8 +124,11 @@ struct itv_set {
 
 };
 
-template<typename x_t, typename y_t, typename res_t, typename f_t>
-itv_set<res_t> itv_apply(f_t f, const itv_set<x_t>& x, const itv_set<y_t>& y) {
+auto itv_apply(auto f, const auto& x, const auto& y) {
+  using x_t = typename remove_reference_t<decltype(x)>::value_type;
+  using y_t = typename remove_reference_t<decltype(x)>::value_type;
+  using res_t = decltype(f(declval<x_t>(), declval<y_t>()));
+
   if (x.lo != y.lo or x.hi != y.hi) throw runtime_error("intervalSet: range mismatch");
   auto itx = x.impl.begin();
   auto ity = y.impl.begin();
@@ -144,6 +151,47 @@ itv_set<res_t> itv_apply(f_t f, const itv_set<x_t>& x, const itv_set<y_t>& y) {
   }
   return ret;
 }
+
+/*
+template<typename x_t, typename y_t, typename f_t>
+auto itv_apply_body(f_t f, const itv_set<x_t>& x, const itv_set<y_t>& y) {
+  if (x.lo != y.lo or x.hi != y.hi) throw runtime_error("intervalSet: range mismatch");
+  auto itx = x.impl.begin();
+  auto ity = y.impl.begin();
+  using res_t = decltype(f(declval<x_t>(), declval<y_t>()));
+  itv_set<res_t> ret(x.lo, x.hi, f(itx->second, ity->second));
+  auto itcc = ret.impl.begin();
+  auto itce = std::next(itcc);
+  while (true) {
+    ll t;
+    tie(t, itx, ity) = [&]() -> tuple<ll, decltype(itx), decltype(ity)> {
+      auto nitx = std::next(itx);
+      auto nity = std::next(ity);
+      if      (nitx->first <  nity->first) return {nitx->first, nitx,  ity};
+      else if (nitx->first >  nity->first) return {nity->first,  itx, nity};
+      else if (nitx->first < x.hi)         return {nitx->first, nitx, nity};
+      else                                 return {-1,          nitx, nity};
+    }();
+    if (t == -1) break;
+    res_t ncur = f(itx->second, ity->second);
+    if (ncur != itcc->second) itcc = ret.impl.emplace_hint(itce, t, move(ncur));
+  }
+  return ret;
+}
+
+auto itv_apply(auto f, const auto& x, const auto& y) {
+  return itv_apply_body<typename remove_reference_t<decltype(x)>::value_type,
+                        typename remove_reference_t<decltype(y)>::value_type,
+                        decltype(f)>(f, x, y);
+}
+*/
+
+/*
+auto itv_apply(auto f, const auto& x, const auto& y) {
+  return itv_apply_body<typename remove_reference<decltype(x)>::type::value_type, typename remove_reference<decltype(y)>::type::value_type, decltype(f)>(f, x, y);
+}
+*/
+
 
 // ---- end intervalSet.cc
 
@@ -570,7 +618,7 @@ int main(/* int argc, char *argv[] */) {
           for (ll j = l; j < r; j++) vecB[j] = x;
         }else {
           auto ff = [](bool p, bool q) -> bool { return p ^ q; };
-          isA = itv_apply<bool, bool, bool, decltype(ff)>(ff, isA, isB);
+          isA = itv_apply(ff, isA, isB);
           for (ll j = 0; j < sz; j++) vecA[j] = vecA[j] ^ vecB[j];
         }
       }
@@ -600,7 +648,7 @@ int main(/* int argc, char *argv[] */) {
     isB.put(60, 80, 200);
     isB.put(80, 100, 100);
     auto op = [&](int x, int y) -> int { return x + y; };
-    auto isC = itv_apply<int, int, int, decltype(op)>(op, isA, isB);
+    auto isC = itv_apply(op, isA, isB);
     itv_set<int> isD(0, 100, 0);
     isD.put(30, 40, 5000);
     isD.put(40, 60, 5300);
@@ -617,7 +665,7 @@ int main(/* int argc, char *argv[] */) {
     isB.put(5, 15, pll{10, 20});
     isB.put(15, 25, pll{30, 40});
     auto myadd = [&](pll p1, pll p2) -> pll { return pll{p1.first + p2.first, p1.second + p2.second}; };
-    auto isC = itv_apply<pll, pll, pll, decltype(myadd)>(myadd, isA, isB);
+    auto isC = itv_apply(myadd, isA, isB);
     auto [l, r, t1] = isC.get(12);
     assert(t1 == pll(13, 24) and l == 10 and r == 15);
     assert(isC.get_val(17) == pll(33, 44));
@@ -636,6 +684,17 @@ int main(/* int argc, char *argv[] */) {
     assert(is.get_val(27) == 1);
     auto [l0, r0, t0] = is.get(27);
     assert(l0 == 25 and r0 == 30);
+  }
+  {
+    vector<itv_set<int>> vis(4);
+    vis[0].put(0, 10, 10);
+    vis[1].put(5, 20, 20);
+    vis[2].put(0, 5, 10);
+    vis[2].put(5, 10, 30);
+    vis[2].put(10, 20, 20);
+    vis[3] = itv_apply(plus<int>(), vis[0], vis[1]);
+    assert(vis[0] != vis[1]);
+    assert(vis[2] == vis[3]);
   }
 
   cout << "ok\n";
