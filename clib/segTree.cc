@@ -1,6 +1,13 @@
 /*
   Segment Tree (non-recursive version; including laziness)
 
+  ********************
+  ********************
+  *** The following can be obsolete.  
+  *** See https://yamate11.github.io/blog/posts/2023/12-03-sement-tree-lib/ instead.
+  ********************
+  ********************
+
   Typical Usage:
 
   auto st = make_seg_tree<DAT>(unit_dat, add, init_vec);
@@ -91,11 +98,15 @@ struct GenSegTree {
   COMP_t comp;
   APPL_t appl;
     
-  GenSegTree(DAT unit_dat_, OP unit_op_, ADD_t add_, COMP_t comp_, APPL_t appl_, const vector<DAT>& initdat)
-    : orig_size(initdat.size()), unit_dat(unit_dat_), unit_op(unit_op_),
-      add(add_), comp(comp_), appl(appl_) { _set_data(initdat); }
+  GenSegTree() {}
 
-  void _set_data(const vector<DAT>& initdat) {
+  GenSegTree(DAT unit_dat_, OP unit_op_, ADD_t add_, COMP_t comp_, APPL_t appl_,
+             const vector<DAT>& initdat = vector<DAT>())
+    : unit_dat(unit_dat_), unit_op(unit_op_),
+      add(add_), comp(comp_), appl(appl_) { set_data(initdat); }
+
+  void set_data(const vector<DAT>& initdat) {
+    orig_size = initdat.size();
     if (initdat.size() <= 1) height = 0;
     else   height = sizeof(int) * 8 - __builtin_clz(initdat.size() - 1);
     size = 1 << height;
@@ -280,20 +291,20 @@ struct GenSegTree {
 };
 
 template<typename DAT, typename OP>
-auto make_seg_tree_lazy(DAT unit_dat, OP unit_op, auto add, auto comp, auto appl, const vector<DAT>& initdat) {
-// -> GenSegTree<DAT, OP, decltype(add), decltype(comp), decltype(appl), true> {
+auto make_seg_tree_lazy(DAT unit_dat, OP unit_op, auto add, auto comp, auto appl,
+                        const vector<DAT>& initdat = vector<DAT>()) {
   using ret_t = GenSegTree<DAT, OP, decltype(add), decltype(comp), decltype(appl), true>;
   return ret_t(unit_dat, unit_op, add, comp, appl, initdat);
 }
 
+void* dummy_comp(void* x, void* y) { return nullptr; }
 template<typename DAT>
-auto make_seg_tree(DAT unit_dat, auto add, const vector<DAT>& initdat) {
-  //  -> GenSegTree<DAT, void *, decltype(add), decltype(comp), decltype(appl), true> {
-  auto dummy_comp = [](void* x, void* y) -> void* { return nullptr; };
-  auto dummy_appl = [](void* f, DAT x) -> DAT { return DAT(); };
-  using ret_t = GenSegTree<DAT, void*, decltype(add), decltype(dummy_comp), decltype(dummy_appl), false>;
-  return ret_t(unit_dat, nullptr, add, dummy_comp, dummy_appl, initdat);
-}
+DAT dummy_appl(void* x, const DAT& y) { return y; }
 
+template<typename DAT>
+auto make_seg_tree(DAT unit_dat, auto add, const vector<DAT>& initdat = vector<DAT>()) {
+  using ret_t = GenSegTree<DAT, void*, decltype(add), void* (*)(void*, void*), DAT (*)(void*, const DAT&), false>;
+  return ret_t(unit_dat, nullptr, add, dummy_comp, dummy_appl<DAT>, initdat);
+}
 
 // @@ !! END() ---- segTree.cc
