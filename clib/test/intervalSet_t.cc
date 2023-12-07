@@ -7,7 +7,7 @@ using pll = pair<ll, ll>;
 // @@ !! LIM(intervalSet debug)
 
 // ---- inserted library file intervalSet.cc
-#line 48 "/home/y-tanabe/proj/compprog/clib/intervalSet.cc"
+#line 45 "/home/y-tanabe/proj/compprog/clib/intervalSet.cc"
 
 template<typename T>
 struct itv_set {
@@ -151,47 +151,6 @@ auto itv_apply(auto f, const auto& x, const auto& y) {
   }
   return ret;
 }
-
-/*
-template<typename x_t, typename y_t, typename f_t>
-auto itv_apply_body(f_t f, const itv_set<x_t>& x, const itv_set<y_t>& y) {
-  if (x.lo != y.lo or x.hi != y.hi) throw runtime_error("intervalSet: range mismatch");
-  auto itx = x.impl.begin();
-  auto ity = y.impl.begin();
-  using res_t = decltype(f(declval<x_t>(), declval<y_t>()));
-  itv_set<res_t> ret(x.lo, x.hi, f(itx->second, ity->second));
-  auto itcc = ret.impl.begin();
-  auto itce = std::next(itcc);
-  while (true) {
-    ll t;
-    tie(t, itx, ity) = [&]() -> tuple<ll, decltype(itx), decltype(ity)> {
-      auto nitx = std::next(itx);
-      auto nity = std::next(ity);
-      if      (nitx->first <  nity->first) return {nitx->first, nitx,  ity};
-      else if (nitx->first >  nity->first) return {nity->first,  itx, nity};
-      else if (nitx->first < x.hi)         return {nitx->first, nitx, nity};
-      else                                 return {-1,          nitx, nity};
-    }();
-    if (t == -1) break;
-    res_t ncur = f(itx->second, ity->second);
-    if (ncur != itcc->second) itcc = ret.impl.emplace_hint(itce, t, move(ncur));
-  }
-  return ret;
-}
-
-auto itv_apply(auto f, const auto& x, const auto& y) {
-  return itv_apply_body<typename remove_reference_t<decltype(x)>::value_type,
-                        typename remove_reference_t<decltype(y)>::value_type,
-                        decltype(f)>(f, x, y);
-}
-*/
-
-/*
-auto itv_apply(auto f, const auto& x, const auto& y) {
-  return itv_apply_body<typename remove_reference<decltype(x)>::type::value_type, typename remove_reference<decltype(y)>::type::value_type, decltype(f)>(f, x, y);
-}
-*/
-
 
 // ---- end intervalSet.cc
 

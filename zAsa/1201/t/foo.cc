@@ -833,6 +833,15 @@ void test7() {
   sg2.set_data(init);
   auto sg3 = make_seg_tree(0, plus<int>(), init);
   assert(segtree_data_equals(sg2, sg3));
+
+  auto sg4 = make_seg_tree(LLONG_MIN, [](ll x, ll y) -> ll { return max(x, y); });
+  using sg4_t = decltype(sg4);
+  vector<sg4_t> vec4(2, sg4);
+  vec4[0].set_data(vector<ll>(5));
+  vec4[1].set_data(vector<ll>(10));
+  vec4[0].update(2, 10);
+  vec4[1].update(9, 20);
+  assert(vec4[0].query(0, 5) + vec4[1].query(0, 10) == 30);
 }
 
 

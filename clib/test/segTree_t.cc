@@ -298,7 +298,7 @@ void dbgLog(bool with_nl, Head&& head, Tail&&... tail)
 // ---- end debug.cc
 
 // ---- inserted library file segTree.cc
-#line 71 "/home/y-tanabe/proj/compprog/clib/segTree.cc"
+#line 78 "/home/y-tanabe/proj/compprog/clib/segTree.cc"
 
 // It seems that we should keep the size power of two,
 // considering the binary search.
@@ -322,11 +322,15 @@ struct GenSegTree {
   COMP_t comp;
   APPL_t appl;
     
-  GenSegTree(DAT unit_dat_, OP unit_op_, ADD_t add_, COMP_t comp_, APPL_t appl_, const vector<DAT>& initdat)
-    : orig_size(initdat.size()), unit_dat(unit_dat_), unit_op(unit_op_),
-      add(add_), comp(comp_), appl(appl_) { _set_data(initdat); }
+  GenSegTree() {}
 
-  void _set_data(const vector<DAT>& initdat) {
+  GenSegTree(DAT unit_dat_, OP unit_op_, ADD_t add_, COMP_t comp_, APPL_t appl_,
+             const vector<DAT>& initdat = vector<DAT>())
+    : unit_dat(unit_dat_), unit_op(unit_op_),
+      add(add_), comp(comp_), appl(appl_) { set_data(initdat); }
+
+  void set_data(const vector<DAT>& initdat) {
+    orig_size = initdat.size();
     if (initdat.size() <= 1) height = 0;
     else   height = sizeof(int) * 8 - __builtin_clz(initdat.size() - 1);
     size = 1 << height;
@@ -511,21 +515,21 @@ struct GenSegTree {
 };
 
 template<typename DAT, typename OP>
-auto make_seg_tree_lazy(DAT unit_dat, OP unit_op, auto add, auto comp, auto appl, const vector<DAT>& initdat) {
-// -> GenSegTree<DAT, OP, decltype(add), decltype(comp), decltype(appl), true> {
+auto make_seg_tree_lazy(DAT unit_dat, OP unit_op, auto add, auto comp, auto appl,
+                        const vector<DAT>& initdat = vector<DAT>()) {
   using ret_t = GenSegTree<DAT, OP, decltype(add), decltype(comp), decltype(appl), true>;
   return ret_t(unit_dat, unit_op, add, comp, appl, initdat);
 }
 
+void* dummy_comp(void* x, void* y) { return nullptr; }
 template<typename DAT>
-auto make_seg_tree(DAT unit_dat, auto add, const vector<DAT>& initdat) {
-  //  -> GenSegTree<DAT, void *, decltype(add), decltype(comp), decltype(appl), true> {
-  auto dummy_comp = [](void* x, void* y) -> void* { return nullptr; };
-  auto dummy_appl = [](void* f, DAT x) -> DAT { return DAT(); };
-  using ret_t = GenSegTree<DAT, void*, decltype(add), decltype(dummy_comp), decltype(dummy_appl), false>;
-  return ret_t(unit_dat, nullptr, add, dummy_comp, dummy_appl, initdat);
-}
+DAT dummy_appl(void* x, const DAT& y) { return y; }
 
+template<typename DAT>
+auto make_seg_tree(DAT unit_dat, auto add, const vector<DAT>& initdat = vector<DAT>()) {
+  using ret_t = GenSegTree<DAT, void*, decltype(add), void* (*)(void*, void*), DAT (*)(void*, const DAT&), false>;
+  return ret_t(unit_dat, nullptr, add, dummy_comp, dummy_appl<DAT>, initdat);
+}
 
 // ---- end segTree.cc
 
@@ -539,6 +543,14 @@ ll randrange(ll i, ll j) {
   return dist(rng);
 }
   
+template <typename DAT, typename OP,
+	  typename ADD_t, typename COMP_t, typename APPL_t, bool lazy> 
+bool segtree_data_equals(const GenSegTree<DAT, OP, ADD_t, COMP_t, APPL_t, lazy>& s1,
+                         const GenSegTree<DAT, OP, ADD_t, COMP_t, APPL_t, lazy>& s2) {
+  return s1.orig_size == s2.orig_size and s1.size == s2.size and s1.height == s2.height and
+    s1.node == s2.node and s1.susp == s2.susp and s1.unit_dat == s2.unit_dat;
+}
+
 template <typename DAT, typename OP, typename Fadd, typename Fappl>
 struct Naive {
   DAT unit_dat;
@@ -772,7 +784,8 @@ void test4() {
   auto sub = [&](ll sz) {
     auto ivec = vector<ll>(sz);
     auto add = [](ll x, ll y) -> ll { return min(x, y); };
-    auto st = make_seg_tree<ll>(LLONG_MAX, add, ivec);
+    auto st = make_seg_tree<ll>(LLONG_MAX, add);
+    st.set_data(ivec);
     auto appl_nv = [](ll f, ll x) -> ll { return f; };
     Naive<ll, ll, decltype(add), decltype(appl_nv)> nv(LLONG_MAX, add, appl_nv, ivec);
     ll rep = 1000;
@@ -824,7 +837,7 @@ void test5() {
       }
       ll j = randrange(0, sz);
       ll k = randrange(j, sz);
-      DLOGK(j, k, nv.vec, st.node, st.query(j, k), nv.query(j, k));
+      // DLOGK(j, k, nv.vec, st.node, st.query(j, k), nv.query(j, k));
       assert(st.query(j, k) == nv.query(j, k));
 
       ll lim = randrange(-1, 5);
@@ -855,6 +868,42 @@ void test6() {
   assert(st1.query(0, 1) == -100);
 }
 
+void test7() {
+  using sg1_t = decltype(make_seg_tree_lazy(0, 0, plus<int>(), plus<int>(), plus<int>()));
+  vector<sg1_t> sg1(10);
+  for (int i = 0; i < 10; i++) {
+    vector myv(1 + (i % 3), 0);
+    if (i % 3 == 0) {
+      sg1[i] = make_seg_tree_lazy(0, 0, plus<int>(), plus<int>(), plus<int>(), myv);
+    }else {
+      sg1[i] = make_seg_tree_lazy(0, 0, plus<int>(), plus<int>(), plus<int>());
+      sg1[i].set_data(myv);
+    }
+  }
+  assert(segtree_data_equals(sg1[4], sg1[7]));
+  assert(not segtree_data_equals(sg1[4], sg1[6]));
+  assert(segtree_data_equals(sg1[3], sg1[6]));
+  assert(not segtree_data_equals(sg1[3], sg1[5]));
+
+  using sg2_t = decltype(make_seg_tree(0, plus<int>()));
+  vector<int> init(100); for (int i = 0; i < 100; i++) init[i] = i;
+  sg2_t sg2;
+  sg2 = make_seg_tree(0, plus<int>());
+  sg2.set_data(init);
+  auto sg3 = make_seg_tree(0, plus<int>(), init);
+  assert(segtree_data_equals(sg2, sg3));
+
+  auto sg4 = make_seg_tree(LLONG_MIN, [](ll x, ll y) -> ll { return max(x, y); });
+  using sg4_t = decltype(sg4);
+  vector<sg4_t> vec4(2, sg4);
+  vec4[0].set_data(vector<ll>(5));
+  vec4[1].set_data(vector<ll>(10));
+  vec4[0].update(2, 10);
+  vec4[1].update(9, 20);
+  assert(vec4[0].query(0, 5) + vec4[1].query(0, 10) == 30);
+}
+
+
 int main(int argc, char *argv[]) {
   ios_base::sync_with_stdio(false);
   cin.tie(nullptr);
@@ -866,6 +915,7 @@ int main(int argc, char *argv[]) {
   test4();
   test5();
   test6();
+  test7();
 
   cout << "Test done." << endl;
   return 0;

@@ -1,0 +1,11 @@
+#!/usr/bin/env python3
+
+from random import choice
+
+def main():
+    n = 5000
+    lst = [choice("abcdefghijklmnopqrstuvwxyz") for _ in range(n)]
+    print(n)
+    print(''.join(lst))
+
+main()

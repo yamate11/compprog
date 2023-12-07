@@ -7,7 +7,7 @@
 	"trie" "tree" "rollingHash" "fft" "doubling" "ipoint" "cumsum2d"
 	"interactive" "intervalSet" "polynomial" "convolution" "adjMatrix"
         "interpolation" "fastTransform" "bintrie" "sortedIndex" "forall" 
-        "mapget" "mypair" "digit" "topord" "input" "cycledetect" "rbst" "mo" "unordered_map" "rle"
+        "mapget" "mypair" "digit" "topord" "input" "cycledetect" "rbst" "mo" "unordered_map" "rle" "random"
 	"power" "f:<<" "f:>>" "f:updMaxMin" "f:gcd" "f:intDiv" 
         "f:perfmeas" "f:mex" "f:shortVector" "f:floor_sum" "f:itrange"
 	))
