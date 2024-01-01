@@ -30,6 +30,9 @@ struct Random {
   Random(unsigned seed) : rng(seed) {}
   
   ll range(ll i, ll j) {
+    if (i >= j) {
+      throw runtime_error("Random.range: invalid range");
+    }
     uniform_int_distribution<ll> dist(i, j - 1);
     return dist(rng);
   }

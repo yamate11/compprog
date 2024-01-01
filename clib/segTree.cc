@@ -4,7 +4,7 @@
   ********************
   ********************
   *** The following can be obsolete.  
-  *** See https://yamate11.github.io/blog/posts/2023/12-03-sement-tree-lib/ instead.
+  *** Instead, see https://yamate11.github.io/blog/posts/2023/12-03-segment-tree-lib/
   ********************
   ********************
 

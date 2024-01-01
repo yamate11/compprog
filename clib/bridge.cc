@@ -6,7 +6,7 @@
   - Articulation point, Biconnected component, and Block-Cut Tree
   The library name might be misleading.  
 
-  For description, see http://localhost:5080/blog/posts/2023/09-05-bridge/
+  For description, see https://yamate11.github.io/blog/posts/2023/09-05-bridge/
 
  */
 

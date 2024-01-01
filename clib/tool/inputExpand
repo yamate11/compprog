@@ -263,13 +263,13 @@ def mkstruct(namebase, c_fields, idx, order, istr, ostr):
     out += '\n' + '\n'.join([f'  {t} {v};' for (v, t) in c_fields])
     if idx:
         out += f'\n  int {idx};'
-    plist = ', '.join([f'{t} {v}_' for (v, t) in c_fields])
+    plist = ', '.join([f'{t} {v}_ = {t}()' for (v, t) in c_fields])
     init_list = ', '.join([f'{v}({v}_)' for (v, t) in c_fields])
     read_list = ' >> '.join([f't.{v}' for (v, t) in c_fields])
     write_list = ' << ", " << '.join([f't.{v}' for (v, t) in c_fields])
     
     out += f'''
-  {tp}() {{}}
+  // {tp}() {{}}
   {tp}({plist}) : {init_list} {{}}'''
     if idx:
         out += f'\n  {tp}({plist}, int {idx}_) : {init_list}, {idx}({idx}_) {{}}'

@@ -5,62 +5,108 @@ using namespace std;
 
 // @@ !! LIM(rollingHash)
 
+// ---- inserted library file random.cc
+#line 23 "/home/y-tanabe/proj/compprog/clib/random.cc"
+
+
+struct Random {
+  static random_device the_random_device;
+  mt19937_64 rng;
+
+  Random() : rng(the_random_device()) {}
+  Random(unsigned seed) : rng(seed) {}
+  
+  ll range(ll i, ll j) {
+    if (i >= j) {
+      throw runtime_error("Random.range: invalid range");
+    }
+    uniform_int_distribution<ll> dist(i, j - 1);
+    return dist(rng);
+  }
+
+};
+
+random_device Random::the_random_device;
+
+// ---- end random.cc
+
 // ---- inserted library file rollingHash.cc
-#line 52 "/home/y-tanabe/proj/compprog/clib/rollingHash.cc"
+#line 55 "/home/y-tanabe/proj/compprog/clib/rollingHash.cc"
 
 // By keymoon
 //     https://qiita.com/keymoon/items/11fac5627672a6d6a9f6
+
 using u64 = unsigned long long;
 
-template<typename F>
-struct RollingHashTemp {
-  static constexpr u64 mod    = (1ULL << 61) - 1;
-  static constexpr u64 mask30 = (1ULL << 30) - 1;
-  static constexpr u64 mask31 = (1ULL << 31) - 1;
-  static constexpr u64 mask61 = (1ULL << 61) - 1;
-  static constexpr u64 positivizer = mod * 4;
-  
-  static u64 mul(u64 a, u64 b) {
-    u64 au = a >> 31;
-    u64 ad = a & mask31;
-    u64 bu = b >> 31;
-    u64 bd = b & mask31;
-    u64 c = ad * bu + au * bd;
-    u64 cu = c >> 30;
-    u64 cd = c & mask30;
-    return au * bu * 2 + cu + (cd << 31) + ad * bd;
-  }
-  
-  static u64 calc_mod(u64 x) {
-    u64 xu = x >> 61;
-    u64 xd = x & mask61;
-    u64 res = xu + xd;
-    if (res >= mod) res -= mod;
-    return res;
-  }
+constexpr u64 rh_prime = (1ULL << 61) - 1;
+constexpr u64 rh_mask30 = (1ULL << 30) - 1;
+constexpr u64 rh_mask31 = (1ULL << 31) - 1;
+constexpr u64 rh_mask61 = (1ULL << 61) - 1;
+constexpr u64 rh_positivizer = rh_prime * 4;
 
-  F hash_elem;
+u64 rh_mul_nomod(u64 a, u64 b) {
+  u64 au = a >> 31;
+  u64 ad = a & rh_mask31;
+  u64 bu = b >> 31;
+  u64 bd = b & rh_mask31;
+  u64 c = ad * bu + au * bd;
+  u64 cu = c >> 30;
+  u64 cd = c & rh_mask30;
+  return au * bu * 2 + cu + (cd << 31) + ad * bd;
+}
+
+u64 rh_calc_mod(u64 x) {
+  u64 xu = x >> 61;
+  u64 xd = x & rh_mask61;
+  u64 res = xu + xd;
+  if (res >= rh_prime) res -= rh_prime;
+  return res;
+}
+
+u64 rh_add(u64 a, u64 b) {
+  u64 x = a + b;
+  return x >= rh_prime ? x - rh_prime : x;
+}
+static u64 rh_subt(u64 a, u64 b) { return (a < b) ? rh_prime + a - b : a - b; }
+static u64 rh_mul(u64 a, u64 b) { return rh_calc_mod(rh_mul_nomod(a, b)); }
+
+template<typename elem_t = char, typename conv_t = nullptr_t>
+struct RollingHashGen {
+  
   vector<u64> pow_memo;
   u64 base;
+  conv_t conv;
 
-  RollingHashTemp(F hash_elem_, mt19937 rng)
-    : hash_elem(hash_elem_), pow_memo({1}) {
-    uniform_int_distribution<> dist(1000, 1ULL << 20);
-    base = dist(rng);
+  void _initialize(u64 base_, u64 min_base_) {
+    pow_memo = vector<u64>({1});
+    if (base_ == 0) base = Random().range(min_base_, 1ULL << 59);
+    else            base = base_;
+    if (base >= rh_prime) { throw runtime_error("RollingHashGen::_initialize: invalid base"); }
   }
+
+  RollingHashGen(u64 base_ = 0, u64 min_base_ = 1000) { _initialize(base_, min_base_); }
+  RollingHashGen(u64 base_, u64 min_base_, conv_t conv_) : conv(conv_) { _initialize(base_, min_base_); }
+
+  void set_conv(conv_t conv_) { conv = conv_; }
 
   vector<u64> hashes(auto s) {
     int n = s.size();
     vector<u64> ret(n+1);
     for (int i = 0; i < n; i++) {
-      ret[i+1] = calc_mod(mul(ret[i], base) + hash_elem(s[i]));
+      u64 e;
+      if constexpr (is_same<conv_t, nullptr_t>::value) {
+        e = static_cast<u64>(s[i]);
+      } else {
+        e = conv(s[i]);
+      }
+      ret[i+1] = rh_calc_mod(rh_mul_nomod(ret[i], base) + e);
     }
     return ret;
   }
 
   u64 base_power(ll n) {
     while ((int)pow_memo.size() < n + 1) {
-      pow_memo.push_back(calc_mod(mul(pow_memo[pow_memo.size() - 1], base)));
+      pow_memo.push_back(rh_mul(pow_memo[pow_memo.size() - 1], base));
     }
     return pow_memo[n];
   }
@@ -68,28 +114,21 @@ struct RollingHashTemp {
   u64 get(const vector<u64>& hashes, int start = 0, int len = -1) {
     if (len == -1) len = hashes.size() - 1 - start;
     if (start == 0) return hashes[len];
-    return calc_mod(hashes[start + len] + 
-		    positivizer - mul(hashes[start], base_power(len)));
+    return rh_calc_mod(hashes[start + len] + 
+                       rh_positivizer - rh_mul_nomod(hashes[start], base_power(len)));
   }
 
   u64 hash_concat(u64 hash1, u64 hash2, int len2) {
-    return calc_mod(calc_mod(mul(hash1, base_power(len2))) + hash2);
+    return rh_add(rh_mul(hash1, base_power(len2)), hash2);
   }
-
-  // u64 hash_char(char c) { return (unsigned char)c; }
 
 };
 
-auto make_rolling_hash_gen(auto hash_elem, mt19937 rng)
-  -> RollingHashTemp<decltype(hash_elem)> {
-  return RollingHashTemp(hash_elem, rng);
-}
+using RollingHash = RollingHashGen<char, nullptr_t>;
 
-u64 hash_char(char c) { return (unsigned char)c; }
-
-using RollingHash = RollingHashTemp<decltype(&hash_char)>;
-RollingHash make_rolling_hash(mt19937 rng) {
-  return RollingHash(&hash_char, rng);
+template<typename T>
+auto make_rolling_hash_gen(ll base, ll min_base, auto conv) {
+  return RollingHashGen<T, decltype(conv)>(base, min_base, conv);
 }
 
 // ---- end rollingHash.cc
@@ -126,17 +165,13 @@ struct WeakRH {
 };
 
 struct U128RH {
-  static random_device rand_dev;
-  static mt19937 rng;
+  Random rand;
   static constexpr u64 mod = (1ULL << 61) - 1;
   
   vector<__uint128_t> pow_memo;
   const u64 base;
 
-  u64 __get_base() {
-    uniform_int_distribution<> dist(1000, 1ULL << 20);
-    return dist(rng);
-  }
+  u64 __get_base() { return rand.range(1000, 1ULL << 20); }
 
   U128RH() : pow_memo({1}), base(__get_base()) {}
 
@@ -170,8 +205,6 @@ struct U128RH {
   u64 hash_char(char c) { return c; }
 
 };
-random_device U128RH::rand_dev;
-mt19937 U128RH::rng(U128RH::rand_dev());
 
 int main(int argc, char *argv[] ) {
   ios_base::sync_with_stdio(false);
@@ -187,7 +220,7 @@ int main(int argc, char *argv[] ) {
   }
 
   {
-    RollingHash rh = make_rolling_hash(rng2);
+    RollingHash rh;
     string s1 = "abcdefgh";
     string s2 = "XXdefYYYZZ";
     auto hashes1 = rh.hashes(s1);
@@ -207,7 +240,7 @@ int main(int argc, char *argv[] ) {
   }
 
   {
-    RollingHash rh = make_rolling_hash(rng2);
+    RollingHash rh;
     uniform_int_distribution<char> dist('0', '1');
     ll size = 100;
     string s(size, 0);
@@ -227,10 +260,10 @@ int main(int argc, char *argv[] ) {
   }
 
   {
-    int lim = 1e5;
+
+    int lim = 100000;
     uniform_int_distribution<int> dist(-lim, lim);
-    auto hash_elem = [&](int x) -> u64 { return x + lim; };
-    auto rh = make_rolling_hash_gen(hash_elem, rng2);
+    auto rh = make_rolling_hash_gen<int>(0, 2 * lim, [](int x) -> u64 { return x + 100000; });
     int sz = 1e4;
     vector<int> v(sz);
     for (int i = 0; i < sz; i++) v[i] = dist(rng2);
@@ -250,40 +283,74 @@ int main(int argc, char *argv[] ) {
     }
   }
 
+  {
+    using pll = pair<ll, ll>;
+    auto hash_elem = [](const pll& p) -> u64 { return rh_add(rh_mul(1000000007, p.first), p.second); };
 
-  // WeakRH rh{};
-  // U128RH rh{};
-  RollingHash rh = make_rolling_hash(rng2);
-
-  ll rep = 1LL << stoi(argv[1]);
-  ll size = 100;
-  uniform_int_distribution<char> dist('a', 'z');
-  uniform_int_distribution<int> dist_idx(0, size-1);
-  unordered_map<u64, string> mp;
-  for (ll k = 0; k < rep; k++) {
-    string s(size, 0);
-    for (ll i = 0; i < size; i++) {
-      for (ll j = 0; j < size; j++) s[j] = dist(rng2);
+    vector<pll> vec{{2, 5}, {1, 0}, {3, 7}, {2, 5}, {1, 0}, {3, 7}, {4, 1}};
+    for (int i = 0; i < 5e4; i ++) {
+      auto rh = make_rolling_hash_gen<pll>(0, 1LL << 30, hash_elem);
+      auto hs = rh.hashes(vec);
+      assert(rh.get(hs, 0, 3) == rh.get(hs, 3, 3));
+      assert(rh.get(hs, 0, 4) != rh.get(hs, 3, 4));
     }
-    auto hashes = rh.hashes(s);
-    for (ll i = 0; i < 10; i++) {
-      int p = dist_idx(rng2);
-      int q = dist_idx(rng2);
-      if (p > q) swap(p, q);
-      string t = s.substr(p, q-p);
-      u64 hash = rh.get(hashes, p, q-p);
-      auto it = mp.find(hash);
-      if (it == mp.end()) {
-	mp[hash] = t;
-      }else if (it->second != t) {
-	cerr << "collision!!!" << endl;
-	cerr << "hash = " << hash << endl;
-	cerr << "str1 = " << it->second << endl;
-	cerr << "str2 = " << t << endl;
-	exit(1);
+  }
+
+
+  {
+    // WeakRH rh{};
+    // U128RH rh{};
+    RollingHash rh;
+
+    ll rep = 1LL << stoi(argv[1]);
+    ll size = 100;
+    uniform_int_distribution<char> dist('a', 'z');
+    uniform_int_distribution<int> dist_idx(0, size-1);
+    unordered_map<u64, string> mp;
+    for (ll k = 0; k < rep; k++) {
+      string s(size, 0);
+      for (ll i = 0; i < size; i++) {
+        for (ll j = 0; j < size; j++) s[j] = dist(rng2);
+      }
+      auto hashes = rh.hashes(s);
+      for (ll i = 0; i < 10; i++) {
+        int p = dist_idx(rng2);
+        int q = dist_idx(rng2);
+        if (p > q) swap(p, q);
+        string t = s.substr(p, q-p);
+        u64 hash = rh.get(hashes, p, q-p);
+        auto it = mp.find(hash);
+        if (it == mp.end()) {
+          mp[hash] = t;
+        }else if (it->second != t) {
+          cerr << "collision!!!" << endl;
+          cerr << "hash = " << hash << endl;
+          cerr << "str1 = " << it->second << endl;
+          cerr << "str2 = " << t << endl;
+          exit(1);
+        }
       }
     }
   }
+
+  {
+    RollingHash rh;
+    Random rand;
+    for (int i = 0; i < 1000; i++) {
+      u64 a = rand.range(0, rh_prime);
+      u64 b = rand.range(0, rh_prime);
+      __uint128_t a128 = a;
+      __uint128_t b128 = b;
+      __uint128_t mod128 = rh_prime;
+      assert(rh_add( a, b) == (a128 + b128) % mod128);
+      u64 x = rh_subt(a, b);
+      assert(x < rh_prime and (x + b) % mod128 == a);
+      assert(rh_mul( a, b) == (a128 * b128) % mod128);
+      assert(rh_prime - a  == mod128 - a128);
+    }
+  }
+
+
   cerr << "ok\n";
   
   return 0;
