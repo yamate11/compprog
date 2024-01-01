@@ -1,6 +1,6 @@
 (setq atcoder-library-list
       '("NONE" "cmpNaive" "UnionFind" "UnionFindRel" "bit" "cht" "coordCompr" "debug"
-	"dinic" "fix" "FuncGraph" "bridge"
+	"dinic" "fix" "FuncGraph" "bridge" "offDynConn" "UndoUnionFind"
 	"integer" "matrix" "misc" "mod" "segTree" "sieve" "strSearch"
 	"util" "scc" "geometry" "binsearch" "dijkstra" "rerror"
 	"suffixArray" "board" "minCostFlow" "perm" "guessPoly" "ftwo"

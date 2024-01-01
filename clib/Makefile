@@ -6,7 +6,7 @@ EXES = UnionFind binsearch bit board cht cmpNaive coordCompr \
        forall mapget mypair digit topord cycledetect rbst
 
 CXX = g++-9
-CXXCOMMONFLAGS = -std=gnu++17 -Wall -Wno-format-security -Wshadow -fconcepts -DCMPNAIVE
+CXXCOMMONFLAGS = -std=gnu++20 -Wall -Wno-format-security -Wshadow -fconcepts -DCMPNAIVE
 # CXXCOMMONFLAGS = -std=gnu++1y -Wall -Wno-format-security -Wshadow
 ifdef DEBUG
   CXXFLAGS = -g -O0 $(CXXCOMMONFLAGS) -DDEBUG=$(DEBUG)
