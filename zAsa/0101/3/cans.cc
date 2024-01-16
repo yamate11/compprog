@@ -9,7 +9,7 @@ using pll = pair<ll, ll>;
 #define REPrev(i, a, b) for (ll i = (a); i >= (b); i--)
 #define ALL(coll) (coll).begin(), (coll).end()
 #define SIZE(v) ((ll)((v).size()))
-#define REPOUT(i, a, b, exp, sep) REP(i, (a), (b)) cout << (exp) << (i + 1 == (b) ? "\n" : (sep))
+#define REPOUT(i, a, b, exp, sep) REP(i, (a), (b)) cout << (exp) << (i + 1 == (b) ? "" : (sep)); cout << "\n"
 
 // @@ !! LIM()
 
@@ -18,15 +18,23 @@ int main(/* int argc, char *argv[] */) {
   cin.tie(nullptr);
   cout << setprecision(20);
 
-  ll T; cin >> T;
-  REP(_t, 0, T) {
-    ll N; cin >> N;
-    string s1, s2, s3; cin >> s1 >> s2 >> s3;
-    string ans(2 * N + 1, '0');
-    REP(i, 0, N) ans[N + i] = '1';
-    cout << ans << endl;
-  }
+  ll N, M; cin >> N >> M;
+  // @InpVec(N, A) [dFiCJ1CU]
+  auto A = vector(N, ll());
+  for (int i = 0; i < N; i++) { ll v; cin >> v; A[i] = v; }
+  // @End [dFiCJ1CU]
 
+  vector S(N + 1, 0LL);
+  REP(i, 0, N) S[i + 1] = S[i] + A[i];
+
+  ll s = 0;
+  REP(i, 0, M) s += (i + 1) * A[i];
+  ll ans = s;
+  REP(i, 0, N - M) {
+    s = s - (S[i + M] - S[i]) + M * A[i + M];
+    ans = max(ans, s);
+  }
+  cout << ans << endl;
   return 0;
 }
 

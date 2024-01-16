@@ -9,45 +9,51 @@ using pll = pair<ll, ll>;
 #define REPrev(i, a, b) for (ll i = (a); i >= (b); i--)
 #define ALL(coll) (coll).begin(), (coll).end()
 #define SIZE(v) ((ll)((v).size()))
-#define REPOUT(i, a, b, exp, sep) REP(i, (a), (b)) cout << (exp) << (i + 1 == (b) ? "\n" : (sep))
+#define REPOUT(i, a, b, exp, sep) REP(i, (a), (b)) cout << (exp) << (i + 1 == (b) ? "" : (sep)); cout << "\n"
 
-// @@ !! LIM()
+// @@ !! LIM(f:updMaxMin)
+
+// ---- inserted function f:updMaxMin from util.cc
+template<typename T>
+bool updMax(T& tmax, const T& x) {
+  if (x > tmax) { tmax = x; return true;  }
+  else          {           return false; }
+}
+template<typename T>
+bool updMin(T& tmin, const T& x) {
+  if (x < tmin) { tmin = x; return true;  }
+  else          {           return false; }
+}
+// ---- end f:updMaxMin
+
+// @@ !! LIM -- end mark --
 
 int main(/* int argc, char *argv[] */) {
   ios_base::sync_with_stdio(false);
   cin.tie(nullptr);
   cout << setprecision(20);
 
-  ll N, K; cin >> N >> K;
-  // @InpVec(N, X) [b3fDJGke]
-  auto X = vector(N, ll());
-  for (int i = 0; i < N; i++) { ll v; cin >> v; X[i] = v; }
-  // @End [b3fDJGke]
-  ll p0 = 0;
-  for (; p0 < N and X[p0] < 0; p0++);
-  if (p0 == N) {
-    cout << -X[N - K] << endl;
-    return 0;
-  }else if (p0 == 0) {
-    cout << X[K - 1] << endl;
-    return 0;
-  }
-  ll ans = 1e18;
-  if (p0 + K - 1 < N) ans = min(ans, X[p0 + K - 1]);
-  if (p0 - K >= 0)    ans = min(ans, -X[p0 - K]);
-  REP(i, 1, K) {
-    ll j = K - i;
-    if (p0 + i - 1 < N and p0 - j >= 0) {
-      ll t = 2 * X[p0 + i - 1] + (-X[p0 - j]);
-      ans = min(ans, t);
-    }
-    if (p0 - i >= 0 and p0 + j - 1 < N) {
-      ll s = 2 * (-X[p0 - i]) + X[p0 + j - 1];
-      ans = min(ans, s);
-    }
-  }
-  cout << ans << endl;
+  ll N, C; cin >> N >> C;
+  // @InpVec(N, A, dec=1) [Pf8Fqcci]
+  auto A = vector(N, ll());
+  for (int i = 0; i < N; i++) { ll v; cin >> v; v -= 1; A[i] = v; }
+  // @End [Pf8Fqcci]
 
+  vector even(10, 0LL);
+  vector odd(10, 0LL);
+  REP(i, 0, N) {
+    if (i % 2 == 0) even[A[i]]++;
+    else             odd[A[i]]++;
+  }
+  ll num = N;
+  ll n_odd = N / 2;
+  ll n_even = N - n_odd;
+  REP(i, 0, 10) REP(j, 0, 10) {
+    if (i == j) continue;
+    updMin(num, n_even - even[i] + n_odd - odd[j]);
+  }
+  cout << num * C << endl;
+  
   return 0;
 }
 

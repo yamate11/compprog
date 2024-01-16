@@ -9,7 +9,7 @@ using pll = pair<ll, ll>;
 #define REPrev(i, a, b) for (ll i = (a); i >= (b); i--)
 #define ALL(coll) (coll).begin(), (coll).end()
 #define SIZE(v) ((ll)((v).size()))
-#define REPOUT(i, a, b, exp, sep) REP(i, (a), (b)) cout << (exp) << (i + 1 == (b) ? "\n" : (sep))
+#define REPOUT(i, a, b, exp, sep) REP(i, (a), (b)) cout << (exp) << (i + 1 == (b) ? "" : (sep)); cout << "\n"
 
 // @@ !! LIM()
 
@@ -18,10 +18,14 @@ int main(/* int argc, char *argv[] */) {
   cin.tie(nullptr);
   cout << setprecision(20);
 
-  ll n, m, x, t, d; cin >> n >> m >> x >> t >> d;
-  ll ans = -1;
-  if (x <= m) ans = t;
-  else ans = t - (x - m) * d;
+  ll N, X; cin >> N >> X;
+  // @InpVec(N, S) [AisJ8DaE]
+  auto S = vector(N, ll());
+  for (int i = 0; i < N; i++) { ll v; cin >> v; S[i] = v; }
+  // @End [AisJ8DaE]
+
+  ll ans = 0;
+  REP(i, 0, N) if (S[i] <= X) ans += S[i];
   cout << ans << endl;
 
   return 0;
