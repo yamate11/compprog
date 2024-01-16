@@ -24,5 +24,6 @@ int main(/* int argc, char *argv[] */) {
   cout << "ng\n";
 
   return 0;
+
 }
 
