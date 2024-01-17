@@ -1,6 +1,7 @@
 import os, subprocess, sys, re, requests, pickle, datetime
 from urllib.parse import unquote
 from bs4 import BeautifulSoup
+import typing
 
 topDir = '/home/y-tanabe/proj/compprog'
 
@@ -10,7 +11,7 @@ def warn(*msg, **opt):
 
 debug = warn
 
-def die(*msg):
+def die(*msg) -> typing.NoReturn:
     warn('ERROR:', *msg)
     sys.exit(1)
 

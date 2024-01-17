@@ -1,4 +1,4 @@
-#!/home/y-tanabe/.venv_10/bin/python
+#!/usr/bin/env python3
 
 import sys, argparse, os, re
 from bs4 import BeautifulSoup
