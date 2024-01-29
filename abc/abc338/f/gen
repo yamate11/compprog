@@ -1,0 +1,115 @@
+#!/usr/bin/env python3
+
+import argparse, sys
+from random import randrange, choice, shuffle
+from itertools import permutations
+
+def show_list(lst):
+    return ' '.join(map(str,lst))
+
+# Function generate() should yield test cases of type string repeatedly.
+# E.g.,
+
+def generate_seq():
+    for x in range(1, 10):
+        for cdir in ['N', 'E', 'S', 'W']:
+            yield f'{x}\n{cdir}\n'
+
+# or E.g.,
+
+def generate_random():
+
+    # This is the function you should edit.
+    # You can use prcase() to print the value to the case
+    def onecase():
+        def cost():
+            ret = 0
+            for i in range(size):
+                j = (i + 1) % size
+                if (p[i], p[j]) not in seen:
+                    return 10**10
+                ret += seen[(p[i], p[j])]
+            return ret
+
+        n = 5
+        m = randrange(1, n * (n - 1) + 1)
+        m = min(m, 11)
+        seen = {}
+        for _ in range(m):
+            while True:
+                u = randrange(1, n + 1)
+                v = randrange(1, n + 1)
+                if u == v:
+                    continue
+                if (u, v) in seen:
+                    continue
+                seen[(u, v)] = randrange(-9, 10)
+                break
+        for size in range(2, n + 1):
+            lst = list(range(1, n + 1))
+            for p in permutations(lst, size):
+                v = cost()
+                if v < 0:
+                    k = randrange(size)
+                    a = p[k]
+                    b = p[(k + 1) % size]
+                    seen[(a, b)] -= v;
+        prcase(n, m)
+        for (a, b) in seen:
+            prcase(a, b, seen[(a, b)])
+
+
+
+        # n = randrange(1, 11)
+        # prcase(n)
+        # prcase(show_list([randrange(1, 5) for _ in range(n)]))
+        # lst = [choice("NSEW") for _ in range(n)]
+        # prcase(show_list(lst))
+
+    # do not edit
+    def prcase(*args):
+        nonlocal case
+        for i, a in enumerate(args):
+            if i > 0:
+                case += ' '
+            case += str(a)
+        case += '\n'
+
+    # do not edit
+    while True:
+        case = ''
+        onecase()
+        yield case
+
+# generate = generate_seq
+generate = generate_random
+
+######################################################################
+# Hope that you need not edit the following code.
+
+end_mark = '^__=end=__^'
+end_file_mark = '^__=end_file=__^'
+
+def main():
+    ap = argparse.ArgumentParser();
+    ap.add_argument('-r', '--repeat', action='store_true',
+                    help='Repeatedly generates cases',)
+    args = ap.parse_args()
+
+    try:
+        if args.repeat:
+            for s in generate():
+                print(s.rstrip())
+                print(end_mark)
+            print(end_file_mark)
+        else:
+            for (i, s) in enumerate(generate()):
+                print(s.rstrip())
+                print(end_mark)
+                if (i == 4):
+                    break
+    except BrokenPipeError as e:
+        # print('caught: BrokenPipeError', file=sys.stderr)
+        pass
+
+main()
