@@ -30,6 +30,19 @@ void sanity_perm(auto& perm, int exp_cnt) {
 }
 
 
+bool my_compare(auto& p, const auto& vec) {
+  int i = 0;
+  while (p.get()) {
+    if (i >= (int)vec.size()) return false;
+    const auto& view = p.vec_view();
+    if (view.size() != vec[i].size()) return false;
+    for (int j = 0; j < (int)view.size(); j++) if (view[j] != vec[i][j]) return false;
+    i++;
+  }
+  if (i != (int)vec.size()) return false;
+  return true;
+}
+
 int main() {
   ios_base::sync_with_stdio(false);
   cin.tie(nullptr);
@@ -52,30 +65,32 @@ int main() {
   }
 
   using vvi = vector<vector<int>>;
-  auto get_all = [&](auto& p) -> vvi {
-    vvi ret;
-    while (p.get()) ret.push_back(p.vec_view());
-    return ret;
-  };
-
   {
     IntPerm p1(3, 2);
-    assert(get_all(p1) == vvi({      {0,1},{0,2},{1,0},      {1,2},{2,0},{2,1}      }));
+    assert(my_compare(p1, vvi({      {0,1},{0,2},{1,0},      {1,2},{2,0},{2,1}      })));
     IntComb p2(3, 2);
-    assert(get_all(p2) == vvi({      {0,1},{0,2},            {1,2},                 }));
+    assert(my_compare(p2, vvi({      {0,1},{0,2},            {1,2},                 })));
     IntDupPerm p3(3, 2);
-    assert(get_all(p3) == vvi({{0,0},{0,1},{0,2},{1,0},{1,1},{1,2},{2,0},{2,1},{2,2}}));
+    assert(my_compare(p3, vvi({{0,0},{0,1},{0,2},{1,0},{1,1},{1,2},{2,0},{2,1},{2,2}})));
     IntDupComb p4(3, 2);
-    assert(get_all(p4) == vvi({{0,0},{0,1},{0,2},      {1,1},{1,2},            {2,2}}));
+    assert(my_compare(p4, vvi({{0,0},{0,1},{0,2},      {1,1},{1,2},            {2,2}})));
   }
   {
     IntDupPerm p1(2, 3);
-    assert(get_all(p1) == vvi({{0,0,0},{0,0,1},{0,1,0},{0,1,1},{1,0,0},{1,0,1},{1,1,0},{1,1,1}}));
+    assert(my_compare(p1, vvi({{0,0,0},{0,0,1},{0,1,0},{0,1,1},{1,0,0},{1,0,1},{1,1,0},{1,1,1}})));
     IntDupComb p2(2, 3);
-    assert(get_all(p2) == vvi({{0,0,0},{0,0,1},{0,1,1},{1,1,1}}));
+    assert(my_compare(p2, vvi({{0,0,0},{0,0,1},{0,1,1},{1,1,1}})));
     IntDupComb p3(3, 3);
-    assert(get_all(p3) == vvi({{0,0,0},{0,0,1},{0,0,2},{0,1,1},{0,1,2},{0,2,2},{1,1,1},{1,1,2},{1,2,2},{2,2,2}}));
+    assert(my_compare(p3, vvi({{0,0,0},{0,0,1},{0,0,2},{0,1,1},{0,1,2},{0,2,2},{1,1,1},{1,1,2},{1,2,2},{2,2,2}})));
   }
+  {
+    IntDirProd p1{vector{{1, 2, 3}}};
+    assert(my_compare(p1, vvi({{0,0,0},{0,0,1},{0,0,2},{0,1,0},{0,1,1},{0,1,2}})));
+    vector<ll> v2{{3, 2, 1}};
+    IntDirProd p2(v2);
+    assert(my_compare(p2, vvi({{0,0,0},{0,1,0},{1,0,0},{1,1,0},{2,0,0},{2,1,0}})));
+  }
+
 
   {
     auto chkPerm = [&](ll n, ll r) -> void {
@@ -172,8 +187,8 @@ int main() {
   }
 
 
-  auto test_is_empty = [&](auto p) -> void { assert(get_all(p) == vvi{}); };
-  auto test_is_single = [&](auto p) -> void { assert(get_all(p) == vvi{{}}); };
+  auto test_is_empty = [&](auto p) -> void { assert(my_compare(p, vvi{})); };
+  auto test_is_single = [&](auto p) -> void { assert(my_compare(p, vvi{{}})); };
   {
     test_is_empty(IntPerm(-3, 2));
     test_is_empty(IntComb(-3, 2));

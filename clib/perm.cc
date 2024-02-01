@@ -7,7 +7,7 @@ using namespace std;
   Permutations
 
   Structs:
-    IntPerm, IntComb, IntDupPerm, IntDupComb
+    IntPerm, IntComb, IntDupPerm, IntDupComb, IntDirProd
 
   Usage:
 
@@ -15,6 +15,7 @@ using namespace std;
     IntComb ic(3, 2);      // Sorted sequences of length 2 from [0, 3), no duplication
     IntDupPerm dip(3, 2);  // Sequences of length 2 from [0, 3)
     IntDupComb dic(3, 2);  // Sorted sequences of length 2 from [0, 3)
+    IntDirProd did{vector{{1, 2, 3}}};  // Sequences (a, b, c) s.t. a < 1, b < 2 and c < 3
 
     while (ip.get()) {  
       for (int i = 0; i < 2; i++) cout << ip.at(i) << " ";
@@ -28,6 +29,8 @@ using namespace std;
     //    IntComb    ...       [0,1],[0,2],            [1,2]
     //    IntDupPerm ... [0,0],[0,1],[0,2],[1,0],[1,1],[1,2],[2,0],[2,1],[2,2]
     //    IntDupComb ... [0,0],[0,1],[0,2],      [1,1],[1,2],            [2,2]
+    //
+    //    IntDirProd ... [0,0,0],[0,0,1],[0,0,2],[0,1,0],[0,1,1],[0,1,2]
 
     // Note:
     //    Unless 0 <= n and 0 <= r, they returns {}.
@@ -167,6 +170,40 @@ struct IntDupComb : IntPermBase<true> {
     for (int j = i + 1; j < r; j++) vec[j] = vec[i];
     return true;
   }
+};
+
+template<typename INT>
+struct IntDirProd {
+  vector<INT> lim;
+  int r;
+  vector<INT> vec;
+  bool started;
+
+  IntDirProd(const vector<INT>& lim_) : lim(lim_), r(lim.size()), started(false) {}
+
+  int at(int i) const { return vec[i]; }
+
+  const vector<INT>& vec_view() const { return vec; }
+
+  bool start_check() {
+    for (int i = 0; i < r; i++) if (lim[i] == 0) return false;
+    started = true;
+    vec.resize(r, 0);
+    return true;
+  }
+
+  bool finish() {
+    vec.resize(0);
+    started = false;
+    return false;
+  }
+
+  bool get() {
+    if (not started) return start_check();
+    for (int i = r - 1; i >= 0; vec[i--] = 0) if (++vec[i] < lim[i]) return true;
+    return finish();
+  }
+
 };
 
 // @@ !! END() ---- perm.cc
