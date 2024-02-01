@@ -1,140 +1,261 @@
 #include <bits/stdc++.h>
 #include <cassert>
-typedef long long int ll;
 using namespace std;
+using ll = long long int;
+using pll = pair<ll, ll>;
 // #include <atcoder/all>
 // using namespace atcoder;
-#define REP2(i, a, b) for (ll i = (a); i < (b); i++)
-#define REP2R(i, a, b) for (ll i = (a); i >= (b); i--)
-#define REP(i, b) REP2(i, 0, b)
+#define REP(i, a, b) for (ll i = (a); i < (b); i++)
+#define REPrev(i, a, b) for (ll i = (a); i >= (b); i--)
 #define ALL(coll) (coll).begin(), (coll).end()
 #define SIZE(v) ((ll)((v).size()))
+#define REPOUT(i, a, b, exp, sep) REP(i, (a), (b)) cout << (exp) << (i + 1 == (b) ? "" : (sep)); cout << "\n"
 
-// @@ !! LIM(UnionFind)
+// @@ !! LIM(UnionFind cmpNaive)
 
 // ---- inserted library file UnionFind.cc
 
-class UnionFind {
-protected:
+template<typename T = ll, typename oplus_t = decltype(plus<T>()), typename onegate_t = decltype(negate<T>())>
+struct UnionFind {
   int size;
-  vector<int> _leader;
-  vector<int> _rank;
+  T zero;
+  oplus_t oplus;
+  onegate_t onegate;
+  vector<pair<int, optional<T>>> _leader;
   vector<int> _gsize;
-  unordered_map<int, vector<int>> _groups;
+  bool built_groups;
+  int _num_groups;
+  vector<vector<int>> _groups;
   
-public:
-  UnionFind(int s);
-  int leader(int i);
-  int merge(int i, int j);
-  int groupSize(int i);
-  const unordered_map<int, vector<int>>& groups();
-  const vector<int>& group(int i);
+  UnionFind(int size_, T zero_ = (T)0, oplus_t oplus_ = plus<T>(), onegate_t onegate_ = negate<T>())
+    : size(size_), zero(zero_), oplus(oplus_), onegate(onegate_), _gsize(size, 1), built_groups(false) {
+    for (int i = 0; i < size; i++) _leader.emplace_back(i, zero);
+  }
+
+  int merge(int i, int j, optional<T> p = nullopt) {
+    built_groups = false;
+    auto [li, pi] = leaderpot(i);
+    auto [lj, pj] = leaderpot(j);
+    if (li == lj) {
+      if (not p.has_value()) _leader[li].second = nullopt;
+      else if (pi.has_value() and oplus(*p, *pj) != *pi) _leader[li].second = nullopt;
+      return li;
+    }
+    int new_leader, obs_leader; bool chg_sign;
+    if (_gsize[li] < _gsize[lj]) {
+      new_leader = lj;
+      obs_leader = li;
+      chg_sign = false;
+    }else {
+      new_leader = li;
+      obs_leader = lj;
+      chg_sign = true;
+    }
+    _gsize[new_leader] += _gsize[obs_leader];
+    _leader[obs_leader].first = new_leader;
+    if (p.has_value() and pi.has_value() and pj.has_value()) {
+      T new_pot = oplus(*p, oplus(*pj, onegate(*pi)));
+      if (chg_sign) new_pot = onegate(new_pot);
+      _leader[obs_leader].second = new_pot;
+    }else {
+      _leader[new_leader].second = nullopt;  // Note this is for new_leader
+    }
+    return new_leader;
+  }
+
+  pair<int, optional<T>> leaderpot(int i) {
+    int cur = i;
+    vector<pair<int, optional<T>>> seen;
+    optional<T> pp;
+    {
+      auto [nxt, p] = _leader[cur];
+      while (cur != nxt) {
+        seen.emplace_back(cur, p);
+        cur = nxt;
+        tie(nxt, p) = _leader[cur];
+      }
+      pp = p;
+    }
+    while (not seen.empty()) {
+      auto [j, p] = seen.back(); seen.pop_back();
+      if (pp.has_value()) pp = oplus(pp.value(), p.value());
+      _leader[j] = {cur, pp};
+    }
+    return {cur, pp};
+  }
+
+  int leader(int i) { return leaderpot(i).first; }
+  optional<T> pot(int i) { return leaderpot(i).second; }
+
+  int groupSize(int i) { return _gsize[leader(i)]; }
+
+  void build_groups() {
+    if (not built_groups) {
+      _num_groups = 0;
+      for (int j = 0; j < size; j++) if (leader(j) == j) _num_groups++;
+      _groups.resize(size);
+      for (int j = 0; j < size; j++) _groups[j].resize(0);
+      for (int j = 0; j < size; j++) _groups[leader(j)].push_back(j);
+      built_groups = true;
+    }
+  }
+
+  int numGroups() {
+    build_groups();
+    return _num_groups;
+  }
+
+  const vector<int>& group(int i) {
+    build_groups();
+    return _groups[leader(i)];
+  }
+
 };
 
-UnionFind::UnionFind(int s) {
-  size = s;
-  _leader = vector<int>(size);
-  for (int i = 0; i < size; i++) { _leader.at(i) = i; }
-  _rank = vector<int>(size, 1);
-  _gsize = vector<int>(size, 1);
+template<typename T = ll>
+auto makeUnionFind(int size, T zero, auto oplus, auto onegate) {
+  return UnionFind<T, decltype(oplus), decltype(onegate)>(size, zero, oplus, onegate);
 }
-
-int UnionFind::leader(int i) {
-  int cur = i;
-  int nxt = _leader.at(cur);
-  vector<int> seen;
-  while (cur != nxt) {
-    seen.push_back(cur);
-    cur = nxt;
-    nxt = _leader.at(cur);
-  }
-  for (auto j : seen) _leader.at(j) = cur;
-  return cur;
-}
-
-int UnionFind::merge(int i0, int j0) {
-  if (!_groups.empty()) {
-    cerr << "merge() cannot be called after group() or groups()." << endl;
-    exit(1);
-  }
-  int li = leader(i0);
-  int lj = leader(j0);
-  if (li == lj) return li;
-  int ri = _rank.at(li);
-  int rj = _rank.at(lj);
-  int rep = li;
-  int other = lj;
-  if      (ri <  rj) swap(rep, other);
-  else if (ri == rj) _rank.at(rep)++;
-  _leader.at(other) = rep;
-  _gsize.at(rep) += _gsize.at(other);
-  return rep;
-}
-
-int UnionFind::groupSize(int i) {
-  return _gsize.at(leader(i));
-}
-
-const unordered_map<int, vector<int>>& UnionFind::groups() {
-  if (_groups.empty()) {
-    for (int i = 0; i < size; i++) _groups[leader(i)].push_back(i);
-  }
-  return _groups;  
-}
-
-const vector<int>& UnionFind::group(int i) { return groups().at(leader(i)); }
-
-
 
 // ---- end UnionFind.cc
 
-// @@ !! LIM -- end mark --
+// ---- inserted library file cmpNaive.cc
 
-using pll = pair<ll, ll>;
+const string end_mark("^__=end=__^");
 
-int main(/* int argc, char *argv[] */) {
+int naive(istream& cin, ostream& cout);
+int body(istream& cin, ostream& cout);
+
+void cmpNaive() {
+  while (true) {
+    string s;
+    getline(cin, s);
+    bool run_body;
+    if (s.at(0) == 'Q') {
+      return;
+    }else if (s.at(0) == 'B') {
+      run_body = true;
+    }else if (s.at(0) == 'N') {
+      run_body = false;
+    }else {
+      cerr << "Unknown body/naive specifier.\n";
+      exit(1);
+    }
+    string input_s;
+    while (true) {
+      getline(cin, s);
+      if (s == end_mark) break;
+      input_s += s;
+      input_s += "\n";
+    }
+    stringstream ss_in(move(input_s));
+    stringstream ss_out;
+    ss_out << setprecision(20);
+    if (run_body) {
+      body(ss_in, ss_out);
+    }else {
+      naive(ss_in, ss_out);
+    }
+    cout << ss_out.str() << end_mark << endl;
+  }
+}
+
+int main(int argc, char *argv[]) {
   ios_base::sync_with_stdio(false);
   cin.tie(nullptr);
   cout << setprecision(20);
 
-  ll N, M, E; cin >> N >> M >> E;
-  vector<ll> U(E), V(E);
-  REP(i, E) { cin >> U[i] >> V[i]; U[i]--; V[i]--; }
-  ll Q; cin >> Q;
-  vector<ll> X(Q);
-  REP(i, Q) { cin >> X[i]; X[i]--; }
-
-  vector<bool> hasPow(N + M, false);
-  vector<ll> numTown(N + M, 0LL);
-  REP2(i, 0, N + M) {
-    if (i < N) numTown[i] = 1;
-    else hasPow[i] = true;
-  }
-  vector<pll> Z(E);
-  REP(e, E) Z[e] = pll(Q, e);
-  REP(q, Q) Z[X[q]].first = q;
-  sort(ALL(Z), greater<pll>());
-
-  UnionFind uf(N + M);
-  vector<ll> ans(Q);
-  
-  ll cnt = 0;
-  for (auto [q, e] : Z) {
-    if (q == Q - 1) ans[Q - 1] = cnt;
-    ll a = uf.leader(U[e]);
-    ll b = uf.leader(V[e]);
-    if (a != b) {
-      ll nt = numTown[a] + numTown[b];
-      bool hp = hasPow[a] or hasPow[b];
-      if (hasPow[a] and not hasPow[b]) cnt += numTown[b];
-      if (hasPow[b] and not hasPow[a]) cnt += numTown[a];
-      ll c = uf.merge(a, b);
-      numTown[c] = nt;
-      hasPow[c] = hp;
+#if CMPNAIVE
+  if (argc == 2) {
+    if (strcmp(argv[1], "cmpNaive") == 0) {
+      cmpNaive();
+    }else if (strcmp(argv[1], "naive") == 0) {
+      naive(cin, cout);
+    }else if (strcmp(argv[1], "skip") == 0) {
+      exit(0);
+    }else {
+      cerr << "Unknown argument.\n";
+      exit(1);
     }
-    if (0 < q and q < Q) ans[q - 1] = cnt;
+  }else {
+#endif
+    body(cin, cout);
+#if CMPNAIVE
   }
-  REP(i, Q) cout << ans[i] << "\n";
+#endif
+  return 0;
+}
+
+/*
+*/
+
+// ---- end cmpNaive.cc
+
+// @@ !! LIM -- end mark --
+
+int naive(istream& cin, ostream& cout) {
+  ll N, M, E; cin >> N >> M >> E;
+
+  vector<ll> U(E, 0LL), V(E, 0LL);
+  REP(i, 0, E) {
+    ll u, v; cin >> u >> v; u--; v--;
+    U[i] = u;
+    V[i] = v;
+  }
+  ll Q; cin >> Q;
+  vector<ll> X(Q, 0LL);
+  REP(i, 0, Q) {
+    ll x; cin >> x; x--;
+    X[i] = x;
+  }
+  vector C(E, false);
+  REP(q, 0, Q) {
+    C[X[q]] = true;
+    UnionFind uf(N + M);
+    REP(i, 0, E) if (not C[i]) uf.merge(U[i], V[i]);
+    ll ans = 0;
+    vector seen(N + M, false);
+    REP(i, N, N + M) {
+      ll ld = uf.leader(i);
+      if (not seen[ld]) {
+        seen[ld] = true;
+        for (int j: uf.group(i)) if (j < N) ans++;
+      }
+    }
+    cout << ans << "\n";
+  }
+  return 0;
+}
+
+int body(istream& cin, ostream& cout) {
+  ll N, M, E; cin >> N >> M >> E;
+
+  auto alt = [&](ll i) -> ll { return i < N ? i : N; };
+
+  vector<ll> U(E, 0LL), V(E, 0LL);
+  REP(i, 0, E) {
+    ll u, v; cin >> u >> v; u--; v--;
+    U[i] = alt(u);
+    V[i] = alt(v);
+  }
+  ll Q; cin >> Q;
+  vector<ll> X(Q, 0LL);
+  REP(i, 0, Q) {
+    ll x; cin >> x; x--;
+    X[i] = x;
+  }
+
+  vector<bool> C(E, false);
+  REP(i, 0, Q) C[X[i]] = true;
+  
+  UnionFind uf(N + 1);
+  REP(i, 0, E) if (not C[i]) uf.merge(U[i], V[i]);
+  vector ans(Q, 0LL);
+  REPrev(i, Q - 1, 0) {
+    ans[i] = uf.groupSize(N) - 1;
+    uf.merge(U[X[i]], V[X[i]]);
+  }
+  REPOUT(i, 0, Q, ans[i], "\n");
 
   return 0;
 }

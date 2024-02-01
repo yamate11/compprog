@@ -9,7 +9,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>D - Maximum Average Sets</title>
+	<title>A - Majority</title>
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 	<meta http-equiv="Content-Language" content="en">
 	<meta name="viewport" content="width=device-width,initial-scale=1.0">
@@ -32,15 +32,15 @@
 
 	<meta property="og:site_name" content="AtCoder">
 	
-	<meta property="og:title" content="D - Maximum Average Sets" />
+	<meta property="og:title" content="A - Majority" />
 	<meta property="og:description" content="AtCoder is a programming contest site for anyone from beginners to experts. We hold weekly programming contests online." />
 	<meta property="og:type" content="website" />
-	<meta property="og:url" content="https://atcoder.jp/contests/abc057/tasks/abc057_d" />
+	<meta property="og:url" content="https://atcoder.jp/contests/abc287/tasks/abc287_a" />
 	<meta property="og:image" content="https://img.atcoder.jp/assets/atcoder.png" />
 	<meta name="twitter:card" content="summary" />
 	<meta name="twitter:site" content="@atcoder" />
 	
-	<meta property="twitter:title" content="D - Maximum Average Sets" />
+	<meta property="twitter:title" content="A - Majority" />
 
 	<link href="//fonts.googleapis.com/css?family=Lato:400,700" rel="stylesheet" type="text/css">
 	<link rel="stylesheet" type="text/css" href="//img.atcoder.jp/public/74ba18f/css/bootstrap.min.css">
@@ -55,7 +55,7 @@
 	<script>
 		var LANG = "en";
 		var userScreenName = "yamate11";
-		var csrfToken = "t43dEjKzW2w9sltkd4AbeCWlkQl3MRhypbbgJ63zJVc="
+		var csrfToken = "hiQedtsnEKszEc6Eu2fr0DLtap0RavJ0CzMtlKzO0hE="
 	</script>
 	<script src="//img.atcoder.jp/public/74ba18f/js/utils.js"></script>
 	
@@ -63,11 +63,11 @@
 		<script src="//img.atcoder.jp/public/74ba18f/js/contest.js"></script>
 		<link href="//img.atcoder.jp/public/74ba18f/css/contest.css" rel="stylesheet" />
 		<script>
-			var contestScreenName = "abc057";
+			var contestScreenName = "abc287";
 			var remainingText = "Remaining Time";
 			var countDownText = "Contest begins in";
-			var startTime = moment("2017-03-26T21:00:00+09:00");
-			var endTime = moment("2017-03-26T22:40:00+09:00");
+			var startTime = moment("2023-01-28T21:00:00+09:00");
+			var endTime = moment("2023-01-28T22:40:00+09:00");
 		</script>
 		<style></style>
 	
@@ -131,11 +131,11 @@
 				<h4 class="modal-title">Contest started</h4>
 			</div>
 			<div class="modal-body">
-				<p>AtCoder Beginner Contest 057 has begun.</p>
+				<p>UNIQUE VISION Programming Contest 2023 New Year (AtCoder Beginner Contest 287) has begun.</p>
 			</div>
 			<div class="modal-footer">
 				
-					<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+					<a class="btn btn-primary" href='/contests/abc287/tasks'>Go to the task list page</a>
 				
 			</div>
 		</div>
@@ -149,7 +149,7 @@
 				<h4 class="modal-title">Contest is over</h4>
 			</div>
 			<div class="modal-body">
-				<p>AtCoder Beginner Contest 057 has ended.</p>
+				<p>UNIQUE VISION Programming Contest 2023 New Year (AtCoder Beginner Contest 287) has ended.</p>
 			</div>
 			<div class="modal-footer">
 				<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
@@ -171,7 +171,7 @@
 			<div class="collapse navbar-collapse" id="navbar-collapse">
 				<ul class="nav navbar-nav">
 				
-					<li><a class="contest-title" href="/contests/abc057">AtCoder Beginner Contest 057</a></li>
+					<li><a class="contest-title" href="/contests/abc287">UNIQUE VISION Programming Contest 2023 New Year (AtCoder Beginner Contest 287)</a></li>
 				
 				</ul>
 				<ul class="nav navbar-nav navbar-right">
@@ -181,15 +181,15 @@
 							<img src='//img.atcoder.jp/assets/top/img/flag-lang/en.png'> English <span class="caret"></span>
 						</a>
 						<ul class="dropdown-menu">
-							<li><a href="/contests/abc057/tasks/abc057_d?lang=ja"><img src='//img.atcoder.jp/assets/top/img/flag-lang/ja.png'> 日本語</a></li>
-							<li><a href="/contests/abc057/tasks/abc057_d?lang=en"><img src='//img.atcoder.jp/assets/top/img/flag-lang/en.png'> English</a></li>
+							<li><a href="/contests/abc287/tasks/abc287_a?lang=ja"><img src='//img.atcoder.jp/assets/top/img/flag-lang/ja.png'> 日本語</a></li>
+							<li><a href="/contests/abc287/tasks/abc287_a?lang=en"><img src='//img.atcoder.jp/assets/top/img/flag-lang/en.png'> English</a></li>
 						</ul>
 					</li>
 					
 					
 						<li class="dropdown">
 							<a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
-								<span class="glyphicon glyphicon-cog" aria-hidden="true"></span> yamate11 (Guest) <span class="caret"></span>
+								<span class="glyphicon glyphicon-cog" aria-hidden="true"></span> yamate11 (Contestant) <span class="caret"></span>
 							</a>
 							<ul class="dropdown-menu">
 								<li><a href="/users/yamate11"><span class="glyphicon glyphicon-user" aria-hidden="true"></span> My Profile</a></li>
@@ -211,8 +211,8 @@
 		</div>
 	</nav>
 
-	<form method="POST" name="form_logout" action="/logout?continue=https%3A%2F%2Fatcoder.jp%2Fcontests%2Fabc057%2Ftasks%2Fabc057_d">
-		<input type="hidden" name="csrf_token" value="t43dEjKzW2w9sltkd4AbeCWlkQl3MRhypbbgJ63zJVc=" />
+	<form method="POST" name="form_logout" action="/logout?continue=https%3A%2F%2Fatcoder.jp%2Fcontests%2Fabc287%2Ftasks%2Fabc287_a">
+		<input type="hidden" name="csrf_token" value="hiQedtsnEKszEc6Eu2fr0DLtap0RavJ0CzMtlKzO0hE=" />
 	</form>
 	<div id="main-container" class="container"
 		 	style="padding-top:50px;">
@@ -225,35 +225,35 @@
 		<small class="contest-duration">
 			
 				Contest Duration:
-				<a href='http://www.timeanddate.com/worldclock/fixedtime.html?iso=20170326T2100&p1=248' target='blank'><time class='fixtime fixtime-full'>2017-03-26 21:00:00+0900</time></a> - <a href='http://www.timeanddate.com/worldclock/fixedtime.html?iso=20170326T2240&p1=248' target='blank'><time class='fixtime fixtime-full'>2017-03-26 22:40:00+0900</time></a> (local time)
+				<a href='http://www.timeanddate.com/worldclock/fixedtime.html?iso=20230128T2100&p1=248' target='blank'><time class='fixtime fixtime-full'>2023-01-28 21:00:00+0900</time></a> - <a href='http://www.timeanddate.com/worldclock/fixedtime.html?iso=20230128T2240&p1=248' target='blank'><time class='fixtime fixtime-full'>2023-01-28 22:40:00+0900</time></a> (local time)
 				(100 minutes)
 			
 		</small>
 		<small class="back-to-home pull-right"><a href="/home">Back to Home</a></small>
 	</div>
 	<ul class="nav nav-tabs">
-		<li><a href="/contests/abc057"><span class="glyphicon glyphicon-home" aria-hidden="true"></span> Top</a></li>
+		<li><a href="/contests/abc287"><span class="glyphicon glyphicon-home" aria-hidden="true"></span> Top</a></li>
 		
-			<li class="active"><a href="/contests/abc057/tasks"><span class="glyphicon glyphicon-tasks" aria-hidden="true"></span> Tasks</a></li>
-		
-
-		
-			<li><a href="/contests/abc057/clarifications"><span class="glyphicon glyphicon-question-sign" aria-hidden="true"></span> Clarifications <span id="clar-badge" class="badge"></span></a></li>
+			<li class="active"><a href="/contests/abc287/tasks"><span class="glyphicon glyphicon-tasks" aria-hidden="true"></span> Tasks</a></li>
 		
 
 		
-			<li><a href="/contests/abc057/submit?taskScreenName=abc057_d"><span class="glyphicon glyphicon-send" aria-hidden="true"></span> Submit</a></li>
+			<li><a href="/contests/abc287/clarifications"><span class="glyphicon glyphicon-question-sign" aria-hidden="true"></span> Clarifications <span id="clar-badge" class="badge"></span></a></li>
+		
+
+		
+			<li><a href="/contests/abc287/submit?taskScreenName=abc287_a"><span class="glyphicon glyphicon-send" aria-hidden="true"></span> Submit</a></li>
 		
 
 		
 			<li>
 				<a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false"><span class="glyphicon glyphicon-list" aria-hidden="true"></span> Results<span class="caret"></span></a>
 				<ul class="dropdown-menu">
-					<li><a href="/contests/abc057/submissions"><span class="glyphicon glyphicon-globe" aria-hidden="true"></span> All Submissions</a></li>
+					<li><a href="/contests/abc287/submissions"><span class="glyphicon glyphicon-globe" aria-hidden="true"></span> All Submissions</a></li>
 					
-						<li><a href="/contests/abc057/submissions/me"><span class="glyphicon glyphicon-user" aria-hidden="true"></span> My Submissions</a></li>
+						<li><a href="/contests/abc287/submissions/me"><span class="glyphicon glyphicon-user" aria-hidden="true"></span> My Submissions</a></li>
 						<li class="divider"></li>
-						<li><a href="/contests/abc057/score"><span class="glyphicon glyphicon-dashboard" aria-hidden="true"></span> My Score</a></li>
+						<li><a href="/contests/abc287/score"><span class="glyphicon glyphicon-dashboard" aria-hidden="true"></span> My Score</a></li>
 					
 				</ul>
 			</li>
@@ -262,21 +262,21 @@
 		
 			
 				
-					<li><a href="/contests/abc057/standings"><span class="glyphicon glyphicon-sort-by-attributes-alt" aria-hidden="true"></span> Standings</a></li>
+					<li><a href="/contests/abc287/standings"><span class="glyphicon glyphicon-sort-by-attributes-alt" aria-hidden="true"></span> Standings</a></li>
 				
 			
 				
-					<li><a href="/contests/abc057/standings/virtual"><span class="glyphicon glyphicon-sort-by-attributes-alt" aria-hidden="true"></span> Virtual Standings</a></li>
+					<li><a href="/contests/abc287/standings/virtual"><span class="glyphicon glyphicon-sort-by-attributes-alt" aria-hidden="true"></span> Virtual Standings</a></li>
 				
 			
 		
 
 		
-			<li><a href="/contests/abc057/custom_test"><span class="glyphicon glyphicon-wrench" aria-hidden="true"></span> Custom Test</a></li>
+			<li><a href="/contests/abc287/custom_test"><span class="glyphicon glyphicon-wrench" aria-hidden="true"></span> Custom Test</a></li>
 		
 
 		
-			<li><a href="/contests/abc057/editorial"><span class="glyphicon glyphicon-book" aria-hidden="true"></span> Editorial</a></li>
+			<li><a href="/contests/abc287/editorial"><span class="glyphicon glyphicon-book" aria-hidden="true"></span> Editorial</a></li>
 		
 		
 			
@@ -288,8 +288,8 @@
 </div>
 	<div class="col-sm-12">
 		<span class="h2">
-			D - Maximum Average Sets
-			<a class="btn btn-default btn-sm" href="/contests/abc057/tasks/abc057_d/editorial">Editorial</a>
+			A - Majority
+			<a class="btn btn-default btn-sm" href="/contests/abc287/tasks/abc287_a/editorial">Editorial</a>
 		</span>
 		<span id="task-lang-btn" class="pull-right"><span data-lang="ja"><img src='//img.atcoder.jp/assets/top/img/flag-lang/ja.png'></span> / <span data-lang="en"><img src='//img.atcoder.jp/assets/top/img/flag-lang/en.png'></span></span>
 		<script>
@@ -328,7 +328,7 @@
 		</script>
 		<hr/>
 		<p>
-			Time Limit: 2 sec / Memory Limit: 256 MB
+			Time Limit: 2 sec / Memory Limit: 1024 MB
 			
 		</p>
 
@@ -336,25 +336,21 @@
 			
 			<span class="lang">
 <span class="lang-ja">
-<p>配点 : <var>400</var> 点</p>
+<p>配点 : <var>100</var> 点</p>
 
 <div class="part">
 <section>
-<h3>問題文</h3><p><var>N</var> 個の品物が与えられます。<br />
-<var>i</var> 番目の品物の価値は <var>v_i (1≦i≦N)</var> です。<br />
-これらの品物から、<var>A</var> 個以上、<var>B</var> 個以下を選ばなければなりません。<br />
-この制約下において、選んだ品物の価値の平均の最大値を求めてください。<br />
-また、選んだ品物の平均が最大となるような品物の選び方が何通りあるかを求めてください。  </p>
+<h3>問題文</h3><p>ある提案に対し、<var>N</var> 人の人が賛成か反対かを表明しています。なお、<var>N</var> は奇数です。</p>
+<p><var>i \, (i = 1, 2, \dots, N)</var> 番目の人の意見は文字列 <var>S_i</var> で表され、<var>S_i = </var> <code>For</code> のとき賛成しており、<var>S_i = </var> <code>Against</code> のとき反対しています。</p>
+<p>過半数の人がこの提案に賛成しているかどうかを判定してください。</p>
 </section>
 </div>
 
 <div class="part">
 <section>
 <h3>制約</h3><ul>
-<li><var>1≦N≦50</var></li>
-<li><var>1≦A≦B≦N</var></li>
-<li><var>1≦v_i≦10^{15}</var></li>
-<li><var>v_i</var> は全て整数である。</li>
+<li><var>N</var> は <var>1</var> 以上 <var>99</var> 以下の<strong>奇数</strong></li>
+<li>全ての <var>i = 1, 2, \dots, N</var> に対し、<var>S_i = </var> <code>For</code> または <var>S_i = </var> <code>Against</code></li>
 </ul>
 </section>
 </div>
@@ -364,18 +360,18 @@
 <div class="part">
 <section>
 <h3>入力</h3><p>入力は以下の形式で標準入力から与えられる。</p>
-<pre><var>N</var> <var>A</var> <var>B</var>
-<var>v_1</var> <var>v_2</var> <var>...</var> <var>v_N</var>  
+<pre><var>N</var>
+<var>S_1</var>
+<var>S_2</var>
+<var>\vdots</var>
+<var>S_N</var>
 </pre>
-
 </section>
 </div>
 
 <div class="part">
 <section>
-<h3>出力</h3><p>解答を <var>2</var> 行に出力せよ。<br />
-<var>1</var> 行目には、選んだ品物の価値の平均の最大値を出力せよ。絶対誤差または相対誤差が <var>10^{−6}</var> 以下ならば正解となる。<br />
-<var>2</var> 行目には、選んだ品物の平均が最大となるような品物の選び方の数を出力せよ。  </p>
+<h3>出力</h3><p><var>N</var> 人のうち過半数が提案に賛成しているならば <code>Yes</code>、そうでなければ <code>No</code> と出力せよ。</p>
 </section>
 </div>
 </div>
@@ -383,100 +379,74 @@
 <hr />
 <div class="part">
 <section>
-<h3>入力例 1</h3><pre>5 2 2
-1 2 3 4 5
+<h3>入力例 1</h3><pre>3
+For
+Against
+For
 </pre>
-
 </section>
 </div>
 
 <div class="part">
 <section>
-<h3>出力例 1</h3><pre>4.500000
-1
+<h3>出力例 1</h3><pre>Yes
 </pre>
-
-<p><var>4</var> 番目の品物と <var>5</var> 番目の品物を選ぶと価値の平均が最大となるため、出力の <var>1</var> 行目は <var>4.5</var> です。 <br />
-また、それ以外の品物の選び方で価値の平均が <var>4.5</var> になるものはないため、出力の <var>2</var> 行目は <var>1</var> です。  </p>
-</section>
-</div>
-
-<hr />
-<div class="part">
-<section>
-<h3>入力例 2</h3><pre>4 2 3
-10 20 10 10
-</pre>
-
-</section>
-</div>
-
-<div class="part">
-<section>
-<h3>出力例 2</h3><pre>15.000000
-3
-</pre>
-
-<p>価値の平均が最大となる品物の選び方は複数存在することがあります。  </p>
+<p>提案に賛成している人数は <var>2</var> 人であり、これは半数を超えているので <code>Yes</code> と出力します。</p>
 </section>
 </div>
 
 <hr />
 <div class="part">
 <section>
-<h3>入力例 3</h3><pre>5 1 5
-1000000000000000 999999999999999 999999999999998 999999999999997 999999999999996
+<h3>入力例 2</h3><pre>5
+Against
+Against
+For
+Against
+For
 </pre>
-
 </section>
 </div>
 
 <div class="part">
 <section>
-<h3>出力例 3</h3><pre>1000000000000000.000000
-1
+<h3>出力例 2</h3><pre>No
 </pre>
-
+<p>提案に賛成している人数は <var>2</var> 人であり、これは半数以下なので <code>No</code> と出力します。</p>
 </section>
 </div>
 
 <hr />
 <div class="part">
 <section>
-<h3>入力例 4</h3><pre>50 1 50
-1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1
+<h3>入力例 3</h3><pre>1
+For
 </pre>
-
 </section>
 </div>
 
 <div class="part">
 <section>
-<h3>出力例 4</h3><pre>1.000000
-1125899906842623
+<h3>出力例 3</h3><pre>Yes
 </pre></section>
 </div>
 </span>
 <span class="lang-en">
-<p>Score : <var>400</var> points</p>
+<p>Score : <var>100</var> points</p>
 
 <div class="part">
 <section>
-<h3>Problem Statement</h3><p>You are given <var>N</var> items.<br />
-The <em>value</em> of the <var>i</var>-th item <var>(1 \leq i \leq N)</var> is <var>v_i</var>.<br />
-Your have to select at least <var>A</var> and at most <var>B</var> of these items.<br />
-Under this condition, find the maximum possible arithmetic mean of the values of selected items.<br />
-Additionally, find the number of ways to select items so that the mean of the values of selected items is maximized.  </p>
+<h3>Problem Statement</h3><p>There are <var>N</var> people.  Each of them agrees or disagrees with a proposal.  Here, <var>N</var> is an odd number.</p>
+<p>The <var>i</var>-th <var>(i = 1, 2, \dots, N)</var> person's opinion is represented by a string <var>S_i</var>: the person agrees if <var>S_i = </var> <code>For</code> and disagrees if <var>S_i = </var> <code>Against</code>.</p>
+<p>Determine whether the majority agrees with the proposal.</p>
 </section>
 </div>
 
 <div class="part">
 <section>
 <h3>Constraints</h3><ul>
-<li><var>1 \leq N \leq 50</var></li>
-<li><var>1 \leq A,B \leq N</var></li>
-<li><var>1 \leq v_i \leq 10^{15}</var></li>
-<li>Each <var>v_i</var> is an integer.</li>
+<li><var>N</var> is an <strong>odd number</strong> between <var>1</var> and <var>99</var>, inclusive.</li>
+<li><var>S_i = </var> <code>For</code> or <var>S_i = </var> <code>Against</code>, for all <var>i = 1, 2, \dots, N</var>.</li>
 </ul>
 </section>
 </div>
@@ -486,21 +456,18 @@ Additionally, find the number of ways to select items so that the mean of the va
 <div class="part">
 <section>
 <h3>Input</h3><p>The input is given from Standard Input in the following format:</p>
-<pre><var>N</var> <var>A</var> <var>B</var>
-<var>v_1</var>
-<var>v_2</var>
-...
-<var>v_N</var>
+<pre><var>N</var>
+<var>S_1</var>
+<var>S_2</var>
+<var>\vdots</var>
+<var>S_N</var>
 </pre>
-
 </section>
 </div>
 
 <div class="part">
 <section>
-<h3>Output</h3><p>Print two lines.<br />
-The first line should contain the maximum possible arithmetic mean of the values of selected items. The output should be considered correct if the absolute or relative error is at most <var>10^{-6}</var>.<br />
-The second line should contain the number of ways to select items so that the mean of the values of selected items is maximized.</p>
+<h3>Output</h3><p>Print <code>Yes</code> if the majority of the <var>N</var> people agree with the proposal; print <code>No</code> otherwise.</p>
 </section>
 </div>
 </div>
@@ -508,58 +475,55 @@ The second line should contain the number of ways to select items so that the me
 <hr />
 <div class="part">
 <section>
-<h3>Sample Input 1</h3><pre>5 2 2
-1 2 3 4 5
+<h3>Sample Input 1</h3><pre>3
+For
+Against
+For
 </pre>
-
 </section>
 </div>
 
 <div class="part">
 <section>
-<h3>Sample Output 1</h3><pre>4.500000
-1
+<h3>Sample Output 1</h3><pre>Yes
 </pre>
-
-<p>The mean of the values of selected items will be maximized when selecting the fourth and fifth items. Hence, the first line of the output should contain <var>4.5</var>.<br />
-There is no other way to select items so that the mean of the values will be <var>4.5</var>, and thus the second line of the output should contain <var>1</var>.</p>
-</section>
-</div>
-
-<hr />
-<div class="part">
-<section>
-<h3>Sample Input 2</h3><pre>4 2 3
-10 20 10 10
-</pre>
-
-</section>
-</div>
-
-<div class="part">
-<section>
-<h3>Sample Output 2</h3><pre>15.000000
-3
-</pre>
-
-<p>There can be multiple ways to select items so that the mean of the values will be maximized.</p>
+<p>The proposal is supported by two people, which is the majority, so <code>Yes</code> should be printed.</p>
 </section>
 </div>
 
 <hr />
 <div class="part">
 <section>
-<h3>Sample Input 3</h3><pre>5 1 5
-1000000000000000 999999999999999 999999999999998 999999999999997 999999999999996
+<h3>Sample Input 2</h3><pre>5
+Against
+Against
+For
+Against
+For
 </pre>
-
 </section>
 </div>
 
 <div class="part">
 <section>
-<h3>Sample Output 3</h3><pre>1000000000000000.000000
-1
+<h3>Sample Output 2</h3><pre>No
+</pre>
+<p>The proposal is supported by two people, which is not the majority, so <code>No</code> should be printed.</p>
+</section>
+</div>
+
+<hr />
+<div class="part">
+<section>
+<h3>Sample Input 3</h3><pre>1
+For
+</pre>
+</section>
+</div>
+
+<div class="part">
+<section>
+<h3>Sample Output 3</h3><pre>Yes
 </pre></section>
 </div>
 </span>
@@ -571,8 +535,8 @@ There is no other way to select items so that the mean of the values will be <va
 
 		
 		<hr/>
-		<form class="form-horizontal form-code-submit" action="/contests/abc057/submit" method="POST">
-			<input type="hidden" name="data.TaskScreenName" value="abc057_d" />
+		<form class="form-horizontal form-code-submit" action="/contests/abc287/submit" method="POST">
+			<input type="hidden" name="data.TaskScreenName" value="abc287_a" />
 			
 			<div class="form-group ">
 				<label class="control-label col-sm-3 col-md-2" for="select-lang">Language</label>
@@ -797,7 +761,7 @@ There is no other way to select items so that the mean of the values will be <va
 </div>
 
 
-			<input type="hidden" name="csrf_token" value="t43dEjKzW2w9sltkd4AbeCWlkQl3MRhypbbgJ63zJVc=" />
+			<input type="hidden" name="csrf_token" value="hiQedtsnEKszEc6Eu2fr0DLtap0RavJ0CzMtlKzO0hE=" />
 			<div class="form-group">
 				<label class="control-label col-sm-3 col-md-2"></label>
 				<div class="col-sm-5">
@@ -817,7 +781,7 @@ There is no other way to select items so that the mean of the values will be <va
 			
 			
 			
-<div class="a2a_kit a2a_kit_size_20 a2a_default_style pull-right" data-a2a-url="https://atcoder.jp/contests/abc057/tasks/abc057_d?lang=en" data-a2a-title="D - Maximum Average Sets">
+<div class="a2a_kit a2a_kit_size_20 a2a_default_style pull-right" data-a2a-url="https://atcoder.jp/contests/abc287/tasks/abc287_a?lang=en" data-a2a-title="A - Majority">
 	<a class="a2a_button_facebook"></a>
 	<a class="a2a_button_twitter"></a>
 	
@@ -837,8 +801,8 @@ There is no other way to select items so that the mean of the values will be <va
 			<footer class="footer">
 			
 				<ul>
-					<li><a href="/contests/abc057/rules">Rule</a></li>
-					<li><a href="/contests/abc057/glossary">Glossary</a></li>
+					<li><a href="/contests/abc287/rules">Rule</a></li>
+					<li><a href="/contests/abc287/glossary">Glossary</a></li>
 					
 				</ul>
 			
