@@ -112,6 +112,7 @@ def makeSource(path):
 #include <cassert>
 using namespace std;
 using ll = long long int;
+using u64 = unsigned long long;
 using pll = pair<ll, ll>;
 // #include <atcoder/all>
 // using namespace atcoder;
