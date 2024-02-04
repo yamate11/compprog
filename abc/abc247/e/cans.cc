@@ -1,14 +1,15 @@
 #include <bits/stdc++.h>
 #include <cassert>
-typedef long long int ll;
 using namespace std;
+using ll = long long int;
+using pll = pair<ll, ll>;
 // #include <atcoder/all>
 // using namespace atcoder;
-#define REP2(i, a, b) for (ll i = (a); i < (b); i++)
-#define REP2R(i, a, b) for (ll i = (a); i >= (b); i--)
-#define REP(i, b) REP2(i, 0, b)
+#define REP(i, a, b) for (ll i = (a); i < (b); i++)
+#define REPrev(i, a, b) for (ll i = (a); i >= (b); i--)
 #define ALL(coll) (coll).begin(), (coll).end()
 #define SIZE(v) ((ll)((v).size()))
+#define REPOUT(i, a, b, exp, sep) REP(i, (a), (b)) cout << (exp) << (i + 1 == (b) ? "" : (sep)); cout << "\n"
 
 // @@ !! LIM()
 
@@ -18,64 +19,30 @@ int main(/* int argc, char *argv[] */) {
   cout << setprecision(20);
 
   ll N, X, Y; cin >> N >> X >> Y;
-  vector<ll> A(N);
-  REP(i, N) cin >> A[i];
-  if (X == Y) {
-    ll ans = 0;
+  // @InpVec(N, A) [YWhj4HG9]
+  auto A = vector(N, ll());
+  for (int i = 0; i < N; i++) { ll v; cin >> v; A[i] = v; }
+  // @End [YWhj4HG9]
+
+  auto func = [&](ll a, ll b) -> ll {
     ll i = 0;
-    while (i < N) {
-      while (i < N and (A[i] != X)) i++;
-      if (i == N) break;
-      ll t = i;
-      while (i < N and (A[i] == X)) i++;
-      ll m = i - t;
-      ans += m * (m + 1) / 2;
-    }
-    cout << ans << endl;
-    return 0;
-  }
-  auto func = [&](ll s, ll t) -> ll {
+    ll j = 0;
+    ll out = 0;
     ll ret = 0;
-    ll i = s;
-    bool bY = false, bX = false;
-    ll p;
-    ll j = i;
-    for ( ; j <= t; j++) {
-      if (A[j] == Y) {
-        if (bX) {
-          ret += (p - i + 1) * (t - j + 1);
-          i = p + 1;
-          p = j;
-          bX = false;
-          bY = true;
-        }else {
-          bY = true;
-          p = j;
-        }
-      }else if (A[j] == X) {
-        if (bY) {
-          ret += (p - i + 1) * (t - j + 1);
-          i = p + 1;
-          p = j;
-          bY = false;
-          bX = true;
-        }else {
-          bX = true;
-          p = j;
-        }
+    while (true) {
+      if (out == 0) {
+        ret += j - i;
+        if (j == N) break;
+        if (A[j] < a or b < A[j]) out++;
+        j++;
+      }else {
+        if (A[i] < a or b < A[i]) out--;
+        i++;
       }
     }
     return ret;
   };
-  ll ans = 0;
-  ll i = 0;
-  while (i < N) {
-    while (i < N and (A[i] < Y or X < A[i])) i++;
-    if (i == N) break;
-    ll t = i;
-    while (i < N and (Y <= A[i] and A[i] <= X)) i++;
-    ans += func(t, i - 1);
-  }
+  ll ans = func(Y, X) - func(Y + 1, X) - func(Y, X - 1) + func(Y + 1, X - 1);
   cout << ans << endl;
 
   return 0;

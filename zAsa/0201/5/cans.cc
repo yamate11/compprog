@@ -11,7 +11,7 @@ using pll = pair<ll, ll>;
 #define SIZE(v) ((ll)((v).size()))
 #define REPOUT(i, a, b, exp, sep) REP(i, (a), (b)) cout << (exp) << (i + 1 == (b) ? "" : (sep)); cout << "\n"
 
-// @@ !! LIM(perm)
+// @@ !! LIM(perm cmpNaive)
 
 // ---- inserted library file perm.cc
 
@@ -171,9 +171,109 @@ struct IntDirProd {
 
 // ---- end perm.cc
 
+// ---- inserted library file cmpNaive.cc
+
+const string end_mark("^__=end=__^");
+
+int naive(istream& cin, ostream& cout);
+int body(istream& cin, ostream& cout);
+
+void cmpNaive() {
+  while (true) {
+    string s;
+    getline(cin, s);
+    bool run_body;
+    if (s.at(0) == 'Q') {
+      return;
+    }else if (s.at(0) == 'B') {
+      run_body = true;
+    }else if (s.at(0) == 'N') {
+      run_body = false;
+    }else {
+      cerr << "Unknown body/naive specifier.\n";
+      exit(1);
+    }
+    string input_s;
+    while (true) {
+      getline(cin, s);
+      if (s == end_mark) break;
+      input_s += s;
+      input_s += "\n";
+    }
+    stringstream ss_in(move(input_s));
+    stringstream ss_out;
+    ss_out << setprecision(20);
+    if (run_body) {
+      body(ss_in, ss_out);
+    }else {
+      naive(ss_in, ss_out);
+    }
+    cout << ss_out.str() << end_mark << endl;
+  }
+}
+
+int main(int argc, char *argv[]) {
+  ios_base::sync_with_stdio(false);
+  cin.tie(nullptr);
+  cout << setprecision(20);
+
+#if CMPNAIVE
+  if (argc == 2) {
+    if (strcmp(argv[1], "cmpNaive") == 0) {
+      cmpNaive();
+    }else if (strcmp(argv[1], "naive") == 0) {
+      naive(cin, cout);
+    }else if (strcmp(argv[1], "skip") == 0) {
+      exit(0);
+    }else {
+      cerr << "Unknown argument.\n";
+      exit(1);
+    }
+  }else {
+#endif
+    body(cin, cout);
+#if CMPNAIVE
+  }
+#endif
+  return 0;
+}
+
+/*
+int naive(istream& cin, ostream& cout) {
+  return 0;
+}
+int body(istream& cin, ostream& cout) {
+  return 0;
+}
+*/
+
+// ---- end cmpNaive.cc
+
 // @@ !! LIM -- end mark --
 
-int main() {
+int naive(istream& cin, ostream& cout) {
+  ll N, W; cin >> N >> W;
+  // @InpMVec(N, (vecW, vecV)) [6ME95oni]
+  auto vecW = vector(N, ll());
+  auto vecV = vector(N, ll());
+  for (int i = 0; i < N; i++) {
+    ll v1; cin >> v1; vecW[i] = v1;
+    ll v2; cin >> v2; vecV[i] = v2;
+  }
+  // @End [6ME95oni]
+  ll ans = 0;
+  REP(x, 0, 1LL << N) {
+    ll w = 0, v = 0;
+    REP(t, 0, N) if (x >> t & 1) {
+      w += vecW[t];
+      v += vecV[t];
+    }
+    if (w <= W) ans = max(ans, v);
+  }
+  cout << ans << endl;
+  return 0;
+}
+int body(istream& cin, ostream& cout) {
   ll N, W; cin >> N >> W;
   vector val(4, vector<ll>());
   ll w_base = -1;
@@ -183,31 +283,25 @@ int main() {
     val[w - w_base].push_back(v);
   }
   REP(i, 0, 4) sort(ALL(val[i]), greater<ll>());
+  vector acc(4, vector(1, 0LL));
+  REP(i, 0, 4) {
+    acc[i].resize(SIZE(val[i]) + 1);
+    REP(j, 0, SIZE(val[i])) acc[i][j + 1] = acc[i][j] + val[i][j];
+  }
+  vector<ll> szs(3);  REP(i, 0, 3) szs[i] = SIZE(val[i]) + 1;
+  IntDirProd idp(szs);
   ll ans = 0;
-  ll i0 = 0, w0 = 0, v0 = 0;
-  while (true) {
-    ll i1 = 0, w1 = 0, v1 = 0;
-    while (true) {
-      ll i2 = 0, w2 = 0, v2 = 0;
-      while (true) {
-        ll i3 = 0, w3 = 0, v3 = 0;
-        while (true) {
-          if (w0 + w1 + w2 + w3 <= W) ans = max(ans, v0 + v1 + v2 + v3);
-          if (i3 == SIZE(val[3])) break;
-          w3 += w_base + 3;
-          v3 += val[3][i3++];
-        }
-        if (i2 == SIZE(val[2])) break;
-        w2 += w_base + 2;
-        v2 += val[2][i2++];
-      }
-      if (i1 == SIZE(val[1])) break;
-      w1 += w_base + 1;
-      v1 += val[1];
+  while (idp.get()) {
+    ll w = 0, v = 0;
+    REP(i, 0, 3) {
+      w += idp.at(i) * (w_base + i);
+      v += acc[i][idp.at(i)];
     }
-    if (i0 == SIZE(val[0])) break;
-    w0 += w_base;
-    v0 += val[0];
+    if (w <= W) {
+      ll m = min(SIZE(val[3]), (W - w) / (w_base + 3));
+      v += acc[3][m];
+      ans = max(ans, v);
+    }
   }
   cout << ans << endl;
 
