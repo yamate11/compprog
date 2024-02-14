@@ -288,30 +288,28 @@ vector<T> read_vector(istream& is) {
 
 // auto [g, s, t] = eGCD(a, b)
 //     g == gcd(|a|, |b|) and as + bt == g           
-//     |a| and |b| must be less than 2^31.
+//     It guarantees that max(|s|, |t|) <= max(|a| / g, |b| / g)   (when g != 0)
+//     Note that gcd(a, 0) == gcd(0, a) == a.
 tuple<ll, ll, ll> eGCD(ll a, ll b) {
-#if DEBUG
-  if (abs(a) >= (1LL << 31) or abs(b) >= (1LL << 31)) throw runtime_error("eGCD: not within the range");
-#endif    
-  array<ll, 50> vec;  // Sufficiently large for a, b < 2^31.
-  ll idx = 0;
-  while (a != 0) {
-    ll x = b / a;
-    ll y = b % a;
-    vec[idx++] = x;
-    b = a;
-    a = y;
+  ll sa = a < 0 ? -1 : 1;
+  ll ta = 0;
+  ll za = a * sa;
+  ll sb = 0;
+  ll tb = b < 0 ? -1 : 1;
+  ll zb = b * tb;
+  while (zb != 0) {
+    ll q = za / zb;
+    ll r = za % zb;
+    za = zb;
+    zb = r;
+    ll new_sb = sa - q * sb;
+    sa = sb;
+    sb = new_sb;
+    ll new_tb = ta - q * tb;
+    ta = tb;
+    tb = new_tb;
   }
-  ll g, s, t;
-  if (b < 0) { g = -b; s = 0; t = -1; }
-  else       { g =  b; s = 0; t =  1; }
-  while (idx > 0) {
-    ll x = vec[--idx];
-    ll old_t = t;
-    t = s;
-    s = old_t - x * s;
-  }
-  return {g, s, t};
+  return {za, sa, ta};
 }
 
 pair<ll, ll> crt_sub(ll a1, ll x1, ll a2, ll x2) {
