@@ -1,0 +1,23 @@
+#!/usr/bin/env python3
+
+from random import randrange, choice, shuffle, sample
+
+def choose2(l, r, ordered=False):
+    if r < l + 2:
+        raise Exception(f'Fatal: choose2: r < l + 2 should hold.  (l = {l}, r = {r})')
+    while True:
+        (x, y) = sample(range(l, r), 2)
+        return (y, x) if not ordered and x > y else (x, y)
+
+n = 10**5
+q = 10**5
+lst = [randrange(0, 10**5) for _ in range(n)]
+print(n, q)
+print(' '.join(map(str, lst)))
+for _q in range(q):
+    (l, r) = choose2(0, n + 1)
+    x = randrange(0, 10**5)
+    if randrange(0, 100) < 50:
+        print(1, l + 1, r)
+    else:
+        print(2, l + 1, r, x)

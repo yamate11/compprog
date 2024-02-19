@@ -4,7 +4,7 @@ typedef long long int ll;
 using namespace std;
 #define SIZE(v) ((ll)((v).size()))
 
-// @@ !! LIM(tree debug)
+// @@ !! LIM(tree mod debug)
 
 
 int main(int argc, char *argv[]) {
@@ -276,6 +276,34 @@ int main(int argc, char *argv[]) {
       tie(x, z) = res7[4]; assert(x == 11 && z == 2);
       tie(x, z) = res7[5]; assert(x == 12 && z == 2);
     }
+  }
+
+  { // ABC 160F rewritten
+
+    using Fp = FpA;
+
+    ll N = 8;
+    Tree tr(N);
+    tr.add_edge(0, 1);
+    tr.add_edge(1, 2);
+    tr.add_edge(2, 3);
+    tr.add_edge(2, 4);
+    tr.add_edge(2, 5);
+    tr.add_edge(5, 6);
+    tr.add_edge(5, 7);
+
+    Comb<Fp> cb(N);
+
+    using sta = pair<Fp, ll>;
+    sta unit = sta{Fp(1), 0LL};
+    auto myadd = [&](const sta& p1, const sta& p2) -> sta {
+      return sta(p1.first * p2.first , p1.second + p2.second);
+    };
+    auto mod1 = [&](sta p, int nd, int cd) -> sta { return sta(p.first / cb.fact(p.second), p.second); };
+    auto mod2 = [&](sta p, int nd) -> sta { return sta(p.first * cb.fact(p.second), p.second + 1); };
+    auto result = reroot(tr, unit, myadd, mod1, mod2);
+    vector<ll> expected{40, 280, 840, 120, 120, 504, 72, 72};
+    for (ll i = 0; i < N; i++) assert(result[i].first == expected[i]);
   }
 
 
