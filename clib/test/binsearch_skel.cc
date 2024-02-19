@@ -10,61 +10,60 @@ int main(int argc, char *argv[]) {
   cin.tie(nullptr);
   cout << setprecision(20);
 
-  vector<ll> vec1 {1, 4, 9, 10, 15, 18, 20};
-  ll sz1 = vec1.size();
-  ll lim1;
-  auto check1 = [&](ll z) { return vec1.at(z) < lim1; };
-  lim1 = 10;
-  assert(binsearch_i<ll>(check1, -1, sz1) == 2);
-  lim1 = 0;
-  assert(binsearch_i<ll>(check1, -1, sz1) == -1);
-  lim1 = 100;
-  assert(binsearch_i<ll>(check1, -1, sz1) == 6);
-
-  vec1 = vector<ll>({20, 18, 15, 10, 9, 4, 1});
-  lim1 = 10;
-  assert(binsearch_i<ll>(check1, sz1, -1) == 4);
-  lim1 = 0;
-  assert(binsearch_i<ll>(check1, sz1, -1) == 7);
-  lim1 = 100;
-  assert(binsearch_i<ll>(check1, sz1, -1) == 0);
-  
-
-  assert(binsearch_i<ll>([&](ll x){ return x*x < 20000; }, 0, 20000) == 141);
-  assert(binsearch_i<ll>([&](ll x){ return x*x > 20000; }, 20000, 0) == 142);
   {
-    vector<double> ts({2, 2e-5, 2e5, 2e19});
-    for (double t : ts) {
-      auto check = [&](double x) -> bool { return x * x < t; };
-      double sq0 = binsearch_r<double>(check, 0.0, max(1.0, t), 1e-10);
-      double sq1 = sqrt(t);
-      assert (abs(sq0 - sq1) < 1e-9 * max(1.0, abs(sq1)));
-    }
-    for (double t : ts) {
-      if (t > 1e10) continue;
-      auto check = [&](double x) -> bool { return x * x < t; };
-      double sq0 = binsearch_r<double>(check, 0.0, max(1.0, t), 1e-10, false);
-      double sq1 = sqrt(t);
-      assert (abs(sq0 - sq1) < 1e-9);
-    }
+    vector<ll> vec1 {1, 4, 9, 10, 15, 18, 20};
+    ll sz1 = vec1.size();
+    ll lim1;
+    auto check1 = [&](ll z) { return vec1.at(z) < lim1; };
+    lim1 = 10;
+    assert(binsearch(check1, -1LL, sz1) == 2);
+    lim1 = 0;
+    assert(binsearch(check1, -1LL, sz1) == -1);
+    lim1 = 100;
+    assert(binsearch(check1, -1LL, sz1) == 6);
+
+    vec1 = vector<ll>({20, 18, 15, 10, 9, 4, 1});
+    lim1 = 10;
+    assert(binsearch(check1, sz1, -1LL) == 4);
+    lim1 = 0;
+    assert(binsearch(check1, sz1, -1LL) == 7);
+    lim1 = 100;
+    assert(binsearch(check1, sz1, -1LL) == 0);
+
+    // avoiding unnecessary overflow
+    ll z0 = LLONG_MAX - 100;
+    auto check2 = [&](ll x) -> bool { return x <= z0; };
+    auto check3 = [&](ll x) -> bool { return x >= z0; };
+    ll x0 = binsearch(check2, z0 - 50, z0 + 50);
+    assert(x0 == z0);
+    ll x1 = binsearch(check3, z0 + 50, z0 - 50);
+    assert(x1 == z0);
+
+  }
+  {
+    auto check = [&](double x) { return x * x < 2; };
+    double x0 = binsearch(check, 1.0, 2.0, 1e-6);
+    assert(abs(sqrt(2) - x0) < 1e-6);
+
+    auto check2 = [&](double x) { return x * x > 2; };
+    double x1 = binsearch(check2, 2.0, 1.0, 1e-6);
+    assert(abs(sqrt(2) - x1) < 1e-6);
+
+    // https://rsk0315.hatenablog.com/entry/2020/04/29/155009
+    auto check3 = [&](long double x) { return x <= 1e17L; };
+    long double x3 = binsearch(check3, 0.0L, 1e18L, 1e-9L);
+    assert(abs(x3 - 1e17L) < 1e-9L);
+
+  }
+
+  {
+    auto check = [&](long double x) { return x * x < 2; };
+    long double x0 = binsearch(check, 1.0L, 2.0L, 1e-17L);
+    assert(abs(sqrt(2.0L) - x0) < 1e-17L);
   }
   
-  {
-    auto sqrt_le_pred = [](ll x, ll t) -> bool { return x * x <= t; };
-    auto sqrt_lt_pred = [](ll x, ll t) -> bool { return x * x < t; };
-    auto sqrt_hint = [](double x) -> double { return sqrt(x); };
-    auto sqrt_hint_inprec1 = [](double x) -> double { return sqrt(x) + 1000; };
-    auto sqrt_hint_inprec2 = [](double x) -> double { return sqrt(x) - 1000; };
-    ll x = 1'234'567'890;
-    assert(border_with_hint(x * x, sqrt_le_pred, sqrt_hint) == x);
-    assert(border_with_hint(x * x - 1, sqrt_le_pred, sqrt_hint) == x - 1);
-    assert(border_with_hint(x * x, sqrt_lt_pred, sqrt_hint) == x - 1);
-    assert(border_with_hint(x * x + 1, sqrt_lt_pred, sqrt_hint) == x);
-    assert(border_with_hint(x * x, sqrt_le_pred, sqrt_hint_inprec1) == x);
-    assert(border_with_hint(x * x, sqrt_le_pred, sqrt_hint_inprec2) == x);
 
-    assert(border_with_hint(x * x + x, sqrt_le_pred, sqrt_hint) == x);
-    assert(border_with_hint(x * x - x, sqrt_le_pred, sqrt_hint) == x - 1);
-  }
-	 
+
+  cerr << "ok.\n";
+
 }
