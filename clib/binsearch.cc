@@ -5,42 +5,7 @@ using namespace std;
 
 /*
   Binary Search
-
-  Usage:
-    auto check = [&](ll x) -> bool { return true or false; };
-    ll ans = binsearch_i<ll>(check, yes, no);
-
-    auto check2 = [&](double x) { return true or false; };
-    double ans2 = binsearch_r<double>(check, yes, no, 1e-9, true);
-
-  binsearch_i() (for int/ll/...)  and binsearch_r() (for
-  double/long double/...) returns the boundary value ans such that
-  check(ans) == true and check(ans +/- err) == false.
-  The default value for err is 1 for binsearch_i
-  should be suitable for long long and int.
-  The fifth argument for binsearch_r controls whether relative err
-  is also checked (default is true).
-
- */
-
-/*
-  Border with Hint
-
-  Usage:
-    auto pred = [](ll x, ll t) -> bool { return true or false; }
-    auto hint = [](double x) -> double { return some_value; }
-    ll x = ....;
-    ll ans = border_with_hint(x, pred, hint);
-          // returns ans such that 
-          // pred(x, ans) == true and pred(x, ans') == false,
-          // where ans' == ans + 1 or ans' == ans - 1,
-          // using hint, i.e. abs(ans - hint(x)) is small.
-
-  E.g.  
-    ll a = border_with_hint(20000,
-                            [](ll x, ll t) -> bool { return x * x <= t; }
-                            [](double x) -> double { return sqrt(x); });
-    // a == 141
+  https://yamate11.github.io/blog/posts/2024/02-19-binary-search/
  */
 
 
