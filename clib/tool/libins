@@ -5,7 +5,8 @@ from util import topDir, die, debug
 
 args = None
 
-depCache = f'{topDir}/clib/.lib_depend'
+clibdir = None
+depCache = None
 
 # dictionary for dependency.
 #   If 'lib1' is in dep['lib2'], then lib1.cc is needed for
@@ -52,7 +53,6 @@ def buildInfo():
     global dep, defAt
     dep = {}
     defAt = {}
-    clibdir = f'{topDir}/clib'
     for fn in os.listdir(clibdir):
         if fn[-3:] != '.cc': continue
         libname = fn[:-3]
@@ -84,7 +84,6 @@ def readCachedDep():
         buildInfo()
         return
     dcMtime = os.stat(depCache).st_mtime
-    clibdir = f'{topDir}/clib'
     for fn in os.listdir(clibdir):
         if fn[-3:] != '.cc': continue
         if fn[0] == '.': continue
@@ -126,7 +125,7 @@ def depSort(libs):
 
 def extractContents(lib):
     cont = ''
-    path = f'{topDir}/clib/{lib}.cc'
+    path = f'{clibdir}/{lib}.cc'
     if not os.path.exists(path):
         raise LibExc(f'File not found: {path}')
     with open(path) as fp:
@@ -203,7 +202,7 @@ def readToFuncContents(libname):
                 raise LibExc('Library/Function cannot be nested.')
             cont += line
 
-    with open(f'{topDir}/clib/{libname}.cc') as fp:
+    with open(f'{clibdir}/{libname}.cc') as fp:
         try:
             while True:
                 (func, cont) = getNextFunc(fp)
@@ -229,7 +228,7 @@ def getFuncContents(funcname):
 def getLibContents(libname):
     (body, start_ln) = extractContents(libname)
     pre = f'\n// ---- inserted library file {libname}.cc\n'
-    lndesc = f'#line {start_ln} "{topDir}/clib/{libname}.cc"\n' if args.orig_lineno else ''
+    lndesc = f'#line {start_ln} "{clibdir}/{libname}.cc"\n' if args.orig_lineno else ''
     post = f'// ---- end {libname}.cc\n'
     return pre + lndesc + body + post
 
@@ -284,7 +283,12 @@ def make_makefile(inserted):
         print(cont, file=wfp)
         
 def main():
+    global clibdir, depCache
+
     parseCommandLine()
+
+    clibdir = args.clib_dir or f'{topDir}/clib'
+    depCache = f'{clibdir}/.lib_depend'
 
     if args.cache_update:
         buildInfo()
@@ -383,6 +387,8 @@ and the last define the range of the library insertion part.
                         'outfile name base with extension .d is used.')
     parser.add_argument('--orig-lineno', action='store_true',
                         help='inserts line numbers in the original file')
+    parser.add_argument('--clib-dir',
+                        help='directory that contains library files')
     args = parser.parse_args()
     if args.cache_update:
         if args.infile or args.outfile or args.makefile:
