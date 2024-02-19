@@ -291,45 +291,50 @@ struct Tree {
 
 };
 
-template <typename T>
-vector<T> reroot(Tree& tree, const T& unit, auto add, auto mod) {
-  vector<T> result(tree.numNodes);
-  vector<T> sum(tree.numNodes);
-  vector<vector<T>> sum_excl(tree.numNodes);
+template <typename M>
+auto reroot(Tree& tree, const M& unit, auto add, auto mod1, auto mod2) {
+  using A = decltype(mod2(M(), 0));
+  vector<A> result(tree.numNodes);
+  vector<vector<M>> sum_left(tree.numNodes);
+  vector<vector<M>> sum_right(tree.numNodes);
   
-  auto dfs1 = [&](const auto& recF, int n) -> void {
-    const auto& cld = tree.children(n);
-    int k = cld.size();
-    vector<T> right(k+1), m(k+1);
-    T g = right[k] = unit;
-    for (int i = k-1; i >= 0; i--) {
-      int c = cld[i];
-      recF(recF, c);
-      m[i] = mod(sum[c], n, c);
-      right[i] = g = add(m[i], g);
-    }
-    sum[n] = g;
-    T gp = unit;
-    sum_excl[n].resize(k);
+  auto dfs1 = [&](const auto& recF, int nd) -> A {
+    const auto& cldr = tree.children(nd);
+    int k = cldr.size();
+    vector<M> ws(k);
     for (int i = 0; i < k; i++) {
-      sum_excl[n][i] = add(gp, right[i+1]);
-      gp = add(gp, m[i]);
+      int c = cldr[i];
+      ws[i] = mod1(recF(recF, c), nd, c);
     }
+    sum_left[nd].resize(k + 1, unit);
+    sum_right[nd].resize(k + 1, unit);
+    for (int i = 0; i < k; i++) sum_left[nd][i + 1] = add(sum_left[nd][i], ws[i]);
+    for (int i = k - 1; i >= 0; i--) sum_right[nd][i] = add(sum_right[nd][i + 1], ws[i]);
+    return mod2(sum_right[nd][0], nd);
   };
   dfs1(dfs1, tree.root);
 
-  auto dfs2 = [&](const auto& recF, int n, T t) -> void {
-    result[n] = add(sum[n], t);
-    const auto& cld = tree.children(n);
-    int k = cld.size();
+  auto dfs2 = [&](const auto& recF, int nd, const M& t) -> void {
+    result[nd] = mod2(add(sum_right[nd][0], t), nd);
+    const auto& cldr = tree.children(nd);
+    int k = cldr.size();
     for (int i = 0; i < k; i++) {
-      int c = cld[i];
-      recF(recF, c, mod(add(sum_excl[n][i], t), c, n));
+      int c = cldr[i];
+      M excl_c = add(sum_left[nd][i], sum_right[nd][i + 1]);
+      M m_for_c = add(excl_c, t);
+      A v_for_c = mod2(m_for_c, nd);
+      M pass_c = mod1(v_for_c, c, nd);
+      recF(recF, c, pass_c);
     }
   };
   dfs2(dfs2, tree.root, unit);
   
   return result;
+}
+
+template <typename M>
+vector<M> reroot(Tree& tree, const M& unit, auto add, auto mod1) {
+  return reroot<M>(tree, unit, add, mod1, [](const M& m, int i) -> M { return m; });
 }
 
 // @@ !! END() ---- tree.cc
