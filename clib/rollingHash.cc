@@ -87,8 +87,8 @@ u64 rh_add(u64 a, u64 b) {
   u64 x = a + b;
   return x >= rh_prime ? x - rh_prime : x;
 }
-static u64 rh_subt(u64 a, u64 b) { return (a < b) ? rh_prime + a - b : a - b; }
-static u64 rh_mul(u64 a, u64 b) { return rh_calc_mod(rh_mul_nomod(a, b)); }
+u64 rh_subt(u64 a, u64 b) { return (a < b) ? rh_prime + a - b : a - b; }
+u64 rh_mul(u64 a, u64 b) { return rh_calc_mod(rh_mul_nomod(a, b)); }
 
 template<typename elem_t = char, typename conv_t = nullptr_t>
 struct RollingHashGen {
