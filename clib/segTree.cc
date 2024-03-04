@@ -1,75 +1,6 @@
 /*
   Segment Tree (non-recursive version; including laziness)
-
-  ********************
-  ********************
-  *** The following can be obsolete.  
-  *** Instead, see https://yamate11.github.io/blog/posts/2023/12-03-segment-tree-lib/
-  ********************
-  ********************
-
-  Typical Usage:
-
-  auto st = make_seg_tree<DAT>(unit_dat, add, init_vec);
-
-  st.update(i, x);
-  DAT x = st.query(il, ir);
-  DAT x = st[i];   // This is equivalent to st.query(i, i + 1);
-
-  auto st = make_seg_tree_lazy<DAT, OP>(unit_dat, unit_op, add, comp, apply, init_vec);
-  // It must be hold:
-  //       - apply(h, add(x, y)) = add(apply(h, x), apply(h, y)) 
-  //       - apply(unit_op, x) = x
-
-  st.update(il, ir, x);
-  DAT x = st.query(il, ir);
-  DAT x = st[i];   // This is equivalent to st.query(i, i + 1);
-
-
-  Binary Search:
-  
-  auto check = [&](DAT x) -> bool { ...; };
-  Case 1: check(query(x', y') holds => check(query(x, y)) holds for x' <= x < y <= y'
-     ir = st.binsearch_r_until(check, il)    means
-           check(query(il, y)) holds for y <= ir    (if there is no such y, ir = il - 1)
-     il = st.binsearch_l_until(check, ir)    means
-           check(query(x, ir)) holds for il <= x    (if there is no such x, il = ir + 1)
-  Case 2: check(query(x, y)) holds => check(query(x', y')) holds for x' <= x < y <= y'
-     ir = st.binsearch_r_from(check, il)     means
-           check(query(il, y)) holds for ir <= y    (if there is no such y, ir = size + 1)
-     il = st.binsearch_l_from(check, ir)     means
-           check(query(x, ir)) holds for x <= il    (if there is no such x, il = -1)
-
-  Examples:
-
-    Query: minimum  (Update: point only)
-      auto st = make_seg_tree<ll>(LLONG_MAX, [](ll x, ll y) { return min(x, y); }, init_vec);
-
-    Query: sum  (Update: point only)
-      auto st = make_seg_tree<ll>(0LL, plus<ll>(), init_vec);
-
-    LAZY, Query: minimum, Update: substitution (interval)
-      using OP = optional<ll>;
-      auto add = [](ll x, ll y) -> ll { return min(x, y); };
-      auto comp = [](OP f, OP g) -> OP { return f ? f : g; };
-      auto appl = [](OP f, ll x) -> ll { return f ? *f : x; };
-      auto st = make_seg_tree_lazy<ll, OP>(LLONG_MAX, OP(), add, comp, appl, init_vec);
-       
-    LAZY, Query: sum,  Update: substitution (interval)
-      using DAT = pair<ll, ll>;
-      using OP = optional<ll>;
-      auto add = [](DAT x, DAT y) -> DAT { return DAT(x.first + y.first, x.second + y.second); };
-      auto comp = [](OP f, OP g) -> OP { return f ? f : g; };
-      auto appl = [](OP f, DAT x) -> DAT { return f ? DAT(*f * x.second, x.second) : x; };
-      auto dat_init = vector<DAT>();
-      REP(i, 0, init_vec.size()) dat_init.emplace_back(init_vec[i], 1);
-      auto st = make_seg_tree_lazy<DAT, OP>(DAT(), OP(), add, comp, appl, dat_init);
-
-  If you want to have a vector of segment trees, try something like:
-
-     auto st = make_seg_tree<ll>(0, plus<ll>(), vector<ll>(N, 0LL));
-     vector segTrees(26, st);
-
+  See https://yamate11.github.io/blog/posts/2023/12-03-segment-tree-lib/
  */
 
 //////////////////////////////////////////////////////////////////////
@@ -79,9 +10,47 @@
 // It seems that we should keep the size power of two,
 // considering the binary search.
 
+pair<int, int> segtree_range_of_node(int ht, unsigned i) {
+  unsigned m = bit_floor(i);
+  unsigned w = ht + 1 - bit_width(i);
+  int lo = (i ^ m) << w;
+  int hi = lo + (1LL << w);
+  return make_pair(lo, hi);
+}
+
+vector<int> segtree_nodes_for_range(int ht, unsigned lo, unsigned hi) {
+  vector<int> left;
+  vector<int> right;
+  lo = (1 << ht) + lo;
+  hi = (1 << ht) + hi - 1;
+  while (lo <= hi) {
+    if (lo == hi) {
+      left.push_back(lo);
+      break;
+    }
+    if (lo & 1) {
+      left.push_back(lo);
+      lo++;
+    }
+    if (not (hi & 1)) {
+      right.push_back(hi);
+      hi--;
+    }
+    lo >>= 1;
+    hi >>= 1;
+  }
+  while (not right.empty()) {
+    left.push_back(right.back());
+    right.pop_back();
+  }
+  return left;
+}
+
 template <typename DAT, typename OP,
 	  typename ADD_t, typename COMP_t, typename APPL_t, bool lazy> 
 struct GenSegTree {
+  using GST = GenSegTree<DAT, OP, ADD_t, COMP_t, APPL_t, lazy>;
+
   int orig_size;     // size of initdat
   int size;	     // power of two; >= 2
   int height;        // size = 1 << height;
@@ -174,13 +143,26 @@ struct GenSegTree {
     return ret;
   }
 
+  const DAT& get_single(int i) {
+    if constexpr(lazy) push_upto(size + i, size + i + 1);
+    return node[size + i];
+  }
+
+  void set_single(int i, const DAT& t) {
+    ll x = size + i;
+    if constexpr(lazy) push_upto(x, x + 1);
+    node[x] = t;
+    for (x >>= 1; x >= 1; x >>= 1) node[x] = add(node[x<<1|0], node[x<<1|1]);
+  }
+
+  // obsolete
   template<bool xx = lazy> enable_if_t<! xx> update(int i, DAT t) {
     ll x = size + i;
     node[x] = t;
     for (x >>= 1; x >= 1; x >>= 1) node[x] = add(node[x<<1|0], node[x<<1|1]);
   }
 
-  template<bool xx = lazy> enable_if_t<xx> update(int l, int r, OP f) {
+  template<bool xx = lazy> enable_if_t<xx> update(int l, int r, const OP& f) {
     if (l >= r) return;
     l += size;
     r += size;
@@ -200,16 +182,15 @@ struct GenSegTree {
     child_updated(l0, r0);
   }
 
-  const DAT& operator[](int i) {
-    if constexpr(lazy) push_upto(size + i, size + i + 1);
-    return node[size + i];
-  }
+  pair<int, int> range_of_node(unsigned i) { return segtree_range_of_node(height, i); }
+
+  vector<int> nodes_for_range(unsigned lo, unsigned hi) { return segtree_nodes_for_range(height, lo, hi); }
 
   friend ostream& operator<<(ostream& os, GenSegTree& st) {
     os << '[';
     for (int i = 0; i < st.orig_size; i++) {
       if (i > 0) os << ", ";
-      os << st[i];
+      os << st.get_single(i);
     }
     os << ']';
     return os;

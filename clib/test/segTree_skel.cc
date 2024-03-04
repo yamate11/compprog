@@ -96,12 +96,12 @@ void test1() {
     assert(st.query(0, 3) == 1);
     assert(st.query(3, 5) == 3);
     assert(st.query(2, 5) == 2);
-    assert(st[2] == 2);
-    st.update(1, 10);
-    assert(st[1] == 10);
+    assert(st.get_single(2) == 2);
+    st.set_single(1, 10);
+    assert(st.get_single(1) == 10);
     assert(st.query(0, 2) == 5);
     assert(st.query(0, 5) == 2);
-    st.update(2, 20);
+    st.set_single(2, 20);
     assert(st.query(0, 5) == 3);
 
     stringstream ss;
@@ -118,7 +118,7 @@ void test1() {
     auto st = make_seg_tree_lazy(LLONG_MAX, OP(), add, comp, apply, init_vec);
 
     assert(st.query(0, 5) == 1);
-    assert(st[2] == 2);
+    assert(st.get_single(2) == 2);
     st.update(1, 4, 10);
     assert(st.query(0, 5) == 5);
     assert(st.query(1, 5) == 7);
@@ -152,7 +152,7 @@ void test1() {
     lim = 0;
     assert(st3.binsearch_r_from(check_LE, 1) == 1);
     assert(st3.binsearch_r_until(check_LE, 1) == 4);
-    st3.update(4, 0);
+    st3.set_single(4, 0);
     assert(st3.binsearch_r_until(check_LE, 1) == 5);
   }
 }
@@ -169,14 +169,14 @@ void test2() {
       ll i = randrange(0, sz);
       {
         ll x = randrange(0, 4);
-        st.update(i, x);
+        st.set_single(i, x);
         nv.update(i, i + 1, x);
       }
       ll j = randrange(0, sz);
       ll k = randrange(j, sz);
       assert(st.query(j, k) == nv.query(j, k));
       ll jj = randrange(0, sz);
-      assert(st[jj] == nv.query(jj, jj + 1));
+      assert(st.get_single(jj) == nv.query(jj, jj + 1));
       ll lim = randrange(0, 19);
       auto checkLE = [&](ll x) -> bool { return x <= lim; };
       auto checkGE = [&](ll x) -> bool { return x >= lim; };
@@ -230,7 +230,7 @@ void test3() {
       // DLOGK(j, k, st.query(j, k), nv.query(j, k));
       assert(st.query(j, k).first == nv.query(j, k));
       ll jj = randrange(0, sz);
-      assert(st[jj].first == nv.query(jj, jj + 1));
+      assert(st.get_single(jj).first == nv.query(jj, jj + 1));
       ll lim = randrange(0, 19);
       auto checkLE_st = [&](DAT x) -> bool { return x.first <= lim; };
       auto checkGE_st = [&](DAT x) -> bool { return x.first >= lim; };
@@ -263,7 +263,7 @@ void test4() {
       ll i = randrange(0, sz);
       {
         ll x = randrange(0, 4);
-        st.update(i, x);
+        st.set_single(i, x);
         nv.update(i, i + 1, x);
       }
       ll j = randrange(0, sz);
@@ -334,7 +334,7 @@ void test6() {
   // one-size init vector
   auto st1 = make_seg_tree<ll>(0LL, plus<ll>(), vector<ll>({5}));
   assert(st1.query(0, 1) == 5);
-  st1.update(0, -100);
+  st1.set_single(0, -100);
   assert(st1.query(0, 1) == -100);
 }
 
@@ -368,9 +368,123 @@ void test7() {
   vector<sg4_t> vec4(2, sg4);
   vec4[0].set_data(vector<ll>(5));
   vec4[1].set_data(vector<ll>(10));
-  vec4[0].update(2, 10);
-  vec4[1].update(9, 20);
+  vec4[0].set_single(2, 10);
+  vec4[1].set_single(9, 20);
   assert(vec4[0].query(0, 5) + vec4[1].query(0, 10) == 30);
+}
+
+void test8() {
+  // seg_single, get_single
+  auto mymin = [&](ll x, ll y) -> ll { return min(x, y); };
+  auto st = make_seg_tree(LLONG_MAX, mymin, vector<ll>(10, 100));
+  st.set_single(5, 80);
+  assert(st.get_single(5) == 80);
+
+  ll big = 1e18;
+  auto st2 = make_seg_tree_lazy(big, 0LL, mymin, plus<ll>(), plus<ll>(), vector(100, 0LL));
+  st2.update(20, 60, 100);
+  st2.update(40, 80, 200);
+  assert(st2.get_single(0) == 0);
+  assert(st2.get_single(20) == 100);
+  assert(st2.get_single(50) == 300);
+  assert(st2.get_single(60) == 200);
+  st2.set_single(45, 150);
+  assert(st2.query(40, 50) == 150);
+
+  ll out_rep = 100;
+  ll in_rep = 1000;
+  ll d_min = -10;
+  ll d_max = 10;
+  for (ll sz : vector<ll>{8, 13}) {
+    auto init_vec = vector<ll>(sz, 0LL);
+    for (ll o_r = 0; o_r < out_rep; o_r++) {
+      auto st3 = make_seg_tree(big, mymin, init_vec);
+      Naive<ll, ll, decltype(mymin), decltype(mymin)> nv3(big, mymin, mymin, init_vec);
+      for (ll _r = 0; _r < in_rep; _r++) {
+        ll tp = randrange(0, 3);
+        if (tp == 0) {
+          ll i = randrange(0, sz);
+          ll x = randrange(d_min, d_max + 1);
+          st3.set_single(i, x);
+          nv3.vec[i] = x;
+        }else if (tp == 1) {
+          ll l = randrange(0, sz);
+          ll r = randrange(l + 1, sz + 1);
+          assert(st3.query(l, r) == nv3.query(l, r));
+        }else if (tp == 2) {
+          ll i = randrange(0, sz);
+          assert(st3.get_single(i) == nv3.vec[i]);
+        }else assert(0);
+      }
+
+      auto st4 = make_seg_tree_lazy(big, 0, mymin, plus<int>(), plus<int>(), init_vec);
+      Naive<ll, ll, decltype(mymin), decltype(plus<int>())> nv4(big, mymin, plus<int>(), init_vec);
+      for (ll _r = 0; _r < in_rep; _r++) {
+        ll tp = randrange(0, 4);
+        if (tp == 0) {
+          ll i = randrange(0, sz);
+          ll x = randrange(d_min, d_max + 1);
+          st4.set_single(i, x);
+          nv4.vec[i] = x;
+        }else if (tp == 1) {
+          ll l = randrange(0, sz);
+          ll r = randrange(l + 1, sz + 1);
+          assert(st4.query(l, r) == nv4.query(l, r));
+        }else if (tp == 2) {
+          ll i = randrange(0, sz);
+          assert(st4.get_single(i) == nv4.vec[i]);
+        }else if (tp == 3) {
+          ll l = randrange(0, sz);
+          ll r = randrange(l + 1, sz + 1);
+          ll x = randrange(d_min, d_max + 1);
+          st4.update(l, r, x);
+          nv4.update(l, r, x);
+        }else assert(0);
+      }
+    }
+  }
+}
+
+void test9() {
+  // range_of_node, nodes_for_range
+  ll rep = 1000;
+  for (ll _r = 0; _r < rep; _r++) {
+    unsigned sz = randrange(4, 18);
+    unsigned ht = countr_zero(bit_ceil(sz));
+    ll i = randrange(1, (1LL << ht) + sz);
+    auto [lo, hi] = segtree_range_of_node(ht, i);
+    auto vec = segtree_nodes_for_range(ht, lo, hi);
+    if (not (ssize(vec) == 1 and vec[0] == i)) {
+      assert(ssize(vec) == 1 and vec[0] == i);
+    }
+  }
+  for (ll _r = 0; _r < rep; _r++) {
+    unsigned sz = randrange(4, 18);
+    unsigned ht = countr_zero(bit_ceil(sz));
+    ll lo = randrange(0, sz);
+    ll hi = randrange(lo + 1, sz + 1);
+    auto vec = segtree_nodes_for_range(ht, lo, hi);
+    auto [lo_A, hi_A] = segtree_range_of_node(ht, vec[0]);
+    auto [lo_B, hi_B] = segtree_range_of_node(ht, vec.back());
+    assert(lo_A == lo and hi_B == hi);
+    ll prev = hi_A;
+    for (ll i = 1; i < ssize(vec); i++) {
+      auto [lo_X, hi_X] = segtree_range_of_node(ht, vec[i]);
+      assert(prev == lo_X and lo_X < hi_X);
+      prev = hi_X;
+    }
+  }
+  auto st = make_seg_tree_lazy(LLONG_MIN, 0, [&](ll a, ll b) -> ll { return max(a, b); }, plus<int>(), plus<int>());
+  for (ll _r = 0; _r < rep; _r++) {
+    unsigned sz = randrange(4, 18);
+    unsigned ht = countr_zero(bit_ceil(sz));
+    st.set_data(vector<ll>(sz, 0LL));
+    ll i = randrange(1, (1LL << ht) + sz);
+    assert(st.range_of_node(i) == segtree_range_of_node(ht, i));
+    ll lo = randrange(0, sz);
+    ll hi = randrange(lo + 1, sz + 1);
+    assert(st.nodes_for_range(lo, hi) == segtree_nodes_for_range(ht, lo, hi));
+  }
 }
 
 
@@ -386,6 +500,8 @@ int main(int argc, char *argv[]) {
   test5();
   test6();
   test7();
+  test8();
+  test9();
 
   cout << "Test done." << endl;
   return 0;
