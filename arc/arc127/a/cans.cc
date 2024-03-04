@@ -1,18 +1,71 @@
 #include <bits/stdc++.h>
 #include <cassert>
-typedef long long int ll;
 using namespace std;
+using ll = long long int;
+using u64 = unsigned long long;
+using pll = pair<ll, ll>;
 // #include <atcoder/all>
 // using namespace atcoder;
-#define REP2(i, a, b) for (ll i = (a); i < (b); i++)
-#define REP2R(i, a, b) for (ll i = (a); i >= (b); i--)
-#define REP(i, b) REP2(i, 0, b)
+#define REP(i, a, b) for (ll i = (a); i < (b); i++)
+#define REPrev(i, a, b) for (ll i = (a); i >= (b); i--)
 #define ALL(coll) (coll).begin(), (coll).end()
 #define SIZE(v) ((ll)((v).size()))
+#define REPOUT(i, a, b, exp, sep) REP(i, (a), (b)) cout << (exp) << (i + 1 == (b) ? "" : (sep)); cout << "\n"
 
 // @@ !! LIM(debug)
 
 // ---- inserted function f:<< from util.cc
+
+// declarations
+
+template <typename T1, typename T2>
+ostream& operator<< (ostream& os, const pair<T1,T2>& p);
+
+template <typename T1, typename T2, typename T3>
+ostream& operator<< (ostream& os, const tuple<T1,T2,T3>& t);
+
+template <typename T1, typename T2, typename T3, typename T4>
+ostream& operator<< (ostream& os, const tuple<T1,T2,T3,T4>& t);
+
+template <typename T>
+ostream& operator<< (ostream& os, const vector<T>& v);
+
+template <typename T, typename C>
+ostream& operator<< (ostream& os, const set<T, C>& v);
+
+template <typename T, typename C>
+ostream& operator<< (ostream& os, const unordered_set<T, C>& v);
+
+template <typename T, typename C>
+ostream& operator<< (ostream& os, const multiset<T, C>& v);
+
+template <typename T1, typename T2, typename C>
+ostream& operator<< (ostream& os, const map<T1, T2, C>& mp);
+
+template <typename T1, typename T2, typename C>
+ostream& operator<< (ostream& os, const unordered_map<T1, T2, C>& mp);
+
+template <typename T, typename T2>
+ostream& operator<< (ostream& os, const queue<T, T2>& orig);
+
+template <typename T, typename T2>
+ostream& operator<< (ostream& os, const deque<T, T2>& orig);
+
+template <typename T, typename T2, typename T3>
+ostream& operator<< (ostream& os, const priority_queue<T, T2, T3>& orig);
+
+template <typename T>
+ostream& operator<< (ostream& os, const stack<T>& st);
+
+#if __cplusplus >= 201703L
+template <typename T>
+ostream& operator<< (ostream& os, const optional<T>& t);
+#endif
+
+ostream& operator<< (ostream& os, int8_t x);
+
+// definitions
+
 template <typename T1, typename T2>
 ostream& operator<< (ostream& os, const pair<T1,T2>& p) {
   os << "(" << p.first << ", " << p.second << ")";
@@ -258,41 +311,68 @@ int main(/* int argc, char *argv[] */) {
   cin.tie(nullptr);
   cout << setprecision(20);
 
-  string N; cin >> N;
-  ll sz = N.size();
-  auto cur_init = vector(2, vector(2, vector(2, vector(sz + 1, 0LL))));
-  auto cur = cur_init;
-  cur[1][1][1][0] = 1;
-  for (char cd : N) {
-    DLOGKL("*** cd = ", cd);
-    ll d = cd - '0';
-    auto prev = move(cur);
-    cur = cur_init;
-    REP(eq, 2) REP(az, 2) REP(ct, 2) REP(m, sz+1) {
-      if (prev[eq][az][ct][m] == 0) continue;
-      REP(x, 10) {
-        if (eq == 1 && x > d) continue;
-        ll n_eq = (eq == 1 && x == d) ? 1 : 0;
-        ll n_m = (ct && x == 1) ? m + 1 : m;
-        ll n_az = az && x == 0;
-        ll n_ct = n_az ? 1 : (ct && x == 1 ? 1 : 0);
-        cur[n_eq][n_az][n_ct][n_m] += prev[eq][az][ct][m];
-        DLOGK(x, n_eq, n_az, n_ct, n_m, eq, az, ct, m);
-        DLOGK(cur[n_eq][n_az][n_ct][n_m]);
-      }
+  vector pow10(19, 1LL);
+  REP(i, 1, 19) pow10[i] = pow10[i - 1] * 10;
+
+  auto dec_floor = [&](ll x) -> ll {
+    auto it = lower_bound(ALL(pow10), x);
+    if (x == *it) return x;
+    return *(prev(it));
+  };
+
+  auto acc = [&](ll z) -> ll {
+    ll ret = 0;
+    while (z > 0) {
+      ret += z;
+      z /= 10;
     }
-#if DEBUG
-    /*
-    DLOG("flag = 1");
-    REP(j, i + 2) DLOGK(j, cur[j][1]);
-    DLOG("flag = 0");
-    REP(j, i + 2) DLOGK(j, cur[j][0]);
-    */
-#endif
-  }
-  ll ans = 0;
-  REP(eq, 2) REP(ct, 2) REP(m, sz + 1) ans += m * cur[eq][0][ct][m];
-  cout << ans << endl;
+    return ret;
+  };
+
+  auto peel = [&](auto rF, ll wx, ll x) -> ll {
+    if (wx == 1) {
+      if (x <= 1) return 0;
+      return 1;
+    }
+    if (x > wx * 2) {
+      ll ret = wx;
+      ret += rF(rF, wx / 10, x - wx);
+      DLOGKL("peel", wx, x, ret);
+      return ret;
+    }else {
+      ll ret = x - wx;
+      if (x - wx > wx / 10) {
+        ret += rF(rF, wx / 10, x - wx);
+      }
+      DLOGKL("peel", wx, x, ret);
+      return ret;
+    }
+  };
+
+  auto f = [&](auto rF, ll x) -> ll {
+    if (x <= 10) {
+      return 1;
+    }
+    ll wx = dec_floor(x);
+    if (wx == x) {
+      ll z = wx / 10;
+      ll ret = rF(rF, z) + acc(z);
+      DLOGK(x, ret);
+      return ret;
+    }
+    ll y = x / wx;
+    if (y >= 2) {
+      ll ret = rF(rF, wx) + acc(wx);
+      DLOGK(x, ret);
+      return ret;
+    }else { // y == 1
+      ll ret = rF(rF, wx) + peel(peel, wx, x);
+      DLOGK(x, ret);
+      return ret;
+    }
+  };
+  ll N; cin >> N;
+  cout << f(f, N + 1) << endl;
 
   return 0;
 }
