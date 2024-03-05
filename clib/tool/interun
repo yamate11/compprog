@@ -1,5 +1,7 @@
 #!/usr/bin/env python3
 
+import os
+import fcntl
 import sys
 import argparse
 import subprocess
@@ -26,6 +28,12 @@ def main():
     p_judge = Popen([judge], encoding='UTF-8', stdin=PIPE, stdout=PIPE)
     p_cans = Popen([cans], encoding='UTF-8', stdin=PIPE, stdout=PIPE)
     
+    # Make p_judge.stdout and p_cans.stdout non-blocking
+    for stream in [p_judge.stdout, p_cans.stdout]:
+        fd = stream.fileno()
+        fl = fcntl.fcntl(fd, fcntl.F_GETFL)
+        fcntl.fcntl(fd, fcntl.F_SETFL, fl | os.O_NONBLOCK)
+
     for line in sys.stdin:
         log('init: ', line)
         print(line, file=p_judge.stdin, end='', flush=True)
@@ -43,26 +51,26 @@ def main():
                 if i not in closed:
                     proc[i].kill()
             abort('timeout occurred.')
-        # if len(lst) != 1:
-        #     abort('select length not 1')
         for (s, e) in lst:
-            # (s, e) = lst[0]
-            msg = s.fileobj.readline()
-            if msg == '':
+            msg = s.fileobj.read()
+            if len(msg) == 0:
                 log(f'{name[s.data]} terminated.\n')
                 sel.unregister(s.fileobj)
                 closed.append(s.data)
                 if (len(closed) == 2):
                     all_closed = True
-            elif msg[0] == '#':
-                log(f'(internal) {msg}')
-                print(msg, end='')
             else:
-                peer = proc[1 - s.data]
-                log(f'{name[s.data]}->{name[1 - s.data]}: {msg}')
-                print(msg, file=peer.stdin, end='', flush=True)
+                for m in msg.split('\n'):
+                    if len(m) >= 1 and m[0] == '#':
+                        log(f'(internal) {m}\n')
+                        print(m)
+                    else:
+                        peer = proc[1 - s.data]
+                        log(f'{name[s.data]}->{name[1 - s.data]}: {m}\n')
+                        peer.stdin.write(m)
+                        peer.stdin.write('\n')
+                        peer.stdin.flush()
     p_judge.wait()
-    # log('*** ', p_judge.returncode, '\n')
     sys.exit(p_judge.returncode)
     
 def parse_args():
