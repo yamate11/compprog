@@ -60,7 +60,7 @@ def main():
                 if (len(closed) == 2):
                     all_closed = True
             else:
-                for m in msg.split('\n'):
+                for m in msg.rstrip().split('\n'):
                     if len(m) >= 1 and m[0] == '#':
                         log(f'(internal) {m}\n')
                         print(m)
