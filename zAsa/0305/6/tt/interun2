@@ -1,0 +1,105 @@
+#!/usr/bin/env python3
+
+import sys
+import argparse
+import subprocess
+from subprocess import Popen, PIPE
+from selectors import DefaultSelector, EVENT_READ, SelectSelector, PollSelector, EpollSelector
+
+import os
+import fcntl
+
+logfile = None
+
+def abort(*msg):
+    log(*msg)
+    print(*msg, file=sys.stderr, flush=True)
+    sys.exit(1)
+
+def log(*msg):
+    print(*msg, file=logfile, flush=True, end='')
+
+def main():
+    global logfile
+    args = parse_args()
+
+    judge = args.judge
+    cans = args.program
+    logfile = open(args.log, 'w', encoding='UTF-8')
+    p_judge = Popen([judge], stdin=PIPE, stdout=PIPE)
+    p_cans = Popen([cans], stdin=PIPE, stdout=PIPE)
+    
+    for stream in [p_judge.stdout, p_cans.stdout]:
+        fd = stream.fileno()
+        fl = fcntl.fcntl(fd, fcntl.F_GETFL)
+        fcntl.fcntl(fd, fcntl.F_SETFL, fl | os.O_NONBLOCK)
+
+    for line in sys.stdin:
+        log('init: ', line)
+        p_judge.stdin.write(line.encode())
+        p_judge.stdin.flush()
+
+    sel = DefaultSelector()
+    sel.register(p_judge.stdout, EVENT_READ, 0)
+    sel.register(p_cans.stdout, EVENT_READ, 1)
+    name = [judge, cans]
+    proc = [p_judge, p_cans]
+    closed = []
+    all_closed = False
+    while not all_closed:
+        lst = sel.select(1.0)
+        if not lst:
+            for i in range(2):
+                if i not in closed:
+                    proc[i].kill()
+            abort('timeout occurred.')
+        for (s, e) in lst:
+            log("DEBUG", "JUST BEFORE READLINE\n")
+            msg = s.fileobj.read()
+            log("DEBUG", "msg", msg, "\n")
+            if len(msg) == 0:
+                log(f'{name[s.data]} terminated.\n')
+                sel.unregister(s.fileobj)
+                closed.append(s.data)
+                if (len(closed) == 2):
+                    all_closed = True
+            elif msg[0] == '#':
+                log(f'(internal) {msg}')
+                print(msg, end='')
+            else:
+                peer = proc[1 - s.data]
+                log(f'{name[s.data]}->{name[1 - s.data]}: {msg.decode()}')
+                peer.stdin.write(msg)
+                peer.stdin.flush()
+    p_judge.wait()
+    sys.exit(p_judge.returncode)
+    
+def parse_args():
+    parser = argparse.ArgumentParser(
+        formatter_class=argparse.RawDescriptionHelpFormatter,
+        description='''Runs cans and judge programs for an interactive problem.
+
+Judge program should first read some lines that specifies the problem parameter
+from stdin, then communicates with the cans program, using stdin and stdout.
+As exceptions, if the first character of a line of the judge's output is '#',
+then the line is regarded as a message to the user, and send to the stdout
+of this script.  So a typical implementation of judge is something like:
+
+n = int(input())
+while True:
+    tp, s = input().split()
+    if tp == '?':
+        print('GE' if int(s) >= n else 'LT', flush=True)
+    elif tp == '!':
+        print('# AC' if int(s) == n else '# WA', flush=True)
+        break
+''')
+    parser.add_argument('-p', '--program', default='./cans', metavar='PROG',
+                        help='program to test.  Default is ./cans')
+    parser.add_argument('-j', '--judge', default='./judge', 
+                        help='program to judge.  Default is ./judge')
+    parser.add_argument('-l', '--log', default='./a.log',
+                        help='log file name')
+    return parser.parse_args()
+
+main()

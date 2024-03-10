@@ -1,0 +1,115 @@
+#!/usr/bin/env python3
+
+import argparse, sys
+from random import randrange, choice, shuffle, sample
+
+def choose2(l, r, ordered=False):
+    if r < l + 2:
+        raise Exception(f'Fatal: choose2: r < l + 2 should hold.  (l = {l}, r = {r})')
+    while True:
+        (x, y) = sample(range(l, r), 2)
+        return (y, x) if not ordered and x > y else (x, y)
+
+class Case:
+    def __init__(self):
+        self.buf = ''
+
+    def p(self, *args):
+        def cvt(a):
+            if isinstance(a, list):
+                return ' '.join(map(str, a))
+            else:
+                return str(a)
+        self.buf += ' '.join(map(cvt, args)) + '\n'
+
+def generate():
+    while True:
+        case = Case()
+        onecase(case)
+        yield case.buf
+
+def main():
+    ap = argparse.ArgumentParser();
+    ap.add_argument('-r', '--repeat', action='store_true',
+                    help='Repeatedly generates cases',)
+    args = ap.parse_args()
+
+    end_mark = '^__=end=__^'
+    end_file_mark = '^__=end_file=__^'
+
+    try:
+        if args.repeat:
+            for s in generate():
+                print(s.rstrip())
+                print(end_mark)
+            print(end_file_mark)
+        else:
+            for (i, s) in enumerate(generate()):
+                print(s.rstrip())
+                print(end_mark)
+                if (i == 4):
+                    break
+    except BrokenPipeError as e:
+        # print('caught: BrokenPipeError', file=sys.stderr)
+        pass
+
+def debug(*msg):
+    print("DEBUG: ", *msg, file=sys.stderr)
+
+######################################################################
+# This is the function you should edit.
+# You can use case.p() to print the value to the case
+def onecase(case):
+
+    maxV = 2
+    while True:
+        vecA = [0] + [choice([True, False]) for _ in range(1, maxV + 1)]
+        repA = [i for i in range(1, maxV + 1) if vecA[i]]
+        n = sum([1 if b else 0 for b in vecA])
+        if n >= 1:
+            break
+    # debug(vecA)
+    # debug(repA)
+    q = 1
+    case.p(n)
+    case.p(repA)
+    case.p(q)
+    cset = set()
+    for _ in range(q):
+        while True:
+            tp = choice([1, 2])
+            if tp == 1:
+                x = randrange(1, maxV + 1)
+                y = randrange(1, maxV + 1)
+                if vecA[x] and not vecA[y]:
+                    case.p(1, x, y)
+                    vecA[y] = True
+                    # debug(1, x, y)
+                    break
+            elif tp == 2:
+                if sum([1 if b else 0 for b in vecA]) == 1:
+                    continue
+                x = randrange(1, maxV + 1)
+                if vecA[x]:
+                    case.p(2, x)
+                    vecA[x] = False
+                    # debug(2, x)
+                    break
+            else:
+                assert False
+
+
+    
+
+
+    # n = randrange(2, 5)
+    # m = randrange(2, 5)
+    # case.p(n, m)    # like print()
+    # case.p([randrange(1, 10) for _ in range(n)])   # lists are printed with space inserted
+    # case.p([choice('UDLR' for _ in range(m))])
+    # (l, r) = choose2(0, n)  # Chooses two distinct values from [0, n) (l < r)
+    #                         # choose2(0, n, ordered=True) may return (l, r) with l > r.
+    # case.p(l, r)
+    # # You can use sample(seq, k) to get k distinct elements from seq.
+
+main()

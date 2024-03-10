@@ -19,6 +19,38 @@ int main(/* int argc, char *argv[] */) {
   cout << setprecision(20);
 
   auto solve = [&]() -> void {
+    ll N; cin >> N;
+    string S; cin >> S;
+    vector<ll> L, R;
+    REP(i, 0, N) {
+      if (S[i] == '<') L.push_back(i);
+      else R.push_back(i);
+    }
+    vector<ll> AL(ssize(L) + 1, 0LL);
+    vector<ll> AR(ssize(R) + 1, 0LL);
+    REP(i, 0, ssize(L)) AL[i + 1] = AL[i] + L[i];
+    REP(i, 0, ssize(R)) AR[i + 1] = AR[i] + R[i];
+    vector<ll> ans(N);
+    ll j0 = 0, k0 = 0;
+    REP(i, 0, N) {
+      if (S[i] == '<') j0++;
+      if (i - 1 >= 0 and S[i - 1] == '>') k0++;
+      ll x = ssize(L) - j0;
+      ll y = k0;
+      ll m = min(x, y);
+      ll t = 2 * ((AL[j0 + m] - AL[j0]) - (AR[k0] - AR[k0 - m]));
+
+      if (S[i] == '>') {
+        if (x <= y) t += N - i;
+        else        t += L[j0 + m] - i + L[j0 + m] - (-1);
+      }else {
+        if (y <= x) t += i - (-1);
+        else        t += i - R[k0 - m - 1] + N - R[k0 - m - 1];
+      }
+      ans[i] = t;
+    }
+    REPOUT(i, 0, N, ans[i], " ");
+
   };
 
   ll T; cin >> T;
