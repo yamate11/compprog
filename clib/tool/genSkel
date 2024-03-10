@@ -12,7 +12,7 @@ def choose2(l, r, ordered=False):
 
 class Case:
     def __init__(self):
-        self.buf = ''
+        self.buf = []
 
     def p(self, *args):
         def cvt(a):
@@ -20,25 +20,31 @@ class Case:
                 return ' '.join(map(str, a))
             else:
                 return str(a)
-        self.buf += ' '.join(map(cvt, args)) + '\n'
+        self.buf.append(' '.join(map(cvt, args)) + '\n')
 
 def generate():
     while True:
         case = Case()
         onecase(case)
-        yield case.buf
+        yield ''.join(case.buf)
 
 def main():
     ap = argparse.ArgumentParser();
     ap.add_argument('-r', '--repeat', action='store_true',
                     help='Repeatedly generates cases',)
+    ap.add_argument('--one', action='store_true',
+                    help='One case only.  No end mark')
     args = ap.parse_args()
 
     end_mark = '^__=end=__^'
     end_file_mark = '^__=end_file=__^'
 
     try:
-        if args.repeat:
+        if args.one:
+            for s in generate():
+                print(s.rstrip())
+                break
+        elif args.repeat:
             for s in generate():
                 print(s.rstrip())
                 print(end_mark)
