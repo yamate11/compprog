@@ -52,8 +52,9 @@ int main(int argc, char *argv[]) {
     // https://rsk0315.hatenablog.com/entry/2020/04/29/155009
     auto check3 = [&](long double x) { return x <= 1e17L; };
     long double x3 = binsearch(check3, 0.0L, 1e18L, 1e-9L);
-    assert(abs(x3 - 1e17L) < 1e-9L);
-
+    assert(abs((x3 - 1e17L) / 1e17L) < 1e-9L);
+    long double x4 = binsearch(check3, 0.0L, 1e18L, 1e-9L, true);
+    assert(abs(x4 - 1e17L) < 1e-9L);
   }
 
   {
@@ -62,7 +63,27 @@ int main(int argc, char *argv[]) {
     assert(abs(sqrt(2.0L) - x0) < 1e-17L);
   }
   
-
+  { // absolute error, relative error
+    for (double w : vector<double>{2e-100, 2e-10, 2.0, 2e10, 2e100}) {
+                                    // Note: maximum double is about 1.79e308
+      auto check = [&](double x) { return x * x < w; };
+      double exp = sqrt(w);
+      double err = 1e-5;
+      double x = binsearch<double>(check, 0.0, max(1.0, w), err);
+      // cerr << w << " " << exp << " " << x << " " << exp - x << " " << (exp - x) /exp << endl;
+      assert(abs(exp - x) < err or abs((exp - x) / exp) < err);
+    }
+    for (double w : vector<double>{2e-100, 2e-10, 2.0, 2e10}) {
+      // When w = 2e10, the values of x and exp are about 1.41e5.  The "fraction" part of double is 52 bits
+      // (about 15 digits), so the precisions of x and exp are both 1e-10.  The absolute error of 1e-5
+      // is thus makable.  But for w = 2e100, it is hopeless.
+      auto check = [&](double x) { return x * x < w; };
+      double exp = sqrt(w);
+      double err = 1e-5;
+      double x = binsearch<double>(check, 0.0, max(1.0, w), err, true);
+      assert(abs(exp - x) < err);
+    }
+  }
 
   cerr << "ok.\n";
 

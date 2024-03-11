@@ -26,10 +26,15 @@ T binsearch(auto check, T yes, T no) {
 
 template <typename T>
 requires floating_point<T>
-T binsearch(auto check, T yes, T no, T err) {
-  int rep = llround(ceil(log(abs(yes - no) / err) / log(2.0))) + 1;
+T binsearch(auto check, T yes, T no, T err, const bool abs_only = false) {
+  T rep_in_t = ceil(log(abs(yes - no) / err) / log(2.0));
+  constexpr int lim = INT_MAX - 10;
+  int rep = rep_in_t > (T)lim ? lim : llround(rep_in_t) + 1;
   for (int r = 0; r < rep; r++) {
     T mid = (yes + no) / 2.0;
+    if (not abs_only) {
+      if (abs(yes - mid) < err * min(abs(mid), abs(yes))) return mid;
+    }
     if (check(mid)) yes = mid;
     else            no  = mid;
   }
