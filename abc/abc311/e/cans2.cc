@@ -12,34 +12,45 @@ using pll = pair<ll, ll>;
 #define SIZE(v) ((ll)((v).size()))
 #define REPOUT(i, a, b, exp, sep) REP(i, (a), (b)) cout << (exp) << (i + 1 == (b) ? "" : (sep)); cout << "\n"
 
-// @@ !! LIM(binsearch)
+// @@ !! LIM(mapget)
 
-// ---- inserted library file binsearch.cc
+// ---- inserted library file mapget.cc
 
-template <typename T>
-requires integral<T>
-T binsearch(auto check, T yes, T no) {
-  while (abs(no - yes) > 1) {
-    T mid = yes + (no - yes) / 2;  // avoiding unnecessary overflow
-    if (check(mid)) yes = mid;
-    else            no  = mid;
+template<typename MP>
+struct mgs : MP {
+  using Key = typename MP::key_type;
+  using T = typename MP::mapped_type;
+
+  T def;
+
+  mgs(const T& def_ = T()) : MP(), def(def_) {}
+  mgs(const mgs& o) : MP(o), def(o.def) {}
+  mgs(mgs&& o) : MP(move(o)), def(move(o.def)) {}
+  mgs& operator =(const mgs& o) {
+    MP::operator=(o);
+    def = o.def;
+    return *this;
   }
-  return yes;
-}
-
-template <typename T>
-requires floating_point<T>
-T binsearch(auto check, T yes, T no, T err) {
-  int rep = llround(ceil(log(abs(yes - no) / err) / log(2.0))) + 1;
-  for (int r = 0; r < rep; r++) {
-    T mid = (yes + no) / 2.0;
-    if (check(mid)) yes = mid;
-    else            no  = mid;
+  mgs& operator =(mgs&& o) {
+    MP::operator=(move(o));
+    def = move(o.def);
+    return *this;
   }
-  return yes;
-}
 
-// ---- end binsearch.cc
+  const T& get(const Key& k) const {
+    auto it = this->find(k);
+    if (it == this->end()) return def;
+    else return it->second;
+  }
+
+  template<typename T1>
+  void set(const Key& k, T1&& t) {
+    if (t == def) this->erase(k);
+    else (*this)[k] = forward<T1>(t);
+  }
+};
+
+// ---- end mapget.cc
 
 // @@ !! LIM -- end mark --
 
