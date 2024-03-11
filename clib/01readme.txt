@@ -3,11 +3,12 @@
 foo.cc を修正する場合．
 
 * tmp_xxx というような名前のディレクトリを作る．
-* foo.cc と test/foo_skel.cc を，tmp_xxx/foo.cc, tmp_xxx/test/foo_skel.cc にコピーする
+* foo.cc と test/foo_skel.cc と test/foo_t.d を，tmp_xxx/foo.cc, tmp_xxx/test/foo_skel.cc, tmp_xxx/test/foo_t.d にコピーする
 * Makefile を tmp_xxx/Makefile にコピーする
 * test/Makefile を tmp_xxx/test/Makefile にコピーする
 * tmp_xxx/foo.cc と tmp_xxx/test/foo_skel.cc を編集する
 * tmp_xxx/test で，make foo_t で foo_t を作成し，テストする．
-* tmp_xxx/foo.cc と tmp_xxx/test/foo_skel.cc を foo.cc と test/foo_skel.cc にコピーする
+  * デバッグするときには make DEBUG=yes foo_t
+* tmp_xxx/foo.cc と tmp_xxx/test/foo_skel.cc と tmp_xxx/test/foo_t.d を foo.cc と test/foo_skel.cc と test/foo_t.d にコピーする
 * make test で，全体をテストする．
 
