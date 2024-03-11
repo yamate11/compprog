@@ -199,6 +199,38 @@ int main(int argc, char *argv[]) {
     }
   }
 
+  // Euler Tour
+  {
+    int rep = 1000;
+    for (int _r = 0; _r < rep; _r++) {
+      int nn = randrange(1, 17);
+      int root = randrange(0, nn);
+      Tree tr(nn, root);
+      for (int i = 1; i < nn; i++) {
+        int j = randrange(0, i);
+        if (randrange(0, 2) == 0) tr.add_edge(i, j);
+        else                      tr.add_edge(j, i);
+      }
+
+      auto dfs = [&](auto rF, ll nd) -> void {
+        int in_e = nd == root ? 0 : tr.euler_edge(tr.parent(nd), nd);
+        int out_e = nd == root ? 2*nn - 1 : tr.euler_edge(nd, tr.parent(nd));
+        assert(tr.euler_in(nd) == in_e);
+        assert(tr.euler_out(nd) == out_e);
+        ll numc = ssize(tr.children(nd));
+        for (int i = 0; i < numc; i++) {
+          int cld = tr.children(nd)[i];
+          if (i == 0) assert(tr.euler_edge(nd, cld) == in_e + 1);
+          else        assert(tr.euler_edge(nd, cld) == tr.euler_edge(tr.children(nd)[i - 1], nd) + 1);
+        }
+        if (numc > 0) assert(out_e == tr.euler_out(tr.children(nd)[numc - 1]) + 1);
+        else          assert(out_e == in_e + 1);
+      };
+      dfs(dfs, root);
+    }
+  }
+
+
   // The length of the longest simple path that goes through the node
   using T5 = pair<ll, ll>;
   vector<TreeEdge> edge5({{0,1}, {0,2}, {0,3}, {1,4}, {1,5}, {2,6}, {2,7}});

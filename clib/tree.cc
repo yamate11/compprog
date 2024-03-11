@@ -21,6 +21,8 @@ using namespace std;
     vector<vector<int>> pPnt;     // power parent
             // pPnt[0][n] == parent of n (or root if n is root)
             // pPnt[t][n] == parent^{2^t}(n)   (but parent(root) == root here, unlike the member function)
+    vector<int> _edge_order;     
+    vector<int> _inv_edge_order;
   constructors
     Tree(int numNodes_, int root_ = 0);
   member functions
@@ -35,6 +37,10 @@ using namespace std;
     int edgeIdx(int x, int y)    // the edge index connecting x and y
                                  // if no such edge exists, -1 is returned.
     pair<int, int> nodesOfEdge(int e)  // the two nodes of the e-th edge.
+    int euler_edge(int nd1, int nd2)   // The Euler Tour index of the edge from nd1 to nd2.
+                                       // Use -1 for the imaginary edge to/from the root.
+    int euler_in(int nd)               // The Euler Tour index of the edge to nd from its parent.
+    int euler_out(int nd)              // The Euler Tour index of the edge from nd to its parent.
     tuple<int, int, int, int, int> diameter()
       // returns (diam, nd0, nd1, ct0, ct1).  diam is the length of the diameter.  
       // nd0 and nd1 are end points of diameter.  
@@ -108,10 +114,17 @@ struct Tree {
   vector<int> _parent;
   vector<vector<int>> _children;
   unordered_map<int, map<int, int>> _node2edgeIdx;
-  vector<pair<int, int>> _edges;
+  vector<pair<int, int>> _edges;   // (x, y) in _edges => x < y
   vector<vector<int>> pPnt;   
           // pPnt[0][n] == parent of n (or root if n is root)
           // pPnt[t][n] == parent^{2^t}[n]
+  // Euler Tour
+  vector<int> _edge_order;     
+  // e = _edge_order[i] is the i-th edge in the Euler Tour.  if 0 <= e < numEdges - 1; it is the edge e in the
+  // "small->large" direction.  If numEdges <= e < 2*numEdges - 1, it is the edge e - numEdges in the "large->small"
+  // direction.  If e == numEdges - 1, it is the imaginary edge to the root.  If e == 2*numEdges - 1, it is the
+  // imaginary edge from the roo.
+  vector<int> _inv_edge_order;  // the inverse of _edge_order
 
   Tree(int numNodes_, int root_ = 0) : numNodes(numNodes_), root(root_), _nbr(numNodes_) {}
 
@@ -127,17 +140,28 @@ struct Tree {
     _depth.resize(numNodes);
     _parent.resize(numNodes);
     _children.resize(numNodes);
+    _edge_order.resize(2 * numNodes);
+    _inv_edge_order.resize(2 * numNodes);
+
+    _edge_order[0] = numNodes - 1;
+    _edge_order[2 * numNodes - 1] = 2 * numNodes - 1;
+    int ei = 0;
     auto dfs = [&](auto rF, int nd, int pt, int d) -> void {
       _stsize[nd] = 1;
       _depth[nd] = d;
       _parent[nd] = pt;
+      ll ev = nd == root ? numNodes - 1 : _node2edgeIdx[pt][nd] + (pt < nd ? 0 : numNodes);
+      _edge_order[ei] = ev;
       for (int c : _nbr[nd]) if (c != pt) {
+          ei++;
           _children[nd].push_back(c);
           rF(rF, c, nd, d + 1);
           _stsize[nd] += _stsize[c];
         }
+      _edge_order[++ei] = ev < numNodes ? ev + numNodes : ev - numNodes;
     };
     dfs(dfs, root, -1, 0);
+    for (int i = 0; i < 2*numNodes; i++) _inv_edge_order[_edge_order[i]] = i;
   }
 
   void preparePPnt() {
@@ -163,7 +187,7 @@ struct Tree {
     _nbr[x].push_back(y);
     _nbr[y].push_back(x);
     _node2edgeIdx[x][y] = _node2edgeIdx[y][x] = numEdges;
-    _edges.emplace_back(x, y);
+    _edges.emplace_back(min(x, y), max(x, y));
     return numEdges++;
   }
 
@@ -236,6 +260,31 @@ struct Tree {
   }
 
   pair<int, int> nodesOfEdge(int e) { return _edges[e]; }
+
+  int euler_edge(int nd1, int nd2) {
+    set_parent_child();
+    ll eid;
+    if (nd1 == -1) {
+      if (nd2 != root) throw range_error("euler_edge");
+      eid = numNodes - 1;
+    }else if (nd2 == -1) {
+      if (nd1 != root) throw range_error("euler_edge");
+      eid = 2 * numNodes - 1;
+    }else {
+      eid = _node2edgeIdx[nd1][nd2] + (nd1 > nd2 ? numNodes : 0);
+    }
+    return _inv_edge_order[eid];
+  }
+
+  int euler_in(int nd) {
+    int pt = nd == root ? -1 : parent(nd);
+    return euler_edge(pt, nd);
+  }
+
+  int euler_out(int nd) {
+    int pt = nd == root ? -1 : parent(nd);
+    return euler_edge(nd, pt);
+  }
 
 #pragma GCC diagnostic push
 #pragma GCC diagnostic ignored "-Wunused-but-set-variable"    
