@@ -4,7 +4,7 @@ typedef long long int ll;
 using namespace std;
 #define SIZE(v) ((ll)((v).size()))
 
-// @@ !! LIM(tree mod debug)
+// @@ !! LIM(mod debug tree)
 
 
 int main(int argc, char *argv[]) {
@@ -33,7 +33,8 @@ int main(int argc, char *argv[]) {
     assert(t1.parent(0) == -1);
     assert(t1.parent(1) == 0);
     assert(t1.parent(6) == 2);
-    auto v = t1.children(0);
+    vector<int> v;
+    for (int c : t1.children(0)) v.push_back(c);
     sort(v.begin(), v.end());
     assert(v == vector<int>({1, 2}));
     assert(t1.stsize(0) == 7);
@@ -49,10 +50,10 @@ int main(int argc, char *argv[]) {
     Tree t2(3);
     t2.add_edge(0, 1);
     t2.add_edge(0, 2);
-    assert(t2.edgeIdx(0,1) == 0);
-    assert(t2.edgeIdx(2,0) == 1);
-    assert(t2.nodesOfEdge(0) == pii(0, 1));
-    assert(t2.nodesOfEdge(1) == pii(0, 2));
+    assert(t2.edge_idx(0,1) == 0);
+    assert(t2.edge_idx(2,0) == 1);
+    assert(t2.nodes_of_edge(0) == pii(0, 1));
+    assert(t2.nodes_of_edge(1) == pii(0, 2));
   }
 
   vector<TreeEdge>
@@ -72,7 +73,8 @@ int main(int argc, char *argv[]) {
   Tree t4(9);
   for (auto [x,y] : edge4) t4.add_edge(x, y);
   auto sub4 = [](Tree t, int i)  {
-    const auto& v = t.children(i);
+    vector<int> v;
+    for (int j = 0; j < t.num_children(i); j++) v.push_back(t.child(i, j));
     return set<int>(v.begin(), v.end());
   };
   assert(sub4(t4, 0) == set<int>({1,3}));
@@ -128,28 +130,50 @@ int main(int argc, char *argv[]) {
         else                        tr.add_edge(j, i);
       }
       for (ll i = 0; i < N - 1; i++) {
-        auto [x, y] = tr.nodesOfEdge(i);
+        auto [x, y] = tr.nodes_of_edge(i);
         assert ((x == i + 1 and y == rec[i + 1]) or (x == rec[i + 1] and y == i + 1));
       }
       for (ll i = 0; i < N; i++) {
         ll cnt = 0;
         for (ll j = 0; j < N; j++) if (conn[i][j]) cnt++;
-        for (ll j : tr.children(i)) assert(conn[i][j]);
+        for (ll k = 0; k < tr.num_children(i); k++) assert(conn[i][tr.child(i, k)]);
         ll sts = 1; for (ll j : tr.children(i)) sts += tr.stsize(j);
         assert(sts == tr.stsize(i));
         if (i == root) {
           assert (tr.parent(i) == -1);
-          assert ((ll)(tr.children(i).size()) == cnt);
+          assert ((ll)(tr.num_children(i)) == cnt);
           assert (tr.depth(i) == 0);
           assert (tr.stsize(i) == N);
           assert (tr.ancestorDep(i, 0) == i);
         }else {
           assert (conn[i][tr.parent(i)]);
-          assert (SIZE(tr.children(i)) + 1 == cnt);
+          assert (tr.num_children(i) + 1 == cnt);
           assert (tr.depth(i) == tr.depth(tr.parent(i)) + 1);
           vector tmp(tr.depth(i) + 1, 0LL);
           for (ll d = 0; d <= tr.depth(i); d++) tmp[d] = tr.ancestorDep(i, d);
           for (ll d = 1; d <= tr.depth(i); d++) assert (tr.parent(tmp[d]) == tmp[d - 1]);
+        }
+      }
+      {
+        for (int nd = 0; nd < N; nd++) {
+          int nc = 0;
+          for (int cld : tr.children(nd)) {
+            assert(nd == tr.parent(cld));
+            assert(cld == tr.child(nd, nc));
+            auto [p, e] = tr.parent_pe(cld);
+            assert(nd == p and tr.nodes_of_edge(e) == make_pair(min(nd, cld), max(nd, cld)));
+            nc++;
+          }
+          assert(nc == tr.num_children(nd));
+          int i = 0;
+          for (auto [cld, e1] : tr.children_pe(nd)) {
+            auto [p, e2] = tr.parent_pe(cld);
+            assert(p == nd and e1 == e2);
+            int e3 = tr.child_edge(nd, i);
+            assert(e1 == e3);
+            assert(e1 == tr.edge_idx(nd, cld));
+            i++;
+          }
         }
       }
       for (ll x = 0; x < N; x++) {
@@ -165,8 +189,8 @@ int main(int argc, char *argv[]) {
           for (ll i = 0; i < SIZE(vec); i++) for (ll j = i + 1; j < SIZE(vec); j++) assert(vec[i] != vec[j]);
           assert (vec[0] == x and vec.back() == y);
           for (ll i = 0; i < SIZE(vec) - 1; i++) assert(conn[vec[i]][vec[i + 1]]);
-          if (conn[x][y]) assert (tr.edgeIdx(x, y) == max(x, y) - 1);
-          else            assert (tr.edgeIdx(x, y) == -1);
+          if (conn[x][y]) assert (tr.edge_idx(x, y) == max(x, y) - 1);
+          else            assert (tr.edge_idx(x, y) == -1);
         }
       }
       {
@@ -187,12 +211,12 @@ int main(int argc, char *argv[]) {
         for (ll j : tr.children(i)) assert(conn[i][j]);
         if (i == newRoot) {
           assert (tr.parent(i) == -1);
-          assert ((ll)(tr.children(i).size()) == cnt);
+          assert ((ll)(tr.num_children(i)) == cnt);
           assert (tr.depth(i) == 0);
           assert (tr.stsize(i) == N);
         }else {
           assert (conn[i][tr.parent(i)]);
-          assert (SIZE(tr.children(i)) + 1 == cnt);
+          assert (tr.num_children(i) + 1 == cnt);
           assert (tr.depth(i) == tr.depth(tr.parent(i)) + 1);
         }
       }
@@ -212,19 +236,25 @@ int main(int argc, char *argv[]) {
         else                      tr.add_edge(j, i);
       }
 
-      auto dfs = [&](auto rF, ll nd) -> void {
-        int in_e = nd == root ? 0 : tr.euler_edge(tr.parent(nd), nd);
-        int out_e = nd == root ? 2*nn - 1 : tr.euler_edge(nd, tr.parent(nd));
-        assert(tr.euler_in(nd) == in_e);
-        assert(tr.euler_out(nd) == out_e);
-        ll numc = ssize(tr.children(nd));
-        for (int i = 0; i < numc; i++) {
-          int cld = tr.children(nd)[i];
-          if (i == 0) assert(tr.euler_edge(nd, cld) == in_e + 1);
-          else        assert(tr.euler_edge(nd, cld) == tr.euler_edge(tr.children(nd)[i - 1], nd) + 1);
+      auto dfs = [&](auto rF, int nd) -> vector<int> {
+        int ein = tr.euler_in(nd);
+        int eout = tr.euler_out(nd);
+        vector<int> v{ein, eout};
+        if (tr.num_children(nd) == 0) {
+          assert(ein + 1 == eout);
+          return v;
+        }else {
+          for (int i : tr.children(nd)) {
+            auto w = rF(rF, i);
+            v.insert(v.end(), w.begin(), w.end());
+          }
+          sort(v.begin(), v.end());
+          assert(v[0] == ein);
+          assert(v.back() == eout);
+          assert(ssize(v) == eout - ein + 1);
+          for (int i = 0; i < ssize(v) - 1; i++) v[i + 1] = v[i] + 1;
         }
-        if (numc > 0) assert(out_e == tr.euler_out(tr.children(nd)[numc - 1]) + 1);
-        else          assert(out_e == in_e + 1);
+        return v;
       };
       dfs(dfs, root);
     }
@@ -246,7 +276,7 @@ int main(int argc, char *argv[]) {
     return make_pair(a1, a2);
   };
   auto mod5 = [&](T5 p, ll n, ll c) -> T5 {
-    return make_pair(p.first + len5[t5.edgeIdx(n,c)], 0);
+    return make_pair(p.first + len5[t5.edge_idx(n,c)], 0);
   };
   auto v5 = reroot(t5, make_pair(0, 0), add5, mod5);
   vector<ll> ans5 = {23, 23, 23, 18, 23, 21, 23, 22};
@@ -297,7 +327,7 @@ int main(int argc, char *argv[]) {
       return make_pair(max(top1, top2), rev1 + rev2);
     };
     auto mod7 = [&](const T7& t, ll n, ll c) -> T7 {
-      ll eid = t7.edgeIdx(c, n);
+      ll eid = t7.edge_idx(c, n);
       ll addRev = (edge7[eid].first == n) ? 1 : 0;
       return make_pair(t.first + time[eid], t.second + addRev);
     };

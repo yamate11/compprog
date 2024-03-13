@@ -9,7 +9,6 @@ using namespace std;
   members
     int numNodes;
     int root;
-    int numEdges;   // must be (numNodes - 1) once the initial construction finishes
     bool pc_built;  // initially false.  set true when parent-children analysis finishes.
     vector<vector<int>> _nbr;
         // If (u, v) is an edge, then _nbr[u] has v and _nbr[v] has u.
@@ -17,7 +16,7 @@ using namespace std;
     vector<int> _depth;
     vector<int> _parent;
     vector<vector<int>> _children;
-    unordered_map<int, map<int, int>> _node2edgeIdx;
+    unordered_map<int, map<int, int>> _edge_idx;
     vector<vector<int>> pPnt;     // power parent
             // pPnt[0][n] == parent of n (or root if n is root)
             // pPnt[t][n] == parent^{2^t}(n)   (but parent(root) == root here, unlike the member function)
@@ -34,7 +33,7 @@ using namespace std;
     int lca(int x, int y);   // lowest common ancestor    
     vector<int> nnpath(int x, int y)  // path (list of nodes) between x and y, inclusive.
     int ancestorDep(int x, int dep)   // the ancestor of x whose depth is dep
-    int edgeIdx(int x, int y)    // the edge index connecting x and y
+    int edge_idx(int x, int y)   // the edge index connecting x and y
                                  // if no such edge exists, -1 is returned.
     pair<int, int> nodesOfEdge(int e)  // the two nodes of the e-th edge.
     int euler_edge(int nd1, int nd2)   // The Euler Tour index of the edge from nd1 to nd2.
@@ -103,72 +102,188 @@ using namespace std;
 
 struct Tree {
 
+  struct pe_t {
+    int peer;
+    int edge;
+    pe_t(int peer_ = -1, int edge_ = -1) : peer(peer_), edge(edge_) {}
+    static const pe_t end_object;
+  };
+
+  struct nbr_t {
+    int parent_idx;                 // pe[parent_idx] is the parent
+    vector<pe_t> pe;
+    nbr_t() : parent_idx(-1), pe() {}
+  };
+
+  template<bool get_peer>
+  struct nbr_iterator {
+    const nbr_t& body;
+    int pe_idx;
+    explicit nbr_iterator(const nbr_t& body_, int pe_idx_) : body(body_), pe_idx(pe_idx_) {
+      if (pe_idx == body.parent_idx) pe_idx++;
+    }
+    auto operator*() const -> typename conditional<get_peer, int, const pe_t&>::type {
+      if constexpr (get_peer) return body.pe[pe_idx].peer;
+      else                    return body.pe[pe_idx];
+    }
+    const nbr_iterator& operator++() {
+      pe_idx++;
+      if (pe_idx == body.parent_idx) pe_idx++;
+      return *this;
+    }
+    bool operator !=(const nbr_iterator& o) const { return pe_idx != o.pe_idx; }
+  };
+
+  template<bool get_peer>
+  struct children_view {
+    const nbr_t& body;
+    children_view(const nbr_t& body_) : body(body_) {}
+    nbr_iterator<get_peer> begin() const { return nbr_iterator<get_peer>(body, 0); }
+    nbr_iterator<get_peer> end() { return nbr_iterator<get_peer>(body, std::ssize(body.pe)); }
+  };
+
   int numNodes;
   int root;
-  int numEdges = 0;
-  bool pc_built = false;
-  vector<vector<int>> _nbr;
-      // if (u, v) is an edge, then _nbr[u] has v and _nbr[v] has u.
+  vector<nbr_t> _nbr;
+  vector<pair<int, int>> _edges;   // (x, y) in _edges => x < y
+  vector<int> _parent;             // _parent[root] == -1
   vector<int> _stsize;
   vector<int> _depth;
-  vector<int> _parent;
-  vector<vector<int>> _children;
-  unordered_map<int, map<int, int>> _node2edgeIdx;
-  vector<pair<int, int>> _edges;   // (x, y) in _edges => x < y
+  unordered_map<int, unordered_map<int, int>> _edge_idx;
   vector<vector<int>> pPnt;   
           // pPnt[0][n] == parent of n (or root if n is root)
           // pPnt[t][n] == parent^{2^t}[n]
   // Euler Tour
-  vector<int> _edge_order;     
-  // e = _edge_order[i] is the i-th edge in the Euler Tour.  if 0 <= e < numEdges - 1; it is the edge e in the
-  // "small->large" direction.  If numEdges <= e < 2*numEdges - 1, it is the edge e - numEdges in the "large->small"
-  // direction.  If e == numEdges - 1, it is the imaginary edge to the root.  If e == 2*numEdges - 1, it is the
-  // imaginary edge from the roo.
-  vector<int> _inv_edge_order;  // the inverse of _edge_order
+  vector<int> _euler_in;
+  vector<int> _euler_out;
+  bool _node2edge_built = false;
+  bool _euler_built = false;
 
-  Tree(int numNodes_, int root_ = 0) : numNodes(numNodes_), root(root_), _nbr(numNodes_) {}
+  Tree(int numNodes_, int root_ = 0) : numNodes(numNodes_), root(root_), _nbr(numNodes_) {
+    if (numNodes == 1) _set_parent();
+  }
 
   // Implementation note:
   // Adding Tree(int, const vector<pair<int, int>>, int) is not a good idea.  If it were added,
   // Tree tr(n, x); would fail when x is long long.  You need to write Tree tr(n, (int)x), then.
 
-  void set_parent_child() {
-    if (pc_built) return;
-    pc_built = true;
-    if (numNodes != numEdges + 1) throw range_error("numNodes and numEdges");
-    _stsize.resize(numNodes);
-    _depth.resize(numNodes);
-    _parent.resize(numNodes);
-    _children.resize(numNodes);
-    _edge_order.resize(2 * numNodes);
-    _inv_edge_order.resize(2 * numNodes);
+  int add_edge(int x, int y) {
+    int i = ssize(_edges);
+    if (i >= numNodes - 1) throw range_error("add_edge");
+    _nbr[x].pe.emplace_back(y, i);
+    _nbr[y].pe.emplace_back(x, i);
+    _edges.emplace_back(min(x, y), max(x, y));
+    if (i + 1 == numNodes - 1) _set_parent();
+    return i;
+  }
 
-    _edge_order[0] = numNodes - 1;
-    _edge_order[2 * numNodes - 1] = 2 * numNodes - 1;
-    int ei = 0;
-    auto dfs = [&](auto rF, int nd, int pt, int d) -> void {
-      _stsize[nd] = 1;
-      _depth[nd] = d;
-      _parent[nd] = pt;
-      ll ev = nd == root ? numNodes - 1 : _node2edgeIdx[pt][nd] + (pt < nd ? 0 : numNodes);
-      _edge_order[ei] = ev;
-      for (int c : _nbr[nd]) if (c != pt) {
-          ei++;
-          _children[nd].push_back(c);
-          rF(rF, c, nd, d + 1);
-          _stsize[nd] += _stsize[c];
+  void _set_parent() {   // called from constructor, add_edge() and change_root()
+    if (numNodes != ssize(_edges) + 1) throw range_error("_set_parent");
+    _nbr[root].parent_idx = ssize(_nbr[root].pe);   // root does not have a parent.
+    vector<tuple<int, int, int>> stack{{root, -1, -1}};
+    while (not stack.empty()) {
+      auto& [nd, cidx, pt] = stack.back();
+      cidx++;
+      if (cidx < ssize(_nbr[nd].pe)) {
+        ll cld = _nbr[nd].pe[cidx].peer;
+        if (cld == pt) _nbr[nd].parent_idx = cidx;
+        else stack.emplace_back(cld, -1, nd);
+      }else {
+        stack.pop_back();
+      }
+    }
+  }
+
+  pe_t parent_pe(int nd) { return _nbr[nd].pe[_nbr[nd].parent_idx]; }
+  int parent(int nd) { return nd == root ? -1 : parent_pe(nd).peer; }
+  int num_children(int nd) { return _nbr[nd].pe.size() - (_nbr[nd].parent_idx == (int)_nbr[nd].pe.size() ? 0 : 1); }
+  pe_t child_pe(int nd, int idx) { return _nbr[nd].pe[idx < _nbr[nd].parent_idx ? idx : idx + 1]; }
+  int child(int nd, int idx) { return child_pe(nd, idx).peer; }
+  int child_edge(int nd, int idx) { return child_pe(nd, idx).edge; }
+  auto children_pe(int nd) { return children_view<false>(_nbr[nd]); }
+  auto children(int nd) { return children_view<true>(_nbr[nd]); }
+
+  int stsize(int nd0) {
+    if (_stsize.empty()) {
+      _stsize.resize(numNodes, 1);
+      vector<pair<int, int>> stack{{root, -1}};
+      while (not stack.empty()) {
+        auto& [nd, cidx] = stack.back();
+        cidx++;
+        if (cidx < num_children(nd)) {
+          stack.emplace_back(child(nd, cidx), -1);
+        }else {
+          if (nd != root) _stsize[parent(nd)] += _stsize[nd];
+          stack.pop_back();
         }
-      _edge_order[++ei] = ev < numNodes ? ev + numNodes : ev - numNodes;
-    };
-    dfs(dfs, root, -1, 0);
-    for (int i = 0; i < 2*numNodes; i++) _inv_edge_order[_edge_order[i]] = i;
+      }
+    }
+    return _stsize[nd0];
+  }
+
+  int depth(int nd0) {
+    if (_depth.empty()) {
+      _depth.resize(numNodes);
+      vector<pair<int, int>> stack{{root, -1}};
+      while (not stack.empty()) {
+        auto& [nd, cidx] = stack.back();
+        if (cidx == -1) _depth[nd] = nd == root ? 0 : _depth[parent(nd)] + 1;
+        cidx++;
+        if (cidx < num_children(nd)) stack.emplace_back(child(nd, cidx), -1);
+        else stack.pop_back();
+      }
+    }
+    return _depth[nd0];
+  }
+
+  int edge_idx(int x, int y) {
+    if (_edge_idx.empty()) {
+      for (int i = 0; i < ssize(_edges); i++) {
+        auto [xx, yy] = _edges[i];
+        _edge_idx[xx][yy] = i;
+        _edge_idx[yy][xx] = i;
+      }
+    }
+    auto it = _edge_idx.find(x);
+    if (it == _edge_idx.end()) return -1;
+    auto it2 = it->second.find(y);
+    if (it2 == it->second.end()) return -1;
+    return it2->second;
+  }
+
+  pair<int, int> nodes_of_edge(int e) { return _edges[e]; }
+
+  void _set_euler() {
+    _euler_in.resize(numNodes);
+    _euler_out.resize(numNodes);
+    vector<pair<int, int>> stack{{root, -1}};
+    int idx = 0;
+    while (not stack.empty()) {
+      auto& [nd, cidx] = stack.back();
+      if (cidx == -1) _euler_in[nd] = idx++;
+      cidx++;
+      if (cidx < num_children(nd)) stack.emplace_back(child(nd, cidx), -1);
+      else {
+        _euler_out[nd] = idx++;
+        stack.pop_back();
+      }
+    }
+  }
+
+  int euler_in(int nd) {
+    if (_euler_in.empty()) _set_euler();
+    return _euler_in[nd];
+  }
+
+  int euler_out(int nd) {
+    if (_euler_out.empty()) _set_euler();
+    return _euler_out[nd];
   }
 
   void preparePPnt() {
-    set_parent_child();
     if (not pPnt.empty()) return;
     vector<int> vec_parent(numNodes);
-    for (int i = 0; i < numNodes; i++) vec_parent[i] = i == root ? i : _parent[i];
+    for (int i = 0; i < numNodes; i++) vec_parent[i] = i == root ? i : parent(i);
     pPnt.push_back(move(vec_parent));
     for (int t = 0; true; t++) {
       bool done = true;
@@ -183,40 +298,10 @@ struct Tree {
     }
   }
 
-  int add_edge(int x, int y) {
-    _nbr[x].push_back(y);
-    _nbr[y].push_back(x);
-    _node2edgeIdx[x][y] = _node2edgeIdx[y][x] = numEdges;
-    _edges.emplace_back(min(x, y), max(x, y));
-    return numEdges++;
-  }
-
-  // parent(root) == -1
-  int parent(int x) {
-    set_parent_child();
-    return _parent[x];
-  }
-
-  const vector<int>& children(int x) { 
-    set_parent_child();
-    return _children[x];
-  }
-
-  int stsize(int x) {
-    set_parent_child();
-    return _stsize[x];
-  }
-
-  int depth(int x) {
-    set_parent_child();
-    return _depth[x];
-  }
-
   // Lowest Common Ancestor
   int lca(int x, int y) {
-    set_parent_child();
-    if (_depth[x] > _depth[y]) swap(x, y);
-    int dep = _depth[x];
+    if (depth(x) > depth(y)) swap(x, y);
+    int dep = depth(x);
     int yy = ancestorDep(y, dep);
     if (x == yy) return x;
     int t = 0;
@@ -251,54 +336,20 @@ struct Tree {
     return x;
   }
 
-  int edgeIdx(int x, int y) {
-    auto itx = _node2edgeIdx.find(x);
-    if (itx == _node2edgeIdx.end()) return -1;
-    auto ity = itx->second.find(y);
-    if (ity == itx->second.end()) return -1;
-    return ity->second;
-  }
-
-  pair<int, int> nodesOfEdge(int e) { return _edges[e]; }
-
-  int euler_edge(int nd1, int nd2) {
-    set_parent_child();
-    ll eid;
-    if (nd1 == -1) {
-      if (nd2 != root) throw range_error("euler_edge");
-      eid = numNodes - 1;
-    }else if (nd2 == -1) {
-      if (nd1 != root) throw range_error("euler_edge");
-      eid = 2 * numNodes - 1;
-    }else {
-      eid = _node2edgeIdx[nd1][nd2] + (nd1 > nd2 ? numNodes : 0);
-    }
-    return _inv_edge_order[eid];
-  }
-
-  int euler_in(int nd) {
-    int pt = nd == root ? -1 : parent(nd);
-    return euler_edge(pt, nd);
-  }
-
-  int euler_out(int nd) {
-    int pt = nd == root ? -1 : parent(nd);
-    return euler_edge(nd, pt);
-  }
-
 #pragma GCC diagnostic push
 #pragma GCC diagnostic ignored "-Wunused-but-set-variable"    
   tuple<int, int, int, int, int> diameter() {
-    set_parent_child();
     if (numNodes == 1) return {0, 0, 0, 0, 0};
     if (numNodes == 2) return {1, 0, 1, 0, 1};
+    depth(root);   // to ensure that _depth is correctly built
     int nd0 = max_element(_depth.begin(), _depth.end()) - _depth.begin();
     int nd1 = -1, ct0 = -1, ct1 = -1;
     int diam = 0;
     auto dfs2 = [&](auto rF, int nd, int dp, int pt) -> bool {
+      // DFS from nd0, which is different from the root.
       bool ret = false;
       ll numChildren = 0;
-      for (ll cld : _nbr[nd]) {
+      for (auto [cld, _e] : _nbr[nd].pe) {
         if (cld == pt) continue;
         numChildren++;
         bool bbb = rF(rF, cld, dp + 1, nd);
@@ -328,17 +379,19 @@ struct Tree {
 #pragma GCC diagnostic pop
 
   void change_root(int newRoot) {
-    pPnt.resize(0);
-    if (pc_built) {
-      pc_built = false;
-      _depth.resize(0);
-      _parent.resize(0);
-      _children.resize(0);
-    }
     root = newRoot;
+    _set_parent();
+    _stsize.clear();
+    _depth.clear();
+    _edge_idx.clear();
+    _euler_in.clear();
+    _euler_out.clear();
+    pPnt.clear();
   }
 
 };
+
+const Tree::pe_t end_object{-1, -1};
 
 template <typename M>
 auto reroot(Tree& tree, const M& unit, auto add, auto mod1, auto mod2) {
@@ -348,11 +401,10 @@ auto reroot(Tree& tree, const M& unit, auto add, auto mod1, auto mod2) {
   vector<vector<M>> sum_right(tree.numNodes);
   
   auto dfs1 = [&](const auto& recF, int nd) -> A {
-    const auto& cldr = tree.children(nd);
-    int k = cldr.size();
+    int k = tree.num_children(nd);
     vector<M> ws(k);
     for (int i = 0; i < k; i++) {
-      int c = cldr[i];
+      int c = tree.child(nd, i);
       ws[i] = mod1(recF(recF, c), nd, c);
     }
     sum_left[nd].resize(k + 1, unit);
@@ -365,10 +417,9 @@ auto reroot(Tree& tree, const M& unit, auto add, auto mod1, auto mod2) {
 
   auto dfs2 = [&](const auto& recF, int nd, const M& t) -> void {
     result[nd] = mod2(add(sum_right[nd][0], t), nd);
-    const auto& cldr = tree.children(nd);
-    int k = cldr.size();
+    int k = tree.num_children(nd);
     for (int i = 0; i < k; i++) {
-      int c = cldr[i];
+      int c = tree.child(nd, i);
       M excl_c = add(sum_left[nd][i], sum_right[nd][i + 1]);
       M m_for_c = add(excl_c, t);
       A v_for_c = mod2(m_for_c, nd);
