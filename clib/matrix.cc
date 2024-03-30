@@ -6,6 +6,8 @@ using namespace std;
 /*
   Matrix
 
+  https://yamate11.github.io/blog/posts/2024/03-30-matrix/
+
   Needs AO (Algebra Operations) as template parameter.
 
   Mat<AO> ... basic usage
@@ -173,6 +175,16 @@ struct Matrix {
     Matrix ret(mat);
     for (int p = 0; p < mat.dimI * mat.dimJ; p++) ret.mem[p] = t * ret.mem[p];
     return ret;
+  }
+
+  vector<T> operator *(const vector<T>& vec) const {
+    auto m = (*this) * Matrix(0, 1, vec);
+    return m.mem;
+  }
+
+  vector<T> operator *(vector<T>&& vec) const {
+    auto m = (*this) * Matrix(0, 1, move(vec));
+    return m.mem;
   }
 
   static Matrix from_vvec(const vector<vector<T>>& vvec) {

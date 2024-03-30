@@ -117,6 +117,19 @@ int main() {
   }
 
   {
+    using MyMat = Matrix<ll>;
+    MyMat mat1{{2, -4, 1}, {3, 5, 0}, {-1, 2, -3}};
+    vector<ll> vec1{3, 1, -2};
+    vector<ll> vec2{0, -2, 1};
+    auto vec3 = mat1 * vec1;
+    assert(vec3 == (vector<ll>{0, 14, 5}));
+    auto vec4 = mat1 * move(vec2);
+    assert(vec4 == (vector<ll>{9, -10, -7}));
+    assert(vec1 == (vector<ll>{3, 1, -2}));
+  }
+
+
+  {
     using Fp = FpA;
 
     cerr << "sweepout, determinant, inverse" << endl;
