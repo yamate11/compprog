@@ -4,6 +4,8 @@ typedef long long int ll;
 using namespace std;
 
 /*
+  https://yamate11.github.io/blog/posts/2024/03-13-tree-lib/
+
   Tree ...  rooted tree.  The nodes must be {0, 1, .., numNodes-1}
 
   members
