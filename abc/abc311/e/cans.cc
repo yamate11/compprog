@@ -57,28 +57,20 @@ int main(/* int argc, char *argv[] */) {
     ll v2; cin >> v2; v2 -= 1; B[i] = v2;
   }
   // @End [Nu6BM0Fj]
-  set<pll> ss;
-  REP(i, 0, N) ss.emplace(A[i], B[i]);
 
-  vector tbl(H, vector(W, 0LL));
-  REP(i, 0, H) REP(j, 0, W) {
-    if (ss.contains(pll(i, j))) tbl[i][j] = 0;
-    else if (i == 0 or j == 0) tbl[i][j] = 1;
-    else {
-      ll a = tbl[i - 1][j];
-      ll b = tbl[i][j - 1];
-      ll c = tbl[i - 1][j - 1];
-      if (a == 0 or b == 0 or c == 0) tbl[i][j] = 1;
-      else if (a != b) tbl[i][j] = min(a, b) + 1;
-      else if (c == a - 1) tbl[i][j] = a;
-      else tbl[i][j] = a + 1;
-    }
-  }
+  vector P(H + 1, vector(W + 1, 0));
+  REP(i, 0, N) P[A[i] + 1][B[i] + 1] = 1;
+  REP(i, 1, H + 1) REP(j, 1, W + 1) P[i][j] += P[i][j - 1];
+  REP(i, 1, H + 1) REP(j, 1, W + 1) P[i][j] += P[i - 1][j];
   ll ans = 0;
-  REP(i, 0, H) REP(j, 0, W) ans += tbl[i][j];
+  REP(i, 0, H) REP(j, 0, W) {
+    auto check = [&](ll k) -> bool {
+      return i + k <= H and j + k <= W and P[i + k][j + k] + P[i][j] - P[i + k][j] - P[i][j + k] == 0;
+    };
+    ll k = binsearch<ll>(check, 0, min(H, W) + 1);
+    ans += k;
+  }
   cout << ans << endl;
-  
-
   return 0;
 }
 
