@@ -4,14 +4,11 @@ typedef long long int ll;
 using namespace std;
 
 /*
-  https://yamate11.github.io/blog/posts/2024/03-13-tree-lib/
-
   Tree ...  rooted tree.  The nodes must be {0, 1, .., numNodes-1}
 
   members
     int numNodes;
     int root;
-    bool pc_built;  // initially false.  set true when parent-children analysis finishes.
     vector<vector<int>> _nbr;
         // If (u, v) is an edge, then _nbr[u] has v and _nbr[v] has u.
     vector<int> _stsize;
@@ -102,6 +99,10 @@ using namespace std;
 // See help of libins command for dependency spec syntax.
 // @@ !! BEGIN() ---- tree.cc
 
+struct function_error : runtime_error {
+  function_error(const string& msg) : runtime_error(msg) {}
+};
+
 struct Tree {
 
   struct pe_t {
@@ -151,23 +152,21 @@ struct Tree {
   vector<int> _parent;             // _parent[root] == -1
   vector<int> _stsize;
   vector<int> _depth;
-  unordered_map<int, unordered_map<int, int>> _edge_idx;
-  vector<vector<int>> pPnt;   
-          // pPnt[0][n] == parent of n (or root if n is root)
-          // pPnt[t][n] == parent^{2^t}[n]
-  // Euler Tour
+  unordered_map<long long, int> _edge_idx;
+  vector<vector<int>> _pPnt;   
+          // _pPnt[0][n] == parent of n (or root if n is root)
+          // _pPnt[t][n] == parent^{2^t}[n]
   vector<int> _euler_in;
   vector<int> _euler_out;
-  bool _node2edge_built = false;
-  bool _euler_built = false;
+  vector<pair<int, bool>> _euler_edge;
+
+  constexpr static bool use_depth = true;
+  constexpr static bool use_stsize = true;
+  constexpr static bool use_euler = true;
 
   Tree(int numNodes_, int root_ = 0) : numNodes(numNodes_), root(root_), _nbr(numNodes_) {
     if (numNodes == 1) _set_parent();
   }
-
-  // Implementation note:
-  // Adding Tree(int, const vector<pair<int, int>>, int) is not a good idea.  If it were added,
-  // Tree tr(n, x); would fail when x is long long.  You need to write Tree tr(n, (int)x), then.
 
   int add_edge(int x, int y) {
     int i = ssize(_edges);
@@ -180,20 +179,42 @@ struct Tree {
   }
 
   void _set_parent() {   // called from constructor, add_edge() and change_root()
-    if (numNodes != ssize(_edges) + 1) throw range_error("_set_parent");
-    _nbr[root].parent_idx = ssize(_nbr[root].pe);   // root does not have a parent.
-    vector<tuple<int, int, int>> stack{{root, -1, -1}};
-    while (not stack.empty()) {
-      auto& [nd, cidx, pt] = stack.back();
-      cidx++;
-      if (cidx < ssize(_nbr[nd].pe)) {
-        ll cld = _nbr[nd].pe[cidx].peer;
-        if (cld == pt) _nbr[nd].parent_idx = cidx;
-        else stack.emplace_back(cld, -1, nd);
-      }else {
-        stack.pop_back();
-      }
+
+    _nbr[root].parent_idx = ssize(_nbr[root].pe);
+
+    if constexpr (use_depth) _depth.resize(numNodes);
+    if constexpr (use_stsize) _stsize.resize(numNodes);
+    if constexpr (use_euler) {
+      _euler_in.resize(numNodes);
+      _euler_out.resize(numNodes);
+      _euler_edge.resize(2 * numNodes);
     }
+    int euler_idx = 0;
+
+    auto dfs = [&](auto rF, int nd, int pt, int edge) -> void {
+      if constexpr (use_depth) _depth[nd] = pt == -1 ? 0 : _depth[pt] + 1;
+      if constexpr (use_stsize) _stsize[nd] = 1;
+      if constexpr (use_euler) {
+        _euler_edge[euler_idx] = {edge, nd < pt};
+        _euler_in[nd] = euler_idx;
+        euler_idx++;
+      }
+      for (int i = 0; i < ssize(_nbr[nd].pe); i++) {
+        auto [c_id, c_eg] = _nbr[nd].pe[i];
+        if (c_id == pt) _nbr[nd].parent_idx = i;
+        else {
+          rF(rF, c_id, nd, c_eg);
+          if constexpr (use_stsize) _stsize[nd] += _stsize[c_id];
+        }
+      }
+      if constexpr (use_euler) {
+        _euler_edge[euler_idx] = {edge, pt < nd};
+        _euler_out[nd] = euler_idx;
+        euler_idx++;
+      }
+    };
+
+    dfs(dfs, root, -1, numNodes - 1);
   }
 
   pe_t parent_pe(int nd) { return _nbr[nd].pe[_nbr[nd].parent_idx]; }
@@ -205,52 +226,28 @@ struct Tree {
   auto children_pe(int nd) { return children_view<false>(_nbr[nd]); }
   auto children(int nd) { return children_view<true>(_nbr[nd]); }
 
-  int stsize(int nd0) {
-    if (_stsize.empty()) {
-      _stsize.resize(numNodes, 1);
-      vector<pair<int, int>> stack{{root, -1}};
-      while (not stack.empty()) {
-        auto& [nd, cidx] = stack.back();
-        cidx++;
-        if (cidx < num_children(nd)) {
-          stack.emplace_back(child(nd, cidx), -1);
-        }else {
-          if (nd != root) _stsize[parent(nd)] += _stsize[nd];
-          stack.pop_back();
-        }
-      }
-    }
-    return _stsize[nd0];
+  int stsize(int nd) {
+    if constexpr (use_stsize) return _stsize[nd];
+    else throw function_error("use_stsize should be set to call stsize.");
   }
 
-  int depth(int nd0) {
-    if (_depth.empty()) {
-      _depth.resize(numNodes);
-      vector<pair<int, int>> stack{{root, -1}};
-      while (not stack.empty()) {
-        auto& [nd, cidx] = stack.back();
-        if (cidx == -1) _depth[nd] = nd == root ? 0 : _depth[parent(nd)] + 1;
-        cidx++;
-        if (cidx < num_children(nd)) stack.emplace_back(child(nd, cidx), -1);
-        else stack.pop_back();
-      }
-    }
-    return _depth[nd0];
+  int depth(int nd) {
+    if constexpr (use_depth) return _depth[nd];
+    else throw function_error("use_depth should be set to call depth.");
   }
+
+  long long _enc_node_pair(int x, int y) { return (x + 1) * (numNodes + 1) + (y + 1); }
 
   int edge_idx(int x, int y) {
     if (_edge_idx.empty()) {
       for (int i = 0; i < ssize(_edges); i++) {
         auto [xx, yy] = _edges[i];
-        _edge_idx[xx][yy] = i;
-        _edge_idx[yy][xx] = i;
+        _edge_idx[_enc_node_pair(xx, yy)] = i;
+        _edge_idx[_enc_node_pair(yy, xx)] = i;
       }
     }
-    auto it = _edge_idx.find(x);
-    if (it == _edge_idx.end()) return -1;
-    auto it2 = it->second.find(y);
-    if (it2 == it->second.end()) return -1;
-    return it2->second;
+    auto it = _edge_idx.find(_enc_node_pair(x, y));
+    return it == _edge_idx.end() ? -1 : it->second;
   }
 
   pair<int, int> nodes_of_edge(int e) { return _edges[e]; }
@@ -273,29 +270,43 @@ struct Tree {
   }
 
   int euler_in(int nd) {
-    if (_euler_in.empty()) _set_euler();
-    return _euler_in[nd];
+    if constexpr (use_euler) return _euler_in[nd];
+    else throw function_error("use_euler should be set to call euler_in.");
   }
 
   int euler_out(int nd) {
-    if (_euler_out.empty()) _set_euler();
-    return _euler_out[nd];
+    if constexpr (use_euler) return _euler_out[nd];
+    else throw function_error("use_euler should be set to call euler_out.");
+  }
+
+  tuple<int, int, int> euler_edge(int idx) {
+    if constexpr (use_euler) {
+      if (idx == 0) return {numNodes - 1, -1, root};
+      else if (idx == 2 * numNodes - 1) return {numNodes - 1, root, -1};
+      else {
+        auto [e, b] = _euler_edge[idx];
+        auto [x, y] = nodes_of_edge(e);
+        if (b) swap(x, y);
+        return {e, x, y};
+      }
+    }
+    else throw function_error("use_euler should be set to call euler_out.");
   }
 
   void preparePPnt() {
-    if (not pPnt.empty()) return;
+    if (not _pPnt.empty()) return;
     vector<int> vec_parent(numNodes);
     for (int i = 0; i < numNodes; i++) vec_parent[i] = i == root ? i : parent(i);
-    pPnt.push_back(move(vec_parent));
+    _pPnt.push_back(move(vec_parent));
     for (int t = 0; true; t++) {
       bool done = true;
       vector<int> vec(numNodes);
       for (int n = 0; n < numNodes; n++) {
-	int m = pPnt[t][n];
-	vec[n] = pPnt[t][m];
+	int m = _pPnt[t][n];
+	vec[n] = _pPnt[t][m];
 	if (vec[n] != m) done = false;
       }
-      pPnt.push_back(move(vec));
+      _pPnt.push_back(move(vec));
       if (done) break;
     }
   }
@@ -309,9 +320,9 @@ struct Tree {
     int t = 0;
     for (int q = 1; q < dep; q *= 2) t++;
     for ( ; t >= 0; t--) {
-      if (pPnt[t][x] != pPnt[t][yy]) {
-	x = pPnt[t][x];
-	yy = pPnt[t][yy];
+      if (_pPnt[t][x] != _pPnt[t][yy]) {
+	x = _pPnt[t][x];
+	yy = _pPnt[t][yy];
       }
     }
     return parent(x);
@@ -334,7 +345,7 @@ struct Tree {
     preparePPnt();
     int diff = depth(x) - dep;
     if (diff < 0) throw range_error("ancestorDep");
-    for (int t = 0; diff >> t; t++) if (diff >> t & 1) x = pPnt[t][x];
+    for (int t = 0; diff >> t; t++) if (diff >> t & 1) x = _pPnt[t][x];
     return x;
   }
 
@@ -381,14 +392,15 @@ struct Tree {
 #pragma GCC diagnostic pop
 
   void change_root(int newRoot) {
-    root = newRoot;
-    _set_parent();
     _stsize.clear();
     _depth.clear();
     _edge_idx.clear();
     _euler_in.clear();
     _euler_out.clear();
-    pPnt.clear();
+    _pPnt.clear();
+
+    root = newRoot;
+    _set_parent();
   }
 
 };

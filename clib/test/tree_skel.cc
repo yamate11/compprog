@@ -3,6 +3,7 @@
 typedef long long int ll;
 using namespace std;
 #define SIZE(v) ((ll)((v).size()))
+using u64 = unsigned long long;
 
 // @@ !! LIM(mod debug tree)
 
@@ -162,6 +163,7 @@ int main(int argc, char *argv[]) {
             assert(cld == tr.child(nd, nc));
             auto [p, e] = tr.parent_pe(cld);
             assert(nd == p and tr.nodes_of_edge(e) == make_pair(min(nd, cld), max(nd, cld)));
+            assert(tr.child_pe(nd, nc).peer == cld and tr.child_pe(nd, nc).edge == e);
             nc++;
           }
           assert(nc == tr.num_children(nd));
@@ -192,6 +194,41 @@ int main(int argc, char *argv[]) {
           if (conn[x][y]) assert (tr.edge_idx(x, y) == max(x, y) - 1);
           else            assert (tr.edge_idx(x, y) == -1);
         }
+      }
+      { // getting LCA using euler tour and sparse table
+        int sz = 2 * N - 1;
+        int K = countr_zero(bit_floor((u64)sz));
+        vector sp_tbl(K + 1, vector(sz, -1));
+        for (int i = 0; i < sz; i++) {
+          auto [e, x, y] = tr.euler_edge(i);
+          sp_tbl[0][i] = y;
+        }
+        for (int k = 1; k <= K; k++) {
+          for (int i = 0; i < sz; i++) {
+            if (i + (1 << k) > sz) break;
+            int x = sp_tbl[k - 1][i];
+            int y = sp_tbl[k - 1][i + (1 << (k - 1))];
+            sp_tbl[k][i] = tr.depth(x) <= tr.depth(y) ? x : y;
+          }
+        }
+        for (int i = 0; i < N; i++) for (int j = 0; j < N; j++) {
+            if (i == j) continue;
+            int x = tr.lca(i, j);
+            int y = -1, t0 = i, t1 = j;
+            int i0 = tr.euler_in(i), o0 = tr.euler_out(i), i1 = tr.euler_in(j), o1 = tr.euler_out(j);
+            assert(i0 != i1 and o0 != o1);
+            if (i0 > i1) { swap(t0, t1); swap(i0, i1); swap(o0, o1); }
+            if (o1 < o0) y = t0;
+            else {
+              assert(o0 < i1);
+              int len = i1 - o0;
+              int k = countr_zero(bit_floor((u64)len));
+              int u = sp_tbl[k][o0];
+              int v = sp_tbl[k][i1 - (1 << k)];
+              y = tr.depth(u) <= tr.depth(v) ? u : v;
+            }
+            assert(x == y);
+          }
       }
       {
         auto [diam, nd0, nd1, ct0, ct1] = tr.diameter();
