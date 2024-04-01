@@ -1,0 +1,14 @@
+#!/usr/bin/env python3
+
+import sys
+from random import randrange;
+
+
+N = 2*10**5
+
+print(N)
+for i in range(2, N + 1):
+    x = randrange(1, i)
+    print(x, i)
+    
+
