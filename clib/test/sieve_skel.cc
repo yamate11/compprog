@@ -15,6 +15,7 @@ int main() {
     assert(prfac(12) == RT({{2, 2}, {3, 1}}));
     assert(prfac(97*97, sieve(97)) == RT({{97, 2}}));
     assert(prfac(1'000'000'007) == RT({{1'000'000'007, 1}}));
+    assert(prfac(1) == RT());
   }
 
   {

@@ -40,7 +40,7 @@ using namespace std;
 
 //////////////////////////////////////////////////////////////////////
 // See help of libins command for dependency spec syntax.
-// @@ !! BEGIN(f:itrange) ---- sieve.cc
+// @@ !! BEGIN() ---- sieve.cc
 
 // sieve(upto) returns the list of prime numbers up to upto.
 //   Size: upto(1e8).size() ... 5.7e6,  upto(1e9).size() ... 5.1e7
@@ -78,11 +78,37 @@ vector<int> divisorSieve(int upto) {
             primes should contain prime numbers at least up to sqrt(n)
  */
 
-vector<pair<ll, int>> _prfac_sub(ll n, const auto& it_beg, const auto& it_end) {
+struct myiter_primes {
+  const vector<int>& primes;
+  int i;
+  myiter_primes(const auto& primes_) : primes(primes_), i(0) {}
+  int next() {
+    if (i == ssize(primes)) return -1;
+    else return primes[i++];
+  }
+};
+
+struct myiter_int {
+  int x;
+  myiter_int() : x(0) {}
+  int next() {
+    x++;
+    if (x == 1) { return 2; }
+    if (x == 2) { return 3; }
+    if (x % 2 == 1) { return 3 * x - 4; }
+    return 3 * x - 5;
+  }
+};
+
+vector<pair<ll, int>> _prfac_sub(ll n, auto& mit) {
   vector<pair<ll, int>> res;
   ll x = n;
-  for (auto it = it_beg; it != it_end and *it * *it <= x; it++) {
-    ll p = *it;
+  while (x > 1) {
+    ll p = mit.next();
+    if (p < 0) {
+      throw runtime_error("_prfac_sub: prime range too small");
+    }
+    if (p * p > x) break;
     int r = 0;
     while (x % p == 0) {
       x /= p;
@@ -95,11 +121,12 @@ vector<pair<ll, int>> _prfac_sub(ll n, const auto& it_beg, const auto& it_end) {
 }
 
 vector<pair<ll, int>> prfac(ll n) {
-  ItRange itr(2, n + 1);
-  return _prfac_sub(n, itr.begin(), itr.end());
+  myiter_int mit;
+  return _prfac_sub(n, mit);
 }
 vector<pair<ll, int>> prfac(ll n, const vector<int>& primes) {
-  return _prfac_sub(n, primes.begin(), primes.end());
+  myiter_primes mit(primes);
+  return _prfac_sub(n, mit);
 }
 
 vector<pair<int, int>> prfacDivSieve(int n, const vector<int>& divSieve) {
