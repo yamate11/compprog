@@ -90,7 +90,7 @@ bool connected(ll n, const vpll& edges, ll nodes) { // nodes \subseteq [0..n)
   for (auto [i, j] : edges) {
     if ((nodes >> i & 1) and (nodes >> j & 1)) uf.merge(i, j);
   }
-  return uf.groupSize(__builtin_ctzll(nodes)) == s;
+  return uf.group_size(__builtin_ctzll(nodes)) == s;
 }
 
 int num_cc(ll n, const vpll& edges, ll nodes) {

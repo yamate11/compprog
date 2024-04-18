@@ -92,7 +92,7 @@ int main() {
       for (int i = 0; i < size; i++) for (int j = i + 1; j < size; j++) {
           assert((uf.leader(i) == uf.leader(j)) == (fg.ccid(i) == fg.ccid(j)));
         }
-      for (int i = 0; i < size; i++) assert(fg.cc_size(i) == uf.groupSize(i));
+      for (int i = 0; i < size; i++) assert(fg.cc_size(i) == uf.group_size(i));
       for (int i = 0; i < size; i++) {
         ll p = fg.dist_to_cycle(i);
         ll c = fg.cycle_size(i);

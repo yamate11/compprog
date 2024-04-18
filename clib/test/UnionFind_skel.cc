@@ -81,37 +81,39 @@ int main(int argc, char *argv[]) {
   {
     UnionFind uf1(6);
     assert(uf1.leader(0) != uf1.leader(5));
-    assert(uf1.groupSize(5) == 1);
+    assert(uf1.group_size(5) == 1);
     uf1.merge(0, 5);
-    assert(uf1.numGroups() == 5);
+    assert(uf1.num_groups() == 5);
     assert(uf1.leader(0) == uf1.leader(5));
-    assert(uf1.groupSize(5) == 2);
-    assert(uf1.groupSize(0) == 2);
+    assert(uf1.group_size(5) == 2);
+    assert(uf1.group_size(0) == 2);
     uf1.merge(1, 3);
     uf1.merge(2, 5);
-    assert(uf1.numGroups() == 3);
-    assert(uf1.groupSize(2) == 3);
+    assert(uf1.num_groups() == 3);
+    assert(uf1.group_size(2) == 3);
     assert(uf1.leader(0) == uf1.leader(2));
     assert(uf1.leader(1) == uf1.leader(3));
     assert(uf1.leader(4) != uf1.leader(0));
     assert(uf1.leader(0) != uf1.leader(1));
 
-    assert(uf1.group(2) == vector<int>({0, 2, 5}));
-    assert(uf1.group(3) == vector<int>({1, 3}));
-
+    auto gi3 = uf1.group_info();
+    assert(gi3.group(2) == vector<int>({0, 2, 5}));
+    assert(gi3.group(3) == vector<int>({1, 3}));
   }
 
   {
     for (int _z = 0; _z < 10000; _z++) {
       DLOG("****");
       int n = randrange(1, 11);
-      UnionFind uf(n);
+      UnionFind<ll> uf(n);
       NaiveUnionFind nuf(n);
       for (int _rep = 0; _rep < 30; _rep++) {
         int a = randrange(0, n);
         int b = randrange(0, n);
-        auto [la, pa] = uf.leaderpot(a);
-        auto [lb, pb] = uf.leaderpot(b);
+        int la = uf.leader(a);
+        auto pa = uf.pot(a);
+        int lb = uf.leader(b);
+        auto pb = uf.pot(b);
         auto [nla, npa] = nuf.leaderpot(a);
         auto [nlb, npb] = nuf.leaderpot(b);
         assert(la == uf.leader(a));
@@ -124,16 +126,27 @@ int main(int argc, char *argv[]) {
         }else {
           int p = randrange(-10, 11);
           DLOGKL("merge", b, a, p);
-          uf.merge(b, a, p);
-          nuf.merge(b, a, p);
-          DLOGK(nuf.leaderpot(b), nuf.leaderpot(a));
+          int i = uf.merge(b, a, p);
+          int j = nuf.merge(b, a, p);
+          DLOGK(i, j, nuf.leaderpot(b), nuf.leaderpot(a));
           DLOGKL("uf", uf._leader);
+          assert(uf.leader(j) == uf.leader(a) and uf.leader(j) == uf.leader(b));
+          assert(nuf.leader(i) == nuf.leader(a) and nuf.leader(i) == nuf.leader(b));
+          for (int k = 0; k < n; k++) {
+            if (uf.leader(k) == i) {
+              if (*nuf._pot[k] - *nuf._pot[i] != *uf.pot(k) - *uf.pot(i)) {
+                DLOGK(k, i, *nuf._pot[k], *nuf._pot[i], *uf.pot(k), *uf.pot(i));
+                assert(false);
+              }
+            }
+          }
         }
         if (_rep == n) {
           for (int i = 0; i < n; i++) {
-            assert(uf.numGroups() == nuf.numGroups());
-            assert(uf.groupSize(i) == nuf.groupSize(i));
-            auto v1 = uf.group(i);
+            assert(uf.num_groups() == nuf.numGroups());
+            assert(uf.group_size(i) == nuf.groupSize(i));
+            auto gi = uf.group_info();
+            auto v1 = gi.group(i);
             auto v2 = nuf.group(i);
             sort(v1.begin(), v1.end());
             sort(v2.begin(), v2.end());
@@ -146,19 +159,21 @@ int main(int argc, char *argv[]) {
 
 
   {
-    UnionFind uf(6);
+    UnionFind<ll> uf(6);
     uf.merge(3, 1, 20);
     int ld = uf.merge(0, 1, -10);
     assert(ld >= 0);
-    auto [ld3, p3] = uf.leaderpot(3);
-    auto [ld0, p0] = uf.leaderpot(0);
+    int ld3 = uf.leader(3);
+    auto p3 = uf.pot(3);
+    int ld0 = uf.leader(0);
+    auto p0 = uf.pot(0);
     assert(ld3 == ld0 and *p3 - *p0 == 30);
     uf.merge(3, 0, 40);
     assert(not uf.pot(0) and not uf.pot(3));
   }
 
   {
-    UnionFind uf(13);
+    UnionFind<ll> uf(13);
     uf.merge(0, 1, 3);
     uf.merge(1, 2, 1);
     uf.merge(4, 1, 2);
@@ -188,8 +203,9 @@ int main(int argc, char *argv[]) {
     assert(*uf.pot(0) - *uf.pot(3) == 5);
     assert(*uf.pot(8) - *uf.pot(6) == 4);
     assert(*uf.pot(4) - *uf.pot(0) == -1);
-    vector<int> v1(uf.group(3));
-    for (int i = 0; i < 13; i++) assert(uf.groupSize(i) == (int)uf.group(i).size());
+    auto gi = uf.group_info();
+    vector<int> v1(gi.group(3));
+    for (int i = 0; i < 13; i++) assert(uf.group_size(i) == (int)gi.group(i).size());
   }
 
 
@@ -200,12 +216,15 @@ int main(int argc, char *argv[]) {
     int rc = uf.merge(4, 2, 0);
     assert(rc >= 0);
     assert(uf.leader(4) == uf.leader(2));
-    auto [ld4, pot4] = uf.leaderpot(4);
-    auto [ld2, pot2] = uf.leaderpot(2);
+    int ld4 = uf.leader(4);
+    auto pot4 = uf.pot(4);
+    int ld2 = uf.leader(2);
+    auto pot2 = uf.pot(2);
     assert(uf.leader(4) == ld4 and uf.leader(2) == ld2);
     assert(pot4 == pot2);
-    assert(uf.groupSize(4) == 3);
-    auto v = uf.group(3);
+    assert(uf.group_size(4) == 3);
+    auto gi = uf.group_info();
+    auto v = gi.group(3);
     sort(v.begin(), v.end());
     assert(v == (vector<int>{2, 3, 4}));
   }
