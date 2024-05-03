@@ -2,6 +2,7 @@
 #include <cassert>
 using namespace std;
 using ll = long long int;
+using u64 = unsigned long long;
 using pll = pair<ll, ll>;
 // #include <atcoder/all>
 // using namespace atcoder;
@@ -11,7 +12,7 @@ using pll = pair<ll, ll>;
 #define SIZE(v) ((ll)((v).size()))
 #define REPOUT(i, a, b, exp, sep) REP(i, (a), (b)) cout << (exp) << (i + 1 == (b) ? "" : (sep)); cout << "\n"
 
-// @@ !! LIM(board)
+// @@ !! LIM(board cmpNaive)
 
 // ---- inserted library file board.cc
 
@@ -218,63 +219,156 @@ struct BoardRange {
 
 // ---- end board.cc
 
-// @@ !! LIM -- end mark --
+// ---- inserted library file cmpNaive.cc
 
-int main(/* int argc, char *argv[] */) {
+const string end_mark("^__=end=__^");
+
+int naive(istream& cin, ostream& cout);
+int body(istream& cin, ostream& cout);
+
+void cmpNaive() {
+  while (true) {
+    string s;
+    getline(cin, s);
+    bool run_body;
+    if (s.at(0) == 'Q') {
+      return;
+    }else if (s.at(0) == 'B') {
+      run_body = true;
+    }else if (s.at(0) == 'N') {
+      run_body = false;
+    }else {
+      cerr << "Unknown body/naive specifier.\n";
+      exit(1);
+    }
+    string input_s;
+    while (true) {
+      getline(cin, s);
+      if (s == end_mark) break;
+      input_s += s;
+      input_s += "\n";
+    }
+    stringstream ss_in(move(input_s));
+    stringstream ss_out;
+    ss_out << setprecision(20);
+    if (run_body) {
+      body(ss_in, ss_out);
+    }else {
+      naive(ss_in, ss_out);
+    }
+    cout << ss_out.str() << end_mark << endl;
+  }
+}
+
+int main(int argc, char *argv[]) {
   ios_base::sync_with_stdio(false);
   cin.tie(nullptr);
   cout << setprecision(20);
 
+#if CMPNAIVE
+  if (argc == 2) {
+    if (strcmp(argv[1], "cmpNaive") == 0) {
+      cmpNaive();
+    }else if (strcmp(argv[1], "naive") == 0) {
+      naive(cin, cout);
+    }else if (strcmp(argv[1], "skip") == 0) {
+      exit(0);
+    }else {
+      cerr << "Unknown argument.\n";
+      exit(1);
+    }
+  }else {
+#endif
+    body(cin, cout);
+#if CMPNAIVE
+  }
+#endif
+  return 0;
+}
+
+/*
+int naive(istream& cin, ostream& cout) {
+  return 0;
+}
+int body(istream& cin, ostream& cout) {
+  return 0;
+}
+*/
+
+// ---- end cmpNaive.cc
+
+// @@ !! LIM -- end mark --
+
+int naive(istream& cin, ostream& cout) {
   ll H, W, K; cin >> H >> W >> K;
   ll x1, y1, x2, y2; cin >> x1 >> y1 >> x2 >> y2; x1--; y1--; x2--; y2--;
-  BrdIdx start(x1, y1);
-  BrdIdx goal(x2, y2);
   Board<char> brd(H, W, '@');
   cin >> brd;
-  pll big((ll)1e18, (ll)1e18);
-  auto dist = vector(H, vector(W, vector(4, big)));
-  using pos_t = pair<BrdIdx, ll>;
-  auto dist_ref = [&](const pos_t& p) -> pll& {
-    const auto& [bi, dir] = p;
-    return dist[bi.r][bi.c][dir];
-  };
-  using sta = pair<pll, pos_t>;
-  priority_queue<sta, vector<sta>, greater<sta>> pque;
-  REP(d, 0, 4) {
-    dist[start.r][start.c][d] = pll(0, K);
-    pque.emplace(pll(0, K), pos_t(start, d));
-  }
-  while (not pque.empty()) {
-    auto [d, p] = pque.top(); pque.pop();
-    auto [dn, dk] = d;
-    auto [bi, dir] = p;
-    if (dist_ref(p) == d) {
-      if (bi == goal) {
-        cout << dn << endl;
-        return 0;
-      }
-      REP(e, 0, 4) {
-        BrdIdx newdir = BrdIdx::nbr4[e];
-        pll newdist;
-        BrdIdx newbi;
-        if (e == dir) {
-          newbi = bi + newdir;
-          if (brd.at(newbi) != '.') continue;
-          newdist = (dk == K) ? pll(dn + 1, 1) : pll(dn, dk + 1);
-        }else {
-          newbi = bi;
-          newdist = pll(dn, K);
+  BrdIdx start(x1, y1);
+  BrdIdx goal(x2, y2);
+
+  ll big = 1e18;
+  Board<ll> dist(H, W, big);
+  dist.at(start) = 0;
+  queue<BrdIdx> que;
+  que.push(start);
+  while (not que.empty()) {
+    auto bi = que.front(); que.pop();
+    for (auto dir : BrdIdx::nbr4) {
+      REP(i, 1, K + 1) {
+        auto bj = bi + i * dir;
+        if (bj == goal) {
+          cout << dist.at(bi) + 1 << endl;
+          return 0;
         }
-        pos_t newpos(newbi, e);
-        if (newdist < dist_ref(newpos)) {
-          dist_ref(newpos) = newdist;
-          pque.emplace(newdist, newpos);
+        if (brd.at(bj) != '.') break;
+        if (dist.at(bj) == big) {
+          dist.at(bj) = dist.at(bi) + 1;
+          que.push(bj);
         }
       }
     }
   }
-  cout << "-1\n";
+  cout << -1 << endl;
+  return 0;
 
+}
+int body(istream& cin, ostream& cout) {
+  ll H, W, K; cin >> H >> W >> K;
+  ll x1, y1, x2, y2; cin >> x1 >> y1 >> x2 >> y2; x1--; y1--; x2--; y2--;
+  Board<char> brd(H, W, '@');
+  cin >> brd;
+  BrdIdx start(x1, y1);
+  BrdIdx goal(x2, y2);
+  ll big = 1e18;
+  Board<ll> dist(H, W, big);
+  dist.at(start) = 0;
+  vector<BrdIdx> marked;
+  marked.push_back(start);
+  while (not marked.empty()) {
+    sort(ALL(marked), [&](const BrdIdx& bi, const BrdIdx& bj) -> bool {
+      if (bi.r != bj.r) return bi.r < bj.r;
+      else return bi.c < bj.c;
+    });
+    vector<BrdIdx> next_marked;
+    for (auto dir : BrdIdx::nbr4) {
+      auto f = [&](ll j) -> void {
+        BrdIdx bi = marked[j];
+        REP(i, 1, K + 1) {
+          BrdIdx bj = bi + i * dir;
+          if (brd.at(bj) != '.' or dist.at(bj) < big) break;
+          dist.at(bj) = dist.at(bi) + 1;
+          next_marked.push_back(bj);
+        }
+      };
+      if (dir.r > 0 or dir.c > 0) REPrev(j, ssize(marked) - 1, 0) f(j);
+      else REP(j, 0, ssize(marked)) f(j);
+    }
+    marked = move(next_marked);
+  }
+  ll ans = dist.at(goal);
+  if (ans == big) ans = -1;
+  cout << ans << endl;
   return 0;
 }
 

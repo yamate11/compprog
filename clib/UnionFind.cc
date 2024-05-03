@@ -5,28 +5,7 @@ using namespace std;
 
 /*
   UnionFind with Potentials
-
-  Usage:
-    UnionFind<T> uf(N);   // Elements are 0, 1, ..., N-1.   T is defaulted to ll.
-                          // Potentials are calculated in (T, (T)0, plus<T>(), negate<T>())
-    ld = uf.merge(i, j);   // Returs the leader
-    ld = uf.merge(i, j, p);   // p is the potential of "i" relative to "j".  If omitted, nullopt is used.
-    ld = uf.leader(i);     // leader
-    p = uf.pot(i);         // potential w.r.t i's leader.  p is type optional<Fp> and nullopt if inconsistent.
-    auto [ld, p] = uf.leaderpot(i);   // ld is the leader of i and potential(i) == potential(ld) + p.value()
-    n = uf.groupSize(i);   // the size of the group that i belongs to
-
-    // Before the following operation after modification, the results are calculated with O(N \alpha(N))
-    ng = uf.numGroups();   // the number of groups
-    for (int n: uf.group(i)) {..}   // loop over the group that i belongs to
-
-  If you are to use adhoc operators:
-    auto uf = makeUnionFind<T>(N, zero, plus, negate);
-
-  Example.  Using XOR for potential operation
-    // (with including ftwo.cc)
-    UnionFind<Ftwo> uf(N);
-
+  https://yamate11.github.io/blog/posts/2024/04-18-union-find-with-potential/
  */
 
 //////////////////////////////////////////////////////////////////////

@@ -2,6 +2,7 @@
 #include <cassert>
 using namespace std;
 using ll = long long int;
+using u64 = unsigned long long;
 using pll = pair<ll, ll>;
 // #include <atcoder/all>
 // using namespace atcoder;
@@ -11,7 +12,10 @@ using pll = pair<ll, ll>;
 #define SIZE(v) ((ll)((v).size()))
 #define REPOUT(i, a, b, exp, sep) REP(i, (a), (b)) cout << (exp) << (i + 1 == (b) ? "" : (sep)); cout << "\n"
 
-// @@ !! LIM(debug cmpNaive binsearch)
+#include <boost/multiprecision/cpp_int.hpp>           // 整数を使う時
+using namespace boost::multiprecision;
+
+// @@ !! LIM(debug binsearch f:intDiv cmpNaive)
 
 // ---- inserted function f:<< from util.cc
 
@@ -303,6 +307,81 @@ void dbgLog(bool with_nl, Head&& head, Tail&&... tail)
 
 // ---- end debug.cc
 
+// ---- inserted library file binsearch.cc
+
+template <typename T>
+requires integral<T>
+T binsearch(auto check, T yes, T no) {
+  while (abs(no - yes) > 1) {
+    T mid = yes + (no - yes) / 2;  // avoiding unnecessary overflow
+    if (check(mid)) yes = mid;
+    else            no  = mid;
+  }
+  return yes;
+}
+
+template <typename T>
+requires floating_point<T>
+T binsearch(auto check, T yes, T no, T err, const bool abs_only = false) {
+  T rep_in_t = ceil(log(abs(yes - no) / err) / log(2.0));
+  constexpr int lim = INT_MAX - 10;
+  int rep = rep_in_t > (T)lim ? lim : llround(rep_in_t) + 1;
+  for (int r = 0; r < rep; r++) {
+    T mid = (yes + no) / 2.0;
+    if (not abs_only) {
+      if (abs(yes - mid) < err * min(abs(mid), abs(yes))) return mid;
+    }
+    if (check(mid)) yes = mid;
+    else            no  = mid;
+  }
+  return yes;
+}
+
+// ---- end binsearch.cc
+
+// ---- inserted function f:intDiv from util.cc
+// imod, divFloor, divCeil
+
+// imod(x, y) : remainder of x for y
+// for y > 0:
+//   imod(x, y)  = r where x = dy + r, 0 <= r < y
+//   imod(x, -y) = r where x = dy + r, 0 >= r > y
+// Thus, imod( 10,  7) =  3
+//       imod(-10,  7) =  4
+//       imod( 10, -7) = -4
+//       imod(-10, -7) = -3
+ll imod(ll x, ll y) {
+  ll v = x % y;
+  if ((x >= 0) == (y >= 0)) return v;
+  else                      return v == 0 ? 0 : v + y;
+}
+
+// Integer Division; regardless pos/neg
+ll divFloor(ll x, ll y) {
+  if (x > 0) {
+    if (y > 0) return x / y;
+    else       return (x - y - 1) / y;
+  }else {
+    if (y > 0) return (x - y + 1) / y;
+    else       return x / y;
+  }
+}
+
+ll divCeil(ll x, ll y) {
+  if (x > 0) {
+    if (y > 0) return (x + y - 1) / y;
+    else       return x / y;
+  }else {
+    if (y > 0) return x / y;
+    else       return (x + y + 1) / y;
+  }
+}
+//   Just a note.  For d \in Z and t \in R,
+//       d < t <=> d < ceil(t),     d <= t <=> d <= floor(t),
+//       d > t <=> d > floor(t),    d >= t <=> d >= ceil(t).
+
+// ---- end f:intDiv
+
 // ---- inserted library file cmpNaive.cc
 
 const string end_mark("^__=end=__^");
@@ -381,198 +460,181 @@ int body(istream& cin, ostream& cout) {
 
 // ---- end cmpNaive.cc
 
-// ---- inserted library file binsearch.cc
-
-template<typename T>
-T binsearch_i(auto check, T yes, T no, T err = (T)1) {
-  while (abs(yes - no) > err) {
-    T mid = (yes + no) / 2;
-    if (check(mid)) yes = mid;
-    else            no  = mid;
-  }
-  return yes;
-}
-
-template<typename T>
-T binsearch_r(auto check, T yes, T no, T err, bool rel = true) {
-  while (abs(yes - no) > err &&
-         (!rel || abs(yes - no) > abs(yes) * err)) {
-    T mid = (yes + no) / 2.0;
-    if (check(mid)) yes = mid;
-    else            no  = mid;
-  }
-  return yes;
-}
-
-ll border_with_hint(ll t, auto pred, auto hint) {
-  double y = hint(t);
-  double d = floor(y);
-  double e = ceil(y);
-  bool rd = pred(d, t);
-  bool re = pred(e, t);
-  if (rd && !re) return d;
-  if (!rd && re) return e;
-  for (ll i = 1; true; i++) {
-    bool rd_i = pred(d - i, t);
-    if (rd_i && !rd) return d - i;
-    if (!rd_i && rd) return d - (i - 1);
-    bool re_i = pred(e + i, t);
-    if (re_i && !re) return e + i;
-    if (!re_i && re) return e + (i - 1);
-  }
-}
-
-// ---- end binsearch.cc
-
 // @@ !! LIM -- end mark --
 
-using Integer = __int128;
+
+template<typename Int = ll>
+struct fraction {
+  Int num;
+  Int den;
+
+  void _normalize() {
+    if (den < 0) { num = -num; den = -den; }
+    Int g = gcd(num, den);
+    if (g != 1) {
+      num /= g;
+      den /= g;
+    }
+  }
+
+  fraction(Int a = 0) : num(a), den(1) {}
+  fraction(Int num_, Int den_) : num(num_), den(den_) { _normalize(); }
+  fraction(const fraction& o) : num(o.num), den(o.den) {}
+
+  fraction& operator=(const fraction& o) { num = o.num; den = o.den; return *this; }
+  fraction& operator=(fraction&& o) { num = move(o.num); den = move(o.den); return *this; }
+
+  bool operator==(const fraction& o) { return num == o.num and den == o.den; }
+  bool operator!=(const fraction& o) { return not (*this == o); }
+
+  fraction& self_negate() {
+    num = -num;
+    return *this;
+  }
+  fraction operator-() const {
+    fraction ret(*this);
+    return ret.self_negate();
+  }
+  fraction& operator +=(const fraction& o) {
+    Int g = gcd(den, o.den);
+    Int x = den / g, y = o.den / g;
+    num = num * y + o.num * x;
+    den *= y;
+    _normalize();
+    return *this;
+  }
+  fraction& operator-=(const fraction& o) { return *this += -o; }
+
+  fraction& operator *=(const fraction& o) {
+    Int g1 = gcd(num, o.den);
+    Int g2 = gcd(den, o.num);
+    num = (num / g1) * (o.num / g2);
+    den = (den / g2) * (o.den / g1);
+    return *this;
+  }
+  fraction& self_inverse() {
+    if (num == 0) throw runtime_error("fraction::self_inverse: numerator is zero.");
+    swap(num, den);
+    if (den < 0) { num = -num; den = -den; }
+    return *this;
+  }
+  fraction inverse() const {
+    fraction ret(*this);
+    return ret.self_inverse();
+  }
+  fraction& operator /=(const fraction& o) { return *this *= o.inverse(); }
+
+  fraction operator+(const fraction& o) const {
+    fraction ret(*this);
+    return ret += o;
+  }
+  fraction operator*(const fraction& o) const {
+    fraction ret(*this);
+    return ret *= o;
+  }
+  fraction operator-(const fraction& o) const { return (*this) + (-o); }
+  fraction operator/(const fraction& o) const { return (*this) * o.inverse(); }
+
+  bool positive() const { return num > 0; }
+  bool negative() const { return num < 0; }
+  bool is_zero() const { return num == 0; }
+  bool operator<(const fraction& o) const { return (o - *this).positive(); }
+  bool operator>(const fraction& o) const { return (*this - o).positive(); }
+  bool operator<=(const fraction& o) const { return not (*this > o); }
+  bool operator>=(const fraction& o) const { return not (*this < o); }
+
+};
+
+template<typename Int>
+ostream& operator<<(ostream& os, const fraction<Int>& f) {
+  return os << "frac(" << f.num << ", " << f.den << ")";
+}
+
+template<typename Int>
+fraction<Int> abs(const fraction<Int>& f) { return f.negative() ? -f : f; }
+
+
+
+using Frac = fraction<cpp_int>;
+
+Frac value(const vector<ll>& data) {
+  Frac ret(0);
+  for (ll i = ssize(data) - 1; i >= 0; i--) {
+    if (i < ssize(data) - 1) ret = Frac(1) / ret;
+    ret += Frac(data[i]);
+  }
+  return ret;
+}
+
+void out_frac(const Frac& f) {
+  cout << f.num << " " << f.den << "\n";
+}
 
 int naive(istream& cin, ostream& cout) {
+  vector<ll> pow10(19);
+  pow10[0] = 1;
+  REP(i, 1, 19) pow10[i] = 10 * pow10[i - 1];
 
-  string s; cin >> s;
+  string sr; cin >> sr;
   ll N; cin >> N;
-  assert(s.substr(0, 2) == "0.");
-  s = s.substr(2);
-  ll r_num = stoll(s);
-  string t(SIZE(s), '0');
-  t[0] = '1';
-  ll r_den = stoll(t);
-  r_den *= 10;
+  fraction<ll> r(stoll(sr.substr(2)), pow10[ssize(sr) - 2]);
 
-  while (r_num % 2 == 0 and r_den % 2 == 0) { r_num /= 2; r_den /= 2; }
-  while (r_num % 5 == 0 and r_den % 5 == 0) { r_num /= 5; r_den /= 5; }
-
-  long double eps = 1e-10;
-  long double vmin = 10;
-  ll ans_p = -1, ans_q = -1;
+  fraction<ll> vmin(10);
+  ll p0 = -1, q0 = -1;
   REP(p, 0, N + 1) REP(q, p, N + 1) {
-    if (gcd(p, q) != 1) continue;
-    long double diff = abs((long double)r_num / r_den - (long double)p / q);
-    if (diff < vmin + eps) {
-      if (diff > vmin - eps) {
-        if ((long double)p / q < (long double)ans_p / ans_q) {
-          vmin = diff;
-          ans_p = p;
-          ans_q = q;
-        }
-      }else {
-        vmin = diff;
-        ans_p = p;
-        ans_q = q;
+    if (gcd(p, q) == 1) {
+      fraction<ll> x(p, q);
+      fraction<ll> d = abs(x - r);
+      if (d < vmin or (d == vmin and x < r)) {
+        p0 = p;
+        q0 = q;
+        vmin = d;
       }
     }
   }
-  cout << ans_p << " " << ans_q << endl;
+  cout << p0 << " " << q0 << endl;
 
   return 0;
 }
-
 int body(istream& cin, ostream& cout) {
 
-  string s; cin >> s;
+  vector<ll> pow10(19);
+  pow10[0] = 1;
+  REP(i, 1, 19) pow10[i] = 10 * pow10[i - 1];
+
+  string sr; cin >> sr;
   ll N; cin >> N;
-  assert(s.substr(0, 2) == "0.");
-  s = s.substr(2);
-  ll r_num = stoll(s);
-  string t(SIZE(s), '0');
-  t[0] = '1';
-  ll r_den = stoll(t);
-  r_den *= 10;
 
-  ll g = gcd(r_num, r_den);
-  r_num /= g;
-  r_den /= g;
-  if (r_den <= N) {
-    cout << r_num << " " << r_den << endl;
-    return 0;
-  }
-  if (N == 1) {
-    if (r_num * 2 <= r_den) cout << "0 1\n";
-    else cout << "1 1\n";
+  Frac r(stoll(sr.substr(2)), pow10[ssize(sr) - 2]);
+  if (r.den <= N) {
+    out_frac(r);
     return 0;
   }
 
-  vector<ll> exp;
-  ll p = r_den;
-  ll q = r_num;
-  while (q > 0) {
-    ll x = p / q;
-    ll y = p % q;
-    exp.push_back(x);
-    p = q;
-    q = y;
-  }
+  vector<ll> data{1};
 
-  auto frac = [&](auto& vn) -> tuple<bool, ll, ll> {
-    ll num = 0;
-    ll den = 1;
-    REPrev(i, SIZE(vn) - 1, 0) {
-      Integer new_den = vn[i] * (Integer)den + num;
-      if (new_den > N) return {false, -1LL, -1LL};
-      num = den;
-      den = new_den;
-    }
-    return {true, num, den};
-  };
-
-  ll lastd = -1;
-  while (true) {
-    lastd = exp.back(); exp.pop_back();
-    auto [b, _p, _q] = frac(exp);
-    if (b) break;
-  }
-  auto tmp = exp;
-  tmp.push_back(-1);
-  auto check = [&](ll d) -> bool {
-    tmp.back() = d;
-    auto [b, _p, _q] = frac(tmp);
-    return b;
-  };
-  ll m = binsearch_i<ll>(check, 0, lastd);
-  vector<ll> other;
-  if (m == 0) {
-    other = exp; other.pop_back();
-  }else {
-    other = exp; other.push_back(m);
-  }
-
-  auto [_b1, e_num, e_den] = frac(exp);
-  auto [_b2, o_num, o_den] = frac(other);
-  assert(_b1 and _b2);
-  Integer dist1 = ((Integer)r_den * e_num - (Integer)e_den * r_num) * (Integer)o_den;
-  Integer dist2 = ((Integer)r_den * o_num - (Integer)o_den * r_num) * (Integer)e_den;
-  if (abs(dist1) < abs(dist2)) {
-    cout << e_num << " " << e_den << endl;
-  }else if (abs(dist1) > abs(dist2)) {
-    cout << o_num << " " << o_den << endl;
-  }else if (dist1 < 0) {
-    cout << e_num << " " << e_den << endl;
-  }else {
-    cout << o_num << " " << o_den << endl;
-  }
-
-  /*
-  auto cmp = [&](auto& vn) -> pair<bool, int> {
-    auto [b, p_num, p_den] = frac(vn);
-    if (not b) return {false, -1};
-    Integer a = (Integer)p_num * r_den - (Integer)r_num * p_den;
-    return {true, a == 0 ? 0 : a > 0 ? 1 : -1};
-  };
-
-  auto get_child = [&](const auto& vn, bool is_hi) {
-    auto ret = vn;
-    if ((SIZE(vn) % 2 != 0) == not is_hi) {
-      ret.back()++;
-    } else {
-      ret.back()--;
-      ret.push_back(2);
-    }
-    return ret;
-  };
-  */
-
-  
+  auto [lo, hi] = ([&]() -> pair<Frac, Frac> {
+      for (bool mode = false; ; mode = not mode) {
+        data.back()--;
+        Frac prev1 = value(data);
+        data.push_back(0);
+        ll p0 = binsearch<ll>([&](ll p) -> bool {
+          data.back() = p;
+          Frac r1 = value(data);
+          return ((r < r1) == mode) or (r1.den > N);
+        }, N + 1, 1);
+        data.back() = p0;
+        Frac r0 = value(data);
+        if (r0.den > N) {
+          data.back()--;
+          r0 = value(data);
+          if (r0 > prev1) swap(r0, prev1);
+          return {move(r0), move(prev1)};
+        }
+      }
+    })();
+  if (r - lo <= hi - r) out_frac(lo);
+  else                  out_frac(hi);
 
   return 0;
 }
