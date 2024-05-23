@@ -102,6 +102,17 @@ int main(int argc, char *argv[]) {
   }
 
   {
+    UnionFind<ll> uf(3);
+    assert(*uf.pot(0) == 0 and *uf.pot(1) == 0 and *uf.pot(2) == 0);
+    uf.merge(1, 0, 10);
+    assert(uf.leader(0) == uf.leader(1) and *uf.pot(1) == *uf.pot(0) + 10);
+    uf.merge(2, 1, 10);
+    assert(uf.leader(1) == uf.leader(2) and *uf.pot(2) == *uf.pot(1) + 10);
+    uf.merge(0, 2, 10);
+    assert(uf.leader(2) == uf.leader(0) and not uf.pot(uf.leader(0)));
+  }
+
+  {
     for (int _z = 0; _z < 10000; _z++) {
       DLOG("****");
       int n = randrange(1, 11);
