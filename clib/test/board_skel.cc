@@ -179,6 +179,16 @@ int main(int argc, char *argv[]) {
       else assert(brd1.at(bi) == false);
     }
   }
+  {
+    Board<char> brd(3, 5, '@');
+    assert(brd.enc(0, 0) == 0);
+    assert(brd.enc(BrdIdx(1, 1)) == 6);;
+    assert(brd.enc(2, 2) == 12);
+    assert(brd.enc(3, 3) == -1);
+    assert(brd.enc(BrdIdx(4, 4)) == -1);
+    assert(brd.dec(9) == BrdIdx(1, 4));
+    assert(brd.dec(100).r < 0);
+  }
 
 
   cout << "Test done." << endl;

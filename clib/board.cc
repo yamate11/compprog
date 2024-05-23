@@ -38,6 +38,10 @@ using namespace std;
   // An index can be checked whether it is on the board with
   // brd.in(r, c) or brd.in(bi) for BrdIdx bi.
 
+  // 2dim -> 1dim encoding is supported.
+  //   brd.enc(r, c) and brd.enc(bi) for encoding
+  //   bi = brd.dec(e) for decoding
+
   // Operators ">>" and "<<" are supported.  
   // For width, use brd.setDispWidth(w).
 
@@ -150,6 +154,7 @@ public:
     : tr_rc(false), tr_row(false), tr_col(false),
       nR(nR_), nC(nC_), def(def_), data(nR*nC + 1, def),
       dispWidth(0) {}
+  // Board(const Board&), Board(Board&&), operator=(const Board&), operator=(Board&&) are automatically generated.
 
   int numRows() const { return tr_rc ? nC : nR; }
   int numCols() const { return tr_rc ? nR : nC; }
@@ -183,6 +188,16 @@ public:
       at(const BrdIdx& bi) const { return at(bi.r, bi.c); }
   const T get(const BrdIdx& bi) const { return get(bi.r, bi.c); }
   void set(const BrdIdx& bi, T t) { set(bi.r, bi.c, t); }
+
+  long long enc(int r, int c) { return in(r, c) ? r * nC + c : -1; }
+  long long enc(const BrdIdx& bi) { return enc(bi.r, bi.c); }
+  BrdIdx dec(long long e) {
+    if (e < 0) return BrdIdx(-1, -1);
+    int r = e / nC;
+    int c = e % nC;
+    if (in(r, c)) return BrdIdx(r, c);
+    else return BrdIdx(-1, -1);
+  }
 
   void transpose_inp() { tr_rc = !tr_rc; }
   void reverse_row_inp() { tr_row = !tr_row; }
