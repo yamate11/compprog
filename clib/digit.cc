@@ -9,7 +9,9 @@
   du.pow(18)         // 1000000000000000000
   du.pow_size()      // 19, meaning du.pow(i) is valid for i from 0 to 18
   du.width(5678)     // 4, meaning 5678 has 4 digits
-  du.width(0)        // 1, a particular value
+  du.width(0)        // Error.   width(n) is defined only for n > 0.
+  du.nd_min(3)       // 100, the least number whose width is 3.
+  su.nd_max(4)       // 9999, the maximum number whose width is 4.
   du.floor(1234)     // 1000, the largest power of 10 that does not exceed 1234
   du.ceil(1234)      // 10000, the smallest power of 10 that does not fall below 1234
   du.to_vector(1234) // vector<ll>{1, 2, 3, 4}
@@ -38,13 +40,14 @@ struct digit_util {
   ll pow(ll i) { return _pow[i]; }
 
   ll width(ll x) {
-    if (x < 0) throw runtime_error("digit.width: x < 0");
-    if (x == 0) return 1; // This may be contravertial, but the value 1 is safer.  E.g. how many digits
-                          // are needed to represent x in base-dic notation.
+    if (x <= 0) throw runtime_error("digit.width: x <= 0");
     ll ret = 0;
     for (; x != 0; x /= base) ret++;
     return ret;
   }
+
+  ll nd_min(ll i) { return pow(i - 1); }
+  ll nd_max(ll i) { return nd_min(i + 1) - 1; }
 
   ll floor(ll x) { return (x == 0) ? 0 : _pow[width(x) - 1]; }
 
