@@ -4,7 +4,8 @@ from bs4 import BeautifulSoup
 import typing
 
 topDir = '/home/y-tanabe/proj/compprog'
-
+def getTopDir():
+    return topDir
 
 def warn(*msg, **opt):
     print(*msg, **opt, file=sys.stderr, flush=True)

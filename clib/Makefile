@@ -5,7 +5,7 @@ EXES = UnionFind binsearch bit board cht cmpNaive coordCompr \
        suffixArray tree trie util interactive polynomial sortedIndex \
        forall mapget mypair digit topord cycledetect rbst
 
-CXX = g++-9
+CXX = g++
 CXXCOMMONFLAGS = -std=gnu++20 -Wall -Wno-format-security -Wshadow -fconcepts -DCMPNAIVE
 # CXXCOMMONFLAGS = -std=gnu++1y -Wall -Wno-format-security -Wshadow
 ifdef DEBUG
