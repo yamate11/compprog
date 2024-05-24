@@ -10,8 +10,6 @@ foo.cc を修正する場合．
   * test/foo_skel.cc
   * test/foo_t.d
   * その他，test/foo_t.d でリストされているファイル
-* Makefile を tmp_xxx/Makefile にコピーする
-* test/Makefile を tmp_xxx/test/Makefile にコピーする
 * tmp_xxx/foo.cc と tmp_xxx/test/foo_skel.cc を編集する
 * tmp_xxx/test で，make foo_t で foo_t を作成し，テストする．
   * デバッグするときには make DEBUG=yes foo_t

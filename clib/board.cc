@@ -16,39 +16,31 @@ using namespace std;
   // or, equivalently,
   for (ll r = 0; r < H; r++) {
     string s; cin >> s;
-    for (ll c = 0; c < W; c++) brd.at(r, c) = s[c];
+    for (ll c = 0; c < W; c++) brd.rs(r, c) = s[c];
   }
 
-  // The following two are the basic:
-  //     brd.set(r, c, value);
-  //     value = brd.get(r, c);
-  // when (r,c) is out of range, brd.set() simply does nothing,
-  // and brd.get() returns the default value.
-
-  // at() is also available, though a bit dangeours
-  //     brd.at(r, c) = value        // (1)
-  //     value = brd.at(r, c)        // (2)
-  // when (r,c) is out of range, (1) sets the value to some specific place
-  // and successing call of (2) throws an exception.
+  //   if (brd.in(r, c)) ... // check
+  //   v = brd.at(r, c);     // get.   If (r, c) is out of the board, the default is returned.
+  //   brd.rs(r, c) = v;     // set.   If (r, c) is out of the board, nothing happens.
+  //   brd.set(r, c, v);     // same as above
 
   // BrdIdx can be used for (r,c) pair:
-  //     BrdIdx bi(r, c);
-  //     val = brd.at(bi);  // equivallent to   val = brd.at(r, c);
+  //   BrdIdx bi(r, c);
+  //   if (brd.in(bi)) ...
+  //   v = brd.at(bi);
+  //   brd.rs(bi) = v;
+  //   brd.set(bi, v);  
 
-  // An index can be checked whether it is on the board with
-  // brd.in(r, c) or brd.in(bi) for BrdIdx bi.
-
-  // 2dim -> 1dim encoding is supported.
-  //   brd.enc(r, c) and brd.enc(bi) for encoding
-  //   bi = brd.dec(e) for decoding
+  // Encoding and Decoding are supported.
+  //    long long e = brd.enc(r, c);  or brd.enc(bi)   // If (r, c) is out, -1 is returned.
+  //    BrdIdx bi = brd.dec(e);    // If e is out, BrdIdx(-1, -1) is returned.
 
   // Operators ">>" and "<<" are supported.  
-  // For width, use brd.setDispWidth(w).
+  // For width, use template parameter disp_width.
 
   // A board can be transposed, reversed (both vertically and horizontally),
   // and rotated, using transpose(), reverse_row(), reverse_col(), and
   // rotate(r), where integer r denotes r * pi / 4 counter-clockwise.
-  // In-place versions are available through transpose_inp() etc.
 
   // BrdIdx is the object for indexing.  It is mostly the same as 
   // pair<int, int>, but has +, -, *, etc.
@@ -62,10 +54,6 @@ using namespace std;
     BrdIdx::nbr5   // SELF, DOWN,     RIGHT,     UP,     LEFT
     BrdIdx::nbr8   //       DOWN, DR, RIGHT, UR, UP, UL, LEFT, DL
     BrdIdx::nbr9   // SELF, DOWN, DR, RIGHT, UR, UP, UL, LEFT, DL
-
-  // bi.rotateQ() returns a BrdIdx obtained by rotating bi 
-  // by pi/2 counterclockwise.  Thus, BrdIdx::nbr4 has the same elements as
-  // {e1, e1.rotateQ(1), e1.rotateQ(2), e1.rotateQ(3)} where e1 = BrdIdx(1, 0).
 
  */
 
@@ -117,107 +105,97 @@ ostream& operator <<(ostream& os, const BrdIdx& i) {
   return os;
 }
 
-template <typename T>
-class Board {
+template <typename T, int dispWidth = 0>
+struct Board {
 
-  bool tr_rc;
-  bool tr_row;
-  bool tr_col;
-  const int nR;
-  const int nC;
-  const T def;
-  vector<T> data;
-  int dispWidth;
+  struct BoardSubst {
+    Board& brd;
+    int r;
+    int c;
+    BoardSubst(Board& brd_, int r_, int c_) : brd(brd_), r(r_), c(c_) {}
+    const T& operator=(const T& t) { return brd.set(r, c, t); }
+  };
 
-  int enc(int r, int c) const {
-    if (tr_rc) swap(r, c);
-    if (tr_row) r = nR - 1 - r;
-    if (tr_col) c = nC - 1 - c;
-    if (r < 0 || nR <= r || c < 0 || nC <= c) return nC * nR;
-    return nC * r + c;
-  }
-  int enc(const BrdIdx& bi) const { return enc(bi.r, bi.c); }
+  T def;
+  vector<vector<T>> data;
 
-  static const vector<int> rotate_tbl;
-
-  void set_for_rotate() {
-    int x = (tr_rc << 2) | (tr_row << 1) | tr_col;
-    int y = rotate_tbl[x];
-    tr_rc  = (y >> 2) & 1;
-    tr_row = (y >> 1) & 1;
-    tr_col = (y >> 0) & 1;
-  }
-
-public:
-
-  Board(int nR_, int nC_, T def_)
-    : tr_rc(false), tr_row(false), tr_col(false),
-      nR(nR_), nC(nC_), def(def_), data(nR*nC + 1, def),
-      dispWidth(0) {}
+  Board() : def(T()), data(0) {}
+  Board(int nR, int nC, const T& def_) : def(def_), data(nR, vector(nC, def)) {}
   // Board(const Board&), Board(Board&&), operator=(const Board&), operator=(Board&&) are automatically generated.
 
-  int numRows() const { return tr_rc ? nC : nR; }
-  int numCols() const { return tr_rc ? nR : nC; }
+  bool operator==(const Board& o) const = default;
+  bool operator!=(const Board& o) const = default;
 
-  bool in(int r, int c) const {
-    if (tr_rc) return 0 <= r && r < nC && 0 <= c && c < nR;
-    else       return 0 <= r && r < nR && 0 <= c && c < nC;
-  }
+  int numRows() const { return ssize(data); }
+  int numCols() const { return data.empty() ? 0 : ssize(data[0]); }
 
-  // Note: We cannot implemen T& at(r, c) in a perfect way.
-  //   When (r,c) is out of bounds, brd.at(r,c) returns brd.data[nR*nC]
-  //   and its value should equal to that of brd.def.  But once
-  //   "brd.at(r,c) = val;" (with (r,c) out of bounds) is executed,
-  //   this no longer holds.
-  //   If you need this sequence, you must use "brd.set(r,c,val);".
-  typename vector<T>::reference at(int r, int c) {
-    if (in(r, c)) return data[enc(r, c)];
-    if (data[nR*nC] == def) return data[nR*nC];
-    string msg = "Error: boards' __dummy holds an incorrect value.  Perhaps you should use get/set instead of at.";
-    throw runtime_error(msg);
-  }
-  typename vector<T>::const_reference at(int r, int c) const {
-    return in(r,c) ? data[enc(r, c)] : def;
-  }
-  void set(int r, int c, T t) { if (in(r, c)) data[enc(r, c)] = t; }
-  const T get(int r, int c) const { return in(r,c) ? data[enc(r, c)] : def; }
-
+  bool in(int r, int c) const { return 0 <= r and r < numRows() and 0 <= c and c < numCols(); }
   bool in(const BrdIdx& bi) const { return in(bi.r, bi.c); }
-  typename vector<T>::reference at(const BrdIdx& bi) { return at(bi.r, bi.c); }
-  typename vector<T>::const_reference
-      at(const BrdIdx& bi) const { return at(bi.r, bi.c); }
-  const T get(const BrdIdx& bi) const { return get(bi.r, bi.c); }
-  void set(const BrdIdx& bi, T t) { set(bi.r, bi.c, t); }
 
-  long long enc(int r, int c) { return in(r, c) ? r * nC + c : -1; }
+  using return_T = typename conditional<is_same_v<T, bool>, T, const T&>::type;
+  // Due to the proxy object for vector<bool>, you need to return bool, instead of const bool&.
+  return_T at(int r, int c) const { return in(r, c) ? data[r][c] : def; }
+  return_T at(const BrdIdx& bi) const { return at(bi.r, bi.c); }
+
+  // Reference for Substitution
+  BoardSubst rs(int r, int c) { return BoardSubst(*this, r, c); }
+  BoardSubst rs(const BrdIdx& bi) { return rs(bi.r, bi.c); }
+
+  const T& set(int r, int c, const T& t) {
+    if (in(r, c)) data[r][c] = t;
+    return t;
+  }
+  const T& set(const BrdIdx& bi, const T& t) { return set(bi.r, bi.c, t); }
+
+  long long enc(int r, int c) { return in(r, c) ? r * numCols() + c : -1; }
   long long enc(const BrdIdx& bi) { return enc(bi.r, bi.c); }
   BrdIdx dec(long long e) {
     if (e < 0) return BrdIdx(-1, -1);
-    int r = e / nC;
-    int c = e % nC;
+    int r = e / numCols();
+    int c = e % numCols();
     if (in(r, c)) return BrdIdx(r, c);
     else return BrdIdx(-1, -1);
   }
 
-  void transpose_inp() { tr_rc = !tr_rc; }
-  void reverse_row_inp() { tr_row = !tr_row; }
-  void reverse_col_inp() { tr_col = !tr_col; }
-  
-  void rotate_inp(int r) {
-    r = r % 4;
-    if (r < 0) r += 4;
-    for (; r > 0; r--) set_for_rotate();
+  Board transpose() const {
+    Board ret(numCols(), numRows(), def);
+    for (int i = 0; i < numRows(); i++) for (int j = 0; j < numCols(); j++) ret.set(j, i, at(i, j));
+    return ret;
   }
-  Board transpose() const
-  { Board ret(*this); ret.transpose_inp(); return ret; }
-  Board reverse_row() const
-  { Board ret(*this); ret.reverse_row_inp(); return ret; }
-  Board reverse_col() const
-  { Board ret(*this); ret.reverse_col_inp(); return ret; }
-  Board rotate(int r) const
-  { Board ret(*this); ret.rotate_inp(r); return ret; }
+  Board reverse_row() const {
+    Board ret(numRows(), numCols(), def);
+    for (int i = 0; i < numRows(); i++) for (int j = 0; j < numCols(); j++) ret.set(numRows() - 1 - i, j, at(i, j));
+    return ret;
+  }
+  Board reverse_col() const {
+    Board ret(numRows(), numCols(), def);
+    for (int i = 0; i < numRows(); i++) for (int j = 0; j < numCols(); j++) ret.set(i, numCols() - 1 - j, at(i, j));
+    return ret;
+  }
+  Board _single_rotate() const {
+    Board ret(numCols(), numRows(), def);
+    for (int i = 0; i < numRows(); i++) for (int j = 0; j < numCols(); j++) ret.data[-j + numCols()-1][i] = data[i][j];
+    return ret;
+  }
+  Board rotate(int r = 1) const {
+    ll nR = numRows();
+    ll nC = numCols();
+    auto f = [&](ll szH, ll szW, auto g, auto h) {
+      Board ret(szH, szW, def);
+      for (int i = 0; i < nR; i++) for (int j = 0; j < nC; j++) ret.set(g(i, j), h(i, j), at(i, j));
+      return ret;
+    };
+    if (r % 4 == 0) return *this;
+    if (r > 0) r = r % 4;
+    else r = 4 + r % 4;
+    if (r == 1) return f(nC, nR, [&](int i, int j) { return -j + nC - 1; }, [&](int i, int j) { return i; });
+    if (r == 2) return f(nR, nC, [&](int i, int j) { return -i + nR - 1; }, [&](int i, int j) { return -j + nC - 1; });
+    if (r == 3) return f(nC, nR, [&](int i, int j) { return j; }, [&](int i, int j) { return -i + nR - 1; });
+    assert(0);
+    
+    return _single_rotate().rotate(r - 1);
+  }
 
-  void setDispWidth(int w) { dispWidth = w; }
 
   void readData(istream& is) {
     for (int i = 0; i < numRows(); i++) {
@@ -236,7 +214,7 @@ public:
   friend ostream& operator <<(ostream& os, const Board& brd) {
     for (int r = 0; r < brd.numRows(); r++) {
       for (int c = 0; c < brd.numCols(); c++) {
-        os << setw(brd.dispWidth) << brd.get(r, c);
+        os << setw(dispWidth) << brd.at(r, c);
       }
       if (r < brd.numRows() - 1) os << "\n";
     }
@@ -244,8 +222,6 @@ public:
   }
 
 };
-template<typename T>
-const vector<int> Board<T>::rotate_tbl({5,4,7,6,2,3,0,1});
 
 template<typename T>
 struct BoardRange {
