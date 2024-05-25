@@ -1,2 +1,0 @@
-libins -M -o trie_t.cc -i trie_skel.cc --orig-lineno
-g++ -o trie_t -std=gnu++17 -g -O0 -D_GLIBCXX_DEBUG -DDEBUG=1 -Wall -Wno-format-security -Wshadow -fconcepts -I/home/y-tanabe/lib/boost_1_73_0 -I/home/y-tanabe/proj/compprog/clib/ac-library -DCMPNAIVE=1 trie_t.cc
