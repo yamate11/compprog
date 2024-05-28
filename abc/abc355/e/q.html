@@ -1,0 +1,793 @@
+
+
+
+
+
+
+
+
+<!DOCTYPE html>
+<html>
+<head>
+	<title>E - Guess the Sum</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+	<meta http-equiv="Content-Language" content="en">
+	<meta name="viewport" content="width=device-width,initial-scale=1.0">
+	<meta name="format-detection" content="telephone=no">
+	<meta name="google-site-verification" content="nXGC_JxO0yoP1qBzMnYD_xgufO6leSLw1kyNo2HZltM" />
+
+	
+	<script async src="https://www.googletagmanager.com/gtag/js?id=G-RC512FD18N"></script>
+	<script>
+		window.dataLayer = window.dataLayer || [];
+		function gtag(){dataLayer.push(arguments);}
+		gtag('js', new Date());
+
+		gtag('config', 'G-RC512FD18N');
+	</script>
+
+	
+	<meta name="description" content="AtCoder is a programming contest site for anyone from beginners to experts. We hold weekly programming contests online.">
+	<meta name="author" content="AtCoder Inc.">
+
+	<meta property="og:site_name" content="AtCoder">
+	
+	<meta property="og:title" content="E - Guess the Sum" />
+	<meta property="og:description" content="AtCoder is a programming contest site for anyone from beginners to experts. We hold weekly programming contests online." />
+	<meta property="og:type" content="website" />
+	<meta property="og:url" content="https://atcoder.jp/contests/abc355/tasks/abc355_e" />
+	<meta property="og:image" content="https://img.atcoder.jp/assets/atcoder.png" />
+	<meta name="twitter:card" content="summary" />
+	<meta name="twitter:site" content="@atcoder" />
+	
+	<meta property="twitter:title" content="E - Guess the Sum" />
+
+	<link href="//fonts.googleapis.com/css?family=Lato:400,700" rel="stylesheet" type="text/css">
+	<link rel="stylesheet" type="text/css" href="//img.atcoder.jp/public/ea27d23/css/bootstrap.min.css">
+	<link rel="stylesheet" type="text/css" href="//img.atcoder.jp/public/ea27d23/css/base.css">
+	<link rel="shortcut icon" type="image/png" href="//img.atcoder.jp/assets/favicon.png">
+	<link rel="apple-touch-icon" href="//img.atcoder.jp/assets/atcoder.png">
+	<script src="//img.atcoder.jp/public/ea27d23/js/lib/jquery-1.9.1.min.js"></script>
+	<script src="//img.atcoder.jp/public/ea27d23/js/lib/bootstrap.min.js"></script>
+	<script src="//img.atcoder.jp/public/ea27d23/js/cdn/js.cookie.min.js"></script>
+	<script src="//img.atcoder.jp/public/ea27d23/js/cdn/moment.min.js"></script>
+	<script src="//img.atcoder.jp/public/ea27d23/js/cdn/moment_js-ja.js"></script>
+	<script>
+		var LANG = "en";
+		var userScreenName = "yamate11";
+		var csrfToken = "v2aZj+HENBi5YvKqZhMm8Ej5GIQBDTpSaljYgtyC3QM="
+	</script>
+	<script src="//img.atcoder.jp/public/ea27d23/js/utils.js"></script>
+	
+	
+		<script src="//img.atcoder.jp/public/ea27d23/js/contest.js"></script>
+		<link href="//img.atcoder.jp/public/ea27d23/css/contest.css" rel="stylesheet" />
+		<script>
+			var contestScreenName = "abc355";
+			var remainingText = "Remaining Time";
+			var countDownText = "Contest begins in";
+			var startTime = moment("2024-05-25T21:00:00+09:00");
+			var endTime = moment("2024-05-25T22:40:00+09:00");
+		</script>
+		<style></style>
+	
+	
+		<link href="//img.atcoder.jp/public/ea27d23/css/cdn/select2.min.css" rel="stylesheet" />
+		<link href="//img.atcoder.jp/public/ea27d23/css/cdn/select2-bootstrap.min.css" rel="stylesheet" />
+		<script src="//img.atcoder.jp/public/ea27d23/js/lib/select2.min.js"></script>
+	
+	
+		<script src="//img.atcoder.jp/public/ea27d23/js/ace/ace.js"></script>
+		<script src="//img.atcoder.jp/public/ea27d23/js/ace/ext-language_tools.js"></script>
+	
+	
+		<script src="//img.atcoder.jp/public/ea27d23/js/cdn/run_prettify.js"></script>
+	
+	
+		<link rel="stylesheet" href="//img.atcoder.jp/public/ea27d23/css/cdn/katex.min.css">
+		<script defer src="//img.atcoder.jp/public/ea27d23/js/cdn/katex.min.js"></script>
+		<script defer src="//img.atcoder.jp/public/ea27d23/js/cdn/auto-render.min.js"></script>
+		<script>$(function(){$('var').each(function(){var html=$(this).html().replace(/<sub>/g,'_{').replace(/<\/sub>/g,'}');$(this).html('\\('+html+'\\)');});});</script>
+		<script>
+			var katexOptions = {
+				delimiters: [
+					{left: "$$", right: "$$", display: true},
+					
+					{left: "\\(", right: "\\)", display: false},
+					{left: "\\[", right: "\\]", display: true}
+				],
+      	ignoredTags: ["script", "noscript", "style", "textarea", "code", "option"],
+				ignoredClasses: ["prettyprint", "source-code-for-copy"],
+				throwOnError: false
+			};
+			document.addEventListener("DOMContentLoaded", function() { renderMathInElement(document.body, katexOptions);});
+		</script>
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	<script src="//img.atcoder.jp/public/ea27d23/js/base.js"></script>
+</head>
+
+<body>
+
+<script type="text/javascript">
+	var __pParams = __pParams || [];
+	__pParams.push({client_id: '468', c_1: 'atcodercontest', c_2: 'ClientSite'});
+</script>
+<script type="text/javascript" src="https://cdn.d2-apps.net/js/tr.js" async></script>
+
+
+<div id="modal-contest-start" class="modal fade" tabindex="-1" role="dialog">
+	<div class="modal-dialog" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+				<h4 class="modal-title">Contest started</h4>
+			</div>
+			<div class="modal-body">
+				<p>Tokio Marine &amp; Nichido Fire Insurance Programming Contest 2024（AtCoder Beginner Contest 355) has begun.</p>
+			</div>
+			<div class="modal-footer">
+				
+					<a class="btn btn-primary" href='/contests/abc355/tasks'>Go to the task list page</a>
+				
+			</div>
+		</div>
+	</div>
+</div>
+<div id="modal-contest-end" class="modal fade" tabindex="-1" role="dialog">
+	<div class="modal-dialog" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+				<h4 class="modal-title">Contest is over</h4>
+			</div>
+			<div class="modal-body">
+				<p>Tokio Marine &amp; Nichido Fire Insurance Programming Contest 2024（AtCoder Beginner Contest 355) has ended.</p>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+			</div>
+		</div>
+	</div>
+</div>
+<div id="main-div" class="float-container">
+
+
+	<nav class="navbar navbar-inverse navbar-fixed-top">
+		<div class="container-fluid">
+			<div class="navbar-header">
+				<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapse" aria-expanded="false">
+					<span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span>
+				</button>
+				<a class="navbar-brand" href="/home"></a>
+			</div>
+			<div class="collapse navbar-collapse" id="navbar-collapse">
+				<ul class="nav navbar-nav">
+				
+					<li><a class="contest-title" href="/contests/abc355">Tokio Marine &amp; Nichido Fire Insurance Programming Contest 2024（AtCoder Beginner Contest 355)</a></li>
+				
+				</ul>
+				<ul class="nav navbar-nav navbar-right">
+					
+					<li class="dropdown">
+						<a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
+							<img src='//img.atcoder.jp/assets/top/img/flag-lang/en.png'> English <span class="caret"></span>
+						</a>
+						<ul class="dropdown-menu">
+							<li><a href="/contests/abc355/tasks/abc355_e?lang=ja"><img src='//img.atcoder.jp/assets/top/img/flag-lang/ja.png'> 日本語</a></li>
+							<li><a href="/contests/abc355/tasks/abc355_e?lang=en"><img src='//img.atcoder.jp/assets/top/img/flag-lang/en.png'> English</a></li>
+						</ul>
+					</li>
+					
+					
+						<li class="dropdown">
+							<a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
+								<span class="glyphicon glyphicon-cog" aria-hidden="true"></span> yamate11 (Contestant) <span class="caret"></span>
+							</a>
+							<ul class="dropdown-menu">
+								<li><a href="/users/yamate11"><span class="glyphicon glyphicon-user" aria-hidden="true"></span> My Profile</a></li>
+								<li class="divider"></li>
+								<li><a href="/settings"><span class="glyphicon glyphicon-wrench" aria-hidden="true"></span> General Settings</a></li>
+								<li><a href="/settings/icon"><span class="glyphicon glyphicon-picture" aria-hidden="true"></span> Change Photo</a></li>
+								<li><a href="/settings/password"><span class="glyphicon glyphicon-lock" aria-hidden="true"></span> Change Password</a></li>
+								<li><a href="/settings/fav"><span class="glyphicon glyphicon-star" aria-hidden="true"></span> Manage Fav</a></li>
+								
+								
+								
+								<li class="divider"></li>
+								<li><a href="javascript:void(form_logout.submit())"><span class="glyphicon glyphicon-log-out" aria-hidden="true"></span> Sign Out</a></li>
+							</ul>
+						</li>
+					
+				</ul>
+			</div>
+		</div>
+	</nav>
+
+	<form method="POST" name="form_logout" action="/logout?continue=https%3A%2F%2Fatcoder.jp%2Fcontests%2Fabc355%2Ftasks%2Fabc355_e">
+		<input type="hidden" name="csrf_token" value="v2aZj&#43;HENBi5YvKqZhMm8Ej5GIQBDTpSaljYgtyC3QM=" />
+	</form>
+	<div id="main-container" class="container"
+		 	style="padding-top:50px;">
+		
+
+
+<div class="row">
+	<div id="contest-nav-tabs" class="col-sm-12 mb-2 cnvtb-fixed">
+	<div>
+		<small class="contest-duration">
+			
+				Contest Duration:
+				<a href='http://www.timeanddate.com/worldclock/fixedtime.html?iso=20240525T2100&p1=248' target='blank'><time class='fixtime fixtime-full'>2024-05-25 21:00:00+0900</time></a> - <a href='http://www.timeanddate.com/worldclock/fixedtime.html?iso=20240525T2240&p1=248' target='blank'><time class='fixtime fixtime-full'>2024-05-25 22:40:00+0900</time></a> (local time)
+				(100 minutes)
+			
+		</small>
+		<small class="back-to-home pull-right"><a href="/home">Back to Home</a></small>
+	</div>
+	<ul class="nav nav-tabs">
+		<li><a href="/contests/abc355"><span class="glyphicon glyphicon-home" aria-hidden="true"></span> Top</a></li>
+		
+			<li class="active"><a href="/contests/abc355/tasks"><span class="glyphicon glyphicon-tasks" aria-hidden="true"></span> Tasks</a></li>
+		
+
+		
+			<li><a href="/contests/abc355/clarifications"><span class="glyphicon glyphicon-question-sign" aria-hidden="true"></span> Clarifications <span id="clar-badge" class="badge"></span></a></li>
+		
+
+		
+			<li><a href="/contests/abc355/submit?taskScreenName=abc355_e"><span class="glyphicon glyphicon-send" aria-hidden="true"></span> Submit</a></li>
+		
+
+		
+			<li>
+				<a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false"><span class="glyphicon glyphicon-list" aria-hidden="true"></span> Results<span class="caret"></span></a>
+				<ul class="dropdown-menu">
+					
+					
+						<li><a href="/contests/abc355/submissions/me"><span class="glyphicon glyphicon-user" aria-hidden="true"></span> My Submissions</a></li>
+						
+						<li class="divider"></li>
+						<li><a href="/contests/abc355/score"><span class="glyphicon glyphicon-dashboard" aria-hidden="true"></span> My Score</a></li>
+					
+				</ul>
+			</li>
+		
+
+		
+			
+				
+					<li><a href="/contests/abc355/standings"><span class="glyphicon glyphicon-sort-by-attributes-alt" aria-hidden="true"></span> Standings</a></li>
+				
+			
+		
+
+		
+			<li><a href="/contests/abc355/custom_test"><span class="glyphicon glyphicon-wrench" aria-hidden="true"></span> Custom Test</a></li>
+		
+
+		
+		
+			
+			
+		
+
+		<li class="pull-right"><a id="fix-cnvtb" href="javascript:void(0)"><span class="glyphicon glyphicon-pushpin" aria-hidden="true"></span></a></li>
+	</ul>
+</div>
+	<div class="col-sm-12">
+		<span class="h2">
+			E - Guess the Sum
+			
+		</span>
+		<span id="task-lang-btn" class="pull-right"><span data-lang="ja"><img src='//img.atcoder.jp/assets/top/img/flag-lang/ja.png'></span> / <span data-lang="en"><img src='//img.atcoder.jp/assets/top/img/flag-lang/en.png'></span></span>
+		<script>
+			$(function() {
+				var ts = $('#task-statement span.lang');
+				if (ts.children('span').size() <= 1) {
+					$('#task-lang-btn').hide();
+					ts.children('span').show();
+					return;
+				}
+				var REMEMBER_LB = 5;
+				var LS_KEY = 'task_lang';
+				var taskLang = getLS(LS_KEY) || '';
+				var changeTimes = 0;
+				if (taskLang == 'ja' || taskLang == 'en') {
+					changeTimes = REMEMBER_LB;
+				} else {
+					var changeTimes = parseInt(taskLang, 10);
+					if (isNaN(changeTimes)) {
+						changeTimes = 0;
+						delLS(LS_KEY);
+					}
+					changeTimes++;
+					taskLang = LANG;
+				}
+				ts.children('span.lang-' + taskLang).show();
+
+				$('#task-lang-btn span').click(function() {
+					var l = $(this).data('lang');
+					ts.children('span').hide();
+					ts.children('span.lang-' + l).show();
+					if (changeTimes < REMEMBER_LB) setLS(LS_KEY, changeTimes);
+					else setLS(LS_KEY, l);
+				});
+			});
+		</script>
+		<hr/>
+		<p>
+			Time Limit: 2 sec / Memory Limit: 1024 MB
+			
+			
+		</p>
+
+		<div id="task-statement">
+			
+			<span class="lang">
+<span class="lang-ja">
+<p>配点 : <var>500</var> 点</p>
+
+<div class="part">
+<section>
+<h3>問題文</h3><p>この問題は <strong>インタラクティブな問題</strong>（あなたの作成したプログラムとジャッジシステムが入出力を介して対話を行う形式の問題）です。</p>
+<p>正整数 <var>N</var> および <var>0</var> 以上 <var>2^N</var> 未満の整数 <var>L,R(L\leq R)</var> が与えられます。
+ジャッジシステムは、<var>0</var> 以上 <var>99</var> 以下の整数からなる長さ <var>2^N</var> の数列 <var>A = (A_0, A_1, \dots, A_{2^N-1})</var> を隠し持っています。</p>
+<p>あなたの目標は <var>A_L+A_{L+1}+\dots+A_{R}</var> を <var>100</var> で割った余りを求めることです。ただし、あなたは数列 <var>A</var> の要素の値を直接知ることはできません。
+その代わりに、ジャッジシステムに対して以下の質問を行うことができます。</p>
+<ul>
+<li><var>2^i(j+1)\leq 2^N</var> を満たすように非負整数 <var>i,j</var> を選ぶ。<var>l=2^ij,r=2^i(j+1)-1</var> として <var>A_l+A_{l+1}+\dots+A_{r}</var> を <var>100</var> で割った余りを聞く。</li>
+</ul>
+<p>どのような <var>A</var> であっても <var>A_L+A_{L+1}+\dots+A_{R}</var> を <var>100</var> で割った余りを特定することができる質問回数の最小値を <var>m</var> とします。<var>m</var> 回以内の質問を行って <var>A_L+A_{L+1}+\dots+A_{R}</var> を <var>100</var> で割った余りを求めてください。</p>
+</section>
+</div>
+
+<div class="part">
+<section>
+<h3>制約</h3><ul>
+<li><var>1\leq N\leq 18</var></li>
+<li><var>0\leq L\leq R\leq 2^N-1</var></li>
+<li>入力は全て整数</li>
+</ul>
+</section>
+</div>
+
+<div class="part">
+<section>
+<h3>入出力</h3><p>この問題はインタラクティブな問題（あなたの作成したプログラムとジャッジシステムが入出力を介して対話を行う形式の問題）です。</p>
+<p>最初に、整数 <var>N,L,R</var> を標準入力から受け取ってください。</p>
+<pre><var>N</var> <var>L</var> <var>R</var>
+</pre>
+<p>次に、<var>A_L+A_{L+1}+\dots+A_{R}</var> を <var>100</var> で割った余りを特定できるまで質問を繰り返してください。
+質問は、以下の形式で標準出力に出力してください。</p>
+<pre><var>?</var> <var>i</var> <var>j</var>
+</pre>
+<p>ここで、<var>i,j</var> は以下を満たす必要があります。</p>
+<ul>
+<li><var>i,j</var> は非負整数</li>
+<li><var>2^i(j+1)\leq 2^N</var></li>
+</ul>
+<p>これに対する応答は、次の形式で標準入力から与えられます。</p>
+<pre><var>T</var>
+</pre>
+<p>ここで、<var>T</var> は質問に対する答えで、<var>l=2^ij,r=2^i(j+1)-1</var> としたとき <var>A_l+A_{l+1}+\dots+A_{r}</var> を <var>100</var> で割った余りです。</p>
+<p>ただし、<var>i,j</var> が制約を満たしていないか、質問回数が <var>m</var> 回を超えた場合は <var>T</var> は <code>-1</code> となります。</p>
+<p>ジャッジが <code>-1</code> を返した場合、プログラムはすでに不正解とみなされています。この場合、ただちにプログラムを終了してください。</p>
+<p><var>A_L+A_{L+1}+\dots+A_{R}</var> を <var>100</var> で割った余りが特定出来たら、<var>S</var> を <var>A_L+A_{L+1}+\dots+A_{R}</var> を <var>100</var> で割った余りとして以下の形式で出力してください。その後、ただちにプログラムを終了してください。</p>
+<pre><var>!</var> <var>S</var>
+</pre>
+</section>
+</div>
+
+<div class="part">
+<section>
+<h3>注意点</h3><ul>
+<li><b><span style = "color:red">出力を行うたびに、末尾に改行を入れて標準出力を flush してください。そうしなかった場合、ジャッジ結果が <span class="label label-warning" data-toggle="tooltip" data-placement="top" title="" data-original-title="実行時間制限超過">TLE</span> となる可能性があります。</span></b></li>
+<li><strong>対話の途中で誤った出力形式による出力を行った、あるいはプログラムが途中で終了した場合のジャッジ結果は不定です。</strong></li>
+<li>解答を出力したらただちにプログラムを終了してください。そうしない場合、ジャッジ結果は不定です。</li>
+</ul>
+</section>
+</div>
+
+<div class="part">
+<section>
+<h3>入出力例</h3><p>以下は、<var>N=3,L=1,R=5,A=(31,41,59,26,53,58,97,93)</var> の場合の入出力例です。この場合 <var>m=3</var> であるため、質問を <var>3</var> 回まで行うことができます。</p>
+<table class="table table-bordered">
+
+<thead> <tr> <th>入力</th> <th>出力</th> <th>説明</th> </tr> </thead> 
+<tbody> 
+<tr> <td><code>3 1 5</code></td> <td></td> <td>まず整数 <var>N,L,R</var> が与えられます。</td> </tr> 
+<tr> <td></td> <td><code>? 0 1</code></td> <td> <var>(i,j)=(0,1)</var> として質問を行います。</td> </tr> 
+<tr> <td><code>41</code></td> <td></td> <td><var>l=1,r=1</var> であるため、質問の答えは <var>A_1=41</var> を <var>100</var> で割った余りである <var>41</var> です。ジャッジはその値を返します。</td> </tr> 
+<tr> <td></td> <td><code>? 1 1</code></td> <td><var>(i,j) = (1,1)</var> として質問を行います。</td> </tr> 
+<tr> <td><code>85</code></td> <td></td> <td><var>l=2,r=3</var> であるため、質問の答えは <var>A_2+A_3=85</var> を <var>100</var> で割った余りである <var>85</var> です。ジャッジはその値を返します。</td> </tr> 
+<tr> <td></td> <td><code>? 1 2</code></td> <td><var>(i,j) = (1,2)</var> として質問を行います。</td> </tr> 
+<tr> <td><code>11</code></td> <td></td> <td><var>l=4,r=5</var> であるため、質問の答えは <var>A_4+A_5=111</var> を <var>100</var> で割った余りである <var>11</var> です。ジャッジはその値を返します。</td> </tr> 
+<tr> <td></td> <td><code>! 37</code></td> <td>答えは <var>37</var> であるとわかったので、それを出力します。</td> </tr> </tbody>
+</table></section>
+</div>
+</span>
+<span class="lang-en">
+<p>Score : <var>500</var> points</p>
+
+<div class="part">
+<section>
+<h3>Problem Statement</h3><p>This is an <strong>interactive problem</strong> (where your program interacts with the judge via input and output).</p>
+<p>You are given a positive integer <var>N</var> and integers <var>L</var> and <var>R</var> such that <var>0 \leq L \leq R &lt; 2^N</var>. The judge has a hidden sequence <var>A = (A_0, A_1, \dots, A_{2^N-1})</var> consisting of integers between <var>0</var> and <var>99</var>, inclusive.</p>
+<p>Your goal is to find the remainder when <var>A_L + A_{L+1} + \dots + A_R</var> is divided by <var>100</var>. However, you cannot directly know the values of the elements in the sequence <var>A</var>. Instead, you can ask the judge the following question:</p>
+<ul>
+<li>Choose non-negative integers <var>i</var> and <var>j</var> such that <var>2^i(j+1) \leq 2^N</var>. Let <var>l = 2^i j</var> and <var>r = 2^i (j+1) - 1</var>. Ask for the remainder when <var>A_l + A_{l+1} + \dots + A_r</var> is divided by <var>100</var>.</li>
+</ul>
+<p>Let <var>m</var> be the minimum number of questions required to determine the remainder when <var>A_L + A_{L+1} + \dots + A_R</var> is divided by <var>100</var> for any sequence <var>A</var>. You need to find this remainder within <var>m</var> questions.</p>
+</section>
+</div>
+
+<div class="part">
+<section>
+<h3>Constraints</h3><ul>
+<li><var>1 \leq N \leq 18</var></li>
+<li><var>0 \leq L \leq R \leq 2^N - 1</var></li>
+<li>All input values are integers.</li>
+</ul>
+</section>
+</div>
+
+<div class="part">
+<section>
+<h3>Input and Output</h3><p>This is an interactive problem (where your program interacts with the judge via input and output).</p>
+<p>First, read the integers <var>N</var>, <var>L</var>, and <var>R</var> from Standard Input:</p>
+<pre><var>N</var> <var>L</var> <var>R</var>
+</pre>
+<p>Then, repeat asking questions until you can determine the remainder when <var>A_L + A_{L+1} + \dots + A_R</var> is divided by <var>100</var>. Each question should be printed in the following format:</p>
+<pre><var>?</var> <var>i</var> <var>j</var>
+</pre>
+<p>Here, <var>i</var> and <var>j</var> must satisfy the following constraints:</p>
+<ul>
+<li><var>i</var> and <var>j</var> are non-negative integers.</li>
+<li><var>2^i(j+1) \leq 2^N</var></li>
+</ul>
+<p>The response to the question will be given in the following format from Standard Input:</p>
+<pre><var>T</var>
+</pre>
+<p>Here, <var>T</var> is the answer to the question, which is the remainder when <var>A_l + A_{l+1} + \dots + A_r</var> is divided by <var>100</var>, where <var>l = 2^i j</var> and <var>r = 2^i (j+1) - 1</var>.</p>
+<p>If <var>i</var> and <var>j</var> do not satisfy the constraints, or if the number of questions exceeds <var>m</var>, then <var>T</var> will be <code>-1</code>.</p>
+<p>If the judge returns <code>-1</code>, your program is already considered incorrect. In this case, terminate the program immediately.</p>
+<p>Once you have determined the remainder when <var>A_L + A_{L+1} + \dots + A_R</var> is divided by <var>100</var>, print the remainder <var>S</var> in the following format and terminate the program immediately:</p>
+<pre><var>!</var> <var>S</var>
+</pre>
+</section>
+</div>
+
+<div class="part">
+<section>
+<h3>Notes</h3><ul>
+<li><b><span style="color:red">At the end of each output, print a newline and flush Standard Output. Otherwise, the verdict may be <span class="label label-warning" data-toggle="tooltip" data-placement="top" title="" data-original-title="Time Limit Exceeded">TLE</span>.</span></b></li>
+<li><strong>If your output is malformed or your program exits prematurely, the verdict will be indeterminate.</strong></li>
+<li>After printing the answer, terminate the program immediately. Otherwise, the verdict will be indeterminate.</li>
+</ul>
+</section>
+</div>
+
+<div class="part">
+<section>
+<h3>Example</h3><p>Here is an example for <var>N=3</var>, <var>L=1</var>, <var>R=5</var>, and <var>A=(31, 41, 59, 26, 53, 58, 97, 93)</var>. In this case, <var>m=3</var>, so you can ask up to three questions.</p>
+<table class="table table-bordered">
+<thead> <tr> <th>Input</th> <th>Output</th> <th>Description</th> </tr> </thead> 
+<tbody> 
+<tr> <td><code>3 1 5</code></td> <td></td> <td>First, the integers <var>N</var>, <var>L</var>, and <var>R</var> are given.</td> </tr> 
+<tr> <td></td> <td><code>? 0 1</code></td> <td>Ask the question with <var>(i, j) = (0, 1)</var>.</td> </tr> 
+<tr> <td><code>41</code></td> <td></td> <td><var>l=1</var> and <var>r=1</var>, so the response is the remainder when <var>A_1=41</var> is divided by <var>100</var>, which is <var>41</var>. The judge returns this value.</td> </tr> 
+<tr> <td></td> <td><code>? 1 1</code></td> <td>Ask the question with <var>(i, j) = (1, 1)</var>.</td> </tr> 
+<tr> <td><code>85</code></td> <td></td> <td><var>l=2</var> and <var>r=3</var>, so the response is the remainder when <var>A_2 + A_3 = 85</var> is divided by <var>100</var>, which is <var>85</var>. The judge returns this value.</td> </tr> 
+<tr> <td></td> <td><code>? 1 2</code></td> <td>Ask the question with <var>(i, j) = (1, 2)</var>.</td> </tr> 
+<tr> <td><code>11</code></td> <td></td> <td><var>l=4</var> and <var>r=5</var>, so the response is the remainder when <var>A_4 + A_5 = 111</var> is divided by <var>100</var>, which is <var>11</var>. The judge returns this value.</td> </tr> 
+<tr> <td></td> <td><code>! 37</code></td> <td>The answer is <var>37</var>, so print this value.</td> </tr> </tbody>
+</table></section>
+</div>
+</span>
+</span>
+
+		</div>
+
+		
+
+		
+		<hr/>
+		<form class="form-horizontal form-code-submit" action="/contests/abc355/submit" method="POST">
+			<input type="hidden" name="data.TaskScreenName" value="abc355_e" />
+			
+			<div class="form-group ">
+				<label class="control-label col-sm-3 col-md-2" for="select-lang">Language</label>
+				<div id="select-lang" class="col-sm-5" data-name="data.LanguageId">
+					<select class="form-control current" data-placeholder="-" name="data.LanguageId" required>
+						<option></option>
+						
+							<option value="5001" data-ace-mode="c_cpp">C&#43;&#43; 20 (gcc 12.2)</option>
+						
+							<option value="5002" data-ace-mode="golang">Go (go 1.20.6)</option>
+						
+							<option value="5003" data-ace-mode="csharp">C# 11.0 (.NET 7.0.7)</option>
+						
+							<option value="5004" data-ace-mode="kotlin">Kotlin (Kotlin/JVM 1.8.20)</option>
+						
+							<option value="5005" data-ace-mode="java">Java (OpenJDK 17)</option>
+						
+							<option value="5006" data-ace-mode="nim">Nim (Nim 1.6.14)</option>
+						
+							<option value="5007" data-ace-mode="text">V (V 0.4)</option>
+						
+							<option value="5008" data-ace-mode="text">Zig (Zig 0.10.1)</option>
+						
+							<option value="5009" data-ace-mode="javascript">JavaScript (Node.js 18.16.1)</option>
+						
+							<option value="5010" data-ace-mode="javascript">JavaScript (Deno 1.35.1)</option>
+						
+							<option value="5011" data-ace-mode="r">R (GNU R 4.2.1)</option>
+						
+							<option value="5012" data-ace-mode="d">D (DMD 2.104.0)</option>
+						
+							<option value="5013" data-ace-mode="d">D (LDC 1.32.2)</option>
+						
+							<option value="5014" data-ace-mode="swift">Swift (swift 5.8.1)</option>
+						
+							<option value="5015" data-ace-mode="dart">Dart (Dart 3.0.5)</option>
+						
+							<option value="5016" data-ace-mode="php">PHP (php 8.2.8)</option>
+						
+							<option value="5017" data-ace-mode="c_cpp">C (gcc 12.2.0)</option>
+						
+							<option value="5018" data-ace-mode="ruby">Ruby (ruby 3.2.2)</option>
+						
+							<option value="5019" data-ace-mode="crystal">Crystal (Crystal 1.9.1)</option>
+						
+							<option value="5020" data-ace-mode="text">Brainfuck (bf 20041219)</option>
+						
+							<option value="5021" data-ace-mode="fsharp">F# 7.0 (.NET 7.0.7)</option>
+						
+							<option value="5022" data-ace-mode="julia">Julia (Julia 1.9.2)</option>
+						
+							<option value="5023" data-ace-mode="sh">Bash (bash 5.2.2)</option>
+						
+							<option value="5024" data-ace-mode="text">Text (cat 8.32)</option>
+						
+							<option value="5025" data-ace-mode="haskell">Haskell (GHC 9.4.5)</option>
+						
+							<option value="5026" data-ace-mode="fortran">Fortran (gfortran 12.2)</option>
+						
+							<option value="5027" data-ace-mode="lua">Lua (LuaJIT 2.1.0-beta3)</option>
+						
+							<option value="5028" data-ace-mode="c_cpp">C&#43;&#43; 23 (gcc 12.2)</option>
+						
+							<option value="5029" data-ace-mode="lisp">Common Lisp (SBCL 2.3.6)</option>
+						
+							<option value="5030" data-ace-mode="cobol">COBOL (Free) (GnuCOBOL 3.1.2)</option>
+						
+							<option value="5031" data-ace-mode="c_cpp">C&#43;&#43; 23 (Clang 16.0.6)</option>
+						
+							<option value="5032" data-ace-mode="sh">Zsh (Zsh 5.9)</option>
+						
+							<option value="5033" data-ace-mode="python">SageMath (SageMath 9.5)</option>
+						
+							<option value="5034" data-ace-mode="sh">Sed (GNU sed 4.8)</option>
+						
+							<option value="5035" data-ace-mode="text">bc (bc 1.07.1)</option>
+						
+							<option value="5036" data-ace-mode="text">dc (dc 1.07.1)</option>
+						
+							<option value="5037" data-ace-mode="perl">Perl (perl  5.34)</option>
+						
+							<option value="5038" data-ace-mode="sh">AWK (GNU Awk 5.0.1)</option>
+						
+							<option value="5039" data-ace-mode="text">なでしこ (cnako3 3.4.20)</option>
+						
+							<option value="5040" data-ace-mode="text">Assembly x64 (NASM 2.15.05)</option>
+						
+							<option value="5041" data-ace-mode="pascal">Pascal (fpc 3.2.2)</option>
+						
+							<option value="5042" data-ace-mode="csharp">C# 11.0 AOT (.NET 7.0.7)</option>
+						
+							<option value="5043" data-ace-mode="lua">Lua (Lua 5.4.6)</option>
+						
+							<option value="5044" data-ace-mode="prolog">Prolog (SWI-Prolog 9.0.4)</option>
+						
+							<option value="5045" data-ace-mode="sh">PowerShell (PowerShell 7.3.1)</option>
+						
+							<option value="5046" data-ace-mode="scheme">Scheme (Gauche 0.9.12)</option>
+						
+							<option value="5047" data-ace-mode="scala">Scala 3.3.0 (Scala Native 0.4.14)</option>
+						
+							<option value="5048" data-ace-mode="vbscript">Visual Basic 16.9 (.NET 7.0.7)</option>
+						
+							<option value="5049" data-ace-mode="text">Forth (gforth 0.7.3)</option>
+						
+							<option value="5050" data-ace-mode="clojure">Clojure (babashka 1.3.181)</option>
+						
+							<option value="5051" data-ace-mode="erlang">Erlang (Erlang 26.0.2)</option>
+						
+							<option value="5052" data-ace-mode="typescript">TypeScript 5.1 (Deno 1.35.1)</option>
+						
+							<option value="5053" data-ace-mode="c_cpp">C&#43;&#43; 17 (gcc 12.2)</option>
+						
+							<option value="5054" data-ace-mode="rust">Rust (rustc 1.70.0)</option>
+						
+							<option value="5055" data-ace-mode="python">Python (CPython 3.11.4)</option>
+						
+							<option value="5056" data-ace-mode="scala">Scala (Dotty 3.3.0)</option>
+						
+							<option value="5057" data-ace-mode="text">Koka (koka 2.4.0)</option>
+						
+							<option value="5058" data-ace-mode="typescript">TypeScript 5.1 (Node.js 18.16.1)</option>
+						
+							<option value="5059" data-ace-mode="ocaml">OCaml (ocamlopt 5.0.0)</option>
+						
+							<option value="5060" data-ace-mode="raku">Raku (Rakudo 2023.06)</option>
+						
+							<option value="5061" data-ace-mode="text">Vim (vim 9.0.0242)</option>
+						
+							<option value="5062" data-ace-mode="lisp">Emacs Lisp (Native Compile) (GNU Emacs 28.2)</option>
+						
+							<option value="5063" data-ace-mode="python">Python (Mambaforge / CPython 3.10.10)</option>
+						
+							<option value="5064" data-ace-mode="clojure">Clojure (clojure 1.11.1)</option>
+						
+							<option value="5065" data-ace-mode="text">プロデル (mono版プロデル 1.9.1182)</option>
+						
+							<option value="5066" data-ace-mode="text">ECLiPSe (ECLiPSe 7.1_13)</option>
+						
+							<option value="5067" data-ace-mode="text">Nibbles (literate form) (nibbles 1.01)</option>
+						
+							<option value="5068" data-ace-mode="ada">Ada (GNAT 12.2)</option>
+						
+							<option value="5069" data-ace-mode="text">jq (jq 1.6)</option>
+						
+							<option value="5070" data-ace-mode="text">Cyber (Cyber v0.2-Latest)</option>
+						
+							<option value="5071" data-ace-mode="clojure">Carp (Carp 0.5.5)</option>
+						
+							<option value="5072" data-ace-mode="c_cpp">C&#43;&#43; 17 (Clang 16.0.6)</option>
+						
+							<option value="5073" data-ace-mode="c_cpp">C&#43;&#43; 20 (Clang 16.0.6)</option>
+						
+							<option value="5074" data-ace-mode="text">LLVM IR (Clang 16.0.6)</option>
+						
+							<option value="5075" data-ace-mode="lisp">Emacs Lisp (Byte Compile) (GNU Emacs 28.2)</option>
+						
+							<option value="5076" data-ace-mode="text">Factor (Factor 0.98)</option>
+						
+							<option value="5077" data-ace-mode="d">D (GDC 12.2)</option>
+						
+							<option value="5078" data-ace-mode="python">Python (PyPy 3.10-v7.3.12)</option>
+						
+							<option value="5079" data-ace-mode="text">Whitespace (whitespacers 1.0.0)</option>
+						
+							<option value="5080" data-ace-mode="text">&gt;&lt;&gt; (fishr 0.1.0)</option>
+						
+							<option value="5081" data-ace-mode="ocaml">ReasonML (reason 3.9.0)</option>
+						
+							<option value="5082" data-ace-mode="python">Python (Cython 0.29.34)</option>
+						
+							<option value="5083" data-ace-mode="matlab">Octave (GNU Octave 8.2.0)</option>
+						
+							<option value="5084" data-ace-mode="haxe">Haxe (JVM) (Haxe 4.3.1)</option>
+						
+							<option value="5085" data-ace-mode="elixir">Elixir (Elixir 1.15.2)</option>
+						
+							<option value="5086" data-ace-mode="text">Mercury (Mercury 22.01.6)</option>
+						
+							<option value="5087" data-ace-mode="text">Seed7 (Seed7 3.2.1)</option>
+						
+							<option value="5088" data-ace-mode="lisp">Emacs Lisp (No Compile) (GNU Emacs 28.2)</option>
+						
+							<option value="5089" data-ace-mode="text">Unison (Unison M5b)</option>
+						
+							<option value="5090" data-ace-mode="cobol">COBOL (GnuCOBOL(Fixed) 3.1.2)</option>
+						
+					</select>
+					<span class="error"></span>
+				</div>
+			</div>
+			<script>var currentLang = getLS('defaultLang');</script>
+			
+			
+<div class="form-group">
+	<div class="col-sm-3 col-md-2 editor-label">
+		<label class="control-label" for="sourceCode">Source Code</label>
+		<div class="editor-buttons">
+			<button id="btn-open-file" type="button" class="btn btn-default btn-sm">
+				<span class="glyphicon glyphicon-folder-open" aria-hidden="true"></span> &nbsp; Open File
+			</button>
+			<button id="btn-customize" type="button" class="btn btn-default btn-sm">
+				<span class="glyphicon glyphicon-cog" aria-hidden="true"></span> &nbsp; Customize
+			</button>
+			<button type="button" class="btn btn-default btn-sm btn-toggle-editor" data-toggle="button" autocomplete="off">
+				Toggle Editor
+			</button>
+			<button type="button" class="btn btn-default btn-sm btn-auto-height" data-toggle="button" autocomplete="off">
+				Auto Height
+			</button>
+		</div>
+	</div>
+	<div class="col-sm-9 col-md-10" id="sourceCode">
+		<div id="editor"></div>
+		<textarea id="plain-textarea" class="form-control" style="display:none;" name="sourceCode"></textarea>
+		<p>
+			<span class="gray">* at most 512 KiB</span><br>
+			<span class="gray">* Your source code will be saved as Main.<i>extension</i>.</span>
+		</p>
+	</div>
+	<input id="input-open-file" type="file" style="display:none;">
+</div>
+
+
+			<input type="hidden" name="csrf_token" value="v2aZj&#43;HENBi5YvKqZhMm8Ej5GIQBDTpSaljYgtyC3QM=" />
+			<div class="form-group">
+				<label class="control-label col-sm-3 col-md-2"></label>
+				<div class="col-sm-5">
+					<button type="submit" class="btn btn-primary" id="submit">Submit</button>
+				</div>
+			</div>
+		</form>
+		
+	</div>
+</div>
+
+
+
+
+		
+			<hr>
+			
+			
+			
+<div class="a2a_kit a2a_kit_size_20 a2a_default_style pull-right" data-a2a-url="https://atcoder.jp/contests/abc355/tasks/abc355_e?lang=en" data-a2a-title="E - Guess the Sum">
+	<a class="a2a_button_facebook"></a>
+	<a class="a2a_button_twitter"></a>
+	
+		<a class="a2a_button_telegram"></a>
+	
+	<a class="a2a_dd" href="https://www.addtoany.com/share"></a>
+</div>
+
+		
+		<script async src="//static.addtoany.com/menu/page.js"></script>
+		
+	</div> 
+	<hr>
+</div> 
+
+	<div class="container" style="margin-bottom: 80px;">
+			<footer class="footer">
+			
+				<ul>
+					<li><a href="/contests/abc355/rules">Rule</a></li>
+					<li><a href="/contests/abc355/glossary">Glossary</a></li>
+					
+				</ul>
+			
+			<ul>
+				<li><a href="/tos">Terms of service</a></li>
+				<li><a href="/privacy">Privacy Policy</a></li>
+				<li><a href="/personal">Information Protection Policy</a></li>
+				<li><a href="/company">Company</a></li>
+				<li><a href="/faq">FAQ</a></li>
+				<li><a href="/contact">Contact</a></li>
+				
+			</ul>
+			<div class="text-center">
+					<small id="copyright">Copyright Since 2012 &copy;<a href="http://atcoder.co.jp">AtCoder Inc.</a> All rights reserved.</small>
+			</div>
+			</footer>
+	</div>
+	<p id="fixed-server-timer" class="contest-timer"></p>
+	<div id="scroll-page-top" style="display:none;"><span class="glyphicon glyphicon-arrow-up" aria-hidden="true"></span> Page Top</div>
+
+</body>
+</html>
+
+
