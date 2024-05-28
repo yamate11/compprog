@@ -12,7 +12,7 @@ using pll = pair<ll, ll>;
 #define SIZE(v) ((ll)((v).size()))
 #define REPOUT(i, a, b, exp, sep) REP(i, (a), (b)) cout << (exp) << (i + 1 == (b) ? "" : (sep)); cout << "\n"
 
-// @@ !! LIM(segTree binsearch debug mod)
+// @@ !! LIM(segTree binsearch debug mod ipoint input)
 
 // ---- inserted function f:<< from util.cc
 
@@ -621,7 +621,6 @@ void dbgLog(bool with_nl, Head&& head, Tail&&... tail)
 
 // ---- end debug.cc
 
-
 // ---- inserted library file algOp.cc
 
 // Common definitions
@@ -1004,8 +1003,6 @@ using FpB = FpG<primeB>;
 
 // ---- end mod.cc
 
-// @@ !! LIM -- end mark --
-
 // ---- inserted library file ipoint.cc
 
 struct IPoint {
@@ -1093,112 +1090,73 @@ namespace std {
   };
 }
 
+
 // ---- end ipoint.cc
 
+// ---- inserted library file input.cc
 
+// The contents are empty.
 
+// ---- end input.cc
+
+// @@ !! LIM -- end mark --
 
 using Fp = FpB;
 // using Fp = double;
+
+// @DefStruct(pi, ((p, IPoint), i0, i1), istr=False, ostr=False) [eoey0ZwM]
+struct pi_t {
+  IPoint p;
+  ll i0;
+  ll i1;
+  // pi_t() {}
+  pi_t(IPoint p_ = IPoint(), ll i0_ = ll(), ll i1_ = ll()) : p(p_), i0(i0_), i1(i1_) {}
+};
+// @End [eoey0ZwM]
 
 int main(/* int argc, char *argv[] */) {
   ios_base::sync_with_stdio(false);
   cin.tie(nullptr);
   cout << setprecision(20);
 
-  auto area = [&](ll x, ll y) -> ll {
-    if (y == 0) {
-      if (x == 0) assert(0);
-      else if (x > 0) return 0;
-      else return 4;
-    }else if (y > 0) {
-      if (x > 0) return 1;
-      else if (x == 0) return 2;
-      else return 3;
-    }else {
-      if (x < 0) return 5;
-      else if (x == 0) return 6;
-      else return 7;
-    }
-  };
-
   ll Q; cin >> Q;
-  // @InpMVec(Q, ((op, type=char), X, Y)) [6jj1xehz]
+  // @InpMVec(Q, ((op, type=char), (P, type=IPoint))) [6jj1xehz]
   auto op = vector(Q, char());
-  auto X = vector(Q, ll());
-  auto Y = vector(Q, ll());
+  auto P = vector(Q, IPoint());
   for (int i = 0; i < Q; i++) {
     char v1; cin >> v1; op[i] = v1;
-    ll v2; cin >> v2; X[i] = v2;
-    ll v3; cin >> v3; Y[i] = v3;
+    IPoint v2; cin >> v2; P[i] = v2;
   }
   // @End [6jj1xehz]
 
-  auto mycompsub = [&](ll x1, ll y1, ll x2, ll y2) -> bool {
-    ll ai = area(x1, y1);
-    ll aj = area(x2, y2);
-    if (ai != aj) return ai < aj;
-    return x1 * y2 > y1 * x2;
-  };
-
-  vector<IPoint> pts;
-  REP(i, 0, Q) pts.emplace_back(X[i], Y[i]);
-  sort(ALL(pts));
-  pts.erase(unique(ALL(pts)), pts.end());
-  sort(ALL(pts),
-       [&](const auto& a, const auto& b) -> bool { return mycompsub(a.x, a.y, b.x, b.y); });
-  ll sz = ssize(pts);
-
-  DLOGK(pts);
-
-  auto stx = make_seg_tree(Fp(0), plus<Fp>(), vector(2 * sz, Fp(0)));
-  auto sty = make_seg_tree(Fp(0), plus<Fp>(), vector(2 * sz, Fp(0)));
-  
-  auto get_idx = [&](ll x, ll y) -> ll {
-    auto check = [&](ll i) -> bool {
-      ll xx = pts[i].x;
-      ll yy = pts[i].y;
-      bool b = not mycompsub(xx, yy, x, y);
-      DLOGK(xx, yy, x, y, b);
-      return b;
-    };
-    ll i = binsearch(check, sz, -1LL);
-    return i;
-  };
-
-  Fp value = 0;
+  vector<pi_t> pi;
   REP(i, 0, Q) {
-    
-    ll j0 = get_idx(X[i], Y[i]);
-    ll j1 = get_idx(-X[i], -Y[i]);
-    DLOGKL("orig_j1", j1);
-    if (j1 <= j0) j1 += sz;
-    Fp wy = sty.query(j0, j1) - sty.query(j1, j0 + sz);
-    Fp wx = stx.query(j0, j1) - stx.query(j1, j0 + sz);
-    Fp v1 = X[i] * wy;
-    Fp v2 = Y[i] * wx;
-    DLOGK(i, j0, j1, wy, wx, v1, v2);
-    if (op[i] == '+') {
-      value += v1 - v2;
-      stx.set_single(j0, stx.get_single(j0) + X[i]);
-      sty.set_single(j0, sty.get_single(j0) + Y[i]);
-      stx.set_single(j0 + sz, stx.get_single(j0 + sz) + X[i]);
-      sty.set_single(j0 + sz, sty.get_single(j0 + sz) + Y[i]);
-    }else if (op[i] == '-') {
-      value -= v1 - v2;
-      stx.set_single(j0, stx.get_single(j0) - X[i]);
-      sty.set_single(j0, sty.get_single(j0) - Y[i]);
-      // stx.sr(j0) = stx.at(j0) - X[i];
-      stx.set_single(j0 + sz, stx.get_single(j0 + sz) - X[i]);
-      sty.set_single(j0 + sz, sty.get_single(j0 + sz) - Y[i]);
-    }else assert(0);
-    cout << value << "\n";
-
-    DLOGK(i, stx, sty);
-
-
+    pi.emplace_back(P[i], i, false);
+    pi.emplace_back(-P[i], i, true);
+  }
+  sort(ALL(pi), [&](const pi_t& x, const pi_t& y) -> bool { return IPoint::lt_arg(x.p, y.p); });
+  ll sz = 2 * Q;
+  vector<ll> vi0(Q);
+  vector<ll> vi1(Q);
+  REP(i, 0, sz) {
+    auto [_p, j, b] = pi[i];
+    if (b) vi1[j] = i;
+    else vi0[j] = i;
   }
 
+  auto st = make_seg_tree(IPoint(0, 0), plus<IPoint>(), vector(2 * sz, IPoint(0, 0)));
+  Fp value = 0;
+  REP(i, 0, Q) {
+    ll j0 = vi0[i], j1 = vi1[i];
+    if (j1 <= j0) j1 += sz;
+    IPoint ww = st.query(j0, j1) - st.query(j1, j0 + sz);
+    Fp v = Fp(P[i].x) * Fp(ww.y) - Fp(P[i].y) * Fp(ww.x);
+    Fp sgn = (op[i] == '+') ? Fp(1) : Fp(-1);
+    value += sgn * v;
+    st.set_single(j0,      st.get_single(j0) + sgn * P[i]);
+    st.set_single(j0 + sz, st.get_single(j0) + sgn * P[i]);
+    cout << value << "\n";
+  }
 
   return 0;
 }
