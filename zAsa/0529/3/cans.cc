@@ -12,7 +12,7 @@ using pll = pair<ll, ll>;
 #define SIZE(v) ((ll)((v).size()))
 #define REPOUT(i, a, b, exp, sep) REP(i, (a), (b)) cout << (exp) << (i + 1 == (b) ? "" : (sep)); cout << "\n"
 
-// @@ !! LIM(mod power)
+// @@ !! LIM(mod)
 
 // ---- inserted library file algOp.cc
 
@@ -396,31 +396,37 @@ using FpB = FpG<primeB>;
 
 // ---- end mod.cc
 
-// ---- inserted library file power.cc
-
-template<typename T>
-T power(const T& a, ll b) {
-  auto two_pow = a;
-  auto ret = one<T>(a);
-  while (b > 0) {
-    if (b & 1LL) ret *= two_pow;
-    two_pow *= two_pow;
-    b >>= 1;
-  }
-  return ret;
-}
-
-// ---- end power.cc
-
 // @@ !! LIM -- end mark --
+
+using Fp = FpB;
 
 int main(/* int argc, char *argv[] */) {
   ios_base::sync_with_stdio(false);
   cin.tie(nullptr);
   cout << setprecision(20);
 
-  ll a, x, m; cin >> a >> x >> m;
-  
+  ll N; cin >> N;
+  // @InpMVec(N, (A, B)) [WANFsXXY]
+  auto A = vector(N, ll());
+  auto B = vector(N, ll());
+  for (int i = 0; i < N; i++) {
+    ll v1; cin >> v1; A[i] = v1;
+    ll v2; cin >> v2; B[i] = v2;
+  }
+  // @End [WANFsXXY]
+
+  Fp a = 1;
+  Fp b = 1;
+  REP(i, 1, N) {
+    Fp prev_a = a;
+    Fp prev_b = b;
+    a = b = Fp(0);
+    if (A[i] != A[i - 1]) a += prev_a;
+    if (A[i] != B[i - 1]) a += prev_b;
+    if (B[i] != A[i - 1]) b += prev_a;
+    if (B[i] != B[i - 1]) b += prev_b;
+  }
+  cout << a + b << endl;
 
   return 0;
 }

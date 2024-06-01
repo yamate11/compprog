@@ -9,7 +9,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>E - Geometric Progression</title>
+	<title>F - Best Concatenation</title>
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 	<meta http-equiv="Content-Language" content="en">
 	<meta name="viewport" content="width=device-width,initial-scale=1.0">
@@ -32,15 +32,15 @@
 
 	<meta property="og:site_name" content="AtCoder">
 	
-	<meta property="og:title" content="E - Geometric Progression" />
+	<meta property="og:title" content="F - Best Concatenation" />
 	<meta property="og:description" content="AtCoder is a programming contest site for anyone from beginners to experts. We hold weekly programming contests online." />
 	<meta property="og:type" content="website" />
-	<meta property="og:url" content="https://atcoder.jp/contests/abc293/tasks/abc293_e" />
+	<meta property="og:url" content="https://atcoder.jp/contests/abc268/tasks/abc268_f" />
 	<meta property="og:image" content="https://img.atcoder.jp/assets/atcoder.png" />
 	<meta name="twitter:card" content="summary" />
 	<meta name="twitter:site" content="@atcoder" />
 	
-	<meta property="twitter:title" content="E - Geometric Progression" />
+	<meta property="twitter:title" content="F - Best Concatenation" />
 
 	<link href="//fonts.googleapis.com/css?family=Lato:400,700" rel="stylesheet" type="text/css">
 	<link rel="stylesheet" type="text/css" href="//img.atcoder.jp/public/ea27d23/css/bootstrap.min.css">
@@ -55,7 +55,7 @@
 	<script>
 		var LANG = "en";
 		var userScreenName = "yamate11";
-		var csrfToken = "EZlnud0PQoQCMGUV0GHItKHskixfrNJGTALWM6oIzTw="
+		var csrfToken = "x901ti843yMJ75IfCWtFqWdz4DOAI/d023PzXj3l+RQ="
 	</script>
 	<script src="//img.atcoder.jp/public/ea27d23/js/utils.js"></script>
 	
@@ -63,13 +63,16 @@
 		<script src="//img.atcoder.jp/public/ea27d23/js/contest.js"></script>
 		<link href="//img.atcoder.jp/public/ea27d23/css/contest.css" rel="stylesheet" />
 		<script>
-			var contestScreenName = "abc293";
+			var contestScreenName = "abc268";
 			var remainingText = "Remaining Time";
 			var countDownText = "Contest begins in";
-			var startTime = moment("2023-03-11T21:00:00+09:00");
-			var endTime = moment("2023-03-11T22:40:00+09:00");
+			var startTime = moment("2022-09-10T21:00:00+09:00");
+			var endTime = moment("2022-09-10T22:40:00+09:00");
 		</script>
-		<style></style>
+		<style>ul.unique-list li {
+padding-bottom: 10px;
+line-height: 150% !important;
+}</style>
 	
 	
 		<link href="//img.atcoder.jp/public/ea27d23/css/cdn/select2.min.css" rel="stylesheet" />
@@ -131,11 +134,11 @@
 				<h4 class="modal-title">Contest started</h4>
 			</div>
 			<div class="modal-body">
-				<p>AtCoder Beginner Contest 293 has begun.</p>
+				<p>UNIQUE VISION Programming Contest 2022 Summer (AtCoder Beginner Contest 268) has begun.</p>
 			</div>
 			<div class="modal-footer">
 				
-					<a class="btn btn-primary" href='/contests/abc293/tasks'>Go to the task list page</a>
+					<a class="btn btn-primary" href='/contests/abc268/tasks'>Go to the task list page</a>
 				
 			</div>
 		</div>
@@ -149,7 +152,7 @@
 				<h4 class="modal-title">Contest is over</h4>
 			</div>
 			<div class="modal-body">
-				<p>AtCoder Beginner Contest 293 has ended.</p>
+				<p>UNIQUE VISION Programming Contest 2022 Summer (AtCoder Beginner Contest 268) has ended.</p>
 			</div>
 			<div class="modal-footer">
 				<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
@@ -171,7 +174,7 @@
 			<div class="collapse navbar-collapse" id="navbar-collapse">
 				<ul class="nav navbar-nav">
 				
-					<li><a class="contest-title" href="/contests/abc293">AtCoder Beginner Contest 293</a></li>
+					<li><a class="contest-title" href="/contests/abc268">UNIQUE VISION Programming Contest 2022 Summer (AtCoder Beginner Contest 268)</a></li>
 				
 				</ul>
 				<ul class="nav navbar-nav navbar-right">
@@ -181,8 +184,8 @@
 							<img src='//img.atcoder.jp/assets/top/img/flag-lang/en.png'> English <span class="caret"></span>
 						</a>
 						<ul class="dropdown-menu">
-							<li><a href="/contests/abc293/tasks/abc293_e?lang=ja"><img src='//img.atcoder.jp/assets/top/img/flag-lang/ja.png'> 日本語</a></li>
-							<li><a href="/contests/abc293/tasks/abc293_e?lang=en"><img src='//img.atcoder.jp/assets/top/img/flag-lang/en.png'> English</a></li>
+							<li><a href="/contests/abc268/tasks/abc268_f?lang=ja"><img src='//img.atcoder.jp/assets/top/img/flag-lang/ja.png'> 日本語</a></li>
+							<li><a href="/contests/abc268/tasks/abc268_f?lang=en"><img src='//img.atcoder.jp/assets/top/img/flag-lang/en.png'> English</a></li>
 						</ul>
 					</li>
 					
@@ -211,8 +214,8 @@
 		</div>
 	</nav>
 
-	<form method="POST" name="form_logout" action="/logout?continue=https%3A%2F%2Fatcoder.jp%2Fcontests%2Fabc293%2Ftasks%2Fabc293_e">
-		<input type="hidden" name="csrf_token" value="EZlnud0PQoQCMGUV0GHItKHskixfrNJGTALWM6oIzTw=" />
+	<form method="POST" name="form_logout" action="/logout?continue=https%3A%2F%2Fatcoder.jp%2Fcontests%2Fabc268%2Ftasks%2Fabc268_f">
+		<input type="hidden" name="csrf_token" value="x901ti843yMJ75IfCWtFqWdz4DOAI/d023PzXj3l&#43;RQ=" />
 	</form>
 	<div id="main-container" class="container"
 		 	style="padding-top:50px;">
@@ -225,36 +228,36 @@
 		<small class="contest-duration">
 			
 				Contest Duration:
-				<a href='http://www.timeanddate.com/worldclock/fixedtime.html?iso=20230311T2100&p1=248' target='blank'><time class='fixtime fixtime-full'>2023-03-11 21:00:00+0900</time></a> - <a href='http://www.timeanddate.com/worldclock/fixedtime.html?iso=20230311T2240&p1=248' target='blank'><time class='fixtime fixtime-full'>2023-03-11 22:40:00+0900</time></a> (local time)
+				<a href='http://www.timeanddate.com/worldclock/fixedtime.html?iso=20220910T2100&p1=248' target='blank'><time class='fixtime fixtime-full'>2022-09-10 21:00:00+0900</time></a> - <a href='http://www.timeanddate.com/worldclock/fixedtime.html?iso=20220910T2240&p1=248' target='blank'><time class='fixtime fixtime-full'>2022-09-10 22:40:00+0900</time></a> (local time)
 				(100 minutes)
 			
 		</small>
 		<small class="back-to-home pull-right"><a href="/home">Back to Home</a></small>
 	</div>
 	<ul class="nav nav-tabs">
-		<li><a href="/contests/abc293"><span class="glyphicon glyphicon-home" aria-hidden="true"></span> Top</a></li>
+		<li><a href="/contests/abc268"><span class="glyphicon glyphicon-home" aria-hidden="true"></span> Top</a></li>
 		
-			<li class="active"><a href="/contests/abc293/tasks"><span class="glyphicon glyphicon-tasks" aria-hidden="true"></span> Tasks</a></li>
-		
-
-		
-			<li><a href="/contests/abc293/clarifications"><span class="glyphicon glyphicon-question-sign" aria-hidden="true"></span> Clarifications <span id="clar-badge" class="badge"></span></a></li>
+			<li class="active"><a href="/contests/abc268/tasks"><span class="glyphicon glyphicon-tasks" aria-hidden="true"></span> Tasks</a></li>
 		
 
 		
-			<li><a href="/contests/abc293/submit?taskScreenName=abc293_e"><span class="glyphicon glyphicon-send" aria-hidden="true"></span> Submit</a></li>
+			<li><a href="/contests/abc268/clarifications"><span class="glyphicon glyphicon-question-sign" aria-hidden="true"></span> Clarifications <span id="clar-badge" class="badge"></span></a></li>
+		
+
+		
+			<li><a href="/contests/abc268/submit?taskScreenName=abc268_f"><span class="glyphicon glyphicon-send" aria-hidden="true"></span> Submit</a></li>
 		
 
 		
 			<li>
 				<a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false"><span class="glyphicon glyphicon-list" aria-hidden="true"></span> Results<span class="caret"></span></a>
 				<ul class="dropdown-menu">
-					<li><a href="/contests/abc293/submissions"><span class="glyphicon glyphicon-globe" aria-hidden="true"></span> All Submissions</a></li>
+					<li><a href="/contests/abc268/submissions"><span class="glyphicon glyphicon-globe" aria-hidden="true"></span> All Submissions</a></li>
 					
-						<li><a href="/contests/abc293/submissions/me"><span class="glyphicon glyphicon-user" aria-hidden="true"></span> My Submissions</a></li>
+						<li><a href="/contests/abc268/submissions/me"><span class="glyphicon glyphicon-user" aria-hidden="true"></span> My Submissions</a></li>
 						
 						<li class="divider"></li>
-						<li><a href="/contests/abc293/score"><span class="glyphicon glyphicon-dashboard" aria-hidden="true"></span> My Score</a></li>
+						<li><a href="/contests/abc268/score"><span class="glyphicon glyphicon-dashboard" aria-hidden="true"></span> My Score</a></li>
 					
 				</ul>
 			</li>
@@ -263,21 +266,21 @@
 		
 			
 				
-					<li><a href="/contests/abc293/standings"><span class="glyphicon glyphicon-sort-by-attributes-alt" aria-hidden="true"></span> Standings</a></li>
+					<li><a href="/contests/abc268/standings"><span class="glyphicon glyphicon-sort-by-attributes-alt" aria-hidden="true"></span> Standings</a></li>
 				
 			
 				
-					<li><a href="/contests/abc293/standings/virtual"><span class="glyphicon glyphicon-sort-by-attributes-alt" aria-hidden="true"></span> Virtual Standings</a></li>
+					<li><a href="/contests/abc268/standings/virtual"><span class="glyphicon glyphicon-sort-by-attributes-alt" aria-hidden="true"></span> Virtual Standings</a></li>
 				
 			
 		
 
 		
-			<li><a href="/contests/abc293/custom_test"><span class="glyphicon glyphicon-wrench" aria-hidden="true"></span> Custom Test</a></li>
+			<li><a href="/contests/abc268/custom_test"><span class="glyphicon glyphicon-wrench" aria-hidden="true"></span> Custom Test</a></li>
 		
 
 		
-			<li><a href="/contests/abc293/editorial"><span class="glyphicon glyphicon-book" aria-hidden="true"></span> Editorial</a></li>
+			<li><a href="/contests/abc268/editorial"><span class="glyphicon glyphicon-book" aria-hidden="true"></span> Editorial</a></li>
 		
 		
 			
@@ -289,8 +292,8 @@
 </div>
 	<div class="col-sm-12">
 		<span class="h2">
-			E - Geometric Progression
-			<a class="btn btn-default btn-sm" href="/contests/abc293/tasks/abc293_e/editorial">Editorial</a>
+			F - Best Concatenation
+			<a class="btn btn-default btn-sm" href="/contests/abc268/tasks/abc268_f/editorial">Editorial</a>
 		</span>
 		<span id="task-lang-btn" class="pull-right"><span data-lang="ja"><img src='//img.atcoder.jp/assets/top/img/flag-lang/ja.png'></span> / <span data-lang="en"><img src='//img.atcoder.jp/assets/top/img/flag-lang/en.png'></span></span>
 		<script>
@@ -342,16 +345,29 @@
 
 <div class="part">
 <section>
-<h3>問題文</h3><p>整数 <var>A, X, M</var> が与えられます。<var>\displaystyle \sum_{i = 0}^{X-1} A^i</var> を <var>M</var> で割った余りを求めてください。</p>
+<h3>問題文</h3><p><code>1</code> から <code>9</code> の数字および <code>X</code> のみからなる <var>N</var> 個の文字列 <var>S_1, S_2, \ldots, S_N</var> が与えられます。</p>
+<p><var>(1, 2, \ldots, N)</var> を並べ替えた列 <var>P = (P_1, P_2, \ldots, P_N)</var> を一つ選び、
+文字列 <var>T = S_{P_1} + S_{P_2} + \cdots + S_{P_N}</var> を作ります。ここで、<var>+</var> は文字列の連結を表します。</p>
+<p>そして、文字列 <var>T = T_1T_2\ldots T_{|T|}</var> の「スコア」を計算します（ <var>|T|</var> は文字列 <var>T</var> の長さを表します）。<br />
+<var>T</var> のスコアは、スコアが <var>0</var> の状態から始め、下記の <var>9</var> 個の手順を行うことで計算されます。</p>
+<ul>
+<li><var>1 \leq i \lt j \leq |T|</var> および <var>T_i = </var> <code>X</code> かつ <var>T_j = </var> <code>1</code> を満たす整数の組 <var>(i, j)</var> の個数だけ、スコアを <var>1</var> 点加算する 。</li>
+<li><var>1 \leq i \lt j \leq |T|</var> および <var>T_i = </var> <code>X</code> かつ <var>T_j = </var> <code>2</code> を満たす整数の組 <var>(i, j)</var> の個数だけ、スコアを <var>2</var> 点加算する。</li>
+<li><var>1 \leq i \lt j \leq |T|</var> および <var>T_i = </var> <code>X</code> かつ <var>T_j = </var> <code>3</code> を満たす整数の組 <var>(i, j)</var> の個数だけ、スコアを <var>3</var> 点加算する。</li>
+<li><var>\cdots</var></li>
+<li><var>1 \leq i \lt j \leq |T|</var> および <var>T_i = </var> <code>X</code> かつ <var>T_j = </var> <code>9</code> を満たす整数の組 <var>(i, j)</var> の個数だけ、スコアを <var>9</var> 点加算する。</li>
+</ul>
+<p><var>P</var> を任意に選ぶときの、<var>T</var> のスコアとしてあり得る最大値を出力してください。</p>
 </section>
 </div>
 
 <div class="part">
 <section>
 <h3>制約</h3><ul>
-<li><var>1 \leq A, M \leq 10^9</var></li>
-<li><var>1 \leq X \leq 10^{12}</var></li>
-<li>入力はすべて整数</li>
+<li><var>2 \leq N \leq 2 \times 10^5</var></li>
+<li><var>N</var> は整数</li>
+<li><var>S_i</var> は <code>1</code> から <code>9</code> の数字および <code>X</code> のみからなる長さ <var>1</var> 以上の文字列</li>
+<li><var>S_1, S_2, \ldots, S_N</var> の長さの総和は <var>2 \times 10^5</var> 以下</li>
 </ul>
 </section>
 </div>
@@ -361,7 +377,11 @@
 <div class="part">
 <section>
 <h3>入力</h3><p>入力は以下の形式で標準入力から与えられる。</p>
-<pre><var>A</var> <var>X</var> <var>M</var>
+<pre><var>N</var>
+<var>S_1</var>
+<var>S_2</var>
+<var>\vdots</var>
+<var>S_N</var>
 </pre>
 </section>
 </div>
@@ -376,45 +396,51 @@
 <hr />
 <div class="part">
 <section>
-<h3>入力例 1</h3><pre>3 4 7
+<h3>入力例 1</h3><pre>3
+1X3
+59
+XXX
 </pre>
 </section>
 </div>
 
 <div class="part">
 <section>
-<h3>出力例 1</h3><pre>5
+<h3>出力例 1</h3><pre>71
 </pre>
-<p><var>3^0 + 3^1 + 3^2 + 3^3 = 40</var> です。<var>40</var> を <var>7</var> で割った余りは <var>5</var> であるため、<var>5</var> を出力します。</p>
-</section>
-</div>
-
-<hr />
-<div class="part">
-<section>
-<h3>入力例 2</h3><pre>8 10 9
-</pre>
-</section>
-</div>
-
-<div class="part">
-<section>
-<h3>出力例 2</h3><pre>0
-</pre>
+<p><var>P = (3, 1, 2)</var> とすると、<var>T = S_3 + S_1 + S_2 = </var> <code>XXX1X359</code> です。
+このとき、<var>T</var> のスコアは次の通り計算されます。</p>
+<ul>
+<li><var>1 \leq i \lt j \leq |T|</var> および <var>T_i = </var> <code>X</code> かつ <var>T_j = </var> <code>1</code> を満たす整数の組 <var>(i, j)</var> が <var>3</var> 個あり、</li>
+<li><var>1 \leq i \lt j \leq |T|</var> および <var>T_i = </var> <code>X</code> かつ <var>T_j = </var> <code>3</code> を満たす整数の組 <var>(i, j)</var> が <var>4</var> 個あり、</li>
+<li><var>1 \leq i \lt j \leq |T|</var> および <var>T_i = </var> <code>X</code> かつ <var>T_j = </var> <code>5</code> を満たす整数の組 <var>(i, j)</var> が <var>4</var> 個あり、</li>
+<li><var>1 \leq i \lt j \leq |T|</var> および <var>T_i = </var> <code>X</code> かつ <var>T_j = </var> <code>9</code> を満たす整数の組 <var>(i, j)</var> が <var>4</var> 個あります。</li>
+</ul>
+<p>よって、<var>T</var> のスコアは <var>1 \times 3 + 3 \times 4 + 5 \times 4 + 9 \times 4 = 71</var> であり、これが考えられる最大値です。</p>
 </section>
 </div>
 
 <hr />
 <div class="part">
 <section>
-<h3>入力例 3</h3><pre>1000000000 1000000000000 998244353
+<h3>入力例 2</h3><pre>10
+X63X395XX
+X2XX3X22X
+13
+3716XXX6
+45X
+X6XX
+9238
+281X92
+1XX4X4XX6
+54X9X711X1
 </pre>
 </section>
 </div>
 
 <div class="part">
 <section>
-<h3>出力例 3</h3><pre>919667211
+<h3>出力例 2</h3><pre>3010
 </pre></section>
 </div>
 </span>
@@ -423,16 +449,29 @@
 
 <div class="part">
 <section>
-<h3>Problem Statement</h3><p>Given integers <var>A</var>, <var>X</var>, and <var>M</var>, find <var>\displaystyle \sum_{i = 0}^{X-1} A^i</var>, modulo <var>M</var>.</p>
+<h3>Problem Statement</h3><p>You are given <var>N</var> strings <var>S_1, S_2, \ldots, S_N</var> consisting of digits from <code>1</code> through <code>9</code> and the character <code>X</code>.</p>
+<p>We will choose a permutation <var>P = (P_1, P_2, \ldots, P_N)</var> of <var>(1, 2, \ldots, N)</var>
+to construct a string <var>T = S_{P_1} + S_{P_2} + \cdots + S_{P_N}</var>, where <var>+</var> denotes a concatenation of strings.</p>
+<p>Then, we will calculate the "score" of the string <var>T = T_1T_2\ldots T_{|T|}</var> (where <var>|T|</var> denotes the length of <var>T</var>).<br />
+The score is calculated by the following <var>9</var> steps, starting from the initial score <var>0</var>:</p>
+<ul>
+<li>Add <var>1</var> point to the score as many times as the number of integer pairs <var>(i, j)</var> such that <var>1 \leq i \lt j \leq |T|</var>,  <var>T_i = </var> <code>X</code>, and <var>T_j = </var> <code>1</code>.</li>
+<li>Add <var>2</var> points to the score as many times as the number of integer pairs <var>(i, j)</var> such that <var>1 \leq i \lt j \leq |T|</var>,  <var>T_i = </var> <code>X</code>, and <var>T_j = </var> <code>2</code>.</li>
+<li>Add <var>3</var> points to the score as many times as the number of integer pairs <var>(i, j)</var> such that <var>1 \leq i \lt j \leq |T|</var>,  <var>T_i = </var> <code>X</code>, and <var>T_j = </var> <code>3</code>.</li>
+<li><var>\cdots</var></li>
+<li>Add <var>9</var> points to the score as many times as the number of integer pairs <var>(i, j)</var> such that <var>1 \leq i \lt j \leq |T|</var>,  <var>T_i = </var> <code>X</code>, and <var>T_j = </var> <code>9</code>.</li>
+</ul>
+<p>Find the maximum possible score of <var>T</var> when <var>P</var> can be chosen arbitrarily.</p>
 </section>
 </div>
 
 <div class="part">
 <section>
 <h3>Constraints</h3><ul>
-<li><var>1 \leq A, M \leq 10^9</var></li>
-<li><var>1 \leq X \leq 10^{12}</var></li>
-<li>All values in the input are integers.</li>
+<li><var>2 \leq N \leq 2 \times 10^5</var></li>
+<li><var>N</var> is an integer.</li>
+<li><var>S_i</var> is a string of length at least <var>1</var> consisting of digits from <code>1</code> through <code>9</code> and the character <code>X</code>.</li>
+<li>The sum of lengths of <var>S_1, S_2, \ldots, S_N</var> is at most <var>2 \times 10^5</var>.</li>
 </ul>
 </section>
 </div>
@@ -441,8 +480,12 @@
 <div class="io-style">
 <div class="part">
 <section>
-<h3>Input</h3><p>The input is given from Standard Input in the following format:</p>
-<pre><var>A</var> <var>X</var> <var>M</var>
+<h3>Input</h3><p>Input is given from Standard Input in the following format:</p>
+<pre><var>N</var>
+<var>S_1</var>
+<var>S_2</var>
+<var>\vdots</var>
+<var>S_N</var>
 </pre>
 </section>
 </div>
@@ -457,58 +500,63 @@
 <hr />
 <div class="part">
 <section>
-<h3>Sample Input 1</h3><pre>3 4 7
+<h3>Sample Input 1</h3><pre>3
+1X3
+59
+XXX
 </pre>
 </section>
 </div>
 
 <div class="part">
 <section>
-<h3>Sample Output 1</h3><pre>5
+<h3>Sample Output 1</h3><pre>71
 </pre>
-<p><var>3^0 + 3^1 + 3^2 + 3^3 = 40</var>, which equals <var>5</var> modulo <var>7</var>, so <var>5</var> should be printed.</p>
-</section>
-</div>
-
-<hr />
-<div class="part">
-<section>
-<h3>Sample Input 2</h3><pre>8 10 9
-</pre>
-</section>
-</div>
-
-<div class="part">
-<section>
-<h3>Sample Output 2</h3><pre>0
-</pre>
+<p>When <var>P = (3, 1, 2)</var>, we have <var>T = S_3 + S_1 + S_2 = </var> <code>XXX1X359</code>.
+Then, the score of <var>T</var> is calculated as follows:</p>
+<ul>
+<li>there are <var>3</var> integer pairs <var>(i, j)</var> such that <var>1 \leq i \lt j \leq |T|</var>,  <var>T_i = </var> <code>X</code>, and <var>T_j = </var> <code>1</code>;</li>
+<li>there are <var>4</var> integer pairs <var>(i, j)</var> such that <var>1 \leq i \lt j \leq |T|</var>,  <var>T_i = </var> <code>X</code>, and <var>T_j = </var> <code>3</code>;</li>
+<li>there are <var>4</var> integer pairs <var>(i, j)</var> such that <var>1 \leq i \lt j \leq |T|</var>,  <var>T_i = </var> <code>X</code>, and <var>T_j = </var> <code>5</code>;</li>
+<li>there are <var>4</var> integer pairs <var>(i, j)</var> such that <var>1 \leq i \lt j \leq |T|</var>,  <var>T_i = </var> <code>X</code>, and <var>T_j = </var> <code>9</code>.</li>
+</ul>
+<p>Therefore, the score of <var>T</var> is <var>1 \times 3 + 3 \times 4 + 5 \times 4 + 9 \times 4 = 71</var>, which is the maximum possible value.</p>
 </section>
 </div>
 
 <hr />
 <div class="part">
 <section>
-<h3>Sample Input 3</h3><pre>1000000000 1000000000000 998244353
+<h3>Sample Input 2</h3><pre>10
+X63X395XX
+X2XX3X22X
+13
+3716XXX6
+45X
+X6XX
+9238
+281X92
+1XX4X4XX6
+54X9X711X1
 </pre>
 </section>
 </div>
 
 <div class="part">
 <section>
-<h3>Sample Output 3</h3><pre>919667211
+<h3>Sample Output 2</h3><pre>3010
 </pre></section>
 </div>
 </span>
 </span>
-
 		</div>
 
 		
 
 		
 		<hr/>
-		<form class="form-horizontal form-code-submit" action="/contests/abc293/submit" method="POST">
-			<input type="hidden" name="data.TaskScreenName" value="abc293_e" />
+		<form class="form-horizontal form-code-submit" action="/contests/abc268/submit" method="POST">
+			<input type="hidden" name="data.TaskScreenName" value="abc268_f" />
 			
 			<div class="form-group ">
 				<label class="control-label col-sm-3 col-md-2" for="select-lang">Language</label>
@@ -733,7 +781,7 @@
 </div>
 
 
-			<input type="hidden" name="csrf_token" value="EZlnud0PQoQCMGUV0GHItKHskixfrNJGTALWM6oIzTw=" />
+			<input type="hidden" name="csrf_token" value="x901ti843yMJ75IfCWtFqWdz4DOAI/d023PzXj3l&#43;RQ=" />
 			<div class="form-group">
 				<label class="control-label col-sm-3 col-md-2"></label>
 				<div class="col-sm-5">
@@ -753,7 +801,7 @@
 			
 			
 			
-<div class="a2a_kit a2a_kit_size_20 a2a_default_style pull-right" data-a2a-url="https://atcoder.jp/contests/abc293/tasks/abc293_e?lang=en" data-a2a-title="E - Geometric Progression">
+<div class="a2a_kit a2a_kit_size_20 a2a_default_style pull-right" data-a2a-url="https://atcoder.jp/contests/abc268/tasks/abc268_f?lang=en" data-a2a-title="F - Best Concatenation">
 	<a class="a2a_button_facebook"></a>
 	<a class="a2a_button_twitter"></a>
 	
@@ -773,8 +821,8 @@
 			<footer class="footer">
 			
 				<ul>
-					<li><a href="/contests/abc293/rules">Rule</a></li>
-					<li><a href="/contests/abc293/glossary">Glossary</a></li>
+					<li><a href="/contests/abc268/rules">Rule</a></li>
+					<li><a href="/contests/abc268/glossary">Glossary</a></li>
 					
 				</ul>
 			

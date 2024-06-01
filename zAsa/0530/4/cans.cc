@@ -414,13 +414,22 @@ T power(const T& a, ll b) {
 
 // @@ !! LIM -- end mark --
 
+using Fp = FpA;
+
 int main(/* int argc, char *argv[] */) {
   ios_base::sync_with_stdio(false);
   cin.tie(nullptr);
   cout << setprecision(20);
 
-  ll a, x, m; cin >> a >> x >> m;
-  
+  ll n, a, b; cin >> n >> a >> b;
+  auto binom = [&](ll m, ll r) -> Fp {
+    Fp ret = 1;
+    REP(i, 0, r) ret = ret * Fp(m - i) / Fp(r - i);
+    return ret;
+  };
+
+  Fp ans = power<Fp>(Fp(2), n) - 1 - binom(n, a) - binom(n, b);
+  cout << ans << endl;
 
   return 0;
 }

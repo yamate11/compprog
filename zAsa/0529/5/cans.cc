@@ -12,7 +12,7 @@ using pll = pair<ll, ll>;
 #define SIZE(v) ((ll)((v).size()))
 #define REPOUT(i, a, b, exp, sep) REP(i, (a), (b)) cout << (exp) << (i + 1 == (b) ? "" : (sep)); cout << "\n"
 
-// @@ !! LIM(mod power)
+// @@ !! LIM(mod)
 
 // ---- inserted library file algOp.cc
 
@@ -396,31 +396,38 @@ using FpB = FpG<primeB>;
 
 // ---- end mod.cc
 
-// ---- inserted library file power.cc
-
-template<typename T>
-T power(const T& a, ll b) {
-  auto two_pow = a;
-  auto ret = one<T>(a);
-  while (b > 0) {
-    if (b & 1LL) ret *= two_pow;
-    two_pow *= two_pow;
-    b >>= 1;
-  }
-  return ret;
-}
-
-// ---- end power.cc
-
 // @@ !! LIM -- end mark --
+
+using Fp = FpA;
 
 int main(/* int argc, char *argv[] */) {
   ios_base::sync_with_stdio(false);
   cin.tie(nullptr);
   cout << setprecision(20);
 
-  ll a, x, m; cin >> a >> x >> m;
-  
+  string L; cin >> L;
+  ll sz = ssize(L);
+  vector tbl_init(2, Fp(0));
+  auto tbl = tbl_init;
+  tbl[1] = Fp(1);
+  REP(i, 0, sz) {
+    ll d = L[i] - '0';
+    auto prev = move(tbl);
+    tbl = tbl_init;
+    REP(eq, 0, 2) {
+      if (prev[eq] == 0) continue;
+      REP(x, 0, 2) {
+        if (eq and x > d) continue;
+        ll new_eq = eq and x == d;
+        if (x == 0) {
+          tbl[new_eq] += prev[eq];
+        }else {
+          tbl[new_eq] += prev[eq] * 2;
+        }
+      }
+    }
+  }
+  cout << tbl[0] + tbl[1] << endl;
 
   return 0;
 }
