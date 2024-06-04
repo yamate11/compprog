@@ -12,7 +12,13 @@ using pll = pair<ll, ll>;
 #define SIZE(v) ((ll)((v).size()))
 #define REPOUT(i, a, b, exp, sep) REP(i, (a), (b)) cout << (exp) << (i + 1 == (b) ? "" : (sep)); cout << "\n"
 
-// @@ !! LIM(debug f:updMaxMin)
+// @@ !! LIM(input debug f:updMaxMin)
+
+// ---- inserted library file input.cc
+
+// The contents are empty.
+
+// ---- end input.cc
 
 // ---- inserted function f:<< from util.cc
 
@@ -348,30 +354,43 @@ int main(/* int argc, char *argv[] */) {
   ios_base::sync_with_stdio(false);
   cin.tie(nullptr);
   cout << setprecision(20);
-  
-  ll N, L; cin >> N >> L;
-  // @InpVec(N, A) [AEWuiSgK]
-  auto A = vector(N, ll());
-  for (int i = 0; i < N; i++) { ll v; cin >> v; A[i] = v; }
-  // @End [AEWuiSgK]
 
-  ll lim = 2e5;
   ll big = 1e18;
-  vector tbl(lim + 1, big);
-  tbl[0] = 0;
-  REP(i, 1, L) {
-    ll w = i * (L - i);
-    for (ll p = 0; p + w <= lim; p++) {
-      updMin(tbl[p + w], tbl[p] + 1);
-    }
+
+  ll N, M; cin >> N >> M;
+  // @InpMVec(M, ((U, dec=1), (V, dec=1), L)) [LHs9NzcH]
+  auto U = vector(M, ll());
+  auto V = vector(M, ll());
+  auto L = vector(M, ll());
+  for (int i = 0; i < M; i++) {
+    ll v1; cin >> v1; v1 -= 1; U[i] = v1;
+    ll v2; cin >> v2; v2 -= 1; V[i] = v2;
+    ll v3; cin >> v3; L[i] = v3;
   }
-  REP(i, 0, N) {
-    if (tbl[A[i]] == big) {
-      cout << -1 << "\n";
+  // @End [LHs9NzcH]
+
+  vector<pll> n0;
+  vector d(N, vector(N, big));
+  REP(i, 0, N) d[i][i] = 0;
+  REP(i, 0, M) {
+    ll u = U[i], v = V[i], l = L[i];
+    if (u == 0) {
+      n0.emplace_back(v, l);
+    }else if (v == 0) {
+      n0.emplace_back(u, l);
     }else {
-      cout << tbl[A[i]] << "\n";
+      d[u][v] = d[v][u] = l;
     }
   }
+  REP(k, 0, N) REP(i, 0, N) REP(j, 0, N) updMin(d[i][j], d[i][k] + d[k][j]);
+  ll ans = big;
+  ll sz = ssize(n0);
+  REP(i, 0, sz) REP(j, i + 1, sz) {
+    auto [p, lp] = n0[i];
+    auto [q, lq] = n0[j];
+    updMin(ans, d[p][q] + lp + lq);
+  }
+  cout << (ans >= big ? -1 : ans) << endl;
 
   return 0;
 }

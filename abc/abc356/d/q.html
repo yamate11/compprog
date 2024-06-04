@@ -9,7 +9,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>E - Kth Number</title>
+	<title>D - Masked Popcount</title>
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 	<meta http-equiv="Content-Language" content="en">
 	<meta name="viewport" content="width=device-width,initial-scale=1.0">
@@ -32,61 +32,61 @@
 
 	<meta property="og:site_name" content="AtCoder">
 	
-	<meta property="og:title" content="E - Kth Number" />
+	<meta property="og:title" content="D - Masked Popcount" />
 	<meta property="og:description" content="AtCoder is a programming contest site for anyone from beginners to experts. We hold weekly programming contests online." />
 	<meta property="og:type" content="website" />
-	<meta property="og:url" content="https://atcoder.jp/contests/abc295/tasks/abc295_e" />
+	<meta property="og:url" content="https://atcoder.jp/contests/abc356/tasks/abc356_d" />
 	<meta property="og:image" content="https://img.atcoder.jp/assets/atcoder.png" />
 	<meta name="twitter:card" content="summary" />
 	<meta name="twitter:site" content="@atcoder" />
 	
-	<meta property="twitter:title" content="E - Kth Number" />
+	<meta property="twitter:title" content="D - Masked Popcount" />
 
 	<link href="//fonts.googleapis.com/css?family=Lato:400,700" rel="stylesheet" type="text/css">
-	<link rel="stylesheet" type="text/css" href="//img.atcoder.jp/public/88363ae/css/bootstrap.min.css">
-	<link rel="stylesheet" type="text/css" href="//img.atcoder.jp/public/88363ae/css/base.css">
+	<link rel="stylesheet" type="text/css" href="//img.atcoder.jp/public/ea27d23/css/bootstrap.min.css">
+	<link rel="stylesheet" type="text/css" href="//img.atcoder.jp/public/ea27d23/css/base.css">
 	<link rel="shortcut icon" type="image/png" href="//img.atcoder.jp/assets/favicon.png">
 	<link rel="apple-touch-icon" href="//img.atcoder.jp/assets/atcoder.png">
-	<script src="//img.atcoder.jp/public/88363ae/js/lib/jquery-1.9.1.min.js"></script>
-	<script src="//img.atcoder.jp/public/88363ae/js/lib/bootstrap.min.js"></script>
-	<script src="//img.atcoder.jp/public/88363ae/js/cdn/js.cookie.min.js"></script>
-	<script src="//img.atcoder.jp/public/88363ae/js/cdn/moment.min.js"></script>
-	<script src="//img.atcoder.jp/public/88363ae/js/cdn/moment_js-ja.js"></script>
+	<script src="//img.atcoder.jp/public/ea27d23/js/lib/jquery-1.9.1.min.js"></script>
+	<script src="//img.atcoder.jp/public/ea27d23/js/lib/bootstrap.min.js"></script>
+	<script src="//img.atcoder.jp/public/ea27d23/js/cdn/js.cookie.min.js"></script>
+	<script src="//img.atcoder.jp/public/ea27d23/js/cdn/moment.min.js"></script>
+	<script src="//img.atcoder.jp/public/ea27d23/js/cdn/moment_js-ja.js"></script>
 	<script>
 		var LANG = "en";
 		var userScreenName = "yamate11";
-		var csrfToken = "zZx9jdc2WPEhOOiZzf9HquvaoDwImCZR2ZQA6k3jlHI="
+		var csrfToken = "dmHC7nndy8/aN+3c1feYAr3xYs2mopWOam8yAwxbCcw="
 	</script>
-	<script src="//img.atcoder.jp/public/88363ae/js/utils.js"></script>
+	<script src="//img.atcoder.jp/public/ea27d23/js/utils.js"></script>
 	
 	
-		<script src="//img.atcoder.jp/public/88363ae/js/contest.js"></script>
-		<link href="//img.atcoder.jp/public/88363ae/css/contest.css" rel="stylesheet" />
+		<script src="//img.atcoder.jp/public/ea27d23/js/contest.js"></script>
+		<link href="//img.atcoder.jp/public/ea27d23/css/contest.css" rel="stylesheet" />
 		<script>
-			var contestScreenName = "abc295";
+			var contestScreenName = "abc356";
 			var remainingText = "Remaining Time";
 			var countDownText = "Contest begins in";
-			var startTime = moment("2023-03-25T21:00:00+09:00");
-			var endTime = moment("2023-03-25T22:40:00+09:00");
+			var startTime = moment("2024-06-01T21:00:00+09:00");
+			var endTime = moment("2024-06-01T22:40:00+09:00");
 		</script>
 		<style></style>
 	
 	
-		<link href="//img.atcoder.jp/public/88363ae/css/cdn/select2.min.css" rel="stylesheet" />
-		<link href="//img.atcoder.jp/public/88363ae/css/cdn/select2-bootstrap.min.css" rel="stylesheet" />
-		<script src="//img.atcoder.jp/public/88363ae/js/lib/select2.min.js"></script>
+		<link href="//img.atcoder.jp/public/ea27d23/css/cdn/select2.min.css" rel="stylesheet" />
+		<link href="//img.atcoder.jp/public/ea27d23/css/cdn/select2-bootstrap.min.css" rel="stylesheet" />
+		<script src="//img.atcoder.jp/public/ea27d23/js/lib/select2.min.js"></script>
 	
 	
-		<script src="//img.atcoder.jp/public/88363ae/js/ace/ace.js"></script>
-		<script src="//img.atcoder.jp/public/88363ae/js/ace/ext-language_tools.js"></script>
+		<script src="//img.atcoder.jp/public/ea27d23/js/ace/ace.js"></script>
+		<script src="//img.atcoder.jp/public/ea27d23/js/ace/ext-language_tools.js"></script>
 	
 	
-		<script src="//img.atcoder.jp/public/88363ae/js/cdn/run_prettify.js"></script>
+		<script src="//img.atcoder.jp/public/ea27d23/js/cdn/run_prettify.js"></script>
 	
 	
-		<link rel="stylesheet" href="//img.atcoder.jp/public/88363ae/css/cdn/katex.min.css">
-		<script defer src="//img.atcoder.jp/public/88363ae/js/cdn/katex.min.js"></script>
-		<script defer src="//img.atcoder.jp/public/88363ae/js/cdn/auto-render.min.js"></script>
+		<link rel="stylesheet" href="//img.atcoder.jp/public/ea27d23/css/cdn/katex.min.css">
+		<script defer src="//img.atcoder.jp/public/ea27d23/js/cdn/katex.min.js"></script>
+		<script defer src="//img.atcoder.jp/public/ea27d23/js/cdn/auto-render.min.js"></script>
 		<script>$(function(){$('var').each(function(){var html=$(this).html().replace(/<sub>/g,'_{').replace(/<\/sub>/g,'}');$(this).html('\\('+html+'\\)');});});</script>
 		<script>
 			var katexOptions = {
@@ -111,7 +111,7 @@
 	
 	
 	
-	<script src="//img.atcoder.jp/public/88363ae/js/base.js"></script>
+	<script src="//img.atcoder.jp/public/ea27d23/js/base.js"></script>
 </head>
 
 <body>
@@ -131,11 +131,11 @@
 				<h4 class="modal-title">Contest started</h4>
 			</div>
 			<div class="modal-body">
-				<p>AtCoder Beginner Contest 295 has begun.</p>
+				<p>AtCoder Beginner Contest 356 has begun.</p>
 			</div>
 			<div class="modal-footer">
 				
-					<a class="btn btn-primary" href='/contests/abc295/tasks'>Go to the task list page</a>
+					<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
 				
 			</div>
 		</div>
@@ -149,7 +149,7 @@
 				<h4 class="modal-title">Contest is over</h4>
 			</div>
 			<div class="modal-body">
-				<p>AtCoder Beginner Contest 295 has ended.</p>
+				<p>AtCoder Beginner Contest 356 has ended.</p>
 			</div>
 			<div class="modal-footer">
 				<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
@@ -171,7 +171,7 @@
 			<div class="collapse navbar-collapse" id="navbar-collapse">
 				<ul class="nav navbar-nav">
 				
-					<li><a class="contest-title" href="/contests/abc295">AtCoder Beginner Contest 295</a></li>
+					<li><a class="contest-title" href="/contests/abc356">AtCoder Beginner Contest 356</a></li>
 				
 				</ul>
 				<ul class="nav navbar-nav navbar-right">
@@ -181,15 +181,15 @@
 							<img src='//img.atcoder.jp/assets/top/img/flag-lang/en.png'> English <span class="caret"></span>
 						</a>
 						<ul class="dropdown-menu">
-							<li><a href="/contests/abc295/tasks/abc295_e?lang=ja"><img src='//img.atcoder.jp/assets/top/img/flag-lang/ja.png'> 日本語</a></li>
-							<li><a href="/contests/abc295/tasks/abc295_e?lang=en"><img src='//img.atcoder.jp/assets/top/img/flag-lang/en.png'> English</a></li>
+							<li><a href="/contests/abc356/tasks/abc356_d?lang=ja"><img src='//img.atcoder.jp/assets/top/img/flag-lang/ja.png'> 日本語</a></li>
+							<li><a href="/contests/abc356/tasks/abc356_d?lang=en"><img src='//img.atcoder.jp/assets/top/img/flag-lang/en.png'> English</a></li>
 						</ul>
 					</li>
 					
 					
 						<li class="dropdown">
 							<a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
-								<span class="glyphicon glyphicon-cog" aria-hidden="true"></span> yamate11 (Contestant) <span class="caret"></span>
+								<span class="glyphicon glyphicon-cog" aria-hidden="true"></span> yamate11 (Guest) <span class="caret"></span>
 							</a>
 							<ul class="dropdown-menu">
 								<li><a href="/users/yamate11"><span class="glyphicon glyphicon-user" aria-hidden="true"></span> My Profile</a></li>
@@ -211,8 +211,8 @@
 		</div>
 	</nav>
 
-	<form method="POST" name="form_logout" action="/logout?continue=https%3A%2F%2Fatcoder.jp%2Fcontests%2Fabc295%2Ftasks%2Fabc295_e">
-		<input type="hidden" name="csrf_token" value="zZx9jdc2WPEhOOiZzf9HquvaoDwImCZR2ZQA6k3jlHI=" />
+	<form method="POST" name="form_logout" action="/logout?continue=https%3A%2F%2Fatcoder.jp%2Fcontests%2Fabc356%2Ftasks%2Fabc356_d">
+		<input type="hidden" name="csrf_token" value="dmHC7nndy8/aN&#43;3c1feYAr3xYs2mopWOam8yAwxbCcw=" />
 	</form>
 	<div id="main-container" class="container"
 		 	style="padding-top:50px;">
@@ -225,36 +225,36 @@
 		<small class="contest-duration">
 			
 				Contest Duration:
-				<a href='http://www.timeanddate.com/worldclock/fixedtime.html?iso=20230325T2100&p1=248' target='blank'><time class='fixtime fixtime-full'>2023-03-25 21:00:00+0900</time></a> - <a href='http://www.timeanddate.com/worldclock/fixedtime.html?iso=20230325T2240&p1=248' target='blank'><time class='fixtime fixtime-full'>2023-03-25 22:40:00+0900</time></a> (local time)
+				<a href='http://www.timeanddate.com/worldclock/fixedtime.html?iso=20240601T2100&p1=248' target='blank'><time class='fixtime fixtime-full'>2024-06-01 21:00:00+0900</time></a> - <a href='http://www.timeanddate.com/worldclock/fixedtime.html?iso=20240601T2240&p1=248' target='blank'><time class='fixtime fixtime-full'>2024-06-01 22:40:00+0900</time></a> (local time)
 				(100 minutes)
 			
 		</small>
 		<small class="back-to-home pull-right"><a href="/home">Back to Home</a></small>
 	</div>
 	<ul class="nav nav-tabs">
-		<li><a href="/contests/abc295"><span class="glyphicon glyphicon-home" aria-hidden="true"></span> Top</a></li>
+		<li><a href="/contests/abc356"><span class="glyphicon glyphicon-home" aria-hidden="true"></span> Top</a></li>
 		
-			<li class="active"><a href="/contests/abc295/tasks"><span class="glyphicon glyphicon-tasks" aria-hidden="true"></span> Tasks</a></li>
-		
-
-		
-			<li><a href="/contests/abc295/clarifications"><span class="glyphicon glyphicon-question-sign" aria-hidden="true"></span> Clarifications <span id="clar-badge" class="badge"></span></a></li>
+			<li class="active"><a href="/contests/abc356/tasks"><span class="glyphicon glyphicon-tasks" aria-hidden="true"></span> Tasks</a></li>
 		
 
 		
-			<li><a href="/contests/abc295/submit?taskScreenName=abc295_e"><span class="glyphicon glyphicon-send" aria-hidden="true"></span> Submit</a></li>
+			<li><a href="/contests/abc356/clarifications"><span class="glyphicon glyphicon-question-sign" aria-hidden="true"></span> Clarifications <span id="clar-badge" class="badge"></span></a></li>
+		
+
+		
+			<li><a href="/contests/abc356/submit?taskScreenName=abc356_d"><span class="glyphicon glyphicon-send" aria-hidden="true"></span> Submit</a></li>
 		
 
 		
 			<li>
 				<a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false"><span class="glyphicon glyphicon-list" aria-hidden="true"></span> Results<span class="caret"></span></a>
 				<ul class="dropdown-menu">
-					<li><a href="/contests/abc295/submissions"><span class="glyphicon glyphicon-globe" aria-hidden="true"></span> All Submissions</a></li>
+					<li><a href="/contests/abc356/submissions"><span class="glyphicon glyphicon-globe" aria-hidden="true"></span> All Submissions</a></li>
 					
-						<li><a href="/contests/abc295/submissions/me"><span class="glyphicon glyphicon-user" aria-hidden="true"></span> My Submissions</a></li>
+						<li><a href="/contests/abc356/submissions/me"><span class="glyphicon glyphicon-user" aria-hidden="true"></span> My Submissions</a></li>
 						
 						<li class="divider"></li>
-						<li><a href="/contests/abc295/score"><span class="glyphicon glyphicon-dashboard" aria-hidden="true"></span> My Score</a></li>
+						<li><a href="/contests/abc356/score"><span class="glyphicon glyphicon-dashboard" aria-hidden="true"></span> My Score</a></li>
 					
 				</ul>
 			</li>
@@ -263,24 +263,26 @@
 		
 			
 				
-					<li><a href="/contests/abc295/standings"><span class="glyphicon glyphicon-sort-by-attributes-alt" aria-hidden="true"></span> Standings</a></li>
+					<li><a href="/contests/abc356/standings"><span class="glyphicon glyphicon-sort-by-attributes-alt" aria-hidden="true"></span> Standings</a></li>
 				
 			
 				
-					<li><a href="/contests/abc295/standings/virtual"><span class="glyphicon glyphicon-sort-by-attributes-alt" aria-hidden="true"></span> Virtual Standings</a></li>
+					<li><a href="/contests/abc356/standings/virtual"><span class="glyphicon glyphicon-sort-by-attributes-alt" aria-hidden="true"></span> Virtual Standings</a></li>
 				
 			
 		
 
 		
-			<li><a href="/contests/abc295/custom_test"><span class="glyphicon glyphicon-wrench" aria-hidden="true"></span> Custom Test</a></li>
+			<li><a href="/contests/abc356/custom_test"><span class="glyphicon glyphicon-wrench" aria-hidden="true"></span> Custom Test</a></li>
 		
 
 		
-			<li><a href="/contests/abc295/editorial"><span class="glyphicon glyphicon-book" aria-hidden="true"></span> Editorial</a></li>
+			<li><a href="/contests/abc356/editorial"><span class="glyphicon glyphicon-book" aria-hidden="true"></span> Editorial</a></li>
 		
 		
 			
+			
+				<li><a href="https://codeforces.com/blog/entry/129995" target="_blank" rel="noopener"><span class="glyphicon glyphicon-comment" aria-hidden="true"></span> Discuss</a></li>
 			
 		
 
@@ -289,8 +291,8 @@
 </div>
 	<div class="col-sm-12">
 		<span class="h2">
-			E - Kth Number
-			<a class="btn btn-default btn-sm" href="/contests/abc295/tasks/abc295_e/editorial">Editorial</a>
+			D - Masked Popcount
+			<a class="btn btn-default btn-sm" href="/contests/abc356/tasks/abc356_d/editorial">Editorial</a>
 		</span>
 		<span id="task-lang-btn" class="pull-right"><span data-lang="ja"><img src='//img.atcoder.jp/assets/top/img/flag-lang/ja.png'></span> / <span data-lang="en"><img src='//img.atcoder.jp/assets/top/img/flag-lang/en.png'></span></span>
 		<script>
@@ -329,7 +331,7 @@
 		</script>
 		<hr/>
 		<p>
-			Time Limit: 4 sec / Memory Limit: 1024 MB
+			Time Limit: 2 sec / Memory Limit: 1024 MB
 			
 			
 		</p>
@@ -338,22 +340,28 @@
 			
 			<span class="lang">
 <span class="lang-ja">
-<p>配点 : <var>500</var> 点</p>
+<p>配点 : <var>400</var> 点</p>
 
 <div class="part">
 <section>
-<h3>問題文</h3><p><var>0</var> 以上 <var>M</var> 以下の整数からなる長さ <var>N</var> の数列 <var>A=(A_1,A_2,\dots,A_N)</var> があります。</p>
-<p>今からすぬけくんが以下の操作 1, 2 を順に行います。</p>
-<ol>
-<li><var>A_i=0</var> を満たすそれぞれの <var>i</var> について、<var>1</var> 以上 <var>M</var> 以下の整数を独立かつ一様ランダムに選び、<var>A_i</var> をその整数で置き換える。</li>
-<li><var>A</var> を昇順に並び替える。</li>
-</ol>
-<p>すぬけくんが操作 1, 2 を行ったあとの <var>A_K</var> の期待値を <var>\text{mod } 998244353</var> で出力してください。</p>
-<details>
-<summary>「期待値を <var>\text{mod } 998244353</var> で出力」とは</summary>
-求める期待値は必ず有理数となることが証明できます。  
-またこの問題の制約下では、その値を互いに素な <var>2</var> つの整数 <var>P</var>, <var>Q</var> を用いて <var>\frac{P}{Q}</var> と表したとき、
-<var>R \times Q \equiv P\pmod{998244353}</var> かつ <var>0 \leq R \lt 998244353</var> を満たす整数 <var>R</var> がただ <var>1</var> つ存在することが証明できます。この <var>R</var> を出力してください。
+<h3>問題文</h3><p>整数 <var>N,M</var> が与えられるので、 <var>\displaystyle \sum_{k=0}^{N}</var> <var>\rm{popcount}</var><var>(k \mathbin{\&amp;} M)</var> を <var>998244353</var> で割った余りを求めてください。</p>
+<p>ただし、 <var>\mathbin{\&amp;}</var> はビット単位 <var>\rm{AND}</var> 演算を表します。</p>
+<details><summary>ビット単位 <var>\rm{AND}</var> 演算とは？</summary>
+非負整数 <var>a</var> と非負整数 <var>b</var> とのビット単位 <var>\rm{AND}</var> 演算の結果 <var>x = a \mathbin{\&} b</var> は次のように定義されます。<br>
+<ul>
+<li><var>x</var> は全ての非負整数 <var>k</var> について以下の条件を満たすただ <var>1</var> つの非負整数である。</li>
+<ul>
+<li><var>a</var> を <var>2</var> 進法で書き下した際の <var>2^k</var> の位と <var>b</var> を <var>2</var> 進法で書き下した際の <var>2^k</var> の位が共に <var>1</var> なら、 <var>x</var> を <var>2</var> 進法で書き下した際の <var>2^k</var> の位は <var>1</var> である。</li>
+<li>そうでないとき、 <var>x</var> を <var>2</var> 進法で書き下した際の <var>2^k</var> の位は <var>0</var> である。</li>
+</ul>
+</ul>
+
+例えば <var>3=11_{(2)}, 5=101_{(2)}</var> なので、 <var>3 \mathbin{\&} 5 = 1</var> となります。
+</details>
+
+<details><summary><var>\rm{popcount}</var> とは？</summary>
+<var>\rm{popcount}</var><var>(x)</var> は、 <var>x</var> を <var>2</var> 進法で書き下した際に登場する <var>1</var> の個数を表します。<br>
+例えば <var>13=1101_{(2)}</var> なので、 <var>\rm{popcount}</var><var>(13) = 3</var> となります。
 </details>
 
 </section>
@@ -362,10 +370,8 @@
 <div class="part">
 <section>
 <h3>制約</h3><ul>
-<li><var>1\leq K \leq N \leq 2000</var></li>
-<li><var>1\leq M \leq 2000</var></li>
-<li><var>0\leq A_i \leq M</var></li>
-<li>入力は全て整数</li>
+<li><var>N</var> は <var>0</var> 以上 <var>2^{60}</var> 未満の整数</li>
+<li><var>M</var> は <var>0</var> 以上 <var>2^{60}</var> 未満の整数</li>
 </ul>
 </section>
 </div>
@@ -375,15 +381,14 @@
 <div class="part">
 <section>
 <h3>入力</h3><p>入力は以下の形式で標準入力から与えられる。</p>
-<pre><var>N</var> <var>M</var> <var>K</var>
-<var>A_1</var> <var>A_2</var> <var>\dots</var> <var>A_N</var>
+<pre><var>N</var> <var>M</var>
 </pre>
 </section>
 </div>
 
 <div class="part">
 <section>
-<h3>出力</h3><p>すぬけくんが操作 1, 2 を行ったあとの <var>A_K</var> の期待値を <var>\text{mod } 998244353</var> で出力せよ。</p>
+<h3>出力</h3><p>答えを整数として出力せよ。</p>
 </section>
 </div>
 </div>
@@ -391,74 +396,80 @@
 <hr />
 <div class="part">
 <section>
-<h3>入力例 1</h3><pre>3 5 2
-2 0 4
+<h3>入力例 1</h3><pre>4 3
 </pre>
 </section>
 </div>
 
 <div class="part">
 <section>
-<h3>出力例 1</h3><pre>3
+<h3>出力例 1</h3><pre>4
 </pre>
-<p>すぬけくんは操作 1 において <var>A_2</var> を <var>1</var> 以上 <var>5</var> 以下の整数で置き換えます。この整数を <var>x</var> とすると、</p>
 <ul>
-<li><var>x=1,2</var> のとき、すぬけくんが操作 1, 2 を行ったあと <var>A_2=2</var> です。</li>
-<li><var>x=3</var> のとき、すぬけくんが操作 1, 2 を行ったあと <var>A_2=3</var> です。</li>
-<li><var>x=4,5</var> のとき、すぬけくんが操作 1, 2 を行ったあと <var>A_2=4</var> です。</li>
+<li><var>\rm{popcount}</var><var>(0\mathbin{\&amp;}3) = 0</var></li>
+<li><var>\rm{popcount}</var><var>(1\mathbin{\&amp;}3) = 1</var></li>
+<li><var>\rm{popcount}</var><var>(2\mathbin{\&amp;}3) = 1</var></li>
+<li><var>\rm{popcount}</var><var>(3\mathbin{\&amp;}3) = 2</var></li>
+<li><var>\rm{popcount}</var><var>(4\mathbin{\&amp;}3) = 0</var></li>
 </ul>
-<p>よって、<var>A_2</var> の期待値は <var>\frac{2+2+3+4+4}{5}=3</var> です。</p>
+<p>であり、これらの和は <var>4</var> です。</p>
 </section>
 </div>
 
 <hr />
 <div class="part">
 <section>
-<h3>入力例 2</h3><pre>2 3 1
-0 0
+<h3>入力例 2</h3><pre>0 0
 </pre>
 </section>
 </div>
 
 <div class="part">
 <section>
-<h3>出力例 2</h3><pre>221832080
+<h3>出力例 2</h3><pre>0
 </pre>
-<p>期待値は <var>\frac{14}{9}</var> です。</p>
+<p><var>N=0</var> である場合や <var>M=0</var> である場合もあります。</p>
 </section>
 </div>
 
 <hr />
 <div class="part">
 <section>
-<h3>入力例 3</h3><pre>10 20 7
-6 5 0 2 0 0 0 15 0 0
+<h3>入力例 3</h3><pre>1152921504606846975 1152921504606846975
 </pre>
 </section>
 </div>
 
 <div class="part">
 <section>
-<h3>出力例 3</h3><pre>617586310
-</pre></section>
+<h3>出力例 3</h3><pre>499791890
+</pre>
+<p><var>998244353</var> で割った余りを求めることに注意してください。</p></section>
 </div>
 </span>
 <span class="lang-en">
-<p>Score : <var>500</var> points</p>
+<p>Score : <var>400</var> points</p>
 
 <div class="part">
 <section>
-<h3>Problem Statement</h3><p>We have a sequence of length <var>N</var> consisting of integers between <var>0</var> and <var>M</var>, inclusive: <var>A=(A_1,A_2,\dots,A_N)</var>.</p>
-<p>Snuke will perform the following operations 1 and 2 in order.</p>
-<ol>
-<li>For each <var>i</var> such that <var>A_i=0</var>, independently choose a uniform random integer between <var>1</var> and <var>M</var>, inclusive, and replace <var>A_i</var> with that integer.</li>
-<li>Sort <var>A</var> in ascending order.</li>
-</ol>
-<p>Print the expected value of <var>A_K</var> after the two operations, modulo <var>998244353</var>.</p>
-<details>
-<summary>How to print a number modulo <var>998244353</var>?</summary>
-It can be proved that the sought expected value is always rational.  
-Additionally, under the Constraints of this problem, when that value is represented as <var>\frac{P}{Q}</var> using two coprime integers <var>P</var> and <var>Q</var>, it can be proved that there is a unique integer <var>R</var> such that <var>R \times Q \equiv P\pmod{998244353}</var> and <var>0 \leq R \lt 998244353</var>. Print this <var>R</var>.
+<h3>Problem Statement</h3><p>Given integers <var>N</var> and <var>M</var>, compute the sum <var>\displaystyle \sum_{k=0}^{N}</var> <var>\rm{popcount}</var><var>(k \mathbin{\&amp;} M)</var>, modulo <var>998244353</var>.</p>
+<p>Here, <var>\mathbin{\&amp;}</var> represents the bitwise <var>\rm{AND}</var> operation.</p>
+<details><summary>What is the bitwise <var>\rm{AND}</var> operation?</summary>
+The result <var>x = a \mathbin{\&} b</var> of the bitwise <var>\rm{AND}</var> operation between non-negative integers <var>a</var> and <var>b</var> is defined as follows:<br>
+<ul>
+<li><var>x</var> is the unique non-negative integer that satisfies the following conditions for all non-negative integers <var>k</var>:</li>
+<ul>
+<li>If the <var>2^k</var> place in the binary representation of <var>a</var> and the <var>2^k</var> place in the binary representation of <var>b</var> are both <var>1</var>, then the <var>2^k</var> place in the binary representation of <var>x</var> is <var>1</var>.</li>
+<li>Otherwise, the <var>2^k</var> place in the binary representation of <var>x</var> is <var>0</var>.</li>
+</ul>
+</ul>
+
+For example, <var>3=11_{(2)}</var> and <var>5=101_{(2)}</var>, so <var>3 \mathbin{\&} 5 = 1</var>.
+</details>
+
+<details><summary>What is <var>\rm{popcount}</var>?</summary>
+<var>\rm{popcount}</var><var>(x)</var> represents the number of <var>1</var>s in the binary representation of <var>x</var>.<br>
+For example, <var>13=1101_{(2)}</var>, so <var>\rm{popcount}</var><var>(13) = 3</var>.
 </details>
 
 </section>
@@ -467,10 +478,8 @@ Additionally, under the Constraints of this problem, when that value is represen
 <div class="part">
 <section>
 <h3>Constraints</h3><ul>
-<li><var>1\leq K \leq N \leq 2000</var></li>
-<li><var>1\leq M \leq 2000</var></li>
-<li><var>0\leq A_i \leq M</var></li>
-<li>All values in the input are integers.</li>
+<li><var>N</var> is an integer between <var>0</var> and <var>2^{60} - 1</var>, inclusive.</li>
+<li><var>M</var> is an integer between <var>0</var> and <var>2^{60} - 1</var>, inclusive.</li>
 </ul>
 </section>
 </div>
@@ -480,15 +489,14 @@ Additionally, under the Constraints of this problem, when that value is represen
 <div class="part">
 <section>
 <h3>Input</h3><p>The input is given from Standard Input in the following format:</p>
-<pre><var>N</var> <var>M</var> <var>K</var>
-<var>A_1</var> <var>A_2</var> <var>\dots</var> <var>A_N</var>
+<pre><var>N</var> <var>M</var>
 </pre>
 </section>
 </div>
 
 <div class="part">
 <section>
-<h3>Output</h3><p>Print the expected value of <var>A_K</var> after the two operations, modulo <var>998244353</var>.</p>
+<h3>Output</h3><p>Print the answer as an integer.</p>
 </section>
 </div>
 </div>
@@ -496,56 +504,55 @@ Additionally, under the Constraints of this problem, when that value is represen
 <hr />
 <div class="part">
 <section>
-<h3>Sample Input 1</h3><pre>3 5 2
-2 0 4
+<h3>Sample Input 1</h3><pre>4 3
 </pre>
 </section>
 </div>
 
 <div class="part">
 <section>
-<h3>Sample Output 1</h3><pre>3
+<h3>Sample Output 1</h3><pre>4
 </pre>
-<p>In the operation 1, Snuke will replace <var>A_2</var> with an integer between <var>1</var> and <var>5</var>. Let <var>x</var> be this integer. </p>
 <ul>
-<li>If <var>x=1</var> or <var>2</var>, we will have <var>A_2=2</var> after the two operations.</li>
-<li>If <var>x=3</var>, we will have <var>A_2=3</var> after the two operations.</li>
-<li>If <var>x=4</var> or <var>5</var>, we will have <var>A_2=4</var> after the two operations.</li>
+<li><var>\rm{popcount}</var><var>(0\mathbin{\&amp;}3) = 0</var></li>
+<li><var>\rm{popcount}</var><var>(1\mathbin{\&amp;}3) = 1</var></li>
+<li><var>\rm{popcount}</var><var>(2\mathbin{\&amp;}3) = 1</var></li>
+<li><var>\rm{popcount}</var><var>(3\mathbin{\&amp;}3) = 2</var></li>
+<li><var>\rm{popcount}</var><var>(4\mathbin{\&amp;}3) = 0</var></li>
 </ul>
-<p>Thus, the expected value of <var>A_2</var> is <var>\frac{2+2+3+4+4}{5}=3</var>.</p>
+<p>The sum of these values is <var>4</var>.</p>
 </section>
 </div>
 
 <hr />
 <div class="part">
 <section>
-<h3>Sample Input 2</h3><pre>2 3 1
-0 0
+<h3>Sample Input 2</h3><pre>0 0
 </pre>
 </section>
 </div>
 
 <div class="part">
 <section>
-<h3>Sample Output 2</h3><pre>221832080
+<h3>Sample Output 2</h3><pre>0
 </pre>
-<p>The expected value is <var>\frac{14}{9}</var>.</p>
+<p>It is possible that <var>N = 0</var> or <var>M = 0</var>.</p>
 </section>
 </div>
 
 <hr />
 <div class="part">
 <section>
-<h3>Sample Input 3</h3><pre>10 20 7
-6 5 0 2 0 0 0 15 0 0
+<h3>Sample Input 3</h3><pre>1152921504606846975 1152921504606846975
 </pre>
 </section>
 </div>
 
 <div class="part">
 <section>
-<h3>Sample Output 3</h3><pre>617586310
-</pre></section>
+<h3>Sample Output 3</h3><pre>499791890
+</pre>
+<p>Remember to compute the result modulo <var>998244353</var>.</p></section>
 </div>
 </span>
 </span>
@@ -556,8 +563,8 @@ Additionally, under the Constraints of this problem, when that value is represen
 
 		
 		<hr/>
-		<form class="form-horizontal form-code-submit" action="/contests/abc295/submit" method="POST">
-			<input type="hidden" name="data.TaskScreenName" value="abc295_e" />
+		<form class="form-horizontal form-code-submit" action="/contests/abc356/submit" method="POST">
+			<input type="hidden" name="data.TaskScreenName" value="abc356_d" />
 			
 			<div class="form-group ">
 				<label class="control-label col-sm-3 col-md-2" for="select-lang">Language</label>
@@ -782,7 +789,7 @@ Additionally, under the Constraints of this problem, when that value is represen
 </div>
 
 
-			<input type="hidden" name="csrf_token" value="zZx9jdc2WPEhOOiZzf9HquvaoDwImCZR2ZQA6k3jlHI=" />
+			<input type="hidden" name="csrf_token" value="dmHC7nndy8/aN&#43;3c1feYAr3xYs2mopWOam8yAwxbCcw=" />
 			<div class="form-group">
 				<label class="control-label col-sm-3 col-md-2"></label>
 				<div class="col-sm-5">
@@ -802,7 +809,7 @@ Additionally, under the Constraints of this problem, when that value is represen
 			
 			
 			
-<div class="a2a_kit a2a_kit_size_20 a2a_default_style pull-right" data-a2a-url="https://atcoder.jp/contests/abc295/tasks/abc295_e?lang=en" data-a2a-title="E - Kth Number">
+<div class="a2a_kit a2a_kit_size_20 a2a_default_style pull-right" data-a2a-url="https://atcoder.jp/contests/abc356/tasks/abc356_d?lang=en" data-a2a-title="D - Masked Popcount">
 	<a class="a2a_button_facebook"></a>
 	<a class="a2a_button_twitter"></a>
 	
@@ -822,8 +829,8 @@ Additionally, under the Constraints of this problem, when that value is represen
 			<footer class="footer">
 			
 				<ul>
-					<li><a href="/contests/abc295/rules">Rule</a></li>
-					<li><a href="/contests/abc295/glossary">Glossary</a></li>
+					<li><a href="/contests/abc356/rules">Rule</a></li>
+					<li><a href="/contests/abc356/glossary">Glossary</a></li>
 					
 				</ul>
 			

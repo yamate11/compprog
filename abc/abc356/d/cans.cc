@@ -12,7 +12,7 @@ using pll = pair<ll, ll>;
 #define SIZE(v) ((ll)((v).size()))
 #define REPOUT(i, a, b, exp, sep) REP(i, (a), (b)) cout << (exp) << (i + 1 == (b) ? "" : (sep)); cout << "\n"
 
-// @@ !! LIM(mod power cmpNaive)
+// @@ !! LIM(mod)
 
 // ---- inserted library file algOp.cc
 
@@ -404,132 +404,27 @@ using FpB = FpG<primeB, ll>;
 
 // ---- end mod.cc
 
-// ---- inserted library file power.cc
+// @@ !! LIM -- end mark --
 
-template<typename T>
-T power(const T& a, ll b) {
-  auto two_pow = a;
-  auto ret = one<T>(a);
-  while (b > 0) {
-    if (b & 1LL) ret *= two_pow;
-    two_pow *= two_pow;
-    b >>= 1;
-  }
-  return ret;
-}
+using Fp = FpB;
 
-// ---- end power.cc
-
-// ---- inserted library file cmpNaive.cc
-
-const string end_mark("^__=end=__^");
-
-int naive(istream& cin, ostream& cout);
-int body(istream& cin, ostream& cout);
-
-void cmpNaive() {
-  while (true) {
-    string s;
-    getline(cin, s);
-    bool run_body;
-    if (s.at(0) == 'Q') {
-      return;
-    }else if (s.at(0) == 'B') {
-      run_body = true;
-    }else if (s.at(0) == 'N') {
-      run_body = false;
-    }else {
-      cerr << "Unknown body/naive specifier.\n";
-      exit(1);
-    }
-    string input_s;
-    while (true) {
-      getline(cin, s);
-      if (s == end_mark) break;
-      input_s += s;
-      input_s += "\n";
-    }
-    stringstream ss_in(move(input_s));
-    stringstream ss_out;
-    ss_out << setprecision(20);
-    if (run_body) {
-      body(ss_in, ss_out);
-    }else {
-      naive(ss_in, ss_out);
-    }
-    cout << ss_out.str() << end_mark << endl;
-  }
-}
-
-int main(int argc, char *argv[]) {
+int main(/* int argc, char *argv[] */) {
   ios_base::sync_with_stdio(false);
   cin.tie(nullptr);
   cout << setprecision(20);
 
-#if CMPNAIVE
-  if (argc == 2) {
-    if (strcmp(argv[1], "cmpNaive") == 0) {
-      cmpNaive();
-    }else if (strcmp(argv[1], "naive") == 0) {
-      naive(cin, cout);
-    }else if (strcmp(argv[1], "skip") == 0) {
-      exit(0);
-    }else {
-      cerr << "Unknown argument.\n";
-      exit(1);
-    }
-  }else {
-#endif
-    body(cin, cout);
-#if CMPNAIVE
+  ll N, M; cin >> N >> M;
+  ll lim = 60;
+  Fp ans = 0;
+  REP(k, 0, lim) {
+    if (not (M >> k & 1)) continue;
+    ll x = (N + 1) / (1LL << (k + 1));
+    ll y = (N + 1) % (1LL << (k + 1));
+    Fp val = Fp(x) * Fp(1LL << k);
+    if (y > (1LL << k)) val += y - (1LL << k);
+    ans += val;
   }
-#endif
-  return 0;
-}
-
-/*
-int naive(istream& cin, ostream& cout) {
-  return 0;
-}
-int body(istream& cin, ostream& cout) {
-  return 0;
-}
-*/
-
-// ---- end cmpNaive.cc
-
-// @@ !! LIM -- end mark --
-
-using Fp = FpG<0, __int128>;
-
-int naive(istream& cin, ostream& cout) {
-  ll a, x, m; cin >> a >> x >> m;
-
-  ll pow_a = 1;
-  ll sum = 0;
-  REP(i, 0, x) {
-    sum += pow_a;
-    pow_a *= a;
-  }
-  cout << sum % m << endl;
-
-  return 0;
-}
-
-int body(istream& cin, ostream& cout) {
-  ll a, x, m; cin >> a >> x >> m;
-  if (a == 1) {
-    cout << x % m << endl;
-    return 0;
-  }else if (m == 1) {
-    cout << 0 << endl;
-    return 0;
-  }
-
-  Fp::setMod(m * (a - 1));
-  Fp b = power<Fp>(Fp(a), x) - 1;
-  cout << (ll)b / (a - 1) << endl;
-  
+  cout << ans << endl;
 
   return 0;
 }

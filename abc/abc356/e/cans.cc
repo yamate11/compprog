@@ -12,7 +12,7 @@ using pll = pair<ll, ll>;
 #define SIZE(v) ((ll)((v).size()))
 #define REPOUT(i, a, b, exp, sep) REP(i, (a), (b)) cout << (exp) << (i + 1 == (b) ? "" : (sep)); cout << "\n"
 
-// @@ !! LIM(debug f:updMaxMin)
+// @@ !! LIM(debug)
 
 // ---- inserted function f:<< from util.cc
 
@@ -329,50 +329,43 @@ void dbgLog(bool with_nl, Head&& head, Tail&&... tail)
 
 // ---- end debug.cc
 
-// ---- inserted function f:updMaxMin from util.cc
-template<typename T>
-bool updMax(T& tmax, const T& x) {
-  if (x > tmax) { tmax = x; return true;  }
-  else          {           return false; }
-}
-template<typename T>
-bool updMin(T& tmin, const T& x) {
-  if (x < tmin) { tmin = x; return true;  }
-  else          {           return false; }
-}
-// ---- end f:updMaxMin
-
 // @@ !! LIM -- end mark --
 
 int main(/* int argc, char *argv[] */) {
   ios_base::sync_with_stdio(false);
   cin.tie(nullptr);
   cout << setprecision(20);
-  
-  ll N, L; cin >> N >> L;
-  // @InpVec(N, A) [AEWuiSgK]
+
+  ll N; cin >> N;
+  // @InpVec(N, A) [pAznXInV]
   auto A = vector(N, ll());
   for (int i = 0; i < N; i++) { ll v; cin >> v; A[i] = v; }
-  // @End [AEWuiSgK]
-
-  ll lim = 2e5;
-  ll big = 1e18;
-  vector tbl(lim + 1, big);
-  tbl[0] = 0;
-  REP(i, 1, L) {
-    ll w = i * (L - i);
-    for (ll p = 0; p + w <= lim; p++) {
-      updMin(tbl[p + w], tbl[p] + 1);
-    }
-  }
+  // @End [pAznXInV]
+  sort(ALL(A));
+  ll ans = 0;
+  ll prev = 0;
   REP(i, 0, N) {
-    if (tbl[A[i]] == big) {
-      cout << -1 << "\n";
+    if (i > 0 and A[i] == A[i - 1]) {
+      prev--;
+      ans += prev;
     }else {
-      cout << tbl[A[i]] << "\n";
+      ll cur = 0;
+      ll p = i + 1;
+      for (ll j = 1; true; j++) {
+        ll x = A[i] * j;
+        ll k = lower_bound(A.begin() + i + 1, A.end(), x) - A.begin();
+        ll t = (j - 1) * (k - p);
+        DLOGK(i, j, t);
+        cur += t;
+        if (k == N) break;
+        p = k;
+      }
+      DLOGK(i, cur);
+      ans += cur;
+      prev = cur;
     }
   }
-
+  cout << ans << endl;
   return 0;
 }
 

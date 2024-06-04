@@ -12,7 +12,34 @@ using pll = pair<ll, ll>;
 #define SIZE(v) ((ll)((v).size()))
 #define REPOUT(i, a, b, exp, sep) REP(i, (a), (b)) cout << (exp) << (i + 1 == (b) ? "" : (sep)); cout << "\n"
 
-// @@ !! LIM(debug f:updMaxMin)
+// @@ !! LIM(forall debug)
+
+// ---- inserted library file forall.cc
+
+#define EX_REP_LL(i, from, to) for (ll i = (from); i < (to); i++)
+#define EX_REP_RB(x, coll) for (auto x : coll)
+#define EXGEN(rep_part, cond, yes, no_behaviour) ([&]() { rep_part if (cond) return (yes); no_behaviour; }())
+#define EXISTS_BASE(rep_part, cond) EXGEN(rep_part, cond, true, return false)
+#define EXFIND_BASE(rep_part, cond, t) EXGEN(rep_part, cond, t, assert(0))
+#define EXFIND_D_BASE(rep_part, cond, t, def) EXGEN(rep_part, cond, t, return def)
+
+#define EXISTS(i, from, to, cond) EXISTS_BASE(EX_REP_LL(i, from, to), cond)
+#define FORALL(i, from, to, cond) (not EXISTS(i, from, to, not (cond)))
+#define EXFIND(i, from, to, cond) EXFIND_BASE(EX_REP_LL(i, from, to), cond, i)
+#define EXFIND_D(i, from, to, cond, def) EXFIND_D_BASE(EX_REP_LL(i, from, to), cond, i, def)
+
+#define EXISTS_C(x, coll, cond) EXISTS_BASE(EX_REP_RB(x, coll), cond)
+#define FORALL_C(x, coll, cond) (not EXISTS_C(x, coll, not (cond)))
+#define EXFIND_C(x, coll, cond) EXFIND_BASE(EX_REP_RB(x, coll), cond, x)
+#define EXFIND_D_C(x, coll, cond, def) EXFIND_D_BASE(EX_REP_RB(x, coll), cond, x, def)
+
+#define COUNT_BASE(rep_part, cond) ([&](){ ll ret = 0; rep_part if (cond) ret++; return ret; }())
+#define COUNT(i, from, to, cond) COUNT_BASE(EX_REP_LL(i, from, to), cond)
+#define COUNT_C(x, coll, cond) COUNT_BASE(EX_REP_RB(x, coll), cond)
+
+#define IMPLIES(a, b) (not (a) or (b))
+
+// ---- end forall.cc
 
 // ---- inserted function f:<< from util.cc
 
@@ -329,49 +356,132 @@ void dbgLog(bool with_nl, Head&& head, Tail&&... tail)
 
 // ---- end debug.cc
 
-// ---- inserted function f:updMaxMin from util.cc
-template<typename T>
-bool updMax(T& tmax, const T& x) {
-  if (x > tmax) { tmax = x; return true;  }
-  else          {           return false; }
-}
-template<typename T>
-bool updMin(T& tmin, const T& x) {
-  if (x < tmin) { tmin = x; return true;  }
-  else          {           return false; }
-}
-// ---- end f:updMaxMin
-
 // @@ !! LIM -- end mark --
+
+vector tbl(1000, vector(1000, -1));
+
+bool myless(ll i, ll j, bool ismax) {
+  int& r = tbl[i][j];
+  if (r < 0) {
+    cout << "? " << i + 1 << " " << j + 1 << endl;
+    ll q; cin >> q;
+    if (q == -1) {
+      cerr << "abort in myless" << endl;
+      exit(1);
+    }
+    tbl[i][j] = q;
+    tbl[j][i] = 1 - q;
+  }
+  if (r == 1) {
+    if (ismax) return true;
+    else return false;
+  }else {
+    if (ismax) return false;
+    else return true;
+  }
+}
+
+ll ask_add(ll i, ll j) {
+  cout << "+ " << i + 1 << " " << j + 1 << endl;
+  ll p; cin >> p;
+  if (p >= 0) return p - 1;
+  else {
+    cerr << "abort in ask_add" << endl;
+    exit(1);
+  }
+}
+
+ll fin() {
+  cout << "!" << endl;
+  exit(0);
+}
 
 int main(/* int argc, char *argv[] */) {
   ios_base::sync_with_stdio(false);
   cin.tie(nullptr);
   cout << setprecision(20);
-  
-  ll N, L; cin >> N >> L;
-  // @InpVec(N, A) [AEWuiSgK]
-  auto A = vector(N, ll());
-  for (int i = 0; i < N; i++) { ll v; cin >> v; A[i] = v; }
-  // @End [AEWuiSgK]
 
-  ll lim = 2e5;
-  ll big = 1e18;
-  vector tbl(lim + 1, big);
-  tbl[0] = 0;
-  REP(i, 1, L) {
-    ll w = i * (L - i);
-    for (ll p = 0; p + w <= lim; p++) {
-      updMin(tbl[p + w], tbl[p] + 1);
+  auto upward = [&](auto& heap, bool ismax, ll i) -> void {
+    while (i > 1) {
+      ll j = i / 2;
+      if (myless(heap[j], heap[i], ismax)) {
+        swap(heap[j], heap[i]);
+      }else {
+        return;
+      }
+      i = j;
     }
-  }
-  REP(i, 0, N) {
-    if (tbl[A[i]] == big) {
-      cout << -1 << "\n";
+  };
+
+  auto push = [&](auto& heap, bool ismax, ll x) -> void {
+    ll i = ssize(heap);
+    heap.push_back(x);
+    upward(heap, ismax, i);
+  };
+  auto top = [&](auto& heap) -> ll {
+    return heap[1];
+  };
+  auto erase = [&](auto& heap, bool ismax, ll i) -> void {
+    ll x = heap.back(); heap.pop_back();
+    if (i == ssize(heap)) return;
+    heap[i] = x;
+    if (i > 1 and myless(heap[i / 2], heap[i], ismax)) {
+      swap(heap[i / 2], heap[i]);
+      i = i / 2;
+      upward(heap, ismax, i);
     }else {
-      cout << tbl[A[i]] << "\n";
+      while (true) {
+        ll j0 = i * 2;
+        ll j1 = i * 2 + 1;
+        ll target;
+        if (j0 >= ssize(heap)) break;
+        if (j1 >= ssize(heap)) {
+          target = j0;
+        }else {
+          if (myless(heap[j0], heap[j1], ismax)) target = j1;
+          else target = j0;
+        }
+        if (myless(heap[i], heap[target], ismax)) {
+          swap(heap[i], heap[target]);
+          i = target;
+        }else {
+          break;
+        }
+      }
     }
+  };
+  auto pop = [&](auto& heap, bool ismax) -> void { erase(heap, ismax, 1); };
+
+  ll N; cin >> N;
+  vector<ll> Hmin{-9};
+  vector<ll> Hmax{-9};
+  REP(i, 0, N) {
+    push(Hmax, true, i);
+    DLOGKL("pushed Hmax", i, Hmax);
+    push(Hmin, false, i);
+    DLOGKL("pushed Hmin", i, Hmin);
   }
+  REP(cnt, 0, N - 1) {
+    ll x = top(Hmax);
+    ll y = top(Hmin);
+    pop(Hmax, true);
+    DLOGKL("poped Hmax", Hmax);
+    pop(Hmin, false);
+    DLOGKL("popped Hmin", Hmin);
+    ll j0 = EXFIND(i, 0, ssize(Hmax), Hmax[i] == y);
+    ll j1 = EXFIND(i, 0, ssize(Hmin), Hmin[i] == x);
+    erase(Hmax, true, j0);
+    DLOGKL("erased Hmax", j0, Hmax);
+    erase(Hmin, false, j1);
+    DLOGKL("erased Hmin", j0, Hmin);
+    ll p = ask_add(x, y);
+    DLOGKL("ask_add", x, y, p);
+    push(Hmax, true, p);
+    DLOGKL("pushed Hmax", p, Hmax);
+    push(Hmin, false, p);
+    DLOGKL("pushed Hmin", p, Hmin);
+  }
+  fin();
 
   return 0;
 }

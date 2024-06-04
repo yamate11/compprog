@@ -9,7 +9,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>E - Kth Number</title>
+	<title>D - Portable Gate</title>
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 	<meta http-equiv="Content-Language" content="en">
 	<meta name="viewport" content="width=device-width,initial-scale=1.0">
@@ -32,61 +32,61 @@
 
 	<meta property="og:site_name" content="AtCoder">
 	
-	<meta property="og:title" content="E - Kth Number" />
+	<meta property="og:title" content="D - Portable Gate" />
 	<meta property="og:description" content="AtCoder is a programming contest site for anyone from beginners to experts. We hold weekly programming contests online." />
 	<meta property="og:type" content="website" />
-	<meta property="og:url" content="https://atcoder.jp/contests/abc295/tasks/abc295_e" />
+	<meta property="og:url" content="https://atcoder.jp/contests/arc179/tasks/arc179_d" />
 	<meta property="og:image" content="https://img.atcoder.jp/assets/atcoder.png" />
 	<meta name="twitter:card" content="summary" />
 	<meta name="twitter:site" content="@atcoder" />
 	
-	<meta property="twitter:title" content="E - Kth Number" />
+	<meta property="twitter:title" content="D - Portable Gate" />
 
 	<link href="//fonts.googleapis.com/css?family=Lato:400,700" rel="stylesheet" type="text/css">
-	<link rel="stylesheet" type="text/css" href="//img.atcoder.jp/public/88363ae/css/bootstrap.min.css">
-	<link rel="stylesheet" type="text/css" href="//img.atcoder.jp/public/88363ae/css/base.css">
+	<link rel="stylesheet" type="text/css" href="//img.atcoder.jp/public/ea27d23/css/bootstrap.min.css">
+	<link rel="stylesheet" type="text/css" href="//img.atcoder.jp/public/ea27d23/css/base.css">
 	<link rel="shortcut icon" type="image/png" href="//img.atcoder.jp/assets/favicon.png">
 	<link rel="apple-touch-icon" href="//img.atcoder.jp/assets/atcoder.png">
-	<script src="//img.atcoder.jp/public/88363ae/js/lib/jquery-1.9.1.min.js"></script>
-	<script src="//img.atcoder.jp/public/88363ae/js/lib/bootstrap.min.js"></script>
-	<script src="//img.atcoder.jp/public/88363ae/js/cdn/js.cookie.min.js"></script>
-	<script src="//img.atcoder.jp/public/88363ae/js/cdn/moment.min.js"></script>
-	<script src="//img.atcoder.jp/public/88363ae/js/cdn/moment_js-ja.js"></script>
+	<script src="//img.atcoder.jp/public/ea27d23/js/lib/jquery-1.9.1.min.js"></script>
+	<script src="//img.atcoder.jp/public/ea27d23/js/lib/bootstrap.min.js"></script>
+	<script src="//img.atcoder.jp/public/ea27d23/js/cdn/js.cookie.min.js"></script>
+	<script src="//img.atcoder.jp/public/ea27d23/js/cdn/moment.min.js"></script>
+	<script src="//img.atcoder.jp/public/ea27d23/js/cdn/moment_js-ja.js"></script>
 	<script>
 		var LANG = "en";
 		var userScreenName = "yamate11";
-		var csrfToken = "zZx9jdc2WPEhOOiZzf9HquvaoDwImCZR2ZQA6k3jlHI="
+		var csrfToken = "dmHC7nndy8/aN+3c1feYAr3xYs2mopWOam8yAwxbCcw="
 	</script>
-	<script src="//img.atcoder.jp/public/88363ae/js/utils.js"></script>
+	<script src="//img.atcoder.jp/public/ea27d23/js/utils.js"></script>
 	
 	
-		<script src="//img.atcoder.jp/public/88363ae/js/contest.js"></script>
-		<link href="//img.atcoder.jp/public/88363ae/css/contest.css" rel="stylesheet" />
+		<script src="//img.atcoder.jp/public/ea27d23/js/contest.js"></script>
+		<link href="//img.atcoder.jp/public/ea27d23/css/contest.css" rel="stylesheet" />
 		<script>
-			var contestScreenName = "abc295";
+			var contestScreenName = "arc179";
 			var remainingText = "Remaining Time";
 			var countDownText = "Contest begins in";
-			var startTime = moment("2023-03-25T21:00:00+09:00");
-			var endTime = moment("2023-03-25T22:40:00+09:00");
+			var startTime = moment("2024-06-02T21:00:00+09:00");
+			var endTime = moment("2024-06-02T23:00:00+09:00");
 		</script>
 		<style></style>
 	
 	
-		<link href="//img.atcoder.jp/public/88363ae/css/cdn/select2.min.css" rel="stylesheet" />
-		<link href="//img.atcoder.jp/public/88363ae/css/cdn/select2-bootstrap.min.css" rel="stylesheet" />
-		<script src="//img.atcoder.jp/public/88363ae/js/lib/select2.min.js"></script>
+		<link href="//img.atcoder.jp/public/ea27d23/css/cdn/select2.min.css" rel="stylesheet" />
+		<link href="//img.atcoder.jp/public/ea27d23/css/cdn/select2-bootstrap.min.css" rel="stylesheet" />
+		<script src="//img.atcoder.jp/public/ea27d23/js/lib/select2.min.js"></script>
 	
 	
-		<script src="//img.atcoder.jp/public/88363ae/js/ace/ace.js"></script>
-		<script src="//img.atcoder.jp/public/88363ae/js/ace/ext-language_tools.js"></script>
+		<script src="//img.atcoder.jp/public/ea27d23/js/ace/ace.js"></script>
+		<script src="//img.atcoder.jp/public/ea27d23/js/ace/ext-language_tools.js"></script>
 	
 	
-		<script src="//img.atcoder.jp/public/88363ae/js/cdn/run_prettify.js"></script>
+		<script src="//img.atcoder.jp/public/ea27d23/js/cdn/run_prettify.js"></script>
 	
 	
-		<link rel="stylesheet" href="//img.atcoder.jp/public/88363ae/css/cdn/katex.min.css">
-		<script defer src="//img.atcoder.jp/public/88363ae/js/cdn/katex.min.js"></script>
-		<script defer src="//img.atcoder.jp/public/88363ae/js/cdn/auto-render.min.js"></script>
+		<link rel="stylesheet" href="//img.atcoder.jp/public/ea27d23/css/cdn/katex.min.css">
+		<script defer src="//img.atcoder.jp/public/ea27d23/js/cdn/katex.min.js"></script>
+		<script defer src="//img.atcoder.jp/public/ea27d23/js/cdn/auto-render.min.js"></script>
 		<script>$(function(){$('var').each(function(){var html=$(this).html().replace(/<sub>/g,'_{').replace(/<\/sub>/g,'}');$(this).html('\\('+html+'\\)');});});</script>
 		<script>
 			var katexOptions = {
@@ -111,7 +111,7 @@
 	
 	
 	
-	<script src="//img.atcoder.jp/public/88363ae/js/base.js"></script>
+	<script src="//img.atcoder.jp/public/ea27d23/js/base.js"></script>
 </head>
 
 <body>
@@ -131,11 +131,11 @@
 				<h4 class="modal-title">Contest started</h4>
 			</div>
 			<div class="modal-body">
-				<p>AtCoder Beginner Contest 295 has begun.</p>
+				<p>AtCoder Regular Contest 179 has begun.</p>
 			</div>
 			<div class="modal-footer">
 				
-					<a class="btn btn-primary" href='/contests/abc295/tasks'>Go to the task list page</a>
+					<a class="btn btn-primary" href='/contests/arc179/tasks'>Go to the task list page</a>
 				
 			</div>
 		</div>
@@ -149,7 +149,7 @@
 				<h4 class="modal-title">Contest is over</h4>
 			</div>
 			<div class="modal-body">
-				<p>AtCoder Beginner Contest 295 has ended.</p>
+				<p>AtCoder Regular Contest 179 has ended.</p>
 			</div>
 			<div class="modal-footer">
 				<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
@@ -171,7 +171,7 @@
 			<div class="collapse navbar-collapse" id="navbar-collapse">
 				<ul class="nav navbar-nav">
 				
-					<li><a class="contest-title" href="/contests/abc295">AtCoder Beginner Contest 295</a></li>
+					<li><a class="contest-title" href="/contests/arc179">AtCoder Regular Contest 179</a></li>
 				
 				</ul>
 				<ul class="nav navbar-nav navbar-right">
@@ -181,8 +181,8 @@
 							<img src='//img.atcoder.jp/assets/top/img/flag-lang/en.png'> English <span class="caret"></span>
 						</a>
 						<ul class="dropdown-menu">
-							<li><a href="/contests/abc295/tasks/abc295_e?lang=ja"><img src='//img.atcoder.jp/assets/top/img/flag-lang/ja.png'> 日本語</a></li>
-							<li><a href="/contests/abc295/tasks/abc295_e?lang=en"><img src='//img.atcoder.jp/assets/top/img/flag-lang/en.png'> English</a></li>
+							<li><a href="/contests/arc179/tasks/arc179_d?lang=ja"><img src='//img.atcoder.jp/assets/top/img/flag-lang/ja.png'> 日本語</a></li>
+							<li><a href="/contests/arc179/tasks/arc179_d?lang=en"><img src='//img.atcoder.jp/assets/top/img/flag-lang/en.png'> English</a></li>
 						</ul>
 					</li>
 					
@@ -211,8 +211,8 @@
 		</div>
 	</nav>
 
-	<form method="POST" name="form_logout" action="/logout?continue=https%3A%2F%2Fatcoder.jp%2Fcontests%2Fabc295%2Ftasks%2Fabc295_e">
-		<input type="hidden" name="csrf_token" value="zZx9jdc2WPEhOOiZzf9HquvaoDwImCZR2ZQA6k3jlHI=" />
+	<form method="POST" name="form_logout" action="/logout?continue=https%3A%2F%2Fatcoder.jp%2Fcontests%2Farc179%2Ftasks%2Farc179_d">
+		<input type="hidden" name="csrf_token" value="dmHC7nndy8/aN&#43;3c1feYAr3xYs2mopWOam8yAwxbCcw=" />
 	</form>
 	<div id="main-container" class="container"
 		 	style="padding-top:50px;">
@@ -225,36 +225,36 @@
 		<small class="contest-duration">
 			
 				Contest Duration:
-				<a href='http://www.timeanddate.com/worldclock/fixedtime.html?iso=20230325T2100&p1=248' target='blank'><time class='fixtime fixtime-full'>2023-03-25 21:00:00+0900</time></a> - <a href='http://www.timeanddate.com/worldclock/fixedtime.html?iso=20230325T2240&p1=248' target='blank'><time class='fixtime fixtime-full'>2023-03-25 22:40:00+0900</time></a> (local time)
-				(100 minutes)
+				<a href='http://www.timeanddate.com/worldclock/fixedtime.html?iso=20240602T2100&p1=248' target='blank'><time class='fixtime fixtime-full'>2024-06-02 21:00:00+0900</time></a> - <a href='http://www.timeanddate.com/worldclock/fixedtime.html?iso=20240602T2300&p1=248' target='blank'><time class='fixtime fixtime-full'>2024-06-02 23:00:00+0900</time></a> (local time)
+				(120 minutes)
 			
 		</small>
 		<small class="back-to-home pull-right"><a href="/home">Back to Home</a></small>
 	</div>
 	<ul class="nav nav-tabs">
-		<li><a href="/contests/abc295"><span class="glyphicon glyphicon-home" aria-hidden="true"></span> Top</a></li>
+		<li><a href="/contests/arc179"><span class="glyphicon glyphicon-home" aria-hidden="true"></span> Top</a></li>
 		
-			<li class="active"><a href="/contests/abc295/tasks"><span class="glyphicon glyphicon-tasks" aria-hidden="true"></span> Tasks</a></li>
-		
-
-		
-			<li><a href="/contests/abc295/clarifications"><span class="glyphicon glyphicon-question-sign" aria-hidden="true"></span> Clarifications <span id="clar-badge" class="badge"></span></a></li>
+			<li class="active"><a href="/contests/arc179/tasks"><span class="glyphicon glyphicon-tasks" aria-hidden="true"></span> Tasks</a></li>
 		
 
 		
-			<li><a href="/contests/abc295/submit?taskScreenName=abc295_e"><span class="glyphicon glyphicon-send" aria-hidden="true"></span> Submit</a></li>
+			<li><a href="/contests/arc179/clarifications"><span class="glyphicon glyphicon-question-sign" aria-hidden="true"></span> Clarifications <span id="clar-badge" class="badge"></span></a></li>
+		
+
+		
+			<li><a href="/contests/arc179/submit?taskScreenName=arc179_d"><span class="glyphicon glyphicon-send" aria-hidden="true"></span> Submit</a></li>
 		
 
 		
 			<li>
 				<a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false"><span class="glyphicon glyphicon-list" aria-hidden="true"></span> Results<span class="caret"></span></a>
 				<ul class="dropdown-menu">
-					<li><a href="/contests/abc295/submissions"><span class="glyphicon glyphicon-globe" aria-hidden="true"></span> All Submissions</a></li>
 					
-						<li><a href="/contests/abc295/submissions/me"><span class="glyphicon glyphicon-user" aria-hidden="true"></span> My Submissions</a></li>
+					
+						<li><a href="/contests/arc179/submissions/me"><span class="glyphicon glyphicon-user" aria-hidden="true"></span> My Submissions</a></li>
 						
 						<li class="divider"></li>
-						<li><a href="/contests/abc295/score"><span class="glyphicon glyphicon-dashboard" aria-hidden="true"></span> My Score</a></li>
+						<li><a href="/contests/arc179/score"><span class="glyphicon glyphicon-dashboard" aria-hidden="true"></span> My Score</a></li>
 					
 				</ul>
 			</li>
@@ -263,24 +263,20 @@
 		
 			
 				
-					<li><a href="/contests/abc295/standings"><span class="glyphicon glyphicon-sort-by-attributes-alt" aria-hidden="true"></span> Standings</a></li>
-				
-			
-				
-					<li><a href="/contests/abc295/standings/virtual"><span class="glyphicon glyphicon-sort-by-attributes-alt" aria-hidden="true"></span> Virtual Standings</a></li>
+					<li><a href="/contests/arc179/standings"><span class="glyphicon glyphicon-sort-by-attributes-alt" aria-hidden="true"></span> Standings</a></li>
 				
 			
 		
 
 		
-			<li><a href="/contests/abc295/custom_test"><span class="glyphicon glyphicon-wrench" aria-hidden="true"></span> Custom Test</a></li>
+			<li><a href="/contests/arc179/custom_test"><span class="glyphicon glyphicon-wrench" aria-hidden="true"></span> Custom Test</a></li>
 		
 
 		
-			<li><a href="/contests/abc295/editorial"><span class="glyphicon glyphicon-book" aria-hidden="true"></span> Editorial</a></li>
-		
 		
 			
+			
+				<li><a href="https://codeforces.com/blog/entry/130030" target="_blank" rel="noopener"><span class="glyphicon glyphicon-comment" aria-hidden="true"></span> Discuss</a></li>
 			
 		
 
@@ -289,8 +285,8 @@
 </div>
 	<div class="col-sm-12">
 		<span class="h2">
-			E - Kth Number
-			<a class="btn btn-default btn-sm" href="/contests/abc295/tasks/abc295_e/editorial">Editorial</a>
+			D - Portable Gate
+			
 		</span>
 		<span id="task-lang-btn" class="pull-right"><span data-lang="ja"><img src='//img.atcoder.jp/assets/top/img/flag-lang/ja.png'></span> / <span data-lang="en"><img src='//img.atcoder.jp/assets/top/img/flag-lang/en.png'></span></span>
 		<script>
@@ -329,7 +325,7 @@
 		</script>
 		<hr/>
 		<p>
-			Time Limit: 4 sec / Memory Limit: 1024 MB
+			Time Limit: 2 sec / Memory Limit: 1024 MB
 			
 			
 		</p>
@@ -338,34 +334,35 @@
 			
 			<span class="lang">
 <span class="lang-ja">
-<p>配点 : <var>500</var> 点</p>
+<p>配点 : <var>700</var> 点</p>
 
 <div class="part">
 <section>
-<h3>問題文</h3><p><var>0</var> 以上 <var>M</var> 以下の整数からなる長さ <var>N</var> の数列 <var>A=(A_1,A_2,\dots,A_N)</var> があります。</p>
-<p>今からすぬけくんが以下の操作 1, 2 を順に行います。</p>
-<ol>
-<li><var>A_i=0</var> を満たすそれぞれの <var>i</var> について、<var>1</var> 以上 <var>M</var> 以下の整数を独立かつ一様ランダムに選び、<var>A_i</var> をその整数で置き換える。</li>
-<li><var>A</var> を昇順に並び替える。</li>
+<h3>問題文</h3><p>頂点 <var>1,2,\dots ,N</var> の <var>N</var> 頂点からなる木が与えられます. <var>i</var> 番目の辺は頂点 <var>u_i,v_i</var> を双方向に結んでいます.</p>
+<p>すべての頂点ははじめ白に塗られています.</p>
+<p>この木のすべての頂点を効率よく訪れるべく, Alice は不思議なゲートを発明しました. Alice は駒とゲートを <var>1</var> 個ずつ用いて次の手順で旅をします.</p>
+<p>まず好きな頂点を選び, 駒とゲートをその頂点に置きます. その後, すべての頂点が黒に塗られるまで次の操作を何度も行います.</p>
+<ul>
+<li>次のうち <var>1</var> つを選んで実行する.<ol>
+<li>駒が置かれている頂点を黒に塗る.</li>
+<li>駒が置かれている頂点に隣接した頂点をひとつ選び, その頂点に駒を移動させる, コストが <var>1</var> かかる.</li>
+<li>ゲートが置かれている頂点に駒を移動させる.</li>
+<li>駒が置かれている頂点にゲートを移動させる.</li>
 </ol>
-<p>すぬけくんが操作 1, 2 を行ったあとの <var>A_K</var> の期待値を <var>\text{mod } 998244353</var> で出力してください。</p>
-<details>
-<summary>「期待値を <var>\text{mod } 998244353</var> で出力」とは</summary>
-求める期待値は必ず有理数となることが証明できます。  
-またこの問題の制約下では、その値を互いに素な <var>2</var> つの整数 <var>P</var>, <var>Q</var> を用いて <var>\frac{P}{Q}</var> と表したとき、
-<var>R \times Q \equiv P\pmod{998244353}</var> かつ <var>0 \leq R \lt 998244353</var> を満たす整数 <var>R</var> がただ <var>1</var> つ存在することが証明できます。この <var>R</var> を出力してください。
-</details>
-
+</li>
+</ul>
+<p>コストがかかるのは <var>2</var> 番目の操作のみであることに注意してください.</p>
+<p>有限回の操作ですべての頂点を黒に塗ることができることが証明できます. かかるコストの合計の最小値を求めてください.</p>
 </section>
 </div>
 
 <div class="part">
 <section>
 <h3>制約</h3><ul>
-<li><var>1\leq K \leq N \leq 2000</var></li>
-<li><var>1\leq M \leq 2000</var></li>
-<li><var>0\leq A_i \leq M</var></li>
-<li>入力は全て整数</li>
+<li><var>2 \leq N \leq 2\times 10^5</var></li>
+<li><var>1 \leq u_i,v_i \leq N</var></li>
+<li>与えられるグラフは木である.</li>
+<li>入力される値はすべて整数.</li>
 </ul>
 </section>
 </div>
@@ -374,16 +371,18 @@
 <div class="io-style">
 <div class="part">
 <section>
-<h3>入力</h3><p>入力は以下の形式で標準入力から与えられる。</p>
-<pre><var>N</var> <var>M</var> <var>K</var>
-<var>A_1</var> <var>A_2</var> <var>\dots</var> <var>A_N</var>
+<h3>入力</h3><p>入力は以下の形式で標準入力から与えられる.</p>
+<pre><var>N</var>
+<var>u_1</var> <var>v_1</var>
+<var>\vdots</var>
+<var>u_{N-1}</var> <var>v_{N-1}</var>
 </pre>
 </section>
 </div>
 
 <div class="part">
 <section>
-<h3>出力</h3><p>すぬけくんが操作 1, 2 を行ったあとの <var>A_K</var> の期待値を <var>\text{mod } 998244353</var> で出力せよ。</p>
+<h3>出力</h3><p>答えを出力せよ.</p>
 </section>
 </div>
 </div>
@@ -391,8 +390,10 @@
 <hr />
 <div class="part">
 <section>
-<h3>入力例 1</h3><pre>3 5 2
-2 0 4
+<h3>入力例 1</h3><pre>4
+1 2
+1 3
+1 4
 </pre>
 </section>
 </div>
@@ -401,76 +402,111 @@
 <section>
 <h3>出力例 1</h3><pre>3
 </pre>
-<p>すぬけくんは操作 1 において <var>A_2</var> を <var>1</var> 以上 <var>5</var> 以下の整数で置き換えます。この整数を <var>x</var> とすると、</p>
+<p>Alice の手順の一例を示します. 駒が頂点 <var>u</var> にありゲートが頂点 <var>v</var> にある状態を <var>(u,v)</var> と表すことにします.</p>
 <ul>
-<li><var>x=1,2</var> のとき、すぬけくんが操作 1, 2 を行ったあと <var>A_2=2</var> です。</li>
-<li><var>x=3</var> のとき、すぬけくんが操作 1, 2 を行ったあと <var>A_2=3</var> です。</li>
-<li><var>x=4,5</var> のとき、すぬけくんが操作 1, 2 を行ったあと <var>A_2=4</var> です。</li>
+<li>頂点 <var>4</var> に駒とゲートを置く.<ul>
+<li>状態は <var>(4,4)</var> となる.</li>
 </ul>
-<p>よって、<var>A_2</var> の期待値は <var>\frac{2+2+3+4+4}{5}=3</var> です。</p>
+</li>
+<li>操作 <var>1</var> を行う.<ul>
+<li>頂点 <var>4</var> が黒く塗られる.</li>
+<li>状態は <var>(4,4)</var> となる.</li>
+</ul>
+</li>
+<li>操作 <var>2</var> を行い, 駒を頂点 <var>1</var> に移動させる.<ul>
+<li>コストが <var>1</var> かかる.</li>
+<li>状態は <var>(1,4)</var> となる.</li>
+</ul>
+</li>
+<li>操作 <var>1</var> を行う.<ul>
+<li>頂点 <var>1</var> が黒く塗られる.</li>
+</ul>
+</li>
+<li>操作 <var>4</var> を行う.<ul>
+<li>状態は <var>(1,1)</var> となる.</li>
+</ul>
+</li>
+<li>操作 <var>2</var> を行い, 駒を頂点 <var>2</var> に移動させる.<ul>
+<li>コストが <var>1</var> かかる.</li>
+<li>状態は <var>(2,1)</var> となる.</li>
+</ul>
+</li>
+<li>操作 <var>1</var> を行う.<ul>
+<li>頂点 <var>2</var> が黒く塗られる.</li>
+</ul>
+</li>
+<li>操作 <var>3</var> を行う.<ul>
+<li>状態は <var>(1,1)</var> となる.</li>
+</ul>
+</li>
+<li>操作 <var>2</var> を行い, 駒を頂点 <var>3</var> に移動させる.<ul>
+<li>コストが <var>1</var> かかる.</li>
+<li>状態は <var>(3,1)</var> となる.</li>
+</ul>
+</li>
+<li>操作 <var>1</var> を行う.<ul>
+<li>頂点 <var>3</var> が黒く塗られる.</li>
+<li>すべての頂点が黒く塗られたので, 操作を終了する.</li>
+</ul>
+</li>
+</ul>
+<p>操作 <var>2</var> を行った回数は <var>3</var> なので, かかるコストの合計は <var>3</var> となります. <var>3</var> より小さいコストの手順は存在しません.</p>
 </section>
 </div>
 
 <hr />
 <div class="part">
 <section>
-<h3>入力例 2</h3><pre>2 3 1
-0 0
+<h3>入力例 2</h3><pre>10
+1 7
+7 10
+10 8
+8 3
+8 4
+10 9
+9 6
+9 5
+7 2
 </pre>
 </section>
 </div>
 
 <div class="part">
 <section>
-<h3>出力例 2</h3><pre>221832080
-</pre>
-<p>期待値は <var>\frac{14}{9}</var> です。</p>
-</section>
-</div>
-
-<hr />
-<div class="part">
-<section>
-<h3>入力例 3</h3><pre>10 20 7
-6 5 0 2 0 0 0 15 0 0
-</pre>
-</section>
-</div>
-
-<div class="part">
-<section>
-<h3>出力例 3</h3><pre>617586310
+<h3>出力例 2</h3><pre>10
 </pre></section>
 </div>
 </span>
 <span class="lang-en">
-<p>Score : <var>500</var> points</p>
+<p>Score : <var>700</var> points</p>
 
 <div class="part">
 <section>
-<h3>Problem Statement</h3><p>We have a sequence of length <var>N</var> consisting of integers between <var>0</var> and <var>M</var>, inclusive: <var>A=(A_1,A_2,\dots,A_N)</var>.</p>
-<p>Snuke will perform the following operations 1 and 2 in order.</p>
-<ol>
-<li>For each <var>i</var> such that <var>A_i=0</var>, independently choose a uniform random integer between <var>1</var> and <var>M</var>, inclusive, and replace <var>A_i</var> with that integer.</li>
-<li>Sort <var>A</var> in ascending order.</li>
+<h3>Problem Statement</h3><p>You are given a tree with <var>N</var> vertices numbered <var>1, 2, \dots, N</var>. The <var>i</var>-th edge connects vertices <var>u_i</var> and <var>v_i</var> bidirectionally.</p>
+<p>Initially, all vertices are painted white.</p>
+<p>To efficiently visit all vertices of this tree, Alice has invented a magical gate. She uses one piece and one gate to travel according to the following procedure.</p>
+<p>First, she chooses a vertex and places both the piece and the gate on that vertex. Then, she repeatedly performs the following operations until all vertices are painted black.</p>
+<ul>
+<li>Choose one of the following actions:<ol>
+<li>Paint the vertex where the piece is placed black.</li>
+<li>Choose a vertex adjacent to the vertex where the piece is placed and move the piece to that vertex. The cost of this action is <var>1</var>.</li>
+<li>Move the piece to the vertex where the gate is placed.</li>
+<li>Move the gate to the vertex where the piece is placed.</li>
 </ol>
-<p>Print the expected value of <var>A_K</var> after the two operations, modulo <var>998244353</var>.</p>
-<details>
-<summary>How to print a number modulo <var>998244353</var>?</summary>
-It can be proved that the sought expected value is always rational.  
-Additionally, under the Constraints of this problem, when that value is represented as <var>\frac{P}{Q}</var> using two coprime integers <var>P</var> and <var>Q</var>, it can be proved that there is a unique integer <var>R</var> such that <var>R \times Q \equiv P\pmod{998244353}</var> and <var>0 \leq R \lt 998244353</var>. Print this <var>R</var>.
-</details>
-
+</li>
+</ul>
+<p>Note that only the second action incurs a cost.</p>
+<p>It can be proved that it is possible to paint all vertices black in a finite number of operations. Find the minimum total cost required.</p>
 </section>
 </div>
 
 <div class="part">
 <section>
 <h3>Constraints</h3><ul>
-<li><var>1\leq K \leq N \leq 2000</var></li>
-<li><var>1\leq M \leq 2000</var></li>
-<li><var>0\leq A_i \leq M</var></li>
-<li>All values in the input are integers.</li>
+<li><var>2 \leq N \leq 2 \times 10^5</var></li>
+<li><var>1 \leq u_i, v_i \leq N</var></li>
+<li>The given graph is a tree.</li>
+<li>All input values are integers.</li>
 </ul>
 </section>
 </div>
@@ -480,15 +516,17 @@ Additionally, under the Constraints of this problem, when that value is represen
 <div class="part">
 <section>
 <h3>Input</h3><p>The input is given from Standard Input in the following format:</p>
-<pre><var>N</var> <var>M</var> <var>K</var>
-<var>A_1</var> <var>A_2</var> <var>\dots</var> <var>A_N</var>
+<pre><var>N</var>
+<var>u_1</var> <var>v_1</var>
+<var>\vdots</var>
+<var>u_{N-1}</var> <var>v_{N-1}</var>
 </pre>
 </section>
 </div>
 
 <div class="part">
 <section>
-<h3>Output</h3><p>Print the expected value of <var>A_K</var> after the two operations, modulo <var>998244353</var>.</p>
+<h3>Output</h3><p>Print the answer.</p>
 </section>
 </div>
 </div>
@@ -496,8 +534,10 @@ Additionally, under the Constraints of this problem, when that value is represen
 <hr />
 <div class="part">
 <section>
-<h3>Sample Input 1</h3><pre>3 5 2
-2 0 4
+<h3>Sample Input 1</h3><pre>4
+1 2
+1 3
+1 4
 </pre>
 </section>
 </div>
@@ -506,45 +546,78 @@ Additionally, under the Constraints of this problem, when that value is represen
 <section>
 <h3>Sample Output 1</h3><pre>3
 </pre>
-<p>In the operation 1, Snuke will replace <var>A_2</var> with an integer between <var>1</var> and <var>5</var>. Let <var>x</var> be this integer. </p>
+<p>Here is an example of Alice's procedure. Let <var>(u, v)</var> denote the state where the piece is at vertex <var>u</var> and the gate is at vertex <var>v</var>.</p>
 <ul>
-<li>If <var>x=1</var> or <var>2</var>, we will have <var>A_2=2</var> after the two operations.</li>
-<li>If <var>x=3</var>, we will have <var>A_2=3</var> after the two operations.</li>
-<li>If <var>x=4</var> or <var>5</var>, we will have <var>A_2=4</var> after the two operations.</li>
+<li>Place the piece and the gate at vertex <var>4</var>.<ul>
+<li>The state is now <var>(4, 4)</var>.</li>
 </ul>
-<p>Thus, the expected value of <var>A_2</var> is <var>\frac{2+2+3+4+4}{5}=3</var>.</p>
+</li>
+<li>Perform action <var>1</var>.<ul>
+<li>Vertex <var>4</var> is painted black.</li>
+<li>The state is now <var>(4, 4)</var>.</li>
+</ul>
+</li>
+<li>Perform action <var>2</var> and move the piece to vertex <var>1</var>.<ul>
+<li>This costs <var>1</var>.</li>
+<li>The state is now <var>(1, 4)</var>.</li>
+</ul>
+</li>
+<li>Perform action <var>1</var>.<ul>
+<li>Vertex <var>1</var> is painted black.</li>
+</ul>
+</li>
+<li>Perform action <var>4</var>.<ul>
+<li>The state is now <var>(1, 1)</var>.</li>
+</ul>
+</li>
+<li>Perform action <var>2</var> and move the piece to vertex <var>2</var>.<ul>
+<li>This costs <var>1</var>.</li>
+<li>The state is now <var>(2, 1)</var>.</li>
+</ul>
+</li>
+<li>Perform action <var>1</var>.<ul>
+<li>Vertex <var>2</var> is painted black.</li>
+</ul>
+</li>
+<li>Perform action <var>3</var>.<ul>
+<li>The state is now <var>(1, 1)</var>.</li>
+</ul>
+</li>
+<li>Perform action <var>2</var> and move the piece to vertex <var>3</var>.<ul>
+<li>This costs <var>1</var>.</li>
+<li>The state is now <var>(3, 1)</var>.</li>
+</ul>
+</li>
+<li>Perform action <var>1</var>.<ul>
+<li>Vertex <var>3</var> is painted black.</li>
+<li>All vertices are now painted black, so the procedure ends.</li>
+</ul>
+</li>
+</ul>
+<p>The total cost of performing action <var>2</var> is <var>3</var>, and there is no procedure with a smaller cost.</p>
 </section>
 </div>
 
 <hr />
 <div class="part">
 <section>
-<h3>Sample Input 2</h3><pre>2 3 1
-0 0
+<h3>Sample Input 2</h3><pre>10
+1 7
+7 10
+10 8
+8 3
+8 4
+10 9
+9 6
+9 5
+7 2
 </pre>
 </section>
 </div>
 
 <div class="part">
 <section>
-<h3>Sample Output 2</h3><pre>221832080
-</pre>
-<p>The expected value is <var>\frac{14}{9}</var>.</p>
-</section>
-</div>
-
-<hr />
-<div class="part">
-<section>
-<h3>Sample Input 3</h3><pre>10 20 7
-6 5 0 2 0 0 0 15 0 0
-</pre>
-</section>
-</div>
-
-<div class="part">
-<section>
-<h3>Sample Output 3</h3><pre>617586310
+<h3>Sample Output 2</h3><pre>10
 </pre></section>
 </div>
 </span>
@@ -556,8 +629,8 @@ Additionally, under the Constraints of this problem, when that value is represen
 
 		
 		<hr/>
-		<form class="form-horizontal form-code-submit" action="/contests/abc295/submit" method="POST">
-			<input type="hidden" name="data.TaskScreenName" value="abc295_e" />
+		<form class="form-horizontal form-code-submit" action="/contests/arc179/submit" method="POST">
+			<input type="hidden" name="data.TaskScreenName" value="arc179_d" />
 			
 			<div class="form-group ">
 				<label class="control-label col-sm-3 col-md-2" for="select-lang">Language</label>
@@ -782,7 +855,7 @@ Additionally, under the Constraints of this problem, when that value is represen
 </div>
 
 
-			<input type="hidden" name="csrf_token" value="zZx9jdc2WPEhOOiZzf9HquvaoDwImCZR2ZQA6k3jlHI=" />
+			<input type="hidden" name="csrf_token" value="dmHC7nndy8/aN&#43;3c1feYAr3xYs2mopWOam8yAwxbCcw=" />
 			<div class="form-group">
 				<label class="control-label col-sm-3 col-md-2"></label>
 				<div class="col-sm-5">
@@ -802,7 +875,7 @@ Additionally, under the Constraints of this problem, when that value is represen
 			
 			
 			
-<div class="a2a_kit a2a_kit_size_20 a2a_default_style pull-right" data-a2a-url="https://atcoder.jp/contests/abc295/tasks/abc295_e?lang=en" data-a2a-title="E - Kth Number">
+<div class="a2a_kit a2a_kit_size_20 a2a_default_style pull-right" data-a2a-url="https://atcoder.jp/contests/arc179/tasks/arc179_d?lang=en" data-a2a-title="D - Portable Gate">
 	<a class="a2a_button_facebook"></a>
 	<a class="a2a_button_twitter"></a>
 	
@@ -822,8 +895,8 @@ Additionally, under the Constraints of this problem, when that value is represen
 			<footer class="footer">
 			
 				<ul>
-					<li><a href="/contests/abc295/rules">Rule</a></li>
-					<li><a href="/contests/abc295/glossary">Glossary</a></li>
+					<li><a href="/contests/arc179/rules">Rule</a></li>
+					<li><a href="/contests/arc179/glossary">Glossary</a></li>
 					
 				</ul>
 			

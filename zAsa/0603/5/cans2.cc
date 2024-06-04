@@ -12,7 +12,13 @@ using pll = pair<ll, ll>;
 #define SIZE(v) ((ll)((v).size()))
 #define REPOUT(i, a, b, exp, sep) REP(i, (a), (b)) cout << (exp) << (i + 1 == (b) ? "" : (sep)); cout << "\n"
 
-// @@ !! LIM(debug f:updMaxMin)
+// @@ !! LIM(input debug)
+
+// ---- inserted library file input.cc
+
+// The contents are empty.
+
+// ---- end input.cc
 
 // ---- inserted function f:<< from util.cc
 
@@ -329,48 +335,71 @@ void dbgLog(bool with_nl, Head&& head, Tail&&... tail)
 
 // ---- end debug.cc
 
-// ---- inserted function f:updMaxMin from util.cc
-template<typename T>
-bool updMax(T& tmax, const T& x) {
-  if (x > tmax) { tmax = x; return true;  }
-  else          {           return false; }
-}
-template<typename T>
-bool updMin(T& tmin, const T& x) {
-  if (x < tmin) { tmin = x; return true;  }
-  else          {           return false; }
-}
-// ---- end f:updMaxMin
-
 // @@ !! LIM -- end mark --
 
 int main(/* int argc, char *argv[] */) {
   ios_base::sync_with_stdio(false);
   cin.tie(nullptr);
   cout << setprecision(20);
-  
-  ll N, L; cin >> N >> L;
-  // @InpVec(N, A) [AEWuiSgK]
-  auto A = vector(N, ll());
-  for (int i = 0; i < N; i++) { ll v; cin >> v; A[i] = v; }
-  // @End [AEWuiSgK]
 
-  ll lim = 2e5;
   ll big = 1e18;
-  vector tbl(lim + 1, big);
-  tbl[0] = 0;
-  REP(i, 1, L) {
-    ll w = i * (L - i);
-    for (ll p = 0; p + w <= lim; p++) {
-      updMin(tbl[p + w], tbl[p] + 1);
-    }
+
+  ll N, M; cin >> N >> M;
+  // @InpNbrList(N, M, nbr, dec=1, read=L) [TSoDGnzX]
+  struct nbr_t {
+    int nd;
+    ll L;
+    // nbr_t() {}
+    nbr_t(int nd_ = int(), ll L_ = ll()) : nd(nd_), L(L_) {}
+  };
+  auto nbr = vector(N, vector(0, nbr_t()));
+  for (int i = 0; i < M; i++) {
+    int u, v; cin >> u >> v; u -= 1; v -= 1;
+    ll L; cin >> L;
+    nbr[u].emplace_back(v, L);
+    nbr[v].emplace_back(u, L);
   }
-  REP(i, 0, N) {
-    if (tbl[A[i]] == big) {
-      cout << -1 << "\n";
-    }else {
-      cout << tbl[A[i]] << "\n";
+  // @End [TSoDGnzX]
+
+  if (ssize(nbr[0]) == 1) {
+    cout << -1 << endl;
+    return 0;
+  }
+  
+  auto f = [&](ll excl) -> ll {
+    auto [st, len_st] = nbr[0][excl];
+    vector<ll> dist(N, big);
+    priority_queue<pll, vector<pll>, greater<pll>> pque;
+    dist[st] = len_st;
+    pque.emplace(len_st, st);
+    DLOGKL("start", len_st, st);
+    while (not pque.empty()) {
+      auto [len, nd] = pque.top(); pque.pop();
+      if (dist[nd] == len) {
+        for (auto [peer, plen] : nbr[nd]) {
+          if (nd == st and peer == 0) continue;
+          DLOGK(nd, peer, plen);
+          ll new_dist = dist[nd] + plen;
+          if (new_dist < dist[peer]) {
+            dist[peer] = new_dist;
+            pque.emplace(new_dist, peer);
+          }
+        }
+      }
     }
+    return dist[0];
+  };
+
+  ll ans = big;
+  REP(i, 0, ssize(nbr[0])) {
+    ll x = f(i);
+    DLOGK(i, nbr[0][i].nd, x);
+    ans = min(ans, f(i));
+  }
+  if (ans >= big) {
+    cout << -1 << endl;
+  }else {
+    cout << ans << endl;
   }
 
   return 0;
