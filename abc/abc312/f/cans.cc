@@ -387,31 +387,41 @@ int body(istream& cin, ostream& cout) {
       C.push_back(x);
     }else assert(0);
   }
-  const ll big = 1e18;
-  A.push_back(big);
-  B.push_back(big);
-  while (SIZE(A) <= M) A.push_back(0);
-  while (SIZE(B) <= M) B.push_back(0);
-  while (SIZE(C) < M) C.push_back(0);
+  ll na = SIZE(A);
+  ll nb = SIZE(B);
+  ll nc = SIZE(C);
   sort(ALL(A), greater<ll>());
   sort(ALL(B), greater<ll>());
   sort(ALL(C), greater<ll>());
-  DLOGK(A, B);
   ll ans = 0;
-  ll L = M;
-  REP(i, 1, L + 1) ans += A[i];
+  ll L = min(M, na);
+  REP(i, 0, L) ans += A[i];
   ll cur = ans;
   ll alpha = 0;
   ll j = 0;
-  DLOGK(cur);
-  REP(c, 0, M) {
-    if (A[L] < B[j]) cur -= A[L--];
-    else             cur -= B[j--];
-    alpha += C[c];
-    while (L > 0 and j < alpha and A[L] < B[j + 1]) {
-      cur += B[++j] - A[L--];
+  REP(c, 0, nc) {
+    ll Mc = max(0LL, M - (c + 1));
+    if (j + L > Mc) {
+      assert(j + L == Mc + 1);
+      if (j == 0) {
+        cur -= A[--L];
+      }else if (L == 0) {
+        cur -= B[--j];
+      }else if (A[L - 1] < B[j - 1]) {
+        cur -= A[--L];
+      }else {
+        cur -= B[--j];
+      }
     }
-    DLOGK(c, cur);
+    alpha += C[c];
+    while (alpha > 0 and j < nb and j + L < Mc) {
+      cur += B[j++];
+      --alpha;
+    }
+    while (alpha > 0 and j < nb and L - 1 >= 0 and B[j] > A[L - 1]) {
+      cur += B[j++] - A[--L];
+      --alpha;
+    }
     ans = max(ans, cur);
   }
   cout << ans << endl;
