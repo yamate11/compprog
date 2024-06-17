@@ -12,211 +12,140 @@ using pll = pair<ll, ll>;
 #define SIZE(v) ((ll)((v).size()))
 #define REPOUT(i, a, b, exp, sep) REP(i, (a), (b)) cout << (exp) << (i + 1 == (b) ? "" : (sep)); cout << "\n"
 
-// @@ !! LIM(board debug)
+// @@ !! LIM(f:intDiv ipoint debug)
 
-// ---- inserted library file board.cc
+// ---- inserted function f:intDiv from util.cc
+// imod, divFloor, divCeil
 
-struct BrdIdx {
-  int r;
-  int c;
-  BrdIdx(int r_, int c_) : r(r_), c(c_) {}
-  BrdIdx() : r(0), c(0) {}
+// imod(x, y) : remainder of x for y
+// for y > 0:
+//   imod(x, y)  = r where x = dy + r, 0 <= r < y
+//   imod(x, -y) = r where x = dy + r, 0 >= r > y
+// Thus, imod( 10,  7) =  3
+//       imod(-10,  7) =  4
+//       imod( 10, -7) = -4
+//       imod(-10, -7) = -3
+ll imod(ll x, ll y) {
+  ll v = x % y;
+  if ((x >= 0) == (y >= 0)) return v;
+  else                      return v == 0 ? 0 : v + y;
+}
 
-  BrdIdx& operator +=(const BrdIdx& o) { r += o.r; c += o.c; return *this; }
-  BrdIdx& operator -=(const BrdIdx& o) { r -= o.r; c -= o.c; return *this; }
-  BrdIdx& operator *=(int k) { r *= k; c *= k; return *this; }
-  BrdIdx operator +(const BrdIdx& o) const { return BrdIdx(*this) += o; }
-  BrdIdx operator -(const BrdIdx& o) const { return BrdIdx(*this) -= o; }
-  BrdIdx operator *(int k) const { return BrdIdx(*this) *= k; }
-  BrdIdx operator -() const { return (*this) * (-1); }
+// Integer Division; regardless pos/neg
+ll divFloor(ll x, ll y) {
+  if (x > 0) {
+    if (y > 0) return x / y;
+    else       return (x - y - 1) / y;
+  }else {
+    if (y > 0) return (x - y + 1) / y;
+    else       return x / y;
+  }
+}
 
-  bool operator ==(const BrdIdx& o) const { return r == o.r && c == o.c; }
-  bool operator !=(const BrdIdx& o) const { return !((*this) == o); }
-  bool operator <(const BrdIdx& o) const {
-    return r < o.r || (r == o.r && c < o.c); }
-  bool operator <=(const BrdIdx& o) const {
-    return r < o.r || (r == o.r && c <= o.c); }
-  bool operator >(const BrdIdx& o) const { return o < *this; }
-  bool operator >=(const BrdIdx& o) const { return o <= *this; }
+ll divCeil(ll x, ll y) {
+  if (x > 0) {
+    if (y > 0) return (x + y - 1) / y;
+    else       return x / y;
+  }else {
+    if (y > 0) return x / y;
+    else       return (x + y + 1) / y;
+  }
+}
+//   Just a note.  For d \in Z and t \in R,
+//       d < t <=> d < ceil(t),     d <= t <=> d <= floor(t),
+//       d > t <=> d > floor(t),    d >= t <=> d >= ceil(t).
 
-  BrdIdx rotateQ() { return BrdIdx(-c, r); } // counter-clockwise
+// ---- end f:intDiv
 
-  static vector<BrdIdx> nbr4, nbr4D, nbr5, nbr8, nbr9;
+// ---- inserted library file ipoint.cc
+
+struct IPoint {
+  ll x;
+  ll y;
+  IPoint(ll x_ = 0, ll y_ = 0) : x(x_), y(y_) {}
+
+  IPoint rotate(int r = 1) const {
+    ll rd = r % 4;
+    ll rr = r >= 0 ? rd : rd == 0 ? 0 : rd + 4;
+    if      (rr == 0) return IPoint( x,  y);
+    else if (rr == 1) return IPoint(-y,  x);
+    else if (rr == 2) return IPoint(-x, -y);
+    else if (rr == 3) return IPoint( y, -x);
+    assert(0);
+  }
+
+  IPoint mirror_x() const { return IPoint(x, -y); }
+  IPoint mirror_y() const { return IPoint(-x, y); }
+
+  IPoint& operator +=(const IPoint& o) {
+    x += o.x;
+    y += o.y;
+    return *this;
+  }
+
+  IPoint& operator -=(const IPoint& o) {
+    x -= o.x;
+    y -= o.y;
+    return *this;
+  }
+
+  IPoint& operator *=(ll k) {
+    x *= k;
+    y *= k;
+    return *this;
+  }
+
+  bool operator ==(const IPoint& o) const { return x == o.x && y == o.y; }
+  bool operator !=(const IPoint& o) const { return x != o.x || y != o.y; }
+  IPoint operator +(const IPoint& o) const { return IPoint(x, y) += o; }
+  IPoint operator -(const IPoint& o) const { return IPoint(x, y) -= o; }
+  IPoint operator *(ll k) const { return IPoint(x, y) *= k; }
+  IPoint operator -() const { return IPoint(-x, -y); }
+
+  bool operator <(const IPoint& o) const {
+    // This seems awkward, but is needed for storing objects in maps.
+    if (x != o.x) return x < o.x;
+    else return y < o.y;
+  }
+
+  bool parallel(const IPoint o) const { return x * o.y == y * o.x; }
+
+  // For "argument sort".  The origin is treated as the maximum.
+  static bool lt_arg(const IPoint& p1, const IPoint& p2) {
+    bool b1 = p1.y > 0 or (p1.y == 0 and p1.x > 0);
+    bool b2 = p2.y > 0 or (p2.y == 0 and p2.x > 0);
+    if (b1 != b2) return b1;
+    else return p1.x * p2.y > p1.y * p2.x;
+  }
+
 };
-
-vector<BrdIdx>
-  BrdIdx::nbr4 ({      {1,0},      {0,1},       {-1,0},        {0,-1}       }),
-  BrdIdx::nbr4D({            {1,1},      {-1,1},       {-1,-1},       {1,-1}}),
-  BrdIdx::nbr5 ({{0,0},{1,0},      {0,1},       {-1,0},        {0,-1}       }),
-  BrdIdx::nbr8 ({      {1,0},{1,1},{0,1},{-1,1},{-1,0},{-1,-1},{0,-1},{1,-1}}),
-  BrdIdx::nbr9 ({{0,0},{1,0},{1,1},{0,1},{-1,1},{-1,0},{-1,-1},{0,-1},{1,-1}});
-
-BrdIdx operator *(int k, const BrdIdx& o) { return o * k; }
-ostream& operator <<(ostream& os, const BrdIdx& i) {
-  os << "(" << i.r << "," << i.c << ")";
+    
+IPoint operator *(ll k, const IPoint& p) { return p * k; }
+istream& operator >>(istream& is, IPoint& p) {
+  ll x_, y_; is >> x_ >> y_;
+  p.x = x_;
+  p.y = y_;
+  return is;
+}
+ostream& operator <<(ostream& os, const IPoint& p) {
+  os << "(" << p.x << ", " << p.y << ")";
   return os;
 }
 
-template <typename T, int dispWidth = 0>
-struct Board {
-
-  struct BoardSubst {
-    Board& brd;
-    int r;
-    int c;
-    BoardSubst(Board& brd_, int r_, int c_) : brd(brd_), r(r_), c(c_) {}
-    const T& operator=(const T& t) { return brd.set(r, c, t); }
-  };
-
-  T def;
-  vector<vector<T>> data;
-
-  Board() : def(T()), data(0) {}
-  Board(int nR, int nC, const T& def_) : def(def_), data(nR, vector(nC, def)) {}
-  // Board(const Board&), Board(Board&&), operator=(const Board&), operator=(Board&&) are automatically generated.
-
-  bool operator==(const Board& o) const = default;
-  bool operator!=(const Board& o) const = default;
-
-  int numRows() const { return ssize(data); }
-  int numCols() const { return data.empty() ? 0 : ssize(data[0]); }
-
-  bool in(int r, int c) const { return 0 <= r and r < numRows() and 0 <= c and c < numCols(); }
-  bool in(const BrdIdx& bi) const { return in(bi.r, bi.c); }
-
-  using return_T = typename conditional<is_same_v<T, bool>, T, const T&>::type;
-  // Due to the proxy object for vector<bool>, you need to return bool, instead of const bool&.
-  return_T at(int r, int c) const { return in(r, c) ? data[r][c] : def; }
-  return_T at(const BrdIdx& bi) const { return at(bi.r, bi.c); }
-
-  // Reference for Substitution
-  BoardSubst rs(int r, int c) { return BoardSubst(*this, r, c); }
-  BoardSubst rs(const BrdIdx& bi) { return rs(bi.r, bi.c); }
-
-  const T& set(int r, int c, const T& t) {
-    if (in(r, c)) data[r][c] = t;
-    return t;
-  }
-  const T& set(const BrdIdx& bi, const T& t) { return set(bi.r, bi.c, t); }
-
-  long long enc(int r, int c) { return in(r, c) ? r * numCols() + c : -1; }
-  long long enc(const BrdIdx& bi) { return enc(bi.r, bi.c); }
-  BrdIdx dec(long long e) {
-    if (e < 0) return BrdIdx(-1, -1);
-    int r = e / numCols();
-    int c = e % numCols();
-    if (in(r, c)) return BrdIdx(r, c);
-    else return BrdIdx(-1, -1);
-  }
-
-  Board transpose() const {
-    Board ret(numCols(), numRows(), def);
-    for (int i = 0; i < numRows(); i++) for (int j = 0; j < numCols(); j++) ret.set(j, i, at(i, j));
-    return ret;
-  }
-  Board reverse_row() const {
-    Board ret(numRows(), numCols(), def);
-    for (int i = 0; i < numRows(); i++) for (int j = 0; j < numCols(); j++) ret.set(numRows() - 1 - i, j, at(i, j));
-    return ret;
-  }
-  Board reverse_col() const {
-    Board ret(numRows(), numCols(), def);
-    for (int i = 0; i < numRows(); i++) for (int j = 0; j < numCols(); j++) ret.set(i, numCols() - 1 - j, at(i, j));
-    return ret;
-  }
-  Board _single_rotate() const {
-    Board ret(numCols(), numRows(), def);
-    for (int i = 0; i < numRows(); i++) for (int j = 0; j < numCols(); j++) ret.data[-j + numCols()-1][i] = data[i][j];
-    return ret;
-  }
-  Board rotate(int r = 1) const {
-    ll nR = numRows();
-    ll nC = numCols();
-    auto f = [&](ll szH, ll szW, auto g, auto h) {
-      Board ret(szH, szW, def);
-      for (int i = 0; i < nR; i++) for (int j = 0; j < nC; j++) ret.set(g(i, j), h(i, j), at(i, j));
-      return ret;
-    };
-    if (r % 4 == 0) return *this;
-    if (r > 0) r = r % 4;
-    else r = 4 + r % 4;
-    if (r == 1) return f(nC, nR, [&](int i, int j) { return -j + nC - 1; }, [&](int i, int j) { return i; });
-    if (r == 2) return f(nR, nC, [&](int i, int j) { return -i + nR - 1; }, [&](int i, int j) { return -j + nC - 1; });
-    if (r == 3) return f(nC, nR, [&](int i, int j) { return j; }, [&](int i, int j) { return -i + nR - 1; });
-    assert(0);
-    
-    return _single_rotate().rotate(r - 1);
-  }
-
-
-  void readData(istream& is) {
-    for (int i = 0; i < numRows(); i++) {
-      for (int j = 0; j < numCols(); j++) {
-	T t; is >> t;
-	set(i, j, t);
-      }
-    }
-  }
-
-  friend istream& operator >>(istream& is, Board& brd) {
-    brd.readData(is);
-    return is;
-  }
-
-  friend ostream& operator <<(ostream& os, const Board& brd) {
-    for (int r = 0; r < brd.numRows(); r++) {
-      for (int c = 0; c < brd.numCols(); c++) {
-        os << setw(dispWidth) << brd.at(r, c);
-      }
-      if (r < brd.numRows() - 1) os << "\n";
-    }
-    return os;
-  }
-
-};
-
-template<typename T>
-struct BoardRange {
-  const Board<T>& board;
-  struct Itr {
-    using iterator_category = input_iterator_tag;
-    using value_type = BrdIdx;
-    using difference_type = ptrdiff_t;
-    using reference = value_type&;
-    using pointer = value_type*;
-
-    int nC;
-    BrdIdx bi;
-
-    Itr(int nC_, int r = 0, int c = 0) : nC(nC_), bi(r, c) {}
-
-    bool operator ==(const Itr& o) const { return bi == o.bi; }
-    bool operator !=(const Itr& o) const { return bi != o.bi; }
-
-    reference operator *() { return bi; }
-    pointer operator ->() { return &bi; }
-
-    Itr& operator ++() {
-      if (++bi.c == nC) {
-        bi.c = 0;
-        ++bi.r;
-      }
-      return *this;
-    }
-    Itr operator ++(int) {
-      Itr const tmp(*this);
-      ++*this;
-      return tmp;
+namespace std {
+  template<>
+  struct hash<IPoint> {
+    std::size_t operator()(const IPoint& p) const {
+      static const uint64_t frand = chrono::steady_clock::now().time_since_epoch().count();
+      static const uint64_t a = (frand ^ 0x9e3779b97f4a7c15) | 1;
+      static const uint64_t b = (frand ^ 0xbf58476d1ce4e5b9) | 1;
+      return a * (uint64_t)p.x + b * (uint64_t)p.y;
     }
   };
-
-  BoardRange(const Board<T>& board_) : board(board_) {}
-  Itr begin() { return Itr(board.numCols(), 0, 0); }
-  Itr end() { return Itr(board.numCols(), board.numRows(), 0); }
-};
+}
 
 
-// ---- end board.cc
+// ---- end ipoint.cc
 
 // ---- inserted function f:<< from util.cc
 
@@ -436,6 +365,13 @@ ostream& operator<< (ostream& os, int8_t x) {
   return os;
 }
 
+// for Enum type; just displays ordinals.
+template <typename E>
+typename std::enable_if<std::is_enum<E>::value, std::ostream&>::type
+operator<<(std::ostream& os, E e) {
+    return os << static_cast<typename std::underlying_type<E>::type>(e);
+}
+
 // This is a very ad-hoc implementation...
 ostream& operator<<(ostream& os, const __int128& v) {
   unsigned __int128 a = v < 0 ? -v : v;
@@ -540,52 +476,84 @@ int main(/* int argc, char *argv[] */) {
   cin.tie(nullptr);
   cout << setprecision(20);
 
-  ll H, W; cin >> H >> W;
-  Board brd(H, W, '#');
-  cin >> brd;
-  BrdIdx start, goal;
-  REP(i, 0, H) REP(j, 0, W) {
-    BrdIdx bi(i, j);
-    auto f = [&](BrdIdx dir) -> void {
-      // DLOGKL("f", bi, dir);
-      BrdIdx bj = bi;
-      while (true) {
-        // DLOGKL("  ", bj);
-        bj += dir;
-        if (not brd.in(bj)) break;
-        if (brd.at(bj) == '#' or brd.at(bj) == '<' or brd.at(bj) == '>' or brd.at(bj) == '^' or brd.at(bj) == 'v') break;
-        if (brd.at(bj) == '.') brd.rs(bj) = '!';
-      }
-    };
-    if (brd.at(i, j) == 'S') start = bi;
-    if (brd.at(i, j) == 'G') goal  = bi;
-    if (brd.at(i, j) == '<') f(BrdIdx(0, -1));
-    if (brd.at(i, j) == '>') f(BrdIdx(0, 1));
-    if (brd.at(i, j) == 'v') f(BrdIdx(1, 0));
-    if (brd.at(i, j) == '^') f(BrdIdx(-1, 0));
-  }
-  // cerr << brd << endl;
-  ll big = 1e18;
-  Board dist(H, W, big);
-  dist.rs(start) = 0;
-  queue<BrdIdx> que;
-  que.push(start);
-  while (not que.empty()) {
-    auto bi = que.front(); que.pop();
-    DLOGKL("popped", bi);
-    for (auto dir : BrdIdx::nbr4) {
-      auto bj = bi + dir;
-      if (brd.at(bj) == 'G') {
-        cout << dist.at(bi) + 1 << endl;
-        return 0;
-      }
-      if (brd.at(bj) == '.' and dist.at(bj) == big) {
-        dist.rs(bj) = dist.at(bi) + 1;
-        que.push(bj);
-      }
+  ll N, M, K; cin >> N >> M >> K;
+  ll maxans;
+  if (K < N) {
+    cout << "No\n";
+    return 0;
+  }else {
+    maxans = N * M;
+    if (N % 2 == 1 and M % 2 == 0) maxans--;
+    if (K <= maxans and (maxans - K) % 2 == 0) {
+      cout << "Yes\n";
+    }else {
+      cout << "No\n";
+      return 0;
     }
   }
-  cout << -1 << endl;
+
+  vector dirpath(N, vector(M, IPoint()));
+  using sta = tuple<ll, ll, IPoint>;
+  REP(i, 0, N) dirpath[i][M - 1] = IPoint(1, 0);
+  REP(i, 0, N) REP(j, 0, M - 1) {
+    if (i % 2 == 0) dirpath[i][j] = IPoint(1, 0);
+    if (i % 2 == 1) dirpath[i][j] = IPoint(0, 1);
+  }
+  if (N % 2 == 1) {
+    REP(k, 0, (M - 1) / 2) {
+      ll j = M - 2 - 2 * k;
+      dirpath[N - 1][j] = IPoint(-1, 0);
+      j--;
+      dirpath[N - 1][j] = IPoint(0, 1);
+    }
+  }
+  vector<sta> incinfo;
+  REP(i, 0, N) REPrev(j, M - 1, 1) {
+    if (i % 2 == 0 and i != N - 1) {
+      incinfo.emplace_back(i, j, IPoint(0, -1));
+    }
+  }
+  if (N % 2 == 1) {
+    REP(k, 0, (M - 1) / 2) {
+      ll j = M - 2 - 2 * k - 1;
+      incinfo.emplace_back(N - 2, j, IPoint(1, 0));
+    }
+  }
+  REP(x, 0, (K - N) / 2) {
+    auto [i, j, p] = incinfo[x];
+    dirpath[i][j] = p;
+  }
+
+  vector<IPoint> path;
+  IPoint cur(0, M - 1);
+  path.push_back(cur);
+  while (cur != IPoint(N - 1, M - 1)) {
+    cur += dirpath[cur.x][cur.y];
+    path.push_back(cur);
+  }
+  
+  vector<string> ans(2*N + 1, string(2*M + 1, '+'));
+  REP(i, 0, 2*N + 1) REP(j, 0, 2*M + 1) {
+    if (i % 2 == 1 and j % 2 == 1) ans[i][j] = 'o';
+    if (i % 2 == 1 and j % 2 == 0 and 0 < i and i < 2*N and 0 < j and j < 2*M) ans[i][j] = '|';
+    if (i % 2 == 0 and j % 2 == 1 and 0 < i and i < 2*N and 0 < j and j < 2*M) ans[i][j] = '-';
+  }
+  REP(i, 0, ssize(path) - 1) {
+    auto [a, b] = path[i];
+    auto [c, d] = path[i + 1];
+    if (a == c) {
+      ll e = min(b, d);
+      ans[1 + 2 * a][2 + 2 * e] = '.';
+    }else if (b == d) {
+      ll e = min(a, c);
+      ans[2 + 2 * e][1 + 2 * b] = '.';
+    }else assert(0);
+  }
+  ans[0][1 + 2 * (M - 1)] = 'S';
+  ans[2*N][1 + 2 * (M - 1)] = 'G';
+
+  REP(i, 0, 2*N + 1) cout << ans[i] << "\n";
+
 
   return 0;
 }

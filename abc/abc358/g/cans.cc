@@ -436,6 +436,13 @@ ostream& operator<< (ostream& os, int8_t x) {
   return os;
 }
 
+// for Enum type; just displays ordinals.
+template <typename E>
+typename std::enable_if<std::is_enum<E>::value, std::ostream&>::type
+operator<<(std::ostream& os, E e) {
+    return os << static_cast<typename std::underlying_type<E>::type>(e);
+}
+
 // This is a very ad-hoc implementation...
 ostream& operator<<(ostream& os, const __int128& v) {
   unsigned __int128 a = v < 0 ? -v : v;
@@ -540,52 +547,35 @@ int main(/* int argc, char *argv[] */) {
   cin.tie(nullptr);
   cout << setprecision(20);
 
-  ll H, W; cin >> H >> W;
-  Board brd(H, W, '#');
-  cin >> brd;
-  BrdIdx start, goal;
-  REP(i, 0, H) REP(j, 0, W) {
-    BrdIdx bi(i, j);
-    auto f = [&](BrdIdx dir) -> void {
-      // DLOGKL("f", bi, dir);
-      BrdIdx bj = bi;
-      while (true) {
-        // DLOGKL("  ", bj);
-        bj += dir;
-        if (not brd.in(bj)) break;
-        if (brd.at(bj) == '#' or brd.at(bj) == '<' or brd.at(bj) == '>' or brd.at(bj) == '^' or brd.at(bj) == 'v') break;
-        if (brd.at(bj) == '.') brd.rs(bj) = '!';
-      }
-    };
-    if (brd.at(i, j) == 'S') start = bi;
-    if (brd.at(i, j) == 'G') goal  = bi;
-    if (brd.at(i, j) == '<') f(BrdIdx(0, -1));
-    if (brd.at(i, j) == '>') f(BrdIdx(0, 1));
-    if (brd.at(i, j) == 'v') f(BrdIdx(1, 0));
-    if (brd.at(i, j) == '^') f(BrdIdx(-1, 0));
-  }
-  // cerr << brd << endl;
-  ll big = 1e18;
-  Board dist(H, W, big);
-  dist.rs(start) = 0;
-  queue<BrdIdx> que;
-  que.push(start);
-  while (not que.empty()) {
-    auto bi = que.front(); que.pop();
-    DLOGKL("popped", bi);
-    for (auto dir : BrdIdx::nbr4) {
-      auto bj = bi + dir;
-      if (brd.at(bj) == 'G') {
-        cout << dist.at(bi) + 1 << endl;
-        return 0;
-      }
-      if (brd.at(bj) == '.' and dist.at(bj) == big) {
-        dist.rs(bj) = dist.at(bi) + 1;
-        que.push(bj);
+  ll H, W, K; cin >> H >> W >> K;
+  ll si, sj; cin >> si >> sj; si--; sj--;
+  // @InpGrid(H, W, A) [8cDbG7ix]
+  auto A = vector(H, vector(W, ll()));
+  for (int i = 0; i < H; i++) for (int j = 0; j < W; j++) { ll v; cin >> v; A[i][j] = v; }
+  // @End [8cDbG7ix]
+
+  Board<ll, 6> brd_init(H, W, -1LL);
+  auto brd = brd_init;
+  brd.rs(si, sj) = 0LL;
+  ll M = min(H * W, K);
+  REP(_i, 0, M) {
+    auto prev_brd = move(brd);
+    brd = brd_init;
+    REP(i, 0, H) REP(j, 0, W) {
+      auto bi = BrdIdx(i, j);
+      ll v = prev_brd.at(bi);
+      for (auto dir : BrdIdx::nbr4) { v = max(v, prev_brd.at(bi + dir)); }
+      if (v >= 0) {
+        brd.rs(bi) = v + A[i][j];
       }
     }
   }
-  cout << -1 << endl;
+  ll ans = 0;
+  REP(i, 0, H) REP(j, 0, W) {
+    ll tv = brd.at(i, j) + (K - M) * A[i][j];
+    ans = max(ans, tv);
+  }
+  cout << ans << endl;
 
   return 0;
 }

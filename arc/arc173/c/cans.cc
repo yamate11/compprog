@@ -12,195 +12,35 @@ using pll = pair<ll, ll>;
 #define SIZE(v) ((ll)((v).size()))
 #define REPOUT(i, a, b, exp, sep) REP(i, (a), (b)) cout << (exp) << (i + 1 == (b) ? "" : (sep)); cout << "\n"
 
-// @@ !! LIM(board debug)
+// @@ !! LIM(intervalSet debug)
 
-// ---- inserted library file board.cc
-
-struct BrdIdx {
-  int r;
-  int c;
-  BrdIdx(int r_, int c_) : r(r_), c(c_) {}
-  BrdIdx() : r(0), c(0) {}
-
-  BrdIdx& operator +=(const BrdIdx& o) { r += o.r; c += o.c; return *this; }
-  BrdIdx& operator -=(const BrdIdx& o) { r -= o.r; c -= o.c; return *this; }
-  BrdIdx& operator *=(int k) { r *= k; c *= k; return *this; }
-  BrdIdx operator +(const BrdIdx& o) const { return BrdIdx(*this) += o; }
-  BrdIdx operator -(const BrdIdx& o) const { return BrdIdx(*this) -= o; }
-  BrdIdx operator *(int k) const { return BrdIdx(*this) *= k; }
-  BrdIdx operator -() const { return (*this) * (-1); }
-
-  bool operator ==(const BrdIdx& o) const { return r == o.r && c == o.c; }
-  bool operator !=(const BrdIdx& o) const { return !((*this) == o); }
-  bool operator <(const BrdIdx& o) const {
-    return r < o.r || (r == o.r && c < o.c); }
-  bool operator <=(const BrdIdx& o) const {
-    return r < o.r || (r == o.r && c <= o.c); }
-  bool operator >(const BrdIdx& o) const { return o < *this; }
-  bool operator >=(const BrdIdx& o) const { return o <= *this; }
-
-  BrdIdx rotateQ() { return BrdIdx(-c, r); } // counter-clockwise
-
-  static vector<BrdIdx> nbr4, nbr4D, nbr5, nbr8, nbr9;
-};
-
-vector<BrdIdx>
-  BrdIdx::nbr4 ({      {1,0},      {0,1},       {-1,0},        {0,-1}       }),
-  BrdIdx::nbr4D({            {1,1},      {-1,1},       {-1,-1},       {1,-1}}),
-  BrdIdx::nbr5 ({{0,0},{1,0},      {0,1},       {-1,0},        {0,-1}       }),
-  BrdIdx::nbr8 ({      {1,0},{1,1},{0,1},{-1,1},{-1,0},{-1,-1},{0,-1},{1,-1}}),
-  BrdIdx::nbr9 ({{0,0},{1,0},{1,1},{0,1},{-1,1},{-1,0},{-1,-1},{0,-1},{1,-1}});
-
-BrdIdx operator *(int k, const BrdIdx& o) { return o * k; }
-ostream& operator <<(ostream& os, const BrdIdx& i) {
-  os << "(" << i.r << "," << i.c << ")";
-  return os;
-}
-
-template <typename T, int dispWidth = 0>
-struct Board {
-
-  struct BoardSubst {
-    Board& brd;
-    int r;
-    int c;
-    BoardSubst(Board& brd_, int r_, int c_) : brd(brd_), r(r_), c(c_) {}
-    const T& operator=(const T& t) { return brd.set(r, c, t); }
-  };
-
-  T def;
-  vector<vector<T>> data;
-
-  Board() : def(T()), data(0) {}
-  Board(int nR, int nC, const T& def_) : def(def_), data(nR, vector(nC, def)) {}
-  // Board(const Board&), Board(Board&&), operator=(const Board&), operator=(Board&&) are automatically generated.
-
-  bool operator==(const Board& o) const = default;
-  bool operator!=(const Board& o) const = default;
-
-  int numRows() const { return ssize(data); }
-  int numCols() const { return data.empty() ? 0 : ssize(data[0]); }
-
-  bool in(int r, int c) const { return 0 <= r and r < numRows() and 0 <= c and c < numCols(); }
-  bool in(const BrdIdx& bi) const { return in(bi.r, bi.c); }
-
-  using return_T = typename conditional<is_same_v<T, bool>, T, const T&>::type;
-  // Due to the proxy object for vector<bool>, you need to return bool, instead of const bool&.
-  return_T at(int r, int c) const { return in(r, c) ? data[r][c] : def; }
-  return_T at(const BrdIdx& bi) const { return at(bi.r, bi.c); }
-
-  // Reference for Substitution
-  BoardSubst rs(int r, int c) { return BoardSubst(*this, r, c); }
-  BoardSubst rs(const BrdIdx& bi) { return rs(bi.r, bi.c); }
-
-  const T& set(int r, int c, const T& t) {
-    if (in(r, c)) data[r][c] = t;
-    return t;
-  }
-  const T& set(const BrdIdx& bi, const T& t) { return set(bi.r, bi.c, t); }
-
-  long long enc(int r, int c) { return in(r, c) ? r * numCols() + c : -1; }
-  long long enc(const BrdIdx& bi) { return enc(bi.r, bi.c); }
-  BrdIdx dec(long long e) {
-    if (e < 0) return BrdIdx(-1, -1);
-    int r = e / numCols();
-    int c = e % numCols();
-    if (in(r, c)) return BrdIdx(r, c);
-    else return BrdIdx(-1, -1);
-  }
-
-  Board transpose() const {
-    Board ret(numCols(), numRows(), def);
-    for (int i = 0; i < numRows(); i++) for (int j = 0; j < numCols(); j++) ret.set(j, i, at(i, j));
-    return ret;
-  }
-  Board reverse_row() const {
-    Board ret(numRows(), numCols(), def);
-    for (int i = 0; i < numRows(); i++) for (int j = 0; j < numCols(); j++) ret.set(numRows() - 1 - i, j, at(i, j));
-    return ret;
-  }
-  Board reverse_col() const {
-    Board ret(numRows(), numCols(), def);
-    for (int i = 0; i < numRows(); i++) for (int j = 0; j < numCols(); j++) ret.set(i, numCols() - 1 - j, at(i, j));
-    return ret;
-  }
-  Board _single_rotate() const {
-    Board ret(numCols(), numRows(), def);
-    for (int i = 0; i < numRows(); i++) for (int j = 0; j < numCols(); j++) ret.data[-j + numCols()-1][i] = data[i][j];
-    return ret;
-  }
-  Board rotate(int r = 1) const {
-    ll nR = numRows();
-    ll nC = numCols();
-    auto f = [&](ll szH, ll szW, auto g, auto h) {
-      Board ret(szH, szW, def);
-      for (int i = 0; i < nR; i++) for (int j = 0; j < nC; j++) ret.set(g(i, j), h(i, j), at(i, j));
-      return ret;
-    };
-    if (r % 4 == 0) return *this;
-    if (r > 0) r = r % 4;
-    else r = 4 + r % 4;
-    if (r == 1) return f(nC, nR, [&](int i, int j) { return -j + nC - 1; }, [&](int i, int j) { return i; });
-    if (r == 2) return f(nR, nC, [&](int i, int j) { return -i + nR - 1; }, [&](int i, int j) { return -j + nC - 1; });
-    if (r == 3) return f(nC, nR, [&](int i, int j) { return j; }, [&](int i, int j) { return -i + nR - 1; });
-    assert(0);
-    
-    return _single_rotate().rotate(r - 1);
-  }
-
-
-  void readData(istream& is) {
-    for (int i = 0; i < numRows(); i++) {
-      for (int j = 0; j < numCols(); j++) {
-	T t; is >> t;
-	set(i, j, t);
-      }
-    }
-  }
-
-  friend istream& operator >>(istream& is, Board& brd) {
-    brd.readData(is);
-    return is;
-  }
-
-  friend ostream& operator <<(ostream& os, const Board& brd) {
-    for (int r = 0; r < brd.numRows(); r++) {
-      for (int c = 0; c < brd.numCols(); c++) {
-        os << setw(dispWidth) << brd.at(r, c);
-      }
-      if (r < brd.numRows() - 1) os << "\n";
-    }
-    return os;
-  }
-
-};
+// ---- inserted library file intervalSet.cc
 
 template<typename T>
-struct BoardRange {
-  const Board<T>& board;
+struct itv_set {
+  using value_type = T;
+  
   struct Itr {
     using iterator_category = input_iterator_tag;
-    using value_type = BrdIdx;
-    using difference_type = ptrdiff_t;
-    using reference = value_type&;
-    using pointer = value_type*;
+    using value_type = tuple<ll, ll, T>;
+    // using difference_type = ptrdiff_t;
+    using reference = value_type const&;
+    // using pointer = value_type const*;
 
-    int nC;
-    BrdIdx bi;
+    using impl_iterator = typename map<ll, T>::iterator;
+    impl_iterator it_impl;
 
-    Itr(int nC_, int r = 0, int c = 0) : nC(nC_), bi(r, c) {}
+    Itr(impl_iterator it_impl_) : it_impl(it_impl_) {}
 
-    bool operator ==(const Itr& o) const { return bi == o.bi; }
-    bool operator !=(const Itr& o) const { return bi != o.bi; }
-
-    reference operator *() { return bi; }
-    pointer operator ->() { return &bi; }
-
-    Itr& operator ++() {
-      if (++bi.c == nC) {
-        bi.c = 0;
-        ++bi.r;
-      }
+    bool operator ==(const Itr& o) const { return it_impl == o.it_impl; }
+    bool operator !=(const Itr& o) const { return it_impl != o.it_impl; }
+    value_type operator *() const {
+      auto [l, t] = *it_impl;
+      auto [r, _dummy] = *(next(it_impl));
+      return value_type(l, r, t);
+    }
+    Itr& operator ++() { 
+      ++it_impl;
       return *this;
     }
     Itr operator ++(int) {
@@ -209,14 +49,117 @@ struct BoardRange {
       return tmp;
     }
   };
+  using iterator = Itr;
+  Itr begin() { return Itr(impl.begin()); }
+  Itr end() { return Itr(prev(impl.end())); }
 
-  BoardRange(const Board<T>& board_) : board(board_) {}
-  Itr begin() { return Itr(board.numCols(), 0, 0); }
-  Itr end() { return Itr(board.numCols(), board.numRows(), 0); }
+  map<ll, T> impl;  
+  ll lo;
+  ll hi;
+
+  itv_set(ll lo_ = LLONG_MIN, ll hi_ = LLONG_MAX, const T& t = T()) : lo(lo_), hi(hi_) {
+    impl[lo] = t;
+    impl[hi] = t;  // the value is just a dummy.
+  }
+
+  bool operator==(const itv_set& o) const { return lo == o.lo and hi == o.hi and impl == o.impl; }
+  bool operator!=(const itv_set& o) const { return not (*this == o); }
+
+  auto get_iter(ll x) {
+    auto it = impl.upper_bound(x);
+    return std::prev(it);
+  }
+
+  auto get_iter(ll x) const {
+    auto it = impl.upper_bound(x);
+    return std::prev(it);
+  }
+
+  auto divide(ll x) {
+    auto it_nxt = impl.upper_bound(x);
+    auto it = std::prev(it_nxt);
+    if (it->first == x) return it;
+    return impl.emplace_hint(it_nxt, x, it->second);
+  }
+
+  
+  void range_check(ll l, ll r) const {
+    if (l < lo or r > hi) throw runtime_error("intervalSet: out of range: " + to_string(l) + ", " + to_string(r));
+  }
+  void range_check(ll x) const {
+    if (x < lo or x > hi - 1) throw runtime_error("intervalSet: out of range: " + to_string(x));
+  }
+
+  void put(ll l, ll r, const T& t) {
+    range_check(l, r);
+    if (l >= r) return;
+    auto it0 = divide(l);
+    auto it1 = divide(r);
+    it0->second = t;
+    for (auto it = std::next(it0); it != it1; it = impl.erase(it));
+    if (std::next(it1) != impl.end() and it0->second == it1->second) impl.erase(it1);
+    if (it0 != impl.begin() and std::prev(it0)->second == it0->second) impl.erase(it0);
+  }
+
+  void put(ll x, const T& t) {
+    range_check(x);
+    put(x, x + 1, t);
+  }
+
+  const T& get_val(ll x) const {
+    range_check(x);
+    return get_iter(x)->second;
+  }
+
+  tuple<ll, ll, T> get(ll x) {
+    range_check(x);
+    auto it = impl.upper_bound(x);
+    return {std::prev(it)->first, it->first, std::prev(it)->second};
+  }
+
+  T sum(ll l0, ll r0) {
+    range_check(l0, r0);
+    T ret = T();
+    ll i = l0;
+    while (true) {
+      const auto& [l, r, t] = get(i);
+      ret += (min(r, r0) - i) * t;
+      if (r0 <= r) return ret;
+      i = r;
+    }
+  }
+
 };
 
+auto itv_apply(auto f, const auto& x, const auto& y) {
+  using x_t = typename remove_reference_t<decltype(x)>::value_type;
+  using y_t = typename remove_reference_t<decltype(x)>::value_type;
+  using res_t = decltype(f(declval<x_t>(), declval<y_t>()));
 
-// ---- end board.cc
+  if (x.lo != y.lo or x.hi != y.hi) throw runtime_error("intervalSet: range mismatch");
+  auto itx = x.impl.begin();
+  auto ity = y.impl.begin();
+  itv_set<res_t> ret(x.lo, x.hi, f(itx->second, ity->second));
+  auto itcc = ret.impl.begin();
+  auto itce = std::next(itcc);
+  while (true) {
+    ll t;
+    tie(t, itx, ity) = [&]() -> tuple<ll, decltype(itx), decltype(ity)> {
+      auto nitx = std::next(itx);
+      auto nity = std::next(ity);
+      if      (nitx->first <  nity->first) return {nitx->first, nitx,  ity};
+      else if (nitx->first >  nity->first) return {nity->first,  itx, nity};
+      else if (nitx->first < x.hi)         return {nitx->first, nitx, nity};
+      else                                 return {-1,          nitx, nity};
+    }();
+    if (t == -1) break;
+    res_t ncur = f(itx->second, ity->second);
+    if (ncur != itcc->second) itcc = ret.impl.emplace_hint(itce, t, move(ncur));
+  }
+  return ret;
+}
+
+// ---- end intervalSet.cc
 
 // ---- inserted function f:<< from util.cc
 
@@ -436,6 +379,13 @@ ostream& operator<< (ostream& os, int8_t x) {
   return os;
 }
 
+// for Enum type; just displays ordinals.
+template <typename E>
+typename std::enable_if<std::is_enum<E>::value, std::ostream&>::type
+operator<<(std::ostream& os, E e) {
+    return os << static_cast<typename std::underlying_type<E>::type>(e);
+}
+
 // This is a very ad-hoc implementation...
 ostream& operator<<(ostream& os, const __int128& v) {
   unsigned __int128 a = v < 0 ? -v : v;
@@ -540,52 +490,71 @@ int main(/* int argc, char *argv[] */) {
   cin.tie(nullptr);
   cout << setprecision(20);
 
-  ll H, W; cin >> H >> W;
-  Board brd(H, W, '#');
-  cin >> brd;
-  BrdIdx start, goal;
-  REP(i, 0, H) REP(j, 0, W) {
-    BrdIdx bi(i, j);
-    auto f = [&](BrdIdx dir) -> void {
-      // DLOGKL("f", bi, dir);
-      BrdIdx bj = bi;
-      while (true) {
-        // DLOGKL("  ", bj);
-        bj += dir;
-        if (not brd.in(bj)) break;
-        if (brd.at(bj) == '#' or brd.at(bj) == '<' or brd.at(bj) == '>' or brd.at(bj) == '^' or brd.at(bj) == 'v') break;
-        if (brd.at(bj) == '.') brd.rs(bj) = '!';
+  ll N; cin >> N;
+  // @InpVec(N, P, dec=1) [rpbCKrWa]
+  auto P = vector(N, ll());
+  for (int i = 0; i < N; i++) { ll v; cin >> v; v -= 1; P[i] = v; }
+  // @End [rpbCKrWa]
+
+  vector<ll> revP(N);
+  REP(i, 0, N) revP[P[i]] = i;
+  
+  ll c = 0;
+  itv_set<ll> is(0, N, -1LL);
+  auto g = [&](ll i) -> void {
+    ll v = (P[i] - c > 0) == (i % 2 == 0);
+    is.put(i, v);
+  };
+
+  REP(i, 0, N) g(i);
+  vector<ll> ans(N);
+  for (c = 0; c < N; c++) {
+    if (c > 0) g(revP[c - 1]);
+    ll p = revP[c];
+    if (p == 0) {
+      ll w = 0;
+      ll j = 1;
+      for (; j < N; j++) {
+        w += (P[j] - c > 0 ? 1 : -1);
+        if (abs(w) >= 2) break;
       }
-    };
-    if (brd.at(i, j) == 'S') start = bi;
-    if (brd.at(i, j) == 'G') goal  = bi;
-    if (brd.at(i, j) == '<') f(BrdIdx(0, -1));
-    if (brd.at(i, j) == '>') f(BrdIdx(0, 1));
-    if (brd.at(i, j) == 'v') f(BrdIdx(1, 0));
-    if (brd.at(i, j) == '^') f(BrdIdx(-1, 0));
-  }
-  // cerr << brd << endl;
-  ll big = 1e18;
-  Board dist(H, W, big);
-  dist.rs(start) = 0;
-  queue<BrdIdx> que;
-  que.push(start);
-  while (not que.empty()) {
-    auto bi = que.front(); que.pop();
-    DLOGKL("popped", bi);
-    for (auto dir : BrdIdx::nbr4) {
-      auto bj = bi + dir;
-      if (brd.at(bj) == 'G') {
-        cout << dist.at(bi) + 1 << endl;
-        return 0;
+      if (j == N) ans[0] = -1;
+      else ans[0] = j + 1;
+    }else if (p == N - 1) {
+      ll w = 0;
+      ll j = N - 2;
+      for (; j >= 0; j--) {
+        w += (P[j] - c > 0 ? 1 : -1);
+        if (abs(w) >= 2) break;
       }
-      if (brd.at(bj) == '.' and dist.at(bj) == big) {
-        dist.rs(bj) = dist.at(bi) + 1;
-        que.push(bj);
+      if (j == -1) ans[N - 1] = -1;
+      else ans[N - 1] = N - j;
+    }else {
+      is.put(p, -1LL);
+      auto [a1, b1, c1] = is.get(p - 1);
+      auto [a2, b2, c2] = is.get(p + 1);
+      if (c1 == c2) {
+        ans[p] = 3;
+      }else {
+        if (a1 > 0 and b2 < N) {
+          ll len = min(b1 - a1, b2 - a2);
+          if (len % 2 == 0) ans[p] = len + 3;
+          else ans[p] = ans[p] = len + 2;
+        }else if (b2 < N) {
+          ll len = b2 - a2;
+          if (len % 2 == 0) ans[p] = len + 3;
+          else ans[p] = ans[p] = len + 2;
+        }else if (a1 > 0) {
+          ll len = b1 - a1;
+          if (len % 2 == 0) ans[p] = len + 3;
+          else ans[p] = ans[p] = len + 2;
+        }else {
+          ans[p] = -1;
+        }
       }
     }
   }
-  cout << -1 << endl;
+  REPOUT(i, 0, N, ans[i], " ");
 
   return 0;
 }
