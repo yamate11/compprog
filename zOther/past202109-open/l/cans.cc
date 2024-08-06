@@ -2,6 +2,7 @@
 #include <cassert>
 using namespace std;
 using ll = long long int;
+using u64 = unsigned long long;
 using pll = pair<ll, ll>;
 // #include <atcoder/all>
 // using namespace atcoder;
@@ -11,52 +12,94 @@ using pll = pair<ll, ll>;
 #define SIZE(v) ((ll)((v).size()))
 #define REPOUT(i, a, b, exp, sep) REP(i, (a), (b)) cout << (exp) << (i + 1 == (b) ? "" : (sep)); cout << "\n"
 
-// @@ !! LIM(binsearch segTree coordCompr)
+// @@ !! LIM(binsearch segTree debug)
 
 // ---- inserted library file binsearch.cc
 
-template<typename T>
-T binsearch_i(auto check, T yes, T no, T err = (T)1) {
-  while (abs(yes - no) > err) {
-    T mid = (yes + no) / 2;
+template <typename T>
+requires integral<T>
+T binsearch(auto check, T yes, T no) {
+  while (abs(no - yes) > 1) {
+    T mid = yes + (no - yes) / 2;  // avoiding unnecessary overflow
     if (check(mid)) yes = mid;
     else            no  = mid;
   }
   return yes;
 }
 
-template<typename T>
-T binsearch_r(auto check, T yes, T no, T err, bool rel = true) {
-  while (abs(yes - no) > err &&
-         (!rel || abs(yes - no) > abs(yes) * err)) {
+template <typename T>
+requires floating_point<T>
+T binsearch(auto check, T yes, T no, T err, const bool abs_only = false) {
+  T rep_in_t = ceil(log(abs(yes - no) / err) / log(2.0));
+  constexpr int lim = INT_MAX - 10;
+  int rep = rep_in_t > (T)lim ? lim : llround(rep_in_t) + 1;
+  for (int r = 0; r < rep; r++) {
     T mid = (yes + no) / 2.0;
+    if (not abs_only) {
+      if (abs(yes - mid) < err * min(abs(mid), abs(yes))) return mid;
+    }
     if (check(mid)) yes = mid;
     else            no  = mid;
   }
   return yes;
-}
-
-ll border_with_hint(ll t, auto pred, auto hint) {
-  double y = hint(t);
-  double d = floor(y);
-  double e = ceil(y);
-  bool rd = pred(d, t);
-  bool re = pred(e, t);
-  if (rd && !re) return d;
-  if (!rd && re) return e;
-  for (ll i = 1; true; i++) {
-    bool rd_i = pred(d - i, t);
-    if (rd_i && !rd) return d - i;
-    if (!rd_i && rd) return d - (i - 1);
-    bool re_i = pred(e + i, t);
-    if (re_i && !re) return e + i;
-    if (!re_i && re) return e + (i - 1);
-  }
 }
 
 // ---- end binsearch.cc
 
 // ---- inserted function f:<< from util.cc
+
+// declarations
+
+template <typename T1, typename T2>
+ostream& operator<< (ostream& os, const pair<T1,T2>& p);
+
+template <typename T1, typename T2, typename T3>
+ostream& operator<< (ostream& os, const tuple<T1,T2,T3>& t);
+
+template <typename T1, typename T2, typename T3, typename T4>
+ostream& operator<< (ostream& os, const tuple<T1,T2,T3,T4>& t);
+
+template <typename T>
+ostream& operator<< (ostream& os, const vector<T>& v);
+
+template <typename T, typename C>
+ostream& operator<< (ostream& os, const set<T, C>& v);
+
+template <typename T, typename C>
+ostream& operator<< (ostream& os, const unordered_set<T, C>& v);
+
+template <typename T, typename C>
+ostream& operator<< (ostream& os, const multiset<T, C>& v);
+
+template <typename T1, typename T2, typename C>
+ostream& operator<< (ostream& os, const map<T1, T2, C>& mp);
+
+template <typename T1, typename T2, typename C>
+ostream& operator<< (ostream& os, const unordered_map<T1, T2, C>& mp);
+
+template <typename T, typename T2>
+ostream& operator<< (ostream& os, const queue<T, T2>& orig);
+
+template <typename T, typename T2>
+ostream& operator<< (ostream& os, const deque<T, T2>& orig);
+
+template <typename T, typename T2, typename T3>
+ostream& operator<< (ostream& os, const priority_queue<T, T2, T3>& orig);
+
+template <typename T>
+ostream& operator<< (ostream& os, const stack<T>& st);
+
+#if __cplusplus >= 201703L
+template <typename T>
+ostream& operator<< (ostream& os, const optional<T>& t);
+#endif
+
+ostream& operator<< (ostream& os, int8_t x);
+
+ostream& operator<< (ostream& os, const __int128& x);
+
+// definitions
+
 template <typename T1, typename T2>
 ostream& operator<< (ostream& os, const pair<T1,T2>& p) {
   os << "(" << p.first << ", " << p.second << ")";
@@ -221,6 +264,36 @@ ostream& operator<< (ostream& os, int8_t x) {
   return os;
 }
 
+// for Enum type; just displays ordinals.
+template <typename E>
+typename std::enable_if<std::is_enum<E>::value, std::ostream&>::type
+operator<<(std::ostream& os, E e) {
+    return os << static_cast<typename std::underlying_type<E>::type>(e);
+}
+
+// This is a very ad-hoc implementation...
+ostream& operator<<(ostream& os, const __int128& v) {
+  unsigned __int128 a = v < 0 ? -v : v;
+  ll i = 0;
+  string s(64, ' ');
+  if (v == 0) {
+    s[i++] = '0';
+  }else {
+    while (a > 0) {
+      s[i++] = '0' + (char)(a % 10);
+      a /= 10;
+    }
+  }
+  if (v < 0) {
+    s[i++] = '-';
+  }
+  s.erase(s.begin() + i, s.end());
+  reverse(s.begin(), s.end());
+  os << s;
+  return os;
+}
+
+
 // ---- end f:<<
 
 // ---- inserted library file segTree.cc
@@ -228,9 +301,47 @@ ostream& operator<< (ostream& os, int8_t x) {
 // It seems that we should keep the size power of two,
 // considering the binary search.
 
+pair<int, int> segtree_range_of_node(int ht, unsigned i) {
+  unsigned m = bit_floor(i);
+  unsigned w = ht + 1 - bit_width(i);
+  int lo = (i ^ m) << w;
+  int hi = lo + (1LL << w);
+  return make_pair(lo, hi);
+}
+
+vector<int> segtree_nodes_for_range(int ht, unsigned lo, unsigned hi) {
+  vector<int> left;
+  vector<int> right;
+  lo = (1 << ht) + lo;
+  hi = (1 << ht) + hi - 1;
+  while (lo <= hi) {
+    if (lo == hi) {
+      left.push_back(lo);
+      break;
+    }
+    if (lo & 1) {
+      left.push_back(lo);
+      lo++;
+    }
+    if (not (hi & 1)) {
+      right.push_back(hi);
+      hi--;
+    }
+    lo >>= 1;
+    hi >>= 1;
+  }
+  while (not right.empty()) {
+    left.push_back(right.back());
+    right.pop_back();
+  }
+  return left;
+}
+
 template <typename DAT, typename OP,
 	  typename ADD_t, typename COMP_t, typename APPL_t, bool lazy> 
 struct GenSegTree {
+  using GST = GenSegTree<DAT, OP, ADD_t, COMP_t, APPL_t, lazy>;
+
   int orig_size;     // size of initdat
   int size;	     // power of two; >= 2
   int height;        // size = 1 << height;
@@ -247,16 +358,16 @@ struct GenSegTree {
   COMP_t comp;
   APPL_t appl;
     
-  GenSegTree(DAT unit_dat_, OP unit_op_, ADD_t add_, COMP_t comp_, APPL_t appl_, const vector<DAT>& initdat)
-    : orig_size(initdat.size()), unit_dat(unit_dat_), unit_op(unit_op_),
-      add(add_), comp(comp_), appl(appl_) { _set_data(initdat); }
+  GenSegTree() {}
 
-  void _set_data(const vector<DAT>& initdat) {
-    if (initdat.size() <= 0) {
-      cerr << "the size of initial vector must be >= 1" << endl;
-      abort();
-    }
-    if (initdat.size() == 1) height = 0;
+  GenSegTree(DAT unit_dat_, OP unit_op_, ADD_t add_, COMP_t comp_, APPL_t appl_,
+             const vector<DAT>& initdat = vector<DAT>())
+    : unit_dat(unit_dat_), unit_op(unit_op_),
+      add(add_), comp(comp_), appl(appl_) { set_data(initdat); }
+
+  void set_data(const vector<DAT>& initdat) {
+    orig_size = initdat.size();
+    if (initdat.size() <= 1) height = 0;
     else   height = sizeof(int) * 8 - __builtin_clz(initdat.size() - 1);
     size = 1 << height;
     node.resize(2*size, unit_dat);
@@ -323,13 +434,37 @@ struct GenSegTree {
     return ret;
   }
 
+  const DAT& at(int i) {
+    if constexpr(lazy) push_upto(size + i, size + i + 1);
+    return node[size + i];
+  }
+
+  const DAT& set_single(int i, const DAT& t) {
+    ll x = size + i;
+    if constexpr(lazy) push_upto(x, x + 1);
+    node[x] = t;
+    for (x >>= 1; x >= 1; x >>= 1) node[x] = add(node[x<<1|0], node[x<<1|1]);
+    return t;
+  }
+
+  struct STSubst {
+    GenSegTree& st;
+    int i;
+    STSubst(GenSegTree& st_, int i_) : st(st_), i(i_) {}
+    const DAT& operator=(const DAT& t) { return st.set_single(i, t); }
+  };
+
+  // Reference for Substitution
+  STSubst rs(int i) { return STSubst(*this, i); }
+
+  // obsolete
   template<bool xx = lazy> enable_if_t<! xx> update(int i, DAT t) {
     ll x = size + i;
     node[x] = t;
     for (x >>= 1; x >= 1; x >>= 1) node[x] = add(node[x<<1|0], node[x<<1|1]);
   }
 
-  template<bool xx = lazy> enable_if_t<xx> update(int l, int r, OP f) {
+  template<bool xx = lazy> enable_if_t<xx> update(int l, int r, const OP& f) {
     if (l >= r) return;
     l += size;
     r += size;
@@ -349,16 +484,15 @@ struct GenSegTree {
     child_updated(l0, r0);
   }
 
-  const DAT& operator[](int i) {
-    if constexpr(lazy) push_upto(size + i, size + i + 1);
-    return node[size + i];
-  }
+  pair<int, int> range_of_node(unsigned i) { return segtree_range_of_node(height, i); }
+
+  vector<int> nodes_for_range(unsigned lo, unsigned hi) { return segtree_nodes_for_range(height, lo, hi); }
 
   friend ostream& operator<<(ostream& os, GenSegTree& st) {
     os << '[';
     for (int i = 0; i < st.orig_size; i++) {
       if (i > 0) os << ", ";
-      os << st[i];
+      os << st.at(i);
     }
     os << ']';
     return os;
@@ -437,31 +571,112 @@ struct GenSegTree {
     return binsearch_l_until([&](DAT x) { return not check(x); }, r) - 1;
   }
 
+  vector<DAT> vec_view() {
+    vector<DAT> ret(orig_size);
+    for (int i = 0; i <  orig_size; i++) ret[i] = at(i);
+    return ret;
+  };
+
 };
 
 template<typename DAT, typename OP>
-auto make_seg_tree_lazy(DAT unit_dat, OP unit_op, auto add, auto comp, auto appl, const vector<DAT>& initdat) {
-// -> GenSegTree<DAT, OP, decltype(add), decltype(comp), decltype(appl), true> {
+auto make_seg_tree_lazy(DAT unit_dat, OP unit_op, auto add, auto comp, auto appl,
+                        const vector<DAT>& initdat = vector<DAT>()) {
   using ret_t = GenSegTree<DAT, OP, decltype(add), decltype(comp), decltype(appl), true>;
   return ret_t(unit_dat, unit_op, add, comp, appl, initdat);
 }
 
+void* dummy_comp(void* x, void* y) { return nullptr; }
 template<typename DAT>
-auto make_seg_tree(DAT unit_dat, auto add, const vector<DAT>& initdat) {
-  //  -> GenSegTree<DAT, void *, decltype(add), decltype(comp), decltype(appl), true> {
-  auto dummy_comp = [](void* x, void* y) -> void* { return nullptr; };
-  auto dummy_appl = [](void* f, DAT x) -> DAT { return DAT(); };
-  using ret_t = GenSegTree<DAT, void*, decltype(add), decltype(dummy_comp), decltype(dummy_appl), false>;
-  return ret_t(unit_dat, nullptr, add, dummy_comp, dummy_appl, initdat);
+DAT dummy_appl(void* x, const DAT& y) { return y; }
+
+template<typename DAT>
+auto make_seg_tree(DAT unit_dat, auto add, const vector<DAT>& initdat = vector<DAT>()) {
+  using ret_t = GenSegTree<DAT, void*, decltype(add), void* (*)(void*, void*), DAT (*)(void*, const DAT&), false>;
+  return ret_t(unit_dat, nullptr, add, dummy_comp, dummy_appl<DAT>, initdat);
 }
 
-
 // ---- end segTree.cc
+
+// ---- inserted library file debug.cc
+template <class... Args>
+string dbgFormat(const char* fmt, Args... args) {
+  size_t len = snprintf(nullptr, 0, fmt, args...);
+  char buf[len + 1];
+  snprintf(buf, len + 1, fmt, args...);
+  return string(buf);
+}
+
+template <class Head>
+void dbgLog(bool with_nl, Head&& head) {
+  cerr << head;
+  if (with_nl) cerr << endl;
+}
+
+template <class Head, class... Tail>
+void dbgLog(bool with_nl, Head&& head, Tail&&... tail)
+{
+  cerr << head << " ";
+  dbgLog(with_nl, forward<Tail>(tail)...);
+}
+
+#if DEBUG
+  #define DLOG(...)        dbgLog(true, __VA_ARGS__)
+  #define DLOGNNL(...)     dbgLog(false, __VA_ARGS__)
+  #define DFMT(...)        cerr << dbgFormat(__VA_ARGS__) << endl
+  #define DCALL(func, ...) func(__VA_ARGS__)
+#else
+  #define DLOG(...)
+  #define DLOGNNL(...)
+  #define DFMT(...)
+  #define DCALL(func, ...)
+#endif
+
+/*
+#if DEBUG_LIB
+  #define DLOG_LIB(...)        dbgLog(true, __VA_ARGS__)
+  #define DLOGNNL_LIB(...)     dbgLog(false, __VA_ARGS__)
+  #define DFMT_LIB(...)        cerr << dbgFormat(__VA_ARGS__) << endl
+  #define DCALL_LIB(func, ...) func(__VA_ARGS__)
+#else
+  #define DLOG_LIB(...)
+  #define DFMT_LIB(...)
+  #define DCALL_LIB(func, ...)
+#endif
+*/
+
+#define DUP1(E1)       #E1 "=", E1
+#define DUP2(E1,E2)    DUP1(E1), DUP1(E2)
+#define DUP3(E1,...)   DUP1(E1), DUP2(__VA_ARGS__)
+#define DUP4(E1,...)   DUP1(E1), DUP3(__VA_ARGS__)
+#define DUP5(E1,...)   DUP1(E1), DUP4(__VA_ARGS__)
+#define DUP6(E1,...)   DUP1(E1), DUP5(__VA_ARGS__)
+#define DUP7(E1,...)   DUP1(E1), DUP6(__VA_ARGS__)
+#define DUP8(E1,...)   DUP1(E1), DUP7(__VA_ARGS__)
+#define DUP9(E1,...)   DUP1(E1), DUP8(__VA_ARGS__)
+#define DUP10(E1,...)   DUP1(E1), DUP9(__VA_ARGS__)
+#define DUP11(E1,...)   DUP1(E1), DUP10(__VA_ARGS__)
+#define DUP12(E1,...)   DUP1(E1), DUP11(__VA_ARGS__)
+#define GET_MACRO(_1,_2,_3,_4,_5,_6,_7,_8,_9,_10,_11,_12,NAME,...) NAME
+#define DUP(...)          GET_MACRO(__VA_ARGS__, DUP12, DUP11, DUP10, DUP9, DUP8, DUP7, DUP6, DUP5, DUP4, DUP3, DUP2, DUP1)(__VA_ARGS__)
+#define DLOGK(...)        DLOG(DUP(__VA_ARGS__))
+#define DLOGKL(lab, ...)  DLOG(lab, DUP(__VA_ARGS__))
+
+#if DEBUG_LIB
+  #define DLOG_LIB   DLOG
+  #define DLOGK_LIB  DLOGK
+  #define DLOGKL_LIB DLOGKL
+#endif
+
+// ---- end debug.cc
+
+// @@ !! LIM -- end mark --
+
 
 // ---- inserted library file coordCompr.cc
 
 template<typename T = ll, typename MAP = unordered_map<T, int>>
-class CoordCompr {
+struct CoordCompr {
   bool built;
   MAP mp;
                        // map from an original value to a compressed value
@@ -510,47 +725,52 @@ public:
 
 // ---- end coordCompr.cc
 
-// @@ !! LIM -- end mark --
-
-
 int main(/* int argc, char *argv[] */) {
   ios_base::sync_with_stdio(false);
   cin.tie(nullptr);
   cout << setprecision(20);
 
+  ll lim = 1e15;
   ll N, K; cin >> N >> K;
-  // @InpVec(N, A) [nxVpgZy9]
+  // @InpVec(N, A) [W5BH14zJ]
   auto A = vector(N, ll());
   for (int i = 0; i < N; i++) { ll v; cin >> v; A[i] = v; }
-  // @End [nxVpgZy9]
+  // @End [W5BH14zJ]
+
   vector<ll> S(N + 1);
   REP(i, 0, N) S[i + 1] = S[i] + A[i];
-  auto SS = S;
-  sort(ALL(SS));
-  SS.erase(unique(SS.begin(), SS.end()), SS.end());
-  
-  auto check = [&](ll v) -> bool {
-    CoordCompr cc;
-    REP(i, 0, N + 1) {
-      cc.add(S[i]);
-      // cc.add(S[i] + v);
-      // cc.add(S[i] - v);
-    }
-    ll sz = cc.size();
-    auto st = make_seg_tree<ll>(0LL, plus<ll>(), vector<ll>(sz));
+  CoordCompr cc;
+  cc.add(lim);
+  cc.add(-lim);
+  vector<ll> P(N);
+  REP(i, 0, N) {
+    P[i] = A[i] - S[i + 1];
+    cc.add(P[i]);
+  }
+  ll sz = cc.size();
+  DLOGK(cc.rev);
+  auto check = [&](ll t) -> bool {
+    auto st = make_seg_tree(0LL, plus<ll>(), vector<ll>(sz, 0LL));
     ll cnt = 0;
-    REPrev(i, N, 0) {
-      ll a = lower_bound(ALL(SS), S[i] - v) - SS.begin();
-      ll b = upper_bound(ALL(SS), S[i] + v) - SS.begin();
-      // cnt += st.query(cc.c(S[i] - v), cc.c(S[i] + v) + 1);
-      cnt += st.query(a, b);
-      ll ci = cc.c(S[i]);
-      st.update(ci, st[ci] + 1);
+    REP(i, 0, N) {
+      ll j = cc.c(P[i]);
+      st.rs(j) = st.at(j) + 1;
+      ll lo_orig = -t - S[i + 1];
+      ll lo_idx = lower_bound(ALL(cc.rev), lo_orig) - cc.rev.begin();
+      ll hi_orig = t - S[i + 1];
+      ll hi_idx = upper_bound(ALL(cc.rev), hi_orig) - cc.rev.begin();
+      DLOGK(t, i, lo_idx, hi_idx);
+      if (lo_idx < hi_idx) {
+        ll v = st.query(lo_idx, hi_idx);
+        DLOGK(t, i, v);
+        cnt += v;
+      }
     }
+    DLOGK(t, cnt);
     return cnt >= K;
   };
-  ll ans = binsearch_i<ll>(check, 3.1e14, -1);
-  cout << ans << endl;
+  ll t = binsearch<ll>(check, lim, -1);
+  cout << t << endl;
 
   return 0;
 }

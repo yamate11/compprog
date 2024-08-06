@@ -1,11 +1,108 @@
 #include <bits/stdc++.h>
 #include <cassert>
-typedef long long int ll;
 using namespace std;
+using ll = long long int;
+using u64 = unsigned long long;
+using pll = pair<ll, ll>;
 // #include <atcoder/all>
 // using namespace atcoder;
+#define REP(i, a, b) for (ll i = (a); i < (b); i++)
+#define REPrev(i, a, b) for (ll i = (a); i >= (b); i--)
+#define ALL(coll) (coll).begin(), (coll).end()
+#define SIZE(v) ((ll)((v).size()))
+#define REPOUT(i, a, b, exp, sep) REP(i, (a), (b)) cout << (exp) << (i + 1 == (b) ? "" : (sep)); cout << "\n"
 
-// @@ !! LIM(geometry UnionFind debug)
+// @@ !! LIM(ipoint geometry UnionFind)
+
+// ---- inserted library file ipoint.cc
+
+struct IPoint {
+  ll x;
+  ll y;
+  IPoint(ll x_ = 0, ll y_ = 0) : x(x_), y(y_) {}
+
+  IPoint rotate(int r = 1) const {
+    ll rd = r % 4;
+    ll rr = r >= 0 ? rd : rd == 0 ? 0 : rd + 4;
+    if      (rr == 0) return IPoint( x,  y);
+    else if (rr == 1) return IPoint(-y,  x);
+    else if (rr == 2) return IPoint(-x, -y);
+    else if (rr == 3) return IPoint( y, -x);
+    assert(0);
+  }
+
+  IPoint mirror_x() const { return IPoint(x, -y); }
+  IPoint mirror_y() const { return IPoint(-x, y); }
+
+  IPoint& operator +=(const IPoint& o) {
+    x += o.x;
+    y += o.y;
+    return *this;
+  }
+
+  IPoint& operator -=(const IPoint& o) {
+    x -= o.x;
+    y -= o.y;
+    return *this;
+  }
+
+  IPoint& operator *=(ll k) {
+    x *= k;
+    y *= k;
+    return *this;
+  }
+
+  bool operator ==(const IPoint& o) const { return x == o.x && y == o.y; }
+  bool operator !=(const IPoint& o) const { return x != o.x || y != o.y; }
+  IPoint operator +(const IPoint& o) const { return IPoint(x, y) += o; }
+  IPoint operator -(const IPoint& o) const { return IPoint(x, y) -= o; }
+  IPoint operator *(ll k) const { return IPoint(x, y) *= k; }
+  IPoint operator -() const { return IPoint(-x, -y); }
+
+  bool operator <(const IPoint& o) const {
+    // This seems awkward, but is needed for storing objects in maps.
+    if (x != o.x) return x < o.x;
+    else return y < o.y;
+  }
+
+  bool parallel(const IPoint o) const { return x * o.y == y * o.x; }
+
+  // For "argument sort".  The origin is treated as the maximum.
+  static bool lt_arg(const IPoint& p1, const IPoint& p2) {
+    bool b1 = p1.y > 0 or (p1.y == 0 and p1.x > 0);
+    bool b2 = p2.y > 0 or (p2.y == 0 and p2.x > 0);
+    if (b1 != b2) return b1;
+    else return p1.x * p2.y > p1.y * p2.x;
+  }
+
+};
+    
+IPoint operator *(ll k, const IPoint& p) { return p * k; }
+istream& operator >>(istream& is, IPoint& p) {
+  ll x_, y_; is >> x_ >> y_;
+  p.x = x_;
+  p.y = y_;
+  return is;
+}
+ostream& operator <<(ostream& os, const IPoint& p) {
+  os << "(" << p.x << ", " << p.y << ")";
+  return os;
+}
+
+namespace std {
+  template<>
+  struct hash<IPoint> {
+    std::size_t operator()(const IPoint& p) const {
+      static const uint64_t frand = chrono::steady_clock::now().time_since_epoch().count();
+      static const uint64_t a = (frand ^ 0x9e3779b97f4a7c15) | 1;
+      static const uint64_t b = (frand ^ 0xbf58476d1ce4e5b9) | 1;
+      return a * (uint64_t)p.x + b * (uint64_t)p.y;
+    }
+  };
+}
+
+
+// ---- end ipoint.cc
 
 // ---- inserted library file rerror.cc
 
@@ -18,23 +115,20 @@ using Real = double;
 // Default Error Value.
 Real g_err = 1e-9;    // Too small value is not good.
 
-bool r_eq(Real x, Real y, Real err = g_err) {
-  return abs(x - y) <= err || abs(x - y) <= abs(x) * err;
+bool may_eq(Real x, Real y, Real err = g_err, bool abs_only = false) {
+  return abs(x - y) <= err or (not abs_only and abs(x - y) <= abs(x) * err);
 }
-bool r_le(Real x, Real y, Real err = g_err) {
-  return x - y <= err || x - y <= abs(x) * err;
+bool may_le(Real x, Real y, Real err = g_err, bool abs_only = false) {
+  return x - y <= err or (not abs_only and x - y <= abs(x) * err);
 }
-bool r_ge(Real x, Real y, Real err = g_err) { return r_le(y, x, err); }
-bool r_gt(Real x, Real y, Real err = g_err) { return !r_le(x, y, err); }
-bool r_lt(Real x, Real y, Real err = g_err) { return !r_le(y, x, err); }
-bool r_ne(Real x, Real y, Real err = g_err) { return !r_eq(x, y, err); }
+bool may_ge(Real x, Real y, Real err = g_err, bool abs_only = false) {
+  return y - x <= err or (not abs_only and y - x <= abs(x) * err);
+}
 
-bool rp_eq(Real x, Real y, Real err = g_err) { return abs(x - y) <= err; }
-bool rp_le(Real x, Real y, Real err = g_err) { return x - y <= err; }
-bool rp_ge(Real x, Real y, Real err = g_err) { return rp_le(y, x, err); }
-bool rp_gt(Real x, Real y, Real err = g_err) { return !rp_le(x, y, err); }
-bool rp_lt(Real x, Real y, Real err = g_err) { return !rp_le(y, x, err); }
-bool rp_ne(Real x, Real y, Real err = g_err) { return !rp_eq(x, y, err); }
+bool may_eq_abs_only(Real x, Real y, Real err = g_err) { return may_eq(x, y, err, true); }
+bool may_le_abs_only(Real x, Real y, Real err = g_err) { return may_le(x, y, err, true); }
+bool may_ge_abs_only(Real x, Real y, Real err = g_err) { return may_ge(x, y, err, true); }
+
 
 // ---- end rerror.cc
 
@@ -69,7 +163,7 @@ struct Point {
   bool operator ==(const Point& p) const { return x == p.x && y == p.y; }
   bool operator !=(const Point& p) const { return ! (*this == p); }
   bool sim(const Point& p, Real err = g_err) const {
-    return r_eq(x, p.x, err) && r_eq(y, p.y, err);
+    return may_eq(x, p.x, err) && may_eq(y, p.y, err);
   }
   static bool sim(const Point& p1, const Point& p2,
 		      Real err = g_err) { return p1.sim(p2, err); }
@@ -94,7 +188,7 @@ struct Point {
   Point rotateQ() const { return Point(-y, x); }
 
   bool parallel(const Point& p, Real err = g_err) const {
-    return r_eq(x * p.y, y * p.x, err);
+    return may_eq(x * p.y, y * p.x, err);
   }
 
   Real innerProd(const Point& p) const { return x * p.x + y * p.y; }
@@ -108,9 +202,8 @@ struct Point {
 };
 
 Point operator *(Real k, const Point& p) { return p * k; }
-ostream& operator <<(ostream& os, const Point& p) {
-  return os << "(" << p.x << ", " << p.y << ")";
-}
+istream& operator >>(istream& is, Point& p) { is >> p.x >> p.y; return is; }
+ostream& operator <<(ostream& os, const Point& p) { return os << "(" << p.x << ", " << p.y << ")"; }
 
 struct Line;
 ostream& operator <<(ostream& os, const Line& l);
@@ -154,8 +247,8 @@ struct Line {
   int ptSide(const Point& p, Real err = g_err) const {
     Real t1 = dir.y * (p.x - base.x);
     Real t2 = dir.x * (p.y - base.y);
-    if (r_eq(t1, t2, err)) return SIDE_ON;
-    if (r_lt(t1, t2, err)) return SIDE_P;
+    if (may_eq(t1, t2, err)) return SIDE_ON;
+    if (may_le(t1, t2, err)) return SIDE_P;
     return SIDE_N;
   }
 
@@ -203,7 +296,7 @@ struct Line {
 };
 
 ostream& operator <<(ostream& os, const Line& l) {
-  return os << "[d " << l.dir << ", b " << l.base << ")";
+  return os << "[d " << l.dir << ", b " << l.base << "]";
 }
 Line Line::x_axis(Point(1,0), Point(0,0));
 Line Line::y_axis(Point(0,1), Point(0,0));
@@ -218,13 +311,13 @@ struct Circle {
   bool operator ==(const Circle& o) const { return c == o.c && r == o.r; }
   bool operator !=(const Circle& o) const { return ! (*this == o); }
   bool sim(const Circle& o, Real err = g_err) const {
-    return c.sim(o.c, err) && r_eq(r, o.r, err);
+    return c.sim(o.c, err) && may_eq(r, o.r, err);
   }
   static bool sim(const Circle& c1, const Circle& c2,
 		  Real err = g_err) { return c1.sim(c2, err); }
 
   bool ptOn(const Point& p, Real err = g_err) const {
-    return r_eq((p - c).len(), r, err);
+    return may_eq((p - c).len(), r, err);
   }
 
   tuple<bool, Point, Point> intersect(const Line& o) const {
@@ -343,12 +436,30 @@ tuple<Real, int, int> convex_diameter(const vector<Point>& pts) {
   return make_tuple(vmax, k0 % n, m0 % n);
 }
 
+// The polygon should be convex.  Vector vs should be in counter-clockwise
+int in_polygon(const Point& pt, const vector<Point>& vs) {
+  int sz = vs.size();
+  bool on_edge = false;
+  for (int i = 0; i < sz; i++) {
+    int c = Line::connect(vs[i], vs[(i + 1) % sz]).ptSide(pt);
+    if (c == Line::SIDE_N) return Line::SIDE_N;
+    if (c == Line::SIDE_ON) on_edge = true;
+  }
+  return on_edge ? Line::SIDE_ON : Line::SIDE_P;
+}
+
+int in_triangle(const Point& pt, const Point& A, const Point& B, const Point& C) {
+  if (Line::connect(A, B).ptSide(C) == Line::SIDE_P) return in_polygon(pt, vector<Point>{A, B, C});
+  else return in_polygon(pt, vector<Point>{B, A, C});
+}
+
+/*
 int in_triangle(const Point& pt, const Point& tr0,
 		const Point& tr1, const Point& tr2) {
   auto chk = [&](const Point& b, const Point& e, const Point& p) -> bool {
     Point be = e - b;
     Point bp = p - b;
-    Real r = r_eq(be.x, 0.0) ? bp.y / be.y : bp.x / be.x;
+    Real r = may_eq(be.x, 0.0) ? bp.y / be.y : bp.x / be.x;
     return 0.0 <= r && r <= 1.0;
   };
 
@@ -368,323 +479,123 @@ int in_triangle(const Point& pt, const Point& tr0,
       l20.ptSide(pt) == Line::SIDE_ON) return Line::SIDE_ON;
   return Line::SIDE_P;
 }
+*/
 
 // ---- end geometry.cc
 
 // ---- inserted library file UnionFind.cc
 
-class UnionFind {
-protected:
+struct UFDummyAlg {
+  static UFDummyAlg zero;
+  UFDummyAlg(int x = 0) {}
+  UFDummyAlg operator -() const { return *this; }
+  UFDummyAlg operator +(const UFDummyAlg& o) const { return *this; }
+};
+UFDummyAlg UFDummyAlg::zero;
+
+template<typename T = UFDummyAlg, typename oplus_t = decltype(plus<T>()), typename onegate_t = decltype(negate<T>())>
+struct UnionFind {
+
+  struct GroupInfo {
+    UnionFind& uf;
+    vector<vector<int>> _groups;
+    GroupInfo(UnionFind& uf_) : uf(uf_), _groups(uf.size) {
+      for (int j = 0; j < uf.size; j++) {
+        if (uf.leader(j) == j) {
+          _groups[j].resize(uf.group_size(j));
+          _groups[j].resize(0);
+        }
+      }
+      for (int j = 0; j < uf.size; j++) _groups[uf.leader(j)].push_back(j);
+    }
+    const vector<int>& group(int i) { return _groups[uf.leader(i)]; }
+  };
+
   int size;
+  T zero;
+  oplus_t oplus;
+  onegate_t onegate;
   vector<int> _leader;
-  vector<int> _rank;
+  vector<optional<T>> _pot;
   vector<int> _gsize;
-  unordered_map<int, vector<int>> _groups;
+  int _num_groups;
+  static constexpr bool _with_pot = not is_same_v<T, UFDummyAlg>;
   
-public:
-  UnionFind(int s);
-  int leader(int i);
-  int merge(int i, int j);
-  int groupSize(int i);
-  const unordered_map<int, vector<int>>& groups();
-  const vector<int>& group(int i);
+  UnionFind() : size(0), zero((T)0), oplus(plus<T>()), onegate(negate<T>()),
+                _leader(0), _pot(0), _gsize(0), _num_groups(0) {}
+
+  UnionFind(int size_, T zero_ = (T)0, oplus_t oplus_ = plus<T>(), onegate_t onegate_ = negate<T>())
+    : size(size_), zero(zero_), oplus(oplus_), onegate(onegate_),
+      _leader(size, -1), _pot(0), _gsize(size, 1), _num_groups(size) {
+    if constexpr (_with_pot) _pot.resize(size, zero);
+  }
+
+  void set_size(int size_) {
+    size = size_;
+    _leader.resize(size, -1);
+    if constexpr (_with_pot) _pot.resize(size, zero);
+    _gsize.resize(size, 1);
+  }
+
+  int merge(int i, int j, T p) {
+    int li = leader(i);
+    int lj = leader(j);
+    optional<T> ld_p;
+    if constexpr (_with_pot) {
+      if (_pot[i] and _pot[j]) ld_p = oplus(p, oplus(*_pot[j], onegate(*_pot[i])));
+      else                     ld_p = nullopt;
+    }
+    if (li == lj) {
+      if constexpr (_with_pot) { if (not (ld_p and *ld_p == zero)) _pot[li] = nullopt; }
+      return lj;
+    }
+    _num_groups--;
+    if (_gsize[lj] < _gsize[li]) {
+      swap(li, lj);
+      if constexpr (_with_pot) if (ld_p) ld_p = onegate(*ld_p);
+    }
+    // lj is the newleader
+    _gsize[lj] += _gsize[li];
+    _leader[li] = lj;
+    if constexpr (_with_pot) {
+      if (_pot[lj] and _pot[li]) _pot[li] = ld_p;
+      else _pot[lj] = nullopt;
+    }
+    return lj;
+  }
+
+  template<typename U = T>
+  enable_if_t<is_same_v<U, UFDummyAlg>, int> merge(int i, int j) { return merge(i, j, zero); }
+
+  void _leaderpot(int i) {
+    int oj = _leader[i];
+    if (oj < 0) return;
+    int nj = _leader[i] = leader(oj);
+    if constexpr (_with_pot) {
+      if (_pot[nj]) _pot[i] = oplus(*_pot[i], *_pot[oj]);
+      else _pot[i] = nullopt;
+    }
+  }
+  int leader(int i) {
+    _leaderpot(i);
+    return _leader[i] < 0 ? i : _leader[i];
+  }
+  optional<T> pot(int i)  { _leaderpot(i); return _pot[i]; }
+
+  int group_size(int i) { return _gsize[leader(i)]; }
+
+  int num_groups() { return _num_groups; }
+
+  GroupInfo group_info() { return GroupInfo(*this); }
+
 };
 
-UnionFind::UnionFind(int s) {
-  size = s;
-  _leader = vector<int>(size);
-  for (int i = 0; i < size; i++) { _leader.at(i) = i; }
-  _rank = vector<int>(size, 1);
-  _gsize = vector<int>(size, 1);
+template<typename T = UFDummyAlg>
+auto makeUnionFind(int size, T zero, auto oplus, auto onegate) {
+  return UnionFind<T, decltype(oplus), decltype(onegate)>(size, zero, oplus, onegate);
 }
-
-int UnionFind::leader(int i) {
-  int cur = i;
-  int nxt = _leader.at(cur);
-  vector<int> seen;
-  while (cur != nxt) {
-    seen.push_back(cur);
-    cur = nxt;
-    nxt = _leader.at(cur);
-  }
-  for (auto j : seen) _leader.at(j) = cur;
-  return cur;
-}
-
-int UnionFind::merge(int i0, int j0) {
-  if (!_groups.empty()) {
-    cerr << "merge() cannot be called after group() or groups()." << endl;
-    exit(1);
-  }
-  int li = leader(i0);
-  int lj = leader(j0);
-  if (li == lj) return li;
-  int ri = _rank.at(li);
-  int rj = _rank.at(lj);
-  int rep = li;
-  int other = lj;
-  if      (ri <  rj) swap(rep, other);
-  else if (ri == rj) _rank.at(rep)++;
-  _leader.at(other) = rep;
-  _gsize.at(rep) += _gsize.at(other);
-  return rep;
-}
-
-int UnionFind::groupSize(int i) {
-  return _gsize.at(leader(i));
-}
-
-const unordered_map<int, vector<int>>& UnionFind::groups() {
-  if (_groups.empty()) {
-    for (int i = 0; i < size; i++) _groups[leader(i)].push_back(i);
-  }
-  return _groups;  
-}
-
-const vector<int>& UnionFind::group(int i) { return groups().at(leader(i)); }
-
-
 
 // ---- end UnionFind.cc
-
-// ---- inserted function f:<< from util.cc
-template <typename T1, typename T2>
-ostream& operator<< (ostream& os, const pair<T1,T2>& p) {
-  os << "(" << p.first << ", " << p.second << ")";
-  return os;
-}
-
-template <typename T1, typename T2, typename T3>
-ostream& operator<< (ostream& os, const tuple<T1,T2,T3>& t) {
-  os << "(" << get<0>(t) << ", " << get<1>(t)
-     << ", " << get<2>(t) << ")";
-  return os;
-}
-
-template <typename T1, typename T2, typename T3, typename T4>
-ostream& operator<< (ostream& os, const tuple<T1,T2,T3,T4>& t) {
-  os << "(" << get<0>(t) << ", " << get<1>(t)
-     << ", " << get<2>(t) << ", " << get<3>(t) << ")";
-  return os;
-}
-
-template <typename T>
-ostream& operator<< (ostream& os, const vector<T>& v) {
-  os << '[';
-  for (auto it = v.begin(); it != v.end(); it++) {
-    if (it != v.begin()) os << ", ";
-    os << *it;
-  }
-  os << ']';
-
-  return os;
-}
-
-template <typename T, typename C>
-ostream& operator<< (ostream& os, const set<T, C>& v) {
-  os << '{';
-  for (auto it = v.begin(); it != v.end(); it++) {
-    if (it != v.begin()) os << ", ";
-    os << *it;
-  }
-  os << '}';
-
-  return os;
-}
-
-template <typename T, typename C>
-ostream& operator<< (ostream& os, const unordered_set<T, C>& v) {
-  os << '{';
-  for (auto it = v.begin(); it != v.end(); it++) {
-    if (it != v.begin()) os << ", ";
-    os << *it;
-  }
-  os << '}';
-
-  return os;
-}
-
-template <typename T, typename C>
-ostream& operator<< (ostream& os, const multiset<T, C>& v) {
-  os << '{';
-  for (auto it = v.begin(); it != v.end(); it++) {
-    if (it != v.begin()) os << ", ";
-    os << *it;
-  }
-  os << '}';
-
-  return os;
-}
-
-template <typename T1, typename T2, typename C>
-ostream& operator<< (ostream& os, const map<T1, T2, C>& mp) {
-  os << '[';
-  for (auto it = mp.begin(); it != mp.end(); it++) {
-    if (it != mp.begin()) os << ", ";
-    os << it->first << ": " << it->second;
-  }
-  os << ']';
-
-  return os;
-}
-
-template <typename T1, typename T2, typename C>
-ostream& operator<< (ostream& os, const unordered_map<T1, T2, C>& mp) {
-  os << '[';
-  for (auto it = mp.begin(); it != mp.end(); it++) {
-    if (it != mp.begin()) os << ", ";
-    os << it->first << ": " << it->second;
-  }
-  os << ']';
-
-  return os;
-}
-
-template <typename T, typename T2>
-ostream& operator<< (ostream& os, const queue<T, T2>& orig) {
-  queue<T, T2> que(orig);
-  bool first = true;
-  os << '[';
-  while (!que.empty()) {
-    T x = que.front(); que.pop();
-    if (!first) os << ", ";
-    os << x;
-    first = false;
-  }
-  return os << ']';
-}
-
-template <typename T, typename T2>
-ostream& operator<< (ostream& os, const deque<T, T2>& orig) {
-  deque<T, T2> que(orig);
-  bool first = true;
-  os << '[';
-  while (!que.empty()) {
-    T x = que.front(); que.pop_front();
-    if (!first) os << ", ";
-    os << x;
-    first = false;
-  }
-  return os << ']';
-}
-
-template <typename T, typename T2, typename T3>
-ostream& operator<< (ostream& os, const priority_queue<T, T2, T3>& orig) {
-  priority_queue<T, T2, T3> pq(orig);
-  bool first = true;
-  os << '[';
-  while (!pq.empty()) {
-    T x = pq.top(); pq.pop();
-    if (!first) os << ", ";
-    os << x;
-    first = false;
-  }
-  return os << ']';
-}
-
-template <typename T>
-ostream& operator<< (ostream& os, const stack<T>& st) {
-  stack<T> tmp(st);
-  os << '[';
-  bool first = true;
-  while (!tmp.empty()) {
-    T& t = tmp.top();
-    if (first) first = false;
-    else os << ", ";
-    os << t;
-    tmp.pop();
-  }
-  os << ']';
-  return os;
-}
-
-#if __cplusplus >= 201703L
-template <typename T>
-ostream& operator<< (ostream& os, const optional<T>& t) {
-  if (t.has_value()) os << "v(" << t.value() << ")";
-  else               os << "nullopt";
-  return os;
-}
-#endif
-
-ostream& operator<< (ostream& os, int8_t x) {
-  os << (int32_t)x;
-  return os;
-}
-
-// ---- end f:<<
-
-// ---- inserted library file debug.cc
-template <class... Args>
-string dbgFormat(const char* fmt, Args... args) {
-  size_t len = snprintf(nullptr, 0, fmt, args...);
-  char buf[len + 1];
-  snprintf(buf, len + 1, fmt, args...);
-  return string(buf);
-}
-
-template <class Head>
-void dbgLog(bool with_nl, Head&& head) {
-  cerr << head;
-  if (with_nl) cerr << endl;
-}
-
-template <class Head, class... Tail>
-void dbgLog(bool with_nl, Head&& head, Tail&&... tail)
-{
-  cerr << head << " ";
-  dbgLog(with_nl, forward<Tail>(tail)...);
-}
-
-#if DEBUG
-  #define DLOG(...)        dbgLog(true, __VA_ARGS__)
-  #define DLOGNNL(...)     dbgLog(false, __VA_ARGS__)
-  #define DFMT(...)        cerr << dbgFormat(__VA_ARGS__) << endl
-  #define DCALL(func, ...) func(__VA_ARGS__)
-#else
-  #define DLOG(...)
-  #define DLOGNNL(...)
-  #define DFMT(...)
-  #define DCALL(func, ...)
-#endif
-
-/*
-#if DEBUG_LIB
-  #define DLOG_LIB(...)        dbgLog(true, __VA_ARGS__)
-  #define DLOGNNL_LIB(...)     dbgLog(false, __VA_ARGS__)
-  #define DFMT_LIB(...)        cerr << dbgFormat(__VA_ARGS__) << endl
-  #define DCALL_LIB(func, ...) func(__VA_ARGS__)
-#else
-  #define DLOG_LIB(...)
-  #define DFMT_LIB(...)
-  #define DCALL_LIB(func, ...)
-#endif
-*/
-
-#define DUP1(E1)       #E1 "=", E1
-#define DUP2(E1,E2)    DUP1(E1), DUP1(E2)
-#define DUP3(E1,...)   DUP1(E1), DUP2(__VA_ARGS__)
-#define DUP4(E1,...)   DUP1(E1), DUP3(__VA_ARGS__)
-#define DUP5(E1,...)   DUP1(E1), DUP4(__VA_ARGS__)
-#define DUP6(E1,...)   DUP1(E1), DUP5(__VA_ARGS__)
-#define DUP7(E1,...)   DUP1(E1), DUP6(__VA_ARGS__)
-#define DUP8(E1,...)   DUP1(E1), DUP7(__VA_ARGS__)
-#define DUP9(E1,...)   DUP1(E1), DUP8(__VA_ARGS__)
-#define DUP10(E1,...)   DUP1(E1), DUP9(__VA_ARGS__)
-#define DUP11(E1,...)   DUP1(E1), DUP10(__VA_ARGS__)
-#define DUP12(E1,...)   DUP1(E1), DUP11(__VA_ARGS__)
-#define GET_MACRO(_1,_2,_3,_4,_5,_6,_7,_8,_9,_10,_11,_12,NAME,...) NAME
-#define DUP(...)          GET_MACRO(__VA_ARGS__, DUP12, DUP11, DUP10, DUP9, DUP8, DUP7, DUP6, DUP5, DUP4, DUP3, DUP2, DUP1)(__VA_ARGS__)
-#define DLOGK(...)        DLOG(DUP(__VA_ARGS__))
-#define DLOGKL(lab, ...)  DLOG(lab, DUP(__VA_ARGS__))
-
-#if DEBUG_LIB
-  #define DLOG_LIB   DLOG
-  #define DLOGK_LIB  DLOGK
-  #define DLOGKL_LIB DLOGKL
-#endif
-
-// ---- end debug.cc
 
 // @@ !! LIM -- end mark --
 
@@ -694,81 +605,48 @@ int main(/* int argc, char *argv[] */) {
   cout << setprecision(20);
 
   ll N, M; cin >> N >> M;
-  vector<Point> P(N), C(M);
+  vector<Point> P(N);
+  vector<Point> C(M);
   vector<Real> R(M);
-  for (ll i = 0; i < N; i++) {
-    Real x, y; cin >> x >> y;
-    P[i] = Point(x, y);
+  REP(i, 0, N) cin >> P[i];
+  REP(i, 0, M) {
+    cin >> C[i];
+    cin >> R[i];
   }
-  for (ll i = 0; i < M; i++) {
-    Real x, y, r; cin >> x >> y >> r;
-    C[i] = Point(x, y);
-    R[i] = r;
-  }
-  Real big = 1e15;
-  vector CC(M, vector(M, big));
-  vector PC(N, vector(M, big));
-  for (ll i = 0; i < M; i++) {
-    for (ll j = 0; j < M; j++) {
-      Real d = (C[i] - C[j]).len();
-      Real r1 = R[i];
-      Real r2 = R[j];
-      if (r1 < r2) swap(r1, r2);
-      Real dist;
-      if (d + r2 < r1) dist = r1 - (d + r2);
-      else if (r1 + r2 < d) dist = d - (r1 + r2);
-      else dist = 0;
-      CC[i][j] = CC[j][i] = dist;
-    }
-  }
-  for (ll i = 0; i < N; i++) {
-    for (ll j = 0; j < M; j++) {
-      Real d = (P[i] - C[j]).len();
-      PC[i][j] = abs(d - R[j]);
-    }
-  }
-  DLOGK(CC);
-  DLOGK(PC);
-  Real ans = big;
-  for (ll x = 1; x < (1LL << M); x++) {
-    DLOGKL("start", x);
-    Real val = 0.0;
+  Real ans = 1e18;
+  REP(x, 0, 1LL << M) {
     using sta = tuple<Real, ll, ll>;
-    vector<sta> edges;
-    for (ll i = 0; i < M; i++) {
-      if (!((x >> i) & 1)) continue;
-      for (ll j = i + 1; j < M; j++) {
-        if (!((x >> j) & 1)) continue;
-        DLOGKL("  ", i, j, CC[i][j]);
-        edges.emplace_back(CC[i][j], i, j);
+    vector<sta> vec;
+    REP(i, 0, N) REP(j, i + 1, N) {
+      vec.emplace_back((P[i] - P[j]).len(), i, j);
+    }
+    REP(i, 0, M) REP(j, i + 1, M) {
+      if ((x >> i & 1) and (x >> j & 1)) {
+        Real d = (C[i] - C[j]).len();
+        Real r1 = R[i], r2 = R[j];
+        if (r1 < r2) swap(r1, r2);
+        if (r1 + r2 < d) vec.emplace_back(d - (r1 + r2), N + i, N + j);
+        else if (d + r2 < r1) vec.emplace_back(r1 - (d + r2), N + i, N + j);
+        else vec.emplace_back(0, N + i, N + j);
       }
     }
-    for (ll i = 0; i < N; i++) {
-      for (ll j = 0; j < M; j++) {
-        if (!((x >> j) & 1)) continue;
-        edges.emplace_back(PC[i][j], M + i, j);
+    REP(i, 0, N) REP(j, 0, M) {
+      if (x >> j & 1) {
+        vec.emplace_back(abs((P[i] - C[j]).len() - R[j]), i, N + j);
       }
     }
-    for (ll i = 0; i < N; i++) {
-      for (ll j = i + 1; j < N; j++) {
-        edges.emplace_back((P[i] - P[j]).len(), M + i, M + j);
-      }
-    }
-
-    sort(edges.begin(), edges.end());
-    UnionFind uf(M + N);
-    for (auto [d, i, j] : edges) {
+    sort(ALL(vec));
+    UnionFind uf(N + M);
+    Real cur = 0.0;
+    for (auto [d, i, j] : vec) {
       if (uf.leader(i) != uf.leader(j)) {
-        val += d;
-        DLOGKL("    ", i, j, d, val);
+        cur += d;
         uf.merge(i, j);
       }
     }
-    DLOGK(x, val);
-    ans = min(ans, val);
+    ans = min(ans, cur);
   }
   cout << ans << endl;
-
   return 0;
 }
 

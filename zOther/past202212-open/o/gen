@@ -1,0 +1,102 @@
+#!/usr/bin/env python3
+
+import argparse, sys
+from random import randrange, choice, shuffle, sample
+
+def choose2(l, r, ordered=False):
+    if r < l + 2:
+        raise Exception(f'Fatal: choose2: r < l + 2 should hold.  (l = {l}, r = {r})')
+    while True:
+        (x, y) = sample(range(l, r), 2)
+        return (y, x) if not ordered and x > y else (x, y)
+
+class Case:
+    def __init__(self):
+        self.buf = []
+
+    def p(self, *args):
+        def cvt(a):
+            if isinstance(a, list):
+                return ' '.join(map(str, a))
+            else:
+                return str(a)
+        self.buf.append(' '.join(map(cvt, args)) + '\n')
+
+def generate():
+    while True:
+        case = Case()
+        onecase(case)
+        yield ''.join(case.buf)
+
+def main():
+    ap = argparse.ArgumentParser();
+    ap.add_argument('-r', '--repeat', action='store_true',
+                    help='Repeatedly generates cases',)
+    ap.add_argument('--one', action='store_true',
+                    help='One case only.  No end mark')
+    args = ap.parse_args()
+
+    end_mark = '^__=end=__^'
+    end_file_mark = '^__=end_file=__^'
+
+    try:
+        if args.one:
+            for s in generate():
+                print(s.rstrip())
+                break
+        elif args.repeat:
+            for s in generate():
+                print(s.rstrip())
+                print(end_mark)
+            print(end_file_mark)
+        else:
+            for (i, s) in enumerate(generate()):
+                print(s.rstrip())
+                print(end_mark)
+                if (i == 4):
+                    break
+    except BrokenPipeError as e:
+        # print('caught: BrokenPipeError', file=sys.stderr)
+        pass
+
+######################################################################
+# This is the function you should edit.
+# You can use case.p() to print the value to the case
+def f(d):
+    v = [choice("123456789") for _ in range(d)]
+    return int(''.join(v))
+
+def onecase(case):
+
+    N = randrange(2, 10)
+    D = randrange(2, 6)
+    case.p(N, D)
+    vecA = [f(D) for _ in range(N)]
+    case.p(vecA)
+    Q = randrange(1, 10)
+    case.p(Q)
+    for _ in range(Q):
+        tp = choice((1, 2, 3))
+        if tp == 1:
+            x = randrange(1, N)
+            case.p(1, x)
+        elif tp == 2:
+            l, r = choose2(0, N + 1)
+            y = randrange(1, D)
+            case.p(2, l + 1, r, y)
+        elif tp == 3:
+            l, r = choose2(0, N + 1)
+            case.p(3, l + 1, r)
+
+
+    # n = randrange(2, 5)
+    # m = randrange(2, 5)
+    # case.p(n, m)    # like print()
+    # case.p([randrange(1, 10) for _ in range(n)])   # lists are printed with space inserted
+    # case.p([choice('UDLR' for _ in range(m))])
+    # (l, r) = choose2(0, n)  # Chooses two distinct values from [0, n) (l < r)
+    #                         # choose2(0, n, ordered=True) may return (l, r) with l > r.
+    # case.p(l, r)
+    # You can use sample(seq, k) to get k distinct elements from seq.
+
+main()
