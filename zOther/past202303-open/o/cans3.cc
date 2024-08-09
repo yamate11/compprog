@@ -12,7 +12,7 @@ using pll = pair<ll, ll>;
 #define SIZE(v) ((ll)((v).size()))
 #define REPOUT(i, a, b, exp, sep) REP(i, (a), (b)) cout << (exp) << (i + 1 == (b) ? "" : (sep)); cout << "\n"
 
-// @@ !! LIM(f:intDiv cmpNaive sqrtDecomp)
+// @@ !! LIM(f:intDiv cmpNaive)
 
 // ---- inserted function f:intDiv from util.cc
 // imod, divFloor, divCeil
@@ -135,7 +135,7 @@ int body(istream& cin, ostream& cout) {
 
 // ---- end cmpNaive.cc
 
-// ---- inserted library file sqrtDecomp.cc
+// @@ !! LIM -- end mark --
 
 template<typename B>
 struct SRD { // square root decomposition
@@ -163,7 +163,6 @@ struct SRD { // square root decomposition
     if (i < numb - 1) return bsize;
     else return tot_size - (numb - 1) * bsize;
   }
-  /*
   void exec_general(int lo, int hi, auto f_edge, auto f_body) {
     auto [b_f, lo_f, hi_f, b_l, lo_l, hi_l] = range_pos(lo, hi);
     f_edge(b_f, lo_f, hi_f);
@@ -171,45 +170,12 @@ struct SRD { // square root decomposition
     if (b_f < b_l) f_edge(b_l, lo_l, hi_l);
   }
   void exec(int lo, int hi, auto inloop_edge, auto inloop_body) {
-    auto f_edge = [&](int b, int lo_b, int hi_b) {
-      for (int i = lo_b; i < hi_b; i++) inloop_edge(b, data(b), i, pos2idx(b, i));
-    };
-    auto f_body = [&](int b0, int b1) {
-      for (int b = b0; b < b1; b++) inloop_body(b, data(b));
-    };
+    auto f_edge = [&](int b, int lo_b, int hi_b) { for (int i = lo_b; i < hi_b; i++) inloop_edge(b, i); };
+    auto f_body = [&](int b0, int b1) { for (int b = b0; b < b1; b++) inloop_body(b); };
     exec_general(lo, hi, f_edge, f_body);
   }
-  */
-  template<typename F0e = nullptr_t, typename F0c = nullptr_t, typename F1e = nullptr_t, typename F1c = nullptr_t>
-  void exec(int lo, int hi, auto edge_body, auto core_body,
-            F0e edge_pre = nullptr, F0c core_pre = nullptr, F1e edge_post = nullptr, F1c core_post = nullptr) {
-    auto do_edge = [&](int b, int lo_e, int hi_e) -> void {
-      if constexpr (not is_same_v<F0e, nullptr_t>) { edge_pre(b, data(b)); }
-      if constexpr (not is_same_v<decltype(edge_body), nullptr_t>) {
-        for (int i = lo_e; i < hi_e; i++) { edge_body(b, data(b), i, pos2idx(b, i)); }
-      }
-      if constexpr (not is_same_v<F1e, nullptr_t>) { edge_post(b, data(b)); }
-    };
-
-    auto [b_f, lo_f, hi_f, b_l, lo_l, hi_l] = range_pos(lo, hi);
-    do_edge(b_f, lo_f, hi_f);
-    if (b_f + 1 < b_l) {
-      if constexpr (not is_same_v<F0c, nullptr_t>) { core_pre(); }
-      if constexpr (not is_same_v<decltype(core_body), nullptr_t>) {
-        for (int b = b_f + 1; b < b_l; b++) { core_body(b, data(b)); }
-      }
-      if constexpr (not is_same_v<F1c, nullptr_t>) { core_post(); }
-    }
-    if (b_f < b_l) do_edge(b_l, lo_l, hi_l);
-  }
-
 
 };
-
-
-// ---- end sqrtDecomp.cc
-
-// @@ !! LIM -- end mark --
 
 int naive(istream& cin, ostream& cout) {
   ll N, Q; cin >> N >> Q;
@@ -252,68 +218,75 @@ int body(istream& cin, ostream& cout) {
   for (int i = 0; i < N; i++) { ll v; cin >> v; A[i] = v; }
   // @End [3hhQNcCT]
 
-  SRD<block_t> srd(N);
-
-  REP(idx, 0, N) {
-    auto [b, i] = srd.idx2pos(idx);
-    srd.data(b).cnt[A[idx]]++;
+  auto srd = SRD<block_t>(N);
+  REP(i, 0, srd.numb) {
+    auto& block = srd.data(i);
+    block.mode = INDIV;
+    REP(j, 0, srd.block_size(i)) block.cnt[A[srd.pos2idx(i, j)]]++;
   }
 
-  auto indiv = [&](int b, block_t& block) -> void {
+  auto indiv = [&](ll i) -> void {
+    auto& block = srd.data(i);
     if (block.mode == INDIV) return;
     ll j = 0;
     REP(dd, 0, a_lim) {
       ll d = (block.mode == ASC) ? dd : a_lim - 1 - dd;
-      REP(k, 0, block.cnt[d]) A[srd.pos2idx(b, j++)] = d;
+      REP(k, 0, block.cnt[d]) A[srd.pos2idx(i, j++)] = d;
     }
     block.mode = INDIV;
   };
 
-  auto mysort = [&](ll L, ll R, bool desc) -> void {
-    vector vec(a_lim, 0LL);
-    auto fe1 = [&](ll b, block_t& block, ll i, ll idx) { vec[A[idx]]++; };
-    auto fb1 = [&](ll b, block_t& block) { REP(d, 0, a_lim) vec[d] += block.cnt[d]; };
-    srd.exec(L, R, fe1, fb1, indiv);
-
-    ll cur_d = desc ? a_lim - 1 : 0;
-    ll step = desc ? -1 : +1;
-
-    auto fe2 = [&](ll b, block_t& block, ll i, ll idx) {
-      while (vec[cur_d] == 0) cur_d += step;
-      ll old_val = A[idx];
-      A[idx] = cur_d;
-      block.cnt[old_val]--;
-      block.cnt[cur_d]++;
-      vec[cur_d]--;
-    };
-    auto fb2 = [&](ll b, block_t& block) {
-      block.mode = desc ? DESC : ASC;
-      REP(dd, 0, a_lim) block.cnt[dd] = 0;
-      ll rem = srd.block_size(b);
-      while (true) {
-        ll y = min(rem, vec[cur_d]);
-        block.cnt[cur_d] = y;
-        vec[cur_d] -= y;
-        rem -= y;
-        if (rem == 0) break;
-        cur_d += step;
-      }
-    };
-    srd.exec(L, R, fe2, fb2);
-  };
-
-
   REP(_q, 0, Q) {
     ll C, L, R; cin >> C >> L >> R; L--;
+    auto [b0, _x, _y, b1, _z, _w] = srd.range_pos(L, R);
+    indiv(b0);
+    if (b0 < b1) indiv(b1);
+
+    auto mysort = [&](bool desc) -> void {
+      vector vec(a_lim, 0LL);
+      auto fe1 = [&](ll b, ll i) { vec[A[srd.pos2idx(b, i)]]++; };
+      auto fb1 = [&](ll b) { REP(d, 0, a_lim) vec[d] += srd.data(b).cnt[d]; };
+      srd.exec(L, R, fe1, fb1);
+
+      ll cur_d = desc ? a_lim - 1 : 0;
+      ll step = desc ? -1 : +1;
+
+      auto fe2 = [&](ll b, ll i) {
+        auto& block = srd.data(b);
+        while (vec[cur_d] == 0) cur_d += step;
+        ll j = srd.pos2idx(b, i);
+        ll old_val = A[j];
+        A[j] = cur_d;
+        block.cnt[old_val]--;
+        block.cnt[cur_d]++;
+        vec[cur_d]--;
+      };
+      auto fb2 = [&](ll b) {
+        auto& block = srd.data(b);
+        block.mode = desc ? DESC : ASC;
+        REP(dd, 0, a_lim) block.cnt[dd] = 0;
+        ll rem = srd.block_size(b);
+        while (true) {
+          ll y = min(rem, vec[cur_d]);
+          block.cnt[cur_d] = y;
+          vec[cur_d] -= y;
+          rem -= y;
+          if (rem == 0) break;
+          cur_d += step;
+        }
+      };
+      srd.exec(L, R, fe2, fb2);
+    };
+
     if (C == 1) {  
-      mysort(L, R, false);
+      mysort(false);
     }else if (C == 2) {
-      mysort(L, R, true);
+      mysort(true);
     }else if (C == 3) {
       ll ans = 0;
-      auto fe = [&](ll b, block_t& block, ll i, ll idx) { ans += A[idx]; };
-      auto fb = [&](ll b, block_t& block) { REP(d, 0, a_lim) ans += d * block.cnt[d]; };
-      srd.exec(L, R, fe, fb, indiv);
+      auto fe = [&](ll b, ll i) { ans += A[srd.pos2idx(b, i)]; };
+      auto fb = [&](ll b) { REP(d, 0, a_lim) ans += d * srd.data(b).cnt[d]; };
+      srd.exec(L, R, fe, fb);
       cout << ans << "\n";
     }
   }
