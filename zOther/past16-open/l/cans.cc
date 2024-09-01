@@ -660,91 +660,61 @@ void dbgLog(bool with_nl, Head&& head, Tail&&... tail)
 
 // @@ !! LIM -- end mark --
 
-ll lim = 1e9;
-enum dat_tp_t { STRAIGHT, CURVE };
-struct DAT {
-  dat_tp_t tp;
-  ll lo;
-  ll hi;
-  ll left;
-  ll right;
-  ll len;
-  DAT(ll lo_ = 0, ll hi_ = lim) : tp(STRAIGHT), lo(lo_), hi(hi_), left(0), right(0), len(0) {}
-  DAT(dat_tp_t tp_, ll lo_, ll hi_, ll left_, ll right_, ll len_)
-    : tp(tp_), lo(lo_), hi(hi_), left(left_), right(right_), len(len_) {}
-  static DAT straight(ll lo_, ll hi_) { return DAT(lo_, hi_); }
-  static DAT curve(ll left_, ll right_, ll len_) { return DAT(CURVE, 0, 0, left_, right_, len_); }
-};
-
 int main(/* int argc, char *argv[] */) {
   ios_base::sync_with_stdio(false);
   cin.tie(nullptr);
   cout << setprecision(20);
 
-  ll N; cin >> N;
-  // @InpMVec(N, ((L, dec=0), U)) [0u9kXM01]
-  auto L = vector(N, ll());
-  auto U = vector(N, ll());
-  for (int i = 0; i < N; i++) {
-    ll v1; cin >> v1; v1 -= 0; L[i] = v1;
-    ll v2; cin >> v2; U[i] = v2;
-  }
-  // @End [0u9kXM01]
+  ll N, Q; cin >> N >> Q;
+  // @InpVec(N, A) [UFm7ZnEr]
+  auto A = vector(N, ll());
+  for (int i = 0; i < N; i++) { ll v; cin >> v; A[i] = v; }
+  // @End [UFm7ZnEr]
+  vector<ll> acc(N + 1);
+  REP(i, 0, N) acc[i + 1] = acc[i] + A[i];
 
-  auto myplus = [&](DAT s, DAT t) -> DAT {
-    if (s.tp == STRAIGHT) {
-      if (t.tp == STRAIGHT) {
-        if      (s.hi <  t.lo) return DAT::curve(s.hi, t.lo, t.lo - s.hi);
-        else if (s.lo >  t.hi) return DAT::curve(s.lo, t.hi, s.lo - t.hi);
-        else                   return DAT::straight(max(s.lo, t.lo), min(s.hi, t.hi));
-      }else if (t.tp == CURVE) {
-        if      (t.left <  s.lo) return DAT::curve(s.lo, t.right, t.len + s.lo - t.left);
-        else if (t.left >  s.hi) return DAT::curve(s.hi, t.right, t.len + t.left - s.hi);
-        else                     return t;
-      }else assert(0);
-    }else if (s.tp == CURVE) {
-      if (t.tp == STRAIGHT) {
-        if      (s.right <  t.lo) return DAT::curve(s.left, t.lo, s.len + t.lo - s.right);
-        else if (s.right >  t.hi) return DAT::curve(s.left, t.hi, s.len + s.right - t.hi);
-        else                     return s;
-      }else if (t.tp == CURVE) {
-        return DAT::curve(s.left, t.right, s.len + t.len + abs(s.right - t.left));
-      }else assert(0);
-    }else assert(0);
+  using OP = optional<pll>;
+  auto mymax = [](pll x, pll y) -> pll {
+    auto [xn, xd] = x;
+    auto [yn, yd] = y;
+    if (xn * yd - xd * yn >= 0) return x;
+    else return y;
   };
-  vector<DAT> init_vec(N);
-  REP(i, 0, N) init_vec[i] = DAT(L[i], U[i]);
-  auto st = make_seg_tree(DAT(), myplus, init_vec);
+  auto comp = [](OP f, OP g) -> OP { return f ? f : g; };
+  auto appl = [](OP f, pll x) -> pll { return f ? *f : x; };
+  vector<pll> init_dat(N);
+  REP(i, 0, N) init_dat[i] = pll(0, 1);
+  auto st = make_seg_tree_lazy(pll(0, 1), OP(), mymax, comp, appl, init_dat);
+  
+  DLOGK(acc);
 
-  ll Q; cin >> Q;
+  set<ll> ss{-1, N + 1};
   REP(_q, 0, Q) {
-    ll sx, sy, tx, ty; cin >> sx >> sy >> tx >> ty;
-    ll ans = 0;
-    if (sx == tx) ans = abs(ty - sy);
-    else {
-      if (sx > tx) {
-        swap(sx, tx);
-        swap(sy, ty);
+    ll tp; cin >> tp;
+    if (tp == 1) {
+      ll x; cin >> x;
+      auto it = ss.lower_bound(x);
+      if (x < *it) {
+        ll hi = *it;
+        ll lo = *(prev(it));
+        if (lo >= 0) st.update(lo, x, pll(acc[x] - acc[lo], x - lo));
+        if (hi <= N) st.update(x, hi, pll(acc[hi] - acc[x], hi - x));
+        ss.insert(x);
+      }else {
+        ll hi = *(next(it));
+        ll lo = *(prev(it));
+        if (0 <= lo and hi <= N) st.update(lo, hi, pll(acc[hi] - acc[lo], hi - lo));
+        else if (0 <= lo) st.update(lo, x, pll(0, 1));
+        else if (hi<= N ) st.update(x, hi, pll(0, 1));
+        ss.erase(x);
       }
-      ll xdist = tx - sx;
-      sx--;
-      auto d = st.query(sx, tx);
-      ll ydist = 0;
-      if (d.tp == STRAIGHT) {
-        if      (sy <= d.lo and ty <= d.lo) ydist = d.lo - sy + d.lo - ty;
-        else if (sy >= d.hi and ty >= d.hi) ydist = sy - d.hi + ty - d.hi;
-        else ydist = abs(sy - ty);
-        DLOGK(d.lo, d.hi, ydist);
-      }else if (d.tp == CURVE) {
-        ydist = abs(sy - d.left) + abs(ty - d.right) + d.len;
-        DLOGK(d.left, d.right, d.len);
-      }else assert(0);
-      ans = xdist + ydist;
-      DLOGK(xdist, ydist, ans);
+    }else if (tp == 2) {
+      auto [xn, xd] = st.query(0, N);
+      ll g = gcd(xn, xd);
+      cout << xn / g << " " << xd / g << "\n";
     }
-    cout << ans << "\n";
   }
-
+  
 
   return 0;
 }
