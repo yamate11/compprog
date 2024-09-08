@@ -2,6 +2,7 @@
 #include <cassert>
 using namespace std;
 using ll = long long int;
+using u64 = unsigned long long;
 using pll = pair<ll, ll>;
 // #include <atcoder/all>
 // using namespace atcoder;
@@ -11,7 +12,165 @@ using pll = pair<ll, ll>;
 #define SIZE(v) ((ll)((v).size()))
 #define REPOUT(i, a, b, exp, sep) REP(i, (a), (b)) cout << (exp) << (i + 1 == (b) ? "" : (sep)); cout << "\n"
 
-// @@ !! LIM(mod power debug)
+// @@ !! LIM(perm mod rle power debug)
+
+// ---- inserted library file perm.cc
+
+template <bool dup>
+struct IntPermBase {
+  int n;
+  int r;
+  vector<int> vec;
+  bool started;
+
+  bool start_check() {
+    if constexpr (dup) { if (not ((1 <= n and 0 <= r) or (n == 0 and r == 0))) return false; }
+    else { if (not (0 <= n and 0 <= r and r <= n)) return false; }
+    started = true;
+    vec.resize(r, 0);
+    return true;
+  }
+
+  bool finish() {
+    vec.resize(0);
+    started = false;
+    return false;
+  }
+
+  IntPermBase(int n_, int r_) : n(n_), r(r_), started(false) {}
+
+  int at(int i) const { return vec[i]; }
+
+  const vector<int>& vec_view() const { return vec; }
+};
+
+struct IntPerm : IntPermBase<false> {
+  vector<vector<int>> cands;
+  vector<int> cidx;
+
+  bool start_check() {
+    if (not IntPermBase<false>::start_check()) return false;
+    iota(vec.begin(), vec.end(), 0);
+    cands.resize(r);
+    cidx.resize(r);
+    for (int i = 0; i < r; i++) {
+      for (int j = n - 1; j >= i; j--) cands[i].push_back(j);
+      cidx[i] = n - i - 1;
+    }
+    return true;
+  }
+
+  bool finish() {
+    cands.resize(0);
+    cidx.resize(0);
+    return IntPermBase<false>::finish();
+  }
+
+  IntPerm(int n_, int r_) : IntPermBase<false>(n_, r_) {}
+
+  bool get() {
+    if (not started) return start_check();
+    int i = r - 1;
+    for (; i >= 0 and cidx[i] == 0; i--);
+    if (i < 0) return finish();
+    vec[i] = cands[i][--cidx[i]];
+    for (int j = i + 1; j < r; j++) {
+      if (j == i + 1) {
+        cands[j].resize(0);
+        for (int k = 0; k < (int)cands[i].size(); k++) {
+          if (k == cidx[i]) continue;
+          cands[j].push_back(cands[i][k]);
+        }
+      }else {
+        cands[j] = cands[j - 1];
+        cands[j].pop_back();
+      }
+      cidx[j] = n - j - 1;
+      vec[j] = cands[j][cidx[j]];
+    }
+    return true;
+  }
+};
+
+struct IntComb : IntPermBase<false> {
+  bool start_check() {
+    if (not IntPermBase<false>::start_check()) return false;
+    iota(vec.begin(), vec.end(), 0);
+    return true;
+  }
+
+  IntComb(int n_, int r_) : IntPermBase<false>(n_, r_) {}
+
+  bool get() {
+    if (not started) return start_check();
+    int i = r - 1;
+    for (; i >= 0 and vec[i] == n - r + i; i--);
+    if (i < 0) return finish();
+    vec[i]++;
+    for (int j = i + 1; j < r; j++) vec[j] = vec[j - 1] + 1;
+    return true;
+  }
+};
+
+struct IntDupPerm : IntPermBase<true> {
+  IntDupPerm(int n_, int r_) : IntPermBase<true>(n_, r_) {}
+
+  bool get() {
+    if (not started) return start_check();
+    for (int i = r - 1; i >= 0; vec[i--] = 0) if (++vec[i] < n) return true;
+    return finish();
+  }
+};
+
+struct IntDupComb : IntPermBase<true> {
+  IntDupComb(int n_, int r_) : IntPermBase<true>(n_, r_) {}
+
+  bool get() {
+    if (not started) return start_check();
+    int i = r - 1;
+    for (; i >= 0 and vec[i] == n - 1; i--);
+    if (i < 0) return finish();
+    vec[i]++;
+    for (int j = i + 1; j < r; j++) vec[j] = vec[i];
+    return true;
+  }
+};
+
+template<typename INT>
+struct IntDirProd {
+  vector<INT> lim;
+  int r;
+  vector<INT> vec;
+  bool started;
+
+  IntDirProd(const vector<INT>& lim_) : lim(lim_), r(lim.size()), started(false) {}
+
+  int at(int i) const { return vec[i]; }
+
+  const vector<INT>& vec_view() const { return vec; }
+
+  bool start_check() {
+    for (int i = 0; i < r; i++) if (lim[i] == 0) return false;
+    started = true;
+    vec.resize(r, 0);
+    return true;
+  }
+
+  bool finish() {
+    vec.resize(0);
+    started = false;
+    return false;
+  }
+
+  bool get() {
+    if (not started) return start_check();
+    for (int i = r - 1; i >= 0; vec[i--] = 0) if (++vec[i] < lim[i]) return true;
+    return finish();
+  }
+
+};
+
+// ---- end perm.cc
 
 // ---- inserted library file algOp.cc
 
@@ -19,27 +178,32 @@ using pll = pair<ll, ll>;
 //    zero, one, inverse
 
 template<typename T>
-constexpr T zero(const T& t) {
+const T zero(const T& t) {
   if constexpr (is_integral_v<T> || is_floating_point_v<T>) { return (T)0; }
   else { return t.zero(); }
 }
 
 template<typename T>
-constexpr T one(const T& t) {
+const T one(const T& t) {
   if constexpr (is_integral_v<T> || is_floating_point_v<T>) { return (T)1; }
   else { return t.one(); }
 }
 
 template<typename T>
-constexpr T inverse(const T& t) {
+const T inverse(const T& t) {
   if constexpr (is_floating_point_v<T>) { return 1.0 / t; }
   else { return t.inverse(); }
 }
 
+#ifdef BOOST_MP_CPP_INT_HPP
+template<> const cpp_int zero(const cpp_int& t) { return cpp_int(0); }
+template<> const cpp_int one(const cpp_int& t) { return cpp_int(1); }
+#endif // BOOST_MP_CPP_INT_HPP
+
 // begin -- detection ideom
 //    cf. https://blog.tartanllama.xyz/detection-idiom/
 
-namespace detail {
+namespace tartan_detail {
   template <template <class...> class Trait, class Enabler, class... Args>
   struct is_detected : false_type{};
 
@@ -48,7 +212,7 @@ namespace detail {
 }
 
 template <template <class...> class Trait, class... Args>
-using is_detected = typename detail::is_detected<Trait, void, Args...>::type;
+using is_detected = typename tartan_detail::is_detected<Trait, void, Args...>::type;
 
 // end -- detection ideom
 
@@ -173,30 +337,29 @@ struct MyAlg {
 
 // auto [g, s, t] = eGCD(a, b)
 //     g == gcd(|a|, |b|) and as + bt == g           
-//     |a| and |b| must be less than 2^31.
-tuple<ll, ll, ll> eGCD(ll a, ll b) {
-#if DEBUG
-  if (abs(a) >= (1LL << 31) or abs(b) >= (1LL << 31)) throw runtime_error("eGCD: not within the range");
-#endif    
-  array<ll, 50> vec;  // Sufficiently large for a, b < 2^31.
-  ll idx = 0;
-  while (a != 0) {
-    ll x = b / a;
-    ll y = b % a;
-    vec[idx++] = x;
-    b = a;
-    a = y;
+//     It guarantees that max(|s|, |t|) <= max(|a| / g, |b| / g)   (when g != 0)
+//     Note that gcd(a, 0) == gcd(0, a) == a.
+template<typename INT=ll>
+tuple<INT, INT, INT> eGCD(INT a, INT b) {
+  INT sa = a < 0 ? -1 : 1;
+  INT ta = 0;
+  INT za = a * sa;
+  INT sb = 0;
+  INT tb = b < 0 ? -1 : 1;
+  INT zb = b * tb;
+  while (zb != 0) {
+    INT q = za / zb;
+    INT r = za % zb;
+    za = zb;
+    zb = r;
+    INT new_sb = sa - q * sb;
+    sa = sb;
+    sb = new_sb;
+    INT new_tb = ta - q * tb;
+    ta = tb;
+    tb = new_tb;
   }
-  ll g, s, t;
-  if (b < 0) { g = -b; s = 0; t = -1; }
-  else       { g =  b; s = 0; t =  1; }
-  while (idx > 0) {
-    ll x = vec[--idx];
-    ll old_t = t;
-    t = s;
-    s = old_t - x * s;
-  }
-  return {g, s, t};
+  return {za, sa, ta};
 }
 
 pair<ll, ll> crt_sub(ll a1, ll x1, ll a2, ll x2) {
@@ -252,36 +415,36 @@ ll crt(vector<ll> as, vector<ll> xs) {
 
 // ---- inserted library file mod.cc
 
-template<int mod=0>
+template<int mod=0, typename INT=ll>
 struct FpG {   // G for General
-  static ll dyn_mod;
+  static INT dyn_mod;
 
-  static ll getMod() {
+  static INT getMod() {
     if (mod == 0) return dyn_mod;
-    else          return mod;
+    else          return (INT)mod;
   }
-
-  static void setMod(ll _mod) {  // effective only when mod == 0
+  
+  // Effective only when mod == 0.
+  // _mod must be less than the half of the maximum value of INT.
+  static void setMod(INT _mod) {  
     dyn_mod = _mod;
   }
 
-  static ll _conv(ll x) {
+  static INT _conv(INT x) {
     if (x >= getMod())  return x % getMod();
     if (x >= 0)         return x;
     if (x >= -getMod()) return x + getMod();
-    ll y = x % getMod();
+    INT y = x % getMod();
     if (y == 0) return 0;
     return y + getMod();
   }
 
-  ll val;
+  INT val;
 
-  FpG(int t = 0) : val(_conv(t)) {}
-  FpG(ll t) : val(_conv(t)) {}
+  FpG(INT t = 0) : val(_conv(t)) {}
   FpG(const FpG& t) : val(t.val) {}
   FpG& operator =(const FpG& t) { val = t.val; return *this; }
-  FpG& operator =(ll t) { val = _conv(t); return *this; }
-  FpG& operator =(int t) { val = _conv(t); return *this; }
+  FpG& operator =(INT t) { val = _conv(t); return *this; }
 
   FpG& operator +=(const FpG& t) {
     val += t.val;
@@ -324,35 +487,37 @@ struct FpG {   // G for General
   bool operator ==(const FpG& t) const { return val == t.val; }
   bool operator !=(const FpG& t) const { return val != t.val; }
   
-  operator ll() const { return val; }
+  operator INT() const { return val; }
 
+  friend FpG operator +(INT x, const FpG& y) { return FpG(x) + y; }
+  friend FpG operator -(INT x, const FpG& y) { return FpG(x) - y; }
+  friend FpG operator *(INT x, const FpG& y) { return FpG(x) * y; }
+  friend FpG operator /(INT x, const FpG& y) { return FpG(x) / y; }
+  friend bool operator ==(INT x, const FpG& y) { return FpG(x) == y; }
+  friend bool operator !=(INT x, const FpG& y) { return FpG(x) != y; }
+  friend FpG operator +(const FpG& x, INT y) { return x + FpG(y); }
+  friend FpG operator -(const FpG& x, INT y) { return x - FpG(y); }
+  friend FpG operator *(const FpG& x, INT y) { return x * FpG(y); }
+  friend FpG operator /(const FpG& x, INT y) { return x / FpG(y); }
+  friend bool operator ==(const FpG& x, INT y) { return x == FpG(y); }
+  friend bool operator !=(const FpG& x, INT y) { return x != FpG(y); }
+
+  /* The following are needed to avoid warnings in cases such as FpG x; x = 5 + x; rather than x = FpG(5) + x; */
   friend FpG operator +(int x, const FpG& y) { return FpG(x) + y; }
   friend FpG operator -(int x, const FpG& y) { return FpG(x) - y; }
   friend FpG operator *(int x, const FpG& y) { return FpG(x) * y; }
   friend FpG operator /(int x, const FpG& y) { return FpG(x) / y; }
   friend bool operator ==(int x, const FpG& y) { return FpG(x) == y; }
   friend bool operator !=(int x, const FpG& y) { return FpG(x) != y; }
-  friend FpG operator +(ll x, const FpG& y) { return FpG(x) + y; }
-  friend FpG operator -(ll x, const FpG& y) { return FpG(x) - y; }
-  friend FpG operator *(ll x, const FpG& y) { return FpG(x) * y; }
-  friend FpG operator /(ll x, const FpG& y) { return FpG(x) / y; }
-  friend bool operator ==(ll x, const FpG& y) { return FpG(x) == y; }
-  friend bool operator !=(ll x, const FpG& y) { return FpG(x) != y; }
   friend FpG operator +(const FpG& x, int y) { return x + FpG(y); }
   friend FpG operator -(const FpG& x, int y) { return x - FpG(y); }
   friend FpG operator *(const FpG& x, int y) { return x * FpG(y); }
   friend FpG operator /(const FpG& x, int y) { return x / FpG(y); }
   friend bool operator ==(const FpG& x, int y) { return x == FpG(y); }
   friend bool operator !=(const FpG& x, int y) { return x != FpG(y); }
-  friend FpG operator +(const FpG& x, ll y) { return x + FpG(y); }
-  friend FpG operator -(const FpG& x, ll y) { return x - FpG(y); }
-  friend FpG operator *(const FpG& x, ll y) { return x * FpG(y); }
-  friend FpG operator /(const FpG& x, ll y) { return x / FpG(y); }
-  friend bool operator ==(const FpG& x, ll y) { return x == FpG(y); }
-  friend bool operator !=(const FpG& x, ll y) { return x != FpG(y); }
 
   friend istream& operator>> (istream& is, FpG& t) {
-    ll x; is >> x;
+    INT x; is >> x;
     t = x;
     return is;
   }
@@ -363,8 +528,8 @@ struct FpG {   // G for General
   }
 
 };
-template<int mod>
-ll FpG<mod>::dyn_mod;
+template<int mod, typename INT>
+INT FpG<mod, INT>::dyn_mod;
 
 template<typename T>
 class Comb {
@@ -392,10 +557,35 @@ public:
 
 constexpr int primeA = 1'000'000'007;
 constexpr int primeB = 998'244'353;          // '
-using FpA = FpG<primeA>;
-using FpB = FpG<primeB>;
+using FpA = FpG<primeA, ll>;
+using FpB = FpG<primeB, ll>;
 
 // ---- end mod.cc
+
+// ---- inserted library file rle.cc
+
+template<class InputIt, class OutputIt>
+OutputIt rle_iter(InputIt first, InputIt last, OutputIt d_first) {
+  InputIt itA = first;
+  OutputIt oit = d_first;
+  while (itA != last) {
+    InputIt itB = next(itA);
+    for (; itB != last and *itA == *itB; itB++);
+    *oit = make_pair(*itA, itB - itA);
+    itA = itB;
+    oit++;
+  }
+  return oit;
+}
+
+template<class V>
+auto rle(V vec) {
+  vector<pair<typename V::value_type, ll>> ret;
+  rle_iter(vec.begin(), vec.end(), back_inserter(ret));
+  return ret;
+}
+
+// ---- end rle.cc
 
 // ---- inserted library file power.cc
 
@@ -411,9 +601,122 @@ T power(const T& a, ll b) {
   return ret;
 }
 
+// a >= 0, b >= 0;  If overflow, returns -1.
+ll llpower(ll a, ll b) {  
+  if (b == 0) return 1;   // 0^0 == 1
+  if (b == 1) return a;
+  if (a == 0) return 0;
+  if (a == 1) return 1;
+  if (a == 2) {
+    if (b >= 63) return -1;
+    else return 1LL << b;
+  }
+  if (b == 2) {
+    ll ret;
+    if (__builtin_smulll_overflow(a, a, &ret)) return -1;
+    return ret;
+  }
+  ll two_pow = a;
+  ll ret = 1;
+  assert(b > 0);
+  while (true) {
+    if (b & 1LL) {
+      if (__builtin_smulll_overflow(ret, two_pow, &ret)) return -1;
+    }
+    b >>= 1;
+    if (b == 0) break;
+    if (__builtin_smulll_overflow(two_pow, two_pow, &two_pow)) return -1;
+  }
+  return ret;
+}
+
+// a >= 0;   Returns x s.t. x*x <= a < (x+1)*(x+1)
+ll llsqrt(ll a) {
+  ll x = llround(sqrt((double)a));
+  ll y;
+  if (__builtin_smulll_overflow(x, x, &y) or a < y) return x - 1;
+  else return x;
+}
+
+// a >= 0, m >= 2;  Returns x s.t. x^m <= a < (x + 1)^m
+ll llroot(ll a, ll m) {
+  ll x = llround(pow(a, 1.0 / m));
+  ll y = llpower(x, m);
+  if (y == -1 or a < y) return x - 1;
+  else return x;
+}
+
+//  base >= 2, a >= 1;  Returns x s.t. base^{x} <= a < base^{x + 1}
+ll lllog(ll base, ll a) {
+  ll x = llround(log(a) / log(base));
+  ll y = llpower(base, x);
+  if (y == -1 or a < y) return x - 1;
+  else return x;
+}
+
+
 // ---- end power.cc
 
 // ---- inserted function f:<< from util.cc
+
+// declarations
+
+template <typename T1, typename T2>
+ostream& operator<< (ostream& os, const pair<T1,T2>& p);
+
+template <typename T1, typename T2, typename T3>
+ostream& operator<< (ostream& os, const tuple<T1,T2,T3>& t);
+
+template <typename T1, typename T2, typename T3, typename T4>
+ostream& operator<< (ostream& os, const tuple<T1,T2,T3,T4>& t);
+
+template <typename T1, typename T2, typename T3, typename T4, typename T5>
+ostream& operator<< (ostream& os, const tuple<T1,T2,T3,T4,T5>& t);
+
+template <typename T1, typename T2, typename T3, typename T4, typename T5, typename T6>
+ostream& operator<< (ostream& os, const tuple<T1,T2,T3,T4,T5,T6>& t);
+
+template <typename T>
+ostream& operator<< (ostream& os, const vector<T>& v);
+
+template <typename T, typename C>
+ostream& operator<< (ostream& os, const set<T, C>& v);
+
+template <typename T, typename C>
+ostream& operator<< (ostream& os, const unordered_set<T, C>& v);
+
+template <typename T, typename C>
+ostream& operator<< (ostream& os, const multiset<T, C>& v);
+
+template <typename T1, typename T2, typename C>
+ostream& operator<< (ostream& os, const map<T1, T2, C>& mp);
+
+template <typename T1, typename T2, typename C>
+ostream& operator<< (ostream& os, const unordered_map<T1, T2, C>& mp);
+
+template <typename T, typename T2>
+ostream& operator<< (ostream& os, const queue<T, T2>& orig);
+
+template <typename T, typename T2>
+ostream& operator<< (ostream& os, const deque<T, T2>& orig);
+
+template <typename T, typename T2, typename T3>
+ostream& operator<< (ostream& os, const priority_queue<T, T2, T3>& orig);
+
+template <typename T>
+ostream& operator<< (ostream& os, const stack<T>& st);
+
+#if __cplusplus >= 201703L
+template <typename T>
+ostream& operator<< (ostream& os, const optional<T>& t);
+#endif
+
+ostream& operator<< (ostream& os, int8_t x);
+
+ostream& operator<< (ostream& os, const __int128& x);
+
+// definitions
+
 template <typename T1, typename T2>
 ostream& operator<< (ostream& os, const pair<T1,T2>& p) {
   os << "(" << p.first << ", " << p.second << ")";
@@ -431,6 +734,20 @@ template <typename T1, typename T2, typename T3, typename T4>
 ostream& operator<< (ostream& os, const tuple<T1,T2,T3,T4>& t) {
   os << "(" << get<0>(t) << ", " << get<1>(t)
      << ", " << get<2>(t) << ", " << get<3>(t) << ")";
+  return os;
+}
+
+template <typename T1, typename T2, typename T3, typename T4, typename T5>
+ostream& operator<< (ostream& os, const tuple<T1,T2,T3,T4,T5>& t) {
+  os << "(" << get<0>(t) << ", " << get<1>(t)
+     << ", " << get<2>(t) << ", " << get<3>(t) << ", " << get<4>(t) << ")";
+  return os;
+}
+
+template <typename T1, typename T2, typename T3, typename T4, typename T5, typename T6>
+ostream& operator<< (ostream& os, const tuple<T1,T2,T3,T4,T5,T6>& t) {
+  os << "(" << get<0>(t) << ", " << get<1>(t)
+     << ", " << get<2>(t) << ", " << get<3>(t) << ", " << get<4>(t) << ", " << get<5>(t) << ")";
   return os;
 }
 
@@ -578,6 +895,36 @@ ostream& operator<< (ostream& os, int8_t x) {
   return os;
 }
 
+// for Enum type; just displays ordinals.
+template <typename E>
+typename std::enable_if<std::is_enum<E>::value, std::ostream&>::type
+operator<<(std::ostream& os, E e) {
+    return os << static_cast<typename std::underlying_type<E>::type>(e);
+}
+
+// This is a very ad-hoc implementation...
+ostream& operator<<(ostream& os, const __int128& v) {
+  unsigned __int128 a = v < 0 ? -v : v;
+  ll i = 0;
+  string s(64, ' ');
+  if (v == 0) {
+    s[i++] = '0';
+  }else {
+    while (a > 0) {
+      s[i++] = '0' + (char)(a % 10);
+      a /= 10;
+    }
+  }
+  if (v < 0) {
+    s[i++] = '-';
+  }
+  s.erase(s.begin() + i, s.end());
+  reverse(s.begin(), s.end());
+  os << s;
+  return os;
+}
+
+
 // ---- end f:<<
 
 // ---- inserted library file debug.cc
@@ -661,22 +1008,51 @@ int main(/* int argc, char *argv[] */) {
   cin.tie(nullptr);
   cout << setprecision(20);
 
+  auto partition = [&](ll n0) {
+    vector tbl(n0 + 1, vector<vector<ll>>());
+    auto sub = [&](auto rF, ll n, ll m) -> void {
+      ll last = tbl[n].empty() ? 0 : tbl[n].back().back();
+      REP(x, last + 1, m + 1) {
+        if (x == n) tbl[n].push_back(vector<ll>{n});
+        else {
+          rF(rF, n - x, min(n - x, x));
+          for (auto v: tbl[n - x]) {
+            if (v.back() > x) break;
+            v.push_back(x);
+            tbl[n].push_back(move(v));
+          }
+        }
+      }
+    };
+    sub(sub, n0, n0);
+    return tbl[n0];
+  };
+
   ll N, K; cin >> N >> K;
   Comb<Fp> cb(N);
 
-  vector tbl(N + 1, map<ll, Fp>());
-  tbl[0][0] = Fp(1);
-  REP(n, 1, N + 1) {
-    tbl[n][n] = cb.fact(n - 1);
-    REP(x, 1, n) {
-      for (auto [y, c] : tbl[n - x]) {
-        tbl[n][lcm(x, y)] += cb.fact(n - 1) / cb.fact(n - x) * c;
-      }
-    }
-    DLOGK(n, tbl[n]);
-  }
+  auto mylcm = [&](auto& vec) -> ll {
+    ll ret = 1;
+    for (ll x : vec) ret = lcm(ret, x);
+    return ret;
+  };
+
   Fp ans = 0;
-  for (auto [y, c] : tbl[N]) ans += power<Fp>(y, K) * c;
+  for (auto& part: partition(N)) {
+    Fp score = power<Fp>(mylcm(part), K);
+    Fp cnt = 1;
+    ll rem = N;
+    for (auto [x, m] : rle(part)) {
+      Fp loccnt = 1;
+      REP(i, 0, m) {
+        loccnt *= cb.binom(rem, x) * cb.fact(x - 1);
+        rem -= x;
+      }
+      loccnt /= cb.fact(m);
+      cnt *= loccnt;
+    }
+    ans += score * cnt;
+  }
   cout << ans << endl;
 
   return 0;

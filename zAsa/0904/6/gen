@@ -1,0 +1,95 @@
+#!/usr/bin/env python3
+
+import argparse, sys
+from random import randrange, choice, shuffle, sample
+
+def choose2(l, r, ordered=False):
+    if r < l + 2:
+        raise Exception(f'Fatal: choose2: r < l + 2 should hold.  (l = {l}, r = {r})')
+    while True:
+        (x, y) = sample(range(l, r), 2)
+        return (y, x) if not ordered and x > y else (x, y)
+
+class Case:
+    def __init__(self):
+        self.buf = []
+
+    def p(self, *args):
+        def cvt(a):
+            if isinstance(a, list):
+                return ' '.join(map(str, a))
+            else:
+                return str(a)
+        self.buf.append(' '.join(map(cvt, args)) + '\n')
+
+def generate():
+    while True:
+        case = Case()
+        onecase(case)
+        yield ''.join(case.buf)
+
+def main():
+    ap = argparse.ArgumentParser();
+    ap.add_argument('-r', '--repeat', action='store_true',
+                    help='Repeatedly generates cases',)
+    ap.add_argument('--one', action='store_true',
+                    help='One case only.  No end mark')
+    args = ap.parse_args()
+
+    end_mark = '^__=end=__^'
+    end_file_mark = '^__=end_file=__^'
+
+    try:
+        if args.one:
+            for s in generate():
+                print(s.rstrip())
+                break
+        elif args.repeat:
+            for s in generate():
+                print(s.rstrip())
+                print(end_mark)
+            print(end_file_mark)
+        else:
+            for (i, s) in enumerate(generate()):
+                print(s.rstrip())
+                print(end_mark)
+                if (i == 4):
+                    break
+    except BrokenPipeError as e:
+        # print('caught: BrokenPipeError', file=sys.stderr)
+        pass
+
+######################################################################
+# This is the function you should edit.
+# You can use case.p() to print the value to the case
+def onecase(case):
+
+    n = randrange(2, 500)
+    m = randrange(2, 500)
+    case.p(n, m)
+    while True:
+        sx = randrange(0, n)
+        sy = randrange(0, m)
+        gx = randrange(0, n)
+        gy = randrange(0, m)
+        if sx == gx:
+            if abs(sy - gy) <= 1:
+                continue
+        if sy == gy:
+            if abs(sx - gx) <= 1:
+                continue
+        break
+    brd = [[" " for _ in range(m)] for __ in range(n)]
+    brd[sx][sy] = 's'
+    brd[gx][gy] = 'g'
+    for x in range(n):
+        for y in range(m):
+            if brd[x][y] == ' ':
+                if randrange(0, 100) < 30:
+                    brd[x][y] = '#'
+                else:
+                    brd[x][y] = choice('123456789')
+    for x in range(n):
+        case.p(''.join(brd[x]))
+
+main()

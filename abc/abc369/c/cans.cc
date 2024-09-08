@@ -12,7 +12,34 @@ using pll = pair<ll, ll>;
 #define SIZE(v) ((ll)((v).size()))
 #define REPOUT(i, a, b, exp, sep) REP(i, (a), (b)) cout << (exp) << (i + 1 == (b) ? "" : (sep)); cout << "\n"
 
-// @@ !! LIM()
+// @@ !! LIM(rle)
+
+// ---- inserted library file rle.cc
+
+template<class InputIt, class OutputIt>
+OutputIt rle_iter(InputIt first, InputIt last, OutputIt d_first) {
+  InputIt itA = first;
+  OutputIt oit = d_first;
+  while (itA != last) {
+    InputIt itB = next(itA);
+    for (; itB != last and *itA == *itB; itB++);
+    *oit = make_pair(*itA, itB - itA);
+    itA = itB;
+    oit++;
+  }
+  return oit;
+}
+
+template<class V>
+auto rle(V vec) {
+  vector<pair<typename V::value_type, int>> ret;
+  rle_iter(vec.begin(), vec.end(), back_inserter(ret));
+  return ret;
+}
+
+// ---- end rle.cc
+
+// @@ !! LIM -- end mark --
 
 int main(/* int argc, char *argv[] */) {
   ios_base::sync_with_stdio(false);
@@ -25,28 +52,11 @@ int main(/* int argc, char *argv[] */) {
   for (int i = 0; i < N; i++) { ll v; cin >> v; A[i] = v; }
   // @End [DiBHNVC9]
 
-  if (N == 1) {
-    cout << 1 << endl;
-    return 0;
-  }else if (N == 2) {
-    cout << 3 << endl;
-    return 0;
-  }
-
-  vector<ll> B(N - 1);
-  REP(i, 0, N - 1) B[i] = A[i + 1] - A[i];
-  
+  vector<ll> B;
+  REP(i, 0, N - 1) B.push_back(A[i + 1] - A[i]);
   ll ans = N;
-  ll p = 0;
-  while (p < N - 1) {
-    ll q = p + 1;
-    while (q < N - 1 and B[q] == B[p]) q++;
-    ll r = q - p + 1;
-    ans += r * (r - 1) / 2;
-    p = q;
-  }
+  for (auto [x, n] : rle(B)) ans += (ll)n * (n + 1) / 2;
   cout << ans << endl;
-
 
   return 0;
 }

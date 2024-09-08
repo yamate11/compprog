@@ -19,7 +19,44 @@ int main(/* int argc, char *argv[] */) {
   cin.tie(nullptr);
   cout << setprecision(20);
 
-  
+  ll H, W, Q; cin >> H >> W >> Q;
+  // @InpVec(H, A, type=string) [IuX9zavq]
+  auto A = vector(H, string());
+  for (int i = 0; i < H; i++) { string v; cin >> v; A[i] = v; }
+  // @End [IuX9zavq]
+
+  bool swapped = false;
+  vector<deque<char>> tbl;
+  if (H > W) {
+    REP(i, 0, W) {
+      tbl.push_back(deque<char>());
+      REP(j, 0, H) tbl[i].push_back(A[j][i]);
+    }
+    swap(H, W);
+    swapped = true;
+  }else {
+    REP(i, 0, H) {
+      tbl.push_back(deque<char>());
+      REP(j, 0, W) tbl[i].push_back(A[i][j]);
+    }
+  }
+  assert(H <= W);
+  assert(ssize(tbl) == H);
+  string S;
+  REP(_q, 0, Q) {
+    ll tp, p; cin >> tp >> p; p--;
+    char c; cin >> c;
+    if ((tp == 1) == (not swapped)) {
+      char e = tbl[p].back(); tbl[p].pop_back();
+      tbl[p].push_front(c);
+      S += e;
+    }else {
+      S += tbl[H - 1][p];
+      REPrev(i, H - 2, 0) tbl[i + 1][p] = tbl[i][p];
+      tbl[0][p] = c;
+    }
+  }
+  cout << S << endl;
 
   return 0;
 }

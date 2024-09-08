@@ -12,7 +12,20 @@ using pll = pair<ll, ll>;
 #define SIZE(v) ((ll)((v).size()))
 #define REPOUT(i, a, b, exp, sep) REP(i, (a), (b)) cout << (exp) << (i + 1 == (b) ? "" : (sep)); cout << "\n"
 
-// @@ !! LIM(debug f:updMaxMin)
+// @@ !! LIM(f:updMaxMin debug)
+
+// ---- inserted function f:updMaxMin from util.cc
+template<typename T>
+bool updMax(T& tmax, const T& x) {
+  if (x > tmax) { tmax = x; return true;  }
+  else          {           return false; }
+}
+template<typename T>
+bool updMin(T& tmin, const T& x) {
+  if (x < tmin) { tmin = x; return true;  }
+  else          {           return false; }
+}
+// ---- end f:updMaxMin
 
 // ---- inserted function f:<< from util.cc
 
@@ -26,6 +39,12 @@ ostream& operator<< (ostream& os, const tuple<T1,T2,T3>& t);
 
 template <typename T1, typename T2, typename T3, typename T4>
 ostream& operator<< (ostream& os, const tuple<T1,T2,T3,T4>& t);
+
+template <typename T1, typename T2, typename T3, typename T4, typename T5>
+ostream& operator<< (ostream& os, const tuple<T1,T2,T3,T4,T5>& t);
+
+template <typename T1, typename T2, typename T3, typename T4, typename T5, typename T6>
+ostream& operator<< (ostream& os, const tuple<T1,T2,T3,T4,T5,T6>& t);
 
 template <typename T>
 ostream& operator<< (ostream& os, const vector<T>& v);
@@ -85,6 +104,20 @@ template <typename T1, typename T2, typename T3, typename T4>
 ostream& operator<< (ostream& os, const tuple<T1,T2,T3,T4>& t) {
   os << "(" << get<0>(t) << ", " << get<1>(t)
      << ", " << get<2>(t) << ", " << get<3>(t) << ")";
+  return os;
+}
+
+template <typename T1, typename T2, typename T3, typename T4, typename T5>
+ostream& operator<< (ostream& os, const tuple<T1,T2,T3,T4,T5>& t) {
+  os << "(" << get<0>(t) << ", " << get<1>(t)
+     << ", " << get<2>(t) << ", " << get<3>(t) << ", " << get<4>(t) << ")";
+  return os;
+}
+
+template <typename T1, typename T2, typename T3, typename T4, typename T5, typename T6>
+ostream& operator<< (ostream& os, const tuple<T1,T2,T3,T4,T5,T6>& t) {
+  os << "(" << get<0>(t) << ", " << get<1>(t)
+     << ", " << get<2>(t) << ", " << get<3>(t) << ", " << get<4>(t) << ", " << get<5>(t) << ")";
   return os;
 }
 
@@ -232,6 +265,13 @@ ostream& operator<< (ostream& os, int8_t x) {
   return os;
 }
 
+// for Enum type; just displays ordinals.
+template <typename E>
+typename std::enable_if<std::is_enum<E>::value, std::ostream&>::type
+operator<<(std::ostream& os, E e) {
+    return os << static_cast<typename std::underlying_type<E>::type>(e);
+}
+
 // This is a very ad-hoc implementation...
 ostream& operator<<(ostream& os, const __int128& v) {
   unsigned __int128 a = v < 0 ? -v : v;
@@ -329,48 +369,36 @@ void dbgLog(bool with_nl, Head&& head, Tail&&... tail)
 
 // ---- end debug.cc
 
-// ---- inserted function f:updMaxMin from util.cc
-template<typename T>
-bool updMax(T& tmax, const T& x) {
-  if (x > tmax) { tmax = x; return true;  }
-  else          {           return false; }
-}
-template<typename T>
-bool updMin(T& tmin, const T& x) {
-  if (x < tmin) { tmin = x; return true;  }
-  else          {           return false; }
-}
-// ---- end f:updMaxMin
-
 // @@ !! LIM -- end mark --
 
 int main(/* int argc, char *argv[] */) {
   ios_base::sync_with_stdio(false);
   cin.tie(nullptr);
   cout << setprecision(20);
-  
+
   ll N, L; cin >> N >> L;
-  // @InpVec(N, A) [AEWuiSgK]
+  // @InpVec(N, A) [IAD70iCk]
   auto A = vector(N, ll());
   for (int i = 0; i < N; i++) { ll v; cin >> v; A[i] = v; }
-  // @End [AEWuiSgK]
+  // @End [IAD70iCk]
 
-  ll lim = 2e5;
   ll big = 1e18;
-  vector tbl(lim + 1, big);
+  ll lim = 2e5;
+  vector<ll> tbl(lim + 1, big);
   tbl[0] = 0;
-  REP(i, 1, L) {
-    ll w = i * (L - i);
-    for (ll p = 0; p + w <= lim; p++) {
-      updMin(tbl[p + w], tbl[p] + 1);
+  REP(a, 1, L) {
+    ll b = L - a;
+    if (a > b) break;
+    ll x = a * b;
+    REP(i, 0, lim + 1) {
+      if (i + x > lim) break;
+      if (tbl[i] == big) continue;
+      updMin(tbl[i + x], tbl[i] + 1);
     }
   }
+
   REP(i, 0, N) {
-    if (tbl[A[i]] == big) {
-      cout << -1 << "\n";
-    }else {
-      cout << tbl[A[i]] << "\n";
-    }
+    cout << (tbl[A[i]] >= big ? -1LL : tbl[A[i]]) << "\n";
   }
 
   return 0;

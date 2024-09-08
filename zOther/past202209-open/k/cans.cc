@@ -141,6 +141,12 @@ ostream& operator<< (ostream& os, const tuple<T1,T2,T3>& t);
 template <typename T1, typename T2, typename T3, typename T4>
 ostream& operator<< (ostream& os, const tuple<T1,T2,T3,T4>& t);
 
+template <typename T1, typename T2, typename T3, typename T4, typename T5>
+ostream& operator<< (ostream& os, const tuple<T1,T2,T3,T4,T5>& t);
+
+template <typename T1, typename T2, typename T3, typename T4, typename T5, typename T6>
+ostream& operator<< (ostream& os, const tuple<T1,T2,T3,T4,T5,T6>& t);
+
 template <typename T>
 ostream& operator<< (ostream& os, const vector<T>& v);
 
@@ -199,6 +205,20 @@ template <typename T1, typename T2, typename T3, typename T4>
 ostream& operator<< (ostream& os, const tuple<T1,T2,T3,T4>& t) {
   os << "(" << get<0>(t) << ", " << get<1>(t)
      << ", " << get<2>(t) << ", " << get<3>(t) << ")";
+  return os;
+}
+
+template <typename T1, typename T2, typename T3, typename T4, typename T5>
+ostream& operator<< (ostream& os, const tuple<T1,T2,T3,T4,T5>& t) {
+  os << "(" << get<0>(t) << ", " << get<1>(t)
+     << ", " << get<2>(t) << ", " << get<3>(t) << ", " << get<4>(t) << ")";
+  return os;
+}
+
+template <typename T1, typename T2, typename T3, typename T4, typename T5, typename T6>
+ostream& operator<< (ostream& os, const tuple<T1,T2,T3,T4,T5,T6>& t) {
+  os << "(" << get<0>(t) << ", " << get<1>(t)
+     << ", " << get<2>(t) << ", " << get<3>(t) << ", " << get<4>(t) << ", " << get<5>(t) << ")";
   return os;
 }
 
@@ -457,89 +477,62 @@ int main(/* int argc, char *argv[] */) {
   cin.tie(nullptr);
   cout << setprecision(20);
 
-  
-  map<pll, ll> en;
-  vector<pll> ne;
   ll N, M; cin >> N >> M;
-  vector<ll> A(N);
-  vector<ll> B(N);
-  vector snp(0, vector<bool>());
-  vector<bool> cur;
-  ll seq = 0;
-  REP(i, 0, M) {
-    ll a, b; cin >> a >> b; a--; b--;
-    en[pll(a, b)] = seq;
-    ne.emplace_back(a, b);
-    cur.push_back(true);
-    seq++;
+  // @InpMVec(M, ((A, dec=1), (B, dec=1))) [823OTGt6]
+  auto A = vector(M, ll());
+  auto B = vector(M, ll());
+  for (int i = 0; i < M; i++) {
+    ll v1; cin >> v1; v1 -= 1; A[i] = v1;
+    ll v2; cin >> v2; v2 -= 1; B[i] = v2;
   }
+  // @End [823OTGt6]
   ll Q; cin >> Q;
-  unordered_map<ll, ll> snpidx;
-  vector<ll> type(Q);
-  vector<ll> edge(Q);
-  REP(tm, 0, Q) {
-    ll tp, x, y; cin >> tp >> x >> y; x--; y--;
-    type[tm] = tp;
-    DLOGK(en, tp, x, y);
-    auto it = en.find(pll(x, y));
-    if (tp == 1) {
-      snpidx[tm] = ssize(snp);
-      snp.push_back(cur);
-      if (it == en.end()) {
-        en[pll(x, y)] = seq;
-        edge[tm] = seq;
-        ne.emplace_back(x, y);
-        cur.push_back(true);
-        seq++;
-      }else {
-        edge[tm] = seq;
-        cur[it->second] = true;
-      }
-    }else if (tp == 2) {
-      assert(it != en.end());
-      edge[tm] = it->second;
-      cur[it->second] = false;
-    }else if (tp == 3) {
-      if (it == en.end()) {
-        en[pll(x, y)] = seq;
-        edge[tm] = seq;
-        ne.emplace_back(x, y);
-        cur.push_back(false);
-        seq++;
-      }else {
-        edge[tm] = it->second;
-      }
-    }
+  // @InpMVec(Q, (T, (X, dec=1), (Y, dec=1))) [KnpWnqXS]
+  auto T = vector(Q, ll());
+  auto X = vector(Q, ll());
+  auto Y = vector(Q, ll());
+  for (int i = 0; i < Q; i++) {
+    ll v1; cin >> v1; T[i] = v1;
+    ll v2; cin >> v2; v2 -= 1; X[i] = v2;
+    ll v3; cin >> v3; v3 -= 1; Y[i] = v3;
   }
-
+  // @End [KnpWnqXS]
+  
+  vector ss(N, set<ll>());
+  REP(i, 0, M) ss[A[i]].insert(B[i]);
+  REP(i, 0, Q) {
+    if (T[i] == 1) {
+      ss[X[i]].insert(Y[i]);
+    }else if (T[i] == 2) {
+      ss[X[i]].erase(Y[i]);
+    }else if (T[i] == 3) {
+    }else assert(0);
+  }
+  DLOGK(ss);
+  vector<ll> ans;
   UnionFind uf(N);
-  REP(i, 0, ssize(cur)) {
-    if (cur[i]) {
-      auto [a, b] = ne[i];
-      uf.merge(a, b);
-    }
+  REP(x, 0, N) {
+    for (ll y : ss[x]) uf.merge(x, y);
   }
-
-  REPrev(tm, Q - 1, 0) {
-    auto [a, b] = ne[edge[tm]];
-    if (type[tm] == 3) {
-      cout << (uf.leader(a) == uf.leader(b) ? "Yes\n" : "No\n");
-    }else if (type[tm] == 2) {
-      uf.merge(a, b);
-    }else if (type[tm] == 1) {
+  
+  REPrev(iq, Q - 1, 0) {
+    if (T[iq] == 1) {
+      ss[X[iq]].erase(Y[iq]);
       uf = UnionFind(N);
-      auto& vec = snp[snpidx[tm]];
-      REP(i, 0, ssize(vec)) {
-        if (vec[i]) {
-          auto [x, y] = ne[i];
-          uf.merge(x, y);
-        }
+      REP(x, 0, N) {
+        for (ll y : ss[x]) uf.merge(x, y);
       }
-
-    }
+    }else if (T[iq] == 2) {
+      ss[X[iq]].insert(Y[iq]);
+      uf.merge(X[iq], Y[iq]);
+    }else if (T[iq] == 3) {
+      ans.push_back(uf.leader(X[iq]) == uf.leader(Y[iq]));
+    }else assert(0);
+    DLOGK(iq, ss);
   }
 
-
+  reverse(ALL(ans));
+  REPOUT(i, 0, ssize(ans), ans[i] ? "Yes" : "No", "\n");
   return 0;
 }
 

@@ -188,31 +188,15 @@ bool updMin(T& tmin, const T& x) {
 // @@ !! LIM -- end mark --
 
 int main(/* int argc, char *argv[] */) {
-  ios_base::sync_with_stdio(false);
-  cin.tie(nullptr);
-  cout << setprecision(20);
-
   ll N, M; cin >> N >> M;
-  // @InpMVec(M, ((U, dec=1), (V, dec=1), T)) [I687pivT]
-  auto U = vector(M, ll());
-  auto V = vector(M, ll());
-  auto T = vector(M, ll());
-  for (int i = 0; i < M; i++) {
-    ll v1; cin >> v1; v1 -= 1; U[i] = v1;
-    ll v2; cin >> v2; v2 -= 1; V[i] = v2;
-    ll v3; cin >> v3; T[i] = v3;
-  }
-  // @End [I687pivT]
-
-  ll big = 1e18;
-  vector dist(N, vector(N, big));
+  vector dist(N, vector(N, LLONG_MAX));
   REP(i, 0, N) dist[i][i] = 0;
   REP(i, 0, M) {
-    updMin(dist[U[i]][V[i]], T[i]);
-    updMin(dist[V[i]][U[i]], T[i]);
+    ll u, v, t; cin >> u >> v >> t; u--; v--;
+    updMin(dist[u][v], t);
+    updMin(dist[v][u], t);
   }
   REP(k, 0, N) REP(i, 0, N) REP(j, 0, N) updMin(dist[i][j], dist[i][k] + dist[k][j]);
-
   ll Q; cin >> Q;
   REP(_q, 0, Q) {
     ll K; cin >> K;

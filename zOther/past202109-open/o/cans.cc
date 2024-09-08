@@ -2,6 +2,7 @@
 #include <cassert>
 using namespace std;
 using ll = long long int;
+using u64 = unsigned long long;
 using pll = pair<ll, ll>;
 // #include <atcoder/all>
 // using namespace atcoder;
@@ -11,7 +12,7 @@ using pll = pair<ll, ll>;
 #define SIZE(v) ((ll)((v).size()))
 #define REPOUT(i, a, b, exp, sep) REP(i, (a), (b)) cout << (exp) << (i + 1 == (b) ? "" : (sep)); cout << "\n"
 
-// @@ !! LIM(mod)
+// @@ !! LIM(mod debug)
 
 // ---- inserted library file algOp.cc
 
@@ -19,27 +20,32 @@ using pll = pair<ll, ll>;
 //    zero, one, inverse
 
 template<typename T>
-constexpr T zero(const T& t) {
+const T zero(const T& t) {
   if constexpr (is_integral_v<T> || is_floating_point_v<T>) { return (T)0; }
   else { return t.zero(); }
 }
 
 template<typename T>
-constexpr T one(const T& t) {
+const T one(const T& t) {
   if constexpr (is_integral_v<T> || is_floating_point_v<T>) { return (T)1; }
   else { return t.one(); }
 }
 
 template<typename T>
-constexpr T inverse(const T& t) {
+const T inverse(const T& t) {
   if constexpr (is_floating_point_v<T>) { return 1.0 / t; }
   else { return t.inverse(); }
 }
 
+#ifdef BOOST_MP_CPP_INT_HPP
+template<> const cpp_int zero(const cpp_int& t) { return cpp_int(0); }
+template<> const cpp_int one(const cpp_int& t) { return cpp_int(1); }
+#endif // BOOST_MP_CPP_INT_HPP
+
 // begin -- detection ideom
 //    cf. https://blog.tartanllama.xyz/detection-idiom/
 
-namespace detail {
+namespace tartan_detail {
   template <template <class...> class Trait, class Enabler, class... Args>
   struct is_detected : false_type{};
 
@@ -48,7 +54,7 @@ namespace detail {
 }
 
 template <template <class...> class Trait, class... Args>
-using is_detected = typename detail::is_detected<Trait, void, Args...>::type;
+using is_detected = typename tartan_detail::is_detected<Trait, void, Args...>::type;
 
 // end -- detection ideom
 
@@ -171,41 +177,43 @@ struct MyAlg {
 
 // ---- inserted function f:gcd from util.cc
 
-tuple<ll, ll, ll> mut_div(ll a, ll b, ll c, bool eff_c = true) {
-  // auto [g, s, t] = mut_div(a, b, c, eff_c)
-  //    If eff_c is true (default),
-  //        g == gcd(|a|, |b|) and as + bt == c, if such s,t exists
-  //        (g, s, t) == (-1, -1, -1)            otherwise
-  //    If eff_c is false,                                 
-  //        g == gcd(|a|, |b|) and as + bt == g           
-  //    N.b.  gcd(0, t) == gcd(t, 0) == t.
-  if (a == 0) {
-    if (eff_c) {
-      if (c % b != 0) return {-1, -1, -1};
-      else            return {abs(b), 0, c / b};
-    }else {
-      if (b < 0) return {-b, 0, -1};
-      else       return { b, 0,  1};
-    }
-  }else {
-    auto [g, t, u] = mut_div(b % a, a, c, eff_c);
-    // DLOGK(b%a, a, c, g, t, u);
-    if (g == -1) return {-1, -1, -1};
-    return {g, u - (b / a) * t, t};
+// auto [g, s, t] = eGCD(a, b)
+//     g == gcd(|a|, |b|) and as + bt == g           
+//     It guarantees that max(|s|, |t|) <= max(|a| / g, |b| / g)   (when g != 0)
+//     Note that gcd(a, 0) == gcd(0, a) == a.
+template<typename INT=ll>
+tuple<INT, INT, INT> eGCD(INT a, INT b) {
+  INT sa = a < 0 ? -1 : 1;
+  INT ta = 0;
+  INT za = a * sa;
+  INT sb = 0;
+  INT tb = b < 0 ? -1 : 1;
+  INT zb = b * tb;
+  while (zb != 0) {
+    INT q = za / zb;
+    INT r = za % zb;
+    za = zb;
+    zb = r;
+    INT new_sb = sa - q * sb;
+    sa = sb;
+    sb = new_sb;
+    INT new_tb = ta - q * tb;
+    ta = tb;
+    tb = new_tb;
   }
+  return {za, sa, ta};
 }
-
-// auto [g, s, t] = eGCD(a, b)  --->  sa + tb == g == gcd(|a|, |b|)
-//    N.b.  gcd(0, t) == gcd(t, 0) == t.
-tuple<ll, ll, ll> eGCD(ll a, ll b) { return mut_div(a, b, 0, false); }
 
 pair<ll, ll> crt_sub(ll a1, ll x1, ll a2, ll x2) {
   // DLOGKL("crt_sub", a1, x1, a2, x2);
   a1 = a1 % x1;
   a2 = a2 % x2;
-  auto [g, s, t] = mut_div(x1, -x2, a2 - a1);
-  // DLOGK(g, s, t);
-  if (g == -1) return {-1, -1};
+  auto [g, s, t] = eGCD(x1, -x2);
+  ll gq = (a2 - a1) / g;
+  ll gr = (a2 - a1) % g;
+  if (gr != 0) return {-1, -1};
+  s *= gq;
+  t *= gq;
   ll z = x1 / g * x2;
   // DLOGK(z);
   s = s % (x2 / g);
@@ -249,36 +257,36 @@ ll crt(vector<ll> as, vector<ll> xs) {
 
 // ---- inserted library file mod.cc
 
-template<int mod=0>
+template<int mod=0, typename INT=ll>
 struct FpG {   // G for General
-  static ll dyn_mod;
+  static INT dyn_mod;
 
-  static ll getMod() {
+  static INT getMod() {
     if (mod == 0) return dyn_mod;
-    else          return mod;
+    else          return (INT)mod;
   }
-
-  static void setMod(ll _mod) {  // effective only when mod == 0
+  
+  // Effective only when mod == 0.
+  // _mod must be less than the half of the maximum value of INT.
+  static void setMod(INT _mod) {  
     dyn_mod = _mod;
   }
 
-  static ll _conv(ll x) {
+  static INT _conv(INT x) {
     if (x >= getMod())  return x % getMod();
     if (x >= 0)         return x;
     if (x >= -getMod()) return x + getMod();
-    ll y = x % getMod();
+    INT y = x % getMod();
     if (y == 0) return 0;
     return y + getMod();
   }
 
-  ll val;
+  INT val;
 
-  FpG(int t = 0) : val(_conv(t)) {}
-  FpG(ll t) : val(_conv(t)) {}
+  FpG(INT t = 0) : val(_conv(t)) {}
   FpG(const FpG& t) : val(t.val) {}
   FpG& operator =(const FpG& t) { val = t.val; return *this; }
-  FpG& operator =(ll t) { val = _conv(t); return *this; }
-  FpG& operator =(int t) { val = _conv(t); return *this; }
+  FpG& operator =(INT t) { val = _conv(t); return *this; }
 
   FpG& operator +=(const FpG& t) {
     val += t.val;
@@ -298,10 +306,9 @@ struct FpG {   // G for General
   }
 
   FpG inv() const {
-    if (val == 0) {
-      throw runtime_error("FpG::inv(): called for zero.");
-    }
+    if (val == 0) { throw runtime_error("FpG::inv(): called for zero."); }
     auto [g, u, v] = eGCD(val, getMod());
+    if (g != 1) { throw runtime_error("FpG::inv(): not co-prime."); }
     return FpG(u);
   }
 
@@ -322,35 +329,37 @@ struct FpG {   // G for General
   bool operator ==(const FpG& t) const { return val == t.val; }
   bool operator !=(const FpG& t) const { return val != t.val; }
   
-  operator ll() const { return val; }
+  operator INT() const { return val; }
 
+  friend FpG operator +(INT x, const FpG& y) { return FpG(x) + y; }
+  friend FpG operator -(INT x, const FpG& y) { return FpG(x) - y; }
+  friend FpG operator *(INT x, const FpG& y) { return FpG(x) * y; }
+  friend FpG operator /(INT x, const FpG& y) { return FpG(x) / y; }
+  friend bool operator ==(INT x, const FpG& y) { return FpG(x) == y; }
+  friend bool operator !=(INT x, const FpG& y) { return FpG(x) != y; }
+  friend FpG operator +(const FpG& x, INT y) { return x + FpG(y); }
+  friend FpG operator -(const FpG& x, INT y) { return x - FpG(y); }
+  friend FpG operator *(const FpG& x, INT y) { return x * FpG(y); }
+  friend FpG operator /(const FpG& x, INT y) { return x / FpG(y); }
+  friend bool operator ==(const FpG& x, INT y) { return x == FpG(y); }
+  friend bool operator !=(const FpG& x, INT y) { return x != FpG(y); }
+
+  /* The following are needed to avoid warnings in cases such as FpG x; x = 5 + x; rather than x = FpG(5) + x; */
   friend FpG operator +(int x, const FpG& y) { return FpG(x) + y; }
   friend FpG operator -(int x, const FpG& y) { return FpG(x) - y; }
   friend FpG operator *(int x, const FpG& y) { return FpG(x) * y; }
   friend FpG operator /(int x, const FpG& y) { return FpG(x) / y; }
   friend bool operator ==(int x, const FpG& y) { return FpG(x) == y; }
   friend bool operator !=(int x, const FpG& y) { return FpG(x) != y; }
-  friend FpG operator +(ll x, const FpG& y) { return FpG(x) + y; }
-  friend FpG operator -(ll x, const FpG& y) { return FpG(x) - y; }
-  friend FpG operator *(ll x, const FpG& y) { return FpG(x) * y; }
-  friend FpG operator /(ll x, const FpG& y) { return FpG(x) / y; }
-  friend bool operator ==(ll x, const FpG& y) { return FpG(x) == y; }
-  friend bool operator !=(ll x, const FpG& y) { return FpG(x) != y; }
   friend FpG operator +(const FpG& x, int y) { return x + FpG(y); }
   friend FpG operator -(const FpG& x, int y) { return x - FpG(y); }
   friend FpG operator *(const FpG& x, int y) { return x * FpG(y); }
   friend FpG operator /(const FpG& x, int y) { return x / FpG(y); }
   friend bool operator ==(const FpG& x, int y) { return x == FpG(y); }
   friend bool operator !=(const FpG& x, int y) { return x != FpG(y); }
-  friend FpG operator +(const FpG& x, ll y) { return x + FpG(y); }
-  friend FpG operator -(const FpG& x, ll y) { return x - FpG(y); }
-  friend FpG operator *(const FpG& x, ll y) { return x * FpG(y); }
-  friend FpG operator /(const FpG& x, ll y) { return x / FpG(y); }
-  friend bool operator ==(const FpG& x, ll y) { return x == FpG(y); }
-  friend bool operator !=(const FpG& x, ll y) { return x != FpG(y); }
 
   friend istream& operator>> (istream& is, FpG& t) {
-    ll x; is >> x;
+    INT x; is >> x;
     t = x;
     return is;
   }
@@ -361,169 +370,455 @@ struct FpG {   // G for General
   }
 
 };
-template<int mod>
-ll FpG<mod>::dyn_mod;
+template<int mod, typename INT>
+INT FpG<mod, INT>::dyn_mod;
 
-template<int mod=0>
-class CombG {
+template<typename T>
+class Comb {
   int nMax;
-  vector<FpG<mod>> vFact;
-  vector<FpG<mod>> vInvFact;
+  vector<T> vFact;
+  vector<T> vInvFact;
 public:
-  CombG(int nm) : nMax(nm), vFact(nm+1), vInvFact(nm+1) {
-    vFact.at(0) = 1;
-    for (int i = 1; i <= nMax; i++) vFact.at(i) = i * vFact.at(i-1);
-    vInvFact.at(nMax) = vFact.at(nMax).inv();
-    for (int i = nMax; i >= 1; i--) vInvFact.at(i-1) = i * vInvFact.at(i);
+  Comb(int nm) : nMax(nm), vFact(nm+1), vInvFact(nm+1) {
+    vFact[0] = 1;
+    for (int i = 1; i <= nMax; i++) vFact[i] = i * vFact[i-1];
+    vInvFact.at(nMax) = (T)1 / vFact[nMax];
+    for (int i = nMax; i >= 1; i--) vInvFact[i-1] = i * vInvFact[i];
   }
-  FpG<mod> fact(int n) { return vFact.at(n); }
-  FpG<mod> binom(int n, int r) {
-    if (r < 0 || r > n) return 0;
-    return vFact.at(n) * vInvFact.at(r) * vInvFact.at(n-r);
+  T fact(int n) { return vFact[n]; }
+  T binom(int n, int r) {
+    if (r < 0 || r > n) return (T)0;
+    return vFact[n] * vInvFact[r] * vInvFact[n-r];
   }
-  FpG<mod> binom_dup(int n, int r) { return binom(n + r - 1, r); }
+  T binom_dup(int n, int r) { return binom(n + r - 1, r); }
   // The number of permutation extracting r from n.
-  FpG<mod> perm(int n, int r) {
-    return vFact.at(n) * vInvFact.at(n-r);
+  T perm(int n, int r) {
+    return vFact[n] * vInvFact[n-r];
   }
 };
 
 constexpr int primeA = 1'000'000'007;
 constexpr int primeB = 998'244'353;          // '
-using FpA = FpG<primeA>;
-using FpB = FpG<primeB>;
-using CombA = CombG<primeA>;
-using CombB = CombG<primeB>;
+using FpA = FpG<primeA, ll>;
+using FpB = FpG<primeB, ll>;
 
 // ---- end mod.cc
+
+// ---- inserted function f:<< from util.cc
+
+// declarations
+
+template <typename T1, typename T2>
+ostream& operator<< (ostream& os, const pair<T1,T2>& p);
+
+template <typename T1, typename T2, typename T3>
+ostream& operator<< (ostream& os, const tuple<T1,T2,T3>& t);
+
+template <typename T1, typename T2, typename T3, typename T4>
+ostream& operator<< (ostream& os, const tuple<T1,T2,T3,T4>& t);
+
+template <typename T1, typename T2, typename T3, typename T4, typename T5>
+ostream& operator<< (ostream& os, const tuple<T1,T2,T3,T4,T5>& t);
+
+template <typename T1, typename T2, typename T3, typename T4, typename T5, typename T6>
+ostream& operator<< (ostream& os, const tuple<T1,T2,T3,T4,T5,T6>& t);
+
+template <typename T>
+ostream& operator<< (ostream& os, const vector<T>& v);
+
+template <typename T, typename C>
+ostream& operator<< (ostream& os, const set<T, C>& v);
+
+template <typename T, typename C>
+ostream& operator<< (ostream& os, const unordered_set<T, C>& v);
+
+template <typename T, typename C>
+ostream& operator<< (ostream& os, const multiset<T, C>& v);
+
+template <typename T1, typename T2, typename C>
+ostream& operator<< (ostream& os, const map<T1, T2, C>& mp);
+
+template <typename T1, typename T2, typename C>
+ostream& operator<< (ostream& os, const unordered_map<T1, T2, C>& mp);
+
+template <typename T, typename T2>
+ostream& operator<< (ostream& os, const queue<T, T2>& orig);
+
+template <typename T, typename T2>
+ostream& operator<< (ostream& os, const deque<T, T2>& orig);
+
+template <typename T, typename T2, typename T3>
+ostream& operator<< (ostream& os, const priority_queue<T, T2, T3>& orig);
+
+template <typename T>
+ostream& operator<< (ostream& os, const stack<T>& st);
+
+#if __cplusplus >= 201703L
+template <typename T>
+ostream& operator<< (ostream& os, const optional<T>& t);
+#endif
+
+ostream& operator<< (ostream& os, int8_t x);
+
+ostream& operator<< (ostream& os, const __int128& x);
+
+// definitions
+
+template <typename T1, typename T2>
+ostream& operator<< (ostream& os, const pair<T1,T2>& p) {
+  os << "(" << p.first << ", " << p.second << ")";
+  return os;
+}
+
+template <typename T1, typename T2, typename T3>
+ostream& operator<< (ostream& os, const tuple<T1,T2,T3>& t) {
+  os << "(" << get<0>(t) << ", " << get<1>(t)
+     << ", " << get<2>(t) << ")";
+  return os;
+}
+
+template <typename T1, typename T2, typename T3, typename T4>
+ostream& operator<< (ostream& os, const tuple<T1,T2,T3,T4>& t) {
+  os << "(" << get<0>(t) << ", " << get<1>(t)
+     << ", " << get<2>(t) << ", " << get<3>(t) << ")";
+  return os;
+}
+
+template <typename T1, typename T2, typename T3, typename T4, typename T5>
+ostream& operator<< (ostream& os, const tuple<T1,T2,T3,T4,T5>& t) {
+  os << "(" << get<0>(t) << ", " << get<1>(t)
+     << ", " << get<2>(t) << ", " << get<3>(t) << ", " << get<4>(t) << ")";
+  return os;
+}
+
+template <typename T1, typename T2, typename T3, typename T4, typename T5, typename T6>
+ostream& operator<< (ostream& os, const tuple<T1,T2,T3,T4,T5,T6>& t) {
+  os << "(" << get<0>(t) << ", " << get<1>(t)
+     << ", " << get<2>(t) << ", " << get<3>(t) << ", " << get<4>(t) << ", " << get<5>(t) << ")";
+  return os;
+}
+
+template <typename T>
+ostream& operator<< (ostream& os, const vector<T>& v) {
+  os << '[';
+  for (auto it = v.begin(); it != v.end(); it++) {
+    if (it != v.begin()) os << ", ";
+    os << *it;
+  }
+  os << ']';
+
+  return os;
+}
+
+template <typename T, typename C>
+ostream& operator<< (ostream& os, const set<T, C>& v) {
+  os << '{';
+  for (auto it = v.begin(); it != v.end(); it++) {
+    if (it != v.begin()) os << ", ";
+    os << *it;
+  }
+  os << '}';
+
+  return os;
+}
+
+template <typename T, typename C>
+ostream& operator<< (ostream& os, const unordered_set<T, C>& v) {
+  os << '{';
+  for (auto it = v.begin(); it != v.end(); it++) {
+    if (it != v.begin()) os << ", ";
+    os << *it;
+  }
+  os << '}';
+
+  return os;
+}
+
+template <typename T, typename C>
+ostream& operator<< (ostream& os, const multiset<T, C>& v) {
+  os << '{';
+  for (auto it = v.begin(); it != v.end(); it++) {
+    if (it != v.begin()) os << ", ";
+    os << *it;
+  }
+  os << '}';
+
+  return os;
+}
+
+template <typename T1, typename T2, typename C>
+ostream& operator<< (ostream& os, const map<T1, T2, C>& mp) {
+  os << '[';
+  for (auto it = mp.begin(); it != mp.end(); it++) {
+    if (it != mp.begin()) os << ", ";
+    os << it->first << ": " << it->second;
+  }
+  os << ']';
+
+  return os;
+}
+
+template <typename T1, typename T2, typename C>
+ostream& operator<< (ostream& os, const unordered_map<T1, T2, C>& mp) {
+  os << '[';
+  for (auto it = mp.begin(); it != mp.end(); it++) {
+    if (it != mp.begin()) os << ", ";
+    os << it->first << ": " << it->second;
+  }
+  os << ']';
+
+  return os;
+}
+
+template <typename T, typename T2>
+ostream& operator<< (ostream& os, const queue<T, T2>& orig) {
+  queue<T, T2> que(orig);
+  bool first = true;
+  os << '[';
+  while (!que.empty()) {
+    T x = que.front(); que.pop();
+    if (!first) os << ", ";
+    os << x;
+    first = false;
+  }
+  return os << ']';
+}
+
+template <typename T, typename T2>
+ostream& operator<< (ostream& os, const deque<T, T2>& orig) {
+  deque<T, T2> que(orig);
+  bool first = true;
+  os << '[';
+  while (!que.empty()) {
+    T x = que.front(); que.pop_front();
+    if (!first) os << ", ";
+    os << x;
+    first = false;
+  }
+  return os << ']';
+}
+
+template <typename T, typename T2, typename T3>
+ostream& operator<< (ostream& os, const priority_queue<T, T2, T3>& orig) {
+  priority_queue<T, T2, T3> pq(orig);
+  bool first = true;
+  os << '[';
+  while (!pq.empty()) {
+    T x = pq.top(); pq.pop();
+    if (!first) os << ", ";
+    os << x;
+    first = false;
+  }
+  return os << ']';
+}
+
+template <typename T>
+ostream& operator<< (ostream& os, const stack<T>& st) {
+  stack<T> tmp(st);
+  os << '[';
+  bool first = true;
+  while (!tmp.empty()) {
+    T& t = tmp.top();
+    if (first) first = false;
+    else os << ", ";
+    os << t;
+    tmp.pop();
+  }
+  os << ']';
+  return os;
+}
+
+#if __cplusplus >= 201703L
+template <typename T>
+ostream& operator<< (ostream& os, const optional<T>& t) {
+  if (t.has_value()) os << "v(" << t.value() << ")";
+  else               os << "nullopt";
+  return os;
+}
+#endif
+
+ostream& operator<< (ostream& os, int8_t x) {
+  os << (int32_t)x;
+  return os;
+}
+
+// for Enum type; just displays ordinals.
+template <typename E>
+typename std::enable_if<std::is_enum<E>::value, std::ostream&>::type
+operator<<(std::ostream& os, E e) {
+    return os << static_cast<typename std::underlying_type<E>::type>(e);
+}
+
+// This is a very ad-hoc implementation...
+ostream& operator<<(ostream& os, const __int128& v) {
+  unsigned __int128 a = v < 0 ? -v : v;
+  ll i = 0;
+  string s(64, ' ');
+  if (v == 0) {
+    s[i++] = '0';
+  }else {
+    while (a > 0) {
+      s[i++] = '0' + (char)(a % 10);
+      a /= 10;
+    }
+  }
+  if (v < 0) {
+    s[i++] = '-';
+  }
+  s.erase(s.begin() + i, s.end());
+  reverse(s.begin(), s.end());
+  os << s;
+  return os;
+}
+
+
+// ---- end f:<<
+
+// ---- inserted library file debug.cc
+template <class... Args>
+string dbgFormat(const char* fmt, Args... args) {
+  size_t len = snprintf(nullptr, 0, fmt, args...);
+  char buf[len + 1];
+  snprintf(buf, len + 1, fmt, args...);
+  return string(buf);
+}
+
+template <class Head>
+void dbgLog(bool with_nl, Head&& head) {
+  cerr << head;
+  if (with_nl) cerr << endl;
+}
+
+template <class Head, class... Tail>
+void dbgLog(bool with_nl, Head&& head, Tail&&... tail)
+{
+  cerr << head << " ";
+  dbgLog(with_nl, forward<Tail>(tail)...);
+}
+
+#if DEBUG
+  #define DLOG(...)        dbgLog(true, __VA_ARGS__)
+  #define DLOGNNL(...)     dbgLog(false, __VA_ARGS__)
+  #define DFMT(...)        cerr << dbgFormat(__VA_ARGS__) << endl
+  #define DCALL(func, ...) func(__VA_ARGS__)
+#else
+  #define DLOG(...)
+  #define DLOGNNL(...)
+  #define DFMT(...)
+  #define DCALL(func, ...)
+#endif
+
+/*
+#if DEBUG_LIB
+  #define DLOG_LIB(...)        dbgLog(true, __VA_ARGS__)
+  #define DLOGNNL_LIB(...)     dbgLog(false, __VA_ARGS__)
+  #define DFMT_LIB(...)        cerr << dbgFormat(__VA_ARGS__) << endl
+  #define DCALL_LIB(func, ...) func(__VA_ARGS__)
+#else
+  #define DLOG_LIB(...)
+  #define DFMT_LIB(...)
+  #define DCALL_LIB(func, ...)
+#endif
+*/
+
+#define DUP1(E1)       #E1 "=", E1
+#define DUP2(E1,E2)    DUP1(E1), DUP1(E2)
+#define DUP3(E1,...)   DUP1(E1), DUP2(__VA_ARGS__)
+#define DUP4(E1,...)   DUP1(E1), DUP3(__VA_ARGS__)
+#define DUP5(E1,...)   DUP1(E1), DUP4(__VA_ARGS__)
+#define DUP6(E1,...)   DUP1(E1), DUP5(__VA_ARGS__)
+#define DUP7(E1,...)   DUP1(E1), DUP6(__VA_ARGS__)
+#define DUP8(E1,...)   DUP1(E1), DUP7(__VA_ARGS__)
+#define DUP9(E1,...)   DUP1(E1), DUP8(__VA_ARGS__)
+#define DUP10(E1,...)   DUP1(E1), DUP9(__VA_ARGS__)
+#define DUP11(E1,...)   DUP1(E1), DUP10(__VA_ARGS__)
+#define DUP12(E1,...)   DUP1(E1), DUP11(__VA_ARGS__)
+#define GET_MACRO(_1,_2,_3,_4,_5,_6,_7,_8,_9,_10,_11,_12,NAME,...) NAME
+#define DUP(...)          GET_MACRO(__VA_ARGS__, DUP12, DUP11, DUP10, DUP9, DUP8, DUP7, DUP6, DUP5, DUP4, DUP3, DUP2, DUP1)(__VA_ARGS__)
+#define DLOGK(...)        DLOG(DUP(__VA_ARGS__))
+#define DLOGKL(lab, ...)  DLOG(lab, DUP(__VA_ARGS__))
+
+#if DEBUG_LIB
+  #define DLOG_LIB   DLOG
+  #define DLOGK_LIB  DLOGK
+  #define DLOGKL_LIB DLOGKL
+#endif
+
+// ---- end debug.cc
 
 // @@ !! LIM -- end mark --
 
 using Fp = FpB;
+
+struct myexc : exception {};
 
 int main(/* int argc, char *argv[] */) {
   ios_base::sync_with_stdio(false);
   cin.tie(nullptr);
   cout << setprecision(20);
 
-  ll N, M; cin >> N >> M;
-  ll NN = 1LL << N;
-  // @InpVec(NN, P, dec=1) [N60XYw3A]
-  auto P = vector(NN, ll());
-  for (int i = 0; i < NN; i++) { ll v; cin >> v; v -= 1; P[i] = v; }
-  // @End [N60XYw3A]
-  vector Pr = vector(NN, 0LL);
-  REP(i, 0, NN) Pr[P[i]] = i;
+  auto solve = [&]() -> Fp {
 
-  // @InpMVec(M, ((W, dec=1), (L, dec=1))) [2i7tFO1i]
-  auto W = vector(M, ll());
-  auto L = vector(M, ll());
-  for (int i = 0; i < M; i++) {
-    ll v1; cin >> v1; v1 -= 1; W[i] = v1;
-    ll v2; cin >> v2; v2 -= 1; L[i] = v2;
-  }
-  // @End [2i7tFO1i]
-  vector Wr(M, 0LL);
-  vector Lr(M, 0LL);
-  REP(i, 0, M) {
-    Wr[i] = Pr[W[i]];
-    Lr[i] = Pr[L[i]];
-  }
-  vector<ll> wlres(NN, -1LL);
-  REP(i, 0, M) {
-    ll x = 1;
-    ll j = N - 1;
-    while (true) {
-      ll w = Wr[i] >> j & 1;
-      ll l = Lr[i] >> j & 1;
-      if (w != l) break;
-      x = (x << 1) | w;
-      j--;
+    ll N, M; cin >> N >> M;
+    ll numP = 1LL << N;
+
+    // @InpVec(numP, P, dec=1) [qCpHq4kd]
+    auto P = vector(numP, ll());
+    for (int i = 0; i < numP; i++) { ll v; cin >> v; v -= 1; P[i] = v; }
+    // @End [qCpHq4kd]
+
+    vector<ll> revP(numP);
+    REP(i, 0, numP) revP[P[i]] = i;
+    // @InpMVec(M, ((W, dec=1), (L, dec=1))) [od80Ys41]
+    auto W = vector(M, ll());
+    auto L = vector(M, ll());
+    for (int i = 0; i < M; i++) {
+      ll v1; cin >> v1; v1 -= 1; W[i] = v1;
+      ll v2; cin >> v2; v2 -= 1; L[i] = v2;
     }
-    for (; j >= 0; j--) {
-      if (wlres[x] >= 0 and wlres[x] != Wr[i]) {
-        cout << 0 << endl;
-        return 0;
+    // @End [od80Ys41]
+  
+    // Fp ans = 2;
+    vector rec(numP, pll(-1, -1));
+    REP(i, 0, M) {
+      ll w = revP[W[i]];
+      ll l = revP[L[i]];
+      u64 x = w ^ l;
+      ll t = bit_width(x);
+      u64 y = (numP + w) >> t;
+      if (rec[y].first >= 0) return 0;
+      rec[y] = pll(w, l);
+    }
+
+    DLOGK(rec);
+
+    auto dfs = [&](auto rF, ll i0, ll ht, ll w0) -> Fp {
+      if (i0 >= numP) return 1;
+      auto [w, l] = rec[i0];
+      if (w0 >= 0 and w >= 0 and w0 != w) throw myexc();
+      if (w0 >= 0 or w >= 0) {
+        ll ww = w0 >= 0 ? w0 : w;
+        ll bit = ww >> (ht - 1) & 1;
+        Fp aW = rF(rF, i0 * 2 + bit,       ht - 1, ww);
+        Fp aL = rF(rF, i0 * 2 + (1 - bit), ht - 1, l);
+        return aW * aL;
+      }else {
+        Fp a0 = 2 * rF(rF, i0 * 2,     ht - 1, -1);
+        Fp a1 = 1 * rF(rF, i0 * 2 + 1, ht - 1, -1);
+        return a0 * a1;
       }
-      wlres[x] = Wr[i];
-      x = (x << 1) | (Wr[i] >> j & 1);
-    }
-  }
-  using sta = tuple<ll, FpB, FpB>;
-  auto dfs = [&](auto rF, ll x) -> vector<sta> {
-    if (x >= NN) {
-      ll i = x ^ NN;
-      return {{P[i], 1, 1}};
-    }
-    vector<sta> v0 = rF(rF, 2 * x + 0);
-    vector<sta> v1 = rF(rF, 2 * x + 1);
-
-    auto accum = [&](const auto& v) {
-      vector<sta> ret(SIZE(v) + 1);
-      for (ll i = 0; i < SIZE(v); i++) 
     };
 
-    vector<sta> sv0 = accum(v0);
-    vector<sta> sv1 = accum(v1);
-    auto w0 = modify(v0, sv1);
-    auto w1 = modify(v1, sv0);
-    vector<sta> ret;
-    ll k0 = 0; k1 = 0;
-    while (k0 < SIZE(w0) or k1 < SIZE(w1)) {
-      if (k0 == SIZE(w0) ret.push_back(move(w1[k1++])));
-      else if (k1 == SIZE(w1) ret.push_back(move(w1[k0++])));
-      else {
-        auto [p0, r0, b0] = w0[k0];
-        auto [p1, r1, b1] = w1[k1];
-        if (p0 < p1) ret.push_back(move(w0[k0++]));
-        else ret.push_back(move(w1[k1++]));
-      }
+    try {
+      return 2 * dfs(dfs, 1, N, -1);
+    }catch(myexc& e) {
+      return 0;
     }
-    return ret;
 
-
-    vector<vector<sta>> v(2);
-    REP(m, 0, 2) v[m] = rF(rF, 2 * x + m);
-    vector<sta> ret;
-    vector<Fp> sumR(2, Fp(0));
-    vector<Fp> sumB(2, Fp(0));
-    REP(m, 0, 2) REP(i, 0, SIZE(v[m]))  {
-      sumR[m] += get<1>(v[m][i]);
-      sumB[m] += get<2>(v[m][i]);
-    }
-    vector<Fp> smallR(2, Fp(0));
-    vector<Fp> smallB(2, Fp(0));
-    vector<Fp> bigR(2, Fp(0));
-    vector<Fp> bigB(2, Fp(0));
-    REP(m, 0, 2) { bigR[m] = sumR[m]; bigB[m] = sumB[m]; }
-    ll k0 = 0, k1 = 0;
-    vector<ll> p(2);
-    vector<Fp> r(2);
-    vector<Fp> b(2);
-    REP(m, 0, 2) tie(p[m], r[m], b[m]) = v[m][0];
-    while (k0 < SIZE(v[0]) or k1 < SIZE(v[1])) {
-      ll m = -1;
-      if (k0 == SIZE(v[0])) m = 1;
-      else if (k1 == SIZE(v[1])) m = 0;
-      else if (p[0] < p[1]) m = 0;
-      else m = 1;
-      if (wlres[x] < 0 or wlres[x] == p[m]) {
-        ret.emplace_back(p[m], bigR[1 - m] + smallB[1 - m], smallR[1 - m] + bigB[1 - m]);
-      }
-      smallR[m] += r[m];
-      bigR[m] -= r[m];
-      smallB[m] += b[m];
-      bigB[m] -= b[m];
-      if (m == 0) k0++;
-      else k1++;
-    }
-    return ret;
   };
-  auto vvec = dfs(dfs, 1);
-  Fp ans = 0;
-  for (auto [_, r, b] : vvec) ans += r + b;
-  cout << ans << endl;
   
+  cout << solve() << endl;
+
   return 0;
 }
 

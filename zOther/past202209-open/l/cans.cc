@@ -12,7 +12,22 @@ using pll = pair<ll, ll>;
 #define SIZE(v) ((ll)((v).size()))
 #define REPOUT(i, a, b, exp, sep) REP(i, (a), (b)) cout << (exp) << (i + 1 == (b) ? "" : (sep)); cout << "\n"
 
-// @@ !! LIM()
+// @@ !! LIM(f:updMaxMin)
+
+// ---- inserted function f:updMaxMin from util.cc
+template<typename T>
+bool updMax(T& tmax, const T& x) {
+  if (x > tmax) { tmax = x; return true;  }
+  else          {           return false; }
+}
+template<typename T>
+bool updMin(T& tmin, const T& x) {
+  if (x < tmin) { tmin = x; return true;  }
+  else          {           return false; }
+}
+// ---- end f:updMaxMin
+
+// @@ !! LIM -- end mark --
 
 int main(/* int argc, char *argv[] */) {
   ios_base::sync_with_stdio(false);
@@ -20,32 +35,31 @@ int main(/* int argc, char *argv[] */) {
   cout << setprecision(20);
 
   ll N, M; cin >> N >> M;
-  // @InpVec(N, A) [2iutszXc]
+  // @InpVec(N, A) [62egLrKP]
   auto A = vector(N, ll());
   for (int i = 0; i < N; i++) { ll v; cin >> v; A[i] = v; }
-  // @End [2iutszXc]
-
-  // @InpMVec(M, (P, (Q, dec=1), L, R)) [LigmBl5C]
-  auto P = vector(M, ll());
-  auto Q = vector(M, ll());
-  auto L = vector(M, ll());
-  auto R = vector(M, ll());
-  for (int i = 0; i < M; i++) {
-    ll v1; cin >> v1; P[i] = v1;
-    ll v2; cin >> v2; v2 -= 1; Q[i] = v2;
-    ll v3; cin >> v3; L[i] = v3;
-    ll v4; cin >> v4; R[i] = v4;
+  // @End [62egLrKP]
+  vector PLR(N + 1, vector(3, vector(3, 0LL)));
+  REP(i, 0, M) {
+    ll p, q, l, r; cin >> p >> q >> l >> r; q--;
+    PLR[q][l][r] += p;
   }
-  // @End [LigmBl5C]
-
-  vector tbl_init(9, 0LL);
+  vector tbl_init(3, vector(3, -1LL));
   auto tbl = tbl_init;
+  REP(i, 0, 3) tbl[0][i] = PLR[0][0][i];
   REP(i, 0, N) {
-    auto prev = tbl;
-    REP(r, 0, 9) {
-      
+    auto prev = move(tbl);
+    tbl = tbl_init;
+    REP(j, 0, 3) REP(k, 0, 3) {
+      if (prev[j][k] < 0) continue;
+      updMax(tbl[j][k], prev[j][k] + PLR[i + 1][j][k]);
+      ll j1 = (j + 1) % 3;
+      ll k2 = (k + 2) % 3;
+      updMax(tbl[j1][k2], prev[j][k] + PLR[i + 1][j1][k2] + A[i]);
     }
   }
+  cout << max(tbl[0][0], max(tbl[1][0], tbl[2][0])) << endl;
+
 
   return 0;
 }

@@ -364,64 +364,45 @@ int main(/* int argc, char *argv[] */) {
   cout << setprecision(20);
 
   ll H, W, N; cin >> H >> W >> N;
-  vector P(H, vector<ll>());
-  vector mp(H, set<ll>());
+  vector C(H, vector<ll>());
   REP(i, 0, N) {
     ll r, c; cin >> r >> c; r--; c--;
-    P[r].push_back(c);
-    mp[r].insert(c);
+    C[r].push_back(c);
   }
-  REP(i, 0, H) sort(ALL(P[i]));
-  multiset<ll> ms;
-  vector added(H, vector<ll>());
-  vector deleted(H, vector<ll>());
-  REP(i, 0, H) {
-    for (ll c : P[i]) {
-      auto it = ms.upper_bound(c);
-      if (it != ms.end()) {
-        deleted[i].push_back(*it);
-        ms.erase(it);
-      }
-      added[i].push_back(c);
-      ms.insert(c);
-    }
-  }
-  cout << ssize(ms) << "\n";
-  ll p = H - 1;
-  ll q = W - 1;
-  string traj;
-  while (not (p == 0 and q == 0)) {
-    char dir;
-    if (p == 0) dir = 'R';
-    else if (q == 0) dir = 'D';
-    else {
-      if (mp[p].contains(q)) {
-        auto it = ms.find(q);
-        assert(it != ms.end());
-        ms.erase(it);
-        if (ms.contains(q)) dir = 'D';
-        else dir = 'R';
-        ms.insert(q);
+  REP(r, 0, H) sort(ALL(C[r]));
+  vector<ll> tail_val;
+  vector<pll> tail_pos;
+  map<pll, pll> prev;
+  REP(r, 0, H) {
+    for (ll c : C[r]) {
+      ll k = upper_bound(ALL(tail_val), c) - tail_val.begin();
+      if (k == ssize(tail_val)) {
+        tail_val.push_back(c);
+        tail_pos.emplace_back(r, c);
       }else {
-        if (ms.contains(q)) dir = 'D';
-        else dir = 'R';
+        tail_val[k] = c;
+        tail_pos[k] = pll(r, c);
       }
+      if (k == 0) prev[pll(r, c)] = pll(-1, -1);
+      else prev[pll(r, c)] = tail_pos[k - 1];
     }
-    traj.push_back(dir);
-    DLOGK(p, q, dir);
-    if (dir == 'D') {
-      for (ll i : deleted[p]) ms.insert(i);
-      for (ll i : added[p]) {
-        auto it = ms.find(i);
-        assert(it != ms.end());
-        ms.erase(it);
-      }
-      p--;
-    }else {
-      q--;
-    }
-    DLOGK(p, q);
   }
+  cout << ssize(tail_val) << "\n";
+
+  string traj;
+  auto add_traj = [&](pll p, pll q) -> void {
+    REP(i, 0, p.first - q.first) traj += 'D';
+    REP(i, 0, p.second - q.second) traj += 'R';
+  };
+  pll p{H - 1, W - 1};
+  pll q = tail_pos.back();
+  while (true) {
+    add_traj(p, q);
+    p = q;
+    q = prev[p];
+    if (q == pll(-1, -1)) break;
+  }
+  add_traj(p, pll(0, 0));
   reverse(ALL(traj));
   cout << traj << "\n";
 
