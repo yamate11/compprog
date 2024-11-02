@@ -1,306 +1,70 @@
 #include <bits/stdc++.h>
 #include <cassert>
-typedef long long int ll;
 using namespace std;
+using ll = long long int;
+using u64 = unsigned long long;
+using pll = pair<ll, ll>;
 // #include <atcoder/all>
 // using namespace atcoder;
+#define REP(i, a, b) for (ll i = (a); i < (b); i++)
+#define REPrev(i, a, b) for (ll i = (a); i >= (b); i--)
+#define ALL(coll) (coll).begin(), (coll).end()
+#define SIZE(v) ((ll)((v).size()))
+#define REPOUT(i, a, b, exp, sep) REP(i, (a), (b)) cout << (exp) << (i + 1 == (b) ? "" : (sep)); cout << "\n"
 
-// @@ !! LIM(debug)
-// --> f:<< debug
-// ---- inserted function << from util.cc
-template <typename T1, typename T2>
-ostream& operator<< (ostream& os, const pair<T1,T2>& p) {
-  os << "(" << p.first << ", " << p.second << ")";
-  return os;
-}
-
-template <typename T1, typename T2, typename T3>
-ostream& operator<< (ostream& os, const tuple<T1,T2,T3>& t) {
-  os << "(" << get<0>(t) << ", " << get<1>(t)
-     << ", " << get<2>(t) << ")";
-  return os;
-}
-
-template <typename T1, typename T2, typename T3, typename T4>
-ostream& operator<< (ostream& os, const tuple<T1,T2,T3,T4>& t) {
-  os << "(" << get<0>(t) << ", " << get<1>(t)
-     << ", " << get<2>(t) << ", " << get<3>(t) << ")";
-  return os;
-}
-
-template <typename T>
-ostream& operator<< (ostream& os, const vector<T>& v) {
-  os << '[';
-  for (auto it = v.begin(); it != v.end(); it++) {
-    if (it != v.begin()) os << ", ";
-    os << *it;
-  }
-  os << ']';
-
-  return os;
-}
-
-template <typename T, typename C>
-ostream& operator<< (ostream& os, const set<T, C>& v) {
-  os << '{';
-  for (auto it = v.begin(); it != v.end(); it++) {
-    if (it != v.begin()) os << ", ";
-    os << *it;
-  }
-  os << '}';
-
-  return os;
-}
-
-template <typename T, typename C>
-ostream& operator<< (ostream& os, const unordered_set<T, C>& v) {
-  os << '{';
-  for (auto it = v.begin(); it != v.end(); it++) {
-    if (it != v.begin()) os << ", ";
-    os << *it;
-  }
-  os << '}';
-
-  return os;
-}
-
-template <typename T, typename C>
-ostream& operator<< (ostream& os, const multiset<T, C>& v) {
-  os << '{';
-  for (auto it = v.begin(); it != v.end(); it++) {
-    if (it != v.begin()) os << ", ";
-    os << *it;
-  }
-  os << '}';
-
-  return os;
-}
-
-template <typename T1, typename T2, typename C>
-ostream& operator<< (ostream& os, const map<T1, T2, C>& mp) {
-  os << '[';
-  for (auto it = mp.begin(); it != mp.end(); it++) {
-    if (it != mp.begin()) os << ", ";
-    os << it->first << ": " << it->second;
-  }
-  os << ']';
-
-  return os;
-}
-
-template <typename T1, typename T2, typename C>
-ostream& operator<< (ostream& os, const unordered_map<T1, T2, C>& mp) {
-  os << '[';
-  for (auto it = mp.begin(); it != mp.end(); it++) {
-    if (it != mp.begin()) os << ", ";
-    os << it->first << ": " << it->second;
-  }
-  os << ']';
-
-  return os;
-}
-
-template <typename T, typename T2>
-ostream& operator<< (ostream& os, const queue<T, T2>& orig) {
-  queue<T, T2> que(orig);
-  bool first = true;
-  os << '[';
-  while (!que.empty()) {
-    T x = que.front(); que.pop();
-    if (!first) os << ", ";
-    os << x;
-    first = false;
-  }
-  return os << ']';
-}
-
-template <typename T, typename T2>
-ostream& operator<< (ostream& os, const deque<T, T2>& orig) {
-  deque<T, T2> que(orig);
-  bool first = true;
-  os << '[';
-  while (!que.empty()) {
-    T x = que.front(); que.pop_front();
-    if (!first) os << ", ";
-    os << x;
-    first = false;
-  }
-  return os << ']';
-}
-
-template <typename T, typename T2, typename T3>
-ostream& operator<< (ostream& os, const priority_queue<T, T2, T3>& orig) {
-  priority_queue<T, T2, T3> pq(orig);
-  bool first = true;
-  os << '[';
-  while (!pq.empty()) {
-    T x = pq.top(); pq.pop();
-    if (!first) os << ", ";
-    os << x;
-    first = false;
-  }
-  return os << ']';
-}
-
-template <typename T>
-ostream& operator<< (ostream& os, const stack<T>& st) {
-  stack<T> tmp(st);
-  os << '[';
-  bool first = true;
-  while (!tmp.empty()) {
-    T& t = tmp.top();
-    if (first) first = false;
-    else os << ", ";
-    os << t;
-    tmp.pop();
-  }
-  os << ']';
-  return os;
-}
-
-#if __cplusplus >= 201703L
-template <typename T>
-ostream& operator<< (ostream& os, const optional<T>& t) {
-  if (t.has_value()) os << "v(" << t.value() << ")";
-  else               os << "nullopt";
-  return os;
-}
-#endif
-
-ostream& operator<< (ostream& os, int8_t x) {
-  os << (int32_t)x;
-  return os;
-}
-
-// ---- end <<
-// ---- inserted library file debug.cc
-template <class... Args>
-string dbgFormat(const char* fmt, Args... args) {
-  size_t len = snprintf(nullptr, 0, fmt, args...);
-  char buf[len + 1];
-  snprintf(buf, len + 1, fmt, args...);
-  return string(buf);
-}
-
-template <class Head>
-void dbgLog(bool with_nl, Head&& head) {
-  cerr << head;
-  if (with_nl) cerr << endl;
-}
-
-template <class Head, class... Tail>
-void dbgLog(bool with_nl, Head&& head, Tail&&... tail)
-{
-  cerr << head << " ";
-  dbgLog(with_nl, forward<Tail>(tail)...);
-}
-
-#if DEBUG
-  #define DLOG(...)        dbgLog(true, __VA_ARGS__)
-  #define DLOGNNL(...)     dbgLog(false, __VA_ARGS__)
-  #define DFMT(...)        cerr << dbgFormat(__VA_ARGS__) << endl
-  #define DCALL(func, ...) func(__VA_ARGS__)
-#else
-  #define DLOG(...)
-  #define DLOGNNL(...)
-  #define DFMT(...)
-  #define DCALL(func, ...)
-#endif
-
-#if DEBUG_LIB
-  #define DLOG_LIB(...)        dbgLog(true, __VA_ARGS__)
-  #define DLOGNNL_LIB(...)     dbgLog(false, __VA_ARGS__)
-  #define DFMT_LIB(...)        cerr << dbgFormat(__VA_ARGS__) << endl
-  #define DCALL_LIB(func, ...) func(__VA_ARGS__)
-#else
-  #define DLOG_LIB(...)
-  #define DFMT_LIB(...)
-  #define DCALL_LIB(func, ...)
-#endif
-
-#define DUP1(E1)       #E1 "=", E1
-#define DUP2(E1,E2)    DUP1(E1), DUP1(E2)
-#define DUP3(E1,...)   DUP1(E1), DUP2(__VA_ARGS__)
-#define DUP4(E1,...)   DUP1(E1), DUP3(__VA_ARGS__)
-#define DUP5(E1,...)   DUP1(E1), DUP4(__VA_ARGS__)
-#define DUP6(E1,...)   DUP1(E1), DUP5(__VA_ARGS__)
-#define DUP7(E1,...)   DUP1(E1), DUP6(__VA_ARGS__)
-#define DUP8(E1,...)   DUP1(E1), DUP7(__VA_ARGS__)
-#define GET_MACRO(_1,_2,_3,_4,_5,_6,_7,_8,NAME,...) NAME
-#define DUP(...)          GET_MACRO(__VA_ARGS__, DUP8, DUP7, DUP6, DUP5, DUP4, DUP3, DUP2, DUP1)(__VA_ARGS__)
-#define DLOGK(...)        DLOG(DUP(__VA_ARGS__))
-#define DLOGKL(lab, ...)  DLOG(lab, DUP(__VA_ARGS__))
-
-// ---- end debug.cc
-// @@ !! LIM  -- end mark --
+// @@ !! LIM()
 
 int main(/* int argc, char *argv[] */) {
   ios_base::sync_with_stdio(false);
   cin.tie(nullptr);
   cout << setprecision(20);
 
-  auto combi = [](ll n, ll r) {
-    ll x1 = 1;
-    ll x2 = 1;
-    for (ll i = 0; i < r; i++) x1 *= (n - i);
-    for (ll i = 0; i < r; i++) x2 *= (r - i);
-    return x1 / x2;
-  };
-
-  auto fact = [](ll n) {
-    ll ret = 1;
-    for (ll i = 1; i <= n; i++) ret *= i;
-    return ret;
-  };
-
   ll N, M; cin >> N >> M;
-  vector nxt(N, 0LL);
-  ll univ = 0;
-  for (ll i = 0; i < M; i++) {
-    ll x, y; cin >> x >> y; x--; y--;
-    nxt[x] = nxt[x] | (1LL << y);
-    univ = univ | (1LL << x);
-    univ = univ | (1LL << y);
+  // @InpMVec(M, ((X, dec=1), (Y, dec=1))) [CdRPpg7A]
+  auto X = vector(M, ll());
+  auto Y = vector(M, ll());
+  for (int i = 0; i < M; i++) {
+    ll v1; cin >> v1; v1 -= 1; X[i] = v1;
+    ll v2; cin >> v2; v2 -= 1; Y[i] = v2;
   }
-  ll rem = -1;
-  {
-    ll cnt = __builtin_popcountll(univ);
-    rem = fact(N - cnt) * combi(N, cnt);
+  // @End [CdRPpg7A]
+  vector nbr(N, vector<ll>());
+  vector<ll> numUp(N);
+  REP(i, 0, M) {
+    nbr[X[i]].push_back(Y[i]);
+    numUp[Y[i]]++;
   }
-  vector<ll> powerset;
-  {
-    ll x = univ;
-    while (true) {
-      powerset.push_back(x);
-      if (x == 0) break;
-      x = (x - 1) & univ;
-    }
-  }
-  reverse(powerset.begin(), powerset.end());
-  DLOGK(powerset);
+  ll tops = 0;
+  REP(i, 0, N) if (numUp[i] == 0) tops |= 1LL << i;
   vector tbl(1LL << N, -1LL);
-  for (ll x : powerset) {
-    DLOGK(x);
-    if (x == 0) {
-      tbl[x] = 1;
-      continue;
-    }
-    ll cnt = 0;
-    for (ll t = 0; t < N; t++) {
-      if ((x >> t) & 1) {
-        DLOGK(t);
-        if (!(nxt[t] & x)) {
-          ll y = x & ~(1LL << t);
-          cnt += tbl[y];
-          DLOGK(y, tbl[y], cnt);
+  auto func = [&](auto rF, ll rem, ll from) -> ll {
+    ll& ret = tbl[rem];
+    if (ret < 0) {
+      if (rem == 0) ret = 1;
+      else {
+        if (from >= 0) {
+          tops ^= (1LL << from);
+          for (ll j : nbr[from]) {
+            numUp[j]--;
+            if (numUp[j] == 0) tops |= (1LL << j);
+          }
+        }
+        ret = 0;
+        REP(i, 0, N) if (tops >> i & 1) {
+          ret += rF(rF, rem ^ (1LL << i), i);
+        }
+        if (from >= 0) {
+          for (ll j : nbr[from]) {
+            if (numUp[j] == 0) tops ^= (1LL << j);
+            numUp[j]++;
+          }
+          tops |= (1LL << from);
         }
       }
     }
-    tbl[x] = cnt;
-    DLOGKL("* tblset", x, tbl[x]);
-  }
-  DLOGK(tbl, rem);
-  cout << tbl[univ] * rem << endl;
+    return ret;
+  };
+  cout << func(func, (1LL << N) - 1, -1) << endl;
 
   return 0;
 }
