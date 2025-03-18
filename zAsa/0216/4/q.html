@@ -9,7 +9,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>C - Slot Strategy 2 (Easy)</title>
+	<title>E - Graph Destruction</title>
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 	<meta http-equiv="Content-Language" content="en">
 	<meta name="viewport" content="width=device-width,initial-scale=1.0">
@@ -22,7 +22,11 @@
 		window.dataLayer = window.dataLayer || [];
 		function gtag(){dataLayer.push(arguments);}
 		gtag('js', new Date());
-
+		gtag('set', 'user_properties', {
+			
+				'login_status': 'logged_in',
+			
+		});
 		gtag('config', 'G-RC512FD18N');
 	</script>
 
@@ -32,61 +36,71 @@
 
 	<meta property="og:site_name" content="AtCoder">
 	
-	<meta property="og:title" content="C - Slot Strategy 2 (Easy)" />
+	<meta property="og:title" content="E - Graph Destruction" />
 	<meta property="og:description" content="AtCoder is a programming contest site for anyone from beginners to experts. We hold weekly programming contests online." />
 	<meta property="og:type" content="website" />
-	<meta property="og:url" content="https://atcoder.jp/contests/abc320/tasks/abc320_c" />
+	<meta property="og:url" content="https://atcoder.jp/contests/abc229/tasks/abc229_e" />
 	<meta property="og:image" content="https://img.atcoder.jp/assets/atcoder.png" />
 	<meta name="twitter:card" content="summary" />
 	<meta name="twitter:site" content="@atcoder" />
 	
-	<meta property="twitter:title" content="C - Slot Strategy 2 (Easy)" />
+	<meta property="twitter:title" content="E - Graph Destruction" />
 
 	<link href="//fonts.googleapis.com/css?family=Lato:400,700" rel="stylesheet" type="text/css">
-	<link rel="stylesheet" type="text/css" href="//img.atcoder.jp/public/36c2fcf/css/bootstrap.min.css">
-	<link rel="stylesheet" type="text/css" href="//img.atcoder.jp/public/36c2fcf/css/base.css">
+	<link rel="stylesheet" type="text/css" href="//img.atcoder.jp/public/c84259b/css/bootstrap.min.css">
+	<link rel="stylesheet" type="text/css" href="//img.atcoder.jp/public/c84259b/css/base.css">
 	<link rel="shortcut icon" type="image/png" href="//img.atcoder.jp/assets/favicon.png">
 	<link rel="apple-touch-icon" href="//img.atcoder.jp/assets/atcoder.png">
-	<script src="//img.atcoder.jp/public/36c2fcf/js/lib/jquery-1.9.1.min.js"></script>
-	<script src="//img.atcoder.jp/public/36c2fcf/js/lib/bootstrap.min.js"></script>
-	<script src="//img.atcoder.jp/public/36c2fcf/js/cdn/js.cookie.min.js"></script>
-	<script src="//img.atcoder.jp/public/36c2fcf/js/cdn/moment.min.js"></script>
-	<script src="//img.atcoder.jp/public/36c2fcf/js/cdn/moment_js-ja.js"></script>
+	<script src="//img.atcoder.jp/public/c84259b/js/lib/jquery-1.9.1.min.js"></script>
+	<script src="//img.atcoder.jp/public/c84259b/js/lib/bootstrap.min.js"></script>
+	<script src="//img.atcoder.jp/public/c84259b/js/cdn/js.cookie.min.js"></script>
+	<script src="//img.atcoder.jp/public/c84259b/js/cdn/moment.min.js"></script>
+	<script src="//img.atcoder.jp/public/c84259b/js/cdn/moment_js-ja.js"></script>
 	<script>
 		var LANG = "en";
 		var userScreenName = "yamate11";
-		var csrfToken = "1os1kXYrQLAxmAOe0x8XuuxoUG3M7khmmlqgigGrqlQ="
+		var csrfToken = "hvYdp1OMT2ixvmwTnLuIrcEhBUMOSoNwTwW99KtVFxg="
 	</script>
-	<script src="//img.atcoder.jp/public/36c2fcf/js/utils.js"></script>
+	<script src="//img.atcoder.jp/public/c84259b/js/utils.js"></script>
 	
 	
-		<script src="//img.atcoder.jp/public/36c2fcf/js/contest.js"></script>
-		<link href="//img.atcoder.jp/public/36c2fcf/css/contest.css" rel="stylesheet" />
+		<script src="//img.atcoder.jp/public/c84259b/js/contest.js"></script>
+		<link href="//img.atcoder.jp/public/c84259b/css/contest.css" rel="stylesheet" />
 		<script>
-			var contestScreenName = "abc320";
+			var contestScreenName = "abc229";
 			var remainingText = "Remaining Time";
 			var countDownText = "Contest begins in";
-			var startTime = moment("2023-09-16T21:00:00+09:00");
-			var endTime = moment("2023-09-16T22:40:00+09:00");
+			var startTime = moment("2021-11-27T21:00:00+09:00");
+			var endTime = moment("2021-11-27T22:40:00+09:00");
 		</script>
-		<style></style>
+		<style>#contest-statement { line-height: 1; }
+#contest-statement p{
+/*       text-indent:1em;  */
+        color: black;
+}
+/*
+ul li {
+  padding-top:4px;
+  padding-bottom:4px;
+}
+*/</style>
 	
 	
-		<link href="//img.atcoder.jp/public/36c2fcf/css/cdn/select2.min.css" rel="stylesheet" />
-		<link href="//img.atcoder.jp/public/36c2fcf/css/cdn/select2-bootstrap.min.css" rel="stylesheet" />
-		<script src="//img.atcoder.jp/public/36c2fcf/js/lib/select2.min.js"></script>
+		<link href="//img.atcoder.jp/public/c84259b/css/cdn/select2.min.css" rel="stylesheet" />
+		<link href="//img.atcoder.jp/public/c84259b/css/cdn/select2-bootstrap.min.css" rel="stylesheet" />
+		<script src="//img.atcoder.jp/public/c84259b/js/lib/select2.min.js"></script>
 	
 	
-		<script src="//img.atcoder.jp/public/36c2fcf/js/ace/ace.js"></script>
-		<script src="//img.atcoder.jp/public/36c2fcf/js/ace/ext-language_tools.js"></script>
+		<script src="//img.atcoder.jp/public/c84259b/js/ace/ace.js"></script>
+		<script src="//img.atcoder.jp/public/c84259b/js/ace/ext-language_tools.js"></script>
 	
 	
-		<script src="//img.atcoder.jp/public/36c2fcf/js/cdn/run_prettify.js"></script>
+		<script src="//img.atcoder.jp/public/c84259b/js/cdn/run_prettify.js"></script>
 	
 	
-		<link rel="stylesheet" href="//img.atcoder.jp/public/36c2fcf/css/cdn/katex.min.css">
-		<script defer src="//img.atcoder.jp/public/36c2fcf/js/cdn/katex.min.js"></script>
-		<script defer src="//img.atcoder.jp/public/36c2fcf/js/cdn/auto-render.min.js"></script>
+		<link rel="stylesheet" href="//img.atcoder.jp/public/c84259b/css/cdn/katex.min.css">
+		<script defer src="//img.atcoder.jp/public/c84259b/js/cdn/katex.min.js"></script>
+		<script defer src="//img.atcoder.jp/public/c84259b/js/cdn/auto-render.min.js"></script>
 		<script>$(function(){$('var').each(function(){var html=$(this).html().replace(/<sub>/g,'_{').replace(/<\/sub>/g,'}');$(this).html('\\('+html+'\\)');});});</script>
 		<script>
 			var katexOptions = {
@@ -111,7 +125,7 @@
 	
 	
 	
-	<script src="//img.atcoder.jp/public/36c2fcf/js/base.js"></script>
+	<script src="//img.atcoder.jp/public/c84259b/js/base.js"></script>
 </head>
 
 <body>
@@ -131,11 +145,11 @@
 				<h4 class="modal-title">Contest started</h4>
 			</div>
 			<div class="modal-body">
-				<p>Toyota Programming Contest 2023#5（AtCoder Beginner Contest 320） has begun.</p>
+				<p>NEC Programming Contest 2021(AtCoder Beginner Contest 229) has begun.</p>
 			</div>
 			<div class="modal-footer">
 				
-					<a class="btn btn-primary" href='/contests/abc320/tasks'>Go to the task list page</a>
+					<a class="btn btn-primary" href='/contests/abc229/tasks'>Go to the task list page</a>
 				
 			</div>
 		</div>
@@ -149,7 +163,7 @@
 				<h4 class="modal-title">Contest is over</h4>
 			</div>
 			<div class="modal-body">
-				<p>Toyota Programming Contest 2023#5（AtCoder Beginner Contest 320） has ended.</p>
+				<p>NEC Programming Contest 2021(AtCoder Beginner Contest 229) has ended.</p>
 			</div>
 			<div class="modal-footer">
 				<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
@@ -171,7 +185,7 @@
 			<div class="collapse navbar-collapse" id="navbar-collapse">
 				<ul class="nav navbar-nav">
 				
-					<li><a class="contest-title" href="/contests/abc320">Toyota Programming Contest 2023#5（AtCoder Beginner Contest 320）</a></li>
+					<li><a class="contest-title" href="/contests/abc229">NEC Programming Contest 2021(AtCoder Beginner Contest 229)</a></li>
 				
 				</ul>
 				<ul class="nav navbar-nav navbar-right">
@@ -181,8 +195,8 @@
 							<img src='//img.atcoder.jp/assets/top/img/flag-lang/en.png'> English <span class="caret"></span>
 						</a>
 						<ul class="dropdown-menu">
-							<li><a href="/contests/abc320/tasks/abc320_c?lang=ja"><img src='//img.atcoder.jp/assets/top/img/flag-lang/ja.png'> 日本語</a></li>
-							<li><a href="/contests/abc320/tasks/abc320_c?lang=en"><img src='//img.atcoder.jp/assets/top/img/flag-lang/en.png'> English</a></li>
+							<li><a href="/contests/abc229/tasks/abc229_e?lang=ja"><img src='//img.atcoder.jp/assets/top/img/flag-lang/ja.png'> 日本語</a></li>
+							<li><a href="/contests/abc229/tasks/abc229_e?lang=en"><img src='//img.atcoder.jp/assets/top/img/flag-lang/en.png'> English</a></li>
 						</ul>
 					</li>
 					
@@ -211,8 +225,8 @@
 		</div>
 	</nav>
 
-	<form method="POST" name="form_logout" action="/logout?continue=https%3A%2F%2Fatcoder.jp%2Fcontests%2Fabc320%2Ftasks%2Fabc320_c">
-		<input type="hidden" name="csrf_token" value="1os1kXYrQLAxmAOe0x8XuuxoUG3M7khmmlqgigGrqlQ=" />
+	<form method="POST" name="form_logout" action="/logout?continue=https%3A%2F%2Fatcoder.jp%2Fcontests%2Fabc229%2Ftasks%2Fabc229_e">
+		<input type="hidden" name="csrf_token" value="hvYdp1OMT2ixvmwTnLuIrcEhBUMOSoNwTwW99KtVFxg=" />
 	</form>
 	<div id="main-container" class="container"
 		 	style="padding-top:50px;">
@@ -225,35 +239,36 @@
 		<small class="contest-duration">
 			
 				Contest Duration:
-				<a href='http://www.timeanddate.com/worldclock/fixedtime.html?iso=20230916T2100&p1=248' target='blank'><time class='fixtime fixtime-full'>2023-09-16 21:00:00+0900</time></a> - <a href='http://www.timeanddate.com/worldclock/fixedtime.html?iso=20230916T2240&p1=248' target='blank'><time class='fixtime fixtime-full'>2023-09-16 22:40:00+0900</time></a> (local time)
+				<a href='http://www.timeanddate.com/worldclock/fixedtime.html?iso=20211127T2100&p1=248' target='blank'><time class='fixtime fixtime-full'>2021-11-27 21:00:00+0900</time></a> - <a href='http://www.timeanddate.com/worldclock/fixedtime.html?iso=20211127T2240&p1=248' target='blank'><time class='fixtime fixtime-full'>2021-11-27 22:40:00+0900</time></a> (local time)
 				(100 minutes)
 			
 		</small>
 		<small class="back-to-home pull-right"><a href="/home">Back to Home</a></small>
 	</div>
 	<ul class="nav nav-tabs">
-		<li><a href="/contests/abc320"><span class="glyphicon glyphicon-home" aria-hidden="true"></span> Top</a></li>
+		<li><a href="/contests/abc229"><span class="glyphicon glyphicon-home" aria-hidden="true"></span> Top</a></li>
 		
-			<li class="active"><a href="/contests/abc320/tasks"><span class="glyphicon glyphicon-tasks" aria-hidden="true"></span> Tasks</a></li>
-		
-
-		
-			<li><a href="/contests/abc320/clarifications"><span class="glyphicon glyphicon-question-sign" aria-hidden="true"></span> Clarifications <span id="clar-badge" class="badge"></span></a></li>
+			<li class="active"><a href="/contests/abc229/tasks"><span class="glyphicon glyphicon-tasks" aria-hidden="true"></span> Tasks</a></li>
 		
 
 		
-			<li><a href="/contests/abc320/submit?taskScreenName=abc320_c"><span class="glyphicon glyphicon-send" aria-hidden="true"></span> Submit</a></li>
+			<li><a href="/contests/abc229/clarifications"><span class="glyphicon glyphicon-question-sign" aria-hidden="true"></span> Clarifications <span id="clar-badge" class="badge" ></span></a></li>
+		
+
+		
+			<li><a href="/contests/abc229/submit?taskScreenName=abc229_e"><span class="glyphicon glyphicon-send" aria-hidden="true"></span> Submit</a></li>
 		
 
 		
 			<li>
 				<a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false"><span class="glyphicon glyphicon-list" aria-hidden="true"></span> Results<span class="caret"></span></a>
 				<ul class="dropdown-menu">
-					<li><a href="/contests/abc320/submissions"><span class="glyphicon glyphicon-globe" aria-hidden="true"></span> All Submissions</a></li>
+					<li><a href="/contests/abc229/submissions"><span class="glyphicon glyphicon-globe" aria-hidden="true"></span> All Submissions</a></li>
 					
-						<li><a href="/contests/abc320/submissions/me"><span class="glyphicon glyphicon-user" aria-hidden="true"></span> My Submissions</a></li>
+						<li><a href="/contests/abc229/submissions/me"><span class="glyphicon glyphicon-user" aria-hidden="true"></span> My Submissions</a></li>
+						
 						<li class="divider"></li>
-						<li><a href="/contests/abc320/score"><span class="glyphicon glyphicon-dashboard" aria-hidden="true"></span> My Score</a></li>
+						<li><a href="/contests/abc229/score"><span class="glyphicon glyphicon-dashboard" aria-hidden="true"></span> My Score</a></li>
 					
 				</ul>
 			</li>
@@ -262,26 +277,24 @@
 		
 			
 				
-					<li><a href="/contests/abc320/standings"><span class="glyphicon glyphicon-sort-by-attributes-alt" aria-hidden="true"></span> Standings</a></li>
+					<li><a href="/contests/abc229/standings"><span class="glyphicon glyphicon-sort-by-attributes-alt" aria-hidden="true"></span> Standings</a></li>
 				
 			
 				
-					<li><a href="/contests/abc320/standings/virtual"><span class="glyphicon glyphicon-sort-by-attributes-alt" aria-hidden="true"></span> Virtual Standings</a></li>
+					<li><a href="/contests/abc229/standings/virtual"><span class="glyphicon glyphicon-sort-by-attributes-alt" aria-hidden="true"></span> Virtual Standings</a></li>
 				
 			
 		
 
 		
-			<li><a href="/contests/abc320/custom_test"><span class="glyphicon glyphicon-wrench" aria-hidden="true"></span> Custom Test</a></li>
+			<li><a href="/contests/abc229/custom_test"><span class="glyphicon glyphicon-wrench" aria-hidden="true"></span> Custom Test</a></li>
 		
 
 		
-			<li><a href="/contests/abc320/editorial"><span class="glyphicon glyphicon-book" aria-hidden="true"></span> Editorial</a></li>
+			<li><a href="/contests/abc229/editorial"><span class="glyphicon glyphicon-book" aria-hidden="true"></span> Editorial</a></li>
 		
 		
 			
-			
-				<li><a href="https://codeforces.com/blog/entry/120415" target="_blank" rel="noopener"><span class="glyphicon glyphicon-comment" aria-hidden="true"></span> Discuss</a></li>
 			
 		
 
@@ -290,8 +303,8 @@
 </div>
 	<div class="col-sm-12">
 		<span class="h2">
-			C - Slot Strategy 2 (Easy)
-			<a class="btn btn-default btn-sm" href="/contests/abc320/tasks/abc320_c/editorial">Editorial</a>
+			E - Graph Destruction
+			<a class="btn btn-default btn-sm" href="/contests/abc229/tasks/abc229_e/editorial">Editorial</a>
 		</span>
 		<span id="task-lang-btn" class="pull-right"><span data-lang="ja"><img src='//img.atcoder.jp/assets/top/img/flag-lang/ja.png'></span> / <span data-lang="en"><img src='//img.atcoder.jp/assets/top/img/flag-lang/en.png'></span></span>
 		<script>
@@ -332,36 +345,38 @@
 		<p>
 			Time Limit: 2 sec / Memory Limit: 1024 MB
 			
+			
 		</p>
 
 		<div id="task-statement">
 			
+
+
+	
+	
+
 			<span class="lang">
 <span class="lang-ja">
-<p>配点 : <var>300</var> 点</p>
+<p>配点 : <var>500</var> 点</p>
 
 <div class="part">
 <section>
-<h3>問題文</h3><blockquote>
-<p>この問題は G 問題の簡易版です。</p>
-</blockquote>
-<p><var>3</var> 個のリールからなるスロットがあります。<br />
-<var>i</var> 番目のリールの配列は文字列 <var>S_i</var> によって表されます。ここで、<var>S_i</var> は数字のみからなる長さ <var>M</var> の文字列です。</p>
-<p>それぞれのリールには対応するボタンがついています。高橋君は各非負整数 <var>t</var> について、スロットが回り始めてからちょうど <var>t</var> 秒後にボタンを <var>1</var> つ選んで押す、または何もしないことができます。<br />
-スロットが回り始めてから <var>t</var> 秒後に <var>i</var> 番目のリールに対応するボタンを押すと、<var>i</var> 番目のリールは <var>S_i</var> の <var>(t \bmod M)+1</var> 文字目を表示して止まります。<br />
-ただし、<var>t \bmod M</var> で <var>t</var> を <var>M</var> で割ったあまりを表します。</p>
-<p>高橋君は全てのリールを止めた上で、表示されている文字が全て同じであるようにしたいです。<br />
-高橋君が目標を達成できるように全てのリールを止めるまでに、スロットが回り始めてから最小で何秒かかるかを求めてください。<br />
-そのようなことが不可能であればそのことを報告してください。</p>
+<h3>問題文</h3><p><var>N</var> 頂点 <var>M</var> 辺の単純な無向グラフが与えられます。<br />
+辺 <var>i</var> は、頂点 <var>A_i</var> と <var>B_i</var> を結んでいます。  </p>
+<p>頂点 <var>1,2,\ldots,N</var> を順番に消していきます。<br />
+なお、頂点 <var>i</var> を消すとは、頂点 <var>i</var> と、頂点 <var>i</var> に接続する全ての辺をグラフから削除することです。  </p>
+<p><var>i=1,2,\ldots,N</var> について、頂点 <var>i</var> まで消した時にグラフはいくつの連結成分に分かれていますか？  </p>
 </section>
 </div>
 
 <div class="part">
 <section>
 <h3>制約</h3><ul>
-<li><var>1 \leq M \leq 100</var></li>
-<li><var>M</var> は整数</li>
-<li><var>S_i</var> は数字のみからなる長さ <var>M</var> の文字列</li>
+<li><var>1 \leq N \leq 2 \times 10^5</var></li>
+<li><var>0 \leq M \leq \min(\frac{N(N-1)}{2} , 2 \times 10^5 )</var></li>
+<li><var>1 \leq A_i \lt B_i \leq N</var></li>
+<li><var>i \neq j</var> ならば <var>(A_i,B_i) \neq (A_j,B_j)</var></li>
+<li>入力は全て整数である</li>
 </ul>
 </section>
 </div>
@@ -371,110 +386,102 @@
 <div class="part">
 <section>
 <h3>入力</h3><p>入力は以下の形式で標準入力から与えられる。</p>
-<pre><var>M</var>
-<var>S_1</var>
-<var>S_2</var>
-<var>S_3</var>
+<pre><var>N</var> <var>M</var>
+<var>A_1</var> <var>B_1</var>
+<var>A_2</var> <var>B_2</var>
+<var>\vdots</var>
+<var>A_M</var> <var>B_M</var>
 </pre>
 </section>
 </div>
 
 <div class="part">
 <section>
-<h3>出力</h3><p>全てのリールを止めた上で、表示されている文字が全て同じであるようにすることができないなら <code>-1</code> を出力せよ。<br />
-できるなら、スロットが回り始めてからそのような状態にするまでに最小で何秒かかるか出力せよ。</p>
+<h3>出力</h3><p><var>N</var> 行出力せよ。<br />
+<var>i</var> 行目には、頂点 <var>i</var> まで消した時のグラフの連結成分の数を出力せよ。  </p>
 </section>
 </div>
-</div>
-
-<hr />
-<div class="part">
-<section>
-<h3>入力例 1</h3><pre>10
-1937458062
-8124690357
-2385760149
-</pre>
-</section>
-</div>
-
-<div class="part">
-<section>
-<h3>出力例 1</h3><pre>6
-</pre>
-<p>高橋君は次のようにそれぞれのリールを止めることでスロットが回り始めてから <var>6</var> 秒後にリールに表示される文字を <code>8</code> で揃えることができます。</p>
-<ul>
-<li>スロットの回転開始から <var>0</var> 秒後に <var>2</var> 番目のリールに対応するボタンを押します。<var>2</var> 番目のリールは <var>S_2</var> の <var>(0 \bmod 10)+1=1</var> 文字目である <code>8</code> を表示して止まります。</li>
-<li>スロットの回転開始から <var>2</var> 秒後に <var>3</var> 番目のリールに対応するボタンを押します。<var>3</var> 番目のリールは <var>S_3</var> の <var>(2 \bmod 10)+1=3</var> 文字目である <code>8</code> を表示して止まります。</li>
-<li>スロットの回転開始から <var>6</var> 秒後に <var>1</var> 番目のリールに対応するボタンを押します。<var>1</var> 番目のリールは <var>S_1</var> の <var>(6 \bmod 10)+1=7</var> 文字目である <code>8</code> を表示して止まります。</li>
-</ul>
-<p><var>5</var> 秒以下で全てのリールに表示されている文字を揃える方法はないため、<var>6</var> を出力します。</p>
-</section>
 </div>
 
 <hr />
 <div class="part">
 <section>
-<h3>入力例 2</h3><pre>20
-01234567890123456789
-01234567890123456789
-01234567890123456789
+<h3>入力例 1</h3><pre>6 7
+1 2
+1 4
+1 5
+2 4
+2 3
+3 5
+3 6
 </pre>
 </section>
 </div>
 
 <div class="part">
 <section>
-<h3>出力例 2</h3><pre>20
+<h3>出力例 1</h3><pre>1
+2
+3
+2
+1
+0
 </pre>
-<p>全てのリールを止めた上で、表示されている文字を揃える必要がある事に注意してください。</p>
+<p><img alt="" src="https://img.atcoder.jp/ghi/3320212a9093132a80105bf02feeb195.png" /><br />
+グラフは上図のように変化していきます。</p>
 </section>
 </div>
 
 <hr />
 <div class="part">
 <section>
-<h3>入力例 3</h3><pre>5
-11111
-22222
-33333
+<h3>入力例 2</h3><pre>8 7
+7 8
+3 4
+5 6
+5 7
+5 8
+6 7
+6 8
 </pre>
 </section>
 </div>
 
 <div class="part">
 <section>
-<h3>出力例 3</h3><pre>-1
+<h3>出力例 2</h3><pre>3
+2
+2
+1
+1
+1
+1
+0
 </pre>
-<p>表示されている文字が全て同じであるようにリールを止めることはできません。<br />
-このとき <code>-1</code> を出力してください。</p></section>
+<p>はじめからグラフが非連結なこともあります。</p></section>
 </div>
 </span>
 <span class="lang-en">
-<p>Score : <var>300</var> points</p>
+<p>Score : <var>500</var> points</p>
 
 <div class="part">
 <section>
-<h3>Problem Statement</h3><blockquote>
-<p>This problem is an easier version of Problem G.</p>
-</blockquote>
-<p>There is a slot machine with three reels.<br />
-The arrangement of symbols on the <var>i</var>-th reel is represented by the string <var>S_i</var>. Here, <var>S_i</var> is a string of length <var>M</var> consisting of digits.</p>
-<p>Each reel has a corresponding button. For each non-negative integer <var>t</var>, Takahashi can either choose and press one button or do nothing exactly <var>t</var> seconds after the reels start spinning.<br />
-If he presses the button corresponding to the <var>i</var>-th reel exactly <var>t</var> seconds after the reels start spinning, the <var>i</var>-th reel will stop and display the <var>((t \bmod M)+1)</var>-th character of <var>S_i</var>.<br />
-Here, <var>t \bmod M</var> denotes the remainder when <var>t</var> is divided by <var>M</var>.</p>
-<p>Takahashi wants to stop all the reels so that all the displayed characters are the same.<br />
-Find the minimum possible number of seconds from the start of the spin until all the reels are stopped so that his goal is achieved.<br />
-If this is impossible, report that fact.</p>
+<h3>Problem Statement</h3><p>Given is an undirected graph with <var>N</var> vertices and <var>M</var> edges.<br />
+Edge <var>i</var> connects Vertices <var>A_i</var> and <var>B_i</var>.</p>
+<p>We will erase Vertices <var>1, 2, \ldots, N</var> one by one.<br />
+Here, erasing Vertex <var>i</var> means deleting Vertex <var>i</var> and all edges incident to Vertex <var>i</var> from the graph.</p>
+<p>For each <var>i=1, 2, \ldots, N</var>, how many connected components does the graph have when vertices up to Vertex <var>i</var> are deleted?</p>
 </section>
 </div>
 
 <div class="part">
 <section>
 <h3>Constraints</h3><ul>
-<li><var>1 \leq M \leq 100</var></li>
-<li><var>M</var> is an integer.</li>
-<li><var>S_i</var> is a string of length <var>M</var> consisting of digits.</li>
+<li><var>1 \leq N \leq 2 \times 10^5</var></li>
+<li><var>0 \leq M \leq \min(\frac{N(N-1)}{2} , 2 \times 10^5 )</var></li>
+<li><var>1 \leq A_i \lt B_i \leq N</var></li>
+<li><var>(A_i,B_i) \neq (A_j,B_j)</var> if <var>i \neq j</var>.</li>
+<li>All values in input are integers.</li>
 </ul>
 </section>
 </div>
@@ -483,96 +490,91 @@ If this is impossible, report that fact.</p>
 <div class="io-style">
 <div class="part">
 <section>
-<h3>Input</h3><p>The input is given from Standard Input in the following format:</p>
-<pre><var>M</var>
-<var>S_1</var>
-<var>S_2</var>
-<var>S_3</var>
+<h3>Input</h3><p>Input is given from Standard Input in the following format:</p>
+<pre><var>N</var> <var>M</var>
+<var>A_1</var> <var>B_1</var>
+<var>A_2</var> <var>B_2</var>
+<var>\vdots</var>
+<var>A_M</var> <var>B_M</var>
 </pre>
 </section>
 </div>
 
 <div class="part">
 <section>
-<h3>Output</h3><p>If it is impossible to stop all the reels so that all the displayed characters are the same, print <code>-1</code>.<br />
-Otherwise, print the minimum possible number of seconds from the start of the spin until such a state is achieved.</p>
+<h3>Output</h3><p>Print <var>N</var> lines.<br />
+The <var>i</var>-th line should contain the number of connected components in the graph when vertices up to Vertex <var>i</var> are deleted.</p>
 </section>
 </div>
-</div>
-
-<hr />
-<div class="part">
-<section>
-<h3>Sample Input 1</h3><pre>10
-1937458062
-8124690357
-2385760149
-</pre>
-</section>
-</div>
-
-<div class="part">
-<section>
-<h3>Sample Output 1</h3><pre>6
-</pre>
-<p>Takahashi can stop each reel as follows so that <var>6</var> seconds after the reels start spinning, all the reels display <code>8</code>.</p>
-<ul>
-<li>Press the button corresponding to the second reel <var>0</var> seconds after the reels start spinning. The second reel stops and displays <code>8</code>, the <var>((0 \bmod 10)+1=1)</var>-st character of <var>S_2</var>.</li>
-<li>Press the button corresponding to the third reel <var>2</var> seconds after the reels start spinning. The third reel stops and displays <code>8</code>, the <var>((2 \bmod 10)+1=3)</var>-rd character of <var>S_3</var>.</li>
-<li>Press the button corresponding to the first reel <var>6</var> seconds after the reels start spinning. The first reel stops and displays <code>8</code>, the <var>((6 \bmod 10)+1=7)</var>-th character of <var>S_1</var>.</li>
-</ul>
-<p>There is no way to make the reels display the same character in <var>5</var> or fewer seconds, so print <var>6</var>.</p>
-</section>
 </div>
 
 <hr />
 <div class="part">
 <section>
-<h3>Sample Input 2</h3><pre>20
-01234567890123456789
-01234567890123456789
-01234567890123456789
+<h3>Sample Input 1</h3><pre>6 7
+1 2
+1 4
+1 5
+2 4
+2 3
+3 5
+3 6
 </pre>
 </section>
 </div>
 
 <div class="part">
 <section>
-<h3>Sample Output 2</h3><pre>20
+<h3>Sample Output 1</h3><pre>1
+2
+3
+2
+1
+0
 </pre>
-<p>Note that he must stop all the reels and make them display the same character.</p>
+<p><img alt="" src="https://img.atcoder.jp/ghi/3320212a9093132a80105bf02feeb195.png" /><br />
+The figure above shows the transition of the graph.</p>
 </section>
 </div>
 
 <hr />
 <div class="part">
 <section>
-<h3>Sample Input 3</h3><pre>5
-11111
-22222
-33333
+<h3>Sample Input 2</h3><pre>8 7
+7 8
+3 4
+5 6
+5 7
+5 8
+6 7
+6 8
 </pre>
 </section>
 </div>
 
 <div class="part">
 <section>
-<h3>Sample Output 3</h3><pre>-1
+<h3>Sample Output 2</h3><pre>3
+2
+2
+1
+1
+1
+1
+0
 </pre>
-<p>It is impossible to stop the reels so that all the displayed characters are the same.<br />
-In this case, print <code>-1</code>.</p></section>
+<p>The graph may be disconnected from the beginning.</p></section>
 </div>
 </span>
 </span>
-
 		</div>
 
 		
 
 		
 		<hr/>
-		<form class="form-horizontal form-code-submit" action="/contests/abc320/submit" method="POST">
-			<input type="hidden" name="data.TaskScreenName" value="abc320_c" />
+		<form class="form-horizontal form-code-submit" action="/contests/abc229/submit" method="POST">
+			<input type="hidden" name="data.TaskScreenName" value="abc229_e" />
 			
 			<div class="form-group ">
 				<label class="control-label col-sm-3 col-md-2" for="select-lang">Language</label>
@@ -797,7 +799,7 @@ In this case, print <code>-1</code>.</p></section>
 </div>
 
 
-			<input type="hidden" name="csrf_token" value="1os1kXYrQLAxmAOe0x8XuuxoUG3M7khmmlqgigGrqlQ=" />
+			<input type="hidden" name="csrf_token" value="hvYdp1OMT2ixvmwTnLuIrcEhBUMOSoNwTwW99KtVFxg=" />
 			<div class="form-group">
 				<label class="control-label col-sm-3 col-md-2"></label>
 				<div class="col-sm-5">
@@ -817,7 +819,7 @@ In this case, print <code>-1</code>.</p></section>
 			
 			
 			
-<div class="a2a_kit a2a_kit_size_20 a2a_default_style pull-right" data-a2a-url="https://atcoder.jp/contests/abc320/tasks/abc320_c?lang=en" data-a2a-title="C - Slot Strategy 2 (Easy)">
+<div class="a2a_kit a2a_kit_size_20 a2a_default_style pull-right" data-a2a-url="https://atcoder.jp/contests/abc229/tasks/abc229_e?lang=en" data-a2a-title="E - Graph Destruction">
 	<a class="a2a_button_facebook"></a>
 	<a class="a2a_button_twitter"></a>
 	
@@ -837,8 +839,8 @@ In this case, print <code>-1</code>.</p></section>
 			<footer class="footer">
 			
 				<ul>
-					<li><a href="/contests/abc320/rules">Rule</a></li>
-					<li><a href="/contests/abc320/glossary">Glossary</a></li>
+					<li><a href="/contests/abc229/rules">Rule</a></li>
+					<li><a href="/contests/abc229/glossary">Glossary</a></li>
 					
 				</ul>
 			

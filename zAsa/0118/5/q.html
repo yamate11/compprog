@@ -9,7 +9,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>E - Third Avenue</title>
+	<title>C - Blue Bird</title>
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 	<meta http-equiv="Content-Language" content="en">
 	<meta name="viewport" content="width=device-width,initial-scale=1.0">
@@ -22,7 +22,11 @@
 		window.dataLayer = window.dataLayer || [];
 		function gtag(){dataLayer.push(arguments);}
 		gtag('js', new Date());
-
+		gtag('set', 'user_properties', {
+			
+				'login_status': 'logged_in',
+			
+		});
 		gtag('config', 'G-RC512FD18N');
 	</script>
 
@@ -32,61 +36,61 @@
 
 	<meta property="og:site_name" content="AtCoder">
 	
-	<meta property="og:title" content="E - Third Avenue" />
+	<meta property="og:title" content="C - Blue Bird" />
 	<meta property="og:description" content="AtCoder is a programming contest site for anyone from beginners to experts. We hold weekly programming contests online." />
 	<meta property="og:type" content="website" />
-	<meta property="og:url" content="https://atcoder.jp/contests/abc184/tasks/abc184_e" />
+	<meta property="og:url" content="https://atcoder.jp/contests/abc022/tasks/abc022_c" />
 	<meta property="og:image" content="https://img.atcoder.jp/assets/atcoder.png" />
 	<meta name="twitter:card" content="summary" />
 	<meta name="twitter:site" content="@atcoder" />
 	
-	<meta property="twitter:title" content="E - Third Avenue" />
+	<meta property="twitter:title" content="C - Blue Bird" />
 
 	<link href="//fonts.googleapis.com/css?family=Lato:400,700" rel="stylesheet" type="text/css">
-	<link rel="stylesheet" type="text/css" href="//img.atcoder.jp/public/c76394f/css/bootstrap.min.css">
-	<link rel="stylesheet" type="text/css" href="//img.atcoder.jp/public/c76394f/css/base.css">
+	<link rel="stylesheet" type="text/css" href="//img.atcoder.jp/public/22afd08/css/bootstrap.min.css">
+	<link rel="stylesheet" type="text/css" href="//img.atcoder.jp/public/22afd08/css/base.css">
 	<link rel="shortcut icon" type="image/png" href="//img.atcoder.jp/assets/favicon.png">
 	<link rel="apple-touch-icon" href="//img.atcoder.jp/assets/atcoder.png">
-	<script src="//img.atcoder.jp/public/c76394f/js/lib/jquery-1.9.1.min.js"></script>
-	<script src="//img.atcoder.jp/public/c76394f/js/lib/bootstrap.min.js"></script>
-	<script src="//img.atcoder.jp/public/c76394f/js/cdn/js.cookie.min.js"></script>
-	<script src="//img.atcoder.jp/public/c76394f/js/cdn/moment.min.js"></script>
-	<script src="//img.atcoder.jp/public/c76394f/js/cdn/moment_js-ja.js"></script>
+	<script src="//img.atcoder.jp/public/22afd08/js/lib/jquery-1.9.1.min.js"></script>
+	<script src="//img.atcoder.jp/public/22afd08/js/lib/bootstrap.min.js"></script>
+	<script src="//img.atcoder.jp/public/22afd08/js/cdn/js.cookie.min.js"></script>
+	<script src="//img.atcoder.jp/public/22afd08/js/cdn/moment.min.js"></script>
+	<script src="//img.atcoder.jp/public/22afd08/js/cdn/moment_js-ja.js"></script>
 	<script>
 		var LANG = "en";
 		var userScreenName = "yamate11";
-		var csrfToken = "lIzC82GusjHci/all7EztCJgQ6TbEEzNMJ4LpY5j/ks="
+		var csrfToken = "MrLE72oIs66bwVGZvH65YXyE78eUE//FtRUdhr99LTA="
 	</script>
-	<script src="//img.atcoder.jp/public/c76394f/js/utils.js"></script>
+	<script src="//img.atcoder.jp/public/22afd08/js/utils.js"></script>
 	
 	
-		<script src="//img.atcoder.jp/public/c76394f/js/contest.js"></script>
-		<link href="//img.atcoder.jp/public/c76394f/css/contest.css" rel="stylesheet" />
+		<script src="//img.atcoder.jp/public/22afd08/js/contest.js"></script>
+		<link href="//img.atcoder.jp/public/22afd08/css/contest.css" rel="stylesheet" />
 		<script>
-			var contestScreenName = "abc184";
+			var contestScreenName = "abc022";
 			var remainingText = "Remaining Time";
 			var countDownText = "Contest begins in";
-			var startTime = moment("2020-11-22T21:00:00+09:00");
-			var endTime = moment("2020-11-22T22:40:00+09:00");
+			var startTime = moment("2015-04-25T21:00:00+09:00");
+			var endTime = moment("2015-04-25T23:00:00+09:00");
 		</script>
 		<style></style>
 	
 	
-		<link href="//img.atcoder.jp/public/c76394f/css/cdn/select2.min.css" rel="stylesheet" />
-		<link href="//img.atcoder.jp/public/c76394f/css/cdn/select2-bootstrap.min.css" rel="stylesheet" />
-		<script src="//img.atcoder.jp/public/c76394f/js/lib/select2.min.js"></script>
+		<link href="//img.atcoder.jp/public/22afd08/css/cdn/select2.min.css" rel="stylesheet" />
+		<link href="//img.atcoder.jp/public/22afd08/css/cdn/select2-bootstrap.min.css" rel="stylesheet" />
+		<script src="//img.atcoder.jp/public/22afd08/js/lib/select2.min.js"></script>
 	
 	
-		<script src="//img.atcoder.jp/public/c76394f/js/ace/ace.js"></script>
-		<script src="//img.atcoder.jp/public/c76394f/js/ace/ext-language_tools.js"></script>
+		<script src="//img.atcoder.jp/public/22afd08/js/ace/ace.js"></script>
+		<script src="//img.atcoder.jp/public/22afd08/js/ace/ext-language_tools.js"></script>
 	
 	
-		<script src="//img.atcoder.jp/public/c76394f/js/cdn/run_prettify.js"></script>
+		<script src="//img.atcoder.jp/public/22afd08/js/cdn/run_prettify.js"></script>
 	
 	
-		<link rel="stylesheet" href="//img.atcoder.jp/public/c76394f/css/cdn/katex.min.css">
-		<script defer src="//img.atcoder.jp/public/c76394f/js/cdn/katex.min.js"></script>
-		<script defer src="//img.atcoder.jp/public/c76394f/js/cdn/auto-render.min.js"></script>
+		<link rel="stylesheet" href="//img.atcoder.jp/public/22afd08/css/cdn/katex.min.css">
+		<script defer src="//img.atcoder.jp/public/22afd08/js/cdn/katex.min.js"></script>
+		<script defer src="//img.atcoder.jp/public/22afd08/js/cdn/auto-render.min.js"></script>
 		<script>$(function(){$('var').each(function(){var html=$(this).html().replace(/<sub>/g,'_{').replace(/<\/sub>/g,'}');$(this).html('\\('+html+'\\)');});});</script>
 		<script>
 			var katexOptions = {
@@ -111,7 +115,7 @@
 	
 	
 	
-	<script src="//img.atcoder.jp/public/c76394f/js/base.js"></script>
+	<script src="//img.atcoder.jp/public/22afd08/js/base.js"></script>
 </head>
 
 <body>
@@ -131,11 +135,11 @@
 				<h4 class="modal-title">Contest started</h4>
 			</div>
 			<div class="modal-body">
-				<p>AtCoder Beginner Contest 184 has begun.</p>
+				<p>AtCoder Beginner Contest 022 has begun.</p>
 			</div>
 			<div class="modal-footer">
 				
-					<a class="btn btn-primary" href='/contests/abc184/tasks'>Go to the task list page</a>
+					<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
 				
 			</div>
 		</div>
@@ -149,7 +153,7 @@
 				<h4 class="modal-title">Contest is over</h4>
 			</div>
 			<div class="modal-body">
-				<p>AtCoder Beginner Contest 184 has ended.</p>
+				<p>AtCoder Beginner Contest 022 has ended.</p>
 			</div>
 			<div class="modal-footer">
 				<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
@@ -171,7 +175,7 @@
 			<div class="collapse navbar-collapse" id="navbar-collapse">
 				<ul class="nav navbar-nav">
 				
-					<li><a class="contest-title" href="/contests/abc184">AtCoder Beginner Contest 184</a></li>
+					<li><a class="contest-title" href="/contests/abc022">AtCoder Beginner Contest 022</a></li>
 				
 				</ul>
 				<ul class="nav navbar-nav navbar-right">
@@ -181,15 +185,15 @@
 							<img src='//img.atcoder.jp/assets/top/img/flag-lang/en.png'> English <span class="caret"></span>
 						</a>
 						<ul class="dropdown-menu">
-							<li><a href="/contests/abc184/tasks/abc184_e?lang=ja"><img src='//img.atcoder.jp/assets/top/img/flag-lang/ja.png'> 日本語</a></li>
-							<li><a href="/contests/abc184/tasks/abc184_e?lang=en"><img src='//img.atcoder.jp/assets/top/img/flag-lang/en.png'> English</a></li>
+							<li><a href="/contests/abc022/tasks/abc022_c?lang=ja"><img src='//img.atcoder.jp/assets/top/img/flag-lang/ja.png'> 日本語</a></li>
+							<li><a href="/contests/abc022/tasks/abc022_c?lang=en"><img src='//img.atcoder.jp/assets/top/img/flag-lang/en.png'> English</a></li>
 						</ul>
 					</li>
 					
 					
 						<li class="dropdown">
 							<a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
-								<span class="glyphicon glyphicon-cog" aria-hidden="true"></span> yamate11 (Contestant) <span class="caret"></span>
+								<span class="glyphicon glyphicon-cog" aria-hidden="true"></span> yamate11 (Guest) <span class="caret"></span>
 							</a>
 							<ul class="dropdown-menu">
 								<li><a href="/users/yamate11"><span class="glyphicon glyphicon-user" aria-hidden="true"></span> My Profile</a></li>
@@ -211,8 +215,8 @@
 		</div>
 	</nav>
 
-	<form method="POST" name="form_logout" action="/logout?continue=https%3A%2F%2Fatcoder.jp%2Fcontests%2Fabc184%2Ftasks%2Fabc184_e">
-		<input type="hidden" name="csrf_token" value="lIzC82GusjHci/all7EztCJgQ6TbEEzNMJ4LpY5j/ks=" />
+	<form method="POST" name="form_logout" action="/logout?continue=https%3A%2F%2Fatcoder.jp%2Fcontests%2Fabc022%2Ftasks%2Fabc022_c">
+		<input type="hidden" name="csrf_token" value="MrLE72oIs66bwVGZvH65YXyE78eUE//FtRUdhr99LTA=" />
 	</form>
 	<div id="main-container" class="container"
 		 	style="padding-top:50px;">
@@ -225,35 +229,36 @@
 		<small class="contest-duration">
 			
 				Contest Duration:
-				<a href='http://www.timeanddate.com/worldclock/fixedtime.html?iso=20201122T2100&p1=248' target='blank'><time class='fixtime fixtime-full'>2020-11-22 21:00:00+0900</time></a> - <a href='http://www.timeanddate.com/worldclock/fixedtime.html?iso=20201122T2240&p1=248' target='blank'><time class='fixtime fixtime-full'>2020-11-22 22:40:00+0900</time></a> (local time)
-				(100 minutes)
+				<a href='http://www.timeanddate.com/worldclock/fixedtime.html?iso=20150425T2100&p1=248' target='blank'><time class='fixtime fixtime-full'>2015-04-25 21:00:00+0900</time></a> - <a href='http://www.timeanddate.com/worldclock/fixedtime.html?iso=20150425T2300&p1=248' target='blank'><time class='fixtime fixtime-full'>2015-04-25 23:00:00+0900</time></a> (local time)
+				(120 minutes)
 			
 		</small>
 		<small class="back-to-home pull-right"><a href="/home">Back to Home</a></small>
 	</div>
 	<ul class="nav nav-tabs">
-		<li><a href="/contests/abc184"><span class="glyphicon glyphicon-home" aria-hidden="true"></span> Top</a></li>
+		<li><a href="/contests/abc022"><span class="glyphicon glyphicon-home" aria-hidden="true"></span> Top</a></li>
 		
-			<li class="active"><a href="/contests/abc184/tasks"><span class="glyphicon glyphicon-tasks" aria-hidden="true"></span> Tasks</a></li>
-		
-
-		
-			<li><a href="/contests/abc184/clarifications"><span class="glyphicon glyphicon-question-sign" aria-hidden="true"></span> Clarifications <span id="clar-badge" class="badge"></span></a></li>
+			<li class="active"><a href="/contests/abc022/tasks"><span class="glyphicon glyphicon-tasks" aria-hidden="true"></span> Tasks</a></li>
 		
 
 		
-			<li><a href="/contests/abc184/submit?taskScreenName=abc184_e"><span class="glyphicon glyphicon-send" aria-hidden="true"></span> Submit</a></li>
+			<li><a href="/contests/abc022/clarifications"><span class="glyphicon glyphicon-question-sign" aria-hidden="true"></span> Clarifications <span id="clar-badge" class="badge" ></span></a></li>
+		
+
+		
+			<li><a href="/contests/abc022/submit?taskScreenName=abc022_c"><span class="glyphicon glyphicon-send" aria-hidden="true"></span> Submit</a></li>
 		
 
 		
 			<li>
 				<a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false"><span class="glyphicon glyphicon-list" aria-hidden="true"></span> Results<span class="caret"></span></a>
 				<ul class="dropdown-menu">
-					<li><a href="/contests/abc184/submissions"><span class="glyphicon glyphicon-globe" aria-hidden="true"></span> All Submissions</a></li>
+					<li><a href="/contests/abc022/submissions"><span class="glyphicon glyphicon-globe" aria-hidden="true"></span> All Submissions</a></li>
 					
-						<li><a href="/contests/abc184/submissions/me"><span class="glyphicon glyphicon-user" aria-hidden="true"></span> My Submissions</a></li>
+						<li><a href="/contests/abc022/submissions/me"><span class="glyphicon glyphicon-user" aria-hidden="true"></span> My Submissions</a></li>
+						
 						<li class="divider"></li>
-						<li><a href="/contests/abc184/score"><span class="glyphicon glyphicon-dashboard" aria-hidden="true"></span> My Score</a></li>
+						<li><a href="/contests/abc022/score"><span class="glyphicon glyphicon-dashboard" aria-hidden="true"></span> My Score</a></li>
 					
 				</ul>
 			</li>
@@ -262,26 +267,24 @@
 		
 			
 				
-					<li><a href="/contests/abc184/standings"><span class="glyphicon glyphicon-sort-by-attributes-alt" aria-hidden="true"></span> Standings</a></li>
+					<li><a href="/contests/abc022/standings"><span class="glyphicon glyphicon-sort-by-attributes-alt" aria-hidden="true"></span> Standings</a></li>
 				
 			
 				
-					<li><a href="/contests/abc184/standings/virtual"><span class="glyphicon glyphicon-sort-by-attributes-alt" aria-hidden="true"></span> Virtual Standings</a></li>
+					<li><a href="/contests/abc022/standings/virtual"><span class="glyphicon glyphicon-sort-by-attributes-alt" aria-hidden="true"></span> Virtual Standings</a></li>
 				
 			
 		
 
 		
-			<li><a href="/contests/abc184/custom_test"><span class="glyphicon glyphicon-wrench" aria-hidden="true"></span> Custom Test</a></li>
+			<li><a href="/contests/abc022/custom_test"><span class="glyphicon glyphicon-wrench" aria-hidden="true"></span> Custom Test</a></li>
 		
 
 		
-			<li><a href="/contests/abc184/editorial"><span class="glyphicon glyphicon-book" aria-hidden="true"></span> Editorial</a></li>
+			<li><a href="/contests/abc022/editorial"><span class="glyphicon glyphicon-book" aria-hidden="true"></span> Editorial</a></li>
 		
 		
 			
-			
-				<li><a href="https://codeforces.com/blog/entry/84906" target="_blank" rel="noopener"><span class="glyphicon glyphicon-comment" aria-hidden="true"></span> Discuss</a></li>
 			
 		
 
@@ -290,8 +293,8 @@
 </div>
 	<div class="col-sm-12">
 		<span class="h2">
-			E - Third Avenue
-			<a class="btn btn-default btn-sm" href="/contests/abc184/tasks/abc184_e/editorial">Editorial</a>
+			C - Blue Bird
+			<a class="btn btn-default btn-sm" href="/contests/abc022/tasks/abc022_c/editorial">Editorial</a>
 		</span>
 		<span id="task-lang-btn" class="pull-right"><span data-lang="ja"><img src='//img.atcoder.jp/assets/top/img/flag-lang/ja.png'></span> / <span data-lang="en"><img src='//img.atcoder.jp/assets/top/img/flag-lang/en.png'></span></span>
 		<script>
@@ -330,278 +333,186 @@
 		</script>
 		<hr/>
 		<p>
-			Time Limit: 3 sec / Memory Limit: 1024 MB
+			Time Limit: 2 sec / Memory Limit: 256 MB
+			
 			
 		</p>
 
 		<div id="task-statement">
 			
-			<span class="lang">
-<span class="lang-ja">
-<p>配点 : <var>500</var> 点</p>
 
+
+	
+	
+
+			<div id="task-statement">
 <div class="part">
+
 <section>
-<h3>問題文</h3><p>縦 <var>H</var> マス、横 <var>W</var> マスの <var>2</var> 次元グリッドで表された街があります。<br />
-上から <var>i</var> 行目、左から <var>j</var> 列目のマスの情報が文字 <var>a_{i,j}</var> により与えられます。 <var>a_{i,j}</var> は <code>S</code> , <code>G</code> , <code>.</code> , <code>#</code> , <code>a</code> ~ <code>z</code> のいずれかです。<br />
-<code>#</code> は入ることができないマスを、<code>a</code> ~ <code>z</code> はテレポーターのあるマスを表します。</p>
-<p>高橋くんははじめ <code>S</code> のマスにおり、 <var>1</var> 秒ごとに以下のいずれかの移動を行います。</p>
-<ul>
-<li>現在いるマスと上下左右に隣り合う、<code>#</code> でないマスに移動する。</li>
-<li>今いるマスと同じ文字が書かれているマスを <var>1</var> つ選び、そこにテレポートする。この移動は現在いるマスが <code>a</code> ~ <code>z</code> のいずれかであるとき使える。</li>
-</ul>
-<p>高橋くんが <code>S</code> のマスから <code>G</code> のマスに移動するのに必要な最短の時間を求めてください。<br />
-ただし、どうしても <code>G</code> のマスにたどり着けない場合は、代わりに <code>-1</code> を出力してください。</p>
+<h3>問題文</h3>
+
+<p>高橋君の住む街には <var>N</var> 個の家と <var>M</var> 個の道があります。
+家は <var>1</var> ～ <var>N</var> の整数によって番号付けされています。
+高橋君は家 <var>1</var> に住んでいます。
+道も <var>1</var> ～ <var>M</var> の整数によって番号付けされています。
+<var>i</var> 番目の道は家 <var>u_i</var> と 家 <var>v_i</var> を双方向につなぐ長さ <var>l_i</var> メートルの道です。</p>
+
+<p>高橋君は街のどこかの家に居るという「幸せの青い鳥」を探しています。
+実は、「幸せの青い鳥」は高橋くんの家にいて、高橋君もそのことを知っています。
+しかし、形だけでも探す旅に出ないと盛り上がりに欠けて面白くないので、仕方なく旅の計画をたてることにしました。</p>
+
+<p>高橋君は自分の家から開始して、同じ道を二度以上通らないようにいくつかの家に訪れ、最後に自分の家に戻ってくる、という旅の計画をたてる予定です。
+このとき盛り上がりを作るために、旅の途中で自分の家以外の家を少なくとも <var>1</var> 軒訪れる予定です。
+高橋君はこの茶番をできるだけ早く終わらせたいので、通る道の長さの総和が最も小さくなるような計画が最適だと考えています。</p>
+
+<p>高橋君の住む街の家と道の情報が与えられるので、高橋君が上の条件のもとで最適な計画をたてることができるかどうかを求めてください。
+もし最適な計画をたてることができるならば、そのとき通る道の長さの総和を求めてください。</p>
+
 </section>
 </div>
-
-<div class="part">
-<section>
-<h3>制約</h3><ul>
-<li><var>1 \le H, W \le 2000</var></li>
-<li><var>a_{i,j}</var> は <code>S</code> , <code>G</code> , <code>.</code> , <code>#</code> , 英小文字のいずれか</li>
-<li><code>S</code> のマスと <code>G</code> のマスはちょうど <var>1</var> つ存在する</li>
-</ul>
-</section>
-</div>
-
 <hr />
 <div class="io-style">
 <div class="part">
+
 <section>
-<h3>入力</h3><p>入力は以下の形式で標準入力から与えられる。</p>
-<pre><var>H</var> <var>W</var>
-<var>a_{1,1}\dots a_{1,W}</var>
-<var>\vdots</var>
-<var>a_{H,1}\dots a_{H,W}</var>
+<h3>入力</h3>
+
+<p>入力は以下の形式で標準入力から与えられる</p>
+
+<pre>
+<var>N</var> <var>M</var>
+<var>u_1</var> <var>v_1</var> <var>l_1</var>
+<var>u_2</var> <var>v_2</var> <var>l_2</var>
+:
+<var>u_M</var> <var>v_M</var> <var>l_M</var>
 </pre>
 
-</section>
-</div>
+<ul class="simple">
 
-<div class="part">
-<section>
-<h3>出力</h3><p><code>S</code> のマスから <code>G</code> のマスに移動するのに必要な最短時間を出力せよ。<br />
-<code>S</code> のマスから <code>G</code> のマスに移動する方法が存在しない場合は、代わりに <code>-1</code> を出力せよ。</p>
-</section>
-</div>
-</div>
+	<li><var>1</var> 行目には高橋君の住む街にある家の個数 <var>N(3 ≦ N ≦ 300)</var> と 道の本数 <var>M(3 ≦ M ≦ N(N-1)/2)</var> が空白区切りで与えられる。</li>
 
-<hr />
-<div class="part">
-<section>
-<h3>入力例 1</h3><pre>2 5
-S.b.b
-a.a.G
-</pre>
+	<li><var>2</var> 行目からの <var>M</var> 行のうち <var>i</var> 行目には <var>i</var> 番目の道路が結ぶ家の番号 <var>u_i, v_i(1 ≦ u_i ＜ v_i ≦ N)</var> とその長さを表す整数 <var>l_i(1 ≦ l_i ≦ 10^5)</var> が空白区切りで与えられる。</li>
 
-</section>
-</div>
+	<li><var>i ≠ j</var> ならば <var>u_i ≠ u_j</var> または <var>v_i ≠ v_j</var> の少なくとも一方が成り立つ。</li>
 
-<div class="part">
-<section>
-<h3>出力例 1</h3><pre>4
-</pre>
-
-<p>上から <var>i</var> 行目、左から <var>j</var> 列目のマスを <var>(i, j)</var> で表すこととします。<br />
-はじめ、高橋くんは <var>(1, 1)</var> にいます。
-例えば、以下のような手順で <var>4</var> 秒で <var>(2, 5)</var> に移動することができます。</p>
-<ul>
-<li><var>(1, 1)</var> から <var>(2, 1)</var> に移動する</li>
-<li><var>(2, 1)</var> と同じ <code>a</code> のマスである <var>(2, 3)</var> にテレポートする</li>
-<li><var>(2, 3)</var> から <var>(2, 4)</var> に移動する</li>
-<li><var>(2, 4)</var> から <var>(2, 5)</var> に移動する</li>
 </ul>
+
 </section>
 </div>
+<div class="part">
 
+<section>
+<h3>出力</h3>
+
+<p>最適な計画をたてることができないならば <var>-1</var> を、できるならばそのとき通る道の長さの総和を <var>1</var> 行に出力せよ。出力の末尾にも改行を入れること。</p>
+
+</section>
+</div>
+</div>
 <hr />
 <div class="part">
+
 <section>
-<h3>入力例 2</h3><pre>11 11
-S##...#c...
-...#d.#.#..
-..........#
-.#....#...#
-#.....bc...
-#.##......#
-.......c..#
-..#........
-a..........
-d..#...a...
-.#........G
+<h3>入力例1</h3>
+
+<pre>
+5 7
+1 2 2
+1 4 1
+2 3 7
+1 5 12
+3 5 2
+2 5 3
+3 4 5
 </pre>
 
 </section>
 </div>
-
 <div class="part">
+
 <section>
-<h3>出力例 2</h3><pre>14
+<h3>出力例1</h3>
+
+<pre>
+13
 </pre>
+
+<p>家と道の様子は以下のようになります</p>
+
+<div class="img-nocaption" align="center">
+	<img src="/img/abc/022/ajfsieojafioes/C_sample1.png" height="300">
+</div>
+
+<p><var>1, 2, 5, 3, 4, 1</var> という順番に訪れる計画が最適です。
+<var>1, 2, 1</var> という順番に訪れる計画は <var>1</var> 番目の道を <var>2</var> 回通っているので条件を満たしていません。</p>
 
 </section>
 </div>
-
 <hr />
 <div class="part">
+
 <section>
-<h3>入力例 3</h3><pre>11 11
-.#.#.e#a...
-.b..##..#..
-#....#.#..#
-.#dd..#..#.
-....#...#e.
-c#.#a....#.
-.....#..#.e
-.#....#b.#.
-.#...#..#..
-......#c#G.
-#..S...#...
+<h3>入力例2</h3>
+
+<pre>
+5 4
+1 2 1
+1 3 1
+1 4 1
+1 5 1
 </pre>
 
 </section>
 </div>
-
 <div class="part">
-<section>
-<h3>出力例 3</h3><pre>-1
-</pre></section>
-</div>
-</span>
-<span class="lang-en">
-<p>Score : <var>500</var> points</p>
 
-<div class="part">
 <section>
-<h3>Problem Statement</h3><p>There is a town represented as a two-dimensional grid with <var>H</var> horizontal rows and <var>W</var> vertical columns.<br />
-A character <var>a_{i,j}</var> describes the square at the <var>i</var>-th row from the top and <var>j</var>-th column from the left. Here, <var>a_{i,j}</var> is one of the following: <code>S</code> , <code>G</code> , <code>.</code> , <code>#</code> , <code>a</code>, ..., and <code>z</code>.<br />
-<code>#</code> represents a square that cannot be entered, and <code>a</code>, ..., <code>z</code> represent squares with teleporters.  </p>
-<p>Takahashi is initially at the square represented as <code>S</code>. In each second, he will make one of the following moves:</p>
-<ul>
-<li>Go to a non-<code>#</code> square that is horizontally or vertically adjacent to his current position.</li>
-<li>Choose a square with the same character as that of his current position, and teleport to that square. He can only use this move when he is at a square represented as <code>a</code>, ..., or <code>z</code>.</li>
-</ul>
-<p>Find the shortest time Takahashi needs to reach the square represented as <code>G</code> from the one represented as <code>S</code>.<br />
-If the destination is unreachable, report <code>-1</code> instead.  </p>
-</section>
-</div>
+<h3>出力例2</h3>
 
-<div class="part">
-<section>
-<h3>Constraints</h3><ul>
-<li><var>1 \le H, W \le 2000</var></li>
-<li><var>a_{i,j}</var> is <code>S</code>, <code>G</code>, <code>.</code>, <code>#</code>, or a lowercase English letter.</li>
-<li>There is exactly one square represented as <code>S</code> and one square represented as <code>G</code>.</li>
-</ul>
-</section>
-</div>
-
-<hr />
-<div class="io-style">
-<div class="part">
-<section>
-<h3>Input</h3><p>Input is given from Standard Input in the following format:</p>
-<pre><var>H</var> <var>W</var>
-<var>a_{1,1}\dots a_{1,W}</var>
-<var>\vdots</var>
-<var>a_{H,1}\dots a_{H,W}</var>
+<pre>
+-1
 </pre>
 
+<p>同じ道を <var>2</var> 度以上通らない旅の計画をたてることはできません。よって <var>-1</var> を出力します。</p>
+
 </section>
 </div>
-
-<div class="part">
-<section>
-<h3>Output</h3><p>Print the shortest time Takahashi needs to reach the square represented as <code>G</code> from the one represented as <code>S</code>.<br />
-If the destination is unreachable from the initial position, print <code>-1</code> instead.  </p>
-</section>
-</div>
-</div>
-
 <hr />
 <div class="part">
+
 <section>
-<h3>Sample Input 1</h3><pre>2 5
-S.b.b
-a.a.G
+<h3>入力例3</h3>
+
+<pre>
+10 12
+1 4 3
+1 9 1
+2 5 4
+2 6 1
+3 7 5
+3 10 9
+4 7 2
+5 6 6
+5 8 5
+6 8 3
+7 9 5
+8 10 8
 </pre>
 
 </section>
 </div>
-
 <div class="part">
-<section>
-<h3>Sample Output 1</h3><pre>4
-</pre>
 
-<p>Let <var>(i, j)</var> denote the square at the <var>i</var>-th row from the top and <var>j</var>-th column from the left.<br />
-Initially, Takahashi is at <var>(1, 1)</var>.
-One way to reach <var>(2, 5)</var> in four seconds is:</p>
-<ul>
-<li>go from <var>(1, 1)</var> to <var>(2, 1)</var>;</li>
-<li>teleport from <var>(2, 1)</var> to <var>(2, 3)</var>, which is also an <code>a</code> square;</li>
-<li>go from <var>(2, 3)</var> to <var>(2, 4)</var>;</li>
-<li>go from <var>(2, 4)</var> to <var>(2, 5)</var>.</li>
-</ul>
-</section>
-</div>
-
-<hr />
-<div class="part">
 <section>
-<h3>Sample Input 2</h3><pre>11 11
-S##...#c...
-...#d.#.#..
-..........#
-.#....#...#
-#.....bc...
-#.##......#
-.......c..#
-..#........
-a..........
-d..#...a...
-.#........G
+<h3>出力例3</h3>
+
+<pre>
+11
 </pre>
 
 </section>
 </div>
-
-<div class="part">
-<section>
-<h3>Sample Output 2</h3><pre>14
-</pre>
-
-</section>
 </div>
-
-<hr />
-<div class="part">
-<section>
-<h3>Sample Input 3</h3><pre>11 11
-.#.#.e#a...
-.b..##..#..
-#....#.#..#
-.#dd..#..#.
-....#...#e.
-c#.#a....#.
-.....#..#.e
-.#....#b.#.
-.#...#..#..
-......#c#G.
-#..S...#...
-</pre>
-
-</section>
-</div>
-
-<div class="part">
-<section>
-<h3>Sample Output 3</h3><pre>-1
-</pre></section>
-</div>
-</span>
-</span>
 
 		</div>
 
@@ -609,8 +520,8 @@ c#.#a....#.
 
 		
 		<hr/>
-		<form class="form-horizontal form-code-submit" action="/contests/abc184/submit" method="POST">
-			<input type="hidden" name="data.TaskScreenName" value="abc184_e" />
+		<form class="form-horizontal form-code-submit" action="/contests/abc022/submit" method="POST">
+			<input type="hidden" name="data.TaskScreenName" value="abc022_c" />
 			
 			<div class="form-group ">
 				<label class="control-label col-sm-3 col-md-2" for="select-lang">Language</label>
@@ -835,7 +746,7 @@ c#.#a....#.
 </div>
 
 
-			<input type="hidden" name="csrf_token" value="lIzC82GusjHci/all7EztCJgQ6TbEEzNMJ4LpY5j/ks=" />
+			<input type="hidden" name="csrf_token" value="MrLE72oIs66bwVGZvH65YXyE78eUE//FtRUdhr99LTA=" />
 			<div class="form-group">
 				<label class="control-label col-sm-3 col-md-2"></label>
 				<div class="col-sm-5">
@@ -855,7 +766,7 @@ c#.#a....#.
 			
 			
 			
-<div class="a2a_kit a2a_kit_size_20 a2a_default_style pull-right" data-a2a-url="https://atcoder.jp/contests/abc184/tasks/abc184_e?lang=en" data-a2a-title="E - Third Avenue">
+<div class="a2a_kit a2a_kit_size_20 a2a_default_style pull-right" data-a2a-url="https://atcoder.jp/contests/abc022/tasks/abc022_c?lang=en" data-a2a-title="C - Blue Bird">
 	<a class="a2a_button_facebook"></a>
 	<a class="a2a_button_twitter"></a>
 	
@@ -875,8 +786,8 @@ c#.#a....#.
 			<footer class="footer">
 			
 				<ul>
-					<li><a href="/contests/abc184/rules">Rule</a></li>
-					<li><a href="/contests/abc184/glossary">Glossary</a></li>
+					<li><a href="/contests/abc022/rules">Rule</a></li>
+					<li><a href="/contests/abc022/glossary">Glossary</a></li>
 					
 				</ul>
 			

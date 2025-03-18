@@ -19,8 +19,12 @@ int main(/* int argc, char *argv[] */) {
   cin.tie(nullptr);
   cout << setprecision(20);
 
-  ll a, b, c, d; cin >> a >> b >> c >> d;
-  cout << a * d - b * c << endl;
+  ll N; cin >> N;
+  ll s = 0;
+  REP(i, 1, N + 1) {
+    if (i % 3 != 0 and i % 5 != 0) s += i;
+  }
+  cout << s << endl;
 
   return 0;
 }

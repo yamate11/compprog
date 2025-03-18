@@ -9,7 +9,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>C - Unexpressed</title>
+	<title>A - Max Add</title>
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 	<meta http-equiv="Content-Language" content="en">
 	<meta name="viewport" content="width=device-width,initial-scale=1.0">
@@ -22,7 +22,11 @@
 		window.dataLayer = window.dataLayer || [];
 		function gtag(){dataLayer.push(arguments);}
 		gtag('js', new Date());
-
+		gtag('set', 'user_properties', {
+			
+				'login_status': 'logged_in',
+			
+		});
 		gtag('config', 'G-RC512FD18N');
 	</script>
 
@@ -32,72 +36,61 @@
 
 	<meta property="og:site_name" content="AtCoder">
 	
-	<meta property="og:title" content="C - Unexpressed" />
+	<meta property="og:title" content="A - Max Add" />
 	<meta property="og:description" content="AtCoder is a programming contest site for anyone from beginners to experts. We hold weekly programming contests online." />
 	<meta property="og:type" content="website" />
-	<meta property="og:url" content="https://atcoder.jp/contests/abc193/tasks/abc193_c" />
+	<meta property="og:url" content="https://atcoder.jp/contests/arc120/tasks/arc120_a" />
 	<meta property="og:image" content="https://img.atcoder.jp/assets/atcoder.png" />
 	<meta name="twitter:card" content="summary" />
 	<meta name="twitter:site" content="@atcoder" />
 	
-	<meta property="twitter:title" content="C - Unexpressed" />
+	<meta property="twitter:title" content="A - Max Add" />
 
 	<link href="//fonts.googleapis.com/css?family=Lato:400,700" rel="stylesheet" type="text/css">
-	<link rel="stylesheet" type="text/css" href="//img.atcoder.jp/public/74ba18f/css/bootstrap.min.css">
-	<link rel="stylesheet" type="text/css" href="//img.atcoder.jp/public/74ba18f/css/base.css">
+	<link rel="stylesheet" type="text/css" href="//img.atcoder.jp/public/5f6d3b6/css/bootstrap.min.css">
+	<link rel="stylesheet" type="text/css" href="//img.atcoder.jp/public/5f6d3b6/css/base.css">
 	<link rel="shortcut icon" type="image/png" href="//img.atcoder.jp/assets/favicon.png">
 	<link rel="apple-touch-icon" href="//img.atcoder.jp/assets/atcoder.png">
-	<script src="//img.atcoder.jp/public/74ba18f/js/lib/jquery-1.9.1.min.js"></script>
-	<script src="//img.atcoder.jp/public/74ba18f/js/lib/bootstrap.min.js"></script>
-	<script src="//img.atcoder.jp/public/74ba18f/js/cdn/js.cookie.min.js"></script>
-	<script src="//img.atcoder.jp/public/74ba18f/js/cdn/moment.min.js"></script>
-	<script src="//img.atcoder.jp/public/74ba18f/js/cdn/moment_js-ja.js"></script>
+	<script src="//img.atcoder.jp/public/5f6d3b6/js/lib/jquery-1.9.1.min.js"></script>
+	<script src="//img.atcoder.jp/public/5f6d3b6/js/lib/bootstrap.min.js"></script>
+	<script src="//img.atcoder.jp/public/5f6d3b6/js/cdn/js.cookie.min.js"></script>
+	<script src="//img.atcoder.jp/public/5f6d3b6/js/cdn/moment.min.js"></script>
+	<script src="//img.atcoder.jp/public/5f6d3b6/js/cdn/moment_js-ja.js"></script>
 	<script>
 		var LANG = "en";
 		var userScreenName = "yamate11";
-		var csrfToken = "hiQedtsnEKszEc6Eu2fr0DLtap0RavJ0CzMtlKzO0hE="
+		var csrfToken = "MrLE72oIs66bwVGZvH65YXyE78eUE//FtRUdhr99LTA="
 	</script>
-	<script src="//img.atcoder.jp/public/74ba18f/js/utils.js"></script>
+	<script src="//img.atcoder.jp/public/5f6d3b6/js/utils.js"></script>
 	
 	
-		<script src="//img.atcoder.jp/public/74ba18f/js/contest.js"></script>
-		<link href="//img.atcoder.jp/public/74ba18f/css/contest.css" rel="stylesheet" />
+		<script src="//img.atcoder.jp/public/5f6d3b6/js/contest.js"></script>
+		<link href="//img.atcoder.jp/public/5f6d3b6/css/contest.css" rel="stylesheet" />
 		<script>
-			var contestScreenName = "abc193";
+			var contestScreenName = "arc120";
 			var remainingText = "Remaining Time";
 			var countDownText = "Contest begins in";
-			var startTime = moment("2021-02-27T21:00:00+09:00");
-			var endTime = moment("2021-02-27T22:40:00+09:00");
+			var startTime = moment("2021-05-23T20:00:00+09:00");
+			var endTime = moment("2021-05-23T22:00:00+09:00");
 		</script>
-		<style>.insert-participant-box {
-    background-color: #fff !important;
-    text-align: -webkit-center !important;
-}
-
-.insert-participant-box h1{
-    font-size: 280%;
-}
-
-#caddi_logo {
-    width: 300px;
-}</style>
+		<style></style>
 	
 	
-		<link href="//img.atcoder.jp/public/74ba18f/css/cdn/select2.min.css" rel="stylesheet" />
-		<link href="//img.atcoder.jp/public/74ba18f/css/cdn/select2-bootstrap.min.css" rel="stylesheet" />
-		<script src="//img.atcoder.jp/public/74ba18f/js/lib/select2.min.js"></script>
+		<link href="//img.atcoder.jp/public/5f6d3b6/css/cdn/select2.min.css" rel="stylesheet" />
+		<link href="//img.atcoder.jp/public/5f6d3b6/css/cdn/select2-bootstrap.min.css" rel="stylesheet" />
+		<script src="//img.atcoder.jp/public/5f6d3b6/js/lib/select2.min.js"></script>
 	
 	
-		<script src="//img.atcoder.jp/public/74ba18f/js/ace/ace.js"></script>
-		<script src="//img.atcoder.jp/public/74ba18f/js/ace/ext-language_tools.js"></script>
+		<script src="//img.atcoder.jp/public/5f6d3b6/js/ace/ace.js"></script>
+		<script src="//img.atcoder.jp/public/5f6d3b6/js/ace/ext-language_tools.js"></script>
 	
 	
-		<script src="//img.atcoder.jp/public/74ba18f/js/cdn/run_prettify.js"></script>
+		<script src="//img.atcoder.jp/public/5f6d3b6/js/cdn/run_prettify.js"></script>
 	
 	
-		<link rel="stylesheet" href="//img.atcoder.jp/public/74ba18f/css/cdn/katex.min.css">
-		<script defer src="//img.atcoder.jp/public/74ba18f/js/cdn/katex.min.js"></script>
-		<script defer src="//img.atcoder.jp/public/74ba18f/js/cdn/auto-render.min.js"></script>
+		<link rel="stylesheet" href="//img.atcoder.jp/public/5f6d3b6/css/cdn/katex.min.css">
+		<script defer src="//img.atcoder.jp/public/5f6d3b6/js/cdn/katex.min.js"></script>
+		<script defer src="//img.atcoder.jp/public/5f6d3b6/js/cdn/auto-render.min.js"></script>
 		<script>$(function(){$('var').each(function(){var html=$(this).html().replace(/<sub>/g,'_{').replace(/<\/sub>/g,'}');$(this).html('\\('+html+'\\)');});});</script>
 		<script>
 			var katexOptions = {
@@ -122,7 +115,7 @@
 	
 	
 	
-	<script src="//img.atcoder.jp/public/74ba18f/js/base.js"></script>
+	<script src="//img.atcoder.jp/public/5f6d3b6/js/base.js"></script>
 </head>
 
 <body>
@@ -142,11 +135,11 @@
 				<h4 class="modal-title">Contest started</h4>
 			</div>
 			<div class="modal-body">
-				<p>Caddi Programming Contest 2021(AtCoder Beginner Contest 193) has begun.</p>
+				<p>AtCoder Regular Contest 120 has begun.</p>
 			</div>
 			<div class="modal-footer">
 				
-					<a class="btn btn-primary" href='/contests/abc193/tasks'>Go to the task list page</a>
+					<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
 				
 			</div>
 		</div>
@@ -160,7 +153,7 @@
 				<h4 class="modal-title">Contest is over</h4>
 			</div>
 			<div class="modal-body">
-				<p>Caddi Programming Contest 2021(AtCoder Beginner Contest 193) has ended.</p>
+				<p>AtCoder Regular Contest 120 has ended.</p>
 			</div>
 			<div class="modal-footer">
 				<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
@@ -182,7 +175,7 @@
 			<div class="collapse navbar-collapse" id="navbar-collapse">
 				<ul class="nav navbar-nav">
 				
-					<li><a class="contest-title" href="/contests/abc193">Caddi Programming Contest 2021(AtCoder Beginner Contest 193)</a></li>
+					<li><a class="contest-title" href="/contests/arc120">AtCoder Regular Contest 120</a></li>
 				
 				</ul>
 				<ul class="nav navbar-nav navbar-right">
@@ -192,15 +185,15 @@
 							<img src='//img.atcoder.jp/assets/top/img/flag-lang/en.png'> English <span class="caret"></span>
 						</a>
 						<ul class="dropdown-menu">
-							<li><a href="/contests/abc193/tasks/abc193_c?lang=ja"><img src='//img.atcoder.jp/assets/top/img/flag-lang/ja.png'> 日本語</a></li>
-							<li><a href="/contests/abc193/tasks/abc193_c?lang=en"><img src='//img.atcoder.jp/assets/top/img/flag-lang/en.png'> English</a></li>
+							<li><a href="/contests/arc120/tasks/arc120_a?lang=ja"><img src='//img.atcoder.jp/assets/top/img/flag-lang/ja.png'> 日本語</a></li>
+							<li><a href="/contests/arc120/tasks/arc120_a?lang=en"><img src='//img.atcoder.jp/assets/top/img/flag-lang/en.png'> English</a></li>
 						</ul>
 					</li>
 					
 					
 						<li class="dropdown">
 							<a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
-								<span class="glyphicon glyphicon-cog" aria-hidden="true"></span> yamate11 (Contestant) <span class="caret"></span>
+								<span class="glyphicon glyphicon-cog" aria-hidden="true"></span> yamate11 (Guest) <span class="caret"></span>
 							</a>
 							<ul class="dropdown-menu">
 								<li><a href="/users/yamate11"><span class="glyphicon glyphicon-user" aria-hidden="true"></span> My Profile</a></li>
@@ -222,8 +215,8 @@
 		</div>
 	</nav>
 
-	<form method="POST" name="form_logout" action="/logout?continue=https%3A%2F%2Fatcoder.jp%2Fcontests%2Fabc193%2Ftasks%2Fabc193_c">
-		<input type="hidden" name="csrf_token" value="hiQedtsnEKszEc6Eu2fr0DLtap0RavJ0CzMtlKzO0hE=" />
+	<form method="POST" name="form_logout" action="/logout?continue=https%3A%2F%2Fatcoder.jp%2Fcontests%2Farc120%2Ftasks%2Farc120_a">
+		<input type="hidden" name="csrf_token" value="MrLE72oIs66bwVGZvH65YXyE78eUE//FtRUdhr99LTA=" />
 	</form>
 	<div id="main-container" class="container"
 		 	style="padding-top:50px;">
@@ -236,35 +229,36 @@
 		<small class="contest-duration">
 			
 				Contest Duration:
-				<a href='http://www.timeanddate.com/worldclock/fixedtime.html?iso=20210227T2100&p1=248' target='blank'><time class='fixtime fixtime-full'>2021-02-27 21:00:00+0900</time></a> - <a href='http://www.timeanddate.com/worldclock/fixedtime.html?iso=20210227T2240&p1=248' target='blank'><time class='fixtime fixtime-full'>2021-02-27 22:40:00+0900</time></a> (local time)
-				(100 minutes)
+				<a href='http://www.timeanddate.com/worldclock/fixedtime.html?iso=20210523T2000&p1=248' target='blank'><time class='fixtime fixtime-full'>2021-05-23 20:00:00+0900</time></a> - <a href='http://www.timeanddate.com/worldclock/fixedtime.html?iso=20210523T2200&p1=248' target='blank'><time class='fixtime fixtime-full'>2021-05-23 22:00:00+0900</time></a> (local time)
+				(120 minutes)
 			
 		</small>
 		<small class="back-to-home pull-right"><a href="/home">Back to Home</a></small>
 	</div>
 	<ul class="nav nav-tabs">
-		<li><a href="/contests/abc193"><span class="glyphicon glyphicon-home" aria-hidden="true"></span> Top</a></li>
+		<li><a href="/contests/arc120"><span class="glyphicon glyphicon-home" aria-hidden="true"></span> Top</a></li>
 		
-			<li class="active"><a href="/contests/abc193/tasks"><span class="glyphicon glyphicon-tasks" aria-hidden="true"></span> Tasks</a></li>
-		
-
-		
-			<li><a href="/contests/abc193/clarifications"><span class="glyphicon glyphicon-question-sign" aria-hidden="true"></span> Clarifications <span id="clar-badge" class="badge"></span></a></li>
+			<li class="active"><a href="/contests/arc120/tasks"><span class="glyphicon glyphicon-tasks" aria-hidden="true"></span> Tasks</a></li>
 		
 
 		
-			<li><a href="/contests/abc193/submit?taskScreenName=abc193_c"><span class="glyphicon glyphicon-send" aria-hidden="true"></span> Submit</a></li>
+			<li><a href="/contests/arc120/clarifications"><span class="glyphicon glyphicon-question-sign" aria-hidden="true"></span> Clarifications <span id="clar-badge" class="badge" ></span></a></li>
+		
+
+		
+			<li><a href="/contests/arc120/submit?taskScreenName=arc120_a"><span class="glyphicon glyphicon-send" aria-hidden="true"></span> Submit</a></li>
 		
 
 		
 			<li>
 				<a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false"><span class="glyphicon glyphicon-list" aria-hidden="true"></span> Results<span class="caret"></span></a>
 				<ul class="dropdown-menu">
-					<li><a href="/contests/abc193/submissions"><span class="glyphicon glyphicon-globe" aria-hidden="true"></span> All Submissions</a></li>
+					<li><a href="/contests/arc120/submissions"><span class="glyphicon glyphicon-globe" aria-hidden="true"></span> All Submissions</a></li>
 					
-						<li><a href="/contests/abc193/submissions/me"><span class="glyphicon glyphicon-user" aria-hidden="true"></span> My Submissions</a></li>
+						<li><a href="/contests/arc120/submissions/me"><span class="glyphicon glyphicon-user" aria-hidden="true"></span> My Submissions</a></li>
+						
 						<li class="divider"></li>
-						<li><a href="/contests/abc193/score"><span class="glyphicon glyphicon-dashboard" aria-hidden="true"></span> My Score</a></li>
+						<li><a href="/contests/arc120/score"><span class="glyphicon glyphicon-dashboard" aria-hidden="true"></span> My Score</a></li>
 					
 				</ul>
 			</li>
@@ -273,26 +267,26 @@
 		
 			
 				
-					<li><a href="/contests/abc193/standings"><span class="glyphicon glyphicon-sort-by-attributes-alt" aria-hidden="true"></span> Standings</a></li>
+					<li><a href="/contests/arc120/standings"><span class="glyphicon glyphicon-sort-by-attributes-alt" aria-hidden="true"></span> Standings</a></li>
 				
 			
 				
-					<li><a href="/contests/abc193/standings/virtual"><span class="glyphicon glyphicon-sort-by-attributes-alt" aria-hidden="true"></span> Virtual Standings</a></li>
+					<li><a href="/contests/arc120/standings/virtual"><span class="glyphicon glyphicon-sort-by-attributes-alt" aria-hidden="true"></span> Virtual Standings</a></li>
 				
 			
 		
 
 		
-			<li><a href="/contests/abc193/custom_test"><span class="glyphicon glyphicon-wrench" aria-hidden="true"></span> Custom Test</a></li>
+			<li><a href="/contests/arc120/custom_test"><span class="glyphicon glyphicon-wrench" aria-hidden="true"></span> Custom Test</a></li>
 		
 
 		
-			<li><a href="/contests/abc193/editorial"><span class="glyphicon glyphicon-book" aria-hidden="true"></span> Editorial</a></li>
+			<li><a href="/contests/arc120/editorial"><span class="glyphicon glyphicon-book" aria-hidden="true"></span> Editorial</a></li>
 		
 		
 			
 			
-				<li><a href="https://codeforces.com/blog/entry/88211" target="_blank" rel="noopener"><span class="glyphicon glyphicon-comment" aria-hidden="true"></span> Discuss</a></li>
+				<li><a href="https://codeforces.com/blog/entry/90979" target="_blank" rel="noopener"><span class="glyphicon glyphicon-comment" aria-hidden="true"></span> Discuss</a></li>
 			
 		
 
@@ -301,8 +295,8 @@
 </div>
 	<div class="col-sm-12">
 		<span class="h2">
-			C - Unexpressed
-			<a class="btn btn-default btn-sm" href="/contests/abc193/tasks/abc193_c/editorial">Editorial</a>
+			A - Max Add
+			<a class="btn btn-default btn-sm" href="/contests/arc120/tasks/arc120_a/editorial">Editorial</a>
 		</span>
 		<span id="task-lang-btn" class="pull-right"><span data-lang="ja"><img src='//img.atcoder.jp/assets/top/img/flag-lang/ja.png'></span> / <span data-lang="en"><img src='//img.atcoder.jp/assets/top/img/flag-lang/en.png'></span></span>
 		<script>
@@ -343,25 +337,38 @@
 		<p>
 			Time Limit: 2 sec / Memory Limit: 1024 MB
 			
+			
 		</p>
 
 		<div id="task-statement">
 			
+
+
+	
+	
+
 			<span class="lang">
 <span class="lang-ja">
-<p>配点 : <var>300</var> 点</p>
+<p>配点 : <var>400</var> 点</p>
 
 <div class="part">
 <section>
-<h3>問題文</h3><p>整数 <var>N</var> が与えられます。 <var>1</var> 以上 <var>N</var> 以下の整数のうち、 <var>2</var> 以上の整数 <var>a, b</var> を用いて <var>a^b</var> と表せないものはいくつあるでしょうか？</p>
+<h3>問題文</h3><p>数列 <var>a = (a_1, a_2, a_3, \dots, a_k)</var> に対して、<var>f(a)</var> を、以下の操作を行った後の <var>a</var> の要素の総和と定義します。  </p>
+<ul>
+<li><var>i = 1, 2, 3, \dots, k</var> の順に以下の操作を行う :<br />
+     現在の <var>a</var> の要素の最大値を <var>a_i</var> に足す  </li>
+</ul>
+<p>長さ <var>N</var> の数列 <var>A = (A_1, A_2, A_3, \dots, A_N)</var> が与えられます。<br />
+<var>1</var> 以上 <var>N</var> 以下の各整数 <var>k</var> について、<var>a = (A_1, A_2, A_3, \dots, A_k)</var> としたときの <var>f(a)</var> を求めてください。  </p>
 </section>
 </div>
 
 <div class="part">
 <section>
 <h3>制約</h3><ul>
-<li><var>N</var> は整数</li>
-<li><var>1 ≤ N ≤ 10^{10}</var></li>
+<li><var>1 \le N \le 2 \times 10^5</var></li>
+<li><var>1 \le A_i \le 10^7</var></li>
+<li>入力に含まれる値は全て整数</li>
 </ul>
 </section>
 </div>
@@ -372,13 +379,14 @@
 <section>
 <h3>入力</h3><p>入力は以下の形式で標準入力から与えられる。</p>
 <pre><var>N</var>
+<var>A_1</var> <var>A_2</var> <var>A_3</var> <var>\dots</var> <var>A_N</var>
 </pre>
 </section>
 </div>
 
 <div class="part">
 <section>
-<h3>出力</h3><p>答えを出力せよ。</p>
+<h3>出力</h3><p><var>N</var> 行にわたって出力せよ。<var>k</var> 行目には <var>a = (A_1, A_2, A_3, \dots, A_k)</var> としたときの <var>f(a)</var> を出力せよ。  </p>
 </section>
 </div>
 </div>
@@ -386,48 +394,48 @@
 <hr />
 <div class="part">
 <section>
-<h3>入力例 1</h3><pre>8
+<h3>入力例 1</h3><pre>3
+1 2 3
 </pre>
 </section>
 </div>
 
 <div class="part">
 <section>
-<h3>出力例 1</h3><pre>6
+<h3>出力例 1</h3><pre>2
+8
+19
 </pre>
-<p><var>4, 8</var> は <var>2^2 = 4,\ 2^3 = 8</var> と、<var>a^b</var> の形で表すことができます。<br />
-<var>1, 2, 3, 5, 6, 7</var> は <var>2</var> 以上の整数 <var>a, b</var> を用いて <var>a^b</var> と表せないので、答えは <var>6</var> です。</p>
-</section>
-</div>
-
-<hr />
-<div class="part">
-<section>
-<h3>入力例 2</h3><pre>100000
-</pre>
-</section>
-</div>
-
-<div class="part">
-<section>
-<h3>出力例 2</h3><pre>99634
-</pre></section>
+<p>例えば <var>a = (A_1, A_2, A_3)</var> のときの <var>f(a)</var> は以下のように計算されます。  </p>
+<ul>
+<li>まず <var>i = 1</var> として、現在の <var>a</var> の最大値である <var>3</var> を <var>a_1</var> に足す。<var>a = (4, 2, 3)</var> となる。</li>
+<li>次に <var>i = 2</var> として、現在の <var>a</var> の最大値である <var>4</var> を <var>a_2</var> に足す。<var>a = (4, 6, 3)</var> となる。</li>
+<li>最後に <var>i = 3</var> として、現在の <var>a</var> の最大値である <var>6</var> を <var>a_3</var> に足す。<var>a = (4, 6, 9)</var> となる。</li>
+<li>操作後の <var>a</var> の総和である <var>19</var> が <var>f(a)</var> の値である。</li>
+</ul></section>
 </div>
 </span>
 <span class="lang-en">
-<p>Score : <var>300</var> points</p>
+<p>Score : <var>400</var> points</p>
 
 <div class="part">
 <section>
-<h3>Problem Statement</h3><p>Given is an integer <var>N</var>. How many integers between <var>1</var> and <var>N</var> (inclusive) are unrepresentable as <var>a^b</var>, where <var>a</var> and <var>b</var> are integers not less than <var>2</var>?</p>
+<h3>Problem Statement</h3><p>For a sequence <var>a = (a_1, a_2, a_3, \dots, a_k)</var>, let <var>f(a)</var> be the sum of its elements after the following is done:</p>
+<ul>
+<li>For each <var>i = 1, 2, 3, \dots, k</var>, in this order, do the following operation:<br />
+    add the current maximum value of an element in <var>a</var> to <var>a_i</var>.</li>
+</ul>
+<p>You are given a sequence of length <var>N</var>: <var>A = (A_1, A_2, A_3, \dots, A_N)</var>.<br />
+For each integer <var>k</var> between <var>1</var> and <var>N</var> (inclusive), find <var>f(a)</var> when <var>a = (A_1, A_2, A_3, \dots, A_k)</var>.</p>
 </section>
 </div>
 
 <div class="part">
 <section>
 <h3>Constraints</h3><ul>
-<li><var>N</var> is an integer.</li>
-<li><var>1 ≤ N ≤ 10^{10}</var></li>
+<li><var>1 \le N \le 2 \times 10^5</var></li>
+<li><var>1 \le A_i \le 10^7</var></li>
+<li>All values in input are integers.</li>
 </ul>
 </section>
 </div>
@@ -438,13 +446,14 @@
 <section>
 <h3>Input</h3><p>Input is given from Standard Input in the following format:</p>
 <pre><var>N</var>
+<var>A_1</var> <var>A_2</var> <var>A_3</var> <var>\dots</var> <var>A_N</var>
 </pre>
 </section>
 </div>
 
 <div class="part">
 <section>
-<h3>Output</h3><p>Print the answer.</p>
+<h3>Output</h3><p>Print <var>N</var> lines. The <var>k</var>-th line should contain <var>f(a)</var> when <var>a = (A_1, A_2, A_3, \dots, A_k)</var>.</p>
 </section>
 </div>
 </div>
@@ -452,32 +461,25 @@
 <hr />
 <div class="part">
 <section>
-<h3>Sample Input 1</h3><pre>8
+<h3>Sample Input 1</h3><pre>3
+1 2 3
 </pre>
 </section>
 </div>
 
 <div class="part">
 <section>
-<h3>Sample Output 1</h3><pre>6
+<h3>Sample Output 1</h3><pre>2
+8
+19
 </pre>
-<p><var>4</var> and <var>8</var> are representable as <var>a^b</var>: we have <var>2^2 = 4</var> and <var>2^3 = 8</var>.<br />
-On the other hand, <var>1</var>, <var>2</var>, <var>3</var>, <var>5</var>, <var>6</var>, and <var>7</var> are unrepresentable as <var>a^b</var> using integers <var>a</var> and <var>b</var> not less than <var>2</var>, so the answer is <var>6</var>.</p>
-</section>
-</div>
-
-<hr />
-<div class="part">
-<section>
-<h3>Sample Input 2</h3><pre>100000
-</pre>
-</section>
-</div>
-
-<div class="part">
-<section>
-<h3>Sample Output 2</h3><pre>99634
-</pre></section>
+<p>For example, when <var>a = (A_1, A_2, A_3)</var>, <var>f(a)</var> is computed as follows:</p>
+<ul>
+<li>First, for <var>i = 1</var>, add to <var>a_1</var> the current maximum value of <var>a</var>, which is <var>3</var>, making <var>a = (4, 2, 3)</var>.</li>
+<li>Next, for <var>i = 2</var>, add to <var>a_2</var> the current maximum value of <var>a</var>, which is <var>4</var>, making <var>a = (4, 6, 3)</var>.</li>
+<li>Finally, for <var>i = 3</var>, add to <var>a_3</var> the current maximum value of <var>a</var>, which is <var>6</var>, making <var>a = (4, 6, 9)</var>.</li>
+<li><var>f(a)</var> is the sum of the elements of <var>a</var> now, which is <var>19</var>.</li>
+</ul></section>
 </div>
 </span>
 </span>
@@ -487,8 +489,8 @@ On the other hand, <var>1</var>, <var>2</var>, <var>3</var>, <var>5</var>, <var>
 
 		
 		<hr/>
-		<form class="form-horizontal form-code-submit" action="/contests/abc193/submit" method="POST">
-			<input type="hidden" name="data.TaskScreenName" value="abc193_c" />
+		<form class="form-horizontal form-code-submit" action="/contests/arc120/submit" method="POST">
+			<input type="hidden" name="data.TaskScreenName" value="arc120_a" />
 			
 			<div class="form-group ">
 				<label class="control-label col-sm-3 col-md-2" for="select-lang">Language</label>
@@ -713,7 +715,7 @@ On the other hand, <var>1</var>, <var>2</var>, <var>3</var>, <var>5</var>, <var>
 </div>
 
 
-			<input type="hidden" name="csrf_token" value="hiQedtsnEKszEc6Eu2fr0DLtap0RavJ0CzMtlKzO0hE=" />
+			<input type="hidden" name="csrf_token" value="MrLE72oIs66bwVGZvH65YXyE78eUE//FtRUdhr99LTA=" />
 			<div class="form-group">
 				<label class="control-label col-sm-3 col-md-2"></label>
 				<div class="col-sm-5">
@@ -733,7 +735,7 @@ On the other hand, <var>1</var>, <var>2</var>, <var>3</var>, <var>5</var>, <var>
 			
 			
 			
-<div class="a2a_kit a2a_kit_size_20 a2a_default_style pull-right" data-a2a-url="https://atcoder.jp/contests/abc193/tasks/abc193_c?lang=en" data-a2a-title="C - Unexpressed">
+<div class="a2a_kit a2a_kit_size_20 a2a_default_style pull-right" data-a2a-url="https://atcoder.jp/contests/arc120/tasks/arc120_a?lang=en" data-a2a-title="A - Max Add">
 	<a class="a2a_button_facebook"></a>
 	<a class="a2a_button_twitter"></a>
 	
@@ -753,8 +755,8 @@ On the other hand, <var>1</var>, <var>2</var>, <var>3</var>, <var>5</var>, <var>
 			<footer class="footer">
 			
 				<ul>
-					<li><a href="/contests/abc193/rules">Rule</a></li>
-					<li><a href="/contests/abc193/glossary">Glossary</a></li>
+					<li><a href="/contests/arc120/rules">Rule</a></li>
+					<li><a href="/contests/arc120/glossary">Glossary</a></li>
 					
 				</ul>
 			

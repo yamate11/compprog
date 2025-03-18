@@ -34,33 +34,30 @@ int main(/* int argc, char *argv[] */) {
   cin.tie(nullptr);
   cout << setprecision(20);
 
-  ll N; cin >> N;
-  // @InpMVec(N, (X, Y, Z)) [HKKPan8A]
-  auto X = vector(N, ll());
-  auto Y = vector(N, ll());
-  auto Z = vector(N, ll());
-  for (int i = 0; i < N; i++) {
-    ll v1; cin >> v1; X[i] = v1;
-    ll v2; cin >> v2; Y[i] = v2;
-    ll v3; cin >> v3; Z[i] = v3;
+  ll A, B, Q; cin >> A >> B >> Q;
+  vector P(2, vector<ll>());
+  ll big = 1e17;
+  REP(k, 0, 2) P[k].push_back(-big);
+  REP(i, 0, A) {
+    ll s; cin >> s;
+    P[0].push_back(s);
   }
-  // @End [HKKPan8A]
+  REP(i, 0, B) {
+    ll t; cin >> t;
+    P[1].push_back(t);
+  }
+  REP(k, 0, 2) P[k].push_back(big);
 
-  auto dist = [&](ll i, ll j) -> ll { return abs(X[i] - X[j]) + abs(Y[i] - Y[j]) + max(0LL, Z[j] - Z[i]); };
-
-  auto big = 1e18;
-  auto tbl = vector(1LL << N, vector(N, big));
-  tbl[1][0] = 0;
-  REP(x, 1, 1LL << N) {
-    REP(t, 0, N) {
-      if (x >> t & 1) {
-        REP(j, 0, N) {
-          updMin(tbl[x | (1LL << j)][j], tbl[x][t] + dist(t, j));
-        }
-      }
+  REP(i, 0, Q) {
+    ll x; cin >> x;
+    vector<ll> j(2);
+    REP(k, 0, 2) j[k] = lower_bound(ALL(P[k]), x) - P[k].begin();
+    ll ans = big;
+    REP(a, 0, 2) REP(b, 0, 2) REP(c, 0, 2) {
+      updMin(ans, abs(P[a][j[a] - b] - x) + abs(P[a][j[a] - b] - P[1 - a][j[1 - a] - c]));
     }
+    cout << ans << "\n";
   }
-  cout << tbl[(1LL << N) - 1][0] << endl;
 
   return 0;
 }

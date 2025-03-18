@@ -19,8 +19,15 @@ int main(/* int argc, char *argv[] */) {
   cin.tie(nullptr);
   cout << setprecision(20);
 
-  ll N, W; cin >> N >> W;
-  cout << N / W << endl;
+  string S; cin >> S;
+  ll N = ssize(S);
+  REP(i, 0, N - 1) {
+    if (S[i] == 'A' and S[i + 1] == 'C') {
+      cout << "Yes\n";
+      return 0;
+    }
+  }
+  cout << "No\n";
 
   return 0;
 }

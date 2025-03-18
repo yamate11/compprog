@@ -4,8 +4,8 @@ using namespace std;
 using ll = long long int;
 using u64 = unsigned long long;
 using pll = pair<ll, ll>;
-// #include <atcoder/all>
-// using namespace atcoder;
+#include <atcoder/maxflow>
+using namespace atcoder;
 #define REP(i, a, b) for (ll i = (a); i < (b); i++)
 #define REPrev(i, a, b) for (ll i = (a); i >= (b); i--)
 #define ALL(coll) (coll).begin(), (coll).end()
@@ -19,41 +19,31 @@ int main(/* int argc, char *argv[] */) {
   cin.tie(nullptr);
   cout << setprecision(20);
 
-  ll N; cin >> N;
-  // @InpMVec(N, (A, B)) [5tGI6ecb]
-  auto A = vector(N, ll());
-  auto B = vector(N, ll());
-  for (int i = 0; i < N; i++) {
+  ll N, G, E; cin >> N >> G >> E;
+  // @InpVec(G, P) [Lh0sxRIE]
+  auto P = vector(G, ll());
+  for (int i = 0; i < G; i++) { ll v; cin >> v; P[i] = v; }
+  // @End [Lh0sxRIE]
+  // @InpMVec(E, (A, B)) [684WSZCF]
+  auto A = vector(E, ll());
+  auto B = vector(E, ll());
+  for (int i = 0; i < E; i++) {
     ll v1; cin >> v1; A[i] = v1;
     ll v2; cin >> v2; B[i] = v2;
   }
-  // @End [5tGI6ecb]
+  // @End [684WSZCF]
 
-  auto cmp = [](ll x) -> int {
-    if (x < 0) return -1;
-    else if (x == 0) return 0;
-    else if (x > 0) return 1;
-    else assert(0);
-  };
-
-  vector<ll> ord(N, 0LL);
-  iota(ALL(ord), 0);
-  sort(ALL(ord), [&](ll i, ll j) -> bool {
-    ll si = cmp(A[i] - B[i]);
-    ll sj = cmp(A[j] - B[j]);
-    if (si != sj) return si < sj;
-    if (si == 0) return i < j;
-    if (si == -1) return A[i] < A[j];
-    if (si == 1) return B[i] > B[j];
-    assert(0);
-  });
-  ll ans = 0;
-  ll c = 0;
-  REP(ii, 0, N) {
-    ll i = ord[ii];
-    ans = max(ans, c + A[i]);
-    c += A[i] - B[i];
+  mf_graph<ll> gr(N + 1);
+  REP(i, 0, E) {
+    if (A[i] == 0) gr.add_edge(A[i], B[i], 1);
+    else if (B[i] == 0) gr.add_edge(B[i], A[i], 1);
+    else {
+      gr.add_edge(A[i], B[i], 1);
+      gr.add_edge(B[i], A[i], 1);
+    }
   }
+  REP(i, 0, G) gr.add_edge(P[i], N, 1);
+  ll ans = gr.flow(0, N);
   cout << ans << endl;
 
   return 0;

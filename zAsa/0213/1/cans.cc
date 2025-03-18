@@ -19,16 +19,26 @@ int main(/* int argc, char *argv[] */) {
   cin.tie(nullptr);
   cout << setprecision(20);
 
-  ll N; cin >> N;
-  vector<bool> seen(2*N + 1, false);
-  ll p = 0;
-  REP(i, 0, N + 1) {
-    while (seen[p]) p++;
-    seen[p] = true;
-    cout << p + 1 << endl;
-    ll k; cin >> k; k--;
-    if (k < 0) break;
-    seen[k] = true;
+  ll N, M; cin >> N >> M;
+  // @InpMVec(M, ((A, dec=1), (B, type=char))) [Yo76zJH6]
+  auto A = vector(M, ll());
+  auto B = vector(M, char());
+  for (int i = 0; i < M; i++) {
+    ll v1; cin >> v1; v1 -= 1; A[i] = v1;
+    char v2; cin >> v2; B[i] = v2;
+  }
+  // @End [Yo76zJH6]
+
+  vector has(N, false);
+  REP(i, 0, M) {
+    if (B[i] == 'F') {
+      cout << "No\n";
+    }else if (not has[A[i]]) {
+      cout << "Yes\n";
+      has[A[i]] = true;
+    }else {
+      cout << "No\n";
+    }
   }
 
   return 0;

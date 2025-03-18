@@ -19,21 +19,21 @@ int main(/* int argc, char *argv[] */) {
   cin.tie(nullptr);
   cout << setprecision(20);
 
-  ll L, H, N; cin >> L >> H >> N;
-  // @InpVec(N, A) [CQ0dsn80]
-  auto A = vector(N, ll());
-  for (int i = 0; i < N; i++) { ll v; cin >> v; A[i] = v; }
-  // @End [CQ0dsn80]
-
-  REP(i, 0, N) {
-    ll ans = 0;
-    if (A[i] < L) ans = L - A[i];
-    else if (A[i] <= H) ans = 0;
-    else ans = -1;
-    cout << ans << endl;
-      
+  ll X; cin >> X;
+  ll ans = 1;
+  REP(b, 2, 10000) {
+    ll t = b * b;
+    if (t > X) break;
+    while (true) {
+      if (t <= X) {
+        ans = max(ans, t);
+      }else {
+        break;
+      }
+      t *= b;
+    }
   }
-
+  cout << ans << endl;
   return 0;
 }
 

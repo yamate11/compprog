@@ -12,165 +12,121 @@ using pll = pair<ll, ll>;
 #define SIZE(v) ((ll)((v).size()))
 #define REPOUT(i, a, b, exp, sep) REP(i, (a), (b)) cout << (exp) << (i + 1 == (b) ? "" : (sep)); cout << "\n"
 
-// @@ !! LIM(perm)
+// @@ !! LIM(UnionFind)
 
-// ---- inserted library file perm.cc
+// ---- inserted library file UnionFind.cc
 
-template <bool dup>
-struct IntPermBase {
-  int n;
-  int r;
-  vector<int> vec;
-  bool started;
-
-  bool start_check() {
-    if constexpr (dup) { if (not ((1 <= n and 0 <= r) or (n == 0 and r == 0))) return false; }
-    else { if (not (0 <= n and 0 <= r and r <= n)) return false; }
-    started = true;
-    vec.resize(r, 0);
-    return true;
-  }
-
-  bool finish() {
-    vec.resize(0);
-    started = false;
-    return false;
-  }
-
-  IntPermBase(int n_, int r_) : n(n_), r(r_), started(false) {}
-
-  int at(int i) const { return vec[i]; }
-
-  const vector<int>& vec_view() const { return vec; }
+struct UFDummyAlg {
+  static UFDummyAlg zero;
+  UFDummyAlg(int x = 0) {}
+  UFDummyAlg operator -() const { return *this; }
+  UFDummyAlg operator +(const UFDummyAlg& o) const { return *this; }
 };
+UFDummyAlg UFDummyAlg::zero;
 
-struct IntPerm : IntPermBase<false> {
-  vector<vector<int>> cands;
-  vector<int> cidx;
+template<typename T = UFDummyAlg, typename oplus_t = decltype(plus<T>()), typename onegate_t = decltype(negate<T>())>
+struct UnionFind {
 
-  bool start_check() {
-    if (not IntPermBase<false>::start_check()) return false;
-    iota(vec.begin(), vec.end(), 0);
-    cands.resize(r);
-    cidx.resize(r);
-    for (int i = 0; i < r; i++) {
-      for (int j = n - 1; j >= i; j--) cands[i].push_back(j);
-      cidx[i] = n - i - 1;
-    }
-    return true;
-  }
-
-  bool finish() {
-    cands.resize(0);
-    cidx.resize(0);
-    return IntPermBase<false>::finish();
-  }
-
-  IntPerm(int n_, int r_) : IntPermBase<false>(n_, r_) {}
-
-  bool get() {
-    if (not started) return start_check();
-    int i = r - 1;
-    for (; i >= 0 and cidx[i] == 0; i--);
-    if (i < 0) return finish();
-    vec[i] = cands[i][--cidx[i]];
-    for (int j = i + 1; j < r; j++) {
-      if (j == i + 1) {
-        cands[j].resize(0);
-        for (int k = 0; k < (int)cands[i].size(); k++) {
-          if (k == cidx[i]) continue;
-          cands[j].push_back(cands[i][k]);
+  struct GroupInfo {
+    UnionFind& uf;
+    vector<vector<int>> _groups;
+    GroupInfo(UnionFind& uf_) : uf(uf_), _groups(uf.size) {
+      for (int j = 0; j < uf.size; j++) {
+        if (uf.leader(j) == j) {
+          _groups[j].resize(uf.group_size(j));
+          _groups[j].resize(0);
         }
-      }else {
-        cands[j] = cands[j - 1];
-        cands[j].pop_back();
       }
-      cidx[j] = n - j - 1;
-      vec[j] = cands[j][cidx[j]];
+      for (int j = 0; j < uf.size; j++) _groups[uf.leader(j)].push_back(j);
     }
-    return true;
+    const vector<int>& group(int i) { return _groups[uf.leader(i)]; }
+  };
+
+  int size;
+  T zero;
+  oplus_t oplus;
+  onegate_t onegate;
+  vector<int> _leader;
+  vector<optional<T>> _pot;
+  vector<int> _gsize;
+  int _num_groups;
+  static constexpr bool _with_pot = not is_same_v<T, UFDummyAlg>;
+  
+  UnionFind() : size(0), zero((T)0), oplus(plus<T>()), onegate(negate<T>()),
+                _leader(0), _pot(0), _gsize(0), _num_groups(0) {}
+
+  UnionFind(int size_, T zero_ = (T)0, oplus_t oplus_ = plus<T>(), onegate_t onegate_ = negate<T>())
+    : size(size_), zero(zero_), oplus(oplus_), onegate(onegate_),
+      _leader(size, -1), _pot(0), _gsize(size, 1), _num_groups(size) {
+    if constexpr (_with_pot) _pot.resize(size, zero);
   }
+
+  void set_size(int size_) {
+    size = size_;
+    _leader.resize(size, -1);
+    if constexpr (_with_pot) _pot.resize(size, zero);
+    _gsize.resize(size, 1);
+  }
+
+  int merge(int i, int j, T p) {
+    int li = leader(i);
+    int lj = leader(j);
+    optional<T> ld_p;
+    if constexpr (_with_pot) {
+      if (_pot[i] and _pot[j]) ld_p = oplus(p, oplus(*_pot[j], onegate(*_pot[i])));
+      else                     ld_p = nullopt;
+    }
+    if (li == lj) {
+      if constexpr (_with_pot) { if (not (ld_p and *ld_p == zero)) _pot[li] = nullopt; }
+      return lj;
+    }
+    _num_groups--;
+    if (_gsize[lj] < _gsize[li]) {
+      swap(li, lj);
+      if constexpr (_with_pot) if (ld_p) ld_p = onegate(*ld_p);
+    }
+    // lj is the newleader
+    _gsize[lj] += _gsize[li];
+    _leader[li] = lj;
+    if constexpr (_with_pot) {
+      if (_pot[lj] and _pot[li]) _pot[li] = ld_p;
+      else _pot[lj] = nullopt;
+    }
+    return lj;
+  }
+
+  template<typename U = T>
+  enable_if_t<is_same_v<U, UFDummyAlg>, int> merge(int i, int j) { return merge(i, j, zero); }
+
+  void _leaderpot(int i) {
+    int oj = _leader[i];
+    if (oj < 0) return;
+    int nj = _leader[i] = leader(oj);
+    if constexpr (_with_pot) {
+      if (_pot[nj]) _pot[i] = oplus(*_pot[i], *_pot[oj]);
+      else _pot[i] = nullopt;
+    }
+  }
+  int leader(int i) {
+    _leaderpot(i);
+    return _leader[i] < 0 ? i : _leader[i];
+  }
+  optional<T> pot(int i)  { _leaderpot(i); return _pot[i]; }
+
+  int group_size(int i) { return _gsize[leader(i)]; }
+
+  int num_groups() { return _num_groups; }
+
+  GroupInfo group_info() { return GroupInfo(*this); }
+
 };
 
-struct IntComb : IntPermBase<false> {
-  bool start_check() {
-    if (not IntPermBase<false>::start_check()) return false;
-    iota(vec.begin(), vec.end(), 0);
-    return true;
-  }
+template<typename T = UFDummyAlg>
+auto makeUnionFind(int size, T zero, auto oplus, auto onegate) {
+  return UnionFind<T, decltype(oplus), decltype(onegate)>(size, zero, oplus, onegate);
+}
 
-  IntComb(int n_, int r_) : IntPermBase<false>(n_, r_) {}
-
-  bool get() {
-    if (not started) return start_check();
-    int i = r - 1;
-    for (; i >= 0 and vec[i] == n - r + i; i--);
-    if (i < 0) return finish();
-    vec[i]++;
-    for (int j = i + 1; j < r; j++) vec[j] = vec[j - 1] + 1;
-    return true;
-  }
-};
-
-struct IntDupPerm : IntPermBase<true> {
-  IntDupPerm(int n_, int r_) : IntPermBase<true>(n_, r_) {}
-
-  bool get() {
-    if (not started) return start_check();
-    for (int i = r - 1; i >= 0; vec[i--] = 0) if (++vec[i] < n) return true;
-    return finish();
-  }
-};
-
-struct IntDupComb : IntPermBase<true> {
-  IntDupComb(int n_, int r_) : IntPermBase<true>(n_, r_) {}
-
-  bool get() {
-    if (not started) return start_check();
-    int i = r - 1;
-    for (; i >= 0 and vec[i] == n - 1; i--);
-    if (i < 0) return finish();
-    vec[i]++;
-    for (int j = i + 1; j < r; j++) vec[j] = vec[i];
-    return true;
-  }
-};
-
-template<typename INT>
-struct IntDirProd {
-  vector<INT> lim;
-  int r;
-  vector<INT> vec;
-  bool started;
-
-  IntDirProd(const vector<INT>& lim_) : lim(lim_), r(lim.size()), started(false) {}
-
-  int at(int i) const { return vec[i]; }
-
-  const vector<INT>& vec_view() const { return vec; }
-
-  bool start_check() {
-    for (int i = 0; i < r; i++) if (lim[i] == 0) return false;
-    started = true;
-    vec.resize(r, 0);
-    return true;
-  }
-
-  bool finish() {
-    vec.resize(0);
-    started = false;
-    return false;
-  }
-
-  bool get() {
-    if (not started) return start_check();
-    for (int i = r - 1; i >= 0; vec[i--] = 0) if (++vec[i] < lim[i]) return true;
-    return finish();
-  }
-
-};
-
-// ---- end perm.cc
+// ---- end UnionFind.cc
 
 // @@ !! LIM -- end mark --
 
@@ -179,27 +135,35 @@ int main(/* int argc, char *argv[] */) {
   cin.tie(nullptr);
   cout << setprecision(20);
 
-  ll M; cin >> M;
-  vector S(3, string(3*M, ' ')); REP(i, 0, 3) {
-    string s; cin >> s;
-    REP(k, 0, 3) REP(j, 0, M) S[i][k*M + j] = s[j];
+  ll N, M; cin >> N >> M;
+  // @InpMVec(M, ((A, dec=1), (B, dec=1))) [K3aVGhgQ]
+  auto A = vector(M, ll());
+  auto B = vector(M, ll());
+  for (int i = 0; i < M; i++) {
+    ll v1; cin >> v1; v1 -= 1; A[i] = v1;
+    ll v2; cin >> v2; v2 -= 1; B[i] = v2;
   }
-  IntPerm ip(3, 3);
-  ll ans = 3*M;
-  while (ip.get()) {
-    REP(d, 0, 10) {
-      ll cur = 0;
-      REP(i, 0, 3) {
-        ll j = ip.at(i);
-        while (cur < 3*M and S[j][cur] != '0' + d) cur++;
-        if (i == 2) break;
-        cur++;
+  // @End [K3aVGhgQ]
+
+  vector nbr(N, vector<ll>());
+  REP(i, 0, M) {
+    ll a = A[i], b = B[i];
+    nbr[a].push_back(b);
+  }
+  UnionFind uf(N);
+  vector<ll> ans(N);
+  ll ncc = 0;
+  REPrev(i, N - 1, 0) {
+    ans[i] = ncc;
+    ncc++;
+    for (ll j : nbr[i]) {
+      if (uf.leader(i) != uf.leader(j)) {
+        ncc--;
+        uf.merge(i, j);
       }
-      ans = min(ans, cur);
     }
   }
-  if (ans == 3*M) ans = -1;
-  cout << ans << endl;
+  REPOUT(i, 0, N, ans[i], "\n");
 
   return 0;
 }

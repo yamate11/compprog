@@ -2,6 +2,7 @@
 #include <cassert>
 using namespace std;
 using ll = long long int;
+using u64 = unsigned long long;
 using pll = pair<ll, ll>;
 // #include <atcoder/all>
 // using namespace atcoder;
@@ -18,14 +19,12 @@ int main(/* int argc, char *argv[] */) {
   cin.tie(nullptr);
   cout << setprecision(20);
 
-  string a, b; cin >> a >> b;
-  string ans;
-  if (SIZE(a) < SIZE(b)) ans = "LESS";
-  else if (SIZE(a) > SIZE(b)) ans = "GREATER";
-  else if (a < b) ans = "LESS";
-  else if (a > b) ans = "GREATER";
-  else ans = "EQUAL";
-  cout << ans << endl;
+  vector<ll> cnt(6);
+  string S; cin >> S;
+  for (char c : S) {
+    cnt[c - 'A']++;
+  }
+  REPOUT(i, 0, 6, cnt[i], " ");
 
   return 0;
 }

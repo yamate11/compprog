@@ -2,6 +2,7 @@
 #include <cassert>
 using namespace std;
 using ll = long long int;
+using u64 = unsigned long long;
 using pll = pair<ll, ll>;
 // #include <atcoder/all>
 // using namespace atcoder;
@@ -11,299 +12,142 @@ using pll = pair<ll, ll>;
 #define SIZE(v) ((ll)((v).size()))
 #define REPOUT(i, a, b, exp, sep) REP(i, (a), (b)) cout << (exp) << (i + 1 == (b) ? "" : (sep)); cout << "\n"
 
-// @@ !! LIM(perm cmpNaive)
+// @@ !! LIM(f:updMaxMin ipoint)
 
-// ---- inserted library file perm.cc
+// ---- inserted function f:updMaxMin from util.cc
+template<typename T>
+bool updMax(T& tmax, const T& x) {
+  if (x > tmax) { tmax = x; return true;  }
+  else          {           return false; }
+}
+template<typename T>
+bool updMin(T& tmin, const T& x) {
+  if (x < tmin) { tmin = x; return true;  }
+  else          {           return false; }
+}
+// ---- end f:updMaxMin
 
-template <bool dup>
-struct IntPermBase {
-  int n;
-  int r;
-  vector<int> vec;
-  bool started;
+// ---- inserted library file ipoint.cc
 
-  bool start_check() {
-    if constexpr (dup) { if (not ((1 <= n and 0 <= r) or (n == 0 and r == 0))) return false; }
-    else { if (not (0 <= n and 0 <= r and r <= n)) return false; }
-    started = true;
-    vec.resize(r, 0);
-    return true;
+struct IPoint {
+  ll x;
+  ll y;
+  IPoint(ll x_ = 0, ll y_ = 0) : x(x_), y(y_) {}
+
+  IPoint rotate(int r = 1) const {
+    ll rd = r % 4;
+    ll rr = r >= 0 ? rd : rd == 0 ? 0 : rd + 4;
+    if      (rr == 0) return IPoint( x,  y);
+    else if (rr == 1) return IPoint(-y,  x);
+    else if (rr == 2) return IPoint(-x, -y);
+    else if (rr == 3) return IPoint( y, -x);
+    assert(0);
   }
 
-  bool finish() {
-    vec.resize(0);
-    started = false;
-    return false;
+  IPoint mirror_x() const { return IPoint(x, -y); }
+  IPoint mirror_y() const { return IPoint(-x, y); }
+
+  IPoint& operator +=(const IPoint& o) {
+    x += o.x;
+    y += o.y;
+    return *this;
   }
 
-  IntPermBase(int n_, int r_) : n(n_), r(r_), started(false) {}
-
-  int at(int i) const { return vec[i]; }
-
-  const vector<int>& vec_view() const { return vec; }
-};
-
-struct IntPerm : IntPermBase<false> {
-  vector<vector<int>> cands;
-  vector<int> cidx;
-
-  bool start_check() {
-    if (not IntPermBase<false>::start_check()) return false;
-    iota(vec.begin(), vec.end(), 0);
-    cands.resize(r);
-    cidx.resize(r);
-    for (int i = 0; i < r; i++) {
-      for (int j = n - 1; j >= i; j--) cands[i].push_back(j);
-      cidx[i] = n - i - 1;
-    }
-    return true;
+  IPoint& operator -=(const IPoint& o) {
+    x -= o.x;
+    y -= o.y;
+    return *this;
   }
 
-  bool finish() {
-    cands.resize(0);
-    cidx.resize(0);
-    return IntPermBase<false>::finish();
+  IPoint& operator *=(ll k) {
+    x *= k;
+    y *= k;
+    return *this;
   }
 
-  IntPerm(int n_, int r_) : IntPermBase<false>(n_, r_) {}
+  bool operator ==(const IPoint& o) const { return x == o.x && y == o.y; }
+  bool operator !=(const IPoint& o) const { return x != o.x || y != o.y; }
+  IPoint operator +(const IPoint& o) const { return IPoint(x, y) += o; }
+  IPoint operator -(const IPoint& o) const { return IPoint(x, y) -= o; }
+  IPoint operator *(ll k) const { return IPoint(x, y) *= k; }
+  IPoint operator -() const { return IPoint(-x, -y); }
 
-  bool get() {
-    if (not started) return start_check();
-    int i = r - 1;
-    for (; i >= 0 and cidx[i] == 0; i--);
-    if (i < 0) return finish();
-    vec[i] = cands[i][--cidx[i]];
-    for (int j = i + 1; j < r; j++) {
-      if (j == i + 1) {
-        cands[j].resize(0);
-        for (int k = 0; k < (int)cands[i].size(); k++) {
-          if (k == cidx[i]) continue;
-          cands[j].push_back(cands[i][k]);
-        }
-      }else {
-        cands[j] = cands[j - 1];
-        cands[j].pop_back();
-      }
-      cidx[j] = n - j - 1;
-      vec[j] = cands[j][cidx[j]];
-    }
-    return true;
-  }
-};
-
-struct IntComb : IntPermBase<false> {
-  bool start_check() {
-    if (not IntPermBase<false>::start_check()) return false;
-    iota(vec.begin(), vec.end(), 0);
-    return true;
+  bool operator <(const IPoint& o) const {
+    // This seems awkward, but is needed for storing objects in maps.
+    if (x != o.x) return x < o.x;
+    else return y < o.y;
   }
 
-  IntComb(int n_, int r_) : IntPermBase<false>(n_, r_) {}
+  bool parallel(const IPoint o) const { return x * o.y == y * o.x; }
 
-  bool get() {
-    if (not started) return start_check();
-    int i = r - 1;
-    for (; i >= 0 and vec[i] == n - r + i; i--);
-    if (i < 0) return finish();
-    vec[i]++;
-    for (int j = i + 1; j < r; j++) vec[j] = vec[j - 1] + 1;
-    return true;
-  }
-};
-
-struct IntDupPerm : IntPermBase<true> {
-  IntDupPerm(int n_, int r_) : IntPermBase<true>(n_, r_) {}
-
-  bool get() {
-    if (not started) return start_check();
-    for (int i = r - 1; i >= 0; vec[i--] = 0) if (++vec[i] < n) return true;
-    return finish();
-  }
-};
-
-struct IntDupComb : IntPermBase<true> {
-  IntDupComb(int n_, int r_) : IntPermBase<true>(n_, r_) {}
-
-  bool get() {
-    if (not started) return start_check();
-    int i = r - 1;
-    for (; i >= 0 and vec[i] == n - 1; i--);
-    if (i < 0) return finish();
-    vec[i]++;
-    for (int j = i + 1; j < r; j++) vec[j] = vec[i];
-    return true;
-  }
-};
-
-template<typename INT>
-struct IntDirProd {
-  vector<INT> lim;
-  int r;
-  vector<INT> vec;
-  bool started;
-
-  IntDirProd(const vector<INT>& lim_) : lim(lim_), r(lim.size()), started(false) {}
-
-  int at(int i) const { return vec[i]; }
-
-  const vector<INT>& vec_view() const { return vec; }
-
-  bool start_check() {
-    for (int i = 0; i < r; i++) if (lim[i] == 0) return false;
-    started = true;
-    vec.resize(r, 0);
-    return true;
-  }
-
-  bool finish() {
-    vec.resize(0);
-    started = false;
-    return false;
-  }
-
-  bool get() {
-    if (not started) return start_check();
-    for (int i = r - 1; i >= 0; vec[i--] = 0) if (++vec[i] < lim[i]) return true;
-    return finish();
+  // For "argument sort".  The origin is treated as the maximum.
+  static bool lt_arg(const IPoint& p1, const IPoint& p2) {
+    bool b1 = p1.y > 0 or (p1.y == 0 and p1.x > 0);
+    bool b2 = p2.y > 0 or (p2.y == 0 and p2.x > 0);
+    if (b1 != b2) return b1;
+    else return p1.x * p2.y > p1.y * p2.x;
   }
 
 };
-
-// ---- end perm.cc
-
-// ---- inserted library file cmpNaive.cc
-
-const string end_mark("^__=end=__^");
-
-int naive(istream& cin, ostream& cout);
-int body(istream& cin, ostream& cout);
-
-void cmpNaive() {
-  while (true) {
-    string s;
-    getline(cin, s);
-    bool run_body;
-    if (s.at(0) == 'Q') {
-      return;
-    }else if (s.at(0) == 'B') {
-      run_body = true;
-    }else if (s.at(0) == 'N') {
-      run_body = false;
-    }else {
-      cerr << "Unknown body/naive specifier.\n";
-      exit(1);
-    }
-    string input_s;
-    while (true) {
-      getline(cin, s);
-      if (s == end_mark) break;
-      input_s += s;
-      input_s += "\n";
-    }
-    stringstream ss_in(move(input_s));
-    stringstream ss_out;
-    ss_out << setprecision(20);
-    if (run_body) {
-      body(ss_in, ss_out);
-    }else {
-      naive(ss_in, ss_out);
-    }
-    cout << ss_out.str() << end_mark << endl;
-  }
+    
+IPoint operator *(ll k, const IPoint& p) { return p * k; }
+istream& operator >>(istream& is, IPoint& p) {
+  ll x_, y_; is >> x_ >> y_;
+  p.x = x_;
+  p.y = y_;
+  return is;
+}
+ostream& operator <<(ostream& os, const IPoint& p) {
+  os << "(" << p.x << ", " << p.y << ")";
+  return os;
 }
 
-int main(int argc, char *argv[]) {
+namespace std {
+  template<>
+  struct hash<IPoint> {
+    std::size_t operator()(const IPoint& p) const {
+      static const uint64_t frand = chrono::steady_clock::now().time_since_epoch().count();
+      static const uint64_t a = (frand ^ 0x9e3779b97f4a7c15) | 1;
+      static const uint64_t b = (frand ^ 0xbf58476d1ce4e5b9) | 1;
+      return a * (uint64_t)p.x + b * (uint64_t)p.y;
+    }
+  };
+}
+
+
+// ---- end ipoint.cc
+
+// @@ !! LIM -- end mark --
+
+int main(/* int argc, char *argv[] */) {
   ios_base::sync_with_stdio(false);
   cin.tie(nullptr);
   cout << setprecision(20);
 
-#if CMPNAIVE
-  if (argc == 2) {
-    if (strcmp(argv[1], "cmpNaive") == 0) {
-      cmpNaive();
-    }else if (strcmp(argv[1], "naive") == 0) {
-      naive(cin, cout);
-    }else if (strcmp(argv[1], "skip") == 0) {
-      exit(0);
+  vector<IPoint> ans(101);
+
+  ans[100] = IPoint(100, 100);
+  ll icur = 99;
+  ll xcur = 0;
+  ll xnext = 200;
+  ll ycur = 200;
+  while (icur >= 1) {
+    if (ycur + 2 * icur <= 1500) {
+      ans[icur] = IPoint(xcur + icur, ycur + icur);
+      ycur += 2 * icur;
     }else {
-      cerr << "Unknown argument.\n";
-      exit(1);
+      // cout << icur << " " << xcur << " " << xnext << endl;
+      xcur = xnext;
+      xnext += icur * 2;
+      ans[icur] = IPoint(xcur + icur, icur);
+      ycur = 2 * icur;
     }
-  }else {
-#endif
-    body(cin, cout);
-#if CMPNAIVE
+    icur--;
   }
-#endif
-  return 0;
-}
-
-/*
-int naive(istream& cin, ostream& cout) {
-  return 0;
-}
-int body(istream& cin, ostream& cout) {
-  return 0;
-}
-*/
-
-// ---- end cmpNaive.cc
-
-// @@ !! LIM -- end mark --
-
-int naive(istream& cin, ostream& cout) {
-  ll N, W; cin >> N >> W;
-  // @InpMVec(N, (vecW, vecV)) [6ME95oni]
-  auto vecW = vector(N, ll());
-  auto vecV = vector(N, ll());
-  for (int i = 0; i < N; i++) {
-    ll v1; cin >> v1; vecW[i] = v1;
-    ll v2; cin >> v2; vecV[i] = v2;
+  REP(i, 1, 101) {
+    auto p = ans[i];
+    cout << p.x << " " << p.y << "\n";
   }
-  // @End [6ME95oni]
-  ll ans = 0;
-  REP(x, 0, 1LL << N) {
-    ll w = 0, v = 0;
-    REP(t, 0, N) if (x >> t & 1) {
-      w += vecW[t];
-      v += vecV[t];
-    }
-    if (w <= W) ans = max(ans, v);
-  }
-  cout << ans << endl;
-  return 0;
-}
-int body(istream& cin, ostream& cout) {
-  ll N, W; cin >> N >> W;
-  vector val(4, vector<ll>());
-  ll w_base = -1;
-  REP(i, 0, N) {
-    ll w, v; cin >> w >> v;
-    if (i == 0) w_base = w;
-    val[w - w_base].push_back(v);
-  }
-  REP(i, 0, 4) sort(ALL(val[i]), greater<ll>());
-  vector acc(4, vector(1, 0LL));
-  REP(i, 0, 4) {
-    acc[i].resize(SIZE(val[i]) + 1);
-    REP(j, 0, SIZE(val[i])) acc[i][j + 1] = acc[i][j] + val[i][j];
-  }
-  vector<ll> szs(3);  REP(i, 0, 3) szs[i] = SIZE(val[i]) + 1;
-  IntDirProd idp(szs);
-  ll ans = 0;
-  while (idp.get()) {
-    ll w = 0, v = 0;
-    REP(i, 0, 3) {
-      w += idp.at(i) * (w_base + i);
-      v += acc[i][idp.at(i)];
-    }
-    if (w <= W) {
-      ll m = min(SIZE(val[3]), (W - w) / (w_base + 3));
-      v += acc[3][m];
-      ans = max(ans, v);
-    }
-  }
-  cout << ans << endl;
 
   return 0;
 }

@@ -9,7 +9,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>C - 積み重ね</title>
+	<title>C - String Invasion</title>
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 	<meta http-equiv="Content-Language" content="en">
 	<meta name="viewport" content="width=device-width,initial-scale=1.0">
@@ -22,7 +22,11 @@
 		window.dataLayer = window.dataLayer || [];
 		function gtag(){dataLayer.push(arguments);}
 		gtag('js', new Date());
-
+		gtag('set', 'user_properties', {
+			
+				'login_status': 'logged_in',
+			
+		});
 		gtag('config', 'G-RC512FD18N');
 	</script>
 
@@ -32,61 +36,61 @@
 
 	<meta property="og:site_name" content="AtCoder">
 	
-	<meta property="og:title" content="C - 積み重ね" />
+	<meta property="og:title" content="C - String Invasion" />
 	<meta property="og:description" content="AtCoder is a programming contest site for anyone from beginners to experts. We hold weekly programming contests online." />
 	<meta property="og:type" content="website" />
-	<meta property="og:url" content="https://atcoder.jp/contests/arc006/tasks/arc006_3" />
+	<meta property="og:url" content="https://atcoder.jp/contests/arc113/tasks/arc113_c" />
 	<meta property="og:image" content="https://img.atcoder.jp/assets/atcoder.png" />
 	<meta name="twitter:card" content="summary" />
 	<meta name="twitter:site" content="@atcoder" />
 	
-	<meta property="twitter:title" content="C - 積み重ね" />
+	<meta property="twitter:title" content="C - String Invasion" />
 
 	<link href="//fonts.googleapis.com/css?family=Lato:400,700" rel="stylesheet" type="text/css">
-	<link rel="stylesheet" type="text/css" href="//img.atcoder.jp/public/4e015d0/css/bootstrap.min.css">
-	<link rel="stylesheet" type="text/css" href="//img.atcoder.jp/public/4e015d0/css/base.css">
+	<link rel="stylesheet" type="text/css" href="//img.atcoder.jp/public/22afd08/css/bootstrap.min.css">
+	<link rel="stylesheet" type="text/css" href="//img.atcoder.jp/public/22afd08/css/base.css">
 	<link rel="shortcut icon" type="image/png" href="//img.atcoder.jp/assets/favicon.png">
 	<link rel="apple-touch-icon" href="//img.atcoder.jp/assets/atcoder.png">
-	<script src="//img.atcoder.jp/public/4e015d0/js/lib/jquery-1.9.1.min.js"></script>
-	<script src="//img.atcoder.jp/public/4e015d0/js/lib/bootstrap.min.js"></script>
-	<script src="//img.atcoder.jp/public/4e015d0/js/cdn/js.cookie.min.js"></script>
-	<script src="//img.atcoder.jp/public/4e015d0/js/cdn/moment.min.js"></script>
-	<script src="//img.atcoder.jp/public/4e015d0/js/cdn/moment_js-ja.js"></script>
+	<script src="//img.atcoder.jp/public/22afd08/js/lib/jquery-1.9.1.min.js"></script>
+	<script src="//img.atcoder.jp/public/22afd08/js/lib/bootstrap.min.js"></script>
+	<script src="//img.atcoder.jp/public/22afd08/js/cdn/js.cookie.min.js"></script>
+	<script src="//img.atcoder.jp/public/22afd08/js/cdn/moment.min.js"></script>
+	<script src="//img.atcoder.jp/public/22afd08/js/cdn/moment_js-ja.js"></script>
 	<script>
 		var LANG = "en";
 		var userScreenName = "yamate11";
-		var csrfToken = "ebAzLgT8F8w74TalQk2ulATrxukE6OQTRPPQ2VMAfuc="
+		var csrfToken = "D4WNZRgtLGU9GLJqOVddyPQSQMkfBuvcRQ0oCnKtSDE="
 	</script>
-	<script src="//img.atcoder.jp/public/4e015d0/js/utils.js"></script>
+	<script src="//img.atcoder.jp/public/22afd08/js/utils.js"></script>
 	
 	
-		<script src="//img.atcoder.jp/public/4e015d0/js/contest.js"></script>
-		<link href="//img.atcoder.jp/public/4e015d0/css/contest.css" rel="stylesheet" />
+		<script src="//img.atcoder.jp/public/22afd08/js/contest.js"></script>
+		<link href="//img.atcoder.jp/public/22afd08/css/contest.css" rel="stylesheet" />
 		<script>
-			var contestScreenName = "arc006";
+			var contestScreenName = "arc113";
 			var remainingText = "Remaining Time";
 			var countDownText = "Contest begins in";
-			var startTime = moment("2012-07-21T20:00:00+09:00");
-			var endTime = moment("2012-07-21T21:30:00+09:00");
+			var startTime = moment("2021-02-21T21:00:00+09:00");
+			var endTime = moment("2021-02-21T23:00:00+09:00");
 		</script>
 		<style></style>
 	
 	
-		<link href="//img.atcoder.jp/public/4e015d0/css/cdn/select2.min.css" rel="stylesheet" />
-		<link href="//img.atcoder.jp/public/4e015d0/css/cdn/select2-bootstrap.min.css" rel="stylesheet" />
-		<script src="//img.atcoder.jp/public/4e015d0/js/lib/select2.min.js"></script>
+		<link href="//img.atcoder.jp/public/22afd08/css/cdn/select2.min.css" rel="stylesheet" />
+		<link href="//img.atcoder.jp/public/22afd08/css/cdn/select2-bootstrap.min.css" rel="stylesheet" />
+		<script src="//img.atcoder.jp/public/22afd08/js/lib/select2.min.js"></script>
 	
 	
-		<script src="//img.atcoder.jp/public/4e015d0/js/ace/ace.js"></script>
-		<script src="//img.atcoder.jp/public/4e015d0/js/ace/ext-language_tools.js"></script>
+		<script src="//img.atcoder.jp/public/22afd08/js/ace/ace.js"></script>
+		<script src="//img.atcoder.jp/public/22afd08/js/ace/ext-language_tools.js"></script>
 	
 	
-		<script src="//img.atcoder.jp/public/4e015d0/js/cdn/run_prettify.js"></script>
+		<script src="//img.atcoder.jp/public/22afd08/js/cdn/run_prettify.js"></script>
 	
 	
-		<link rel="stylesheet" href="//img.atcoder.jp/public/4e015d0/css/cdn/katex.min.css">
-		<script defer src="//img.atcoder.jp/public/4e015d0/js/cdn/katex.min.js"></script>
-		<script defer src="//img.atcoder.jp/public/4e015d0/js/cdn/auto-render.min.js"></script>
+		<link rel="stylesheet" href="//img.atcoder.jp/public/22afd08/css/cdn/katex.min.css">
+		<script defer src="//img.atcoder.jp/public/22afd08/js/cdn/katex.min.js"></script>
+		<script defer src="//img.atcoder.jp/public/22afd08/js/cdn/auto-render.min.js"></script>
 		<script>$(function(){$('var').each(function(){var html=$(this).html().replace(/<sub>/g,'_{').replace(/<\/sub>/g,'}');$(this).html('\\('+html+'\\)');});});</script>
 		<script>
 			var katexOptions = {
@@ -111,7 +115,7 @@
 	
 	
 	
-	<script src="//img.atcoder.jp/public/4e015d0/js/base.js"></script>
+	<script src="//img.atcoder.jp/public/22afd08/js/base.js"></script>
 </head>
 
 <body>
@@ -131,7 +135,7 @@
 				<h4 class="modal-title">Contest started</h4>
 			</div>
 			<div class="modal-body">
-				<p>AtCoder Regular Contest 006 has begun.</p>
+				<p>AtCoder Regular Contest 113 has begun.</p>
 			</div>
 			<div class="modal-footer">
 				
@@ -149,7 +153,7 @@
 				<h4 class="modal-title">Contest is over</h4>
 			</div>
 			<div class="modal-body">
-				<p>AtCoder Regular Contest 006 has ended.</p>
+				<p>AtCoder Regular Contest 113 has ended.</p>
 			</div>
 			<div class="modal-footer">
 				<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
@@ -171,7 +175,7 @@
 			<div class="collapse navbar-collapse" id="navbar-collapse">
 				<ul class="nav navbar-nav">
 				
-					<li><a class="contest-title" href="/contests/arc006">AtCoder Regular Contest 006</a></li>
+					<li><a class="contest-title" href="/contests/arc113">AtCoder Regular Contest 113</a></li>
 				
 				</ul>
 				<ul class="nav navbar-nav navbar-right">
@@ -181,8 +185,8 @@
 							<img src='//img.atcoder.jp/assets/top/img/flag-lang/en.png'> English <span class="caret"></span>
 						</a>
 						<ul class="dropdown-menu">
-							<li><a href="/contests/arc006/tasks/arc006_3?lang=ja"><img src='//img.atcoder.jp/assets/top/img/flag-lang/ja.png'> 日本語</a></li>
-							<li><a href="/contests/arc006/tasks/arc006_3?lang=en"><img src='//img.atcoder.jp/assets/top/img/flag-lang/en.png'> English</a></li>
+							<li><a href="/contests/arc113/tasks/arc113_c?lang=ja"><img src='//img.atcoder.jp/assets/top/img/flag-lang/ja.png'> 日本語</a></li>
+							<li><a href="/contests/arc113/tasks/arc113_c?lang=en"><img src='//img.atcoder.jp/assets/top/img/flag-lang/en.png'> English</a></li>
 						</ul>
 					</li>
 					
@@ -211,8 +215,8 @@
 		</div>
 	</nav>
 
-	<form method="POST" name="form_logout" action="/logout?continue=https%3A%2F%2Fatcoder.jp%2Fcontests%2Farc006%2Ftasks%2Farc006_3">
-		<input type="hidden" name="csrf_token" value="ebAzLgT8F8w74TalQk2ulATrxukE6OQTRPPQ2VMAfuc=" />
+	<form method="POST" name="form_logout" action="/logout?continue=https%3A%2F%2Fatcoder.jp%2Fcontests%2Farc113%2Ftasks%2Farc113_c">
+		<input type="hidden" name="csrf_token" value="D4WNZRgtLGU9GLJqOVddyPQSQMkfBuvcRQ0oCnKtSDE=" />
 	</form>
 	<div id="main-container" class="container"
 		 	style="padding-top:50px;">
@@ -225,35 +229,36 @@
 		<small class="contest-duration">
 			
 				Contest Duration:
-				<a href='http://www.timeanddate.com/worldclock/fixedtime.html?iso=20120721T2000&p1=248' target='blank'><time class='fixtime fixtime-full'>2012-07-21 20:00:00+0900</time></a> - <a href='http://www.timeanddate.com/worldclock/fixedtime.html?iso=20120721T2130&p1=248' target='blank'><time class='fixtime fixtime-full'>2012-07-21 21:30:00+0900</time></a> (local time)
-				(90 minutes)
+				<a href='http://www.timeanddate.com/worldclock/fixedtime.html?iso=20210221T2100&p1=248' target='blank'><time class='fixtime fixtime-full'>2021-02-21 21:00:00+0900</time></a> - <a href='http://www.timeanddate.com/worldclock/fixedtime.html?iso=20210221T2300&p1=248' target='blank'><time class='fixtime fixtime-full'>2021-02-21 23:00:00+0900</time></a> (local time)
+				(120 minutes)
 			
 		</small>
 		<small class="back-to-home pull-right"><a href="/home">Back to Home</a></small>
 	</div>
 	<ul class="nav nav-tabs">
-		<li><a href="/contests/arc006"><span class="glyphicon glyphicon-home" aria-hidden="true"></span> Top</a></li>
+		<li><a href="/contests/arc113"><span class="glyphicon glyphicon-home" aria-hidden="true"></span> Top</a></li>
 		
-			<li class="active"><a href="/contests/arc006/tasks"><span class="glyphicon glyphicon-tasks" aria-hidden="true"></span> Tasks</a></li>
-		
-
-		
-			<li><a href="/contests/arc006/clarifications"><span class="glyphicon glyphicon-question-sign" aria-hidden="true"></span> Clarifications <span id="clar-badge" class="badge"></span></a></li>
+			<li class="active"><a href="/contests/arc113/tasks"><span class="glyphicon glyphicon-tasks" aria-hidden="true"></span> Tasks</a></li>
 		
 
 		
-			<li><a href="/contests/arc006/submit?taskScreenName=arc006_3"><span class="glyphicon glyphicon-send" aria-hidden="true"></span> Submit</a></li>
+			<li><a href="/contests/arc113/clarifications"><span class="glyphicon glyphicon-question-sign" aria-hidden="true"></span> Clarifications <span id="clar-badge" class="badge" ></span></a></li>
+		
+
+		
+			<li><a href="/contests/arc113/submit?taskScreenName=arc113_c"><span class="glyphicon glyphicon-send" aria-hidden="true"></span> Submit</a></li>
 		
 
 		
 			<li>
 				<a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false"><span class="glyphicon glyphicon-list" aria-hidden="true"></span> Results<span class="caret"></span></a>
 				<ul class="dropdown-menu">
-					<li><a href="/contests/arc006/submissions"><span class="glyphicon glyphicon-globe" aria-hidden="true"></span> All Submissions</a></li>
+					<li><a href="/contests/arc113/submissions"><span class="glyphicon glyphicon-globe" aria-hidden="true"></span> All Submissions</a></li>
 					
-						<li><a href="/contests/arc006/submissions/me"><span class="glyphicon glyphicon-user" aria-hidden="true"></span> My Submissions</a></li>
+						<li><a href="/contests/arc113/submissions/me"><span class="glyphicon glyphicon-user" aria-hidden="true"></span> My Submissions</a></li>
+						
 						<li class="divider"></li>
-						<li><a href="/contests/arc006/score"><span class="glyphicon glyphicon-dashboard" aria-hidden="true"></span> My Score</a></li>
+						<li><a href="/contests/arc113/score"><span class="glyphicon glyphicon-dashboard" aria-hidden="true"></span> My Score</a></li>
 					
 				</ul>
 			</li>
@@ -262,24 +267,26 @@
 		
 			
 				
-					<li><a href="/contests/arc006/standings"><span class="glyphicon glyphicon-sort-by-attributes-alt" aria-hidden="true"></span> Standings</a></li>
+					<li><a href="/contests/arc113/standings"><span class="glyphicon glyphicon-sort-by-attributes-alt" aria-hidden="true"></span> Standings</a></li>
 				
 			
 				
-					<li><a href="/contests/arc006/standings/virtual"><span class="glyphicon glyphicon-sort-by-attributes-alt" aria-hidden="true"></span> Virtual Standings</a></li>
+					<li><a href="/contests/arc113/standings/virtual"><span class="glyphicon glyphicon-sort-by-attributes-alt" aria-hidden="true"></span> Virtual Standings</a></li>
 				
 			
 		
 
 		
-			<li><a href="/contests/arc006/custom_test"><span class="glyphicon glyphicon-wrench" aria-hidden="true"></span> Custom Test</a></li>
+			<li><a href="/contests/arc113/custom_test"><span class="glyphicon glyphicon-wrench" aria-hidden="true"></span> Custom Test</a></li>
 		
 
 		
-			<li><a href="/contests/arc006/editorial"><span class="glyphicon glyphicon-book" aria-hidden="true"></span> Editorial</a></li>
+			<li><a href="/contests/arc113/editorial"><span class="glyphicon glyphicon-book" aria-hidden="true"></span> Editorial</a></li>
 		
 		
 			
+			
+				<li><a href="https://codeforces.com/blog/entry/88027" target="_blank" rel="noopener"><span class="glyphicon glyphicon-comment" aria-hidden="true"></span> Discuss</a></li>
 			
 		
 
@@ -288,8 +295,8 @@
 </div>
 	<div class="col-sm-12">
 		<span class="h2">
-			C - 積み重ね
-			<a class="btn btn-default btn-sm" href="/contests/arc006/tasks/arc006_3/editorial">Editorial</a>
+			C - String Invasion
+			<a class="btn btn-default btn-sm" href="/contests/arc113/tasks/arc113_c/editorial">Editorial</a>
 		</span>
 		<span id="task-lang-btn" class="pull-right"><span data-lang="ja"><img src='//img.atcoder.jp/assets/top/img/flag-lang/ja.png'></span> / <span data-lang="en"><img src='//img.atcoder.jp/assets/top/img/flag-lang/en.png'></span></span>
 		<script>
@@ -328,24 +335,37 @@
 		</script>
 		<hr/>
 		<p>
-			Time Limit: 2 sec / Memory Limit: 64 MB
+			Time Limit: 2 sec / Memory Limit: 1024 MB
+			
 			
 		</p>
 
 		<div id="task-statement">
 			
-			<div class="part">
-<h3>問題文</h3>
+
+
+	
+	
+
+			<span class="lang">
+<span class="lang-ja">
+<p>配点 : <var>500</var> 点</p>
+
+<div class="part">
 <section>
-　高橋君はもう大人なので、親元を離れて一人暮らしをすることにしました。トラックから引越し先の部屋へと荷物のダンボールを運びたいのですが、部屋の床がダンボールで埋まってしまうと、今日高橋君が寝るための布団がひけません。<br />
-　そこで、<var>1</var> 箱ずつ広げて置くのではなく、ある程度ダンボールを積み重ねた山を作ることにしました。しかし、ダンボールには重さが決まっており、下にあるダンボールよりも重いダンボールを上に積み重ねると下のダンボールが潰れてしまいます。<br />
-<div class="img-caption">
-	<img src="/img/arc/006/3-01.png" width="300" height="187">
-	<div class="caption">図：下にあるダンボールは上にあるダンボール以上の重さでなければならない</div>
+<h3>問題文</h3><p>長さ <var>N</var> の文字列 <var>S</var> が与えられます。<var>S</var> の <var>i</var> 文字目を <var>s_i</var> で表します。以下の操作を繰り返せる回数の最大値を求めてください。</p>
+<ul>
+<li>連続する <var>3</var> 文字 <var>s_i,s_{i+1},s_{i+2}\quad (1\leq i\leq |S|-2)</var> であって、<var>s_i=s_{i+1}\neq s_{i+2}</var> であるものを選ぶ。<var>s_{i+2}</var> を <var>s_i</var> で置き換える。</li>
+</ul>
+</section>
 </div>
 
-<br />
-　トラックから運ぶ順にダンボールの重さが与えられるので、ダンボールを潰さないような積み重ね方を考えなさい。そして、その積み重ねた山の個数が最小となる場合の山の個数を求めなさい。
+<div class="part">
+<section>
+<h3>制約</h3><ul>
+<li><var>3 \leq |S| \leq 2\times 10^5</var></li>
+<li><var>S</var> は英小文字からなる</li>
+</ul>
 </section>
 </div>
 
@@ -353,30 +373,17 @@
 
 <div class="io-style">
 <div class="part">
-<h3>入力</h3>
 <section>
-入力は以下の形式で標準入力から与えられる。
-<pre>
-<var>N</var>
-<var>w_1</var>
-<var>w_2</var>
-:
-:
-<var>w_N</var>
+<h3>入力</h3><p>入力は以下の形式で標準入力から与えられる。</p>
+<pre><var>S</var>
 </pre>
-<ul>
-	<li>入力は <var>N+1</var> 行ある。</li>
-	<li><var>1</var> 行目には、ダンボールの個数を表す整数 <var>N(1≦N≦50)</var> が与えられる。</li>
-	<li><var>2</var> 行目からの <var>N</var> 行には、<var>i+1(1≦i≦N)</var> 行目に <var>i</var> 番目に運ぶダンボールの重さを表す整数 <var>w_i(1≦w_i≦100,000)</var> が与えられる。 
-</ul>
+
 </section>
 </div>
 
 <div class="part">
-<h3>出力</h3>
 <section>
-ダンボールを順番に運び、上のダンボールが下のダンボールと同じ重さまたはそれよりも軽くなるように積み重ねたときに、できるダンボールの山の数の最小値を標準出力に <var>1</var> 行で出力せよ。<br />
-なお、最後には改行を出力せよ。
+<h3>出力</h3><p>操作を繰り返せる回数の最大値を出力せよ。</p>
 </section>
 </div>
 </div>
@@ -384,89 +391,23 @@
 <hr />
 
 <div class="part">
-<h3>入力例 1</h3>
 <section>
-<pre>
-5
-4
-3
-1
-2
-1
+<h3>入力例 1</h3><pre>accept
 </pre>
-</div>
 
-<div class="part">
-<h3>出力例 1</h3>
-<section>
-<pre>
-2
-</pre>
-<ul>
-<li>下図の例の順に積み重ねると、<var>2</var> つのダンボールの山ができる。</li>
-<li><var>3</var> 番目のダンボールの次に重さ <var>2</var> のダンボールをその上に重ねることはできないので <var>1</var> つの山にすることはできず、最小は <var>2</var> となる。
-</ul>
-<div class="img-nocaption">
-	<img src="/img/arc/006/3-02.png" width="800" height="156">
-</div>
 </section>
 </div>
 
-<hr />
-
 <div class="part">
-<h3>入力例 2</h3>
 <section>
-<pre>
-7
-93
-249
-150
-958
-442
-391
-25
+<h3>出力例 1</h3><pre>3
 </pre>
-</div>
 
-<div class="part">
-<h3>出力例 2</h3>
-<section>
-<pre>
-3
-</pre>
+<p>以下のように <var>3</var> 回の操作を行うことができます。</p>
 <ul>
-<li>下図の形に積み重ねると、山の数は <var>3</var> となる。</li>
-<div class="todo">訂正：下図の225のダンボールは25の誤りです。申し訳ありません。</div>
-</ul>
-<div class="img-nocaption">
-	<img src="/img/arc/006/3-03.png" width="300" height="259">
-</div>
-</section>
-</div>
-
-<hr />
-
-<div class="part">
-<h3>入力例 3</h3>
-<section>
-<pre>
-4
-100
-100
-100
-100
-</pre>
-</div>
-
-<div class="part">
-<h3>出力例 3</h3>
-<section>
-<pre>
-1
-</pre>
-<ul>
-<li>同じ重さのダンボールは積み重ねられるので、<var>1</var> つの山にすることができる。</li>
+<li><var>i=2</var> に対して操作を行う。操作後の文字列は <code>acccpt</code> になる。</li>
+<li><var>i=3</var> に対して操作を行う。操作後の文字列は <code>acccct</code> になる。</li>
+<li><var>i=4</var> に対して操作を行う。操作後の文字列は <code>accccc</code> になる。</li>
 </ul>
 </section>
 </div>
@@ -474,28 +415,97 @@
 <hr />
 
 <div class="part">
-<h3>入力例 4</h3>
 <section>
-<pre>
-6
-5
-10
-15
-20
-25
-30
+<h3>入力例 2</h3><pre>atcoder
 </pre>
+
+</section>
 </div>
 
 <div class="part">
-<h3>出力例 4</h3>
 <section>
-<pre>
-6
+<h3>出力例 2</h3><pre>0
 </pre>
+
+</section>
+</div>
+
+<hr />
+
+<div class="part">
+<section>
+<h3>入力例 3</h3><pre>anerroroccurred
+</pre>
+
+</section>
+</div>
+
+<div class="part">
+<section>
+<h3>出力例 3</h3><pre>16
+</pre></section>
+</div>
+</span>
+<span class="lang-en">
+<p>Score : <var>500</var> points</p>
+
+<div class="part">
+<section>
+<h3>Problem Statement</h3><p>Given is a string <var>S</var> of length <var>N</var>. Let <var>s_i</var> denote the <var>i</var>-th character of <var>S</var>. Find the maximum number of times the following operation can be done.</p>
 <ul>
-<li>どのダンボールも前に運んだダンボールの上に重ねられないので、<var>1</var> つも積み重ねることができない。</li>
-<li>したがって、<var>6</var> つの山が最小となる。</li>
+<li>Choose three consecutive characters in <var>S</var>, <var>s_i,s_{i+1},s_{i+2}\quad (1\leq i\leq |S|-2)</var>, such that <var>s_i=s_{i+1}\neq s_{i+2}</var>, and replace <var>s_{i+2}</var> with <var>s_i</var>.</li>
+</ul>
+</section>
+</div>
+
+<div class="part">
+<section>
+<h3>Constraints</h3><ul>
+<li><var>3 \leq |S| \leq 2\times 10^5</var></li>
+<li><var>S</var> consists of lowercase English letters.</li>
+</ul>
+</section>
+</div>
+
+<hr />
+
+<div class="io-style">
+<div class="part">
+<section>
+<h3>Input</h3><p>Input is given from Standard Input in the following format:</p>
+<pre><var>S</var>
+</pre>
+
+</section>
+</div>
+
+<div class="part">
+<section>
+<h3>Output</h3><p>Print the maximum number of times the operation can be done.</p>
+</section>
+</div>
+</div>
+
+<hr />
+
+<div class="part">
+<section>
+<h3>Sample Input 1</h3><pre>accept
+</pre>
+
+</section>
+</div>
+
+<div class="part">
+<section>
+<h3>Sample Output 1</h3><pre>3
+</pre>
+
+<p>We can do the operation three times, as follows:</p>
+<ul>
+<li>do it with <var>i=2</var>, changing the string to <code>acccpt</code>;</li>
+<li>do it with <var>i=3</var>, changing the string to <code>acccct</code>;</li>
+<li>do it with <var>i=4</var>, changing the string to <code>accccc</code>.</li>
 </ul>
 </section>
 </div>
@@ -503,54 +513,47 @@
 <hr />
 
 <div class="part">
-<h3>入力例 5</h3>
 <section>
-<pre>
-15
-3
-1
-4
-1
-5
-9
-2
-6
-5
-3
-5
-8
-9
-7
-9
+<h3>Sample Input 2</h3><pre>atcoder
 </pre>
+
+</section>
 </div>
 
 <div class="part">
-<h3>出力例 5</h3>
 <section>
-<pre>
-6
+<h3>Sample Output 2</h3><pre>0
 </pre>
-<ul>
-<li>下図のように積み重ねると最小となる。</li>
-</ul>
-<div class="img-nocaption">
-	<img src="/img/arc/006/3-04.png" width="500" height="168">
-</div>
+
 </section>
 </div>
+
+<hr />
+
+<div class="part">
+<section>
+<h3>Sample Input 3</h3><pre>anerroroccurred
+</pre>
+
+</section>
+</div>
+
+<div class="part">
+<section>
+<h3>Sample Output 3</h3><pre>16
+</pre></section>
+</div>
+</span>
+</span>
+
 		</div>
 
-		
-			<hr/>
-			<h3>Source Name</h3>
-			<a href="" target="blank">ARC 006</a>
 		
 
 		
 		<hr/>
-		<form class="form-horizontal form-code-submit" action="/contests/arc006/submit" method="POST">
-			<input type="hidden" name="data.TaskScreenName" value="arc006_3" />
+		<form class="form-horizontal form-code-submit" action="/contests/arc113/submit" method="POST">
+			<input type="hidden" name="data.TaskScreenName" value="arc113_c" />
 			
 			<div class="form-group ">
 				<label class="control-label col-sm-3 col-md-2" for="select-lang">Language</label>
@@ -775,7 +778,7 @@
 </div>
 
 
-			<input type="hidden" name="csrf_token" value="ebAzLgT8F8w74TalQk2ulATrxukE6OQTRPPQ2VMAfuc=" />
+			<input type="hidden" name="csrf_token" value="D4WNZRgtLGU9GLJqOVddyPQSQMkfBuvcRQ0oCnKtSDE=" />
 			<div class="form-group">
 				<label class="control-label col-sm-3 col-md-2"></label>
 				<div class="col-sm-5">
@@ -795,7 +798,7 @@
 			
 			
 			
-<div class="a2a_kit a2a_kit_size_20 a2a_default_style pull-right" data-a2a-url="https://atcoder.jp/contests/arc006/tasks/arc006_3?lang=en" data-a2a-title="C - 積み重ね">
+<div class="a2a_kit a2a_kit_size_20 a2a_default_style pull-right" data-a2a-url="https://atcoder.jp/contests/arc113/tasks/arc113_c?lang=en" data-a2a-title="C - String Invasion">
 	<a class="a2a_button_facebook"></a>
 	<a class="a2a_button_twitter"></a>
 	
@@ -815,8 +818,8 @@
 			<footer class="footer">
 			
 				<ul>
-					<li><a href="/contests/arc006/rules">Rule</a></li>
-					<li><a href="/contests/arc006/glossary">Glossary</a></li>
+					<li><a href="/contests/arc113/rules">Rule</a></li>
+					<li><a href="/contests/arc113/glossary">Glossary</a></li>
 					
 				</ul>
 			

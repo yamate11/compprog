@@ -9,7 +9,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>D - Freefall</title>
+	<title>B - Card Game for Three (ABC Edit)</title>
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 	<meta http-equiv="Content-Language" content="en">
 	<meta name="viewport" content="width=device-width,initial-scale=1.0">
@@ -22,7 +22,11 @@
 		window.dataLayer = window.dataLayer || [];
 		function gtag(){dataLayer.push(arguments);}
 		gtag('js', new Date());
-
+		gtag('set', 'user_properties', {
+			
+				'login_status': 'logged_in',
+			
+		});
 		gtag('config', 'G-RC512FD18N');
 	</script>
 
@@ -32,61 +36,61 @@
 
 	<meta property="og:site_name" content="AtCoder">
 	
-	<meta property="og:title" content="D - Freefall" />
+	<meta property="og:title" content="B - Card Game for Three (ABC Edit)" />
 	<meta property="og:description" content="AtCoder is a programming contest site for anyone from beginners to experts. We hold weekly programming contests online." />
 	<meta property="og:type" content="website" />
-	<meta property="og:url" content="https://atcoder.jp/contests/abc279/tasks/abc279_d" />
+	<meta property="og:url" content="https://atcoder.jp/contests/abc045/tasks/abc045_b" />
 	<meta property="og:image" content="https://img.atcoder.jp/assets/atcoder.png" />
 	<meta name="twitter:card" content="summary" />
 	<meta name="twitter:site" content="@atcoder" />
 	
-	<meta property="twitter:title" content="D - Freefall" />
+	<meta property="twitter:title" content="B - Card Game for Three (ABC Edit)" />
 
 	<link href="//fonts.googleapis.com/css?family=Lato:400,700" rel="stylesheet" type="text/css">
-	<link rel="stylesheet" type="text/css" href="//img.atcoder.jp/public/74ba18f/css/bootstrap.min.css">
-	<link rel="stylesheet" type="text/css" href="//img.atcoder.jp/public/74ba18f/css/base.css">
+	<link rel="stylesheet" type="text/css" href="//img.atcoder.jp/public/5f6d3b6/css/bootstrap.min.css">
+	<link rel="stylesheet" type="text/css" href="//img.atcoder.jp/public/5f6d3b6/css/base.css">
 	<link rel="shortcut icon" type="image/png" href="//img.atcoder.jp/assets/favicon.png">
 	<link rel="apple-touch-icon" href="//img.atcoder.jp/assets/atcoder.png">
-	<script src="//img.atcoder.jp/public/74ba18f/js/lib/jquery-1.9.1.min.js"></script>
-	<script src="//img.atcoder.jp/public/74ba18f/js/lib/bootstrap.min.js"></script>
-	<script src="//img.atcoder.jp/public/74ba18f/js/cdn/js.cookie.min.js"></script>
-	<script src="//img.atcoder.jp/public/74ba18f/js/cdn/moment.min.js"></script>
-	<script src="//img.atcoder.jp/public/74ba18f/js/cdn/moment_js-ja.js"></script>
+	<script src="//img.atcoder.jp/public/5f6d3b6/js/lib/jquery-1.9.1.min.js"></script>
+	<script src="//img.atcoder.jp/public/5f6d3b6/js/lib/bootstrap.min.js"></script>
+	<script src="//img.atcoder.jp/public/5f6d3b6/js/cdn/js.cookie.min.js"></script>
+	<script src="//img.atcoder.jp/public/5f6d3b6/js/cdn/moment.min.js"></script>
+	<script src="//img.atcoder.jp/public/5f6d3b6/js/cdn/moment_js-ja.js"></script>
 	<script>
 		var LANG = "en";
 		var userScreenName = "yamate11";
-		var csrfToken = "S/B+rjmYbzB2+yRmo9U9NP9masNF7ixGvskYqICC03w="
+		var csrfToken = "MrLE72oIs66bwVGZvH65YXyE78eUE//FtRUdhr99LTA="
 	</script>
-	<script src="//img.atcoder.jp/public/74ba18f/js/utils.js"></script>
+	<script src="//img.atcoder.jp/public/5f6d3b6/js/utils.js"></script>
 	
 	
-		<script src="//img.atcoder.jp/public/74ba18f/js/contest.js"></script>
-		<link href="//img.atcoder.jp/public/74ba18f/css/contest.css" rel="stylesheet" />
+		<script src="//img.atcoder.jp/public/5f6d3b6/js/contest.js"></script>
+		<link href="//img.atcoder.jp/public/5f6d3b6/css/contest.css" rel="stylesheet" />
 		<script>
-			var contestScreenName = "abc279";
+			var contestScreenName = "abc045";
 			var remainingText = "Remaining Time";
 			var countDownText = "Contest begins in";
-			var startTime = moment("2022-11-26T21:00:00+09:00");
-			var endTime = moment("2022-11-26T22:40:00+09:00");
+			var startTime = moment("2016-09-11T21:00:00+09:00");
+			var endTime = moment("2016-09-11T22:40:00+09:00");
 		</script>
 		<style></style>
 	
 	
-		<link href="//img.atcoder.jp/public/74ba18f/css/cdn/select2.min.css" rel="stylesheet" />
-		<link href="//img.atcoder.jp/public/74ba18f/css/cdn/select2-bootstrap.min.css" rel="stylesheet" />
-		<script src="//img.atcoder.jp/public/74ba18f/js/lib/select2.min.js"></script>
+		<link href="//img.atcoder.jp/public/5f6d3b6/css/cdn/select2.min.css" rel="stylesheet" />
+		<link href="//img.atcoder.jp/public/5f6d3b6/css/cdn/select2-bootstrap.min.css" rel="stylesheet" />
+		<script src="//img.atcoder.jp/public/5f6d3b6/js/lib/select2.min.js"></script>
 	
 	
-		<script src="//img.atcoder.jp/public/74ba18f/js/ace/ace.js"></script>
-		<script src="//img.atcoder.jp/public/74ba18f/js/ace/ext-language_tools.js"></script>
+		<script src="//img.atcoder.jp/public/5f6d3b6/js/ace/ace.js"></script>
+		<script src="//img.atcoder.jp/public/5f6d3b6/js/ace/ext-language_tools.js"></script>
 	
 	
-		<script src="//img.atcoder.jp/public/74ba18f/js/cdn/run_prettify.js"></script>
+		<script src="//img.atcoder.jp/public/5f6d3b6/js/cdn/run_prettify.js"></script>
 	
 	
-		<link rel="stylesheet" href="//img.atcoder.jp/public/74ba18f/css/cdn/katex.min.css">
-		<script defer src="//img.atcoder.jp/public/74ba18f/js/cdn/katex.min.js"></script>
-		<script defer src="//img.atcoder.jp/public/74ba18f/js/cdn/auto-render.min.js"></script>
+		<link rel="stylesheet" href="//img.atcoder.jp/public/5f6d3b6/css/cdn/katex.min.css">
+		<script defer src="//img.atcoder.jp/public/5f6d3b6/js/cdn/katex.min.js"></script>
+		<script defer src="//img.atcoder.jp/public/5f6d3b6/js/cdn/auto-render.min.js"></script>
 		<script>$(function(){$('var').each(function(){var html=$(this).html().replace(/<sub>/g,'_{').replace(/<\/sub>/g,'}');$(this).html('\\('+html+'\\)');});});</script>
 		<script>
 			var katexOptions = {
@@ -111,7 +115,7 @@
 	
 	
 	
-	<script src="//img.atcoder.jp/public/74ba18f/js/base.js"></script>
+	<script src="//img.atcoder.jp/public/5f6d3b6/js/base.js"></script>
 </head>
 
 <body>
@@ -131,11 +135,11 @@
 				<h4 class="modal-title">Contest started</h4>
 			</div>
 			<div class="modal-body">
-				<p>TOYOTA SYSTEMS Programming Contest 2022(AtCoder Beginner Contest 279) has begun.</p>
+				<p>AtCoder Beginner Contest 045 has begun.</p>
 			</div>
 			<div class="modal-footer">
 				
-					<a class="btn btn-primary" href='/contests/abc279/tasks'>Go to the task list page</a>
+					<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
 				
 			</div>
 		</div>
@@ -149,7 +153,7 @@
 				<h4 class="modal-title">Contest is over</h4>
 			</div>
 			<div class="modal-body">
-				<p>TOYOTA SYSTEMS Programming Contest 2022(AtCoder Beginner Contest 279) has ended.</p>
+				<p>AtCoder Beginner Contest 045 has ended.</p>
 			</div>
 			<div class="modal-footer">
 				<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
@@ -171,7 +175,7 @@
 			<div class="collapse navbar-collapse" id="navbar-collapse">
 				<ul class="nav navbar-nav">
 				
-					<li><a class="contest-title" href="/contests/abc279">TOYOTA SYSTEMS Programming Contest 2022(AtCoder Beginner Contest 279)</a></li>
+					<li><a class="contest-title" href="/contests/abc045">AtCoder Beginner Contest 045</a></li>
 				
 				</ul>
 				<ul class="nav navbar-nav navbar-right">
@@ -181,15 +185,15 @@
 							<img src='//img.atcoder.jp/assets/top/img/flag-lang/en.png'> English <span class="caret"></span>
 						</a>
 						<ul class="dropdown-menu">
-							<li><a href="/contests/abc279/tasks/abc279_d?lang=ja"><img src='//img.atcoder.jp/assets/top/img/flag-lang/ja.png'> 日本語</a></li>
-							<li><a href="/contests/abc279/tasks/abc279_d?lang=en"><img src='//img.atcoder.jp/assets/top/img/flag-lang/en.png'> English</a></li>
+							<li><a href="/contests/abc045/tasks/abc045_b?lang=ja"><img src='//img.atcoder.jp/assets/top/img/flag-lang/ja.png'> 日本語</a></li>
+							<li><a href="/contests/abc045/tasks/abc045_b?lang=en"><img src='//img.atcoder.jp/assets/top/img/flag-lang/en.png'> English</a></li>
 						</ul>
 					</li>
 					
 					
 						<li class="dropdown">
 							<a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
-								<span class="glyphicon glyphicon-cog" aria-hidden="true"></span> yamate11 (Contestant) <span class="caret"></span>
+								<span class="glyphicon glyphicon-cog" aria-hidden="true"></span> yamate11 (Guest) <span class="caret"></span>
 							</a>
 							<ul class="dropdown-menu">
 								<li><a href="/users/yamate11"><span class="glyphicon glyphicon-user" aria-hidden="true"></span> My Profile</a></li>
@@ -211,8 +215,8 @@
 		</div>
 	</nav>
 
-	<form method="POST" name="form_logout" action="/logout?continue=https%3A%2F%2Fatcoder.jp%2Fcontests%2Fabc279%2Ftasks%2Fabc279_d">
-		<input type="hidden" name="csrf_token" value="S/B&#43;rjmYbzB2&#43;yRmo9U9NP9masNF7ixGvskYqICC03w=" />
+	<form method="POST" name="form_logout" action="/logout?continue=https%3A%2F%2Fatcoder.jp%2Fcontests%2Fabc045%2Ftasks%2Fabc045_b">
+		<input type="hidden" name="csrf_token" value="MrLE72oIs66bwVGZvH65YXyE78eUE//FtRUdhr99LTA=" />
 	</form>
 	<div id="main-container" class="container"
 		 	style="padding-top:50px;">
@@ -225,35 +229,36 @@
 		<small class="contest-duration">
 			
 				Contest Duration:
-				<a href='http://www.timeanddate.com/worldclock/fixedtime.html?iso=20221126T2100&p1=248' target='blank'><time class='fixtime fixtime-full'>2022-11-26 21:00:00+0900</time></a> - <a href='http://www.timeanddate.com/worldclock/fixedtime.html?iso=20221126T2240&p1=248' target='blank'><time class='fixtime fixtime-full'>2022-11-26 22:40:00+0900</time></a> (local time)
+				<a href='http://www.timeanddate.com/worldclock/fixedtime.html?iso=20160911T2100&p1=248' target='blank'><time class='fixtime fixtime-full'>2016-09-11 21:00:00+0900</time></a> - <a href='http://www.timeanddate.com/worldclock/fixedtime.html?iso=20160911T2240&p1=248' target='blank'><time class='fixtime fixtime-full'>2016-09-11 22:40:00+0900</time></a> (local time)
 				(100 minutes)
 			
 		</small>
 		<small class="back-to-home pull-right"><a href="/home">Back to Home</a></small>
 	</div>
 	<ul class="nav nav-tabs">
-		<li><a href="/contests/abc279"><span class="glyphicon glyphicon-home" aria-hidden="true"></span> Top</a></li>
+		<li><a href="/contests/abc045"><span class="glyphicon glyphicon-home" aria-hidden="true"></span> Top</a></li>
 		
-			<li class="active"><a href="/contests/abc279/tasks"><span class="glyphicon glyphicon-tasks" aria-hidden="true"></span> Tasks</a></li>
-		
-
-		
-			<li><a href="/contests/abc279/clarifications"><span class="glyphicon glyphicon-question-sign" aria-hidden="true"></span> Clarifications <span id="clar-badge" class="badge"></span></a></li>
+			<li class="active"><a href="/contests/abc045/tasks"><span class="glyphicon glyphicon-tasks" aria-hidden="true"></span> Tasks</a></li>
 		
 
 		
-			<li><a href="/contests/abc279/submit?taskScreenName=abc279_d"><span class="glyphicon glyphicon-send" aria-hidden="true"></span> Submit</a></li>
+			<li><a href="/contests/abc045/clarifications"><span class="glyphicon glyphicon-question-sign" aria-hidden="true"></span> Clarifications <span id="clar-badge" class="badge" ></span></a></li>
+		
+
+		
+			<li><a href="/contests/abc045/submit?taskScreenName=abc045_b"><span class="glyphicon glyphicon-send" aria-hidden="true"></span> Submit</a></li>
 		
 
 		
 			<li>
 				<a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false"><span class="glyphicon glyphicon-list" aria-hidden="true"></span> Results<span class="caret"></span></a>
 				<ul class="dropdown-menu">
-					<li><a href="/contests/abc279/submissions"><span class="glyphicon glyphicon-globe" aria-hidden="true"></span> All Submissions</a></li>
+					<li><a href="/contests/abc045/submissions"><span class="glyphicon glyphicon-globe" aria-hidden="true"></span> All Submissions</a></li>
 					
-						<li><a href="/contests/abc279/submissions/me"><span class="glyphicon glyphicon-user" aria-hidden="true"></span> My Submissions</a></li>
+						<li><a href="/contests/abc045/submissions/me"><span class="glyphicon glyphicon-user" aria-hidden="true"></span> My Submissions</a></li>
+						
 						<li class="divider"></li>
-						<li><a href="/contests/abc279/score"><span class="glyphicon glyphicon-dashboard" aria-hidden="true"></span> My Score</a></li>
+						<li><a href="/contests/abc045/score"><span class="glyphicon glyphicon-dashboard" aria-hidden="true"></span> My Score</a></li>
 					
 				</ul>
 			</li>
@@ -262,21 +267,21 @@
 		
 			
 				
-					<li><a href="/contests/abc279/standings"><span class="glyphicon glyphicon-sort-by-attributes-alt" aria-hidden="true"></span> Standings</a></li>
+					<li><a href="/contests/abc045/standings"><span class="glyphicon glyphicon-sort-by-attributes-alt" aria-hidden="true"></span> Standings</a></li>
 				
 			
 				
-					<li><a href="/contests/abc279/standings/virtual"><span class="glyphicon glyphicon-sort-by-attributes-alt" aria-hidden="true"></span> Virtual Standings</a></li>
+					<li><a href="/contests/abc045/standings/virtual"><span class="glyphicon glyphicon-sort-by-attributes-alt" aria-hidden="true"></span> Virtual Standings</a></li>
 				
 			
 		
 
 		
-			<li><a href="/contests/abc279/custom_test"><span class="glyphicon glyphicon-wrench" aria-hidden="true"></span> Custom Test</a></li>
+			<li><a href="/contests/abc045/custom_test"><span class="glyphicon glyphicon-wrench" aria-hidden="true"></span> Custom Test</a></li>
 		
 
 		
-			<li><a href="/contests/abc279/editorial"><span class="glyphicon glyphicon-book" aria-hidden="true"></span> Editorial</a></li>
+			<li><a href="/contests/abc045/editorial"><span class="glyphicon glyphicon-book" aria-hidden="true"></span> Editorial</a></li>
 		
 		
 			
@@ -288,8 +293,8 @@
 </div>
 	<div class="col-sm-12">
 		<span class="h2">
-			D - Freefall
-			<a class="btn btn-default btn-sm" href="/contests/abc279/tasks/abc279_d/editorial">Editorial</a>
+			B - Card Game for Three (ABC Edit)
+			<a class="btn btn-default btn-sm" href="/contests/abc045/tasks/abc045_b/editorial">Editorial</a>
 		</span>
 		<span id="task-lang-btn" class="pull-right"><span data-lang="ja"><img src='//img.atcoder.jp/assets/top/img/flag-lang/ja.png'></span> / <span data-lang="en"><img src='//img.atcoder.jp/assets/top/img/flag-lang/en.png'></span></span>
 		<script>
@@ -328,208 +333,211 @@
 		</script>
 		<hr/>
 		<p>
-			Time Limit: 2 sec / Memory Limit: 1024 MB
+			Time Limit: 2 sec / Memory Limit: 256 MB
+			
 			
 		</p>
 
 		<div id="task-statement">
 			
+
+
+	
+	
+
 			<span class="lang">
 <span class="lang-ja">
-<p>配点 : <var>400</var> 点</p>
+<p>配点 : <var>200</var> 点</p>
 
 <div class="part">
 <section>
-<h3>問題文</h3><p>スーパーマンである高橋くんは、地上で困っている人を助けるため、あるビルの屋上から飛び降りようとしています。
-高橋くんがいる星には重力の大きさを表す <var>g</var> という値が定まっており、
-高橋くんが落下を開始してから地面に到達するまでにかかる時間は <var>\frac{A}{\sqrt{g}}</var> です。</p>
-<p>現在の時刻は <var>0</var> であり、<var>g = 1</var> が成り立ちます。
-高橋くんは、今から次の操作を好きな回数（<var>0</var> 回でもよい）行います。</p>
+<h3>問題文</h3><p>A さん、B さん、C さんの <var>3</var> 人が以下のようなカードゲームをプレイしています。</p>
 <ul>
-<li>超能力により <var>g</var> の値を <var>1</var> 増やす。時間が <var>B</var> 経過する。</li>
+<li>最初、<var>3</var> 人はそれぞれ <code>a</code>、<code>b</code>、<code>c</code> いずれかの文字が書かれたカードを、何枚か持っている。これらは入力で与えられた順番に持っており、途中で並べ替えたりしない。</li>
+<li><var>A</var> さんのターンから始まる。</li>
+<li>現在自分のターンである人がカードを <var>1</var> 枚以上持っているならば、そのうち先頭のカードを捨てる。その後、捨てられたカードに書かれているアルファベットと同じ名前の人 (例えば、カードに <code>a</code> と書かれていたならば A さん) のターンとなる。</li>
+<li>現在自分のターンである人がカードを <var>1</var> 枚も持っていないならば、その人がゲームの勝者となり、ゲームは終了する。</li>
 </ul>
-<p>その後、高橋くんはビルから飛び降ります。落下を開始した後は <var>g</var> の値を変えることはできません。
-また、操作によって経過する時間と落下にかかる時間以外は考えないものとします。</p>
-<p>高橋くんが地面に到達できる最も早い時刻を求めてください。</p>
+<p><var>3</var> 人が最初に持っているカードがそれぞれ先頭から順に与えられます。
+具体的には、文字列 <var>S_A</var>、<var>S_B</var>、<var>S_C</var> が与えられます。文字列 <var>S_A</var> の <var>i</var> 文字目 ( <var>1 \leq i \leq |S_A|</var> ) に書かれている文字が、A さんの持っている中で先頭から <var>i</var> 番目のカードに
+書かれている文字です。文字列 <var>S_B</var>、 <var>S_C</var> についても同様です。</p>
+<p>最終的に誰がこのゲームの勝者となるかを求めてください。</p>
 </section>
 </div>
 
 <div class="part">
 <section>
 <h3>制約</h3><ul>
-<li><var>1 \leq A \leq 10^{18}</var></li>
-<li><var>1 \leq B \leq 10^{18}</var></li>
-<li>入力は全て整数</li>
+<li><var>1 \leq &#124;S_A&#124; \leq 100</var></li>
+<li><var>1 \leq &#124;S_B&#124; \leq 100</var></li>
+<li><var>1 \leq &#124;S_C&#124; \leq 100</var></li>
+<li><var>S_A</var>、<var>S_B</var>、<var>S_C</var> に含まれる文字はそれぞれ <code>a</code>、<code>b</code>、<code>c</code> のいずれか</li>
 </ul>
 </section>
 </div>
 
 <hr />
+
 <div class="io-style">
 <div class="part">
 <section>
 <h3>入力</h3><p>入力は以下の形式で標準入力から与えられる。</p>
-<pre><var>A</var> <var>B</var>
+<pre><var>S_A</var>
+<var>S_B</var>
+<var>S_C</var>
 </pre>
+
 </section>
 </div>
 
 <div class="part">
 <section>
-<h3>出力</h3><p>高橋くんが地面に到達できる最も早い時刻を出力せよ。
-出力は、真の値との絶対誤差または相対誤差が <var>10^{-6}</var> 以下のとき正解と判定される。</p>
+<h3>出力</h3><p>A さんが勝つなら <code>A</code>、B さんが勝つなら <code>B</code>、C さんが勝つなら <code>C</code> と出力せよ。</p>
 </section>
 </div>
 </div>
 
 <hr />
+
 <div class="part">
 <section>
-<h3>入力例 1</h3><pre>10 1
+<h3>入力例 1</h3><pre>aca
+accc
+ca
 </pre>
+
 </section>
 </div>
 
 <div class="part">
 <section>
-<h3>出力例 1</h3><pre>7.7735026919
+<h3>出力例 1</h3><pre>A
 </pre>
+
+<p>ゲームは以下のように進行します。</p>
 <ul>
-<li>操作を <var>0</var> 回行うとき、地面に到達する時刻は <var>1\times 0+\frac{10}{\sqrt{1}} = 10</var> です。</li>
-<li>操作を <var>1</var> 回行うとき、地面に到達する時刻は <var>1\times 1+\frac{10}{\sqrt{2}} \fallingdotseq 8.07</var> です。</li>
-<li>操作を <var>2</var> 回行うとき、地面に到達する時刻は <var>1\times 2+\frac{10}{\sqrt{3}} \fallingdotseq 7.77</var> です。</li>
-<li>操作を <var>3</var> 回行うとき、地面に到達する時刻は <var>1\times 3+\frac{10}{\sqrt{4}} = 8</var> です。</li>
+<li>A さんが、持っている中で最初のカード <code>a</code> を捨てる。次は A さんの番となる。</li>
+<li>A さんが、持っている中で最初のカード <code>c</code> を捨てる。次は C さんの番となる。</li>
+<li>C さんが、持っている中で最初のカード <code>c</code> を捨てる。次は C さんの番となる。</li>
+<li>C さんが、持っている中で最初のカード <code>a</code> を捨てる。次は A さんの番となる。</li>
+<li>A さんが、持っている中で最初のカード <code>a</code> を捨てる。次は A さんの番となる。</li>
+<li>A さんはもう持っているカードがない。よって A さんの勝利となり、ゲームは終了する。</li>
 </ul>
-<p>操作を <var>4</var> 回以上行っても、地面への到達時刻は遅くなるのみです。
-よって、操作を <var>2</var> 回行ってから飛び降りるのが最適で、答えは <var>2+\frac{10}{\sqrt{3}}</var> です。</p>
 </section>
 </div>
 
 <hr />
+
 <div class="part">
 <section>
-<h3>入力例 2</h3><pre>5 10
+<h3>入力例 2</h3><pre>abcb
+aacb
+bccc
 </pre>
+
 </section>
 </div>
 
 <div class="part">
 <section>
-<h3>出力例 2</h3><pre>5.0000000000
-</pre>
-<p>操作を <var>1</var> 回も行わないのが最適です。</p>
-</section>
-</div>
-
-<hr />
-<div class="part">
-<section>
-<h3>入力例 3</h3><pre>1000000000000000000 100
-</pre>
-</section>
-</div>
-
-<div class="part">
-<section>
-<h3>出力例 3</h3><pre>8772053214538.5976562500
+<h3>出力例 2</h3><pre>C
 </pre></section>
 </div>
 </span>
 <span class="lang-en">
-<p>Score : <var>400</var> points</p>
+<p>Score : <var>200</var> points</p>
 
 <div class="part">
 <section>
-<h3>Problem Statement</h3><p>A superman, Takahashi, is about to jump off the roof of a building to help a person in trouble on the ground.
-Takahashi's planet has a constant value <var>g</var> that represents the strength of gravity, and the time it takes for him to reach the ground after starting to fall is <var>\frac{A}{\sqrt{g}}</var>.</p>
-<p>It is now time <var>0</var>, and <var>g = 1</var>.
-Takahashi will perform the following operation as many times as he wants (possibly zero).</p>
+<h3>Problem Statement</h3><p>Alice, Bob and Charlie are playing <em>Card Game for Three</em>, as below:</p>
 <ul>
-<li>Use a superpower to increase the value of <var>g</var> by <var>1</var>. This takes a time of <var>B</var>.</li>
+<li>At first, each of the three players has a deck consisting of some number of cards. Each card has a letter <code>a</code>, <code>b</code> or <code>c</code> written on it. The orders of the cards in the decks cannot be rearranged.</li>
+<li>The players take turns. Alice goes first.</li>
+<li>If the current player's deck contains at least one card, discard the top card in the deck. Then, the player whose name begins with the letter on the discarded card, takes the next turn. (For example, if the card says <code>a</code>, Alice takes the next turn.)</li>
+<li>If the current player's deck is empty, the game ends and the current player wins the game.</li>
 </ul>
-<p>Then, he will jump off the building. After starting to fall, he cannot change the value of <var>g</var>. Additionally, we only consider the time it takes to perform the operation and fall.</p>
-<p>Find the earliest time Takahashi can reach the ground.</p>
+<p>You are given the initial decks of the players.
+More specifically, you are given three strings <var>S_A</var>, <var>S_B</var> and <var>S_C</var>. The <var>i</var>-th <var>(1≦i≦|S_A|)</var> letter in <var>S_A</var> is the letter on the <var>i</var>-th card in Alice's initial deck. <var>S_B</var> and <var>S_C</var> describes Bob's and Charlie's initial decks in the same way.</p>
+<p>Determine the winner of the game.</p>
 </section>
 </div>
 
 <div class="part">
 <section>
 <h3>Constraints</h3><ul>
-<li><var>1 \leq A \leq 10^{18}</var></li>
-<li><var>1 \leq B \leq 10^{18}</var></li>
-<li>All values in the input are integers.</li>
+<li><var>1≦&#124;S_A&#124;≦100</var></li>
+<li><var>1≦&#124;S_B&#124;≦100</var></li>
+<li><var>1≦&#124;S_C&#124;≦100</var></li>
+<li>Each letter in <var>S_A</var>, <var>S_B</var>, <var>S_C</var> is <code>a</code>, <code>b</code> or <code>c</code>.</li>
 </ul>
 </section>
 </div>
 
 <hr />
+
 <div class="io-style">
 <div class="part">
 <section>
 <h3>Input</h3><p>The input is given from Standard Input in the following format:</p>
-<pre><var>A</var> <var>B</var>
+<pre><var>S_A</var>
+<var>S_B</var>
+<var>S_C</var>
 </pre>
+
 </section>
 </div>
 
 <div class="part">
 <section>
-<h3>Output</h3><p>Print the earliest time Takahashi can reach the ground.
-Your output will be accepted when its absolute or relative error from the true value is at most <var>10^{-6}</var>.</p>
+<h3>Output</h3><p>If Alice will win, print <code>A</code>. If Bob will win, print <code>B</code>. If Charlie will win, print <code>C</code>.</p>
 </section>
 </div>
 </div>
 
 <hr />
+
 <div class="part">
 <section>
-<h3>Sample Input 1</h3><pre>10 1
+<h3>Sample Input 1</h3><pre>aca
+accc
+ca
 </pre>
+
 </section>
 </div>
 
 <div class="part">
 <section>
-<h3>Sample Output 1</h3><pre>7.7735026919
+<h3>Sample Output 1</h3><pre>A
 </pre>
+
+<p>The game will progress as below:</p>
 <ul>
-<li>If he performs the operation zero times, he will reach the ground at time <var>1\times 0+\frac{10}{\sqrt{1}} = 10</var>.</li>
-<li>If he performs the operation once, he will reach the ground at time <var>1\times 1+\frac{10}{\sqrt{2}} \fallingdotseq 8.07</var>.</li>
-<li>If he performs the operation twice, he will reach the ground at time <var>1\times 2+\frac{10}{\sqrt{3}} \fallingdotseq 7.77</var>.</li>
-<li>If he performs the operation three times, he will reach the ground at time <var>1\times 3+\frac{10}{\sqrt{4}} = 8</var>.</li>
+<li>Alice discards the top card in her deck, <code>a</code>. Alice takes the next turn.</li>
+<li>Alice discards the top card in her deck, <code>c</code>. Charlie takes the next turn.</li>
+<li>Charlie discards the top card in his deck, <code>c</code>. Charlie takes the next turn.</li>
+<li>Charlie discards the top card in his deck, <code>a</code>. Alice takes the next turn.</li>
+<li>Alice discards the top card in her deck, <code>a</code>. Alice takes the next turn.</li>
+<li>Alice's deck is empty. The game ends and Alice wins the game.</li>
 </ul>
-<p>Performing the operation four or more times will only delay the time to reach the ground.
-Therefore, it is optimal to perform the operation twice before jumping off, and the answer is <var>2+\frac{10}{\sqrt{3}}</var>.</p>
 </section>
 </div>
 
 <hr />
+
 <div class="part">
 <section>
-<h3>Sample Input 2</h3><pre>5 10
+<h3>Sample Input 2</h3><pre>abcb
+aacb
+bccc
 </pre>
+
 </section>
 </div>
 
 <div class="part">
 <section>
-<h3>Sample Output 2</h3><pre>5.0000000000
-</pre>
-<p>It is optimal not to perform the operation at all.</p>
-</section>
-</div>
-
-<hr />
-<div class="part">
-<section>
-<h3>Sample Input 3</h3><pre>1000000000000000000 100
-</pre>
-</section>
-</div>
-
-<div class="part">
-<section>
-<h3>Sample Output 3</h3><pre>8772053214538.5976562500
+<h3>Sample Output 2</h3><pre>C
 </pre></section>
 </div>
 </span>
@@ -541,8 +549,8 @@ Therefore, it is optimal to perform the operation twice before jumping off, and 
 
 		
 		<hr/>
-		<form class="form-horizontal form-code-submit" action="/contests/abc279/submit" method="POST">
-			<input type="hidden" name="data.TaskScreenName" value="abc279_d" />
+		<form class="form-horizontal form-code-submit" action="/contests/abc045/submit" method="POST">
+			<input type="hidden" name="data.TaskScreenName" value="abc045_b" />
 			
 			<div class="form-group ">
 				<label class="control-label col-sm-3 col-md-2" for="select-lang">Language</label>
@@ -767,7 +775,7 @@ Therefore, it is optimal to perform the operation twice before jumping off, and 
 </div>
 
 
-			<input type="hidden" name="csrf_token" value="S/B&#43;rjmYbzB2&#43;yRmo9U9NP9masNF7ixGvskYqICC03w=" />
+			<input type="hidden" name="csrf_token" value="MrLE72oIs66bwVGZvH65YXyE78eUE//FtRUdhr99LTA=" />
 			<div class="form-group">
 				<label class="control-label col-sm-3 col-md-2"></label>
 				<div class="col-sm-5">
@@ -787,7 +795,7 @@ Therefore, it is optimal to perform the operation twice before jumping off, and 
 			
 			
 			
-<div class="a2a_kit a2a_kit_size_20 a2a_default_style pull-right" data-a2a-url="https://atcoder.jp/contests/abc279/tasks/abc279_d?lang=en" data-a2a-title="D - Freefall">
+<div class="a2a_kit a2a_kit_size_20 a2a_default_style pull-right" data-a2a-url="https://atcoder.jp/contests/abc045/tasks/abc045_b?lang=en" data-a2a-title="B - Card Game for Three (ABC Edit)">
 	<a class="a2a_button_facebook"></a>
 	<a class="a2a_button_twitter"></a>
 	
@@ -807,8 +815,8 @@ Therefore, it is optimal to perform the operation twice before jumping off, and 
 			<footer class="footer">
 			
 				<ul>
-					<li><a href="/contests/abc279/rules">Rule</a></li>
-					<li><a href="/contests/abc279/glossary">Glossary</a></li>
+					<li><a href="/contests/abc045/rules">Rule</a></li>
+					<li><a href="/contests/abc045/glossary">Glossary</a></li>
 					
 				</ul>
 			

@@ -9,7 +9,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>B - 運動管理</title>
+	<title>B - Exponential</title>
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 	<meta http-equiv="Content-Language" content="en">
 	<meta name="viewport" content="width=device-width,initial-scale=1.0">
@@ -22,7 +22,11 @@
 		window.dataLayer = window.dataLayer || [];
 		function gtag(){dataLayer.push(arguments);}
 		gtag('js', new Date());
-
+		gtag('set', 'user_properties', {
+			
+				'login_status': 'logged_in',
+			
+		});
 		gtag('config', 'G-RC512FD18N');
 	</script>
 
@@ -32,61 +36,61 @@
 
 	<meta property="og:site_name" content="AtCoder">
 	
-	<meta property="og:title" content="B - 運動管理" />
+	<meta property="og:title" content="B - Exponential" />
 	<meta property="og:description" content="AtCoder is a programming contest site for anyone from beginners to experts. We hold weekly programming contests online." />
 	<meta property="og:type" content="website" />
-	<meta property="og:url" content="https://atcoder.jp/contests/abc031/tasks/abc031_b" />
+	<meta property="og:url" content="https://atcoder.jp/contests/abc097/tasks/abc097_b" />
 	<meta property="og:image" content="https://img.atcoder.jp/assets/atcoder.png" />
 	<meta name="twitter:card" content="summary" />
 	<meta name="twitter:site" content="@atcoder" />
 	
-	<meta property="twitter:title" content="B - 運動管理" />
+	<meta property="twitter:title" content="B - Exponential" />
 
 	<link href="//fonts.googleapis.com/css?family=Lato:400,700" rel="stylesheet" type="text/css">
-	<link rel="stylesheet" type="text/css" href="//img.atcoder.jp/public/969a6a4/css/bootstrap.min.css">
-	<link rel="stylesheet" type="text/css" href="//img.atcoder.jp/public/969a6a4/css/base.css">
+	<link rel="stylesheet" type="text/css" href="//img.atcoder.jp/public/b011337/css/bootstrap.min.css">
+	<link rel="stylesheet" type="text/css" href="//img.atcoder.jp/public/b011337/css/base.css">
 	<link rel="shortcut icon" type="image/png" href="//img.atcoder.jp/assets/favicon.png">
 	<link rel="apple-touch-icon" href="//img.atcoder.jp/assets/atcoder.png">
-	<script src="//img.atcoder.jp/public/969a6a4/js/lib/jquery-1.9.1.min.js"></script>
-	<script src="//img.atcoder.jp/public/969a6a4/js/lib/bootstrap.min.js"></script>
-	<script src="//img.atcoder.jp/public/969a6a4/js/cdn/js.cookie.min.js"></script>
-	<script src="//img.atcoder.jp/public/969a6a4/js/cdn/moment.min.js"></script>
-	<script src="//img.atcoder.jp/public/969a6a4/js/cdn/moment_js-ja.js"></script>
+	<script src="//img.atcoder.jp/public/b011337/js/lib/jquery-1.9.1.min.js"></script>
+	<script src="//img.atcoder.jp/public/b011337/js/lib/bootstrap.min.js"></script>
+	<script src="//img.atcoder.jp/public/b011337/js/cdn/js.cookie.min.js"></script>
+	<script src="//img.atcoder.jp/public/b011337/js/cdn/moment.min.js"></script>
+	<script src="//img.atcoder.jp/public/b011337/js/cdn/moment_js-ja.js"></script>
 	<script>
 		var LANG = "en";
 		var userScreenName = "yamate11";
-		var csrfToken = "dd1TlswZo5zwN/DSzLIpCgtdTMK5Xa2Z4OXK327oKWI="
+		var csrfToken = "hvYdp1OMT2ixvmwTnLuIrcEhBUMOSoNwTwW99KtVFxg="
 	</script>
-	<script src="//img.atcoder.jp/public/969a6a4/js/utils.js"></script>
+	<script src="//img.atcoder.jp/public/b011337/js/utils.js"></script>
 	
 	
-		<script src="//img.atcoder.jp/public/969a6a4/js/contest.js"></script>
-		<link href="//img.atcoder.jp/public/969a6a4/css/contest.css" rel="stylesheet" />
+		<script src="//img.atcoder.jp/public/b011337/js/contest.js"></script>
+		<link href="//img.atcoder.jp/public/b011337/css/contest.css" rel="stylesheet" />
 		<script>
-			var contestScreenName = "abc031";
+			var contestScreenName = "abc097";
 			var remainingText = "Remaining Time";
 			var countDownText = "Contest begins in";
-			var startTime = moment("2015-11-21T21:00:00+09:00");
-			var endTime = moment("2015-11-21T23:00:00+09:00");
+			var startTime = moment("2018-05-12T21:00:00+09:00");
+			var endTime = moment("2018-05-12T22:40:00+09:00");
 		</script>
 		<style></style>
 	
 	
-		<link href="//img.atcoder.jp/public/969a6a4/css/cdn/select2.min.css" rel="stylesheet" />
-		<link href="//img.atcoder.jp/public/969a6a4/css/cdn/select2-bootstrap.min.css" rel="stylesheet" />
-		<script src="//img.atcoder.jp/public/969a6a4/js/lib/select2.min.js"></script>
+		<link href="//img.atcoder.jp/public/b011337/css/cdn/select2.min.css" rel="stylesheet" />
+		<link href="//img.atcoder.jp/public/b011337/css/cdn/select2-bootstrap.min.css" rel="stylesheet" />
+		<script src="//img.atcoder.jp/public/b011337/js/lib/select2.min.js"></script>
 	
 	
-		<script src="//img.atcoder.jp/public/969a6a4/js/ace/ace.js"></script>
-		<script src="//img.atcoder.jp/public/969a6a4/js/ace/ext-language_tools.js"></script>
+		<script src="//img.atcoder.jp/public/b011337/js/ace/ace.js"></script>
+		<script src="//img.atcoder.jp/public/b011337/js/ace/ext-language_tools.js"></script>
 	
 	
-		<script src="//img.atcoder.jp/public/969a6a4/js/cdn/run_prettify.js"></script>
+		<script src="//img.atcoder.jp/public/b011337/js/cdn/run_prettify.js"></script>
 	
 	
-		<link rel="stylesheet" href="//img.atcoder.jp/public/969a6a4/css/cdn/katex.min.css">
-		<script defer src="//img.atcoder.jp/public/969a6a4/js/cdn/katex.min.js"></script>
-		<script defer src="//img.atcoder.jp/public/969a6a4/js/cdn/auto-render.min.js"></script>
+		<link rel="stylesheet" href="//img.atcoder.jp/public/b011337/css/cdn/katex.min.css">
+		<script defer src="//img.atcoder.jp/public/b011337/js/cdn/katex.min.js"></script>
+		<script defer src="//img.atcoder.jp/public/b011337/js/cdn/auto-render.min.js"></script>
 		<script>$(function(){$('var').each(function(){var html=$(this).html().replace(/<sub>/g,'_{').replace(/<\/sub>/g,'}');$(this).html('\\('+html+'\\)');});});</script>
 		<script>
 			var katexOptions = {
@@ -111,7 +115,7 @@
 	
 	
 	
-	<script src="//img.atcoder.jp/public/969a6a4/js/base.js"></script>
+	<script src="//img.atcoder.jp/public/b011337/js/base.js"></script>
 </head>
 
 <body>
@@ -131,7 +135,7 @@
 				<h4 class="modal-title">Contest started</h4>
 			</div>
 			<div class="modal-body">
-				<p>AtCoder Beginner Contest 031 has begun.</p>
+				<p>AtCoder Beginner Contest 097 has begun.</p>
 			</div>
 			<div class="modal-footer">
 				
@@ -149,7 +153,7 @@
 				<h4 class="modal-title">Contest is over</h4>
 			</div>
 			<div class="modal-body">
-				<p>AtCoder Beginner Contest 031 has ended.</p>
+				<p>AtCoder Beginner Contest 097 has ended.</p>
 			</div>
 			<div class="modal-footer">
 				<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
@@ -171,7 +175,7 @@
 			<div class="collapse navbar-collapse" id="navbar-collapse">
 				<ul class="nav navbar-nav">
 				
-					<li><a class="contest-title" href="/contests/abc031">AtCoder Beginner Contest 031</a></li>
+					<li><a class="contest-title" href="/contests/abc097">AtCoder Beginner Contest 097</a></li>
 				
 				</ul>
 				<ul class="nav navbar-nav navbar-right">
@@ -181,8 +185,8 @@
 							<img src='//img.atcoder.jp/assets/top/img/flag-lang/en.png'> English <span class="caret"></span>
 						</a>
 						<ul class="dropdown-menu">
-							<li><a href="/contests/abc031/tasks/abc031_b?lang=ja"><img src='//img.atcoder.jp/assets/top/img/flag-lang/ja.png'> 日本語</a></li>
-							<li><a href="/contests/abc031/tasks/abc031_b?lang=en"><img src='//img.atcoder.jp/assets/top/img/flag-lang/en.png'> English</a></li>
+							<li><a href="/contests/abc097/tasks/abc097_b?lang=ja"><img src='//img.atcoder.jp/assets/top/img/flag-lang/ja.png'> 日本語</a></li>
+							<li><a href="/contests/abc097/tasks/abc097_b?lang=en"><img src='//img.atcoder.jp/assets/top/img/flag-lang/en.png'> English</a></li>
 						</ul>
 					</li>
 					
@@ -211,8 +215,8 @@
 		</div>
 	</nav>
 
-	<form method="POST" name="form_logout" action="/logout?continue=https%3A%2F%2Fatcoder.jp%2Fcontests%2Fabc031%2Ftasks%2Fabc031_b">
-		<input type="hidden" name="csrf_token" value="dd1TlswZo5zwN/DSzLIpCgtdTMK5Xa2Z4OXK327oKWI=" />
+	<form method="POST" name="form_logout" action="/logout?continue=https%3A%2F%2Fatcoder.jp%2Fcontests%2Fabc097%2Ftasks%2Fabc097_b">
+		<input type="hidden" name="csrf_token" value="hvYdp1OMT2ixvmwTnLuIrcEhBUMOSoNwTwW99KtVFxg=" />
 	</form>
 	<div id="main-container" class="container"
 		 	style="padding-top:50px;">
@@ -225,35 +229,38 @@
 		<small class="contest-duration">
 			
 				Contest Duration:
-				<a href='http://www.timeanddate.com/worldclock/fixedtime.html?iso=20151121T2100&p1=248' target='blank'><time class='fixtime fixtime-full'>2015-11-21 21:00:00+0900</time></a> - <a href='http://www.timeanddate.com/worldclock/fixedtime.html?iso=20151121T2300&p1=248' target='blank'><time class='fixtime fixtime-full'>2015-11-21 23:00:00+0900</time></a> (local time)
-				(120 minutes)
+				<a href='http://www.timeanddate.com/worldclock/fixedtime.html?iso=20180512T2100&p1=248' target='blank'><time class='fixtime fixtime-full'>2018-05-12 21:00:00+0900</time></a> - <a href='http://www.timeanddate.com/worldclock/fixedtime.html?iso=20180512T2240&p1=248' target='blank'><time class='fixtime fixtime-full'>2018-05-12 22:40:00+0900</time></a> (local time)
+				(100 minutes)
 			
 		</small>
 		<small class="back-to-home pull-right"><a href="/home">Back to Home</a></small>
 	</div>
 	<ul class="nav nav-tabs">
-		<li><a href="/contests/abc031"><span class="glyphicon glyphicon-home" aria-hidden="true"></span> Top</a></li>
+		<li><a href="/contests/abc097"><span class="glyphicon glyphicon-home" aria-hidden="true"></span> Top</a></li>
 		
-			<li class="active"><a href="/contests/abc031/tasks"><span class="glyphicon glyphicon-tasks" aria-hidden="true"></span> Tasks</a></li>
-		
-
-		
-			<li><a href="/contests/abc031/clarifications"><span class="glyphicon glyphicon-question-sign" aria-hidden="true"></span> Clarifications <span id="clar-badge" class="badge"></span></a></li>
+			<li class="active"><a href="/contests/abc097/tasks"><span class="glyphicon glyphicon-tasks" aria-hidden="true"></span> Tasks</a></li>
 		
 
 		
-			<li><a href="/contests/abc031/submit?taskScreenName=abc031_b"><span class="glyphicon glyphicon-send" aria-hidden="true"></span> Submit</a></li>
+			<li><a href="/contests/abc097/clarifications"><span class="glyphicon glyphicon-question-sign" aria-hidden="true"></span> Clarifications <span id="clar-badge" class="badge" ></span></a></li>
+		
+
+		
+			<li><a href="/contests/abc097/submit?taskScreenName=abc097_b"><span class="glyphicon glyphicon-send" aria-hidden="true"></span> Submit</a></li>
 		
 
 		
 			<li>
 				<a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false"><span class="glyphicon glyphicon-list" aria-hidden="true"></span> Results<span class="caret"></span></a>
 				<ul class="dropdown-menu">
-					<li><a href="/contests/abc031/submissions"><span class="glyphicon glyphicon-globe" aria-hidden="true"></span> All Submissions</a></li>
+					<li><a href="/contests/abc097/submissions"><span class="glyphicon glyphicon-globe" aria-hidden="true"></span> All Submissions</a></li>
 					
-						<li><a href="/contests/abc031/submissions/me"><span class="glyphicon glyphicon-user" aria-hidden="true"></span> My Submissions</a></li>
-						<li class="divider"></li>
-						<li><a href="/contests/abc031/score"><span class="glyphicon glyphicon-dashboard" aria-hidden="true"></span> My Score</a></li>
+						<li><a href="/contests/abc097/submissions/me"><span class="glyphicon glyphicon-user" aria-hidden="true"></span> My Submissions</a></li>
+						
+						
+							<li class="divider"></li>
+							<li><a href="/contests/abc097/score"><span class="glyphicon glyphicon-dashboard" aria-hidden="true"></span> My Score</a></li>
+						
 					
 				</ul>
 			</li>
@@ -262,21 +269,21 @@
 		
 			
 				
-					<li><a href="/contests/abc031/standings"><span class="glyphicon glyphicon-sort-by-attributes-alt" aria-hidden="true"></span> Standings</a></li>
+					<li><a href="/contests/abc097/standings"><span class="glyphicon glyphicon-sort-by-attributes-alt" aria-hidden="true"></span> Standings</a></li>
 				
 			
 				
-					<li><a href="/contests/abc031/standings/virtual"><span class="glyphicon glyphicon-sort-by-attributes-alt" aria-hidden="true"></span> Virtual Standings</a></li>
+					<li><a href="/contests/abc097/standings/virtual"><span class="glyphicon glyphicon-sort-by-attributes-alt" aria-hidden="true"></span> Virtual Standings</a></li>
 				
 			
 		
 
 		
-			<li><a href="/contests/abc031/custom_test"><span class="glyphicon glyphicon-wrench" aria-hidden="true"></span> Custom Test</a></li>
+			<li><a href="/contests/abc097/custom_test"><span class="glyphicon glyphicon-wrench" aria-hidden="true"></span> Custom Test</a></li>
 		
 
 		
-			<li><a href="/contests/abc031/editorial"><span class="glyphicon glyphicon-book" aria-hidden="true"></span> Editorial</a></li>
+			<li><a href="/contests/abc097/editorial"><span class="glyphicon glyphicon-book" aria-hidden="true"></span> Editorial</a></li>
 		
 		
 			
@@ -288,8 +295,8 @@
 </div>
 	<div class="col-sm-12">
 		<span class="h2">
-			B - 運動管理
-			<a class="btn btn-default btn-sm" href="/contests/abc031/tasks/abc031_b/editorial">Editorial</a>
+			B - Exponential
+			<a class="btn btn-default btn-sm" href="/contests/abc097/tasks/abc097_b/editorial">Editorial</a>
 		</span>
 		<span id="task-lang-btn" class="pull-right"><span data-lang="ja"><img src='//img.atcoder.jp/assets/top/img/flag-lang/ja.png'></span> / <span data-lang="en"><img src='//img.atcoder.jp/assets/top/img/flag-lang/en.png'></span></span>
 		<script>
@@ -328,144 +335,206 @@
 		</script>
 		<hr/>
 		<p>
-			Time Limit: 2 sec / Memory Limit: 256 MB
+			Time Limit: 2 sec / Memory Limit: 1024 MB
 			
 			
 		</p>
 
 		<div id="task-statement">
 			
-			<div id="task-statement">
+
+
+	
+	
+
+			<span class="lang">
+<span class="lang-ja">
+<p>配点 : <var>200</var> 点</p>
+
 <div class="part">
-
 <section>
-<h3>問題文</h3>
-
-<p>高橋君は AtCoder 社のマスコットキャラクターである。</p>
-
-<p>マスコットキャラクターとしての魅力を維持するために、高橋君は適度な運動をすることになっている。高橋君は週の運動時間が <var>L</var> 分以上 <var>H</var> 分以下でなければならない。</p>
-
-<p>しかしながら、青木君は最近、高橋君が運動しているところを見ていない。高橋君の運動状況が気になった青木君は、高橋君の過去 <var>N</var> 週間の運動時間が制限にあっているのか、そして足りないなら少なくともあと何分運動する必要があったのかを計算するプログラムを作成することにした。</p>
-
+<h3>問題文</h3><p>正整数 <var>X</var> が与えられます。
+<var>X</var> 以下の最大のべき乗数を求めてください。
+ただし、べき乗数とは、ある <var>1</var> 以上の整数 <var>b</var> と <var>2</var> 以上の整数 <var>p</var> を使って <var>b^p</var> とかける整数のことを指すこととします。</p>
 </section>
 </div>
+
+<div class="part">
+<section>
+<h3>制約</h3><ul>
+<li><var>1</var> <var>≤</var> <var>X</var> <var>≤</var> <var>1000</var></li>
+<li><var>X</var> は整数</li>
+</ul>
+</section>
+</div>
+
 <hr />
+
 <div class="io-style">
 <div class="part">
-
 <section>
-<h3>入力</h3>
-
-<p>入力は以下の形式で標準入力から与えられる。</p>
-
-<pre>
-<var>L</var> <var>H</var>
-<var>N</var>
-<var>A_1</var>
-<var>A_2</var>
-:
-<var>A_N</var>
+<h3>入力</h3><p>入力は以下の形式で標準入力から与えられる。</p>
+<pre><var>X</var>
 </pre>
 
-<ul class="simple">
-
-	<li><var>1</var> 行目には、<var>2</var> 個の整数 <var>L</var>, <var>H (1≦L≦H≦10^4)</var> が空白区切りで与えられる。これは、高橋君が週に <var>L</var> 分以上 <var>H</var> 分以下の運動をしなければならないことを表す。</li>
-
-	<li><var>2</var> 行目には、整数 <var>N (1≦N≦50)</var> が与えられる。これは青木君が <var>N</var> 週分の運動時間について調べていることを表す。</li>
-
-	<li><var>3</var> 行目からの <var>N</var> 行には、高橋君の運動状況を表す整数が与えられる。<var>N</var> 行の内 <var>i (1≦i≦N)</var> 行目には、整数 <var>A_i (0≦A_i≦10^4)</var> が与えられる。これは <var>i</var> 個前の週において高橋君が <var>A_i</var> 分運動したことを表す。</li>
-
-</ul>
-
 </section>
 </div>
+
 <div class="part">
-
 <section>
-<h3>出力</h3>
-
-<p>出力は <var>N</var> 行からなる。<var>i (1≦i≦N)</var> 行目には、<var>i</var> 個前の週において高橋君が必要な分よりも多く運動している場合は <var>-1</var> を、そうでない場合は追加で必要な運動時間の最小値を分単位で <var>1</var> 行に出力せよ。</p>
-
-<p>出力の末尾にも改行を入れること。</p>
-
+<h3>出力</h3><p><var>X</var> 以下の最大のべき乗数を出力せよ。</p>
 </section>
 </div>
 </div>
+
 <hr />
+
 <div class="part">
-
 <section>
-<h3>入力例1</h3>
-
-<pre>
-300 400
-3
-240
-350
-480
+<h3>入力例 1</h3><pre>10
 </pre>
 
 </section>
 </div>
+
 <div class="part">
-
 <section>
-<h3>出力例1</h3>
-
-<pre>
-60
-0
--1
+<h3>出力例 1</h3><pre>9
 </pre>
 
-<p>青木君は <var>3</var> 個の週について調査している。</p>
-
-<ul class="simple">
-
-	<li><var>1</var> 個前の週において、高橋君は <var>240</var> 分運動しており、これは運動時間の下限である <var>300</var> 分に満たない。高橋君はあと <var>60</var> 分追加で運動する必要があるため、<var>1</var> 行目には <var>60</var> を出力する。</li>
-
-	<li><var>2</var> 個前の週において、高橋君は <var>350</var> 分運動しており、これは運動時間の制限に適している。そのため、<var>2</var> 行目には <var>0</var> を出力する。</li>
-
-	<li><var>3</var> 個前の週において、高橋君は <var>480</var> 分運動しており、これは運動時間の上限である <var>400</var> 分を越えており、運動しすぎである。そのため、<var>3</var> 行目には <var>-1</var> を出力する。</li>
-
-</ul>
-
+<p><var>10</var> 以下のべき乗数は <var>1</var>,<var>4</var>,<var>8</var>,<var>9</var> の <var>4</var> つです。
+この内最も大きい <var>9</var> を出力してください。</p>
 </section>
 </div>
+
 <hr />
+
 <div class="part">
-
 <section>
-<h3>入力例2</h3>
-
-<pre>
-50 80
-5
-10000
-50
-81
-80
-0
+<h3>入力例 2</h3><pre>1
 </pre>
 
 </section>
 </div>
+
 <div class="part">
-
 <section>
-<h3>出力例2</h3>
-
-<pre>
--1
-0
--1
-0
-50
+<h3>出力例 2</h3><pre>1
 </pre>
 
 </section>
 </div>
+
+<hr />
+
+<div class="part">
+<section>
+<h3>入力例 3</h3><pre>999
+</pre>
+
+</section>
 </div>
+
+<div class="part">
+<section>
+<h3>出力例 3</h3><pre>961
+</pre></section>
+</div>
+</span>
+<span class="lang-en">
+<p>Score : <var>200</var> points</p>
+
+<div class="part">
+<section>
+<h3>Problem Statement</h3><p>You are given a positive integer <var>X</var>.
+Find the largest <em>perfect power</em> that is at most <var>X</var>.
+Here, a perfect power is an integer that can be represented as <var>b^p</var>, where <var>b</var> is an integer not less than <var>1</var> and <var>p</var> is an integer not less than <var>2</var>.</p>
+</section>
+</div>
+
+<div class="part">
+<section>
+<h3>Constraints</h3><ul>
+<li><var>1</var> <var>≤</var> <var>X</var> <var>≤</var> <var>1000</var></li>
+<li><var>X</var> is an integer.</li>
+</ul>
+</section>
+</div>
+
+<hr />
+
+<div class="io-style">
+<div class="part">
+<section>
+<h3>Input</h3><p>Input is given from Standard Input in the following format:</p>
+<pre><var>X</var>
+</pre>
+
+</section>
+</div>
+
+<div class="part">
+<section>
+<h3>Output</h3><p>Print the largest perfect power that is at most <var>X</var>.</p>
+</section>
+</div>
+</div>
+
+<hr />
+
+<div class="part">
+<section>
+<h3>Sample Input 1</h3><pre>10
+</pre>
+
+</section>
+</div>
+
+<div class="part">
+<section>
+<h3>Sample Output 1</h3><pre>9
+</pre>
+
+<p>There are four perfect powers that are at most <var>10</var>: <var>1</var>, <var>4</var>, <var>8</var> and <var>9</var>.
+We should print the largest among them, <var>9</var>.</p>
+</section>
+</div>
+
+<hr />
+
+<div class="part">
+<section>
+<h3>Sample Input 2</h3><pre>1
+</pre>
+
+</section>
+</div>
+
+<div class="part">
+<section>
+<h3>Sample Output 2</h3><pre>1
+</pre>
+
+</section>
+</div>
+
+<hr />
+
+<div class="part">
+<section>
+<h3>Sample Input 3</h3><pre>999
+</pre>
+
+</section>
+</div>
+
+<div class="part">
+<section>
+<h3>Sample Output 3</h3><pre>961
+</pre></section>
+</div>
+</span>
+</span>
 
 		</div>
 
@@ -473,8 +542,8 @@
 
 		
 		<hr/>
-		<form class="form-horizontal form-code-submit" action="/contests/abc031/submit" method="POST">
-			<input type="hidden" name="data.TaskScreenName" value="abc031_b" />
+		<form class="form-horizontal form-code-submit" action="/contests/abc097/submit" method="POST">
+			<input type="hidden" name="data.TaskScreenName" value="abc097_b" />
 			
 			<div class="form-group ">
 				<label class="control-label col-sm-3 col-md-2" for="select-lang">Language</label>
@@ -699,7 +768,7 @@
 </div>
 
 
-			<input type="hidden" name="csrf_token" value="dd1TlswZo5zwN/DSzLIpCgtdTMK5Xa2Z4OXK327oKWI=" />
+			<input type="hidden" name="csrf_token" value="hvYdp1OMT2ixvmwTnLuIrcEhBUMOSoNwTwW99KtVFxg=" />
 			<div class="form-group">
 				<label class="control-label col-sm-3 col-md-2"></label>
 				<div class="col-sm-5">
@@ -719,7 +788,7 @@
 			
 			
 			
-<div class="a2a_kit a2a_kit_size_20 a2a_default_style pull-right" data-a2a-url="https://atcoder.jp/contests/abc031/tasks/abc031_b?lang=en" data-a2a-title="B - 運動管理">
+<div class="a2a_kit a2a_kit_size_20 a2a_default_style pull-right" data-a2a-url="https://atcoder.jp/contests/abc097/tasks/abc097_b?lang=en" data-a2a-title="B - Exponential">
 	<a class="a2a_button_facebook"></a>
 	<a class="a2a_button_twitter"></a>
 	
@@ -739,8 +808,8 @@
 			<footer class="footer">
 			
 				<ul>
-					<li><a href="/contests/abc031/rules">Rule</a></li>
-					<li><a href="/contests/abc031/glossary">Glossary</a></li>
+					<li><a href="/contests/abc097/rules">Rule</a></li>
+					<li><a href="/contests/abc097/glossary">Glossary</a></li>
 					
 				</ul>
 			

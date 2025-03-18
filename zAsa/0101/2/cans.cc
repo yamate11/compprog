@@ -2,6 +2,7 @@
 #include <cassert>
 using namespace std;
 using ll = long long int;
+using u64 = unsigned long long;
 using pll = pair<ll, ll>;
 // #include <atcoder/all>
 // using namespace atcoder;
@@ -19,22 +20,7 @@ int main(/* int argc, char *argv[] */) {
   cout << setprecision(20);
 
   ll N; cin >> N;
-  // @InpVec(N, R) [tS0zavvd]
-  auto R = vector(N, ll());
-  for (int i = 0; i < N; i++) { ll v; cin >> v; R[i] = v; }
-  // @End [tS0zavvd]
-  // @InpVec(N, C) [nZp2FxeX]
-  auto C = vector(N, ll());
-  for (int i = 0; i < N; i++) { ll v; cin >> v; C[i] = v; }
-  // @End [nZp2FxeX]
-
-  ll Q; cin >> Q;
-  REP(q, 0, Q) {
-    ll r, c; cin >> r >> c; r--; c--;
-    if (C[c] + R[r] >= N + 1) cout << '#';
-    else cout << '.';
-  }
-  cout << endl;
+  cout << N / 25 << endl;
 
   return 0;
 }

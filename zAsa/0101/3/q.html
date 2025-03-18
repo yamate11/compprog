@@ -9,7 +9,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>C - Index × A(Continuous ver.)</title>
+	<title>D - Weak Takahashi</title>
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 	<meta http-equiv="Content-Language" content="en">
 	<meta name="viewport" content="width=device-width,initial-scale=1.0">
@@ -22,7 +22,11 @@
 		window.dataLayer = window.dataLayer || [];
 		function gtag(){dataLayer.push(arguments);}
 		gtag('js', new Date());
-
+		gtag('set', 'user_properties', {
+			
+				'login_status': 'logged_in',
+			
+		});
 		gtag('config', 'G-RC512FD18N');
 	</script>
 
@@ -32,61 +36,61 @@
 
 	<meta property="og:site_name" content="AtCoder">
 	
-	<meta property="og:title" content="C - Index × A(Continuous ver.)" />
+	<meta property="og:title" content="D - Weak Takahashi" />
 	<meta property="og:description" content="AtCoder is a programming contest site for anyone from beginners to experts. We hold weekly programming contests online." />
 	<meta property="og:type" content="website" />
-	<meta property="og:url" content="https://atcoder.jp/contests/abc267/tasks/abc267_c" />
+	<meta property="og:url" content="https://atcoder.jp/contests/abc232/tasks/abc232_d" />
 	<meta property="og:image" content="https://img.atcoder.jp/assets/atcoder.png" />
 	<meta name="twitter:card" content="summary" />
 	<meta name="twitter:site" content="@atcoder" />
 	
-	<meta property="twitter:title" content="C - Index × A(Continuous ver.)" />
+	<meta property="twitter:title" content="D - Weak Takahashi" />
 
 	<link href="//fonts.googleapis.com/css?family=Lato:400,700" rel="stylesheet" type="text/css">
-	<link rel="stylesheet" type="text/css" href="//img.atcoder.jp/public/4e015d0/css/bootstrap.min.css">
-	<link rel="stylesheet" type="text/css" href="//img.atcoder.jp/public/4e015d0/css/base.css">
+	<link rel="stylesheet" type="text/css" href="//img.atcoder.jp/public/22afd08/css/bootstrap.min.css">
+	<link rel="stylesheet" type="text/css" href="//img.atcoder.jp/public/22afd08/css/base.css">
 	<link rel="shortcut icon" type="image/png" href="//img.atcoder.jp/assets/favicon.png">
 	<link rel="apple-touch-icon" href="//img.atcoder.jp/assets/atcoder.png">
-	<script src="//img.atcoder.jp/public/4e015d0/js/lib/jquery-1.9.1.min.js"></script>
-	<script src="//img.atcoder.jp/public/4e015d0/js/lib/bootstrap.min.js"></script>
-	<script src="//img.atcoder.jp/public/4e015d0/js/cdn/js.cookie.min.js"></script>
-	<script src="//img.atcoder.jp/public/4e015d0/js/cdn/moment.min.js"></script>
-	<script src="//img.atcoder.jp/public/4e015d0/js/cdn/moment_js-ja.js"></script>
+	<script src="//img.atcoder.jp/public/22afd08/js/lib/jquery-1.9.1.min.js"></script>
+	<script src="//img.atcoder.jp/public/22afd08/js/lib/bootstrap.min.js"></script>
+	<script src="//img.atcoder.jp/public/22afd08/js/cdn/js.cookie.min.js"></script>
+	<script src="//img.atcoder.jp/public/22afd08/js/cdn/moment.min.js"></script>
+	<script src="//img.atcoder.jp/public/22afd08/js/cdn/moment_js-ja.js"></script>
 	<script>
 		var LANG = "en";
 		var userScreenName = "yamate11";
-		var csrfToken = "7UOtlWtLpAAVZOF7U9ZTSr/aFQk/vFYdmq5IyWCm55g="
+		var csrfToken = "D4WNZRgtLGU9GLJqOVddyPQSQMkfBuvcRQ0oCnKtSDE="
 	</script>
-	<script src="//img.atcoder.jp/public/4e015d0/js/utils.js"></script>
+	<script src="//img.atcoder.jp/public/22afd08/js/utils.js"></script>
 	
 	
-		<script src="//img.atcoder.jp/public/4e015d0/js/contest.js"></script>
-		<link href="//img.atcoder.jp/public/4e015d0/css/contest.css" rel="stylesheet" />
+		<script src="//img.atcoder.jp/public/22afd08/js/contest.js"></script>
+		<link href="//img.atcoder.jp/public/22afd08/css/contest.css" rel="stylesheet" />
 		<script>
-			var contestScreenName = "abc267";
+			var contestScreenName = "abc232";
 			var remainingText = "Remaining Time";
 			var countDownText = "Contest begins in";
-			var startTime = moment("2022-09-03T21:00:00+09:00");
-			var endTime = moment("2022-09-03T22:40:00+09:00");
+			var startTime = moment("2021-12-19T21:00:00+09:00");
+			var endTime = moment("2021-12-19T22:40:00+09:00");
 		</script>
 		<style></style>
 	
 	
-		<link href="//img.atcoder.jp/public/4e015d0/css/cdn/select2.min.css" rel="stylesheet" />
-		<link href="//img.atcoder.jp/public/4e015d0/css/cdn/select2-bootstrap.min.css" rel="stylesheet" />
-		<script src="//img.atcoder.jp/public/4e015d0/js/lib/select2.min.js"></script>
+		<link href="//img.atcoder.jp/public/22afd08/css/cdn/select2.min.css" rel="stylesheet" />
+		<link href="//img.atcoder.jp/public/22afd08/css/cdn/select2-bootstrap.min.css" rel="stylesheet" />
+		<script src="//img.atcoder.jp/public/22afd08/js/lib/select2.min.js"></script>
 	
 	
-		<script src="//img.atcoder.jp/public/4e015d0/js/ace/ace.js"></script>
-		<script src="//img.atcoder.jp/public/4e015d0/js/ace/ext-language_tools.js"></script>
+		<script src="//img.atcoder.jp/public/22afd08/js/ace/ace.js"></script>
+		<script src="//img.atcoder.jp/public/22afd08/js/ace/ext-language_tools.js"></script>
 	
 	
-		<script src="//img.atcoder.jp/public/4e015d0/js/cdn/run_prettify.js"></script>
+		<script src="//img.atcoder.jp/public/22afd08/js/cdn/run_prettify.js"></script>
 	
 	
-		<link rel="stylesheet" href="//img.atcoder.jp/public/4e015d0/css/cdn/katex.min.css">
-		<script defer src="//img.atcoder.jp/public/4e015d0/js/cdn/katex.min.js"></script>
-		<script defer src="//img.atcoder.jp/public/4e015d0/js/cdn/auto-render.min.js"></script>
+		<link rel="stylesheet" href="//img.atcoder.jp/public/22afd08/css/cdn/katex.min.css">
+		<script defer src="//img.atcoder.jp/public/22afd08/js/cdn/katex.min.js"></script>
+		<script defer src="//img.atcoder.jp/public/22afd08/js/cdn/auto-render.min.js"></script>
 		<script>$(function(){$('var').each(function(){var html=$(this).html().replace(/<sub>/g,'_{').replace(/<\/sub>/g,'}');$(this).html('\\('+html+'\\)');});});</script>
 		<script>
 			var katexOptions = {
@@ -111,7 +115,7 @@
 	
 	
 	
-	<script src="//img.atcoder.jp/public/4e015d0/js/base.js"></script>
+	<script src="//img.atcoder.jp/public/22afd08/js/base.js"></script>
 </head>
 
 <body>
@@ -131,11 +135,11 @@
 				<h4 class="modal-title">Contest started</h4>
 			</div>
 			<div class="modal-body">
-				<p>NEC Programming Contest 2022 (AtCoder Beginner Contest 267) has begun.</p>
+				<p>M-SOLUTIONS Programming Contest 2021(AtCoder Beginner Contest 232) has begun.</p>
 			</div>
 			<div class="modal-footer">
 				
-					<a class="btn btn-primary" href='/contests/abc267/tasks'>Go to the task list page</a>
+					<a class="btn btn-primary" href='/contests/abc232/tasks'>Go to the task list page</a>
 				
 			</div>
 		</div>
@@ -149,7 +153,7 @@
 				<h4 class="modal-title">Contest is over</h4>
 			</div>
 			<div class="modal-body">
-				<p>NEC Programming Contest 2022 (AtCoder Beginner Contest 267) has ended.</p>
+				<p>M-SOLUTIONS Programming Contest 2021(AtCoder Beginner Contest 232) has ended.</p>
 			</div>
 			<div class="modal-footer">
 				<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
@@ -171,7 +175,7 @@
 			<div class="collapse navbar-collapse" id="navbar-collapse">
 				<ul class="nav navbar-nav">
 				
-					<li><a class="contest-title" href="/contests/abc267">NEC Programming Contest 2022 (AtCoder Beginner Contest 267)</a></li>
+					<li><a class="contest-title" href="/contests/abc232">M-SOLUTIONS Programming Contest 2021(AtCoder Beginner Contest 232)</a></li>
 				
 				</ul>
 				<ul class="nav navbar-nav navbar-right">
@@ -181,8 +185,8 @@
 							<img src='//img.atcoder.jp/assets/top/img/flag-lang/en.png'> English <span class="caret"></span>
 						</a>
 						<ul class="dropdown-menu">
-							<li><a href="/contests/abc267/tasks/abc267_c?lang=ja"><img src='//img.atcoder.jp/assets/top/img/flag-lang/ja.png'> 日本語</a></li>
-							<li><a href="/contests/abc267/tasks/abc267_c?lang=en"><img src='//img.atcoder.jp/assets/top/img/flag-lang/en.png'> English</a></li>
+							<li><a href="/contests/abc232/tasks/abc232_d?lang=ja"><img src='//img.atcoder.jp/assets/top/img/flag-lang/ja.png'> 日本語</a></li>
+							<li><a href="/contests/abc232/tasks/abc232_d?lang=en"><img src='//img.atcoder.jp/assets/top/img/flag-lang/en.png'> English</a></li>
 						</ul>
 					</li>
 					
@@ -211,8 +215,8 @@
 		</div>
 	</nav>
 
-	<form method="POST" name="form_logout" action="/logout?continue=https%3A%2F%2Fatcoder.jp%2Fcontests%2Fabc267%2Ftasks%2Fabc267_c">
-		<input type="hidden" name="csrf_token" value="7UOtlWtLpAAVZOF7U9ZTSr/aFQk/vFYdmq5IyWCm55g=" />
+	<form method="POST" name="form_logout" action="/logout?continue=https%3A%2F%2Fatcoder.jp%2Fcontests%2Fabc232%2Ftasks%2Fabc232_d">
+		<input type="hidden" name="csrf_token" value="D4WNZRgtLGU9GLJqOVddyPQSQMkfBuvcRQ0oCnKtSDE=" />
 	</form>
 	<div id="main-container" class="container"
 		 	style="padding-top:50px;">
@@ -225,35 +229,36 @@
 		<small class="contest-duration">
 			
 				Contest Duration:
-				<a href='http://www.timeanddate.com/worldclock/fixedtime.html?iso=20220903T2100&p1=248' target='blank'><time class='fixtime fixtime-full'>2022-09-03 21:00:00+0900</time></a> - <a href='http://www.timeanddate.com/worldclock/fixedtime.html?iso=20220903T2240&p1=248' target='blank'><time class='fixtime fixtime-full'>2022-09-03 22:40:00+0900</time></a> (local time)
+				<a href='http://www.timeanddate.com/worldclock/fixedtime.html?iso=20211219T2100&p1=248' target='blank'><time class='fixtime fixtime-full'>2021-12-19 21:00:00+0900</time></a> - <a href='http://www.timeanddate.com/worldclock/fixedtime.html?iso=20211219T2240&p1=248' target='blank'><time class='fixtime fixtime-full'>2021-12-19 22:40:00+0900</time></a> (local time)
 				(100 minutes)
 			
 		</small>
 		<small class="back-to-home pull-right"><a href="/home">Back to Home</a></small>
 	</div>
 	<ul class="nav nav-tabs">
-		<li><a href="/contests/abc267"><span class="glyphicon glyphicon-home" aria-hidden="true"></span> Top</a></li>
+		<li><a href="/contests/abc232"><span class="glyphicon glyphicon-home" aria-hidden="true"></span> Top</a></li>
 		
-			<li class="active"><a href="/contests/abc267/tasks"><span class="glyphicon glyphicon-tasks" aria-hidden="true"></span> Tasks</a></li>
-		
-
-		
-			<li><a href="/contests/abc267/clarifications"><span class="glyphicon glyphicon-question-sign" aria-hidden="true"></span> Clarifications <span id="clar-badge" class="badge"></span></a></li>
+			<li class="active"><a href="/contests/abc232/tasks"><span class="glyphicon glyphicon-tasks" aria-hidden="true"></span> Tasks</a></li>
 		
 
 		
-			<li><a href="/contests/abc267/submit?taskScreenName=abc267_c"><span class="glyphicon glyphicon-send" aria-hidden="true"></span> Submit</a></li>
+			<li><a href="/contests/abc232/clarifications"><span class="glyphicon glyphicon-question-sign" aria-hidden="true"></span> Clarifications <span id="clar-badge" class="badge" ></span></a></li>
+		
+
+		
+			<li><a href="/contests/abc232/submit?taskScreenName=abc232_d"><span class="glyphicon glyphicon-send" aria-hidden="true"></span> Submit</a></li>
 		
 
 		
 			<li>
 				<a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false"><span class="glyphicon glyphicon-list" aria-hidden="true"></span> Results<span class="caret"></span></a>
 				<ul class="dropdown-menu">
-					<li><a href="/contests/abc267/submissions"><span class="glyphicon glyphicon-globe" aria-hidden="true"></span> All Submissions</a></li>
+					<li><a href="/contests/abc232/submissions"><span class="glyphicon glyphicon-globe" aria-hidden="true"></span> All Submissions</a></li>
 					
-						<li><a href="/contests/abc267/submissions/me"><span class="glyphicon glyphicon-user" aria-hidden="true"></span> My Submissions</a></li>
+						<li><a href="/contests/abc232/submissions/me"><span class="glyphicon glyphicon-user" aria-hidden="true"></span> My Submissions</a></li>
+						
 						<li class="divider"></li>
-						<li><a href="/contests/abc267/score"><span class="glyphicon glyphicon-dashboard" aria-hidden="true"></span> My Score</a></li>
+						<li><a href="/contests/abc232/score"><span class="glyphicon glyphicon-dashboard" aria-hidden="true"></span> My Score</a></li>
 					
 				</ul>
 			</li>
@@ -262,21 +267,21 @@
 		
 			
 				
-					<li><a href="/contests/abc267/standings"><span class="glyphicon glyphicon-sort-by-attributes-alt" aria-hidden="true"></span> Standings</a></li>
+					<li><a href="/contests/abc232/standings"><span class="glyphicon glyphicon-sort-by-attributes-alt" aria-hidden="true"></span> Standings</a></li>
 				
 			
 				
-					<li><a href="/contests/abc267/standings/virtual"><span class="glyphicon glyphicon-sort-by-attributes-alt" aria-hidden="true"></span> Virtual Standings</a></li>
+					<li><a href="/contests/abc232/standings/virtual"><span class="glyphicon glyphicon-sort-by-attributes-alt" aria-hidden="true"></span> Virtual Standings</a></li>
 				
 			
 		
 
 		
-			<li><a href="/contests/abc267/custom_test"><span class="glyphicon glyphicon-wrench" aria-hidden="true"></span> Custom Test</a></li>
+			<li><a href="/contests/abc232/custom_test"><span class="glyphicon glyphicon-wrench" aria-hidden="true"></span> Custom Test</a></li>
 		
 
 		
-			<li><a href="/contests/abc267/editorial"><span class="glyphicon glyphicon-book" aria-hidden="true"></span> Editorial</a></li>
+			<li><a href="/contests/abc232/editorial"><span class="glyphicon glyphicon-book" aria-hidden="true"></span> Editorial</a></li>
 		
 		
 			
@@ -288,8 +293,8 @@
 </div>
 	<div class="col-sm-12">
 		<span class="h2">
-			C - Index × A(Continuous ver.)
-			<a class="btn btn-default btn-sm" href="/contests/abc267/tasks/abc267_c/editorial">Editorial</a>
+			D - Weak Takahashi
+			<a class="btn btn-default btn-sm" href="/contests/abc232/tasks/abc232_d/editorial">Editorial</a>
 		</span>
 		<span id="task-lang-btn" class="pull-right"><span data-lang="ja"><img src='//img.atcoder.jp/assets/top/img/flag-lang/ja.png'></span> / <span data-lang="en"><img src='//img.atcoder.jp/assets/top/img/flag-lang/en.png'></span></span>
 		<script>
@@ -330,34 +335,36 @@
 		<p>
 			Time Limit: 2 sec / Memory Limit: 1024 MB
 			
+			
 		</p>
 
 		<div id="task-statement">
 			
+
+
+	
+	
+
 			<span class="lang">
 <span class="lang-ja">
-<p>配点 : <var>300</var> 点</p>
+<p>配点 : <var>400</var> 点</p>
 
 <div class="part">
 <section>
-<h3>問題文</h3><p>長さ <var>N</var> の整数列 <var>A=(A_1,A_2,\dots,A_N)</var> が与えられます。</p>
-<p>長さ <var>M</var> の <var>A</var> の連続部分列 <var>B=(B_1,B_2,\dots,B_M)</var> に対する、<var>\displaystyle \sum_{i=1}^{M} i \times B_i</var> の最大値を求めてください。</p>
-</section>
-</div>
-
-<div class="part">
-<section>
-<h3>注記</h3><p>数列の<strong>連続部分列</strong>とは、数列の先頭から <var>0</var> 個以上、末尾から <var>0</var> 個以上の要素を削除して得られる列のことをいいます。  </p>
-<p>例えば <var>(2, 3)</var> や <var>(1, 2, 3)</var> は <var>(1, 2, 3, 4)</var> の連続部分列ですが、<var>(1, 3)</var> や <var>(3,2,1)</var> は <var>(1, 2, 3, 4)</var> の連続部分列ではありません。  </p>
+<h3>問題文</h3><p>縦 <var>H</var> 行、横 <var>W</var> 行の <var>H \times W</var> マスからなるグリッドがあります。上から <var>i</var> 行目、左から <var>j</var> 列目のマスを <var>(i, j)</var> と表します。<br />
+各マスの状態は文字 <var>C_{i, j}</var> で表され、<var>C_{i, j} = </var> <code>.</code> ならばマス <var>(i, j)</var> は空きマスであり、<var>C_{i, j} = </var> <code>#</code> ならばマス <var>(i, j)</var> は壁です。</p>
+<p>高橋君がグリッド上を歩こうとしています。彼がマス <var>(i, j)</var> にいるとき、マス <var>(i, j + 1)</var> またはマス <var>(i + 1, j)</var> に移動することができます。ただし、グリッドの外に出るような移動や、壁のマスへの移動を行うことはできません。高橋君は、移動することのできるマスが無くなった時点で立ち止まります。</p>
+<p>高橋君がマス <var>(1, 1)</var> から歩き始めるとき、彼が立ち止まるまでに通ることのできるマスは最大で何マスですか？</p>
 </section>
 </div>
 
 <div class="part">
 <section>
 <h3>制約</h3><ul>
-<li><var>1 \le M \le N \le 2 \times 10^5</var></li>
-<li><var>- 2 \times 10^5 \le A_i \le 2 \times 10^5</var></li>
-<li>入力は全て整数。</li>
+<li><var>1 \leq H, W \leq 100</var></li>
+<li><var>H, W</var> は整数</li>
+<li><var>C_{i, j} = </var> <code>.</code> または <var>C_{i, j} = </var> <code>#</code> <var>(1 \leq i \leq H, 1 \leq j \leq W)</var></li>
+<li><var>C_{1, 1} = </var> <code>.</code></li>
 </ul>
 </section>
 </div>
@@ -367,8 +374,10 @@
 <div class="part">
 <section>
 <h3>入力</h3><p>入力は以下の形式で標準入力から与えられる。</p>
-<pre><var>N</var> <var>M</var>
-<var>A_1</var> <var>A_2</var> <var>\dots</var> <var>A_N</var>
+<pre><var>H</var> <var>W</var>
+<var>C_{1, 1} \ldots C_{1, W}</var>
+<var>\vdots</var>
+<var>C_{H, 1} \ldots C_{H, W}</var>
 </pre>
 </section>
 </div>
@@ -383,59 +392,77 @@
 <hr />
 <div class="part">
 <section>
-<h3>入力例 1</h3><pre>4 2
-5 4 -1 8
+<h3>入力例 1</h3><pre>3 4
+.#..
+..#.
+..##
 </pre>
 </section>
 </div>
 
 <div class="part">
 <section>
-<h3>出力例 1</h3><pre>15
+<h3>出力例 1</h3><pre>4
 </pre>
-<p><var>B=(A_3,A_4)</var> とした場合、<var>\displaystyle \sum_{i=1}^{M} i \times B_i = 1 \times (-1) + 2 \times 8 = 15</var> となります。<var>16</var> 以上の値を達成することはできないため、解は <var>15</var> です。</p>
-<p><var>B=(A_1,A_4)</var> などを選ぶことができないことに注意してください。</p>
+<p>例えば <var>(1, 1) \rightarrow (2, 1) \rightarrow (2, 2) \rightarrow (3, 2)</var> と進むことで、<var>4</var> マス通ることができます。</p>
+<p><var>5</var> マス以上通ることはできないので、<var>4</var> と出力します。</p>
 </section>
 </div>
 
 <hr />
 <div class="part">
 <section>
-<h3>入力例 2</h3><pre>10 4
--3 1 -4 1 -5 9 -2 6 -5 3
+<h3>入力例 2</h3><pre>1 1
+.
 </pre>
 </section>
 </div>
 
 <div class="part">
 <section>
-<h3>出力例 2</h3><pre>31
-</pre></section>
+<h3>出力例 2</h3><pre>1
+</pre>
+</section>
 </div>
-</span>
-<span class="lang-en">
-<p>Score : <var>300</var> points</p>
 
+<hr />
 <div class="part">
 <section>
-<h3>Problem Statement</h3><p>You are given an integer sequence <var>A=(A_1,A_2,\dots,A_N)</var> of length <var>N</var>.</p>
-<p>Find the maximum value of <var>\displaystyle \sum_{i=1}^{M} i \times B_i</var> for a contiguous subarray <var>B=(B_1,B_2,\dots,B_M)</var> of <var>A</var> of length <var>M</var>.</p>
+<h3>入力例 3</h3><pre>5 5
+.....
+.....
+.....
+.....
+.....
+</pre>
 </section>
 </div>
 
 <div class="part">
 <section>
-<h3>Notes</h3><p>A <strong>contiguous subarray</strong> of a number sequence is a sequence that is obtained by removing <var>0</var> or more initial terms and <var>0</var> or more final terms from the original number sequence.</p>
-<p>For example, <var>(2, 3)</var> and <var>(1, 2, 3)</var> are contiguous subarrays of <var>(1, 2, 3, 4)</var>, but <var>(1, 3)</var> and <var>(3,2,1)</var> are not contiguous subarrays of <var>(1, 2, 3, 4)</var>.  </p>
+<h3>出力例 3</h3><pre>9
+</pre></section>
+</div>
+</span>
+<span class="lang-en">
+<p>Score : <var>400</var> points</p>
+
+<div class="part">
+<section>
+<h3>Problem Statement</h3><p>There is a <var>H \times W</var>-square grid with <var>H</var> horizontal rows and <var>W</var> vertical columns. Let <var>(i, j)</var> denote the square at the <var>i</var>-th row from the top and <var>j</var>-th column from the left.<br />
+Each square is described by a character <var>C_{i, j}</var>, where <var>C_{i, j} = </var> <code>.</code> means <var>(i, j)</var> is an empty square, and <var>C_{i, j} = </var> <code>#</code> means <var>(i, j)</var> is a wall.</p>
+<p>Takahashi is about to start walking in this grid. When he is on <var>(i, j)</var>, he can go to <var>(i, j + 1)</var> or <var>(i + 1, j)</var>. However, he cannot exit the grid or enter a wall square. He will stop when there is no more square to go to.</p>
+<p>When starting on <var>(1, 1)</var>, at most how many squares can Takahashi visit before he stops?</p>
 </section>
 </div>
 
 <div class="part">
 <section>
 <h3>Constraints</h3><ul>
-<li><var>1 \le M \le N \le 2 \times 10^5</var></li>
-<li><var>- 2 \times 10^5 \le A_i \le 2 \times 10^5</var></li>
-<li>All values in input are integers.</li>
+<li><var>1 \leq H, W \leq 100</var></li>
+<li><var>H</var> and <var>W</var> are integers.</li>
+<li><var>C_{i, j} = </var> <code>.</code> or <var>C_{i, j} = </var> <code>#</code>. <var>(1 \leq i \leq H, 1 \leq j \leq W)</var></li>
+<li><var>C_{1, 1} = </var> <code>.</code></li>
 </ul>
 </section>
 </div>
@@ -445,8 +472,10 @@
 <div class="part">
 <section>
 <h3>Input</h3><p>Input is given from Standard Input in the following format:</p>
-<pre><var>N</var> <var>M</var>
-<var>A_1</var> <var>A_2</var> <var>\dots</var> <var>A_N</var>
+<pre><var>H</var> <var>W</var>
+<var>C_{1, 1} \ldots C_{1, W}</var>
+<var>\vdots</var>
+<var>C_{H, 1} \ldots C_{H, W}</var>
 </pre>
 </section>
 </div>
@@ -461,33 +490,55 @@
 <hr />
 <div class="part">
 <section>
-<h3>Sample Input 1</h3><pre>4 2
-5 4 -1 8
+<h3>Sample Input 1</h3><pre>3 4
+.#..
+..#.
+..##
 </pre>
 </section>
 </div>
 
 <div class="part">
 <section>
-<h3>Sample Output 1</h3><pre>15
+<h3>Sample Output 1</h3><pre>4
 </pre>
-<p>When <var>B=(A_3,A_4)</var>, we have <var>\displaystyle \sum_{i=1}^{M} i \times B_i = 1 \times (-1) + 2 \times 8 = 15</var>.  Since it is impossible to achieve <var>16</var> or a larger value, the solution is <var>15</var>.</p>
-<p>Note that you are not allowed to choose, for instance, <var>B=(A_1,A_4)</var>.</p>
+<p>For example, by going <var>(1, 1) \rightarrow (2, 1) \rightarrow (2, 2) \rightarrow (3, 2)</var>, he can visit <var>4</var> squares.</p>
+<p>He cannot visit <var>5</var> or more squares, so we should print <var>4</var>.</p>
 </section>
 </div>
 
 <hr />
 <div class="part">
 <section>
-<h3>Sample Input 2</h3><pre>10 4
--3 1 -4 1 -5 9 -2 6 -5 3
+<h3>Sample Input 2</h3><pre>1 1
+.
 </pre>
 </section>
 </div>
 
 <div class="part">
 <section>
-<h3>Sample Output 2</h3><pre>31
+<h3>Sample Output 2</h3><pre>1
+</pre>
+</section>
+</div>
+
+<hr />
+<div class="part">
+<section>
+<h3>Sample Input 3</h3><pre>5 5
+.....
+.....
+.....
+.....
+.....
+</pre>
+</section>
+</div>
+
+<div class="part">
+<section>
+<h3>Sample Output 3</h3><pre>9
 </pre></section>
 </div>
 </span>
@@ -498,8 +549,8 @@
 
 		
 		<hr/>
-		<form class="form-horizontal form-code-submit" action="/contests/abc267/submit" method="POST">
-			<input type="hidden" name="data.TaskScreenName" value="abc267_c" />
+		<form class="form-horizontal form-code-submit" action="/contests/abc232/submit" method="POST">
+			<input type="hidden" name="data.TaskScreenName" value="abc232_d" />
 			
 			<div class="form-group ">
 				<label class="control-label col-sm-3 col-md-2" for="select-lang">Language</label>
@@ -724,7 +775,7 @@
 </div>
 
 
-			<input type="hidden" name="csrf_token" value="7UOtlWtLpAAVZOF7U9ZTSr/aFQk/vFYdmq5IyWCm55g=" />
+			<input type="hidden" name="csrf_token" value="D4WNZRgtLGU9GLJqOVddyPQSQMkfBuvcRQ0oCnKtSDE=" />
 			<div class="form-group">
 				<label class="control-label col-sm-3 col-md-2"></label>
 				<div class="col-sm-5">
@@ -744,7 +795,7 @@
 			
 			
 			
-<div class="a2a_kit a2a_kit_size_20 a2a_default_style pull-right" data-a2a-url="https://atcoder.jp/contests/abc267/tasks/abc267_c?lang=en" data-a2a-title="C - Index × A(Continuous ver.)">
+<div class="a2a_kit a2a_kit_size_20 a2a_default_style pull-right" data-a2a-url="https://atcoder.jp/contests/abc232/tasks/abc232_d?lang=en" data-a2a-title="D - Weak Takahashi">
 	<a class="a2a_button_facebook"></a>
 	<a class="a2a_button_twitter"></a>
 	
@@ -764,8 +815,8 @@
 			<footer class="footer">
 			
 				<ul>
-					<li><a href="/contests/abc267/rules">Rule</a></li>
-					<li><a href="/contests/abc267/glossary">Glossary</a></li>
+					<li><a href="/contests/abc232/rules">Rule</a></li>
+					<li><a href="/contests/abc232/glossary">Glossary</a></li>
 					
 				</ul>
 			

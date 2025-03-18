@@ -19,25 +19,18 @@ int main(/* int argc, char *argv[] */) {
   cin.tie(nullptr);
   cout << setprecision(20);
 
-  ll a, b, c; cin >> a >> b >> c;
-  a = a % 10;
-  ll ans = -1;
-  if (a == 0 or a == 1 or a ==5 or a == 6) ans = a;
-  else if (a == 4 or a == 9) {
-    if (b % 2 == 0) ans = (a * a) % 10;
-    else ans = a;
-  }else {
-    if (b % 4 == 0) ans = (a * a * a * a) % 10;
-    else if (b % 4 == 1) ans = a;
-    else if (b % 4 == 2) {
-      if (c == 1) ans = (a * a) % 10;
-      else ans = (a * a * a * a) % 10;
-    }else if (b % 4 == 3) {
-      if (c % 2 == 0) ans = a;
-      else ans = (a * a * a) % 10;
-    }else assert(0);
+  string S; cin >> S;
+  ll N = ssize(S);
+  REP(i, 0, N) {
+    ll r = N - 7;
+    if (i + r >= N) break;
+    string t = S.substr(0, i) + S.substr(i + r);
+    if (t == "keyence") {
+      cout << "YES\n";
+      return 0;
+    }
   }
-  cout << ans << endl;
+  cout << "NO\n";
 
   return 0;
 }

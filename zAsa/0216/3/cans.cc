@@ -19,21 +19,14 @@ int main(/* int argc, char *argv[] */) {
   cin.tie(nullptr);
   cout << setprecision(20);
 
-  ll N; cin >> N;
-  // @InpVec(N, A) [5PmFp0yK]
-  auto A = vector(N, ll());
-  for (int i = 0; i < N; i++) { ll v; cin >> v; A[i] = v; }
-  // @End [5PmFp0yK]
-  ll Q; cin >> Q;
-  vector rec(N + 1, vector<ll>());
-  REP(i, 0, N) rec[A[i]].push_back(i);
-
-  REP(_q, 0, Q) {
-    ll l, r, x; cin >> l >> r >> x; l--;
-    auto it1 = lower_bound(ALL(rec[x]), l);
-    auto it2 = lower_bound(ALL(rec[x]), r);
-    cout << it2 - it1 << "\n";
+  string N; cin >> N;
+  reverse(ALL(N));
+  ll even = 0, odd = 0;
+  REP(i, 0, ssize(N)) {
+    if (i % 2 == 0) odd += N[i] - '0';
+    else even += N[i] - '0';
   }
+  cout << even << " " << odd << endl;
 
   return 0;
 }

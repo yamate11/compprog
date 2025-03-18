@@ -1,0 +1,9 @@
+4 4
+NEGATE -10
+CHMIN -9
+CHMAX -3
+CHMAX -6
+5
+-20
+14
+-15

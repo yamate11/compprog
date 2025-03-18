@@ -1,0 +1,5 @@
+3 1
+CHMAX 9
+CHMIN -6
+CHMIN -1
+10

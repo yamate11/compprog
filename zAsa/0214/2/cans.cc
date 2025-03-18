@@ -19,12 +19,9 @@ int main(/* int argc, char *argv[] */) {
   cin.tie(nullptr);
   cout << setprecision(20);
 
-  ll n, a, b; cin >> n >> a >> b;
-  ll ans = n;
-  if ((b - a) % 2 == 0) ans = min(ans, (b - a) / 2);
-  ans = min(ans, (a - 1) + (b - a + 1) / 2);
-  ans = min(ans, (n - b) + (b - a + 1) / 2);
-  cout << ans << endl;
+  string a, b; cin >> a >> b;
+  string c = a + b;
+  cout << stoll(c) * 2 << endl;
 
   return 0;
 }

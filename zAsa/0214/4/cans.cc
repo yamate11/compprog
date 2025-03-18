@@ -20,22 +20,18 @@ int main(/* int argc, char *argv[] */) {
   cout << setprecision(20);
 
   ll N; cin >> N;
-  // @InpVec(N, A, dec=1) [19YkPoxm]
+  // @InpVec(N,  A) [aAsR1Dfu]
   auto A = vector(N, ll());
-  for (int i = 0; i < N; i++) { ll v; cin >> v; v -= 1; A[i] = v; }
-  // @End [19YkPoxm]
+  for (int i = 0; i < N; i++) { ll v; cin >> v; A[i] = v; }
+  // @End [aAsR1Dfu]
 
-  vector vec(N, vector<ll>());
-  REP(i, 0, N) vec[A[i]].push_back(i);
+  vector S(N + 1, 0LL);
+  REP(i, 0, N) S[i + 1] = S[i] + A[i];
+  map<ll, ll> mp;
+  REP(i, 0, N + 1) mp[S[i]]++;
   ll ans = 0;
-  REP(i, 0, N) {
-    const auto& V = vec[i];
-    ll m = ssize(V);
-    vector<ll> S(m + 1, 0LL); REP(j, 0, m) S[j + 1] = S[j] + V[j];
-    REP(j, 0, m) {
-      ll t = (S[m] - S[j + 1]) - (m - j - 1) * V[j] - (m - j - 1) * (m - j) / 2;
-      ans += t;
-    }
+  for (auto [a, n] : mp) {
+    ans += n * (n - 1) / 2;
   }
   cout << ans << endl;
   return 0;

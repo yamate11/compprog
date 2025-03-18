@@ -9,7 +9,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>A - 2nd Greatest Distance</title>
+	<title>C - Exam and Wizard</title>
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 	<meta http-equiv="Content-Language" content="en">
 	<meta name="viewport" content="width=device-width,initial-scale=1.0">
@@ -22,7 +22,11 @@
 		window.dataLayer = window.dataLayer || [];
 		function gtag(){dataLayer.push(arguments);}
 		gtag('js', new Date());
-
+		gtag('set', 'user_properties', {
+			
+				'login_status': 'logged_in',
+			
+		});
 		gtag('config', 'G-RC512FD18N');
 	</script>
 
@@ -32,61 +36,61 @@
 
 	<meta property="og:site_name" content="AtCoder">
 	
-	<meta property="og:title" content="A - 2nd Greatest Distance" />
+	<meta property="og:title" content="C - Exam and Wizard" />
 	<meta property="og:description" content="AtCoder is a programming contest site for anyone from beginners to experts. We hold weekly programming contests online." />
 	<meta property="og:type" content="website" />
-	<meta property="og:url" content="https://atcoder.jp/contests/arc121/tasks/arc121_a" />
+	<meta property="og:url" content="https://atcoder.jp/contests/keyence2019/tasks/keyence2019_c" />
 	<meta property="og:image" content="https://img.atcoder.jp/assets/atcoder.png" />
 	<meta name="twitter:card" content="summary" />
 	<meta name="twitter:site" content="@atcoder" />
 	
-	<meta property="twitter:title" content="A - 2nd Greatest Distance" />
+	<meta property="twitter:title" content="C - Exam and Wizard" />
 
 	<link href="//fonts.googleapis.com/css?family=Lato:400,700" rel="stylesheet" type="text/css">
-	<link rel="stylesheet" type="text/css" href="//img.atcoder.jp/public/c76394f/css/bootstrap.min.css">
-	<link rel="stylesheet" type="text/css" href="//img.atcoder.jp/public/c76394f/css/base.css">
+	<link rel="stylesheet" type="text/css" href="//img.atcoder.jp/public/22afd08/css/bootstrap.min.css">
+	<link rel="stylesheet" type="text/css" href="//img.atcoder.jp/public/22afd08/css/base.css">
 	<link rel="shortcut icon" type="image/png" href="//img.atcoder.jp/assets/favicon.png">
 	<link rel="apple-touch-icon" href="//img.atcoder.jp/assets/atcoder.png">
-	<script src="//img.atcoder.jp/public/c76394f/js/lib/jquery-1.9.1.min.js"></script>
-	<script src="//img.atcoder.jp/public/c76394f/js/lib/bootstrap.min.js"></script>
-	<script src="//img.atcoder.jp/public/c76394f/js/cdn/js.cookie.min.js"></script>
-	<script src="//img.atcoder.jp/public/c76394f/js/cdn/moment.min.js"></script>
-	<script src="//img.atcoder.jp/public/c76394f/js/cdn/moment_js-ja.js"></script>
+	<script src="//img.atcoder.jp/public/22afd08/js/lib/jquery-1.9.1.min.js"></script>
+	<script src="//img.atcoder.jp/public/22afd08/js/lib/bootstrap.min.js"></script>
+	<script src="//img.atcoder.jp/public/22afd08/js/cdn/js.cookie.min.js"></script>
+	<script src="//img.atcoder.jp/public/22afd08/js/cdn/moment.min.js"></script>
+	<script src="//img.atcoder.jp/public/22afd08/js/cdn/moment_js-ja.js"></script>
 	<script>
 		var LANG = "en";
 		var userScreenName = "yamate11";
-		var csrfToken = "lIzC82GusjHci/all7EztCJgQ6TbEEzNMJ4LpY5j/ks="
+		var csrfToken = "MrLE72oIs66bwVGZvH65YXyE78eUE//FtRUdhr99LTA="
 	</script>
-	<script src="//img.atcoder.jp/public/c76394f/js/utils.js"></script>
+	<script src="//img.atcoder.jp/public/22afd08/js/utils.js"></script>
 	
 	
-		<script src="//img.atcoder.jp/public/c76394f/js/contest.js"></script>
-		<link href="//img.atcoder.jp/public/c76394f/css/contest.css" rel="stylesheet" />
+		<script src="//img.atcoder.jp/public/22afd08/js/contest.js"></script>
+		<link href="//img.atcoder.jp/public/22afd08/css/contest.css" rel="stylesheet" />
 		<script>
-			var contestScreenName = "arc121";
+			var contestScreenName = "keyence2019";
 			var remainingText = "Remaining Time";
 			var countDownText = "Contest begins in";
-			var startTime = moment("2021-05-29T21:00:00+09:00");
-			var endTime = moment("2021-05-29T23:00:00+09:00");
+			var startTime = moment("2019-01-13T21:00:00+09:00");
+			var endTime = moment("2019-01-13T23:00:00+09:00");
 		</script>
 		<style></style>
 	
 	
-		<link href="//img.atcoder.jp/public/c76394f/css/cdn/select2.min.css" rel="stylesheet" />
-		<link href="//img.atcoder.jp/public/c76394f/css/cdn/select2-bootstrap.min.css" rel="stylesheet" />
-		<script src="//img.atcoder.jp/public/c76394f/js/lib/select2.min.js"></script>
+		<link href="//img.atcoder.jp/public/22afd08/css/cdn/select2.min.css" rel="stylesheet" />
+		<link href="//img.atcoder.jp/public/22afd08/css/cdn/select2-bootstrap.min.css" rel="stylesheet" />
+		<script src="//img.atcoder.jp/public/22afd08/js/lib/select2.min.js"></script>
 	
 	
-		<script src="//img.atcoder.jp/public/c76394f/js/ace/ace.js"></script>
-		<script src="//img.atcoder.jp/public/c76394f/js/ace/ext-language_tools.js"></script>
+		<script src="//img.atcoder.jp/public/22afd08/js/ace/ace.js"></script>
+		<script src="//img.atcoder.jp/public/22afd08/js/ace/ext-language_tools.js"></script>
 	
 	
-		<script src="//img.atcoder.jp/public/c76394f/js/cdn/run_prettify.js"></script>
+		<script src="//img.atcoder.jp/public/22afd08/js/cdn/run_prettify.js"></script>
 	
 	
-		<link rel="stylesheet" href="//img.atcoder.jp/public/c76394f/css/cdn/katex.min.css">
-		<script defer src="//img.atcoder.jp/public/c76394f/js/cdn/katex.min.js"></script>
-		<script defer src="//img.atcoder.jp/public/c76394f/js/cdn/auto-render.min.js"></script>
+		<link rel="stylesheet" href="//img.atcoder.jp/public/22afd08/css/cdn/katex.min.css">
+		<script defer src="//img.atcoder.jp/public/22afd08/js/cdn/katex.min.js"></script>
+		<script defer src="//img.atcoder.jp/public/22afd08/js/cdn/auto-render.min.js"></script>
 		<script>$(function(){$('var').each(function(){var html=$(this).html().replace(/<sub>/g,'_{').replace(/<\/sub>/g,'}');$(this).html('\\('+html+'\\)');});});</script>
 		<script>
 			var katexOptions = {
@@ -111,7 +115,7 @@
 	
 	
 	
-	<script src="//img.atcoder.jp/public/c76394f/js/base.js"></script>
+	<script src="//img.atcoder.jp/public/22afd08/js/base.js"></script>
 </head>
 
 <body>
@@ -131,11 +135,11 @@
 				<h4 class="modal-title">Contest started</h4>
 			</div>
 			<div class="modal-body">
-				<p>NOMURA Programming Contest 2021 (AtCoder Regular Contest 121) has begun.</p>
+				<p>KEYENCE Programming Contest 2019 has begun.</p>
 			</div>
 			<div class="modal-footer">
 				
-					<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+					<a class="btn btn-primary" href='/contests/keyence2019/tasks'>Go to the task list page</a>
 				
 			</div>
 		</div>
@@ -149,7 +153,7 @@
 				<h4 class="modal-title">Contest is over</h4>
 			</div>
 			<div class="modal-body">
-				<p>NOMURA Programming Contest 2021 (AtCoder Regular Contest 121) has ended.</p>
+				<p>KEYENCE Programming Contest 2019 has ended.</p>
 			</div>
 			<div class="modal-footer">
 				<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
@@ -171,7 +175,7 @@
 			<div class="collapse navbar-collapse" id="navbar-collapse">
 				<ul class="nav navbar-nav">
 				
-					<li><a class="contest-title" href="/contests/arc121">NOMURA Programming Contest 2021 (AtCoder Regular Contest 121)</a></li>
+					<li><a class="contest-title" href="/contests/keyence2019">KEYENCE Programming Contest 2019</a></li>
 				
 				</ul>
 				<ul class="nav navbar-nav navbar-right">
@@ -181,15 +185,15 @@
 							<img src='//img.atcoder.jp/assets/top/img/flag-lang/en.png'> English <span class="caret"></span>
 						</a>
 						<ul class="dropdown-menu">
-							<li><a href="/contests/arc121/tasks/arc121_a?lang=ja"><img src='//img.atcoder.jp/assets/top/img/flag-lang/ja.png'> 日本語</a></li>
-							<li><a href="/contests/arc121/tasks/arc121_a?lang=en"><img src='//img.atcoder.jp/assets/top/img/flag-lang/en.png'> English</a></li>
+							<li><a href="/contests/keyence2019/tasks/keyence2019_c?lang=ja"><img src='//img.atcoder.jp/assets/top/img/flag-lang/ja.png'> 日本語</a></li>
+							<li><a href="/contests/keyence2019/tasks/keyence2019_c?lang=en"><img src='//img.atcoder.jp/assets/top/img/flag-lang/en.png'> English</a></li>
 						</ul>
 					</li>
 					
 					
 						<li class="dropdown">
 							<a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
-								<span class="glyphicon glyphicon-cog" aria-hidden="true"></span> yamate11 (Guest) <span class="caret"></span>
+								<span class="glyphicon glyphicon-cog" aria-hidden="true"></span> yamate11 (Contestant) <span class="caret"></span>
 							</a>
 							<ul class="dropdown-menu">
 								<li><a href="/users/yamate11"><span class="glyphicon glyphicon-user" aria-hidden="true"></span> My Profile</a></li>
@@ -211,8 +215,8 @@
 		</div>
 	</nav>
 
-	<form method="POST" name="form_logout" action="/logout?continue=https%3A%2F%2Fatcoder.jp%2Fcontests%2Farc121%2Ftasks%2Farc121_a">
-		<input type="hidden" name="csrf_token" value="lIzC82GusjHci/all7EztCJgQ6TbEEzNMJ4LpY5j/ks=" />
+	<form method="POST" name="form_logout" action="/logout?continue=https%3A%2F%2Fatcoder.jp%2Fcontests%2Fkeyence2019%2Ftasks%2Fkeyence2019_c">
+		<input type="hidden" name="csrf_token" value="MrLE72oIs66bwVGZvH65YXyE78eUE//FtRUdhr99LTA=" />
 	</form>
 	<div id="main-container" class="container"
 		 	style="padding-top:50px;">
@@ -225,35 +229,36 @@
 		<small class="contest-duration">
 			
 				Contest Duration:
-				<a href='http://www.timeanddate.com/worldclock/fixedtime.html?iso=20210529T2100&p1=248' target='blank'><time class='fixtime fixtime-full'>2021-05-29 21:00:00+0900</time></a> - <a href='http://www.timeanddate.com/worldclock/fixedtime.html?iso=20210529T2300&p1=248' target='blank'><time class='fixtime fixtime-full'>2021-05-29 23:00:00+0900</time></a> (local time)
+				<a href='http://www.timeanddate.com/worldclock/fixedtime.html?iso=20190113T2100&p1=248' target='blank'><time class='fixtime fixtime-full'>2019-01-13 21:00:00+0900</time></a> - <a href='http://www.timeanddate.com/worldclock/fixedtime.html?iso=20190113T2300&p1=248' target='blank'><time class='fixtime fixtime-full'>2019-01-13 23:00:00+0900</time></a> (local time)
 				(120 minutes)
 			
 		</small>
-		<small class="back-to-home pull-right"><a href="/home">Back to Home</a></small>
+		
 	</div>
 	<ul class="nav nav-tabs">
-		<li><a href="/contests/arc121"><span class="glyphicon glyphicon-home" aria-hidden="true"></span> Top</a></li>
+		<li><a href="/contests/keyence2019"><span class="glyphicon glyphicon-home" aria-hidden="true"></span> Top</a></li>
 		
-			<li class="active"><a href="/contests/arc121/tasks"><span class="glyphicon glyphicon-tasks" aria-hidden="true"></span> Tasks</a></li>
-		
-
-		
-			<li><a href="/contests/arc121/clarifications"><span class="glyphicon glyphicon-question-sign" aria-hidden="true"></span> Clarifications <span id="clar-badge" class="badge"></span></a></li>
+			<li class="active"><a href="/contests/keyence2019/tasks"><span class="glyphicon glyphicon-tasks" aria-hidden="true"></span> Tasks</a></li>
 		
 
 		
-			<li><a href="/contests/arc121/submit?taskScreenName=arc121_a"><span class="glyphicon glyphicon-send" aria-hidden="true"></span> Submit</a></li>
+			<li><a href="/contests/keyence2019/clarifications"><span class="glyphicon glyphicon-question-sign" aria-hidden="true"></span> Clarifications <span id="clar-badge" class="badge" ></span></a></li>
+		
+
+		
+			<li><a href="/contests/keyence2019/submit?taskScreenName=keyence2019_c"><span class="glyphicon glyphicon-send" aria-hidden="true"></span> Submit</a></li>
 		
 
 		
 			<li>
 				<a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false"><span class="glyphicon glyphicon-list" aria-hidden="true"></span> Results<span class="caret"></span></a>
 				<ul class="dropdown-menu">
-					<li><a href="/contests/arc121/submissions"><span class="glyphicon glyphicon-globe" aria-hidden="true"></span> All Submissions</a></li>
+					<li><a href="/contests/keyence2019/submissions"><span class="glyphicon glyphicon-globe" aria-hidden="true"></span> All Submissions</a></li>
 					
-						<li><a href="/contests/arc121/submissions/me"><span class="glyphicon glyphicon-user" aria-hidden="true"></span> My Submissions</a></li>
+						<li><a href="/contests/keyence2019/submissions/me"><span class="glyphicon glyphicon-user" aria-hidden="true"></span> My Submissions</a></li>
+						
 						<li class="divider"></li>
-						<li><a href="/contests/arc121/score"><span class="glyphicon glyphicon-dashboard" aria-hidden="true"></span> My Score</a></li>
+						<li><a href="/contests/keyence2019/score"><span class="glyphicon glyphicon-dashboard" aria-hidden="true"></span> My Score</a></li>
 					
 				</ul>
 			</li>
@@ -262,21 +267,21 @@
 		
 			
 				
-					<li><a href="/contests/arc121/standings"><span class="glyphicon glyphicon-sort-by-attributes-alt" aria-hidden="true"></span> Standings</a></li>
+					<li><a href="/contests/keyence2019/standings"><span class="glyphicon glyphicon-sort-by-attributes-alt" aria-hidden="true"></span> Standings</a></li>
 				
 			
 				
-					<li><a href="/contests/arc121/standings/virtual"><span class="glyphicon glyphicon-sort-by-attributes-alt" aria-hidden="true"></span> Virtual Standings</a></li>
+					<li><a href="/contests/keyence2019/standings/virtual"><span class="glyphicon glyphicon-sort-by-attributes-alt" aria-hidden="true"></span> Virtual Standings</a></li>
 				
 			
 		
 
 		
-			<li><a href="/contests/arc121/custom_test"><span class="glyphicon glyphicon-wrench" aria-hidden="true"></span> Custom Test</a></li>
+			<li><a href="/contests/keyence2019/custom_test"><span class="glyphicon glyphicon-wrench" aria-hidden="true"></span> Custom Test</a></li>
 		
 
 		
-			<li><a href="/contests/arc121/editorial"><span class="glyphicon glyphicon-book" aria-hidden="true"></span> Editorial</a></li>
+			<li><a href="/contests/keyence2019/editorial"><span class="glyphicon glyphicon-book" aria-hidden="true"></span> Editorial</a></li>
 		
 		
 			
@@ -288,8 +293,8 @@
 </div>
 	<div class="col-sm-12">
 		<span class="h2">
-			A - 2nd Greatest Distance
-			<a class="btn btn-default btn-sm" href="/contests/arc121/tasks/arc121_a/editorial">Editorial</a>
+			C - Exam and Wizard
+			<a class="btn btn-default btn-sm" href="/contests/keyence2019/tasks/keyence2019_c/editorial">Editorial</a>
 		</span>
 		<span id="task-lang-btn" class="pull-right"><span data-lang="ja"><img src='//img.atcoder.jp/assets/top/img/flag-lang/ja.png'></span> / <span data-lang="en"><img src='//img.atcoder.jp/assets/top/img/flag-lang/en.png'></span></span>
 		<script>
@@ -330,30 +335,43 @@
 		<p>
 			Time Limit: 2 sec / Memory Limit: 1024 MB
 			
+			
 		</p>
 
 		<div id="task-statement">
 			
+
+
+	
+	
+
 			<span class="lang">
 <span class="lang-ja">
 <p>配点 : <var>400</var> 点</p>
 
 <div class="part">
 <section>
-<h3>問題文</h3><p><var>2</var> 次元平面上に <var>1</var> から <var>N</var> の番号がついた <var>N</var> 軒の家があります。
-家 <var>i</var> は <var>(x_i,y_i)</var> にあります。</p>
-<p>家同士の距離はチェビシェフ距離で定められます。
-すなわち、家 <var>i,j</var> 間の距離は <var>\max(|x_i - x_j|, |y_i-y_j|)</var> です。</p>
-<p>異なる <var>2</var> つの家の組は <var>\frac{N(N-1)}{2}</var> 通りあります。異なる家の組それぞれについて家同士の距離を計算し、距離の値を <strong>降順</strong> に並べて長さ <var>\frac{N(N-1)}{2}</var> の数列を作ります。この数列の先頭から <var>2</var> 番目の値を求めてください。</p>
+<h3>問題文</h3><p>大学生の高橋君は <var>N</var> 個の試験を受けてすべてに合格する必要があります．
+現在，<var>i</var> 番目の試験の準備度は <var>A_{i}</var> です．
+また，高橋君の入念な調査によって，<var>i</var> 番目の試験に合格するためには準備度を <var>B_{i}</var> 以上にしなくてはならないことが分かっています．</p>
+<p>このままだとすべての試験に合格できないかもしれないと思った高橋君は，魔法使いの青木君に頼んで，
+試験の準備度の総和は変えずに，なるべく少ない数の試験の準備度を変更してもらうことで試験を乗り切ることにしました．</p>
+<p>高橋君に代わって，以下の条件を満たす数列 <var>C_1, C_2, ..., C_{N}</var> を考えたときの <var>A_i</var> と <var>C_i</var> が異なるような <var>i</var> の個数の最小値を求めてください．
+そのような数列 <var>C_1, C_2, ..., C_{N}</var> が構成できない場合は <var>-1</var> を出力してください．</p>
+<ul>
+<li>数列 <var>A_1, A_2, ..., A_{N}</var> の総和と数列 <var>C_1, C_2, ..., C_{N}</var> の総和は等しい</li>
+<li>どの <var>i</var> に対しても，<var>B_i \leq C_i</var> が成り立つ</li>
+</ul>
 </section>
 </div>
 
 <div class="part">
 <section>
 <h3>制約</h3><ul>
-<li>与えられる入力は全て整数</li>
-<li><var>3 \leq N \leq 2 \times 10^{5}</var></li>
-<li><var>-10^{9} \leq x_i, y_i \leq 10^{9}</var></li>
+<li><var>1 \leq N \leq 10^5</var></li>
+<li><var>1 \leq A_i \leq 10^9</var></li>
+<li><var>1 \leq B_i \leq 10^9</var></li>
+<li><var>A_i, B_i</var> は整数</li>
 </ul>
 </section>
 </div>
@@ -363,11 +381,10 @@
 <div class="io-style">
 <div class="part">
 <section>
-<h3>入力</h3><p>入力は以下の形式で標準入力から与えられる。</p>
+<h3>入力</h3><p>入力は以下の形式で標準入力から与えられる．</p>
 <pre><var>N</var>
-<var>x_{1}</var> <var>y_{1}</var>
-<var>\vdots</var>
-<var>x_{N}</var> <var>y_{N}</var>
+<var>A_1</var> <var>A_2</var> <var>...</var> <var>A_{N}</var>
+<var>B_1</var> <var>B_2</var> <var>...</var> <var>B_{N}</var>
 </pre>
 
 </section>
@@ -375,7 +392,8 @@
 
 <div class="part">
 <section>
-<h3>出力</h3><p>異なる家の組全てについて家同士の距離を計算し、降順に並べて数列を作ったときの先頭から <var>2</var> 番目の値を出力せよ。</p>
+<h3>出力</h3><p>条件を満たす数列 <var>C_1, C_2, ..., C_{N}</var> を考えたときの <var>A_i</var> と <var>C_i</var> が異なるような <var>i</var> の個数の最小値を出力せよ．
+数列 <var>C_1, C_2, ..., C_{N}</var> が構成できない場合は，<var>-1</var> を出力せよ．</p>
 </section>
 </div>
 </div>
@@ -385,9 +403,8 @@
 <div class="part">
 <section>
 <h3>入力例 1</h3><pre>3
-0 0
-1 2
-4 0
+2 3 5
+3 4 1
 </pre>
 
 </section>
@@ -398,11 +415,10 @@
 <h3>出力例 1</h3><pre>3
 </pre>
 
+<p><var>(A_1, A_2, A_3) = (2, 3, 5)</var> ，<var>(B_1, B_2, B_3) = (3, 4, 1)</var> であり，このままでは <var>1</var> 番目と <var>2</var> 番目の試験に合格できません．
+以下のように <var>C_1, C_2, C_3</var> を構成すれば，<var>A_i</var> と <var>C_i</var> が異なるような <var>i</var> の個数の最小値 <var>3</var> を達成できます．</p>
 <ul>
-<li>家 <var>1,2</var> 間の距離は <var>2</var> です。</li>
-<li>家 <var>1,3</var> 間の距離は <var>4</var> です。</li>
-<li>家 <var>2,3</var> 間の距離は <var>3</var> です。</li>
-<li>これらを降順に並べて作られる数列は <var>(4,3,2)</var> です。先頭から <var>2</var> 番目に現れる数は <var>3</var> です。</li>
+<li><var>(C_1, C_2, C_3) = (3, 5, 2)</var></li>
 </ul>
 </section>
 </div>
@@ -411,11 +427,9 @@
 
 <div class="part">
 <section>
-<h3>入力例 2</h3><pre>4
-0 0
-0 0
-1 0
-0 1
+<h3>入力例 2</h3><pre>3
+2 3 3
+2 2 1
 </pre>
 
 </section>
@@ -423,12 +437,10 @@
 
 <div class="part">
 <section>
-<h3>出力例 2</h3><pre>1
+<h3>出力例 2</h3><pre>0
 </pre>
 
-<ul>
-<li>家は同じ座標に存在することもあります。</li>
-</ul>
+<p>この場合は，何もしなくても全ての試験に合格できます．</p>
 </section>
 </div>
 
@@ -436,27 +448,9 @@
 
 <div class="part">
 <section>
-<h3>入力例 3</h3><pre>20
-407 361
-167 433
-756 388
--551 -47
-306 -471
-36 928
-338 -355
-911 852
-288 70
--961 -769
--668 -386
--690 -378
-182 -609
--677 401
--458 -112
-184 -131
--243 888
--163 471
--11 997
-119 544
+<h3>入力例 3</h3><pre>3
+17 7 1
+25 6 14
 </pre>
 
 </section>
@@ -464,7 +458,28 @@
 
 <div class="part">
 <section>
-<h3>出力例 3</h3><pre>1766
+<h3>出力例 3</h3><pre>-1
+</pre>
+
+<p>この場合は，どのようにしても全ての試験に合格することはできません．</p>
+</section>
+</div>
+
+<hr />
+
+<div class="part">
+<section>
+<h3>入力例 4</h3><pre>12
+757232153 372327760 440075441 195848680 354974235 458054863 463477172 740174259 615762794 632963102 529866931 64991604
+74164189 98239366 465611891 362739947 147060907 118867039 63189252 78303147 501410831 110823640 122948912 572905212
+</pre>
+
+</section>
+</div>
+
+<div class="part">
+<section>
+<h3>出力例 4</h3><pre>5
 </pre></section>
 </div>
 </span>
@@ -473,19 +488,25 @@
 
 <div class="part">
 <section>
-<h3>Problem Statement</h3><p>There are <var>N</var> houses numbered <var>1</var> through <var>N</var> on a two-dimensional plane.
-House <var>i</var> is at <var>(x_i, y_i)</var>.</p>
-<p>We use Chebyshev distance to calculate the distance between two houses. That is, the distance between Houses <var>i</var> and <var>j</var> is <var>\max(|x_i - x_j|, |y_i-y_j|)</var>.</p>
-<p>There are <var>\frac{N(N-1)}{2}</var> pairs formed by two different houses. For each of these pairs, we will calculate the distance between the houses, and then we will sort these distances in <strong>descending order</strong> to get a sequence of length <var>\frac{N(N-1)}{2}</var>. Find the second value from the beginning of this sequence.</p>
+<h3>Problem Statement</h3><p>A university student, Takahashi, has to take <var>N</var> examinations and pass all of them.
+Currently, his <em>readiness</em> for the <var>i</var>-th examination is <var>A_{i}</var>, and according to his investigation, it is known that he needs readiness of at least <var>B_{i}</var> in order to pass the <var>i</var>-th examination.</p>
+<p>Takahashi thinks that he may not be able to pass all the examinations, and he has decided to ask a magician, Aoki, to change the readiness for as few examinations as possible so that he can pass all of them, while not changing the total readiness.</p>
+<p>For Takahashi, find the minimum possible number of indices <var>i</var> such that <var>A_i</var> and <var>C_i</var> are different, for a sequence <var>C_1, C_2, ..., C_{N}</var> that satisfies the following conditions:</p>
+<ul>
+<li>The sum of the sequence <var>A_1, A_2, ..., A_{N}</var> and the sum of the sequence <var>C_1, C_2, ..., C_{N}</var> are equal.</li>
+<li>For every <var>i</var>, <var>B_i \leq C_i</var> holds.</li>
+</ul>
+<p>If such a sequence <var>C_1, C_2, ..., C_{N}</var> cannot be constructed, print <var>-1</var>.</p>
 </section>
 </div>
 
 <div class="part">
 <section>
 <h3>Constraints</h3><ul>
-<li>All values in input are integers.</li>
-<li><var>3 \leq N \leq 2 \times 10^{5}</var></li>
-<li><var>-10^{9} \leq x_i, y_i \leq 10^{9}</var></li>
+<li><var>1 \leq N \leq 10^5</var></li>
+<li><var>1 \leq A_i \leq 10^9</var></li>
+<li><var>1 \leq B_i \leq 10^9</var></li>
+<li><var>A_i</var> and <var>B_i</var> are integers.</li>
 </ul>
 </section>
 </div>
@@ -497,9 +518,8 @@ House <var>i</var> is at <var>(x_i, y_i)</var>.</p>
 <section>
 <h3>Input</h3><p>Input is given from Standard Input in the following format:</p>
 <pre><var>N</var>
-<var>x_{1}</var> <var>y_{1}</var>
-<var>\vdots</var>
-<var>x_{N}</var> <var>y_{N}</var>
+<var>A_1</var> <var>A_2</var> <var>...</var> <var>A_{N}</var>
+<var>B_1</var> <var>B_2</var> <var>...</var> <var>B_{N}</var>
 </pre>
 
 </section>
@@ -507,7 +527,8 @@ House <var>i</var> is at <var>(x_i, y_i)</var>.</p>
 
 <div class="part">
 <section>
-<h3>Output</h3><p>Print the second value from the beginning of the sequence of distances of different houses sorted in descending order.</p>
+<h3>Output</h3><p>Print the minimum possible number of indices <var>i</var> such that <var>A_i</var> and <var>C_i</var> are different, for a sequence <var>C_1, C_2, ..., C_{N}</var> that satisfies the conditions.
+If such a sequence <var>C_1, C_2, ..., C_{N}</var> cannot be constructed, print <var>-1</var>.</p>
 </section>
 </div>
 </div>
@@ -517,9 +538,8 @@ House <var>i</var> is at <var>(x_i, y_i)</var>.</p>
 <div class="part">
 <section>
 <h3>Sample Input 1</h3><pre>3
-0 0
-1 2
-4 0
+2 3 5
+3 4 1
 </pre>
 
 </section>
@@ -530,11 +550,10 @@ House <var>i</var> is at <var>(x_i, y_i)</var>.</p>
 <h3>Sample Output 1</h3><pre>3
 </pre>
 
+<p><var>(A_1, A_2, A_3) = (2, 3, 5)</var> and <var>(B_1, B_2, B_3) = (3, 4, 1)</var>. If nothing is done, he cannot pass the first and second exams.
+The minimum possible number of indices <var>i</var> such that <var>A_i</var> and <var>C_i</var> are different, <var>3</var>, is achieved when:</p>
 <ul>
-<li>The distance between Houses <var>1</var> and <var>2</var> is <var>2</var>;</li>
-<li>The distance between Houses <var>1</var> and <var>3</var> is <var>4</var>;</li>
-<li>The distance between Houses <var>2</var> and <var>3</var> is <var>3</var>.</li>
-<li>By sorting these in descending order, we get <var>(4,3,2)</var>, where the second value from the beginning is <var>3</var>.</li>
+<li><var>(C_1, C_2, C_3) = (3, 5, 2)</var></li>
 </ul>
 </section>
 </div>
@@ -543,11 +562,9 @@ House <var>i</var> is at <var>(x_i, y_i)</var>.</p>
 
 <div class="part">
 <section>
-<h3>Sample Input 2</h3><pre>4
-0 0
-0 0
-1 0
-0 1
+<h3>Sample Input 2</h3><pre>3
+2 3 3
+2 2 1
 </pre>
 
 </section>
@@ -555,12 +572,10 @@ House <var>i</var> is at <var>(x_i, y_i)</var>.</p>
 
 <div class="part">
 <section>
-<h3>Sample Output 2</h3><pre>1
+<h3>Sample Output 2</h3><pre>0
 </pre>
 
-<ul>
-<li>There may be multiple houses at the same coordinates.</li>
-</ul>
+<p>In this case, he has to do nothing in order to pass all the exams.</p>
 </section>
 </div>
 
@@ -568,27 +583,9 @@ House <var>i</var> is at <var>(x_i, y_i)</var>.</p>
 
 <div class="part">
 <section>
-<h3>Sample Input 3</h3><pre>20
-407 361
-167 433
-756 388
--551 -47
-306 -471
-36 928
-338 -355
-911 852
-288 70
--961 -769
--668 -386
--690 -378
-182 -609
--677 401
--458 -112
-184 -131
--243 888
--163 471
--11 997
-119 544
+<h3>Sample Input 3</h3><pre>3
+17 7 1
+25 6 14
 </pre>
 
 </section>
@@ -596,7 +593,28 @@ House <var>i</var> is at <var>(x_i, y_i)</var>.</p>
 
 <div class="part">
 <section>
-<h3>Sample Output 3</h3><pre>1766
+<h3>Sample Output 3</h3><pre>-1
+</pre>
+
+<p>In this case, no matter what is done, he cannot pass all the exams.</p>
+</section>
+</div>
+
+<hr />
+
+<div class="part">
+<section>
+<h3>Sample Input 4</h3><pre>12
+757232153 372327760 440075441 195848680 354974235 458054863 463477172 740174259 615762794 632963102 529866931 64991604
+74164189 98239366 465611891 362739947 147060907 118867039 63189252 78303147 501410831 110823640 122948912 572905212
+</pre>
+
+</section>
+</div>
+
+<div class="part">
+<section>
+<h3>Sample Output 4</h3><pre>5
 </pre></section>
 </div>
 </span>
@@ -608,8 +626,8 @@ House <var>i</var> is at <var>(x_i, y_i)</var>.</p>
 
 		
 		<hr/>
-		<form class="form-horizontal form-code-submit" action="/contests/arc121/submit" method="POST">
-			<input type="hidden" name="data.TaskScreenName" value="arc121_a" />
+		<form class="form-horizontal form-code-submit" action="/contests/keyence2019/submit" method="POST">
+			<input type="hidden" name="data.TaskScreenName" value="keyence2019_c" />
 			
 			<div class="form-group ">
 				<label class="control-label col-sm-3 col-md-2" for="select-lang">Language</label>
@@ -834,7 +852,7 @@ House <var>i</var> is at <var>(x_i, y_i)</var>.</p>
 </div>
 
 
-			<input type="hidden" name="csrf_token" value="lIzC82GusjHci/all7EztCJgQ6TbEEzNMJ4LpY5j/ks=" />
+			<input type="hidden" name="csrf_token" value="MrLE72oIs66bwVGZvH65YXyE78eUE//FtRUdhr99LTA=" />
 			<div class="form-group">
 				<label class="control-label col-sm-3 col-md-2"></label>
 				<div class="col-sm-5">
@@ -854,7 +872,7 @@ House <var>i</var> is at <var>(x_i, y_i)</var>.</p>
 			
 			
 			
-<div class="a2a_kit a2a_kit_size_20 a2a_default_style pull-right" data-a2a-url="https://atcoder.jp/contests/arc121/tasks/arc121_a?lang=en" data-a2a-title="A - 2nd Greatest Distance">
+<div class="a2a_kit a2a_kit_size_20 a2a_default_style pull-right" data-a2a-url="https://atcoder.jp/contests/keyence2019/tasks/keyence2019_c?lang=en" data-a2a-title="C - Exam and Wizard">
 	<a class="a2a_button_facebook"></a>
 	<a class="a2a_button_twitter"></a>
 	
@@ -874,8 +892,8 @@ House <var>i</var> is at <var>(x_i, y_i)</var>.</p>
 			<footer class="footer">
 			
 				<ul>
-					<li><a href="/contests/arc121/rules">Rule</a></li>
-					<li><a href="/contests/arc121/glossary">Glossary</a></li>
+					<li><a href="/contests/keyence2019/rules">Rule</a></li>
+					<li><a href="/contests/keyence2019/glossary">Glossary</a></li>
 					
 				</ul>
 			

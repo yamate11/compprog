@@ -2,6 +2,7 @@
 #include <cassert>
 using namespace std;
 using ll = long long int;
+using u64 = unsigned long long;
 using pll = pair<ll, ll>;
 // #include <atcoder/all>
 // using namespace atcoder;
@@ -19,15 +20,15 @@ int main(/* int argc, char *argv[] */) {
   cout << setprecision(20);
 
   ll N; cin >> N;
-  ll yes = 0, no = 0;
+
+  ll s = 0;
   REP(i, 0, N) {
-    string s; cin >> s;
-    if (s == "For") yes++;
-    else if (s == "Against") no++;
-    else assert(0);
+    s += (i + 1);
+    if (s >= N) {
+      cout << i + 1 << endl;
+      return 0;
+    }
   }
-  if (yes > no) cout << "Yes\n";
-  else cout << "No\n";
 
   return 0;
 }

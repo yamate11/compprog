@@ -9,7 +9,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>C - Four Variables</title>
+	<title>C - Minimization</title>
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 	<meta http-equiv="Content-Language" content="en">
 	<meta name="viewport" content="width=device-width,initial-scale=1.0">
@@ -22,7 +22,11 @@
 		window.dataLayer = window.dataLayer || [];
 		function gtag(){dataLayer.push(arguments);}
 		gtag('js', new Date());
-
+		gtag('set', 'user_properties', {
+			
+				'login_status': 'logged_in',
+			
+		});
 		gtag('config', 'G-RC512FD18N');
 	</script>
 
@@ -32,61 +36,61 @@
 
 	<meta property="og:site_name" content="AtCoder">
 	
-	<meta property="og:title" content="C - Four Variables" />
+	<meta property="og:title" content="C - Minimization" />
 	<meta property="og:description" content="AtCoder is a programming contest site for anyone from beginners to experts. We hold weekly programming contests online." />
 	<meta property="og:type" content="website" />
-	<meta property="og:url" content="https://atcoder.jp/contests/abc292/tasks/abc292_c" />
+	<meta property="og:url" content="https://atcoder.jp/contests/abc101/tasks/arc099_a" />
 	<meta property="og:image" content="https://img.atcoder.jp/assets/atcoder.png" />
 	<meta name="twitter:card" content="summary" />
 	<meta name="twitter:site" content="@atcoder" />
 	
-	<meta property="twitter:title" content="C - Four Variables" />
+	<meta property="twitter:title" content="C - Minimization" />
 
 	<link href="//fonts.googleapis.com/css?family=Lato:400,700" rel="stylesheet" type="text/css">
-	<link rel="stylesheet" type="text/css" href="//img.atcoder.jp/public/36c2fcf/css/bootstrap.min.css">
-	<link rel="stylesheet" type="text/css" href="//img.atcoder.jp/public/36c2fcf/css/base.css">
+	<link rel="stylesheet" type="text/css" href="//img.atcoder.jp/public/e434a31/css/bootstrap.min.css">
+	<link rel="stylesheet" type="text/css" href="//img.atcoder.jp/public/e434a31/css/base.css">
 	<link rel="shortcut icon" type="image/png" href="//img.atcoder.jp/assets/favicon.png">
 	<link rel="apple-touch-icon" href="//img.atcoder.jp/assets/atcoder.png">
-	<script src="//img.atcoder.jp/public/36c2fcf/js/lib/jquery-1.9.1.min.js"></script>
-	<script src="//img.atcoder.jp/public/36c2fcf/js/lib/bootstrap.min.js"></script>
-	<script src="//img.atcoder.jp/public/36c2fcf/js/cdn/js.cookie.min.js"></script>
-	<script src="//img.atcoder.jp/public/36c2fcf/js/cdn/moment.min.js"></script>
-	<script src="//img.atcoder.jp/public/36c2fcf/js/cdn/moment_js-ja.js"></script>
+	<script src="//img.atcoder.jp/public/e434a31/js/lib/jquery-1.9.1.min.js"></script>
+	<script src="//img.atcoder.jp/public/e434a31/js/lib/bootstrap.min.js"></script>
+	<script src="//img.atcoder.jp/public/e434a31/js/cdn/js.cookie.min.js"></script>
+	<script src="//img.atcoder.jp/public/e434a31/js/cdn/moment.min.js"></script>
+	<script src="//img.atcoder.jp/public/e434a31/js/cdn/moment_js-ja.js"></script>
 	<script>
 		var LANG = "en";
 		var userScreenName = "yamate11";
-		var csrfToken = "CJ8u0i3AG/9THd134YlYHuTSRCnQE34Pg4w7IizqEyM="
+		var csrfToken = "hvYdp1OMT2ixvmwTnLuIrcEhBUMOSoNwTwW99KtVFxg="
 	</script>
-	<script src="//img.atcoder.jp/public/36c2fcf/js/utils.js"></script>
+	<script src="//img.atcoder.jp/public/e434a31/js/utils.js"></script>
 	
 	
-		<script src="//img.atcoder.jp/public/36c2fcf/js/contest.js"></script>
-		<link href="//img.atcoder.jp/public/36c2fcf/css/contest.css" rel="stylesheet" />
+		<script src="//img.atcoder.jp/public/e434a31/js/contest.js"></script>
+		<link href="//img.atcoder.jp/public/e434a31/css/contest.css" rel="stylesheet" />
 		<script>
-			var contestScreenName = "abc292";
+			var contestScreenName = "abc101";
 			var remainingText = "Remaining Time";
 			var countDownText = "Contest begins in";
-			var startTime = moment("2023-03-04T21:00:00+09:00");
-			var endTime = moment("2023-03-04T22:40:00+09:00");
+			var startTime = moment("2018-06-23T21:00:00+09:00");
+			var endTime = moment("2018-06-23T22:40:00+09:00");
 		</script>
 		<style></style>
 	
 	
-		<link href="//img.atcoder.jp/public/36c2fcf/css/cdn/select2.min.css" rel="stylesheet" />
-		<link href="//img.atcoder.jp/public/36c2fcf/css/cdn/select2-bootstrap.min.css" rel="stylesheet" />
-		<script src="//img.atcoder.jp/public/36c2fcf/js/lib/select2.min.js"></script>
+		<link href="//img.atcoder.jp/public/e434a31/css/cdn/select2.min.css" rel="stylesheet" />
+		<link href="//img.atcoder.jp/public/e434a31/css/cdn/select2-bootstrap.min.css" rel="stylesheet" />
+		<script src="//img.atcoder.jp/public/e434a31/js/lib/select2.min.js"></script>
 	
 	
-		<script src="//img.atcoder.jp/public/36c2fcf/js/ace/ace.js"></script>
-		<script src="//img.atcoder.jp/public/36c2fcf/js/ace/ext-language_tools.js"></script>
+		<script src="//img.atcoder.jp/public/e434a31/js/ace/ace.js"></script>
+		<script src="//img.atcoder.jp/public/e434a31/js/ace/ext-language_tools.js"></script>
 	
 	
-		<script src="//img.atcoder.jp/public/36c2fcf/js/cdn/run_prettify.js"></script>
+		<script src="//img.atcoder.jp/public/e434a31/js/cdn/run_prettify.js"></script>
 	
 	
-		<link rel="stylesheet" href="//img.atcoder.jp/public/36c2fcf/css/cdn/katex.min.css">
-		<script defer src="//img.atcoder.jp/public/36c2fcf/js/cdn/katex.min.js"></script>
-		<script defer src="//img.atcoder.jp/public/36c2fcf/js/cdn/auto-render.min.js"></script>
+		<link rel="stylesheet" href="//img.atcoder.jp/public/e434a31/css/cdn/katex.min.css">
+		<script defer src="//img.atcoder.jp/public/e434a31/js/cdn/katex.min.js"></script>
+		<script defer src="//img.atcoder.jp/public/e434a31/js/cdn/auto-render.min.js"></script>
 		<script>$(function(){$('var').each(function(){var html=$(this).html().replace(/<sub>/g,'_{').replace(/<\/sub>/g,'}');$(this).html('\\('+html+'\\)');});});</script>
 		<script>
 			var katexOptions = {
@@ -111,7 +115,7 @@
 	
 	
 	
-	<script src="//img.atcoder.jp/public/36c2fcf/js/base.js"></script>
+	<script src="//img.atcoder.jp/public/e434a31/js/base.js"></script>
 </head>
 
 <body>
@@ -131,7 +135,7 @@
 				<h4 class="modal-title">Contest started</h4>
 			</div>
 			<div class="modal-body">
-				<p>AtCoder Beginner Contest 292 has begun.</p>
+				<p>AtCoder Beginner Contest 101 has begun.</p>
 			</div>
 			<div class="modal-footer">
 				
@@ -149,7 +153,7 @@
 				<h4 class="modal-title">Contest is over</h4>
 			</div>
 			<div class="modal-body">
-				<p>AtCoder Beginner Contest 292 has ended.</p>
+				<p>AtCoder Beginner Contest 101 has ended.</p>
 			</div>
 			<div class="modal-footer">
 				<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
@@ -171,7 +175,7 @@
 			<div class="collapse navbar-collapse" id="navbar-collapse">
 				<ul class="nav navbar-nav">
 				
-					<li><a class="contest-title" href="/contests/abc292">AtCoder Beginner Contest 292</a></li>
+					<li><a class="contest-title" href="/contests/abc101">AtCoder Beginner Contest 101</a></li>
 				
 				</ul>
 				<ul class="nav navbar-nav navbar-right">
@@ -181,8 +185,8 @@
 							<img src='//img.atcoder.jp/assets/top/img/flag-lang/en.png'> English <span class="caret"></span>
 						</a>
 						<ul class="dropdown-menu">
-							<li><a href="/contests/abc292/tasks/abc292_c?lang=ja"><img src='//img.atcoder.jp/assets/top/img/flag-lang/ja.png'> 日本語</a></li>
-							<li><a href="/contests/abc292/tasks/abc292_c?lang=en"><img src='//img.atcoder.jp/assets/top/img/flag-lang/en.png'> English</a></li>
+							<li><a href="/contests/abc101/tasks/arc099_a?lang=ja"><img src='//img.atcoder.jp/assets/top/img/flag-lang/ja.png'> 日本語</a></li>
+							<li><a href="/contests/abc101/tasks/arc099_a?lang=en"><img src='//img.atcoder.jp/assets/top/img/flag-lang/en.png'> English</a></li>
 						</ul>
 					</li>
 					
@@ -211,8 +215,8 @@
 		</div>
 	</nav>
 
-	<form method="POST" name="form_logout" action="/logout?continue=https%3A%2F%2Fatcoder.jp%2Fcontests%2Fabc292%2Ftasks%2Fabc292_c">
-		<input type="hidden" name="csrf_token" value="CJ8u0i3AG/9THd134YlYHuTSRCnQE34Pg4w7IizqEyM=" />
+	<form method="POST" name="form_logout" action="/logout?continue=https%3A%2F%2Fatcoder.jp%2Fcontests%2Fabc101%2Ftasks%2Farc099_a">
+		<input type="hidden" name="csrf_token" value="hvYdp1OMT2ixvmwTnLuIrcEhBUMOSoNwTwW99KtVFxg=" />
 	</form>
 	<div id="main-container" class="container"
 		 	style="padding-top:50px;">
@@ -225,35 +229,38 @@
 		<small class="contest-duration">
 			
 				Contest Duration:
-				<a href='http://www.timeanddate.com/worldclock/fixedtime.html?iso=20230304T2100&p1=248' target='blank'><time class='fixtime fixtime-full'>2023-03-04 21:00:00+0900</time></a> - <a href='http://www.timeanddate.com/worldclock/fixedtime.html?iso=20230304T2240&p1=248' target='blank'><time class='fixtime fixtime-full'>2023-03-04 22:40:00+0900</time></a> (local time)
+				<a href='http://www.timeanddate.com/worldclock/fixedtime.html?iso=20180623T2100&p1=248' target='blank'><time class='fixtime fixtime-full'>2018-06-23 21:00:00+0900</time></a> - <a href='http://www.timeanddate.com/worldclock/fixedtime.html?iso=20180623T2240&p1=248' target='blank'><time class='fixtime fixtime-full'>2018-06-23 22:40:00+0900</time></a> (local time)
 				(100 minutes)
 			
 		</small>
 		<small class="back-to-home pull-right"><a href="/home">Back to Home</a></small>
 	</div>
 	<ul class="nav nav-tabs">
-		<li><a href="/contests/abc292"><span class="glyphicon glyphicon-home" aria-hidden="true"></span> Top</a></li>
+		<li><a href="/contests/abc101"><span class="glyphicon glyphicon-home" aria-hidden="true"></span> Top</a></li>
 		
-			<li class="active"><a href="/contests/abc292/tasks"><span class="glyphicon glyphicon-tasks" aria-hidden="true"></span> Tasks</a></li>
-		
-
-		
-			<li><a href="/contests/abc292/clarifications"><span class="glyphicon glyphicon-question-sign" aria-hidden="true"></span> Clarifications <span id="clar-badge" class="badge"></span></a></li>
+			<li class="active"><a href="/contests/abc101/tasks"><span class="glyphicon glyphicon-tasks" aria-hidden="true"></span> Tasks</a></li>
 		
 
 		
-			<li><a href="/contests/abc292/submit?taskScreenName=abc292_c"><span class="glyphicon glyphicon-send" aria-hidden="true"></span> Submit</a></li>
+			<li><a href="/contests/abc101/clarifications"><span class="glyphicon glyphicon-question-sign" aria-hidden="true"></span> Clarifications <span id="clar-badge" class="badge" ></span></a></li>
+		
+
+		
+			<li><a href="/contests/abc101/submit?taskScreenName=arc099_a"><span class="glyphicon glyphicon-send" aria-hidden="true"></span> Submit</a></li>
 		
 
 		
 			<li>
 				<a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false"><span class="glyphicon glyphicon-list" aria-hidden="true"></span> Results<span class="caret"></span></a>
 				<ul class="dropdown-menu">
-					<li><a href="/contests/abc292/submissions"><span class="glyphicon glyphicon-globe" aria-hidden="true"></span> All Submissions</a></li>
+					<li><a href="/contests/abc101/submissions"><span class="glyphicon glyphicon-globe" aria-hidden="true"></span> All Submissions</a></li>
 					
-						<li><a href="/contests/abc292/submissions/me"><span class="glyphicon glyphicon-user" aria-hidden="true"></span> My Submissions</a></li>
-						<li class="divider"></li>
-						<li><a href="/contests/abc292/score"><span class="glyphicon glyphicon-dashboard" aria-hidden="true"></span> My Score</a></li>
+						<li><a href="/contests/abc101/submissions/me"><span class="glyphicon glyphicon-user" aria-hidden="true"></span> My Submissions</a></li>
+						
+						
+							<li class="divider"></li>
+							<li><a href="/contests/abc101/score"><span class="glyphicon glyphicon-dashboard" aria-hidden="true"></span> My Score</a></li>
+						
 					
 				</ul>
 			</li>
@@ -262,21 +269,21 @@
 		
 			
 				
-					<li><a href="/contests/abc292/standings"><span class="glyphicon glyphicon-sort-by-attributes-alt" aria-hidden="true"></span> Standings</a></li>
+					<li><a href="/contests/abc101/standings"><span class="glyphicon glyphicon-sort-by-attributes-alt" aria-hidden="true"></span> Standings</a></li>
 				
 			
 				
-					<li><a href="/contests/abc292/standings/virtual"><span class="glyphicon glyphicon-sort-by-attributes-alt" aria-hidden="true"></span> Virtual Standings</a></li>
+					<li><a href="/contests/abc101/standings/virtual"><span class="glyphicon glyphicon-sort-by-attributes-alt" aria-hidden="true"></span> Virtual Standings</a></li>
 				
 			
 		
 
 		
-			<li><a href="/contests/abc292/custom_test"><span class="glyphicon glyphicon-wrench" aria-hidden="true"></span> Custom Test</a></li>
+			<li><a href="/contests/abc101/custom_test"><span class="glyphicon glyphicon-wrench" aria-hidden="true"></span> Custom Test</a></li>
 		
 
 		
-			<li><a href="/contests/abc292/editorial"><span class="glyphicon glyphicon-book" aria-hidden="true"></span> Editorial</a></li>
+			<li><a href="/contests/abc101/editorial"><span class="glyphicon glyphicon-book" aria-hidden="true"></span> Editorial</a></li>
 		
 		
 			
@@ -288,8 +295,8 @@
 </div>
 	<div class="col-sm-12">
 		<span class="h2">
-			C - Four Variables
-			<a class="btn btn-default btn-sm" href="/contests/abc292/tasks/abc292_c/editorial">Editorial</a>
+			C - Minimization
+			<a class="btn btn-default btn-sm" href="/contests/abc101/tasks/arc099_a/editorial">Editorial</a>
 		</span>
 		<span id="task-lang-btn" class="pull-right"><span data-lang="ja"><img src='//img.atcoder.jp/assets/top/img/flag-lang/ja.png'></span> / <span data-lang="en"><img src='//img.atcoder.jp/assets/top/img/flag-lang/en.png'></span></span>
 		<script>
@@ -330,100 +337,119 @@
 		<p>
 			Time Limit: 2 sec / Memory Limit: 1024 MB
 			
+			
 		</p>
 
 		<div id="task-statement">
 			
+
+
+	
+	
+
 			<span class="lang">
 <span class="lang-ja">
 <p>配点 : <var>300</var> 点</p>
 
 <div class="part">
 <section>
-<h3>問題文</h3><p>正整数 <var>N</var> が与えられます。<br />
-正整数の組 <var>(A,B,C,D)</var> であって、<var>AB + CD = N</var> を満たすものの個数を求めてください。  </p>
-<p>なお、本問の制約の下、答えが <var>9 \times 10^{18}</var> 以下であることが証明できます。</p>
+<h3>問題文</h3><p>長さ <var>N</var> の数列 <var>A_1, A_2, ..., A_N</var> があります．最初，この数列の要素は <var>1, 2, ..., N</var> を並び替えたものになっています．</p>
+<p>スヌケ君は，この数列に対して次の操作を行うことができます．</p>
+<ul>
+<li>数列のうち，連続した <var>K</var> 個の要素を選ぶ．その後，選んだ要素それぞれの値を，選んだ要素の中の最小値で置き換える．</li>
+</ul>
+<p>スヌケ君は，上の操作を何回か繰り返すことで，この数列の要素をすべて等しくしたいです．
+必要な操作の回数の最小値を求めてください．
+この問題の制約の下，このようなことは必ず可能であることが証明できます．</p>
 </section>
 </div>
 
 <div class="part">
 <section>
 <h3>制約</h3><ul>
-<li><var>2 \leq N \leq 2 \times 10^5</var></li>
-<li><var>N</var> は整数</li>
+<li><var>2 \leq K \leq N \leq 100000</var></li>
+<li><var>A_1, A_2, ..., A_N</var> は <var>1, 2, ..., N</var> の並び替え</li>
 </ul>
 </section>
 </div>
 
 <hr />
+
 <div class="io-style">
 <div class="part">
 <section>
-<h3>入力</h3><p>入力は以下の形式で標準入力から与えられる。</p>
-<pre><var>N</var>
+<h3>入力</h3><p>入力は以下の形式で標準入力から与えられる．</p>
+<pre><var>N</var> <var>K</var>
+<var>A_1</var> <var>A_2</var> <var>...</var> <var>A_N</var>
 </pre>
+
 </section>
 </div>
 
 <div class="part">
 <section>
-<h3>出力</h3><p>答えを出力せよ。</p>
+<h3>出力</h3><p>必要な操作の回数の最小値を出力せよ．</p>
 </section>
 </div>
 </div>
 
 <hr />
+
 <div class="part">
 <section>
-<h3>入力例 1</h3><pre>4
+<h3>入力例 1</h3><pre>4 3
+2 3 1 4
 </pre>
+
 </section>
 </div>
 
 <div class="part">
 <section>
-<h3>出力例 1</h3><pre>8
+<h3>出力例 1</h3><pre>2
 </pre>
-<p><var>(A,B,C,D)</var> として以下の <var>8</var> 個が考えられます。</p>
+
+<p>例えば，次のようにするとよいです：</p>
 <ul>
-<li><var>(A,B,C,D)=(1,1,1,3)</var></li>
-<li><var>(A,B,C,D)=(1,1,3,1)</var></li>
-<li><var>(A,B,C,D)=(1,2,1,2)</var></li>
-<li><var>(A,B,C,D)=(1,2,2,1)</var></li>
-<li><var>(A,B,C,D)=(1,3,1,1)</var></li>
-<li><var>(A,B,C,D)=(2,1,1,2)</var></li>
-<li><var>(A,B,C,D)=(2,1,2,1)</var></li>
-<li><var>(A,B,C,D)=(3,1,1,1)</var></li>
+<li><var>1</var> 回目の操作では，<var>1, 2, 3</var> 番目の要素を選ぶ．すると，数列 <var>A</var> は <var>1, 1, 1, 4</var> になる．</li>
+<li><var>2</var> 回目の操作では，<var>2, 3, 4</var> 番目の要素を選ぶ．すると，数列 <var>A</var> は <var>1, 1, 1, 1</var> になる．</li>
 </ul>
 </section>
 </div>
 
 <hr />
+
 <div class="part">
 <section>
-<h3>入力例 2</h3><pre>292
+<h3>入力例 2</h3><pre>3 3
+1 2 3
 </pre>
+
 </section>
 </div>
 
 <div class="part">
 <section>
-<h3>出力例 2</h3><pre>10886
+<h3>出力例 2</h3><pre>1
 </pre>
+
 </section>
 </div>
 
 <hr />
+
 <div class="part">
 <section>
-<h3>入力例 3</h3><pre>19876
+<h3>入力例 3</h3><pre>8 3
+7 3 1 8 4 6 2 5
 </pre>
+
 </section>
 </div>
 
 <div class="part">
 <section>
-<h3>出力例 3</h3><pre>2219958
+<h3>出力例 3</h3><pre>4
 </pre></section>
 </div>
 </span>
@@ -432,90 +458,107 @@
 
 <div class="part">
 <section>
-<h3>Problem Statement</h3><p>You are given a positive integer <var>N</var>.<br />
-Find the number of quadruples of positive integers <var>(A,B,C,D)</var> such that <var>AB + CD = N</var>.</p>
-<p>Under the constraints of this problem, it can be proved that the answer is at most <var>9 \times 10^{18}</var>.</p>
+<h3>Problem Statement</h3><p>There is a sequence of length <var>N</var>: <var>A_1, A_2, ..., A_N</var>. Initially, this sequence is a permutation of <var>1, 2, ..., N</var>.</p>
+<p>On this sequence, Snuke can perform the following operation:</p>
+<ul>
+<li>Choose <var>K</var> consecutive elements in the sequence. Then, replace the value of each chosen element with the minimum value among the chosen elements.</li>
+</ul>
+<p>Snuke would like to make all the elements in this sequence equal by repeating the operation above some number of times.
+Find the minimum number of operations required.
+It can be proved that, Under the constraints of this problem, this objective is always achievable.</p>
 </section>
 </div>
 
 <div class="part">
 <section>
 <h3>Constraints</h3><ul>
-<li><var>2 \leq N \leq 2 \times 10^5</var></li>
-<li><var>N</var> is an integer.</li>
+<li><var>2 \leq K \leq N \leq 100000</var></li>
+<li><var>A_1, A_2, ..., A_N</var> is a permutation of <var>1, 2, ..., N</var>.</li>
 </ul>
 </section>
 </div>
 
 <hr />
+
 <div class="io-style">
 <div class="part">
 <section>
-<h3>Input</h3><p>The input is given from Standard Input in the following format:</p>
-<pre><var>N</var>
+<h3>Input</h3><p>Input is given from Standard Input in the following format:</p>
+<pre><var>N</var> <var>K</var>
+<var>A_1</var> <var>A_2</var> <var>...</var> <var>A_N</var>
 </pre>
+
 </section>
 </div>
 
 <div class="part">
 <section>
-<h3>Output</h3><p>Print the answer.</p>
+<h3>Output</h3><p>Print the minimum number of operations required.</p>
 </section>
 </div>
 </div>
 
 <hr />
+
 <div class="part">
 <section>
-<h3>Sample Input 1</h3><pre>4
+<h3>Sample Input 1</h3><pre>4 3
+2 3 1 4
 </pre>
+
 </section>
 </div>
 
 <div class="part">
 <section>
-<h3>Sample Output 1</h3><pre>8
+<h3>Sample Output 1</h3><pre>2
 </pre>
-<p>Here are the eight desired quadruples.</p>
+
+<p>One optimal strategy is as follows:</p>
 <ul>
-<li><var>(A,B,C,D)=(1,1,1,3)</var></li>
-<li><var>(A,B,C,D)=(1,1,3,1)</var></li>
-<li><var>(A,B,C,D)=(1,2,1,2)</var></li>
-<li><var>(A,B,C,D)=(1,2,2,1)</var></li>
-<li><var>(A,B,C,D)=(1,3,1,1)</var></li>
-<li><var>(A,B,C,D)=(2,1,1,2)</var></li>
-<li><var>(A,B,C,D)=(2,1,2,1)</var></li>
-<li><var>(A,B,C,D)=(3,1,1,1)</var></li>
+<li>
+<p>In the first operation, choose the first, second and third elements. The sequence <var>A</var> becomes <var>1, 1, 1, 4</var>.</p>
+</li>
+<li>
+<p>In the second operation, choose the second, third and fourth elements. The sequence <var>A</var> becomes <var>1, 1, 1, 1</var>.</p>
+</li>
 </ul>
 </section>
 </div>
 
 <hr />
+
 <div class="part">
 <section>
-<h3>Sample Input 2</h3><pre>292
+<h3>Sample Input 2</h3><pre>3 3
+1 2 3
 </pre>
+
 </section>
 </div>
 
 <div class="part">
 <section>
-<h3>Sample Output 2</h3><pre>10886
+<h3>Sample Output 2</h3><pre>1
 </pre>
+
 </section>
 </div>
 
 <hr />
+
 <div class="part">
 <section>
-<h3>Sample Input 3</h3><pre>19876
+<h3>Sample Input 3</h3><pre>8 3
+7 3 1 8 4 6 2 5
 </pre>
+
 </section>
 </div>
 
 <div class="part">
 <section>
-<h3>Sample Output 3</h3><pre>2219958
+<h3>Sample Output 3</h3><pre>4
 </pre></section>
 </div>
 </span>
@@ -527,8 +570,8 @@ Find the number of quadruples of positive integers <var>(A,B,C,D)</var> such tha
 
 		
 		<hr/>
-		<form class="form-horizontal form-code-submit" action="/contests/abc292/submit" method="POST">
-			<input type="hidden" name="data.TaskScreenName" value="abc292_c" />
+		<form class="form-horizontal form-code-submit" action="/contests/abc101/submit" method="POST">
+			<input type="hidden" name="data.TaskScreenName" value="arc099_a" />
 			
 			<div class="form-group ">
 				<label class="control-label col-sm-3 col-md-2" for="select-lang">Language</label>
@@ -753,7 +796,7 @@ Find the number of quadruples of positive integers <var>(A,B,C,D)</var> such tha
 </div>
 
 
-			<input type="hidden" name="csrf_token" value="CJ8u0i3AG/9THd134YlYHuTSRCnQE34Pg4w7IizqEyM=" />
+			<input type="hidden" name="csrf_token" value="hvYdp1OMT2ixvmwTnLuIrcEhBUMOSoNwTwW99KtVFxg=" />
 			<div class="form-group">
 				<label class="control-label col-sm-3 col-md-2"></label>
 				<div class="col-sm-5">
@@ -773,7 +816,7 @@ Find the number of quadruples of positive integers <var>(A,B,C,D)</var> such tha
 			
 			
 			
-<div class="a2a_kit a2a_kit_size_20 a2a_default_style pull-right" data-a2a-url="https://atcoder.jp/contests/abc292/tasks/abc292_c?lang=en" data-a2a-title="C - Four Variables">
+<div class="a2a_kit a2a_kit_size_20 a2a_default_style pull-right" data-a2a-url="https://atcoder.jp/contests/abc101/tasks/arc099_a?lang=en" data-a2a-title="C - Minimization">
 	<a class="a2a_button_facebook"></a>
 	<a class="a2a_button_twitter"></a>
 	
@@ -793,8 +836,8 @@ Find the number of quadruples of positive integers <var>(A,B,C,D)</var> such tha
 			<footer class="footer">
 			
 				<ul>
-					<li><a href="/contests/abc292/rules">Rule</a></li>
-					<li><a href="/contests/abc292/glossary">Glossary</a></li>
+					<li><a href="/contests/abc101/rules">Rule</a></li>
+					<li><a href="/contests/abc101/glossary">Glossary</a></li>
 					
 				</ul>
 			

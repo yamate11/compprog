@@ -12,61 +12,52 @@ using pll = pair<ll, ll>;
 #define SIZE(v) ((ll)((v).size()))
 #define REPOUT(i, a, b, exp, sep) REP(i, (a), (b)) cout << (exp) << (i + 1 == (b) ? "" : (sep)); cout << "\n"
 
-// @@ !! LIM(f:updMaxMin)
-
-// ---- inserted function f:updMaxMin from util.cc
-template<typename T>
-bool updMax(T& tmax, const T& x) {
-  if (x > tmax) { tmax = x; return true;  }
-  else          {           return false; }
-}
-template<typename T>
-bool updMin(T& tmin, const T& x) {
-  if (x < tmin) { tmin = x; return true;  }
-  else          {           return false; }
-}
-// ---- end f:updMaxMin
-
-// @@ !! LIM -- end mark --
+// @@ !! LIM()
 
 int main(/* int argc, char *argv[] */) {
   ios_base::sync_with_stdio(false);
   cin.tie(nullptr);
   cout << setprecision(20);
 
-  ll H, W, N; cin >> H >> W >> N;
-  // @InpMVec(N, ((R, dec=1), (C, dec=1), A)) [876sbtsg]
-  auto R = vector(N, ll());
-  auto C = vector(N, ll());
-  auto A = vector(N, ll());
-  for (int i = 0; i < N; i++) {
-    ll v1; cin >> v1; v1 -= 1; R[i] = v1;
-    ll v2; cin >> v2; v2 -= 1; C[i] = v2;
-    ll v3; cin >> v3; A[i] = v3;
-  }
-  // @End [876sbtsg]
+  ll N, M; cin >> N >> M;
+  // @InpVec(N, X) [2Aor8rxC]
+  auto X = vector(N, ll());
+  for (int i = 0; i < N; i++) { ll v; cin >> v; X[i] = v; }
+  // @End [2Aor8rxC]
 
-  map<ll, vector<ll>> mp;
-  REP(i, 0, N) mp[-A[i]].push_back(i);
-
-  vector MR(N, 0LL);
-  vector MC(N, 0LL);
-
-  vector<ll> ans(N);
-  for (const auto& [_num, vec] : mp) {
-    map<ll, ll> updR;
-    map<ll, ll> updC;
-    for (ll i : vec) {
-      ll z = max(MR[R[i]], MC[C[i]]) + 1;
-      ans[i] = z;
-      updMax(updR[R[i]], z);
-      updMax(updC[C[i]], z);
+  ll lim = 1e5 + 1;
+  vector<ll> C(lim);
+  vector<deque<ll>> D(M);
+  REP(i, 0, N) C[X[i]]++;
+  REP(i, 0, lim) {
+    ll k = i % M;
+    ll n = C[i];
+    ll a = n / 2;
+    ll b = n % 2;
+    REP(j, 0, a) {
+      D[k].push_front(i);
+      D[k].push_front(i);
     }
-    for (auto [i, v] : updR) updMax(MR[i], v);
-    for (auto [i, v] : updC) updMax(MC[i], v);
+    if (b != 0) D[k].push_back(i);
   }
-  REPOUT(i, 0, N, ans[i] - 1, "\n");
-
+  ll ans = 0;
+  REP(i, 0, M) {
+    ll j = M - i;
+    if (i == 0 or i == j) ans += ssize(D[i]) / 2;
+    else if (i < j) {
+      auto v1 = D[i];
+      auto v2 = D[j];
+      if (ssize(v1) < ssize(v2)) swap(v1, v2);
+      ll s1 = ssize(v1);
+      ll s2 = ssize(v2);
+      ll r = s1 - s2;
+      ans += s2;
+      REP(p, 0, r) {
+        if (p % 2 == 0 and p + 1 < r and v1[p] == v1[p + 1]) ans++;
+      }
+    }
+  }
+  cout << ans << endl;
   return 0;
 }
 

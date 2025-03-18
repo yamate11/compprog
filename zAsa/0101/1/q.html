@@ -9,7 +9,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>A - Not Too Hard</title>
+	<title>B - Strings with the Same Length</title>
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 	<meta http-equiv="Content-Language" content="en">
 	<meta name="viewport" content="width=device-width,initial-scale=1.0">
@@ -22,7 +22,11 @@
 		window.dataLayer = window.dataLayer || [];
 		function gtag(){dataLayer.push(arguments);}
 		gtag('js', new Date());
-
+		gtag('set', 'user_properties', {
+			
+				'login_status': 'logged_in',
+			
+		});
 		gtag('config', 'G-RC512FD18N');
 	</script>
 
@@ -32,61 +36,61 @@
 
 	<meta property="og:site_name" content="AtCoder">
 	
-	<meta property="og:title" content="A - Not Too Hard" />
+	<meta property="og:title" content="B - Strings with the Same Length" />
 	<meta property="og:description" content="AtCoder is a programming contest site for anyone from beginners to experts. We hold weekly programming contests online." />
 	<meta property="og:type" content="website" />
-	<meta property="og:url" content="https://atcoder.jp/contests/abc328/tasks/abc328_a" />
+	<meta property="og:url" content="https://atcoder.jp/contests/abc148/tasks/abc148_b" />
 	<meta property="og:image" content="https://img.atcoder.jp/assets/atcoder.png" />
 	<meta name="twitter:card" content="summary" />
 	<meta name="twitter:site" content="@atcoder" />
 	
-	<meta property="twitter:title" content="A - Not Too Hard" />
+	<meta property="twitter:title" content="B - Strings with the Same Length" />
 
 	<link href="//fonts.googleapis.com/css?family=Lato:400,700" rel="stylesheet" type="text/css">
-	<link rel="stylesheet" type="text/css" href="//img.atcoder.jp/public/4e015d0/css/bootstrap.min.css">
-	<link rel="stylesheet" type="text/css" href="//img.atcoder.jp/public/4e015d0/css/base.css">
+	<link rel="stylesheet" type="text/css" href="//img.atcoder.jp/public/22afd08/css/bootstrap.min.css">
+	<link rel="stylesheet" type="text/css" href="//img.atcoder.jp/public/22afd08/css/base.css">
 	<link rel="shortcut icon" type="image/png" href="//img.atcoder.jp/assets/favicon.png">
 	<link rel="apple-touch-icon" href="//img.atcoder.jp/assets/atcoder.png">
-	<script src="//img.atcoder.jp/public/4e015d0/js/lib/jquery-1.9.1.min.js"></script>
-	<script src="//img.atcoder.jp/public/4e015d0/js/lib/bootstrap.min.js"></script>
-	<script src="//img.atcoder.jp/public/4e015d0/js/cdn/js.cookie.min.js"></script>
-	<script src="//img.atcoder.jp/public/4e015d0/js/cdn/moment.min.js"></script>
-	<script src="//img.atcoder.jp/public/4e015d0/js/cdn/moment_js-ja.js"></script>
+	<script src="//img.atcoder.jp/public/22afd08/js/lib/jquery-1.9.1.min.js"></script>
+	<script src="//img.atcoder.jp/public/22afd08/js/lib/bootstrap.min.js"></script>
+	<script src="//img.atcoder.jp/public/22afd08/js/cdn/js.cookie.min.js"></script>
+	<script src="//img.atcoder.jp/public/22afd08/js/cdn/moment.min.js"></script>
+	<script src="//img.atcoder.jp/public/22afd08/js/cdn/moment_js-ja.js"></script>
 	<script>
 		var LANG = "en";
 		var userScreenName = "yamate11";
-		var csrfToken = "7UOtlWtLpAAVZOF7U9ZTSr/aFQk/vFYdmq5IyWCm55g="
+		var csrfToken = "D4WNZRgtLGU9GLJqOVddyPQSQMkfBuvcRQ0oCnKtSDE="
 	</script>
-	<script src="//img.atcoder.jp/public/4e015d0/js/utils.js"></script>
+	<script src="//img.atcoder.jp/public/22afd08/js/utils.js"></script>
 	
 	
-		<script src="//img.atcoder.jp/public/4e015d0/js/contest.js"></script>
-		<link href="//img.atcoder.jp/public/4e015d0/css/contest.css" rel="stylesheet" />
+		<script src="//img.atcoder.jp/public/22afd08/js/contest.js"></script>
+		<link href="//img.atcoder.jp/public/22afd08/css/contest.css" rel="stylesheet" />
 		<script>
-			var contestScreenName = "abc328";
+			var contestScreenName = "abc148";
 			var remainingText = "Remaining Time";
 			var countDownText = "Contest begins in";
-			var startTime = moment("2023-11-11T21:00:00+09:00");
-			var endTime = moment("2023-11-11T22:40:00+09:00");
+			var startTime = moment("2019-12-22T21:00:00+09:00");
+			var endTime = moment("2019-12-22T22:40:00+09:00");
 		</script>
 		<style></style>
 	
 	
-		<link href="//img.atcoder.jp/public/4e015d0/css/cdn/select2.min.css" rel="stylesheet" />
-		<link href="//img.atcoder.jp/public/4e015d0/css/cdn/select2-bootstrap.min.css" rel="stylesheet" />
-		<script src="//img.atcoder.jp/public/4e015d0/js/lib/select2.min.js"></script>
+		<link href="//img.atcoder.jp/public/22afd08/css/cdn/select2.min.css" rel="stylesheet" />
+		<link href="//img.atcoder.jp/public/22afd08/css/cdn/select2-bootstrap.min.css" rel="stylesheet" />
+		<script src="//img.atcoder.jp/public/22afd08/js/lib/select2.min.js"></script>
 	
 	
-		<script src="//img.atcoder.jp/public/4e015d0/js/ace/ace.js"></script>
-		<script src="//img.atcoder.jp/public/4e015d0/js/ace/ext-language_tools.js"></script>
+		<script src="//img.atcoder.jp/public/22afd08/js/ace/ace.js"></script>
+		<script src="//img.atcoder.jp/public/22afd08/js/ace/ext-language_tools.js"></script>
 	
 	
-		<script src="//img.atcoder.jp/public/4e015d0/js/cdn/run_prettify.js"></script>
+		<script src="//img.atcoder.jp/public/22afd08/js/cdn/run_prettify.js"></script>
 	
 	
-		<link rel="stylesheet" href="//img.atcoder.jp/public/4e015d0/css/cdn/katex.min.css">
-		<script defer src="//img.atcoder.jp/public/4e015d0/js/cdn/katex.min.js"></script>
-		<script defer src="//img.atcoder.jp/public/4e015d0/js/cdn/auto-render.min.js"></script>
+		<link rel="stylesheet" href="//img.atcoder.jp/public/22afd08/css/cdn/katex.min.css">
+		<script defer src="//img.atcoder.jp/public/22afd08/js/cdn/katex.min.js"></script>
+		<script defer src="//img.atcoder.jp/public/22afd08/js/cdn/auto-render.min.js"></script>
 		<script>$(function(){$('var').each(function(){var html=$(this).html().replace(/<sub>/g,'_{').replace(/<\/sub>/g,'}');$(this).html('\\('+html+'\\)');});});</script>
 		<script>
 			var katexOptions = {
@@ -111,7 +115,7 @@
 	
 	
 	
-	<script src="//img.atcoder.jp/public/4e015d0/js/base.js"></script>
+	<script src="//img.atcoder.jp/public/22afd08/js/base.js"></script>
 </head>
 
 <body>
@@ -131,11 +135,11 @@
 				<h4 class="modal-title">Contest started</h4>
 			</div>
 			<div class="modal-body">
-				<p>Toyota Programming Contest 2023#7（AtCoder Beginner Contest 328） has begun.</p>
+				<p>AtCoder Beginner Contest 148 has begun.</p>
 			</div>
 			<div class="modal-footer">
 				
-					<a class="btn btn-primary" href='/contests/abc328/tasks'>Go to the task list page</a>
+					<a class="btn btn-primary" href='/contests/abc148/tasks'>Go to the task list page</a>
 				
 			</div>
 		</div>
@@ -149,7 +153,7 @@
 				<h4 class="modal-title">Contest is over</h4>
 			</div>
 			<div class="modal-body">
-				<p>Toyota Programming Contest 2023#7（AtCoder Beginner Contest 328） has ended.</p>
+				<p>AtCoder Beginner Contest 148 has ended.</p>
 			</div>
 			<div class="modal-footer">
 				<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
@@ -171,7 +175,7 @@
 			<div class="collapse navbar-collapse" id="navbar-collapse">
 				<ul class="nav navbar-nav">
 				
-					<li><a class="contest-title" href="/contests/abc328">Toyota Programming Contest 2023#7（AtCoder Beginner Contest 328）</a></li>
+					<li><a class="contest-title" href="/contests/abc148">AtCoder Beginner Contest 148</a></li>
 				
 				</ul>
 				<ul class="nav navbar-nav navbar-right">
@@ -181,8 +185,8 @@
 							<img src='//img.atcoder.jp/assets/top/img/flag-lang/en.png'> English <span class="caret"></span>
 						</a>
 						<ul class="dropdown-menu">
-							<li><a href="/contests/abc328/tasks/abc328_a?lang=ja"><img src='//img.atcoder.jp/assets/top/img/flag-lang/ja.png'> 日本語</a></li>
-							<li><a href="/contests/abc328/tasks/abc328_a?lang=en"><img src='//img.atcoder.jp/assets/top/img/flag-lang/en.png'> English</a></li>
+							<li><a href="/contests/abc148/tasks/abc148_b?lang=ja"><img src='//img.atcoder.jp/assets/top/img/flag-lang/ja.png'> 日本語</a></li>
+							<li><a href="/contests/abc148/tasks/abc148_b?lang=en"><img src='//img.atcoder.jp/assets/top/img/flag-lang/en.png'> English</a></li>
 						</ul>
 					</li>
 					
@@ -211,8 +215,8 @@
 		</div>
 	</nav>
 
-	<form method="POST" name="form_logout" action="/logout?continue=https%3A%2F%2Fatcoder.jp%2Fcontests%2Fabc328%2Ftasks%2Fabc328_a">
-		<input type="hidden" name="csrf_token" value="7UOtlWtLpAAVZOF7U9ZTSr/aFQk/vFYdmq5IyWCm55g=" />
+	<form method="POST" name="form_logout" action="/logout?continue=https%3A%2F%2Fatcoder.jp%2Fcontests%2Fabc148%2Ftasks%2Fabc148_b">
+		<input type="hidden" name="csrf_token" value="D4WNZRgtLGU9GLJqOVddyPQSQMkfBuvcRQ0oCnKtSDE=" />
 	</form>
 	<div id="main-container" class="container"
 		 	style="padding-top:50px;">
@@ -225,35 +229,36 @@
 		<small class="contest-duration">
 			
 				Contest Duration:
-				<a href='http://www.timeanddate.com/worldclock/fixedtime.html?iso=20231111T2100&p1=248' target='blank'><time class='fixtime fixtime-full'>2023-11-11 21:00:00+0900</time></a> - <a href='http://www.timeanddate.com/worldclock/fixedtime.html?iso=20231111T2240&p1=248' target='blank'><time class='fixtime fixtime-full'>2023-11-11 22:40:00+0900</time></a> (local time)
+				<a href='http://www.timeanddate.com/worldclock/fixedtime.html?iso=20191222T2100&p1=248' target='blank'><time class='fixtime fixtime-full'>2019-12-22 21:00:00+0900</time></a> - <a href='http://www.timeanddate.com/worldclock/fixedtime.html?iso=20191222T2240&p1=248' target='blank'><time class='fixtime fixtime-full'>2019-12-22 22:40:00+0900</time></a> (local time)
 				(100 minutes)
 			
 		</small>
 		<small class="back-to-home pull-right"><a href="/home">Back to Home</a></small>
 	</div>
 	<ul class="nav nav-tabs">
-		<li><a href="/contests/abc328"><span class="glyphicon glyphicon-home" aria-hidden="true"></span> Top</a></li>
+		<li><a href="/contests/abc148"><span class="glyphicon glyphicon-home" aria-hidden="true"></span> Top</a></li>
 		
-			<li class="active"><a href="/contests/abc328/tasks"><span class="glyphicon glyphicon-tasks" aria-hidden="true"></span> Tasks</a></li>
-		
-
-		
-			<li><a href="/contests/abc328/clarifications"><span class="glyphicon glyphicon-question-sign" aria-hidden="true"></span> Clarifications <span id="clar-badge" class="badge"></span></a></li>
+			<li class="active"><a href="/contests/abc148/tasks"><span class="glyphicon glyphicon-tasks" aria-hidden="true"></span> Tasks</a></li>
 		
 
 		
-			<li><a href="/contests/abc328/submit?taskScreenName=abc328_a"><span class="glyphicon glyphicon-send" aria-hidden="true"></span> Submit</a></li>
+			<li><a href="/contests/abc148/clarifications"><span class="glyphicon glyphicon-question-sign" aria-hidden="true"></span> Clarifications <span id="clar-badge" class="badge" ></span></a></li>
+		
+
+		
+			<li><a href="/contests/abc148/submit?taskScreenName=abc148_b"><span class="glyphicon glyphicon-send" aria-hidden="true"></span> Submit</a></li>
 		
 
 		
 			<li>
 				<a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false"><span class="glyphicon glyphicon-list" aria-hidden="true"></span> Results<span class="caret"></span></a>
 				<ul class="dropdown-menu">
-					<li><a href="/contests/abc328/submissions"><span class="glyphicon glyphicon-globe" aria-hidden="true"></span> All Submissions</a></li>
+					<li><a href="/contests/abc148/submissions"><span class="glyphicon glyphicon-globe" aria-hidden="true"></span> All Submissions</a></li>
 					
-						<li><a href="/contests/abc328/submissions/me"><span class="glyphicon glyphicon-user" aria-hidden="true"></span> My Submissions</a></li>
+						<li><a href="/contests/abc148/submissions/me"><span class="glyphicon glyphicon-user" aria-hidden="true"></span> My Submissions</a></li>
+						
 						<li class="divider"></li>
-						<li><a href="/contests/abc328/score"><span class="glyphicon glyphicon-dashboard" aria-hidden="true"></span> My Score</a></li>
+						<li><a href="/contests/abc148/score"><span class="glyphicon glyphicon-dashboard" aria-hidden="true"></span> My Score</a></li>
 					
 				</ul>
 			</li>
@@ -262,26 +267,24 @@
 		
 			
 				
-					<li><a href="/contests/abc328/standings"><span class="glyphicon glyphicon-sort-by-attributes-alt" aria-hidden="true"></span> Standings</a></li>
+					<li><a href="/contests/abc148/standings"><span class="glyphicon glyphicon-sort-by-attributes-alt" aria-hidden="true"></span> Standings</a></li>
 				
 			
 				
-					<li><a href="/contests/abc328/standings/virtual"><span class="glyphicon glyphicon-sort-by-attributes-alt" aria-hidden="true"></span> Virtual Standings</a></li>
+					<li><a href="/contests/abc148/standings/virtual"><span class="glyphicon glyphicon-sort-by-attributes-alt" aria-hidden="true"></span> Virtual Standings</a></li>
 				
 			
 		
 
 		
-			<li><a href="/contests/abc328/custom_test"><span class="glyphicon glyphicon-wrench" aria-hidden="true"></span> Custom Test</a></li>
+			<li><a href="/contests/abc148/custom_test"><span class="glyphicon glyphicon-wrench" aria-hidden="true"></span> Custom Test</a></li>
 		
 
 		
-			<li><a href="/contests/abc328/editorial"><span class="glyphicon glyphicon-book" aria-hidden="true"></span> Editorial</a></li>
+			<li><a href="/contests/abc148/editorial"><span class="glyphicon glyphicon-book" aria-hidden="true"></span> Editorial</a></li>
 		
 		
 			
-			
-				<li><a href="https://codeforces.com/blog/entry/122225" target="_blank" rel="noopener"><span class="glyphicon glyphicon-comment" aria-hidden="true"></span> Discuss</a></li>
 			
 		
 
@@ -290,8 +293,8 @@
 </div>
 	<div class="col-sm-12">
 		<span class="h2">
-			A - Not Too Hard
-			<a class="btn btn-default btn-sm" href="/contests/abc328/tasks/abc328_a/editorial">Editorial</a>
+			B - Strings with the Same Length
+			<a class="btn btn-default btn-sm" href="/contests/abc148/tasks/abc148_b/editorial">Editorial</a>
 		</span>
 		<span id="task-lang-btn" class="pull-right"><span data-lang="ja"><img src='//img.atcoder.jp/assets/top/img/flag-lang/ja.png'></span> / <span data-lang="en"><img src='//img.atcoder.jp/assets/top/img/flag-lang/en.png'></span></span>
 		<script>
@@ -332,29 +335,34 @@
 		<p>
 			Time Limit: 2 sec / Memory Limit: 1024 MB
 			
+			
 		</p>
 
 		<div id="task-statement">
 			
+
+
+	
+	
+
 			<span class="lang">
 <span class="lang-ja">
-<p>配点 : <var>100</var> 点</p>
+<p>配点 : <var>200</var> 点</p>
 
 <div class="part">
 <section>
-<h3>問題文</h3><p><var>N</var> 問の問題が出題されるプログラミングコンテストがあります。
-<var>i = 1, 2, \ldots, N</var> について、<var>i</var> 問目の配点は <var>S_i</var> です。</p>
-<p>配点が <var>X</var> 以下である問題すべての配点の合計を出力してください。</p>
+<h3>問題文</h3><p>英小文字のみからなる長さ <var>N</var> の文字列 <var>S</var>, <var>T</var> が与えられます。</p>
+<p><var>S</var> の <var>1</var> 文字目、<var>T</var> の <var>1</var> 文字目、<var>S</var> の <var>2</var> 文字目、<var>T</var> の<var>2</var> 文字目、<var>S</var> の <var>3</var> 文字目、...、<var>S</var> の<var>N</var> 文字目、<var>T</var> の<var>N</var> 文字目というように、
+<var>S</var> の各文字と <var>T</var> の各文字を先頭から順に交互に文字を並べ、新しい文字列を作ります。この新しくできた文字列を出力してください。</p>
 </section>
 </div>
 
 <div class="part">
 <section>
 <h3>制約</h3><ul>
-<li>入力される値は全て整数</li>
-<li><var>4 \leq N \leq 8</var></li>
-<li><var>100 \leq S_i \leq 675</var></li>
-<li><var>100 \leq X \leq 675</var></li>
+<li><var>1 ≤ N ≤ 100</var></li>
+<li><var>|S| = |T| = N</var></li>
+<li><var>S</var>, <var>T</var> は英小文字のみからなる文字列</li>
 </ul>
 </section>
 </div>
@@ -364,8 +372,8 @@
 <div class="part">
 <section>
 <h3>入力</h3><p>入力は以下の形式で標準入力から与えられる。</p>
-<pre><var>N</var> <var>X</var>
-<var>S_1</var> <var>S_2</var> <var>\ldots</var> <var>S_N</var>
+<pre><var>N</var>
+<var>S</var> <var>T</var>
 </pre>
 
 </section>
@@ -373,7 +381,7 @@
 
 <div class="part">
 <section>
-<h3>出力</h3><p>答えを出力せよ。</p>
+<h3>出力</h3><p>新しくできた文字列を出力せよ。</p>
 </section>
 </div>
 </div>
@@ -381,8 +389,8 @@
 <hr />
 <div class="part">
 <section>
-<h3>入力例 1</h3><pre>6 200
-100 675 201 200 199 328
+<h3>入力例 1</h3><pre>2
+ip cc
 </pre>
 
 </section>
@@ -390,26 +398,7 @@
 
 <div class="part">
 <section>
-<h3>出力例 1</h3><pre>499
-</pre>
-
-<p>配点が <var>200</var> 以下である問題は、<var>1, 4, 5</var> 問目の全 <var>3</var> 問であり、それらの配点の合計は <var>S_1 + S_4 + S_5 = 100 + 200 + 199 = 499</var> です。</p>
-</section>
-</div>
-
-<hr />
-<div class="part">
-<section>
-<h3>入力例 2</h3><pre>8 675
-675 675 675 675 675 675 675 675
-</pre>
-
-</section>
-</div>
-
-<div class="part">
-<section>
-<h3>出力例 2</h3><pre>5400
+<h3>出力例 1</h3><pre>icpc
 </pre>
 
 </section>
@@ -418,8 +407,8 @@
 <hr />
 <div class="part">
 <section>
-<h3>入力例 3</h3><pre>8 674
-675 675 675 675 675 675 675 675
+<h3>入力例 2</h3><pre>8
+hmhmnknk uuuuuuuu
 </pre>
 
 </section>
@@ -427,27 +416,44 @@
 
 <div class="part">
 <section>
-<h3>出力例 3</h3><pre>0
+<h3>出力例 2</h3><pre>humuhumunukunuku
+</pre>
+
+</section>
+</div>
+
+<hr />
+<div class="part">
+<section>
+<h3>入力例 3</h3><pre>5
+aaaaa aaaaa
+</pre>
+
+</section>
+</div>
+
+<div class="part">
+<section>
+<h3>出力例 3</h3><pre>aaaaaaaaaa
 </pre></section>
 </div>
 </span>
 <span class="lang-en">
-<p>Score : <var>100</var> points</p>
+<p>Score : <var>200</var> points</p>
 
 <div class="part">
 <section>
-<h3>Problem Statement</h3><p>There is a programming contest with <var>N</var> problems. For each <var>i = 1, 2, \ldots, N</var>, the score for the <var>i</var>-th problem is <var>S_i</var>.</p>
-<p>Print the total score for all problems with a score of <var>X</var> or less.</p>
+<h3>Problem Statement</h3><p>Given are strings <var>s</var> and <var>t</var> of length <var>N</var> each, both consisting of lowercase English letters.</p>
+<p>Let us form a new string by alternating the characters of <var>S</var> and the characters of <var>T</var>, as follows: the first character of <var>S</var>, the first character of <var>T</var>, the second character of <var>S</var>, the second character of <var>T</var>, <var>...</var>, the <var>N</var>-th character of <var>S</var>, the <var>N</var>-th character of <var>T</var>. Print this new string.</p>
 </section>
 </div>
 
 <div class="part">
 <section>
 <h3>Constraints</h3><ul>
-<li>All input values are integers.</li>
-<li><var>4 \leq N \leq 8</var></li>
-<li><var>100 \leq S_i \leq 675</var></li>
-<li><var>100 \leq X \leq 675</var></li>
+<li><var>1 \leq N \leq 100</var></li>
+<li><var>|S| = |T| = N</var></li>
+<li><var>S</var> and <var>T</var> are strings consisting of lowercase English letters.</li>
 </ul>
 </section>
 </div>
@@ -456,9 +462,9 @@
 <div class="io-style">
 <div class="part">
 <section>
-<h3>Input</h3><p>The input is given from Standard Input in the following format:</p>
-<pre><var>N</var> <var>X</var>
-<var>S_1</var> <var>S_2</var> <var>\ldots</var> <var>S_N</var>
+<h3>Input</h3><p>Input is given from Standard Input in the following format:</p>
+<pre><var>N</var>
+<var>S</var> <var>T</var>
 </pre>
 
 </section>
@@ -466,7 +472,7 @@
 
 <div class="part">
 <section>
-<h3>Output</h3><p>Print the answer.</p>
+<h3>Output</h3><p>Print the string formed.</p>
 </section>
 </div>
 </div>
@@ -474,8 +480,8 @@
 <hr />
 <div class="part">
 <section>
-<h3>Sample Input 1</h3><pre>6 200
-100 675 201 200 199 328
+<h3>Sample Input 1</h3><pre>2
+ip cc
 </pre>
 
 </section>
@@ -483,26 +489,7 @@
 
 <div class="part">
 <section>
-<h3>Sample Output 1</h3><pre>499
-</pre>
-
-<p>Three problems have a score of <var>200</var> or less: the first, fourth, and fifth, for a total score of <var>S_1 + S_4 + S_5 = 100 + 200 + 199 = 499</var>.</p>
-</section>
-</div>
-
-<hr />
-<div class="part">
-<section>
-<h3>Sample Input 2</h3><pre>8 675
-675 675 675 675 675 675 675 675
-</pre>
-
-</section>
-</div>
-
-<div class="part">
-<section>
-<h3>Sample Output 2</h3><pre>5400
+<h3>Sample Output 1</h3><pre>icpc
 </pre>
 
 </section>
@@ -511,8 +498,8 @@
 <hr />
 <div class="part">
 <section>
-<h3>Sample Input 3</h3><pre>8 674
-675 675 675 675 675 675 675 675
+<h3>Sample Input 2</h3><pre>8
+hmhmnknk uuuuuuuu
 </pre>
 
 </section>
@@ -520,7 +507,25 @@
 
 <div class="part">
 <section>
-<h3>Sample Output 3</h3><pre>0
+<h3>Sample Output 2</h3><pre>humuhumunukunuku
+</pre>
+
+</section>
+</div>
+
+<hr />
+<div class="part">
+<section>
+<h3>Sample Input 3</h3><pre>5
+aaaaa aaaaa
+</pre>
+
+</section>
+</div>
+
+<div class="part">
+<section>
+<h3>Sample Output 3</h3><pre>aaaaaaaaaa
 </pre></section>
 </div>
 </span>
@@ -532,8 +537,8 @@
 
 		
 		<hr/>
-		<form class="form-horizontal form-code-submit" action="/contests/abc328/submit" method="POST">
-			<input type="hidden" name="data.TaskScreenName" value="abc328_a" />
+		<form class="form-horizontal form-code-submit" action="/contests/abc148/submit" method="POST">
+			<input type="hidden" name="data.TaskScreenName" value="abc148_b" />
 			
 			<div class="form-group ">
 				<label class="control-label col-sm-3 col-md-2" for="select-lang">Language</label>
@@ -758,7 +763,7 @@
 </div>
 
 
-			<input type="hidden" name="csrf_token" value="7UOtlWtLpAAVZOF7U9ZTSr/aFQk/vFYdmq5IyWCm55g=" />
+			<input type="hidden" name="csrf_token" value="D4WNZRgtLGU9GLJqOVddyPQSQMkfBuvcRQ0oCnKtSDE=" />
 			<div class="form-group">
 				<label class="control-label col-sm-3 col-md-2"></label>
 				<div class="col-sm-5">
@@ -778,7 +783,7 @@
 			
 			
 			
-<div class="a2a_kit a2a_kit_size_20 a2a_default_style pull-right" data-a2a-url="https://atcoder.jp/contests/abc328/tasks/abc328_a?lang=en" data-a2a-title="A - Not Too Hard">
+<div class="a2a_kit a2a_kit_size_20 a2a_default_style pull-right" data-a2a-url="https://atcoder.jp/contests/abc148/tasks/abc148_b?lang=en" data-a2a-title="B - Strings with the Same Length">
 	<a class="a2a_button_facebook"></a>
 	<a class="a2a_button_twitter"></a>
 	
@@ -798,8 +803,8 @@
 			<footer class="footer">
 			
 				<ul>
-					<li><a href="/contests/abc328/rules">Rule</a></li>
-					<li><a href="/contests/abc328/glossary">Glossary</a></li>
+					<li><a href="/contests/abc148/rules">Rule</a></li>
+					<li><a href="/contests/abc148/glossary">Glossary</a></li>
 					
 				</ul>
 			

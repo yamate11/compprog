@@ -9,7 +9,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>F - Construct Highway</title>
+	<title>C - ハイスコア</title>
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 	<meta http-equiv="Content-Language" content="en">
 	<meta name="viewport" content="width=device-width,initial-scale=1.0">
@@ -22,7 +22,11 @@
 		window.dataLayer = window.dataLayer || [];
 		function gtag(){dataLayer.push(arguments);}
 		gtag('js', new Date());
-
+		gtag('set', 'user_properties', {
+			
+				'login_status': 'logged_in',
+			
+		});
 		gtag('config', 'G-RC512FD18N');
 	</script>
 
@@ -32,61 +36,61 @@
 
 	<meta property="og:site_name" content="AtCoder">
 	
-	<meta property="og:title" content="F - Construct Highway" />
+	<meta property="og:title" content="C - ハイスコア" />
 	<meta property="og:description" content="AtCoder is a programming contest site for anyone from beginners to experts. We hold weekly programming contests online." />
 	<meta property="og:type" content="website" />
-	<meta property="og:url" content="https://atcoder.jp/contests/abc239/tasks/abc239_f" />
+	<meta property="og:url" content="https://atcoder.jp/contests/abc017/tasks/abc017_3" />
 	<meta property="og:image" content="https://img.atcoder.jp/assets/atcoder.png" />
 	<meta name="twitter:card" content="summary" />
 	<meta name="twitter:site" content="@atcoder" />
 	
-	<meta property="twitter:title" content="F - Construct Highway" />
+	<meta property="twitter:title" content="C - ハイスコア" />
 
 	<link href="//fonts.googleapis.com/css?family=Lato:400,700" rel="stylesheet" type="text/css">
-	<link rel="stylesheet" type="text/css" href="//img.atcoder.jp/public/4e015d0/css/bootstrap.min.css">
-	<link rel="stylesheet" type="text/css" href="//img.atcoder.jp/public/4e015d0/css/base.css">
+	<link rel="stylesheet" type="text/css" href="//img.atcoder.jp/public/22afd08/css/bootstrap.min.css">
+	<link rel="stylesheet" type="text/css" href="//img.atcoder.jp/public/22afd08/css/base.css">
 	<link rel="shortcut icon" type="image/png" href="//img.atcoder.jp/assets/favicon.png">
 	<link rel="apple-touch-icon" href="//img.atcoder.jp/assets/atcoder.png">
-	<script src="//img.atcoder.jp/public/4e015d0/js/lib/jquery-1.9.1.min.js"></script>
-	<script src="//img.atcoder.jp/public/4e015d0/js/lib/bootstrap.min.js"></script>
-	<script src="//img.atcoder.jp/public/4e015d0/js/cdn/js.cookie.min.js"></script>
-	<script src="//img.atcoder.jp/public/4e015d0/js/cdn/moment.min.js"></script>
-	<script src="//img.atcoder.jp/public/4e015d0/js/cdn/moment_js-ja.js"></script>
+	<script src="//img.atcoder.jp/public/22afd08/js/lib/jquery-1.9.1.min.js"></script>
+	<script src="//img.atcoder.jp/public/22afd08/js/lib/bootstrap.min.js"></script>
+	<script src="//img.atcoder.jp/public/22afd08/js/cdn/js.cookie.min.js"></script>
+	<script src="//img.atcoder.jp/public/22afd08/js/cdn/moment.min.js"></script>
+	<script src="//img.atcoder.jp/public/22afd08/js/cdn/moment_js-ja.js"></script>
 	<script>
 		var LANG = "en";
 		var userScreenName = "yamate11";
-		var csrfToken = "ebAzLgT8F8w74TalQk2ulATrxukE6OQTRPPQ2VMAfuc="
+		var csrfToken = "D4WNZRgtLGU9GLJqOVddyPQSQMkfBuvcRQ0oCnKtSDE="
 	</script>
-	<script src="//img.atcoder.jp/public/4e015d0/js/utils.js"></script>
+	<script src="//img.atcoder.jp/public/22afd08/js/utils.js"></script>
 	
 	
-		<script src="//img.atcoder.jp/public/4e015d0/js/contest.js"></script>
-		<link href="//img.atcoder.jp/public/4e015d0/css/contest.css" rel="stylesheet" />
+		<script src="//img.atcoder.jp/public/22afd08/js/contest.js"></script>
+		<link href="//img.atcoder.jp/public/22afd08/css/contest.css" rel="stylesheet" />
 		<script>
-			var contestScreenName = "abc239";
+			var contestScreenName = "abc017";
 			var remainingText = "Remaining Time";
 			var countDownText = "Contest begins in";
-			var startTime = moment("2022-02-19T21:00:00+09:00");
-			var endTime = moment("2022-02-19T22:40:00+09:00");
+			var startTime = moment("2015-01-17T21:00:00+09:00");
+			var endTime = moment("2015-01-17T23:00:00+09:00");
 		</script>
 		<style></style>
 	
 	
-		<link href="//img.atcoder.jp/public/4e015d0/css/cdn/select2.min.css" rel="stylesheet" />
-		<link href="//img.atcoder.jp/public/4e015d0/css/cdn/select2-bootstrap.min.css" rel="stylesheet" />
-		<script src="//img.atcoder.jp/public/4e015d0/js/lib/select2.min.js"></script>
+		<link href="//img.atcoder.jp/public/22afd08/css/cdn/select2.min.css" rel="stylesheet" />
+		<link href="//img.atcoder.jp/public/22afd08/css/cdn/select2-bootstrap.min.css" rel="stylesheet" />
+		<script src="//img.atcoder.jp/public/22afd08/js/lib/select2.min.js"></script>
 	
 	
-		<script src="//img.atcoder.jp/public/4e015d0/js/ace/ace.js"></script>
-		<script src="//img.atcoder.jp/public/4e015d0/js/ace/ext-language_tools.js"></script>
+		<script src="//img.atcoder.jp/public/22afd08/js/ace/ace.js"></script>
+		<script src="//img.atcoder.jp/public/22afd08/js/ace/ext-language_tools.js"></script>
 	
 	
-		<script src="//img.atcoder.jp/public/4e015d0/js/cdn/run_prettify.js"></script>
+		<script src="//img.atcoder.jp/public/22afd08/js/cdn/run_prettify.js"></script>
 	
 	
-		<link rel="stylesheet" href="//img.atcoder.jp/public/4e015d0/css/cdn/katex.min.css">
-		<script defer src="//img.atcoder.jp/public/4e015d0/js/cdn/katex.min.js"></script>
-		<script defer src="//img.atcoder.jp/public/4e015d0/js/cdn/auto-render.min.js"></script>
+		<link rel="stylesheet" href="//img.atcoder.jp/public/22afd08/css/cdn/katex.min.css">
+		<script defer src="//img.atcoder.jp/public/22afd08/js/cdn/katex.min.js"></script>
+		<script defer src="//img.atcoder.jp/public/22afd08/js/cdn/auto-render.min.js"></script>
 		<script>$(function(){$('var').each(function(){var html=$(this).html().replace(/<sub>/g,'_{').replace(/<\/sub>/g,'}');$(this).html('\\('+html+'\\)');});});</script>
 		<script>
 			var katexOptions = {
@@ -111,7 +115,7 @@
 	
 	
 	
-	<script src="//img.atcoder.jp/public/4e015d0/js/base.js"></script>
+	<script src="//img.atcoder.jp/public/22afd08/js/base.js"></script>
 </head>
 
 <body>
@@ -131,11 +135,11 @@
 				<h4 class="modal-title">Contest started</h4>
 			</div>
 			<div class="modal-body">
-				<p>Denso Create Programming Contest 2022(AtCoder Beginner Contest 239) has begun.</p>
+				<p>AtCoder Beginner Contest 017 has begun.</p>
 			</div>
 			<div class="modal-footer">
 				
-					<a class="btn btn-primary" href='/contests/abc239/tasks'>Go to the task list page</a>
+					<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
 				
 			</div>
 		</div>
@@ -149,7 +153,7 @@
 				<h4 class="modal-title">Contest is over</h4>
 			</div>
 			<div class="modal-body">
-				<p>Denso Create Programming Contest 2022(AtCoder Beginner Contest 239) has ended.</p>
+				<p>AtCoder Beginner Contest 017 has ended.</p>
 			</div>
 			<div class="modal-footer">
 				<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
@@ -171,7 +175,7 @@
 			<div class="collapse navbar-collapse" id="navbar-collapse">
 				<ul class="nav navbar-nav">
 				
-					<li><a class="contest-title" href="/contests/abc239">Denso Create Programming Contest 2022(AtCoder Beginner Contest 239)</a></li>
+					<li><a class="contest-title" href="/contests/abc017">AtCoder Beginner Contest 017</a></li>
 				
 				</ul>
 				<ul class="nav navbar-nav navbar-right">
@@ -181,15 +185,15 @@
 							<img src='//img.atcoder.jp/assets/top/img/flag-lang/en.png'> English <span class="caret"></span>
 						</a>
 						<ul class="dropdown-menu">
-							<li><a href="/contests/abc239/tasks/abc239_f?lang=ja"><img src='//img.atcoder.jp/assets/top/img/flag-lang/ja.png'> 日本語</a></li>
-							<li><a href="/contests/abc239/tasks/abc239_f?lang=en"><img src='//img.atcoder.jp/assets/top/img/flag-lang/en.png'> English</a></li>
+							<li><a href="/contests/abc017/tasks/abc017_3?lang=ja"><img src='//img.atcoder.jp/assets/top/img/flag-lang/ja.png'> 日本語</a></li>
+							<li><a href="/contests/abc017/tasks/abc017_3?lang=en"><img src='//img.atcoder.jp/assets/top/img/flag-lang/en.png'> English</a></li>
 						</ul>
 					</li>
 					
 					
 						<li class="dropdown">
 							<a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
-								<span class="glyphicon glyphicon-cog" aria-hidden="true"></span> yamate11 (Contestant) <span class="caret"></span>
+								<span class="glyphicon glyphicon-cog" aria-hidden="true"></span> yamate11 (Guest) <span class="caret"></span>
 							</a>
 							<ul class="dropdown-menu">
 								<li><a href="/users/yamate11"><span class="glyphicon glyphicon-user" aria-hidden="true"></span> My Profile</a></li>
@@ -211,8 +215,8 @@
 		</div>
 	</nav>
 
-	<form method="POST" name="form_logout" action="/logout?continue=https%3A%2F%2Fatcoder.jp%2Fcontests%2Fabc239%2Ftasks%2Fabc239_f">
-		<input type="hidden" name="csrf_token" value="ebAzLgT8F8w74TalQk2ulATrxukE6OQTRPPQ2VMAfuc=" />
+	<form method="POST" name="form_logout" action="/logout?continue=https%3A%2F%2Fatcoder.jp%2Fcontests%2Fabc017%2Ftasks%2Fabc017_3">
+		<input type="hidden" name="csrf_token" value="D4WNZRgtLGU9GLJqOVddyPQSQMkfBuvcRQ0oCnKtSDE=" />
 	</form>
 	<div id="main-container" class="container"
 		 	style="padding-top:50px;">
@@ -225,35 +229,36 @@
 		<small class="contest-duration">
 			
 				Contest Duration:
-				<a href='http://www.timeanddate.com/worldclock/fixedtime.html?iso=20220219T2100&p1=248' target='blank'><time class='fixtime fixtime-full'>2022-02-19 21:00:00+0900</time></a> - <a href='http://www.timeanddate.com/worldclock/fixedtime.html?iso=20220219T2240&p1=248' target='blank'><time class='fixtime fixtime-full'>2022-02-19 22:40:00+0900</time></a> (local time)
-				(100 minutes)
+				<a href='http://www.timeanddate.com/worldclock/fixedtime.html?iso=20150117T2100&p1=248' target='blank'><time class='fixtime fixtime-full'>2015-01-17 21:00:00+0900</time></a> - <a href='http://www.timeanddate.com/worldclock/fixedtime.html?iso=20150117T2300&p1=248' target='blank'><time class='fixtime fixtime-full'>2015-01-17 23:00:00+0900</time></a> (local time)
+				(120 minutes)
 			
 		</small>
 		<small class="back-to-home pull-right"><a href="/home">Back to Home</a></small>
 	</div>
 	<ul class="nav nav-tabs">
-		<li><a href="/contests/abc239"><span class="glyphicon glyphicon-home" aria-hidden="true"></span> Top</a></li>
+		<li><a href="/contests/abc017"><span class="glyphicon glyphicon-home" aria-hidden="true"></span> Top</a></li>
 		
-			<li class="active"><a href="/contests/abc239/tasks"><span class="glyphicon glyphicon-tasks" aria-hidden="true"></span> Tasks</a></li>
-		
-
-		
-			<li><a href="/contests/abc239/clarifications"><span class="glyphicon glyphicon-question-sign" aria-hidden="true"></span> Clarifications <span id="clar-badge" class="badge"></span></a></li>
+			<li class="active"><a href="/contests/abc017/tasks"><span class="glyphicon glyphicon-tasks" aria-hidden="true"></span> Tasks</a></li>
 		
 
 		
-			<li><a href="/contests/abc239/submit?taskScreenName=abc239_f"><span class="glyphicon glyphicon-send" aria-hidden="true"></span> Submit</a></li>
+			<li><a href="/contests/abc017/clarifications"><span class="glyphicon glyphicon-question-sign" aria-hidden="true"></span> Clarifications <span id="clar-badge" class="badge" ></span></a></li>
+		
+
+		
+			<li><a href="/contests/abc017/submit?taskScreenName=abc017_3"><span class="glyphicon glyphicon-send" aria-hidden="true"></span> Submit</a></li>
 		
 
 		
 			<li>
 				<a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false"><span class="glyphicon glyphicon-list" aria-hidden="true"></span> Results<span class="caret"></span></a>
 				<ul class="dropdown-menu">
-					<li><a href="/contests/abc239/submissions"><span class="glyphicon glyphicon-globe" aria-hidden="true"></span> All Submissions</a></li>
+					<li><a href="/contests/abc017/submissions"><span class="glyphicon glyphicon-globe" aria-hidden="true"></span> All Submissions</a></li>
 					
-						<li><a href="/contests/abc239/submissions/me"><span class="glyphicon glyphicon-user" aria-hidden="true"></span> My Submissions</a></li>
+						<li><a href="/contests/abc017/submissions/me"><span class="glyphicon glyphicon-user" aria-hidden="true"></span> My Submissions</a></li>
+						
 						<li class="divider"></li>
-						<li><a href="/contests/abc239/score"><span class="glyphicon glyphicon-dashboard" aria-hidden="true"></span> My Score</a></li>
+						<li><a href="/contests/abc017/score"><span class="glyphicon glyphicon-dashboard" aria-hidden="true"></span> My Score</a></li>
 					
 				</ul>
 			</li>
@@ -262,21 +267,21 @@
 		
 			
 				
-					<li><a href="/contests/abc239/standings"><span class="glyphicon glyphicon-sort-by-attributes-alt" aria-hidden="true"></span> Standings</a></li>
+					<li><a href="/contests/abc017/standings"><span class="glyphicon glyphicon-sort-by-attributes-alt" aria-hidden="true"></span> Standings</a></li>
 				
 			
 				
-					<li><a href="/contests/abc239/standings/virtual"><span class="glyphicon glyphicon-sort-by-attributes-alt" aria-hidden="true"></span> Virtual Standings</a></li>
+					<li><a href="/contests/abc017/standings/virtual"><span class="glyphicon glyphicon-sort-by-attributes-alt" aria-hidden="true"></span> Virtual Standings</a></li>
 				
 			
 		
 
 		
-			<li><a href="/contests/abc239/custom_test"><span class="glyphicon glyphicon-wrench" aria-hidden="true"></span> Custom Test</a></li>
+			<li><a href="/contests/abc017/custom_test"><span class="glyphicon glyphicon-wrench" aria-hidden="true"></span> Custom Test</a></li>
 		
 
 		
-			<li><a href="/contests/abc239/editorial"><span class="glyphicon glyphicon-book" aria-hidden="true"></span> Editorial</a></li>
+			<li><a href="/contests/abc017/editorial"><span class="glyphicon glyphicon-book" aria-hidden="true"></span> Editorial</a></li>
 		
 		
 			
@@ -288,8 +293,8 @@
 </div>
 	<div class="col-sm-12">
 		<span class="h2">
-			F - Construct Highway
-			<a class="btn btn-default btn-sm" href="/contests/abc239/tasks/abc239_f/editorial">Editorial</a>
+			C - ハイスコア
+			<a class="btn btn-default btn-sm" href="/contests/abc017/tasks/abc017_3/editorial">Editorial</a>
 		</span>
 		<span id="task-lang-btn" class="pull-right"><span data-lang="ja"><img src='//img.atcoder.jp/assets/top/img/flag-lang/ja.png'></span> / <span data-lang="en"><img src='//img.atcoder.jp/assets/top/img/flag-lang/en.png'></span></span>
 		<script>
@@ -328,224 +333,191 @@
 		</script>
 		<hr/>
 		<p>
-			Time Limit: 2 sec / Memory Limit: 1024 MB
+			Time Limit: 6 sec / Memory Limit: 256 MB
+			
 			
 		</p>
 
 		<div id="task-statement">
 			
-			<span class="lang">
-<span class="lang-ja">
-<p>配点 : <var>500</var> 点</p>
 
+
+	
+	
+
+			<div id="task-statement">
 <div class="part">
+
 <section>
-<h3>問題文</h3><p>Atcoder 国には <var>1</var> から <var>N</var> の番号がついた <var>N</var> 個の街と <var>1</var> から <var>M</var> の番号がついた <var>M</var> 個の高速道路があります。<br />
-高速道路 <var>i</var> は街 <var>A_i</var> と街 <var>B_i</var> を双方向に結んでいます。</p>
-<p>国王の高橋君は、新たに <var>N-M-1</var> 本の高速道路を建設し、次の <var>2</var> つの条件をともに満たそうとしています。</p>
-<ul>
-<li>すべての街同士は、高速道路をいくつか通って互いに行き来できる</li>
-<li>各 <var>i=1,\ldots,N</var> について、街 <var>i</var> はちょうど <var>D_i</var> 本の高速道路と直接つながっている</li>
-</ul>
-<p>条件を満たすような建設方法が存在するか判定し、存在するなら <var>1</var> つ出力してください。</p>
+<h3>問題文</h3>
+
+<p>高橋君はあるゲームが大好きである。</p>
+
+<p>このゲームには <var>N</var> 個の遺跡があり、好きな順番に探索することができる。遺跡には <var>1</var> から <var>N</var> までの番号が付けられている。</p>
+
+<p>ゲーム中に宝石を獲得することがある。宝石は <var>M</var> 種類あり、<var>1</var> から <var>M</var> まで番号が付けられている。</p>
+
+<p>遺跡を探索することで報酬として得点といくつかの宝石を入手することができる。遺跡 <var>i (1 ≦ i ≦ N)</var> を探索することで、得点 <var>s_i</var> 点を獲得し、番号が <var>l_i</var> 以上 <var>r_i</var> 以下のすべての宝石を <var>1</var> つずつ獲得する。同じ遺跡を複数回探索することはできない。</p>
+
+<p>獲得した宝石は捨てることができず、またすべての種類の宝石を <var>1</var> つ以上獲得してしまうと、魔王が復活するイベントが進行する。魔王が復活する際に探索していた遺跡で得られるはずの得点は消滅してしまう。</p>
+
+<p>高橋君はスコアをできるだけ高くすることを目標としており、うまく探索する遺跡を選ぶことで、魔王が復活しない状態で得られる得点の合計値を最大化したい。</p>
+
+<p>考えられる最大値はいくらか。</p>
+
 </section>
 </div>
-
-<div class="part">
-<section>
-<h3>制約</h3><ul>
-<li><var>2 \leq N \leq 2\times 10^5</var></li>
-<li><var>0 \leq M \lt N-1</var></li>
-<li><var>1 \leq D_i \leq N-1</var></li>
-<li><var>1\leq A_i \lt B_i \leq N</var></li>
-<li><var>i\neq j</var> ならば、<var>(A_i, B_i) \neq (A_j,B_j)</var></li>
-<li>入力に含まれる値は全て整数である</li>
-</ul>
-</section>
-</div>
-
 <hr />
 <div class="io-style">
 <div class="part">
+
 <section>
-<h3>入力</h3><p>入力は以下の形式で標準入力から与えられる。</p>
-<pre><var>N</var> <var>M</var>
-<var>D_1</var> <var>\ldots</var> <var>D_N</var>
-<var>A_1</var> <var>B_1</var>
-<var>\vdots</var>
-<var>A_M</var> <var>B_M</var>
+<h3>入力</h3>
+
+<p>入力は以下の形式で標準入力から与えられる。</p>
+
+<pre>
+<var>N</var> <var>M</var>
+<var>l_1</var> <var>r_1</var> <var>s_1</var>
+<var>l_2</var> <var>r_2</var> <var>s_2</var>
+:
+<var>l_N</var> <var>r_N</var> <var>s_N</var>
 </pre>
-</section>
-</div>
 
-<div class="part">
-<section>
-<h3>出力</h3><p>条件を満たすような建設方法が存在しないとき <code>-1</code> を出力せよ。<br />
-存在するとき、<var>N-M-1</var> 行出力せよ。<var>i</var> 行目には、<var>i</var> 番目に建設する高速道路が結ぶ <var>2</var> つの街の番号を空白区切りで出力せよ。</p>
-</section>
-</div>
-</div>
+<ul class="simple">
 
-<hr />
-<div class="part">
-<section>
-<h3>入力例 1</h3><pre>6 2
-1 2 1 2 2 2
-2 3
-1 4
-</pre>
-</section>
-</div>
+	<li><var>1</var> 行目には、<var>2</var> つの整数 <var>N (1 ≦ N ≦ 100,000)</var> と <var>M (1 ≦ M ≦ 100,000)</var> が空白区切りで書かれている。これは、遺跡が <var>N</var> 個、宝石が <var>M</var> 種類あることを表す。</li>
 
-<div class="part">
-<section>
-<h3>出力例 1</h3><pre>6 2
-5 6
-4 5
-</pre>
-<p>出力例のように、街 <var>6</var> と<var>2</var>、街 <var>5</var> と <var>6</var>、街 <var>4</var> と <var>5</var> をそれぞれ結ぶ高速道路を建設すると条件を満たすことができます。</p>
-<p>この他にも、例えば 街 <var>6</var> と<var>4</var>、街 <var>5</var> と <var>6</var>、街 <var>2</var> と <var>5</var> を結ぶような高速道路を建設しても条件を満たすことができます。</p>
-</section>
-</div>
+	<li><var>2</var> 行目から <var>N</var> 行には、遺跡に関する情報を表す <var>3</var> つの整数 <var>l_i</var>, <var>r_i (1 ≦ l_i ≦ r_i ≦ M)</var>, <var>s_i (1 ≦ s_i ≦ 5,000)</var> が与えられる。これは、遺跡 <var>i (1 ≦ i ≦ N)</var> を探索することで、得点 <var>s_i</var> 点を獲得し、番号が <var>l_i</var> 以上 <var>r_i</var> 以下のすべての宝石を <var>1</var> つずつ獲得することを表す。</li>
 
-<hr />
-<div class="part">
-<section>
-<h3>入力例 2</h3><pre>5 1
-1 1 1 1 4
-2 3
-</pre>
-</section>
-</div>
-
-<div class="part">
-<section>
-<h3>出力例 2</h3><pre>-1
-</pre>
-</section>
-</div>
-
-<hr />
-<div class="part">
-<section>
-<h3>入力例 3</h3><pre>4 0
-3 3 3 3
-</pre>
-</section>
-</div>
-
-<div class="part">
-<section>
-<h3>出力例 3</h3><pre>-1
-</pre></section>
-</div>
-</span>
-<span class="lang-en">
-<p>Score : <var>500</var> points</p>
-
-<div class="part">
-<section>
-<h3>Problem Statement</h3><p>The Republic of Atcoder has <var>N</var> towns numbered <var>1</var> through <var>N</var>, and <var>M</var> highways numbered <var>1</var> through <var>M</var>.<br />
-Highway <var>i</var> connects Town <var>A_i</var> and Town <var>B_i</var> bidirectionally.</p>
-<p>King Takahashi is going to construct <var>(N-M-1)</var> new highways so that the following two conditions are satisfied:</p>
-<ul>
-<li>One can travel between every pair of towns using some number of highways</li>
-<li>For each <var>i=1,\ldots,N</var>, exactly <var>D_i</var> highways are directly connected to Town <var>i</var> </li>
 </ul>
-<p>Determine if there is such a way of construction.  If it exists, print one.</p>
+
 </section>
 </div>
-
 <div class="part">
+
 <section>
-<h3>Constraints</h3><ul>
-<li><var>2 \leq N \leq 2\times 10^5</var></li>
-<li><var>0 \leq M \lt N-1</var></li>
-<li><var>1 \leq D_i \leq N-1</var></li>
-<li><var>1\leq A_i \lt B_i \leq N</var></li>
-<li>If <var>i\neq j</var>, then <var>(A_i, B_i) \neq (A_j,B_j)</var>.</li>
-<li>All values in input are integers.</li>
+<h3>配点と部分点</h3>
+
+<p>この問題は <var>101</var> 点満点で、部分点が設定されている。</p>
+
+<ul class="simple">
+
+	<li><var>N ≦ 8</var> かつ <var>M ≦ 8</var> を満たすデータセット <var>1</var> に正解した場合は、<var>30</var> 点が与えられる。</li>
+
+	<li><var>N ≦ 5,000</var> かつ <var>M ≦ 5,000</var> を満たすデータセット <var>2</var> に正解した場合は、上記とは別に <var>70</var> 点が与えられる。</li>
+
+	<li>追加制約のないデータセット <var>3</var> に正解した場合は、上記とは別に <var>1</var> 点が与えられる。</li>
+
 </ul>
+
 </section>
 </div>
-
-<hr />
-<div class="io-style">
 <div class="part">
+
 <section>
-<h3>Input</h3><p>Input is given from Standard Input in the following format:</p>
-<pre><var>N</var> <var>M</var>
-<var>D_1</var> <var>\ldots</var> <var>D_N</var>
-<var>A_1</var> <var>B_1</var>
-<var>\vdots</var>
-<var>A_M</var> <var>B_M</var>
+<h3>出力</h3>
+
+<p>魔王が復活しないような探索方法として考えられるものの中で得られる得点の最大値を <var>1</var> 行に出力せよ。出力の末尾にも改行を入れること。</p>
+
+</section>
+</div>
+</div>
+<hr />
+<div class="part">
+
+<section>
+<h3>入力例1</h3>
+
+<pre>
+4 6
+1 3 30
+2 3 40
+3 6 25
+6 6 10
 </pre>
+
 </section>
 </div>
-
 <div class="part">
+
 <section>
-<h3>Output</h3><p>If there isn't a way of construction that satisfies the conditions, print <code>-1</code>.<br />
-If there is, print <var>(N-M-1)</var> lines.  The <var>i</var>-th line should contain the indices of the two towns connected by the <var>i</var>-th highway to be constructed.</p>
+<h3>出力例1</h3>
+
+<pre>
+80
+</pre>
+
+<p>例えば、以下の順番に <var>3</var> つの遺跡を探索します。</p>
+
+<ul class="simple">
+
+	<li>遺跡 <var>1</var> を探索する。得点は <var>30</var> 点で、宝石 <var>1</var> と宝石 <var>2</var> と宝石 <var>3</var> を獲得する。</li>
+
+	<li>遺跡 <var>2</var> を探索する。得点は <var>40</var> 点で、宝石 <var>2</var> と宝石 <var>3</var> を獲得する。</li>
+
+	<li>遺跡 <var>4</var> を探索する。得点は <var>10</var> 点で、宝石 <var>6</var> を獲得する。</li>
+
+</ul>
+
+<p>最終的に獲得している宝石の種類は宝石 <var>1</var> と宝石 <var>2</var> と宝石 <var>3</var> と宝石 <var>6</var> の <var>4</var> 種類なので、魔王は復活しません。合計得点は <var>80</var> 点となり、これが最大値です。</p>
+
 </section>
 </div>
-</div>
-
 <hr />
 <div class="part">
+
 <section>
-<h3>Sample Input 1</h3><pre>6 2
-1 2 1 2 2 2
-2 3
+<h3>入力例2</h3>
+
+<pre>
+2 7
+1 3 90
+5 7 90
+</pre>
+
+</section>
+</div>
+<div class="part">
+
+<section>
+<h3>出力例2</h3>
+
+<pre>
+180
+</pre>
+
+<p>すべての遺跡を探索しても魔王は復活しません。</p>
+
+</section>
+</div>
+<hr />
+<div class="part">
+
+<section>
+<h3>入力例3</h3>
+
+<pre>
 1 4
+1 4 70
 </pre>
+
 </section>
 </div>
-
 <div class="part">
+
 <section>
-<h3>Sample Output 1</h3><pre>6 2
-5 6
-4 5
+<h3>出力例3</h3>
+
+<pre>
+0
 </pre>
-<p>As in the Sample Output, the conditions can be satisfied by constructing highways connecting Towns <var>6</var> and <var>2</var>, Towns <var>5</var> and <var>6</var>, and Towns <var>4</var> and <var>5</var>, respectively.</p>
-<p>Another example to satisfy the conditions is to construct highways connecting Towns <var>6</var> and <var>4</var>, Towns <var>5</var> and <var>6</var>, and Towns <var>2</var> and <var>5</var>, respectively.</p>
+
+<p>魔王が復活しないように遺跡を探索することができません。</p>
+
 </section>
 </div>
-
-<hr />
-<div class="part">
-<section>
-<h3>Sample Input 2</h3><pre>5 1
-1 1 1 1 4
-2 3
-</pre>
-</section>
 </div>
-
-<div class="part">
-<section>
-<h3>Sample Output 2</h3><pre>-1
-</pre>
-</section>
-</div>
-
-<hr />
-<div class="part">
-<section>
-<h3>Sample Input 3</h3><pre>4 0
-3 3 3 3
-</pre>
-</section>
-</div>
-
-<div class="part">
-<section>
-<h3>Sample Output 3</h3><pre>-1
-</pre></section>
-</div>
-</span>
-</span>
 
 		</div>
 
@@ -553,8 +525,8 @@ If there is, print <var>(N-M-1)</var> lines.  The <var>i</var>-th line should co
 
 		
 		<hr/>
-		<form class="form-horizontal form-code-submit" action="/contests/abc239/submit" method="POST">
-			<input type="hidden" name="data.TaskScreenName" value="abc239_f" />
+		<form class="form-horizontal form-code-submit" action="/contests/abc017/submit" method="POST">
+			<input type="hidden" name="data.TaskScreenName" value="abc017_3" />
 			
 			<div class="form-group ">
 				<label class="control-label col-sm-3 col-md-2" for="select-lang">Language</label>
@@ -779,7 +751,7 @@ If there is, print <var>(N-M-1)</var> lines.  The <var>i</var>-th line should co
 </div>
 
 
-			<input type="hidden" name="csrf_token" value="ebAzLgT8F8w74TalQk2ulATrxukE6OQTRPPQ2VMAfuc=" />
+			<input type="hidden" name="csrf_token" value="D4WNZRgtLGU9GLJqOVddyPQSQMkfBuvcRQ0oCnKtSDE=" />
 			<div class="form-group">
 				<label class="control-label col-sm-3 col-md-2"></label>
 				<div class="col-sm-5">
@@ -799,7 +771,7 @@ If there is, print <var>(N-M-1)</var> lines.  The <var>i</var>-th line should co
 			
 			
 			
-<div class="a2a_kit a2a_kit_size_20 a2a_default_style pull-right" data-a2a-url="https://atcoder.jp/contests/abc239/tasks/abc239_f?lang=en" data-a2a-title="F - Construct Highway">
+<div class="a2a_kit a2a_kit_size_20 a2a_default_style pull-right" data-a2a-url="https://atcoder.jp/contests/abc017/tasks/abc017_3?lang=en" data-a2a-title="C - ハイスコア">
 	<a class="a2a_button_facebook"></a>
 	<a class="a2a_button_twitter"></a>
 	
@@ -819,8 +791,8 @@ If there is, print <var>(N-M-1)</var> lines.  The <var>i</var>-th line should co
 			<footer class="footer">
 			
 				<ul>
-					<li><a href="/contests/abc239/rules">Rule</a></li>
-					<li><a href="/contests/abc239/glossary">Glossary</a></li>
+					<li><a href="/contests/abc017/rules">Rule</a></li>
+					<li><a href="/contests/abc017/glossary">Glossary</a></li>
 					
 				</ul>
 			

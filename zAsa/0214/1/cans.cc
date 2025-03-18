@@ -19,8 +19,8 @@ int main(/* int argc, char *argv[] */) {
   cin.tie(nullptr);
   cout << setprecision(20);
 
-  ll a, b; cin >> a >> b;
-  cout << 2 * a + 100 - b << endl;
+  ll n; cin >> n;
+  cout << (n + 1) / 2 << endl;
 
   return 0;
 }

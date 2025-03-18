@@ -19,25 +19,26 @@ int main(/* int argc, char *argv[] */) {
   cin.tie(nullptr);
   cout << setprecision(20);
 
-  ll N, M; cin >> N >> M;
-  vector B(N, vector(M, 0LL));
-  vector A(N, vector(M, 0LL));
-  REP(i, 0, N) {
-    string s; cin >> s;
-    REP(j, 0, M) B[i][j] = s[j] - '0';
+  string S;
+  cin >> S;
+  ll ans = 0;
+  ll s = 0;
+  ll N = ssize(S);
+  for (ll i = 0; i < N; ) {
+    if (S[i] == 'A') {
+      s++;
+      i++;
+    }
+    else if (i + 1 < N and S[i] == 'B' and S[i + 1] == 'C') {
+      ans += s;
+      i += 2;
+    }
+    else {
+      s = 0;
+      i++;
+    }
   }
-  REP(i, 0, N - 2) REP(j, 1, M - 1) {
-    ll b = B[i][j];
-    B[i][j] -= b;
-    B[i + 1][j - 1] -= b;
-    B[i + 1][j + 1] -= b;
-    B[i + 2][j] -= b;
-    A[i + 1][j] += b;
-  }
-  REP(i, 0, N) {
-    REP(j, 0, M) cout << A[i][j];
-    cout << "\n";
-  }
+  cout << ans << endl;
 
   return 0;
 }

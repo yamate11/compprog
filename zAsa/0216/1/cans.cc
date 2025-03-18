@@ -19,11 +19,15 @@ int main(/* int argc, char *argv[] */) {
   cin.tie(nullptr);
   cout << setprecision(20);
 
-  ll N; cin >> N;
-  REP(i, 0, N) {
-    ll a, b; cin >> a >> b;
-    cout << a + b << "\n";
+  vector<ll> a(3);
+  REP(i, 0, 3) cin >> a[i];
+  sort(ALL(a));
+  if (a[0] == 5 and a[1] == 5 and a[2] == 7) {
+    cout << "YES\n";
+  }else {
+    cout << "NO\n";
   }
+  
 
   return 0;
 }

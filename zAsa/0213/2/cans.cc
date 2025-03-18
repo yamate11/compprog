@@ -20,10 +20,19 @@ int main(/* int argc, char *argv[] */) {
   cout << setprecision(20);
 
   ll N; cin >> N;
+  // @InpVec(N, A) [0gJwL2rY]
+  auto A = vector(N, ll());
+  for (int i = 0; i < N; i++) { ll v; cin >> v; A[i] = v; }
+  // @End [0gJwL2rY]
+
+
   ll ans = 0;
-  REP(a, 1, N + 1) {
-    ll bb = (N - 1) / a;
-    ans += bb;
+  ll j = N - 2;
+  REPrev(i, N - 1, 0) {
+    if (j == i) j--;
+    while (j >= 0 and A[j] * 2 > A[i]) j--;
+    if (j < 0) break;
+    ans += j + 1;
   }
   cout << ans << endl;
 

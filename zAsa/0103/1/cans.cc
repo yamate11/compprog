@@ -2,6 +2,7 @@
 #include <cassert>
 using namespace std;
 using ll = long long int;
+using u64 = unsigned long long;
 using pll = pair<ll, ll>;
 // #include <atcoder/all>
 // using namespace atcoder;
@@ -18,8 +19,10 @@ int main(/* int argc, char *argv[] */) {
   cin.tie(nullptr);
   cout << setprecision(20);
 
-  string S, T; cin >> S >> T;
-  if (T.substr(0, SIZE(S)) == S) {
+  vector<ll> v(3);
+  REP(i, 0, 3) cin >> v[i];
+  sort(ALL(v));
+  if (v[0] + v[1] == v[2]) {
     cout << "Yes\n";
   }else {
     cout << "No\n";

@@ -1,2 +1,1 @@
-code
-atcoder
+30 30 100

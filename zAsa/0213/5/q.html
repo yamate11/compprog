@@ -9,7 +9,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>D - We Like AGC</title>
+	<title>E - All-you-can-eat</title>
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 	<meta http-equiv="Content-Language" content="en">
 	<meta name="viewport" content="width=device-width,initial-scale=1.0">
@@ -22,7 +22,11 @@
 		window.dataLayer = window.dataLayer || [];
 		function gtag(){dataLayer.push(arguments);}
 		gtag('js', new Date());
-
+		gtag('set', 'user_properties', {
+			
+				'login_status': 'logged_in',
+			
+		});
 		gtag('config', 'G-RC512FD18N');
 	</script>
 
@@ -32,61 +36,61 @@
 
 	<meta property="og:site_name" content="AtCoder">
 	
-	<meta property="og:title" content="D - We Like AGC" />
+	<meta property="og:title" content="E - All-you-can-eat" />
 	<meta property="og:description" content="AtCoder is a programming contest site for anyone from beginners to experts. We hold weekly programming contests online." />
 	<meta property="og:type" content="website" />
-	<meta property="og:url" content="https://atcoder.jp/contests/abc122/tasks/abc122_d" />
+	<meta property="og:url" content="https://atcoder.jp/contests/abc145/tasks/abc145_e" />
 	<meta property="og:image" content="https://img.atcoder.jp/assets/atcoder.png" />
 	<meta name="twitter:card" content="summary" />
 	<meta name="twitter:site" content="@atcoder" />
 	
-	<meta property="twitter:title" content="D - We Like AGC" />
+	<meta property="twitter:title" content="E - All-you-can-eat" />
 
 	<link href="//fonts.googleapis.com/css?family=Lato:400,700" rel="stylesheet" type="text/css">
-	<link rel="stylesheet" type="text/css" href="//img.atcoder.jp/public/36c2fcf/css/bootstrap.min.css">
-	<link rel="stylesheet" type="text/css" href="//img.atcoder.jp/public/36c2fcf/css/base.css">
+	<link rel="stylesheet" type="text/css" href="//img.atcoder.jp/public/c84259b/css/bootstrap.min.css">
+	<link rel="stylesheet" type="text/css" href="//img.atcoder.jp/public/c84259b/css/base.css">
 	<link rel="shortcut icon" type="image/png" href="//img.atcoder.jp/assets/favicon.png">
 	<link rel="apple-touch-icon" href="//img.atcoder.jp/assets/atcoder.png">
-	<script src="//img.atcoder.jp/public/36c2fcf/js/lib/jquery-1.9.1.min.js"></script>
-	<script src="//img.atcoder.jp/public/36c2fcf/js/lib/bootstrap.min.js"></script>
-	<script src="//img.atcoder.jp/public/36c2fcf/js/cdn/js.cookie.min.js"></script>
-	<script src="//img.atcoder.jp/public/36c2fcf/js/cdn/moment.min.js"></script>
-	<script src="//img.atcoder.jp/public/36c2fcf/js/cdn/moment_js-ja.js"></script>
+	<script src="//img.atcoder.jp/public/c84259b/js/lib/jquery-1.9.1.min.js"></script>
+	<script src="//img.atcoder.jp/public/c84259b/js/lib/bootstrap.min.js"></script>
+	<script src="//img.atcoder.jp/public/c84259b/js/cdn/js.cookie.min.js"></script>
+	<script src="//img.atcoder.jp/public/c84259b/js/cdn/moment.min.js"></script>
+	<script src="//img.atcoder.jp/public/c84259b/js/cdn/moment_js-ja.js"></script>
 	<script>
 		var LANG = "en";
 		var userScreenName = "yamate11";
-		var csrfToken = "8G2c4+7qpAGuNv750z2aW4S51Y6GtmN6dIYUWqqu76Y="
+		var csrfToken = "Bka6F1TOtCF6/4QIdUWt0TgKxjssA1eJ7XBApFcGJSk="
 	</script>
-	<script src="//img.atcoder.jp/public/36c2fcf/js/utils.js"></script>
+	<script src="//img.atcoder.jp/public/c84259b/js/utils.js"></script>
 	
 	
-		<script src="//img.atcoder.jp/public/36c2fcf/js/contest.js"></script>
-		<link href="//img.atcoder.jp/public/36c2fcf/css/contest.css" rel="stylesheet" />
+		<script src="//img.atcoder.jp/public/c84259b/js/contest.js"></script>
+		<link href="//img.atcoder.jp/public/c84259b/css/contest.css" rel="stylesheet" />
 		<script>
-			var contestScreenName = "abc122";
+			var contestScreenName = "abc145";
 			var remainingText = "Remaining Time";
 			var countDownText = "Contest begins in";
-			var startTime = moment("2019-03-24T21:00:00+09:00");
-			var endTime = moment("2019-03-24T22:40:00+09:00");
+			var startTime = moment("2019-11-16T21:00:00+09:00");
+			var endTime = moment("2019-11-16T22:40:00+09:00");
 		</script>
 		<style></style>
 	
 	
-		<link href="//img.atcoder.jp/public/36c2fcf/css/cdn/select2.min.css" rel="stylesheet" />
-		<link href="//img.atcoder.jp/public/36c2fcf/css/cdn/select2-bootstrap.min.css" rel="stylesheet" />
-		<script src="//img.atcoder.jp/public/36c2fcf/js/lib/select2.min.js"></script>
+		<link href="//img.atcoder.jp/public/c84259b/css/cdn/select2.min.css" rel="stylesheet" />
+		<link href="//img.atcoder.jp/public/c84259b/css/cdn/select2-bootstrap.min.css" rel="stylesheet" />
+		<script src="//img.atcoder.jp/public/c84259b/js/lib/select2.min.js"></script>
 	
 	
-		<script src="//img.atcoder.jp/public/36c2fcf/js/ace/ace.js"></script>
-		<script src="//img.atcoder.jp/public/36c2fcf/js/ace/ext-language_tools.js"></script>
+		<script src="//img.atcoder.jp/public/c84259b/js/ace/ace.js"></script>
+		<script src="//img.atcoder.jp/public/c84259b/js/ace/ext-language_tools.js"></script>
 	
 	
-		<script src="//img.atcoder.jp/public/36c2fcf/js/cdn/run_prettify.js"></script>
+		<script src="//img.atcoder.jp/public/c84259b/js/cdn/run_prettify.js"></script>
 	
 	
-		<link rel="stylesheet" href="//img.atcoder.jp/public/36c2fcf/css/cdn/katex.min.css">
-		<script defer src="//img.atcoder.jp/public/36c2fcf/js/cdn/katex.min.js"></script>
-		<script defer src="//img.atcoder.jp/public/36c2fcf/js/cdn/auto-render.min.js"></script>
+		<link rel="stylesheet" href="//img.atcoder.jp/public/c84259b/css/cdn/katex.min.css">
+		<script defer src="//img.atcoder.jp/public/c84259b/js/cdn/katex.min.js"></script>
+		<script defer src="//img.atcoder.jp/public/c84259b/js/cdn/auto-render.min.js"></script>
 		<script>$(function(){$('var').each(function(){var html=$(this).html().replace(/<sub>/g,'_{').replace(/<\/sub>/g,'}');$(this).html('\\('+html+'\\)');});});</script>
 		<script>
 			var katexOptions = {
@@ -111,7 +115,7 @@
 	
 	
 	
-	<script src="//img.atcoder.jp/public/36c2fcf/js/base.js"></script>
+	<script src="//img.atcoder.jp/public/c84259b/js/base.js"></script>
 </head>
 
 <body>
@@ -131,7 +135,7 @@
 				<h4 class="modal-title">Contest started</h4>
 			</div>
 			<div class="modal-body">
-				<p>AtCoder Beginner Contest 122 has begun.</p>
+				<p>AtCoder Beginner Contest 145 has begun.</p>
 			</div>
 			<div class="modal-footer">
 				
@@ -149,7 +153,7 @@
 				<h4 class="modal-title">Contest is over</h4>
 			</div>
 			<div class="modal-body">
-				<p>AtCoder Beginner Contest 122 has ended.</p>
+				<p>AtCoder Beginner Contest 145 has ended.</p>
 			</div>
 			<div class="modal-footer">
 				<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
@@ -171,7 +175,7 @@
 			<div class="collapse navbar-collapse" id="navbar-collapse">
 				<ul class="nav navbar-nav">
 				
-					<li><a class="contest-title" href="/contests/abc122">AtCoder Beginner Contest 122</a></li>
+					<li><a class="contest-title" href="/contests/abc145">AtCoder Beginner Contest 145</a></li>
 				
 				</ul>
 				<ul class="nav navbar-nav navbar-right">
@@ -181,8 +185,8 @@
 							<img src='//img.atcoder.jp/assets/top/img/flag-lang/en.png'> English <span class="caret"></span>
 						</a>
 						<ul class="dropdown-menu">
-							<li><a href="/contests/abc122/tasks/abc122_d?lang=ja"><img src='//img.atcoder.jp/assets/top/img/flag-lang/ja.png'> 日本語</a></li>
-							<li><a href="/contests/abc122/tasks/abc122_d?lang=en"><img src='//img.atcoder.jp/assets/top/img/flag-lang/en.png'> English</a></li>
+							<li><a href="/contests/abc145/tasks/abc145_e?lang=ja"><img src='//img.atcoder.jp/assets/top/img/flag-lang/ja.png'> 日本語</a></li>
+							<li><a href="/contests/abc145/tasks/abc145_e?lang=en"><img src='//img.atcoder.jp/assets/top/img/flag-lang/en.png'> English</a></li>
 						</ul>
 					</li>
 					
@@ -211,8 +215,8 @@
 		</div>
 	</nav>
 
-	<form method="POST" name="form_logout" action="/logout?continue=https%3A%2F%2Fatcoder.jp%2Fcontests%2Fabc122%2Ftasks%2Fabc122_d">
-		<input type="hidden" name="csrf_token" value="8G2c4&#43;7qpAGuNv750z2aW4S51Y6GtmN6dIYUWqqu76Y=" />
+	<form method="POST" name="form_logout" action="/logout?continue=https%3A%2F%2Fatcoder.jp%2Fcontests%2Fabc145%2Ftasks%2Fabc145_e">
+		<input type="hidden" name="csrf_token" value="Bka6F1TOtCF6/4QIdUWt0TgKxjssA1eJ7XBApFcGJSk=" />
 	</form>
 	<div id="main-container" class="container"
 		 	style="padding-top:50px;">
@@ -225,35 +229,36 @@
 		<small class="contest-duration">
 			
 				Contest Duration:
-				<a href='http://www.timeanddate.com/worldclock/fixedtime.html?iso=20190324T2100&p1=248' target='blank'><time class='fixtime fixtime-full'>2019-03-24 21:00:00+0900</time></a> - <a href='http://www.timeanddate.com/worldclock/fixedtime.html?iso=20190324T2240&p1=248' target='blank'><time class='fixtime fixtime-full'>2019-03-24 22:40:00+0900</time></a> (local time)
+				<a href='http://www.timeanddate.com/worldclock/fixedtime.html?iso=20191116T2100&p1=248' target='blank'><time class='fixtime fixtime-full'>2019-11-16 21:00:00+0900</time></a> - <a href='http://www.timeanddate.com/worldclock/fixedtime.html?iso=20191116T2240&p1=248' target='blank'><time class='fixtime fixtime-full'>2019-11-16 22:40:00+0900</time></a> (local time)
 				(100 minutes)
 			
 		</small>
 		<small class="back-to-home pull-right"><a href="/home">Back to Home</a></small>
 	</div>
 	<ul class="nav nav-tabs">
-		<li><a href="/contests/abc122"><span class="glyphicon glyphicon-home" aria-hidden="true"></span> Top</a></li>
+		<li><a href="/contests/abc145"><span class="glyphicon glyphicon-home" aria-hidden="true"></span> Top</a></li>
 		
-			<li class="active"><a href="/contests/abc122/tasks"><span class="glyphicon glyphicon-tasks" aria-hidden="true"></span> Tasks</a></li>
-		
-
-		
-			<li><a href="/contests/abc122/clarifications"><span class="glyphicon glyphicon-question-sign" aria-hidden="true"></span> Clarifications <span id="clar-badge" class="badge"></span></a></li>
+			<li class="active"><a href="/contests/abc145/tasks"><span class="glyphicon glyphicon-tasks" aria-hidden="true"></span> Tasks</a></li>
 		
 
 		
-			<li><a href="/contests/abc122/submit?taskScreenName=abc122_d"><span class="glyphicon glyphicon-send" aria-hidden="true"></span> Submit</a></li>
+			<li><a href="/contests/abc145/clarifications"><span class="glyphicon glyphicon-question-sign" aria-hidden="true"></span> Clarifications <span id="clar-badge" class="badge" ></span></a></li>
+		
+
+		
+			<li><a href="/contests/abc145/submit?taskScreenName=abc145_e"><span class="glyphicon glyphicon-send" aria-hidden="true"></span> Submit</a></li>
 		
 
 		
 			<li>
 				<a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false"><span class="glyphicon glyphicon-list" aria-hidden="true"></span> Results<span class="caret"></span></a>
 				<ul class="dropdown-menu">
-					<li><a href="/contests/abc122/submissions"><span class="glyphicon glyphicon-globe" aria-hidden="true"></span> All Submissions</a></li>
+					<li><a href="/contests/abc145/submissions"><span class="glyphicon glyphicon-globe" aria-hidden="true"></span> All Submissions</a></li>
 					
-						<li><a href="/contests/abc122/submissions/me"><span class="glyphicon glyphicon-user" aria-hidden="true"></span> My Submissions</a></li>
+						<li><a href="/contests/abc145/submissions/me"><span class="glyphicon glyphicon-user" aria-hidden="true"></span> My Submissions</a></li>
+						
 						<li class="divider"></li>
-						<li><a href="/contests/abc122/score"><span class="glyphicon glyphicon-dashboard" aria-hidden="true"></span> My Score</a></li>
+						<li><a href="/contests/abc145/score"><span class="glyphicon glyphicon-dashboard" aria-hidden="true"></span> My Score</a></li>
 					
 				</ul>
 			</li>
@@ -262,24 +267,26 @@
 		
 			
 				
-					<li><a href="/contests/abc122/standings"><span class="glyphicon glyphicon-sort-by-attributes-alt" aria-hidden="true"></span> Standings</a></li>
+					<li><a href="/contests/abc145/standings"><span class="glyphicon glyphicon-sort-by-attributes-alt" aria-hidden="true"></span> Standings</a></li>
 				
 			
 				
-					<li><a href="/contests/abc122/standings/virtual"><span class="glyphicon glyphicon-sort-by-attributes-alt" aria-hidden="true"></span> Virtual Standings</a></li>
+					<li><a href="/contests/abc145/standings/virtual"><span class="glyphicon glyphicon-sort-by-attributes-alt" aria-hidden="true"></span> Virtual Standings</a></li>
 				
 			
 		
 
 		
-			<li><a href="/contests/abc122/custom_test"><span class="glyphicon glyphicon-wrench" aria-hidden="true"></span> Custom Test</a></li>
+			<li><a href="/contests/abc145/custom_test"><span class="glyphicon glyphicon-wrench" aria-hidden="true"></span> Custom Test</a></li>
 		
 
 		
-			<li><a href="/contests/abc122/editorial"><span class="glyphicon glyphicon-book" aria-hidden="true"></span> Editorial</a></li>
+			<li><a href="/contests/abc145/editorial"><span class="glyphicon glyphicon-book" aria-hidden="true"></span> Editorial</a></li>
 		
 		
 			
+			
+				<li><a href="https://codeforces.com/blog/entry/71461" target="_blank" rel="noopener"><span class="glyphicon glyphicon-comment" aria-hidden="true"></span> Discuss</a></li>
 			
 		
 
@@ -288,8 +295,8 @@
 </div>
 	<div class="col-sm-12">
 		<span class="h2">
-			D - We Like AGC
-			<a class="btn btn-default btn-sm" href="/contests/abc122/tasks/abc122_d/editorial">Editorial</a>
+			E - All-you-can-eat
+			<a class="btn btn-default btn-sm" href="/contests/abc145/tasks/abc145_e/editorial">Editorial</a>
 		</span>
 		<span id="task-lang-btn" class="pull-right"><span data-lang="ja"><img src='//img.atcoder.jp/assets/top/img/flag-lang/ja.png'></span> / <span data-lang="en"><img src='//img.atcoder.jp/assets/top/img/flag-lang/en.png'></span></span>
 		<script>
@@ -330,36 +337,52 @@
 		<p>
 			Time Limit: 2 sec / Memory Limit: 1024 MB
 			
+			
 		</p>
 
 		<div id="task-statement">
 			
+
+
+	
+	
+
 			<span class="lang">
 <span class="lang-ja">
-<p>配点 : <var>400</var> 点</p>
+<p>配点 : <var>500</var> 点</p>
 
 <div class="part">
 <section>
-<h3>問題文</h3><p>整数 <var>N</var> が与えられます。次の条件を満たす長さ <var>N</var> の文字列の数を <var>10^9+7</var> で割った余りを求めてください。</p>
+<h3>問題文</h3><p>高橋君は食べ放題のお店に来ました。</p>
+<p><var>N</var> 種類の料理があり、<var>i</var> 番目の料理は、食べるために <var>A_i</var> 分必要で、美味しさは <var>B_i</var> です。</p>
+<p>この店のルールは以下の通りです。</p>
 <ul>
-<li><code>A</code>, <code>C</code>, <code>G</code>, <code>T</code> 以外の文字を含まない。</li>
-<li><code>AGC</code> を部分文字列として含まない。</li>
-<li>隣接する <var>2</var> 文字の入れ替えを <var>1</var> 回行うことで上記の条件に違反させることはできない。</li>
+<li>
+<p><var>1</var> 度に <var>1</var> つの料理のみを注文することができます。注文した料理は即座に提供され、食べ始めることができます。</p>
+</li>
+<li>
+<p>同じ種類の料理を <var>2</var> 度以上注文することはできません。</p>
+</li>
+<li>
+<p>提供済みの料理を食べ終わるまで次の料理を注文することはできません。</p>
+</li>
+<li>
+<p>最初の注文から <var>T-0.5</var> 分後以降に注文することはできませんが、提供済みの料理を食べることはできます。</p>
+</li>
 </ul>
-</section>
-</div>
-
-<div class="part">
-<section>
-<h3>注記</h3><p>文字列 <var>T</var> の部分文字列とは、<var>T</var> の先頭と末尾から <var>0</var> 文字以上を取り去って得られる文字列です。</p>
-<p>例えば、<code>ATCODER</code> の部分文字列には <code>TCO</code>, <code>AT</code>, <code>CODER</code>, <code>ATCODER</code>, <code></code> (空文字列) が含まれ、<code>AC</code> は含まれません。</p>
+<p>高橋君の満足度を、この来店で高橋君が食べる料理の美味しさの合計とします。</p>
+<p>高橋君が適切に行動したとき、満足度は最大でいくらになるでしょうか。</p>
 </section>
 </div>
 
 <div class="part">
 <section>
 <h3>制約</h3><ul>
-<li><var>3 \leq N \leq 100</var></li>
+<li><var>2 \leq N \leq 3000</var></li>
+<li><var>1 \leq T \leq 3000</var></li>
+<li><var>1 \leq A_i \leq 3000</var></li>
+<li><var>1 \leq B_i \leq 3000</var></li>
+<li>入力中のすべての値は整数である。</li>
 </ul>
 </section>
 </div>
@@ -369,7 +392,10 @@
 <div class="part">
 <section>
 <h3>入力</h3><p>入力は以下の形式で標準入力から与えられる。</p>
-<pre><var>N</var>
+<pre><var>N</var> <var>T</var>
+<var>A_1</var> <var>B_1</var>
+<var>:</var>
+<var>A_N</var> <var>B_N</var>
 </pre>
 
 </section>
@@ -377,7 +403,7 @@
 
 <div class="part">
 <section>
-<h3>出力</h3><p>条件を満たす文字列の数を <var>10^9+7</var> で割った余りを出力せよ。</p>
+<h3>出力</h3><p>高橋君が適切に行動したときの、満足度の最大値を出力せよ。</p>
 </section>
 </div>
 </div>
@@ -385,7 +411,9 @@
 <hr />
 <div class="part">
 <section>
-<h3>入力例 1</h3><pre>3
+<h3>入力例 1</h3><pre>2 60
+10 10
+100 100
 </pre>
 
 </section>
@@ -393,34 +421,21 @@
 
 <div class="part">
 <section>
-<h3>出力例 1</h3><pre>61
+<h3>出力例 1</h3><pre>110
 </pre>
 
-<p><code>A</code>, <code>C</code>, <code>G</code>, <code>T</code> 以外の文字を含まない長さ <var>3</var> の文字列は <var>4^3 = 64</var> 通り存在し、そのうち <code>AGC</code>, <code>ACG</code>, <code>GAC</code> のみが条件に違反するため、答えは <var>64 - 3 = 61</var> 通りです。</p>
-</section>
-</div>
-
-<hr />
-<div class="part">
-<section>
-<h3>入力例 2</h3><pre>4
-</pre>
-
-</section>
-</div>
-
-<div class="part">
-<section>
-<h3>出力例 2</h3><pre>230
-</pre>
-
+<p><var>1</var> 番目、<var>2</var> 番目の順に料理を注文することで、満足度は <var>110</var> になります。</p>
+<p>注文が時間内に間に合えば、食べるのにどれだけ時間がかかっても良いことに注意してください。</p>
 </section>
 </div>
 
 <hr />
 <div class="part">
 <section>
-<h3>入力例 3</h3><pre>100
+<h3>入力例 2</h3><pre>3 60
+10 10
+10 20
+10 30
 </pre>
 
 </section>
@@ -428,37 +443,87 @@
 
 <div class="part">
 <section>
-<h3>出力例 3</h3><pre>388130742
+<h3>出力例 2</h3><pre>60
 </pre>
 
-<p>文字列の数を <var>10^9+7</var> で割った余りを出力することをお忘れなく。</p></section>
+<p><var>60</var> 分以内に全ての料理を食べることができます。</p>
+</section>
+</div>
+
+<hr />
+<div class="part">
+<section>
+<h3>入力例 3</h3><pre>3 60
+30 10
+30 20
+30 30
+</pre>
+
+</section>
+</div>
+
+<div class="part">
+<section>
+<h3>出力例 3</h3><pre>50
+</pre>
+
+<p><var>2</var> 番目、<var>3</var> 番目の順に料理に注文することで、満足度を <var>50</var> にできます。</p>
+<p>どのような順に料理を注文しても、料理を <var>3</var> つ注文することはできません。</p>
+</section>
+</div>
+
+<hr />
+<div class="part">
+<section>
+<h3>入力例 4</h3><pre>10 100
+15 23
+20 18
+13 17
+24 12
+18 29
+19 27
+23 21
+18 20
+27 15
+22 25
+</pre>
+
+</section>
+</div>
+
+<div class="part">
+<section>
+<h3>出力例 4</h3><pre>145
+</pre></section>
 </div>
 </span>
 <span class="lang-en">
-<p>Score : <var>400</var> points</p>
+<p>Score : <var>500</var> points</p>
 
 <div class="part">
 <section>
-<h3>Problem Statement</h3><p>You are given an integer <var>N</var>. Find the number of strings of length <var>N</var> that satisfy the following conditions, modulo <var>10^9+7</var>:</p>
+<h3>Problem Statement</h3><p>Takahashi is at an all-you-can-eat restaurant.</p>
+<p>The restaurant offers <var>N</var> kinds of dishes. It takes <var>A_i</var> minutes to eat the <var>i</var>-th dish, whose deliciousness is <var>B_i</var>.</p>
+<p>The restaurant has the following rules:</p>
 <ul>
-<li>The string does not contain characters other than <code>A</code>, <code>C</code>, <code>G</code> and <code>T</code>.</li>
-<li>The string does not contain <code>AGC</code> as a substring.</li>
-<li>The condition above cannot be violated by swapping two adjacent characters once.</li>
+<li>You can only order one dish at a time. The dish ordered will be immediately served and ready to eat.</li>
+<li>You cannot order the same kind of dish more than once.</li>
+<li>Until you finish eating the dish already served, you cannot order a new dish.</li>
+<li>After <var>T-0.5</var> minutes from the first order, you can no longer place a new order, but you can continue eating the dish already served.</li>
 </ul>
-</section>
-</div>
-
-<div class="part">
-<section>
-<h3>Notes</h3><p>A substring of a string <var>T</var> is a string obtained by removing zero or more characters from the beginning and the end of <var>T</var>.</p>
-<p>For example, the substrings of <code>ATCODER</code> include <code>TCO</code>, <code>AT</code>, <code>CODER</code>, <code>ATCODER</code> and <code></code> (the empty string), but not <code>AC</code>.</p>
+<p>Let Takahashi's happiness be the sum of the deliciousness of the dishes he eats in this restaurant.</p>
+<p>What is the maximum possible happiness achieved by making optimal choices?</p>
 </section>
 </div>
 
 <div class="part">
 <section>
 <h3>Constraints</h3><ul>
-<li><var>3 \leq N \leq 100</var></li>
+<li><var>2 \leq N \leq 3000</var></li>
+<li><var>1 \leq T \leq 3000</var></li>
+<li><var>1 \leq A_i \leq 3000</var></li>
+<li><var>1 \leq B_i \leq 3000</var></li>
+<li>All values in input are integers.</li>
 </ul>
 </section>
 </div>
@@ -468,7 +533,10 @@
 <div class="part">
 <section>
 <h3>Input</h3><p>Input is given from Standard Input in the following format:</p>
-<pre><var>N</var>
+<pre><var>N</var> <var>T</var>
+<var>A_1</var> <var>B_1</var>
+<var>:</var>
+<var>A_N</var> <var>B_N</var>
 </pre>
 
 </section>
@@ -476,7 +544,7 @@
 
 <div class="part">
 <section>
-<h3>Output</h3><p>Print the number of strings of length <var>N</var> that satisfy the following conditions, modulo <var>10^9+7</var>.</p>
+<h3>Output</h3><p>Print the maximum possible happiness Takahashi can achieve.</p>
 </section>
 </div>
 </div>
@@ -484,7 +552,9 @@
 <hr />
 <div class="part">
 <section>
-<h3>Sample Input 1</h3><pre>3
+<h3>Sample Input 1</h3><pre>2 60
+10 10
+100 100
 </pre>
 
 </section>
@@ -492,34 +562,21 @@
 
 <div class="part">
 <section>
-<h3>Sample Output 1</h3><pre>61
+<h3>Sample Output 1</h3><pre>110
 </pre>
 
-<p>There are <var>4^3 = 64</var> strings of length <var>3</var> that do not contain characters other than <code>A</code>, <code>C</code>, <code>G</code> and <code>T</code>. Among them, only <code>AGC</code>, <code>ACG</code> and <code>GAC</code> violate the condition, so the answer is <var>64 - 3 = 61</var>.</p>
-</section>
-</div>
-
-<hr />
-<div class="part">
-<section>
-<h3>Sample Input 2</h3><pre>4
-</pre>
-
-</section>
-</div>
-
-<div class="part">
-<section>
-<h3>Sample Output 2</h3><pre>230
-</pre>
-
+<p>By ordering the first and second dishes in this order, Takahashi's happiness will be <var>110</var>.</p>
+<p>Note that, if we manage to order a dish in time, we can spend any amount of time to eat it.</p>
 </section>
 </div>
 
 <hr />
 <div class="part">
 <section>
-<h3>Sample Input 3</h3><pre>100
+<h3>Sample Input 2</h3><pre>3 60
+10 10
+10 20
+10 30
 </pre>
 
 </section>
@@ -527,10 +584,58 @@
 
 <div class="part">
 <section>
-<h3>Sample Output 3</h3><pre>388130742
+<h3>Sample Output 2</h3><pre>60
 </pre>
 
-<p>Be sure to print the number of strings modulo <var>10^9+7</var>.</p></section>
+<p>Takahashi can eat all the dishes within <var>60</var> minutes.</p>
+</section>
+</div>
+
+<hr />
+<div class="part">
+<section>
+<h3>Sample Input 3</h3><pre>3 60
+30 10
+30 20
+30 30
+</pre>
+
+</section>
+</div>
+
+<div class="part">
+<section>
+<h3>Sample Output 3</h3><pre>50
+</pre>
+
+<p>By ordering the second and third dishes in this order, Takahashi's happiness will be <var>50</var>.</p>
+<p>We cannot order three dishes, in whatever order we place them.</p>
+</section>
+</div>
+
+<hr />
+<div class="part">
+<section>
+<h3>Sample Input 4</h3><pre>10 100
+15 23
+20 18
+13 17
+24 12
+18 29
+19 27
+23 21
+18 20
+27 15
+22 25
+</pre>
+
+</section>
+</div>
+
+<div class="part">
+<section>
+<h3>Sample Output 4</h3><pre>145
+</pre></section>
 </div>
 </span>
 </span>
@@ -541,8 +646,8 @@
 
 		
 		<hr/>
-		<form class="form-horizontal form-code-submit" action="/contests/abc122/submit" method="POST">
-			<input type="hidden" name="data.TaskScreenName" value="abc122_d" />
+		<form class="form-horizontal form-code-submit" action="/contests/abc145/submit" method="POST">
+			<input type="hidden" name="data.TaskScreenName" value="abc145_e" />
 			
 			<div class="form-group ">
 				<label class="control-label col-sm-3 col-md-2" for="select-lang">Language</label>
@@ -767,7 +872,7 @@
 </div>
 
 
-			<input type="hidden" name="csrf_token" value="8G2c4&#43;7qpAGuNv750z2aW4S51Y6GtmN6dIYUWqqu76Y=" />
+			<input type="hidden" name="csrf_token" value="Bka6F1TOtCF6/4QIdUWt0TgKxjssA1eJ7XBApFcGJSk=" />
 			<div class="form-group">
 				<label class="control-label col-sm-3 col-md-2"></label>
 				<div class="col-sm-5">
@@ -787,7 +892,7 @@
 			
 			
 			
-<div class="a2a_kit a2a_kit_size_20 a2a_default_style pull-right" data-a2a-url="https://atcoder.jp/contests/abc122/tasks/abc122_d?lang=en" data-a2a-title="D - We Like AGC">
+<div class="a2a_kit a2a_kit_size_20 a2a_default_style pull-right" data-a2a-url="https://atcoder.jp/contests/abc145/tasks/abc145_e?lang=en" data-a2a-title="E - All-you-can-eat">
 	<a class="a2a_button_facebook"></a>
 	<a class="a2a_button_twitter"></a>
 	
@@ -807,8 +912,8 @@
 			<footer class="footer">
 			
 				<ul>
-					<li><a href="/contests/abc122/rules">Rule</a></li>
-					<li><a href="/contests/abc122/glossary">Glossary</a></li>
+					<li><a href="/contests/abc145/rules">Rule</a></li>
+					<li><a href="/contests/abc145/glossary">Glossary</a></li>
 					
 				</ul>
 			

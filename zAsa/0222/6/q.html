@@ -9,7 +9,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>C - 魔法使い高橋君</title>
+	<title>D - 浮気予防</title>
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 	<meta http-equiv="Content-Language" content="en">
 	<meta name="viewport" content="width=device-width,initial-scale=1.0">
@@ -22,7 +22,11 @@
 		window.dataLayer = window.dataLayer || [];
 		function gtag(){dataLayer.push(arguments);}
 		gtag('js', new Date());
-
+		gtag('set', 'user_properties', {
+			
+				'login_status': 'logged_in',
+			
+		});
 		gtag('config', 'G-RC512FD18N');
 	</script>
 
@@ -32,61 +36,61 @@
 
 	<meta property="og:site_name" content="AtCoder">
 	
-	<meta property="og:title" content="C - 魔法使い高橋君" />
+	<meta property="og:title" content="D - 浮気予防" />
 	<meta property="og:description" content="AtCoder is a programming contest site for anyone from beginners to experts. We hold weekly programming contests online." />
 	<meta property="og:type" content="website" />
-	<meta property="og:url" content="https://atcoder.jp/contests/arc053/tasks/arc053_c" />
+	<meta property="og:url" content="https://atcoder.jp/contests/abc010/tasks/abc010_4" />
 	<meta property="og:image" content="https://img.atcoder.jp/assets/atcoder.png" />
 	<meta name="twitter:card" content="summary" />
 	<meta name="twitter:site" content="@atcoder" />
 	
-	<meta property="twitter:title" content="C - 魔法使い高橋君" />
+	<meta property="twitter:title" content="D - 浮気予防" />
 
 	<link href="//fonts.googleapis.com/css?family=Lato:400,700" rel="stylesheet" type="text/css">
-	<link rel="stylesheet" type="text/css" href="//img.atcoder.jp/public/36c2fcf/css/bootstrap.min.css">
-	<link rel="stylesheet" type="text/css" href="//img.atcoder.jp/public/36c2fcf/css/base.css">
+	<link rel="stylesheet" type="text/css" href="//img.atcoder.jp/public/e434a31/css/bootstrap.min.css">
+	<link rel="stylesheet" type="text/css" href="//img.atcoder.jp/public/e434a31/css/base.css">
 	<link rel="shortcut icon" type="image/png" href="//img.atcoder.jp/assets/favicon.png">
 	<link rel="apple-touch-icon" href="//img.atcoder.jp/assets/atcoder.png">
-	<script src="//img.atcoder.jp/public/36c2fcf/js/lib/jquery-1.9.1.min.js"></script>
-	<script src="//img.atcoder.jp/public/36c2fcf/js/lib/bootstrap.min.js"></script>
-	<script src="//img.atcoder.jp/public/36c2fcf/js/cdn/js.cookie.min.js"></script>
-	<script src="//img.atcoder.jp/public/36c2fcf/js/cdn/moment.min.js"></script>
-	<script src="//img.atcoder.jp/public/36c2fcf/js/cdn/moment_js-ja.js"></script>
+	<script src="//img.atcoder.jp/public/e434a31/js/lib/jquery-1.9.1.min.js"></script>
+	<script src="//img.atcoder.jp/public/e434a31/js/lib/bootstrap.min.js"></script>
+	<script src="//img.atcoder.jp/public/e434a31/js/cdn/js.cookie.min.js"></script>
+	<script src="//img.atcoder.jp/public/e434a31/js/cdn/moment.min.js"></script>
+	<script src="//img.atcoder.jp/public/e434a31/js/cdn/moment_js-ja.js"></script>
 	<script>
 		var LANG = "en";
 		var userScreenName = "yamate11";
-		var csrfToken = "CJ8u0i3AG/9THd134YlYHuTSRCnQE34Pg4w7IizqEyM="
+		var csrfToken = "hvYdp1OMT2ixvmwTnLuIrcEhBUMOSoNwTwW99KtVFxg="
 	</script>
-	<script src="//img.atcoder.jp/public/36c2fcf/js/utils.js"></script>
+	<script src="//img.atcoder.jp/public/e434a31/js/utils.js"></script>
 	
 	
-		<script src="//img.atcoder.jp/public/36c2fcf/js/contest.js"></script>
-		<link href="//img.atcoder.jp/public/36c2fcf/css/contest.css" rel="stylesheet" />
+		<script src="//img.atcoder.jp/public/e434a31/js/contest.js"></script>
+		<link href="//img.atcoder.jp/public/e434a31/css/contest.css" rel="stylesheet" />
 		<script>
-			var contestScreenName = "arc053";
+			var contestScreenName = "abc010";
 			var remainingText = "Remaining Time";
 			var countDownText = "Contest begins in";
-			var startTime = moment("2016-05-14T21:00:00+09:00");
-			var endTime = moment("2016-05-14T22:30:00+09:00");
+			var startTime = moment("2014-06-07T21:00:00+09:00");
+			var endTime = moment("2014-06-07T23:00:00+09:00");
 		</script>
 		<style></style>
 	
 	
-		<link href="//img.atcoder.jp/public/36c2fcf/css/cdn/select2.min.css" rel="stylesheet" />
-		<link href="//img.atcoder.jp/public/36c2fcf/css/cdn/select2-bootstrap.min.css" rel="stylesheet" />
-		<script src="//img.atcoder.jp/public/36c2fcf/js/lib/select2.min.js"></script>
+		<link href="//img.atcoder.jp/public/e434a31/css/cdn/select2.min.css" rel="stylesheet" />
+		<link href="//img.atcoder.jp/public/e434a31/css/cdn/select2-bootstrap.min.css" rel="stylesheet" />
+		<script src="//img.atcoder.jp/public/e434a31/js/lib/select2.min.js"></script>
 	
 	
-		<script src="//img.atcoder.jp/public/36c2fcf/js/ace/ace.js"></script>
-		<script src="//img.atcoder.jp/public/36c2fcf/js/ace/ext-language_tools.js"></script>
+		<script src="//img.atcoder.jp/public/e434a31/js/ace/ace.js"></script>
+		<script src="//img.atcoder.jp/public/e434a31/js/ace/ext-language_tools.js"></script>
 	
 	
-		<script src="//img.atcoder.jp/public/36c2fcf/js/cdn/run_prettify.js"></script>
+		<script src="//img.atcoder.jp/public/e434a31/js/cdn/run_prettify.js"></script>
 	
 	
-		<link rel="stylesheet" href="//img.atcoder.jp/public/36c2fcf/css/cdn/katex.min.css">
-		<script defer src="//img.atcoder.jp/public/36c2fcf/js/cdn/katex.min.js"></script>
-		<script defer src="//img.atcoder.jp/public/36c2fcf/js/cdn/auto-render.min.js"></script>
+		<link rel="stylesheet" href="//img.atcoder.jp/public/e434a31/css/cdn/katex.min.css">
+		<script defer src="//img.atcoder.jp/public/e434a31/js/cdn/katex.min.js"></script>
+		<script defer src="//img.atcoder.jp/public/e434a31/js/cdn/auto-render.min.js"></script>
 		<script>$(function(){$('var').each(function(){var html=$(this).html().replace(/<sub>/g,'_{').replace(/<\/sub>/g,'}');$(this).html('\\('+html+'\\)');});});</script>
 		<script>
 			var katexOptions = {
@@ -111,7 +115,7 @@
 	
 	
 	
-	<script src="//img.atcoder.jp/public/36c2fcf/js/base.js"></script>
+	<script src="//img.atcoder.jp/public/e434a31/js/base.js"></script>
 </head>
 
 <body>
@@ -131,7 +135,7 @@
 				<h4 class="modal-title">Contest started</h4>
 			</div>
 			<div class="modal-body">
-				<p>AtCoder Regular Contest 053 has begun.</p>
+				<p>AtCoder Beginner Contest 010 has begun.</p>
 			</div>
 			<div class="modal-footer">
 				
@@ -149,7 +153,7 @@
 				<h4 class="modal-title">Contest is over</h4>
 			</div>
 			<div class="modal-body">
-				<p>AtCoder Regular Contest 053 has ended.</p>
+				<p>AtCoder Beginner Contest 010 has ended.</p>
 			</div>
 			<div class="modal-footer">
 				<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
@@ -171,7 +175,7 @@
 			<div class="collapse navbar-collapse" id="navbar-collapse">
 				<ul class="nav navbar-nav">
 				
-					<li><a class="contest-title" href="/contests/arc053">AtCoder Regular Contest 053</a></li>
+					<li><a class="contest-title" href="/contests/abc010">AtCoder Beginner Contest 010</a></li>
 				
 				</ul>
 				<ul class="nav navbar-nav navbar-right">
@@ -181,8 +185,8 @@
 							<img src='//img.atcoder.jp/assets/top/img/flag-lang/en.png'> English <span class="caret"></span>
 						</a>
 						<ul class="dropdown-menu">
-							<li><a href="/contests/arc053/tasks/arc053_c?lang=ja"><img src='//img.atcoder.jp/assets/top/img/flag-lang/ja.png'> 日本語</a></li>
-							<li><a href="/contests/arc053/tasks/arc053_c?lang=en"><img src='//img.atcoder.jp/assets/top/img/flag-lang/en.png'> English</a></li>
+							<li><a href="/contests/abc010/tasks/abc010_4?lang=ja"><img src='//img.atcoder.jp/assets/top/img/flag-lang/ja.png'> 日本語</a></li>
+							<li><a href="/contests/abc010/tasks/abc010_4?lang=en"><img src='//img.atcoder.jp/assets/top/img/flag-lang/en.png'> English</a></li>
 						</ul>
 					</li>
 					
@@ -211,8 +215,8 @@
 		</div>
 	</nav>
 
-	<form method="POST" name="form_logout" action="/logout?continue=https%3A%2F%2Fatcoder.jp%2Fcontests%2Farc053%2Ftasks%2Farc053_c">
-		<input type="hidden" name="csrf_token" value="CJ8u0i3AG/9THd134YlYHuTSRCnQE34Pg4w7IizqEyM=" />
+	<form method="POST" name="form_logout" action="/logout?continue=https%3A%2F%2Fatcoder.jp%2Fcontests%2Fabc010%2Ftasks%2Fabc010_4">
+		<input type="hidden" name="csrf_token" value="hvYdp1OMT2ixvmwTnLuIrcEhBUMOSoNwTwW99KtVFxg=" />
 	</form>
 	<div id="main-container" class="container"
 		 	style="padding-top:50px;">
@@ -225,35 +229,38 @@
 		<small class="contest-duration">
 			
 				Contest Duration:
-				<a href='http://www.timeanddate.com/worldclock/fixedtime.html?iso=20160514T2100&p1=248' target='blank'><time class='fixtime fixtime-full'>2016-05-14 21:00:00+0900</time></a> - <a href='http://www.timeanddate.com/worldclock/fixedtime.html?iso=20160514T2230&p1=248' target='blank'><time class='fixtime fixtime-full'>2016-05-14 22:30:00+0900</time></a> (local time)
-				(90 minutes)
+				<a href='http://www.timeanddate.com/worldclock/fixedtime.html?iso=20140607T2100&p1=248' target='blank'><time class='fixtime fixtime-full'>2014-06-07 21:00:00+0900</time></a> - <a href='http://www.timeanddate.com/worldclock/fixedtime.html?iso=20140607T2300&p1=248' target='blank'><time class='fixtime fixtime-full'>2014-06-07 23:00:00+0900</time></a> (local time)
+				(120 minutes)
 			
 		</small>
 		<small class="back-to-home pull-right"><a href="/home">Back to Home</a></small>
 	</div>
 	<ul class="nav nav-tabs">
-		<li><a href="/contests/arc053"><span class="glyphicon glyphicon-home" aria-hidden="true"></span> Top</a></li>
+		<li><a href="/contests/abc010"><span class="glyphicon glyphicon-home" aria-hidden="true"></span> Top</a></li>
 		
-			<li class="active"><a href="/contests/arc053/tasks"><span class="glyphicon glyphicon-tasks" aria-hidden="true"></span> Tasks</a></li>
-		
-
-		
-			<li><a href="/contests/arc053/clarifications"><span class="glyphicon glyphicon-question-sign" aria-hidden="true"></span> Clarifications <span id="clar-badge" class="badge"></span></a></li>
+			<li class="active"><a href="/contests/abc010/tasks"><span class="glyphicon glyphicon-tasks" aria-hidden="true"></span> Tasks</a></li>
 		
 
 		
-			<li><a href="/contests/arc053/submit?taskScreenName=arc053_c"><span class="glyphicon glyphicon-send" aria-hidden="true"></span> Submit</a></li>
+			<li><a href="/contests/abc010/clarifications"><span class="glyphicon glyphicon-question-sign" aria-hidden="true"></span> Clarifications <span id="clar-badge" class="badge" ></span></a></li>
+		
+
+		
+			<li><a href="/contests/abc010/submit?taskScreenName=abc010_4"><span class="glyphicon glyphicon-send" aria-hidden="true"></span> Submit</a></li>
 		
 
 		
 			<li>
 				<a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false"><span class="glyphicon glyphicon-list" aria-hidden="true"></span> Results<span class="caret"></span></a>
 				<ul class="dropdown-menu">
-					<li><a href="/contests/arc053/submissions"><span class="glyphicon glyphicon-globe" aria-hidden="true"></span> All Submissions</a></li>
+					<li><a href="/contests/abc010/submissions"><span class="glyphicon glyphicon-globe" aria-hidden="true"></span> All Submissions</a></li>
 					
-						<li><a href="/contests/arc053/submissions/me"><span class="glyphicon glyphicon-user" aria-hidden="true"></span> My Submissions</a></li>
-						<li class="divider"></li>
-						<li><a href="/contests/arc053/score"><span class="glyphicon glyphicon-dashboard" aria-hidden="true"></span> My Score</a></li>
+						<li><a href="/contests/abc010/submissions/me"><span class="glyphicon glyphicon-user" aria-hidden="true"></span> My Submissions</a></li>
+						
+						
+							<li class="divider"></li>
+							<li><a href="/contests/abc010/score"><span class="glyphicon glyphicon-dashboard" aria-hidden="true"></span> My Score</a></li>
+						
 					
 				</ul>
 			</li>
@@ -262,21 +269,21 @@
 		
 			
 				
-					<li><a href="/contests/arc053/standings"><span class="glyphicon glyphicon-sort-by-attributes-alt" aria-hidden="true"></span> Standings</a></li>
+					<li><a href="/contests/abc010/standings"><span class="glyphicon glyphicon-sort-by-attributes-alt" aria-hidden="true"></span> Standings</a></li>
 				
 			
 				
-					<li><a href="/contests/arc053/standings/virtual"><span class="glyphicon glyphicon-sort-by-attributes-alt" aria-hidden="true"></span> Virtual Standings</a></li>
+					<li><a href="/contests/abc010/standings/virtual"><span class="glyphicon glyphicon-sort-by-attributes-alt" aria-hidden="true"></span> Virtual Standings</a></li>
 				
 			
 		
 
 		
-			<li><a href="/contests/arc053/custom_test"><span class="glyphicon glyphicon-wrench" aria-hidden="true"></span> Custom Test</a></li>
+			<li><a href="/contests/abc010/custom_test"><span class="glyphicon glyphicon-wrench" aria-hidden="true"></span> Custom Test</a></li>
 		
 
 		
-			<li><a href="/contests/arc053/editorial"><span class="glyphicon glyphicon-book" aria-hidden="true"></span> Editorial</a></li>
+			<li><a href="/contests/abc010/editorial"><span class="glyphicon glyphicon-book" aria-hidden="true"></span> Editorial</a></li>
 		
 		
 			
@@ -288,8 +295,8 @@
 </div>
 	<div class="col-sm-12">
 		<span class="h2">
-			C - 魔法使い高橋君
-			<a class="btn btn-default btn-sm" href="/contests/arc053/tasks/arc053_c/editorial">Editorial</a>
+			D - 浮気予防
+			<a class="btn btn-default btn-sm" href="/contests/abc010/tasks/abc010_4/editorial">Editorial</a>
 		</span>
 		<span id="task-lang-btn" class="pull-right"><span data-lang="ja"><img src='//img.atcoder.jp/assets/top/img/flag-lang/ja.png'></span> / <span data-lang="en"><img src='//img.atcoder.jp/assets/top/img/flag-lang/en.png'></span></span>
 		<script>
@@ -330,105 +337,268 @@
 		<p>
 			Time Limit: 2 sec / Memory Limit: 256 MB
 			
+			
 		</p>
 
 		<div id="task-statement">
 			
-			<section>
-<h3>問題文</h3>
-<p>高橋君は <var>N</var> 個の魔法を覚えています。魔法は <var>1</var> から <var>N</var> まで番号が振られています。</p>
-<p>最初、気温は <var>0</var> 度です。高橋君が <var>i</var> 番目の魔法を唱えると、気温が <var>a_i</var> 度だけ上がった後 <var>b_i</var> 度だけ下がります。</p>
-<p>高橋君はすべての魔法をちょうど <var>1</var> 回ずつ唱えます。この間の気温の最大値を <var>X</var> 度とします。高橋君は魔法を唱える順番を工夫して、<var>X</var> をできるだけ小さくしようとしています。<var>X</var> の最小値を求めてください。</p>
-</section>
+
+
+	
+	
+
+			<div id="task-statement">
+<div class="part">
 
 <section>
-<h3>制約</h3>
-<ul>
-<li><var>1≦N≦10^5</var></li>
-<li><var>a_i</var>，<var>b_i</var> は整数である。</li>
-<li><var>1≦a_i，b_i≦10^9</var></li>
-</ul>
-</section>
-<hr>
+<h3>問題文</h3>
 
+<p>高橋君の秘書のなぎさちゃんは、高橋君が大好きです。今日も、高橋君に悪い虫が取り憑かないように、高橋君を監視しなければなりません。</p>
+
+<p>高橋君は、女の子と仲良くなるために、自前のSNSを使います。SNSで友人関係にある人を辿って行き、見つけた女の子にメッセージを送ります。
+なぎさちゃんは、高橋君のメッセージを女の子が見ることがないように、このSNSに対して、工作を行うことにしました。</p>
+
+<p>行える工作活動は、以下の <var>2</var>つです。
+
+<ul class="simple">
+
+	<li>特定の二人の友人関係を解消する</li>
+
+	<li>特定の一人のパスワードを変え、ログイン出来なくする　<font color="red">高橋君のパスワードは変更できません。(21:11追記)</font></li>
+
+</ul>
+
+<p>友人関係が解消されると、高橋君は、その二人の間を辿ることが出来なくなります。しかし、他の友人を経由して、辿ることが可能な場合は、その限りではありません。</p>
+
+<p>パスワードを変更すると、その人は、メッセージを見ることが不可能になります。友人関係に変化はないので、パスワードを変更された人を辿って、別の友人を探すのは可能です。</p>
+
+<p>なぎさちゃんは、出来るだけ工作の回数を少なくして、予めマークした女の子達が、高橋君のメッセージを閲覧できないようにしたいです。なぎさちゃんが工作を行う必要のある回数を求めてください。</p>
+
+</section>
+</div>
+<hr />
 <div class="io-style">
+<div class="part">
 
 <section>
 <h3>入力</h3>
+
 <p>入力は以下の形式で標準入力から与えられる。</p>
+
 <pre>
-<var>N</var>
+<var>N</var> <var>G</var> <var>E</var>
+<var>p_1</var> <var>p_2</var> ... <var>p_G</var>
 <var>a_1</var> <var>b_1</var>
-<var>:</var>
-<var>a_N</var> <var>b_N</var>
+<var>a_2</var> <var>b_2</var>
+:
+<var>a_E</var> <var>b_E</var>
 </pre>
+
+<ul class="simple">
+
+	<li><var>1</var> 行目には、SNSの登録人数を表す整数 <var>N (1 ≦ N ≦ 100)</var> と、なぎさちゃんがマークしている女の子の数 <var>G (0 ≦ G ≦ N - 1)</var>、 SNSの友人関係の数を表す整数 <var>E (0 ≦ E ≦ N × (N-1) / 2)</var>がスペース区切りで与えられる。</li>
+
+	<li><var>2</var> 行目では、なぎさちゃんがマークしている <var>i</var> 番目の女の子のIDを表す整数 <var>p_i (1 ≦ p_i ≦ N - 1)</var> の値が、スペース区切りで <var>G</var> 個与えられる。</li>
+
+	<li><var>3</var> 行目から <var>E</var> 行では、友人関係に関する情報が与えられる。このうち <var>i</var> 行目では <var>i</var> 番目の友人関係における、二人のID番号を表す <var>2</var> つの整数 <var>a_i (0 ≦ a_i ≦ N - 1)</var> <var>b_i (0 ≦ b_i ≦ N - 1)</var> の値が、スペース区切りで与えられる。</li>
+
+	<li><var>i ≠ j</var> のとき、<var>a_i = a_j</var> かつ <var>b_i = b_j</var>、または <var>a_i = b_j</var> かつ <var>b_i = a_j</var> になることはないことが保障されている。</li>
+
+	<li>全ての入力において、高橋君のIDは <var>0</var> であることが保障されている。</li>
+
+</ul>
+
 </section>
+</div>
+<div class="part">
+
+<section>
+<h3>部分点</h3>
+
+<p><var>0 ≦ E ≦ 12</var> を満たすテストケースに正解した場合、部分点として <var>99</var> 点が与えられる。</p>
+
+</section>
+</div>
+<div class="part">
 
 <section>
 <h3>出力</h3>
-<p><var>X</var> の最小値を出力せよ。</p>
+
+<p>なぎさちゃんが工作を行う必要のある回数の最小値を、 <var>1</var> 行で出力せよ。出力の末尾には改行をいれること。</p>
+
 </section>
-
 </div>
-
-<hr>
+</div>
+<hr />
+<div class="part">
 
 <section>
 <h3>入力例1</h3>
-<pre>
-1
-10 20
+
+<pre class="prettyprint linenums">
+4 2 3
+2 3
+0 1
+1 2
+1 3
 </pre>
+
 </section>
+</div>
+<div class="part">
 
 <section>
 <h3>出力例1</h3>
-<pre>
-10
-</pre>
-<p>唯一の魔法を唱えると、気温は <var>0</var> → <var>10</var> → <var>-10</var> 度と変化します。</p>
-</section>
 
-<hr>
+<pre class="prettyprint linenums">
+1
+</pre>
+
+<p><div class="img-caption">
+            <img src="/img/abc/010/pic1.png" height="300" width="300"/>
+</div></p>
+
+<p>図のように、 <var>1</var> つの友人関係を解消するだけで、<var>2</var> 人の女の子を高橋君から切り離すことが出来ます。</p>
+
+</section>
+</div>
+<hr />
+<div class="part">
 
 <section>
 <h3>入力例2</h3>
-<pre>
-2
-30 20
-10 20
+
+<pre class="prettyprint linenums">
+4 1 4
+3
+0 1
+0 2
+1 3
+2 3
 </pre>
+
 </section>
+</div>
+<div class="part">
 
 <section>
 <h3>出力例2</h3>
-<pre>
-20
-</pre>
-<p><var>2</var> 番目の魔法、<var>1</var> 番目の魔法の順に唱えると、気温は <var>0</var> → <var>10</var> → <var>-10</var> → <var>20</var> → <var>0</var> 度と変化します。</p>
-</section>
 
-<hr>
+<pre class="prettyprint linenums">
+1
+</pre>
+
+<p><div class="img-caption">
+            <img src="/img/abc/010/pic2.png" height="300" width="300"/>
+</div></p>
+
+<p>マークしている女の子は一人だけなので、この人をログイン出来なくするだけで、目的を達成することができます。</p>
+
+</section>
+</div>
+<hr />
+<div class="part">
 
 <section>
 <h3>入力例3</h3>
-<pre>
-5
-5 10
-10 5
-10 15
-15 10
-20 20
+
+<pre class="prettyprint linenums">
+10 3 11
+7 8 9
+0 1
+0 2
+0 3
+0 4
+1 5
+2 5
+5 6
+6 7
+6 8
+3 9
+4 9
 </pre>
+
 </section>
+</div>
+<div class="part">
 
 <section>
 <h3>出力例3</h3>
-<pre>
-10
+
+<pre class="prettyprint linenums">
+2
 </pre>
-<p>例えば、<var>1</var>，<var>3</var>，<var>5</var>，<var>2</var>，<var>4</var> 番目の魔法の順に唱えればよいです。</p>
+
+<p><div class="img-caption">
+            <img src="/img/abc/010/pic3.png" height="300" width="300"/>
+</div></p>
+
+<p>図のように工作を行うことで、全ての女の子に対して工作を行えます。</p>
+
 </section>
+</div>
+<hr />
+<div class="part">
+
+<section>
+<h3>入力例4</h3>
+
+<pre class="prettyprint linenums">
+6 2 6
+4 5
+0 1
+0 2
+1 3
+2 3
+3 4
+3 5
+</pre>
+
+</section>
+</div>
+<div class="part">
+
+<section>
+<h3>出力例4</h3>
+
+<pre class="prettyprint linenums">
+2
+</pre>
+
+<p>IDが <var>3</var> の人をログイン出来ないようにしても、高橋君が友達を探すのに影響がないことに注意してください。</p>
+
+</section>
+</div>
+<hr />
+<div class="part">
+
+<section>
+<h3>入力例5</h3>
+
+<pre class="prettyprint linenums">
+4 3 3
+1 2 3
+1 2
+1 3
+2 3
+</pre>
+
+</section>
+</div>
+<div class="part">
+
+<section>
+<h3>出力例5</h3>
+
+<pre class="prettyprint linenums">
+0
+</pre>
+
+<p>高橋君には友達がいないため、工作を行う必要はありません。</p>
+
+</section>
+</div>
+</div>
 
 		</div>
 
@@ -436,8 +606,8 @@
 
 		
 		<hr/>
-		<form class="form-horizontal form-code-submit" action="/contests/arc053/submit" method="POST">
-			<input type="hidden" name="data.TaskScreenName" value="arc053_c" />
+		<form class="form-horizontal form-code-submit" action="/contests/abc010/submit" method="POST">
+			<input type="hidden" name="data.TaskScreenName" value="abc010_4" />
 			
 			<div class="form-group ">
 				<label class="control-label col-sm-3 col-md-2" for="select-lang">Language</label>
@@ -662,7 +832,7 @@
 </div>
 
 
-			<input type="hidden" name="csrf_token" value="CJ8u0i3AG/9THd134YlYHuTSRCnQE34Pg4w7IizqEyM=" />
+			<input type="hidden" name="csrf_token" value="hvYdp1OMT2ixvmwTnLuIrcEhBUMOSoNwTwW99KtVFxg=" />
 			<div class="form-group">
 				<label class="control-label col-sm-3 col-md-2"></label>
 				<div class="col-sm-5">
@@ -682,7 +852,7 @@
 			
 			
 			
-<div class="a2a_kit a2a_kit_size_20 a2a_default_style pull-right" data-a2a-url="https://atcoder.jp/contests/arc053/tasks/arc053_c?lang=en" data-a2a-title="C - 魔法使い高橋君">
+<div class="a2a_kit a2a_kit_size_20 a2a_default_style pull-right" data-a2a-url="https://atcoder.jp/contests/abc010/tasks/abc010_4?lang=en" data-a2a-title="D - 浮気予防">
 	<a class="a2a_button_facebook"></a>
 	<a class="a2a_button_twitter"></a>
 	
@@ -702,8 +872,8 @@
 			<footer class="footer">
 			
 				<ul>
-					<li><a href="/contests/arc053/rules">Rule</a></li>
-					<li><a href="/contests/arc053/glossary">Glossary</a></li>
+					<li><a href="/contests/abc010/rules">Rule</a></li>
+					<li><a href="/contests/abc010/glossary">Glossary</a></li>
 					
 				</ul>
 			

@@ -2,6 +2,7 @@
 #include <cassert>
 using namespace std;
 using ll = long long int;
+using u64 = unsigned long long;
 using pll = pair<ll, ll>;
 // #include <atcoder/all>
 // using namespace atcoder;
@@ -18,11 +19,18 @@ int main(/* int argc, char *argv[] */) {
   cin.tie(nullptr);
   cout << setprecision(20);
 
-  ll n; cin >> n;
-  string ans;
-  if (n < 1000) ans = "ABC";
-  else ans = "ABD";
-  cout << ans << endl;
+  ll x, y; cin >> x >> y;
+  ll unit = 100000;
+  ll ans;
+  if (x == 1 and y == 1) ans = 10;
+  else {
+    ll xx = 4 - x;
+    ll yy = 4 - y;
+    if (xx < 0) xx = 0;
+    if (yy < 0) yy = 0;
+    ans = xx + yy;
+  }
+  cout << ans * unit << endl;
 
   return 0;
 }

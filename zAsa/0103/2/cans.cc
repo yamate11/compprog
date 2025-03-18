@@ -2,6 +2,7 @@
 #include <cassert>
 using namespace std;
 using ll = long long int;
+using u64 = unsigned long long;
 using pll = pair<ll, ll>;
 // #include <atcoder/all>
 // using namespace atcoder;
@@ -18,31 +19,22 @@ int main(/* int argc, char *argv[] */) {
   cin.tie(nullptr);
   cout << setprecision(20);
 
-  ll N, K, X; cin >> N >> K >> X;
-  // @InpVec(N, A) [IZOPUwkf]
-  auto A = vector(N, ll());
-  for (int i = 0; i < N; i++) { ll v; cin >> v; A[i] = v; }
-  // @End [IZOPUwkf]
-
-  vector<ll> R(N);
-  ll tot = 0;
-  ll s = 0;
+  ll N, K; cin >> N >> K;
+  vector<ll> A(N);
   REP(i, 0, N) {
-    R[i] = A[i] % X;
-    s += A[i] / X;
-    tot += A[i];
+    ll p, q, r; cin >> p >> q >> r;
+    A[i] = p + q + r;
   }
-  if (K <= s) {
-    cout << tot - K * X << endl;
-  }else if (K >= s + N) {
-    cout << 0 << endl;
-  }else {
-    sort(ALL(R));
-    ll z = 0;
-    REP(i, 0, N - (K - s)) z += R[i];
-    cout << z << endl;
+  auto B = A;
+  sort(ALL(B));
+  REP(i, 0, N) {
+    ll p = B.end() - upper_bound(ALL(B), A[i] + 300);
+    if (p <= K - 1) {
+      cout << "Yes\n";
+    }else {
+      cout << "No\n";
+    }
   }
-
   return 0;
 }
 
