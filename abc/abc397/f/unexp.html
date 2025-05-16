@@ -1,0 +1,3034 @@
+
+
+
+
+
+
+<!DOCTYPE html>
+<html>
+<head>
+	<title>提出 - オムロンプログラミングコンテスト2025（AtCoder Beginner Contest 397）</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+	<meta http-equiv="Content-Language" content="ja">
+	<meta name="viewport" content="width=device-width,initial-scale=1.0">
+	<meta name="format-detection" content="telephone=no">
+	<meta name="google-site-verification" content="nXGC_JxO0yoP1qBzMnYD_xgufO6leSLw1kyNo2HZltM" />
+
+	
+	<script async src="https://www.googletagmanager.com/gtag/js?id=G-RC512FD18N"></script>
+	<script>
+		window.dataLayer = window.dataLayer || [];
+		function gtag(){dataLayer.push(arguments);}
+		gtag('js', new Date());
+		gtag('set', 'user_properties', {
+			
+				'login_status': 'logged_in',
+			
+		});
+		gtag('config', 'G-RC512FD18N');
+	</script>
+
+	
+	<meta name="description" content="プログラミング初級者から上級者まで楽しめる、競技プログラミングコンテストサイト「AtCoder」。オンラインで毎週開催プログラミングコンテストを開催しています。競技プログラミングを用いて、客観的に自分のスキルを計ることのできるサービスです。">
+	<meta name="author" content="AtCoder Inc.">
+
+	<meta property="og:site_name" content="AtCoder">
+	
+	<meta property="og:title" content="提出 - オムロンプログラミングコンテスト2025（AtCoder Beginner Contest 397）" />
+	<meta property="og:description" content="プログラミング初級者から上級者まで楽しめる、競技プログラミングコンテストサイト「AtCoder」。オンラインで毎週開催プログラミングコンテストを開催しています。競技プログラミングを用いて、客観的に自分のスキルを計ることのできるサービスです。" />
+	<meta property="og:type" content="website" />
+	<meta property="og:url" content="https://atcoder.jp/contests/abc397/submit" />
+	<meta property="og:image" content="https://img.atcoder.jp/assets/atcoder.png" />
+	<meta name="twitter:card" content="summary" />
+	<meta name="twitter:site" content="@atcoder" />
+	
+	<meta property="twitter:title" content="提出 - オムロンプログラミングコンテスト2025（AtCoder Beginner Contest 397）" />
+
+	<link href="//fonts.googleapis.com/css?family=Lato:400,700" rel="stylesheet" type="text/css">
+	<link rel="stylesheet" type="text/css" href="//img.atcoder.jp/public/48e8e89/css/bootstrap.min.css">
+	<link rel="stylesheet" type="text/css" href="//img.atcoder.jp/public/48e8e89/css/base.css">
+	<link rel="shortcut icon" type="image/png" href="//img.atcoder.jp/assets/favicon.png">
+	<link rel="apple-touch-icon" href="//img.atcoder.jp/assets/atcoder.png">
+	<script src="//img.atcoder.jp/public/48e8e89/js/lib/jquery-1.9.1.min.js"></script>
+	<script src="//img.atcoder.jp/public/48e8e89/js/lib/bootstrap.min.js"></script>
+	<script src="//img.atcoder.jp/public/48e8e89/js/cdn/js.cookie.min.js"></script>
+	<script src="//img.atcoder.jp/public/48e8e89/js/cdn/moment.min.js"></script>
+	<script src="//img.atcoder.jp/public/48e8e89/js/cdn/moment_js-ja.js"></script>
+	<script>
+		var LANG = "ja";
+		var userScreenName = "yamate11";
+		var csrfToken = "xq/2/1/cd0OKZhkOMPzGHO28HpSv5GCbMjIXdzS6eNY="
+	</script>
+	<script src="//img.atcoder.jp/public/48e8e89/js/utils.js"></script>
+	
+	
+		<script src="//img.atcoder.jp/public/48e8e89/js/contest.js"></script>
+		<link href="//img.atcoder.jp/public/48e8e89/css/contest.css" rel="stylesheet" />
+		<script>
+			var contestScreenName = "abc397";
+			var remainingText = "残り時間";
+			var countDownText = "開始まであと";
+			var startTime = moment("2025-03-15T21:00:00+09:00");
+			var endTime = moment("2025-03-15T22:40:00+09:00");
+		</script>
+		<style></style>
+	
+	
+		<link href="//img.atcoder.jp/public/48e8e89/css/cdn/select2.min.css" rel="stylesheet" />
+		<link href="//img.atcoder.jp/public/48e8e89/css/cdn/select2-bootstrap.min.css" rel="stylesheet" />
+		<script src="//img.atcoder.jp/public/48e8e89/js/lib/select2.min.js"></script>
+	
+	
+		<script src="//img.atcoder.jp/public/48e8e89/js/ace/ace.js"></script>
+		<script src="//img.atcoder.jp/public/48e8e89/js/ace/ext-language_tools.js"></script>
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	<script src="//img.atcoder.jp/public/48e8e89/js/base.js"></script>
+</head>
+
+<body>
+
+<script type="text/javascript">
+	var __pParams = __pParams || [];
+	__pParams.push({client_id: '468', c_1: 'atcodercontest', c_2: 'ClientSite'});
+</script>
+<script type="text/javascript" src="https://cdn.d2-apps.net/js/tr.js" async></script>
+
+
+<div id="modal-contest-start" class="modal fade" tabindex="-1" role="dialog">
+	<div class="modal-dialog" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+				<h4 class="modal-title">コンテスト開始</h4>
+			</div>
+			<div class="modal-body">
+				<p>オムロンプログラミングコンテスト2025（AtCoder Beginner Contest 397）が開始されました。</p>
+			</div>
+			<div class="modal-footer">
+				
+					<a class="btn btn-primary" href='/contests/abc397/tasks'>問題一覧ページへ移動</a>
+				
+			</div>
+		</div>
+	</div>
+</div>
+<div id="modal-contest-end" class="modal fade" tabindex="-1" role="dialog">
+	<div class="modal-dialog" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+				<h4 class="modal-title">コンテスト終了</h4>
+			</div>
+			<div class="modal-body">
+				<p>オムロンプログラミングコンテスト2025（AtCoder Beginner Contest 397）は終了しました。</p>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-default" data-dismiss="modal">閉じる</button>
+			</div>
+		</div>
+	</div>
+</div>
+<div id="main-div" class="float-container">
+
+
+	<nav class="navbar navbar-inverse navbar-fixed-top">
+		<div class="container-fluid">
+			<div class="navbar-header">
+				<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapse" aria-expanded="false">
+					<span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span>
+				</button>
+				<a class="navbar-brand" href="/home"></a>
+			</div>
+			<div class="collapse navbar-collapse" id="navbar-collapse">
+				<ul class="nav navbar-nav">
+				
+					<li><a class="contest-title" href="/contests/abc397">オムロンプログラミングコンテスト2025（AtCoder Beginner Contest 397）</a></li>
+				
+				</ul>
+				<ul class="nav navbar-nav navbar-right">
+					
+					<li class="dropdown">
+						<a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
+							<img src='//img.atcoder.jp/assets/top/img/flag-lang/ja.png'> 日本語 <span class="caret"></span>
+						</a>
+						<ul class="dropdown-menu">
+							<li><a href="/contests/abc397/submit?lang=ja"><img src='//img.atcoder.jp/assets/top/img/flag-lang/ja.png'> 日本語</a></li>
+							<li><a href="/contests/abc397/submit?lang=en"><img src='//img.atcoder.jp/assets/top/img/flag-lang/en.png'> English</a></li>
+						</ul>
+					</li>
+					
+					
+						<li class="dropdown">
+							<a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
+								<span class="glyphicon glyphicon-cog" aria-hidden="true"></span> yamate11 (Contestant) <span class="caret"></span>
+							</a>
+							<ul class="dropdown-menu">
+								<li><a href="/users/yamate11"><span class="glyphicon glyphicon-user" aria-hidden="true"></span> マイプロフィール</a></li>
+								<li class="divider"></li>
+								<li><a href="/settings"><span class="glyphicon glyphicon-wrench" aria-hidden="true"></span> 基本設定</a></li>
+								<li><a href="/settings/icon"><span class="glyphicon glyphicon-picture" aria-hidden="true"></span> アイコン設定</a></li>
+								<li><a href="/settings/password"><span class="glyphicon glyphicon-lock" aria-hidden="true"></span> パスワードの変更</a></li>
+								<li><a href="/settings/fav"><span class="glyphicon glyphicon-star" aria-hidden="true"></span> お気に入り管理</a></li>
+								
+								
+								
+								<li class="divider"></li>
+								<li><a href="javascript:void(form_logout.submit())"><span class="glyphicon glyphicon-log-out" aria-hidden="true"></span> ログアウト</a></li>
+							</ul>
+						</li>
+					
+				</ul>
+			</div>
+		</div>
+	</nav>
+
+	<form method="POST" name="form_logout" action="/logout?continue=https%3A%2F%2Fatcoder.jp%2Fcontests%2Fabc397%2Fsubmit">
+		<input type="hidden" name="csrf_token" value="xq/2/1/cd0OKZhkOMPzGHO28HpSv5GCbMjIXdzS6eNY=" />
+	</form>
+	<div id="main-container" class="container"
+		 	style="padding-top:50px;">
+		
+	<div class="row" style="margin-top:10px;">
+		
+			<div class="alert alert-danger alert-dismissible col-sm-12 fade in" role="alert" >
+				<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+				<span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span> エラーが発生しました。
+			</div>
+		
+		
+	</div>
+
+
+
+<div class="row">
+	<div id="contest-nav-tabs" class="col-sm-12 mb-2 cnvtb-fixed">
+	<div>
+		<small class="contest-duration">
+			
+				コンテスト時間:
+				<a href='http://www.timeanddate.com/worldclock/fixedtime.html?iso=20250315T2100&p1=248' target='blank'><time class='fixtime fixtime-full'>2025-03-15 21:00:00+0900</time></a> ~ <a href='http://www.timeanddate.com/worldclock/fixedtime.html?iso=20250315T2240&p1=248' target='blank'><time class='fixtime fixtime-full'>2025-03-15 22:40:00+0900</time></a> 
+				(100分)
+			
+		</small>
+		<small class="back-to-home pull-right"><a href="/home">AtCoderホームへ戻る</a></small>
+	</div>
+	<ul class="nav nav-tabs">
+		<li><a href="/contests/abc397"><span class="glyphicon glyphicon-home" aria-hidden="true"></span> トップ</a></li>
+		
+			<li><a href="/contests/abc397/tasks"><span class="glyphicon glyphicon-tasks" aria-hidden="true"></span> 問題</a></li>
+		
+
+		
+			<li><a href="/contests/abc397/clarifications"><span class="glyphicon glyphicon-question-sign" aria-hidden="true"></span> 質問 <span id="clar-badge" class="badge" ></span></a></li>
+		
+
+		
+			<li><a href="/contests/abc397/submit"><span class="glyphicon glyphicon-send" aria-hidden="true"></span> 提出</a></li>
+		
+
+		
+			<li>
+				<a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false"><span class="glyphicon glyphicon-list" aria-hidden="true"></span> 提出結果<span class="caret"></span></a>
+				<ul class="dropdown-menu">
+					<li><a href="/contests/abc397/submissions"><span class="glyphicon glyphicon-globe" aria-hidden="true"></span> すべての提出</a></li>
+					
+						<li><a href="/contests/abc397/submissions/me"><span class="glyphicon glyphicon-user" aria-hidden="true"></span> 自分の提出</a></li>
+						
+						
+							<li class="divider"></li>
+							<li><a href="/contests/abc397/score"><span class="glyphicon glyphicon-dashboard" aria-hidden="true"></span> 自分の得点状況</a></li>
+						
+					
+				</ul>
+			</li>
+		
+
+		
+			
+				
+					<li><a href="/contests/abc397/standings"><span class="glyphicon glyphicon-sort-by-attributes-alt" aria-hidden="true"></span> 順位表</a></li>
+				
+			
+				
+					<li><a href="/contests/abc397/standings/virtual"><span class="glyphicon glyphicon-sort-by-attributes-alt" aria-hidden="true"></span> バーチャル順位表</a></li>
+				
+			
+		
+
+		
+			<li><a href="/contests/abc397/custom_test"><span class="glyphicon glyphicon-wrench" aria-hidden="true"></span> コードテスト</a></li>
+		
+
+		
+			<li><a href="/contests/abc397/editorial"><span class="glyphicon glyphicon-book" aria-hidden="true"></span> 解説</a></li>
+		
+		
+
+		<li class="pull-right"><a id="fix-cnvtb" href="javascript:void(0)"><span class="glyphicon glyphicon-pushpin" aria-hidden="true"></span></a></li>
+	</ul>
+</div>
+	<div class="col-sm-12">
+		<h2>提出</h2>
+		<hr>
+		
+		<form class="form-horizontal form-code-submit" action="/contests/abc397/submit" method="POST">
+			
+			<div class="form-group ">
+				<label class="control-label col-sm-3 col-md-2" for="select-task">問題</label>
+				<div class="col-sm-5">
+					<select class="form-control" id="select-task" name="data.TaskScreenName">
+						
+							<option value="abc397_a">A - Thermometer</option>
+						
+							<option value="abc397_b">B - Ticket Gate Log</option>
+						
+							<option value="abc397_c">C - Variety Split Easy</option>
+						
+							<option value="abc397_d">D - Cubes</option>
+						
+							<option value="abc397_e">E - Path Decomposition of a Tree</option>
+						
+							<option value="abc397_f" selected>F - Variety Split Hard</option>
+						
+							<option value="abc397_g">G - Maximize Distance</option>
+						
+					</select>
+					<span class="error"></span>
+				</div>
+			</div>
+			
+			
+			<div class="form-group ">
+				<label class="control-label col-sm-3 col-md-2" for="select-lang">言語</label>
+				<div id="select-lang" class="col-sm-5" data-name="data.LanguageId" style="display:none;">
+					
+						<div id="select-lang-abc397_a">
+							<select class="form-control" data-placeholder="-" style="width:300px;">
+								<option></option>
+								
+									<option value="5001" data-ace-mode="c_cpp">C&#43;&#43; 20 (gcc 12.2)</option>
+								
+									<option value="5002" data-ace-mode="golang">Go (go 1.20.6)</option>
+								
+									<option value="5003" data-ace-mode="csharp">C# 11.0 (.NET 7.0.7)</option>
+								
+									<option value="5004" data-ace-mode="kotlin">Kotlin (Kotlin/JVM 1.8.20)</option>
+								
+									<option value="5005" data-ace-mode="java">Java (OpenJDK 17)</option>
+								
+									<option value="5006" data-ace-mode="nim">Nim (Nim 1.6.14)</option>
+								
+									<option value="5007" data-ace-mode="text">V (V 0.4)</option>
+								
+									<option value="5008" data-ace-mode="text">Zig (Zig 0.10.1)</option>
+								
+									<option value="5009" data-ace-mode="javascript">JavaScript (Node.js 18.16.1)</option>
+								
+									<option value="5010" data-ace-mode="javascript">JavaScript (Deno 1.35.1)</option>
+								
+									<option value="5011" data-ace-mode="r">R (GNU R 4.2.1)</option>
+								
+									<option value="5012" data-ace-mode="d">D (DMD 2.104.0)</option>
+								
+									<option value="5013" data-ace-mode="d">D (LDC 1.32.2)</option>
+								
+									<option value="5014" data-ace-mode="swift">Swift (swift 5.8.1)</option>
+								
+									<option value="5015" data-ace-mode="dart">Dart (Dart 3.0.5)</option>
+								
+									<option value="5016" data-ace-mode="php">PHP (php 8.2.8)</option>
+								
+									<option value="5017" data-ace-mode="c_cpp">C (gcc 12.2.0)</option>
+								
+									<option value="5018" data-ace-mode="ruby">Ruby (ruby 3.2.2)</option>
+								
+									<option value="5019" data-ace-mode="crystal">Crystal (Crystal 1.9.1)</option>
+								
+									<option value="5020" data-ace-mode="text">Brainfuck (bf 20041219)</option>
+								
+									<option value="5021" data-ace-mode="fsharp">F# 7.0 (.NET 7.0.7)</option>
+								
+									<option value="5022" data-ace-mode="julia">Julia (Julia 1.9.2)</option>
+								
+									<option value="5023" data-ace-mode="sh">Bash (bash 5.2.2)</option>
+								
+									<option value="5024" data-ace-mode="text">Text (cat 8.32)</option>
+								
+									<option value="5025" data-ace-mode="haskell">Haskell (GHC 9.4.5)</option>
+								
+									<option value="5026" data-ace-mode="fortran">Fortran (gfortran 12.2)</option>
+								
+									<option value="5027" data-ace-mode="lua">Lua (LuaJIT 2.1.0-beta3)</option>
+								
+									<option value="5028" data-ace-mode="c_cpp">C&#43;&#43; 23 (gcc 12.2)</option>
+								
+									<option value="5029" data-ace-mode="lisp">Common Lisp (SBCL 2.3.6)</option>
+								
+									<option value="5030" data-ace-mode="cobol">COBOL (Free) (GnuCOBOL 3.1.2)</option>
+								
+									<option value="5031" data-ace-mode="c_cpp">C&#43;&#43; 23 (Clang 16.0.6)</option>
+								
+									<option value="5032" data-ace-mode="sh">Zsh (Zsh 5.9)</option>
+								
+									<option value="5033" data-ace-mode="python">SageMath (SageMath 9.5)</option>
+								
+									<option value="5034" data-ace-mode="sh">Sed (GNU sed 4.8)</option>
+								
+									<option value="5035" data-ace-mode="text">bc (bc 1.07.1)</option>
+								
+									<option value="5036" data-ace-mode="text">dc (dc 1.07.1)</option>
+								
+									<option value="5037" data-ace-mode="perl">Perl (perl  5.34)</option>
+								
+									<option value="5038" data-ace-mode="sh">AWK (GNU Awk 5.0.1)</option>
+								
+									<option value="5039" data-ace-mode="text">なでしこ (cnako3 3.4.20)</option>
+								
+									<option value="5040" data-ace-mode="text">Assembly x64 (NASM 2.15.05)</option>
+								
+									<option value="5041" data-ace-mode="pascal">Pascal (fpc 3.2.2)</option>
+								
+									<option value="5042" data-ace-mode="csharp">C# 11.0 AOT (.NET 7.0.7)</option>
+								
+									<option value="5043" data-ace-mode="lua">Lua (Lua 5.4.6)</option>
+								
+									<option value="5044" data-ace-mode="prolog">Prolog (SWI-Prolog 9.0.4)</option>
+								
+									<option value="5045" data-ace-mode="sh">PowerShell (PowerShell 7.3.1)</option>
+								
+									<option value="5046" data-ace-mode="scheme">Scheme (Gauche 0.9.12)</option>
+								
+									<option value="5047" data-ace-mode="scala">Scala 3.3.0 (Scala Native 0.4.14)</option>
+								
+									<option value="5048" data-ace-mode="vbscript">Visual Basic 16.9 (.NET 7.0.7)</option>
+								
+									<option value="5049" data-ace-mode="text">Forth (gforth 0.7.3)</option>
+								
+									<option value="5050" data-ace-mode="clojure">Clojure (babashka 1.3.181)</option>
+								
+									<option value="5051" data-ace-mode="erlang">Erlang (Erlang 26.0.2)</option>
+								
+									<option value="5052" data-ace-mode="typescript">TypeScript 5.1 (Deno 1.35.1)</option>
+								
+									<option value="5053" data-ace-mode="c_cpp">C&#43;&#43; 17 (gcc 12.2)</option>
+								
+									<option value="5054" data-ace-mode="rust">Rust (rustc 1.70.0)</option>
+								
+									<option value="5055" data-ace-mode="python">Python (CPython 3.11.4)</option>
+								
+									<option value="5056" data-ace-mode="scala">Scala (Dotty 3.3.0)</option>
+								
+									<option value="5057" data-ace-mode="text">Koka (koka 2.4.0)</option>
+								
+									<option value="5058" data-ace-mode="typescript">TypeScript 5.1 (Node.js 18.16.1)</option>
+								
+									<option value="5059" data-ace-mode="ocaml">OCaml (ocamlopt 5.0.0)</option>
+								
+									<option value="5060" data-ace-mode="raku">Raku (Rakudo 2023.06)</option>
+								
+									<option value="5061" data-ace-mode="text">Vim (vim 9.0.0242)</option>
+								
+									<option value="5062" data-ace-mode="lisp">Emacs Lisp (Native Compile) (GNU Emacs 28.2)</option>
+								
+									<option value="5063" data-ace-mode="python">Python (Mambaforge / CPython 3.10.10)</option>
+								
+									<option value="5064" data-ace-mode="clojure">Clojure (clojure 1.11.1)</option>
+								
+									<option value="5065" data-ace-mode="text">プロデル (mono版プロデル 1.9.1182)</option>
+								
+									<option value="5066" data-ace-mode="text">ECLiPSe (ECLiPSe 7.1_13)</option>
+								
+									<option value="5067" data-ace-mode="text">Nibbles (literate form) (nibbles 1.01)</option>
+								
+									<option value="5068" data-ace-mode="ada">Ada (GNAT 12.2)</option>
+								
+									<option value="5069" data-ace-mode="text">jq (jq 1.6)</option>
+								
+									<option value="5070" data-ace-mode="text">Cyber (Cyber v0.2-Latest)</option>
+								
+									<option value="5071" data-ace-mode="clojure">Carp (Carp 0.5.5)</option>
+								
+									<option value="5072" data-ace-mode="c_cpp">C&#43;&#43; 17 (Clang 16.0.6)</option>
+								
+									<option value="5073" data-ace-mode="c_cpp">C&#43;&#43; 20 (Clang 16.0.6)</option>
+								
+									<option value="5074" data-ace-mode="text">LLVM IR (Clang 16.0.6)</option>
+								
+									<option value="5075" data-ace-mode="lisp">Emacs Lisp (Byte Compile) (GNU Emacs 28.2)</option>
+								
+									<option value="5076" data-ace-mode="text">Factor (Factor 0.98)</option>
+								
+									<option value="5077" data-ace-mode="d">D (GDC 12.2)</option>
+								
+									<option value="5078" data-ace-mode="python">Python (PyPy 3.10-v7.3.12)</option>
+								
+									<option value="5079" data-ace-mode="text">Whitespace (whitespacers 1.0.0)</option>
+								
+									<option value="5080" data-ace-mode="text">&gt;&lt;&gt; (fishr 0.1.0)</option>
+								
+									<option value="5081" data-ace-mode="ocaml">ReasonML (reason 3.9.0)</option>
+								
+									<option value="5082" data-ace-mode="python">Python (Cython 0.29.34)</option>
+								
+									<option value="5083" data-ace-mode="matlab">Octave (GNU Octave 8.2.0)</option>
+								
+									<option value="5084" data-ace-mode="haxe">Haxe (JVM) (Haxe 4.3.1)</option>
+								
+									<option value="5085" data-ace-mode="elixir">Elixir (Elixir 1.15.2)</option>
+								
+									<option value="5086" data-ace-mode="text">Mercury (Mercury 22.01.6)</option>
+								
+									<option value="5087" data-ace-mode="text">Seed7 (Seed7 3.2.1)</option>
+								
+									<option value="5088" data-ace-mode="lisp">Emacs Lisp (No Compile) (GNU Emacs 28.2)</option>
+								
+									<option value="5089" data-ace-mode="text">Unison (Unison M5b)</option>
+								
+									<option value="5090" data-ace-mode="cobol">COBOL (GnuCOBOL(Fixed) 3.1.2)</option>
+								
+							</select>
+						</div>
+					
+						<div id="select-lang-abc397_b">
+							<select class="form-control" data-placeholder="-" style="width:300px;">
+								<option></option>
+								
+									<option value="5001" data-ace-mode="c_cpp">C&#43;&#43; 20 (gcc 12.2)</option>
+								
+									<option value="5002" data-ace-mode="golang">Go (go 1.20.6)</option>
+								
+									<option value="5003" data-ace-mode="csharp">C# 11.0 (.NET 7.0.7)</option>
+								
+									<option value="5004" data-ace-mode="kotlin">Kotlin (Kotlin/JVM 1.8.20)</option>
+								
+									<option value="5005" data-ace-mode="java">Java (OpenJDK 17)</option>
+								
+									<option value="5006" data-ace-mode="nim">Nim (Nim 1.6.14)</option>
+								
+									<option value="5007" data-ace-mode="text">V (V 0.4)</option>
+								
+									<option value="5008" data-ace-mode="text">Zig (Zig 0.10.1)</option>
+								
+									<option value="5009" data-ace-mode="javascript">JavaScript (Node.js 18.16.1)</option>
+								
+									<option value="5010" data-ace-mode="javascript">JavaScript (Deno 1.35.1)</option>
+								
+									<option value="5011" data-ace-mode="r">R (GNU R 4.2.1)</option>
+								
+									<option value="5012" data-ace-mode="d">D (DMD 2.104.0)</option>
+								
+									<option value="5013" data-ace-mode="d">D (LDC 1.32.2)</option>
+								
+									<option value="5014" data-ace-mode="swift">Swift (swift 5.8.1)</option>
+								
+									<option value="5015" data-ace-mode="dart">Dart (Dart 3.0.5)</option>
+								
+									<option value="5016" data-ace-mode="php">PHP (php 8.2.8)</option>
+								
+									<option value="5017" data-ace-mode="c_cpp">C (gcc 12.2.0)</option>
+								
+									<option value="5018" data-ace-mode="ruby">Ruby (ruby 3.2.2)</option>
+								
+									<option value="5019" data-ace-mode="crystal">Crystal (Crystal 1.9.1)</option>
+								
+									<option value="5020" data-ace-mode="text">Brainfuck (bf 20041219)</option>
+								
+									<option value="5021" data-ace-mode="fsharp">F# 7.0 (.NET 7.0.7)</option>
+								
+									<option value="5022" data-ace-mode="julia">Julia (Julia 1.9.2)</option>
+								
+									<option value="5023" data-ace-mode="sh">Bash (bash 5.2.2)</option>
+								
+									<option value="5024" data-ace-mode="text">Text (cat 8.32)</option>
+								
+									<option value="5025" data-ace-mode="haskell">Haskell (GHC 9.4.5)</option>
+								
+									<option value="5026" data-ace-mode="fortran">Fortran (gfortran 12.2)</option>
+								
+									<option value="5027" data-ace-mode="lua">Lua (LuaJIT 2.1.0-beta3)</option>
+								
+									<option value="5028" data-ace-mode="c_cpp">C&#43;&#43; 23 (gcc 12.2)</option>
+								
+									<option value="5029" data-ace-mode="lisp">Common Lisp (SBCL 2.3.6)</option>
+								
+									<option value="5030" data-ace-mode="cobol">COBOL (Free) (GnuCOBOL 3.1.2)</option>
+								
+									<option value="5031" data-ace-mode="c_cpp">C&#43;&#43; 23 (Clang 16.0.6)</option>
+								
+									<option value="5032" data-ace-mode="sh">Zsh (Zsh 5.9)</option>
+								
+									<option value="5033" data-ace-mode="python">SageMath (SageMath 9.5)</option>
+								
+									<option value="5034" data-ace-mode="sh">Sed (GNU sed 4.8)</option>
+								
+									<option value="5035" data-ace-mode="text">bc (bc 1.07.1)</option>
+								
+									<option value="5036" data-ace-mode="text">dc (dc 1.07.1)</option>
+								
+									<option value="5037" data-ace-mode="perl">Perl (perl  5.34)</option>
+								
+									<option value="5038" data-ace-mode="sh">AWK (GNU Awk 5.0.1)</option>
+								
+									<option value="5039" data-ace-mode="text">なでしこ (cnako3 3.4.20)</option>
+								
+									<option value="5040" data-ace-mode="text">Assembly x64 (NASM 2.15.05)</option>
+								
+									<option value="5041" data-ace-mode="pascal">Pascal (fpc 3.2.2)</option>
+								
+									<option value="5042" data-ace-mode="csharp">C# 11.0 AOT (.NET 7.0.7)</option>
+								
+									<option value="5043" data-ace-mode="lua">Lua (Lua 5.4.6)</option>
+								
+									<option value="5044" data-ace-mode="prolog">Prolog (SWI-Prolog 9.0.4)</option>
+								
+									<option value="5045" data-ace-mode="sh">PowerShell (PowerShell 7.3.1)</option>
+								
+									<option value="5046" data-ace-mode="scheme">Scheme (Gauche 0.9.12)</option>
+								
+									<option value="5047" data-ace-mode="scala">Scala 3.3.0 (Scala Native 0.4.14)</option>
+								
+									<option value="5048" data-ace-mode="vbscript">Visual Basic 16.9 (.NET 7.0.7)</option>
+								
+									<option value="5049" data-ace-mode="text">Forth (gforth 0.7.3)</option>
+								
+									<option value="5050" data-ace-mode="clojure">Clojure (babashka 1.3.181)</option>
+								
+									<option value="5051" data-ace-mode="erlang">Erlang (Erlang 26.0.2)</option>
+								
+									<option value="5052" data-ace-mode="typescript">TypeScript 5.1 (Deno 1.35.1)</option>
+								
+									<option value="5053" data-ace-mode="c_cpp">C&#43;&#43; 17 (gcc 12.2)</option>
+								
+									<option value="5054" data-ace-mode="rust">Rust (rustc 1.70.0)</option>
+								
+									<option value="5055" data-ace-mode="python">Python (CPython 3.11.4)</option>
+								
+									<option value="5056" data-ace-mode="scala">Scala (Dotty 3.3.0)</option>
+								
+									<option value="5057" data-ace-mode="text">Koka (koka 2.4.0)</option>
+								
+									<option value="5058" data-ace-mode="typescript">TypeScript 5.1 (Node.js 18.16.1)</option>
+								
+									<option value="5059" data-ace-mode="ocaml">OCaml (ocamlopt 5.0.0)</option>
+								
+									<option value="5060" data-ace-mode="raku">Raku (Rakudo 2023.06)</option>
+								
+									<option value="5061" data-ace-mode="text">Vim (vim 9.0.0242)</option>
+								
+									<option value="5062" data-ace-mode="lisp">Emacs Lisp (Native Compile) (GNU Emacs 28.2)</option>
+								
+									<option value="5063" data-ace-mode="python">Python (Mambaforge / CPython 3.10.10)</option>
+								
+									<option value="5064" data-ace-mode="clojure">Clojure (clojure 1.11.1)</option>
+								
+									<option value="5065" data-ace-mode="text">プロデル (mono版プロデル 1.9.1182)</option>
+								
+									<option value="5066" data-ace-mode="text">ECLiPSe (ECLiPSe 7.1_13)</option>
+								
+									<option value="5067" data-ace-mode="text">Nibbles (literate form) (nibbles 1.01)</option>
+								
+									<option value="5068" data-ace-mode="ada">Ada (GNAT 12.2)</option>
+								
+									<option value="5069" data-ace-mode="text">jq (jq 1.6)</option>
+								
+									<option value="5070" data-ace-mode="text">Cyber (Cyber v0.2-Latest)</option>
+								
+									<option value="5071" data-ace-mode="clojure">Carp (Carp 0.5.5)</option>
+								
+									<option value="5072" data-ace-mode="c_cpp">C&#43;&#43; 17 (Clang 16.0.6)</option>
+								
+									<option value="5073" data-ace-mode="c_cpp">C&#43;&#43; 20 (Clang 16.0.6)</option>
+								
+									<option value="5074" data-ace-mode="text">LLVM IR (Clang 16.0.6)</option>
+								
+									<option value="5075" data-ace-mode="lisp">Emacs Lisp (Byte Compile) (GNU Emacs 28.2)</option>
+								
+									<option value="5076" data-ace-mode="text">Factor (Factor 0.98)</option>
+								
+									<option value="5077" data-ace-mode="d">D (GDC 12.2)</option>
+								
+									<option value="5078" data-ace-mode="python">Python (PyPy 3.10-v7.3.12)</option>
+								
+									<option value="5079" data-ace-mode="text">Whitespace (whitespacers 1.0.0)</option>
+								
+									<option value="5080" data-ace-mode="text">&gt;&lt;&gt; (fishr 0.1.0)</option>
+								
+									<option value="5081" data-ace-mode="ocaml">ReasonML (reason 3.9.0)</option>
+								
+									<option value="5082" data-ace-mode="python">Python (Cython 0.29.34)</option>
+								
+									<option value="5083" data-ace-mode="matlab">Octave (GNU Octave 8.2.0)</option>
+								
+									<option value="5084" data-ace-mode="haxe">Haxe (JVM) (Haxe 4.3.1)</option>
+								
+									<option value="5085" data-ace-mode="elixir">Elixir (Elixir 1.15.2)</option>
+								
+									<option value="5086" data-ace-mode="text">Mercury (Mercury 22.01.6)</option>
+								
+									<option value="5087" data-ace-mode="text">Seed7 (Seed7 3.2.1)</option>
+								
+									<option value="5088" data-ace-mode="lisp">Emacs Lisp (No Compile) (GNU Emacs 28.2)</option>
+								
+									<option value="5089" data-ace-mode="text">Unison (Unison M5b)</option>
+								
+									<option value="5090" data-ace-mode="cobol">COBOL (GnuCOBOL(Fixed) 3.1.2)</option>
+								
+							</select>
+						</div>
+					
+						<div id="select-lang-abc397_c">
+							<select class="form-control" data-placeholder="-" style="width:300px;">
+								<option></option>
+								
+									<option value="5001" data-ace-mode="c_cpp">C&#43;&#43; 20 (gcc 12.2)</option>
+								
+									<option value="5002" data-ace-mode="golang">Go (go 1.20.6)</option>
+								
+									<option value="5003" data-ace-mode="csharp">C# 11.0 (.NET 7.0.7)</option>
+								
+									<option value="5004" data-ace-mode="kotlin">Kotlin (Kotlin/JVM 1.8.20)</option>
+								
+									<option value="5005" data-ace-mode="java">Java (OpenJDK 17)</option>
+								
+									<option value="5006" data-ace-mode="nim">Nim (Nim 1.6.14)</option>
+								
+									<option value="5007" data-ace-mode="text">V (V 0.4)</option>
+								
+									<option value="5008" data-ace-mode="text">Zig (Zig 0.10.1)</option>
+								
+									<option value="5009" data-ace-mode="javascript">JavaScript (Node.js 18.16.1)</option>
+								
+									<option value="5010" data-ace-mode="javascript">JavaScript (Deno 1.35.1)</option>
+								
+									<option value="5011" data-ace-mode="r">R (GNU R 4.2.1)</option>
+								
+									<option value="5012" data-ace-mode="d">D (DMD 2.104.0)</option>
+								
+									<option value="5013" data-ace-mode="d">D (LDC 1.32.2)</option>
+								
+									<option value="5014" data-ace-mode="swift">Swift (swift 5.8.1)</option>
+								
+									<option value="5015" data-ace-mode="dart">Dart (Dart 3.0.5)</option>
+								
+									<option value="5016" data-ace-mode="php">PHP (php 8.2.8)</option>
+								
+									<option value="5017" data-ace-mode="c_cpp">C (gcc 12.2.0)</option>
+								
+									<option value="5018" data-ace-mode="ruby">Ruby (ruby 3.2.2)</option>
+								
+									<option value="5019" data-ace-mode="crystal">Crystal (Crystal 1.9.1)</option>
+								
+									<option value="5020" data-ace-mode="text">Brainfuck (bf 20041219)</option>
+								
+									<option value="5021" data-ace-mode="fsharp">F# 7.0 (.NET 7.0.7)</option>
+								
+									<option value="5022" data-ace-mode="julia">Julia (Julia 1.9.2)</option>
+								
+									<option value="5023" data-ace-mode="sh">Bash (bash 5.2.2)</option>
+								
+									<option value="5024" data-ace-mode="text">Text (cat 8.32)</option>
+								
+									<option value="5025" data-ace-mode="haskell">Haskell (GHC 9.4.5)</option>
+								
+									<option value="5026" data-ace-mode="fortran">Fortran (gfortran 12.2)</option>
+								
+									<option value="5027" data-ace-mode="lua">Lua (LuaJIT 2.1.0-beta3)</option>
+								
+									<option value="5028" data-ace-mode="c_cpp">C&#43;&#43; 23 (gcc 12.2)</option>
+								
+									<option value="5029" data-ace-mode="lisp">Common Lisp (SBCL 2.3.6)</option>
+								
+									<option value="5030" data-ace-mode="cobol">COBOL (Free) (GnuCOBOL 3.1.2)</option>
+								
+									<option value="5031" data-ace-mode="c_cpp">C&#43;&#43; 23 (Clang 16.0.6)</option>
+								
+									<option value="5032" data-ace-mode="sh">Zsh (Zsh 5.9)</option>
+								
+									<option value="5033" data-ace-mode="python">SageMath (SageMath 9.5)</option>
+								
+									<option value="5034" data-ace-mode="sh">Sed (GNU sed 4.8)</option>
+								
+									<option value="5035" data-ace-mode="text">bc (bc 1.07.1)</option>
+								
+									<option value="5036" data-ace-mode="text">dc (dc 1.07.1)</option>
+								
+									<option value="5037" data-ace-mode="perl">Perl (perl  5.34)</option>
+								
+									<option value="5038" data-ace-mode="sh">AWK (GNU Awk 5.0.1)</option>
+								
+									<option value="5039" data-ace-mode="text">なでしこ (cnako3 3.4.20)</option>
+								
+									<option value="5040" data-ace-mode="text">Assembly x64 (NASM 2.15.05)</option>
+								
+									<option value="5041" data-ace-mode="pascal">Pascal (fpc 3.2.2)</option>
+								
+									<option value="5042" data-ace-mode="csharp">C# 11.0 AOT (.NET 7.0.7)</option>
+								
+									<option value="5043" data-ace-mode="lua">Lua (Lua 5.4.6)</option>
+								
+									<option value="5044" data-ace-mode="prolog">Prolog (SWI-Prolog 9.0.4)</option>
+								
+									<option value="5045" data-ace-mode="sh">PowerShell (PowerShell 7.3.1)</option>
+								
+									<option value="5046" data-ace-mode="scheme">Scheme (Gauche 0.9.12)</option>
+								
+									<option value="5047" data-ace-mode="scala">Scala 3.3.0 (Scala Native 0.4.14)</option>
+								
+									<option value="5048" data-ace-mode="vbscript">Visual Basic 16.9 (.NET 7.0.7)</option>
+								
+									<option value="5049" data-ace-mode="text">Forth (gforth 0.7.3)</option>
+								
+									<option value="5050" data-ace-mode="clojure">Clojure (babashka 1.3.181)</option>
+								
+									<option value="5051" data-ace-mode="erlang">Erlang (Erlang 26.0.2)</option>
+								
+									<option value="5052" data-ace-mode="typescript">TypeScript 5.1 (Deno 1.35.1)</option>
+								
+									<option value="5053" data-ace-mode="c_cpp">C&#43;&#43; 17 (gcc 12.2)</option>
+								
+									<option value="5054" data-ace-mode="rust">Rust (rustc 1.70.0)</option>
+								
+									<option value="5055" data-ace-mode="python">Python (CPython 3.11.4)</option>
+								
+									<option value="5056" data-ace-mode="scala">Scala (Dotty 3.3.0)</option>
+								
+									<option value="5057" data-ace-mode="text">Koka (koka 2.4.0)</option>
+								
+									<option value="5058" data-ace-mode="typescript">TypeScript 5.1 (Node.js 18.16.1)</option>
+								
+									<option value="5059" data-ace-mode="ocaml">OCaml (ocamlopt 5.0.0)</option>
+								
+									<option value="5060" data-ace-mode="raku">Raku (Rakudo 2023.06)</option>
+								
+									<option value="5061" data-ace-mode="text">Vim (vim 9.0.0242)</option>
+								
+									<option value="5062" data-ace-mode="lisp">Emacs Lisp (Native Compile) (GNU Emacs 28.2)</option>
+								
+									<option value="5063" data-ace-mode="python">Python (Mambaforge / CPython 3.10.10)</option>
+								
+									<option value="5064" data-ace-mode="clojure">Clojure (clojure 1.11.1)</option>
+								
+									<option value="5065" data-ace-mode="text">プロデル (mono版プロデル 1.9.1182)</option>
+								
+									<option value="5066" data-ace-mode="text">ECLiPSe (ECLiPSe 7.1_13)</option>
+								
+									<option value="5067" data-ace-mode="text">Nibbles (literate form) (nibbles 1.01)</option>
+								
+									<option value="5068" data-ace-mode="ada">Ada (GNAT 12.2)</option>
+								
+									<option value="5069" data-ace-mode="text">jq (jq 1.6)</option>
+								
+									<option value="5070" data-ace-mode="text">Cyber (Cyber v0.2-Latest)</option>
+								
+									<option value="5071" data-ace-mode="clojure">Carp (Carp 0.5.5)</option>
+								
+									<option value="5072" data-ace-mode="c_cpp">C&#43;&#43; 17 (Clang 16.0.6)</option>
+								
+									<option value="5073" data-ace-mode="c_cpp">C&#43;&#43; 20 (Clang 16.0.6)</option>
+								
+									<option value="5074" data-ace-mode="text">LLVM IR (Clang 16.0.6)</option>
+								
+									<option value="5075" data-ace-mode="lisp">Emacs Lisp (Byte Compile) (GNU Emacs 28.2)</option>
+								
+									<option value="5076" data-ace-mode="text">Factor (Factor 0.98)</option>
+								
+									<option value="5077" data-ace-mode="d">D (GDC 12.2)</option>
+								
+									<option value="5078" data-ace-mode="python">Python (PyPy 3.10-v7.3.12)</option>
+								
+									<option value="5079" data-ace-mode="text">Whitespace (whitespacers 1.0.0)</option>
+								
+									<option value="5080" data-ace-mode="text">&gt;&lt;&gt; (fishr 0.1.0)</option>
+								
+									<option value="5081" data-ace-mode="ocaml">ReasonML (reason 3.9.0)</option>
+								
+									<option value="5082" data-ace-mode="python">Python (Cython 0.29.34)</option>
+								
+									<option value="5083" data-ace-mode="matlab">Octave (GNU Octave 8.2.0)</option>
+								
+									<option value="5084" data-ace-mode="haxe">Haxe (JVM) (Haxe 4.3.1)</option>
+								
+									<option value="5085" data-ace-mode="elixir">Elixir (Elixir 1.15.2)</option>
+								
+									<option value="5086" data-ace-mode="text">Mercury (Mercury 22.01.6)</option>
+								
+									<option value="5087" data-ace-mode="text">Seed7 (Seed7 3.2.1)</option>
+								
+									<option value="5088" data-ace-mode="lisp">Emacs Lisp (No Compile) (GNU Emacs 28.2)</option>
+								
+									<option value="5089" data-ace-mode="text">Unison (Unison M5b)</option>
+								
+									<option value="5090" data-ace-mode="cobol">COBOL (GnuCOBOL(Fixed) 3.1.2)</option>
+								
+							</select>
+						</div>
+					
+						<div id="select-lang-abc397_d">
+							<select class="form-control" data-placeholder="-" style="width:300px;">
+								<option></option>
+								
+									<option value="5001" data-ace-mode="c_cpp">C&#43;&#43; 20 (gcc 12.2)</option>
+								
+									<option value="5002" data-ace-mode="golang">Go (go 1.20.6)</option>
+								
+									<option value="5003" data-ace-mode="csharp">C# 11.0 (.NET 7.0.7)</option>
+								
+									<option value="5004" data-ace-mode="kotlin">Kotlin (Kotlin/JVM 1.8.20)</option>
+								
+									<option value="5005" data-ace-mode="java">Java (OpenJDK 17)</option>
+								
+									<option value="5006" data-ace-mode="nim">Nim (Nim 1.6.14)</option>
+								
+									<option value="5007" data-ace-mode="text">V (V 0.4)</option>
+								
+									<option value="5008" data-ace-mode="text">Zig (Zig 0.10.1)</option>
+								
+									<option value="5009" data-ace-mode="javascript">JavaScript (Node.js 18.16.1)</option>
+								
+									<option value="5010" data-ace-mode="javascript">JavaScript (Deno 1.35.1)</option>
+								
+									<option value="5011" data-ace-mode="r">R (GNU R 4.2.1)</option>
+								
+									<option value="5012" data-ace-mode="d">D (DMD 2.104.0)</option>
+								
+									<option value="5013" data-ace-mode="d">D (LDC 1.32.2)</option>
+								
+									<option value="5014" data-ace-mode="swift">Swift (swift 5.8.1)</option>
+								
+									<option value="5015" data-ace-mode="dart">Dart (Dart 3.0.5)</option>
+								
+									<option value="5016" data-ace-mode="php">PHP (php 8.2.8)</option>
+								
+									<option value="5017" data-ace-mode="c_cpp">C (gcc 12.2.0)</option>
+								
+									<option value="5018" data-ace-mode="ruby">Ruby (ruby 3.2.2)</option>
+								
+									<option value="5019" data-ace-mode="crystal">Crystal (Crystal 1.9.1)</option>
+								
+									<option value="5020" data-ace-mode="text">Brainfuck (bf 20041219)</option>
+								
+									<option value="5021" data-ace-mode="fsharp">F# 7.0 (.NET 7.0.7)</option>
+								
+									<option value="5022" data-ace-mode="julia">Julia (Julia 1.9.2)</option>
+								
+									<option value="5023" data-ace-mode="sh">Bash (bash 5.2.2)</option>
+								
+									<option value="5024" data-ace-mode="text">Text (cat 8.32)</option>
+								
+									<option value="5025" data-ace-mode="haskell">Haskell (GHC 9.4.5)</option>
+								
+									<option value="5026" data-ace-mode="fortran">Fortran (gfortran 12.2)</option>
+								
+									<option value="5027" data-ace-mode="lua">Lua (LuaJIT 2.1.0-beta3)</option>
+								
+									<option value="5028" data-ace-mode="c_cpp">C&#43;&#43; 23 (gcc 12.2)</option>
+								
+									<option value="5029" data-ace-mode="lisp">Common Lisp (SBCL 2.3.6)</option>
+								
+									<option value="5030" data-ace-mode="cobol">COBOL (Free) (GnuCOBOL 3.1.2)</option>
+								
+									<option value="5031" data-ace-mode="c_cpp">C&#43;&#43; 23 (Clang 16.0.6)</option>
+								
+									<option value="5032" data-ace-mode="sh">Zsh (Zsh 5.9)</option>
+								
+									<option value="5033" data-ace-mode="python">SageMath (SageMath 9.5)</option>
+								
+									<option value="5034" data-ace-mode="sh">Sed (GNU sed 4.8)</option>
+								
+									<option value="5035" data-ace-mode="text">bc (bc 1.07.1)</option>
+								
+									<option value="5036" data-ace-mode="text">dc (dc 1.07.1)</option>
+								
+									<option value="5037" data-ace-mode="perl">Perl (perl  5.34)</option>
+								
+									<option value="5038" data-ace-mode="sh">AWK (GNU Awk 5.0.1)</option>
+								
+									<option value="5039" data-ace-mode="text">なでしこ (cnako3 3.4.20)</option>
+								
+									<option value="5040" data-ace-mode="text">Assembly x64 (NASM 2.15.05)</option>
+								
+									<option value="5041" data-ace-mode="pascal">Pascal (fpc 3.2.2)</option>
+								
+									<option value="5042" data-ace-mode="csharp">C# 11.0 AOT (.NET 7.0.7)</option>
+								
+									<option value="5043" data-ace-mode="lua">Lua (Lua 5.4.6)</option>
+								
+									<option value="5044" data-ace-mode="prolog">Prolog (SWI-Prolog 9.0.4)</option>
+								
+									<option value="5045" data-ace-mode="sh">PowerShell (PowerShell 7.3.1)</option>
+								
+									<option value="5046" data-ace-mode="scheme">Scheme (Gauche 0.9.12)</option>
+								
+									<option value="5047" data-ace-mode="scala">Scala 3.3.0 (Scala Native 0.4.14)</option>
+								
+									<option value="5048" data-ace-mode="vbscript">Visual Basic 16.9 (.NET 7.0.7)</option>
+								
+									<option value="5049" data-ace-mode="text">Forth (gforth 0.7.3)</option>
+								
+									<option value="5050" data-ace-mode="clojure">Clojure (babashka 1.3.181)</option>
+								
+									<option value="5051" data-ace-mode="erlang">Erlang (Erlang 26.0.2)</option>
+								
+									<option value="5052" data-ace-mode="typescript">TypeScript 5.1 (Deno 1.35.1)</option>
+								
+									<option value="5053" data-ace-mode="c_cpp">C&#43;&#43; 17 (gcc 12.2)</option>
+								
+									<option value="5054" data-ace-mode="rust">Rust (rustc 1.70.0)</option>
+								
+									<option value="5055" data-ace-mode="python">Python (CPython 3.11.4)</option>
+								
+									<option value="5056" data-ace-mode="scala">Scala (Dotty 3.3.0)</option>
+								
+									<option value="5057" data-ace-mode="text">Koka (koka 2.4.0)</option>
+								
+									<option value="5058" data-ace-mode="typescript">TypeScript 5.1 (Node.js 18.16.1)</option>
+								
+									<option value="5059" data-ace-mode="ocaml">OCaml (ocamlopt 5.0.0)</option>
+								
+									<option value="5060" data-ace-mode="raku">Raku (Rakudo 2023.06)</option>
+								
+									<option value="5061" data-ace-mode="text">Vim (vim 9.0.0242)</option>
+								
+									<option value="5062" data-ace-mode="lisp">Emacs Lisp (Native Compile) (GNU Emacs 28.2)</option>
+								
+									<option value="5063" data-ace-mode="python">Python (Mambaforge / CPython 3.10.10)</option>
+								
+									<option value="5064" data-ace-mode="clojure">Clojure (clojure 1.11.1)</option>
+								
+									<option value="5065" data-ace-mode="text">プロデル (mono版プロデル 1.9.1182)</option>
+								
+									<option value="5066" data-ace-mode="text">ECLiPSe (ECLiPSe 7.1_13)</option>
+								
+									<option value="5067" data-ace-mode="text">Nibbles (literate form) (nibbles 1.01)</option>
+								
+									<option value="5068" data-ace-mode="ada">Ada (GNAT 12.2)</option>
+								
+									<option value="5069" data-ace-mode="text">jq (jq 1.6)</option>
+								
+									<option value="5070" data-ace-mode="text">Cyber (Cyber v0.2-Latest)</option>
+								
+									<option value="5071" data-ace-mode="clojure">Carp (Carp 0.5.5)</option>
+								
+									<option value="5072" data-ace-mode="c_cpp">C&#43;&#43; 17 (Clang 16.0.6)</option>
+								
+									<option value="5073" data-ace-mode="c_cpp">C&#43;&#43; 20 (Clang 16.0.6)</option>
+								
+									<option value="5074" data-ace-mode="text">LLVM IR (Clang 16.0.6)</option>
+								
+									<option value="5075" data-ace-mode="lisp">Emacs Lisp (Byte Compile) (GNU Emacs 28.2)</option>
+								
+									<option value="5076" data-ace-mode="text">Factor (Factor 0.98)</option>
+								
+									<option value="5077" data-ace-mode="d">D (GDC 12.2)</option>
+								
+									<option value="5078" data-ace-mode="python">Python (PyPy 3.10-v7.3.12)</option>
+								
+									<option value="5079" data-ace-mode="text">Whitespace (whitespacers 1.0.0)</option>
+								
+									<option value="5080" data-ace-mode="text">&gt;&lt;&gt; (fishr 0.1.0)</option>
+								
+									<option value="5081" data-ace-mode="ocaml">ReasonML (reason 3.9.0)</option>
+								
+									<option value="5082" data-ace-mode="python">Python (Cython 0.29.34)</option>
+								
+									<option value="5083" data-ace-mode="matlab">Octave (GNU Octave 8.2.0)</option>
+								
+									<option value="5084" data-ace-mode="haxe">Haxe (JVM) (Haxe 4.3.1)</option>
+								
+									<option value="5085" data-ace-mode="elixir">Elixir (Elixir 1.15.2)</option>
+								
+									<option value="5086" data-ace-mode="text">Mercury (Mercury 22.01.6)</option>
+								
+									<option value="5087" data-ace-mode="text">Seed7 (Seed7 3.2.1)</option>
+								
+									<option value="5088" data-ace-mode="lisp">Emacs Lisp (No Compile) (GNU Emacs 28.2)</option>
+								
+									<option value="5089" data-ace-mode="text">Unison (Unison M5b)</option>
+								
+									<option value="5090" data-ace-mode="cobol">COBOL (GnuCOBOL(Fixed) 3.1.2)</option>
+								
+							</select>
+						</div>
+					
+						<div id="select-lang-abc397_e">
+							<select class="form-control" data-placeholder="-" style="width:300px;">
+								<option></option>
+								
+									<option value="5001" data-ace-mode="c_cpp">C&#43;&#43; 20 (gcc 12.2)</option>
+								
+									<option value="5002" data-ace-mode="golang">Go (go 1.20.6)</option>
+								
+									<option value="5003" data-ace-mode="csharp">C# 11.0 (.NET 7.0.7)</option>
+								
+									<option value="5004" data-ace-mode="kotlin">Kotlin (Kotlin/JVM 1.8.20)</option>
+								
+									<option value="5005" data-ace-mode="java">Java (OpenJDK 17)</option>
+								
+									<option value="5006" data-ace-mode="nim">Nim (Nim 1.6.14)</option>
+								
+									<option value="5007" data-ace-mode="text">V (V 0.4)</option>
+								
+									<option value="5008" data-ace-mode="text">Zig (Zig 0.10.1)</option>
+								
+									<option value="5009" data-ace-mode="javascript">JavaScript (Node.js 18.16.1)</option>
+								
+									<option value="5010" data-ace-mode="javascript">JavaScript (Deno 1.35.1)</option>
+								
+									<option value="5011" data-ace-mode="r">R (GNU R 4.2.1)</option>
+								
+									<option value="5012" data-ace-mode="d">D (DMD 2.104.0)</option>
+								
+									<option value="5013" data-ace-mode="d">D (LDC 1.32.2)</option>
+								
+									<option value="5014" data-ace-mode="swift">Swift (swift 5.8.1)</option>
+								
+									<option value="5015" data-ace-mode="dart">Dart (Dart 3.0.5)</option>
+								
+									<option value="5016" data-ace-mode="php">PHP (php 8.2.8)</option>
+								
+									<option value="5017" data-ace-mode="c_cpp">C (gcc 12.2.0)</option>
+								
+									<option value="5018" data-ace-mode="ruby">Ruby (ruby 3.2.2)</option>
+								
+									<option value="5019" data-ace-mode="crystal">Crystal (Crystal 1.9.1)</option>
+								
+									<option value="5020" data-ace-mode="text">Brainfuck (bf 20041219)</option>
+								
+									<option value="5021" data-ace-mode="fsharp">F# 7.0 (.NET 7.0.7)</option>
+								
+									<option value="5022" data-ace-mode="julia">Julia (Julia 1.9.2)</option>
+								
+									<option value="5023" data-ace-mode="sh">Bash (bash 5.2.2)</option>
+								
+									<option value="5024" data-ace-mode="text">Text (cat 8.32)</option>
+								
+									<option value="5025" data-ace-mode="haskell">Haskell (GHC 9.4.5)</option>
+								
+									<option value="5026" data-ace-mode="fortran">Fortran (gfortran 12.2)</option>
+								
+									<option value="5027" data-ace-mode="lua">Lua (LuaJIT 2.1.0-beta3)</option>
+								
+									<option value="5028" data-ace-mode="c_cpp">C&#43;&#43; 23 (gcc 12.2)</option>
+								
+									<option value="5029" data-ace-mode="lisp">Common Lisp (SBCL 2.3.6)</option>
+								
+									<option value="5030" data-ace-mode="cobol">COBOL (Free) (GnuCOBOL 3.1.2)</option>
+								
+									<option value="5031" data-ace-mode="c_cpp">C&#43;&#43; 23 (Clang 16.0.6)</option>
+								
+									<option value="5032" data-ace-mode="sh">Zsh (Zsh 5.9)</option>
+								
+									<option value="5033" data-ace-mode="python">SageMath (SageMath 9.5)</option>
+								
+									<option value="5034" data-ace-mode="sh">Sed (GNU sed 4.8)</option>
+								
+									<option value="5035" data-ace-mode="text">bc (bc 1.07.1)</option>
+								
+									<option value="5036" data-ace-mode="text">dc (dc 1.07.1)</option>
+								
+									<option value="5037" data-ace-mode="perl">Perl (perl  5.34)</option>
+								
+									<option value="5038" data-ace-mode="sh">AWK (GNU Awk 5.0.1)</option>
+								
+									<option value="5039" data-ace-mode="text">なでしこ (cnako3 3.4.20)</option>
+								
+									<option value="5040" data-ace-mode="text">Assembly x64 (NASM 2.15.05)</option>
+								
+									<option value="5041" data-ace-mode="pascal">Pascal (fpc 3.2.2)</option>
+								
+									<option value="5042" data-ace-mode="csharp">C# 11.0 AOT (.NET 7.0.7)</option>
+								
+									<option value="5043" data-ace-mode="lua">Lua (Lua 5.4.6)</option>
+								
+									<option value="5044" data-ace-mode="prolog">Prolog (SWI-Prolog 9.0.4)</option>
+								
+									<option value="5045" data-ace-mode="sh">PowerShell (PowerShell 7.3.1)</option>
+								
+									<option value="5046" data-ace-mode="scheme">Scheme (Gauche 0.9.12)</option>
+								
+									<option value="5047" data-ace-mode="scala">Scala 3.3.0 (Scala Native 0.4.14)</option>
+								
+									<option value="5048" data-ace-mode="vbscript">Visual Basic 16.9 (.NET 7.0.7)</option>
+								
+									<option value="5049" data-ace-mode="text">Forth (gforth 0.7.3)</option>
+								
+									<option value="5050" data-ace-mode="clojure">Clojure (babashka 1.3.181)</option>
+								
+									<option value="5051" data-ace-mode="erlang">Erlang (Erlang 26.0.2)</option>
+								
+									<option value="5052" data-ace-mode="typescript">TypeScript 5.1 (Deno 1.35.1)</option>
+								
+									<option value="5053" data-ace-mode="c_cpp">C&#43;&#43; 17 (gcc 12.2)</option>
+								
+									<option value="5054" data-ace-mode="rust">Rust (rustc 1.70.0)</option>
+								
+									<option value="5055" data-ace-mode="python">Python (CPython 3.11.4)</option>
+								
+									<option value="5056" data-ace-mode="scala">Scala (Dotty 3.3.0)</option>
+								
+									<option value="5057" data-ace-mode="text">Koka (koka 2.4.0)</option>
+								
+									<option value="5058" data-ace-mode="typescript">TypeScript 5.1 (Node.js 18.16.1)</option>
+								
+									<option value="5059" data-ace-mode="ocaml">OCaml (ocamlopt 5.0.0)</option>
+								
+									<option value="5060" data-ace-mode="raku">Raku (Rakudo 2023.06)</option>
+								
+									<option value="5061" data-ace-mode="text">Vim (vim 9.0.0242)</option>
+								
+									<option value="5062" data-ace-mode="lisp">Emacs Lisp (Native Compile) (GNU Emacs 28.2)</option>
+								
+									<option value="5063" data-ace-mode="python">Python (Mambaforge / CPython 3.10.10)</option>
+								
+									<option value="5064" data-ace-mode="clojure">Clojure (clojure 1.11.1)</option>
+								
+									<option value="5065" data-ace-mode="text">プロデル (mono版プロデル 1.9.1182)</option>
+								
+									<option value="5066" data-ace-mode="text">ECLiPSe (ECLiPSe 7.1_13)</option>
+								
+									<option value="5067" data-ace-mode="text">Nibbles (literate form) (nibbles 1.01)</option>
+								
+									<option value="5068" data-ace-mode="ada">Ada (GNAT 12.2)</option>
+								
+									<option value="5069" data-ace-mode="text">jq (jq 1.6)</option>
+								
+									<option value="5070" data-ace-mode="text">Cyber (Cyber v0.2-Latest)</option>
+								
+									<option value="5071" data-ace-mode="clojure">Carp (Carp 0.5.5)</option>
+								
+									<option value="5072" data-ace-mode="c_cpp">C&#43;&#43; 17 (Clang 16.0.6)</option>
+								
+									<option value="5073" data-ace-mode="c_cpp">C&#43;&#43; 20 (Clang 16.0.6)</option>
+								
+									<option value="5074" data-ace-mode="text">LLVM IR (Clang 16.0.6)</option>
+								
+									<option value="5075" data-ace-mode="lisp">Emacs Lisp (Byte Compile) (GNU Emacs 28.2)</option>
+								
+									<option value="5076" data-ace-mode="text">Factor (Factor 0.98)</option>
+								
+									<option value="5077" data-ace-mode="d">D (GDC 12.2)</option>
+								
+									<option value="5078" data-ace-mode="python">Python (PyPy 3.10-v7.3.12)</option>
+								
+									<option value="5079" data-ace-mode="text">Whitespace (whitespacers 1.0.0)</option>
+								
+									<option value="5080" data-ace-mode="text">&gt;&lt;&gt; (fishr 0.1.0)</option>
+								
+									<option value="5081" data-ace-mode="ocaml">ReasonML (reason 3.9.0)</option>
+								
+									<option value="5082" data-ace-mode="python">Python (Cython 0.29.34)</option>
+								
+									<option value="5083" data-ace-mode="matlab">Octave (GNU Octave 8.2.0)</option>
+								
+									<option value="5084" data-ace-mode="haxe">Haxe (JVM) (Haxe 4.3.1)</option>
+								
+									<option value="5085" data-ace-mode="elixir">Elixir (Elixir 1.15.2)</option>
+								
+									<option value="5086" data-ace-mode="text">Mercury (Mercury 22.01.6)</option>
+								
+									<option value="5087" data-ace-mode="text">Seed7 (Seed7 3.2.1)</option>
+								
+									<option value="5088" data-ace-mode="lisp">Emacs Lisp (No Compile) (GNU Emacs 28.2)</option>
+								
+									<option value="5089" data-ace-mode="text">Unison (Unison M5b)</option>
+								
+									<option value="5090" data-ace-mode="cobol">COBOL (GnuCOBOL(Fixed) 3.1.2)</option>
+								
+							</select>
+						</div>
+					
+						<div id="select-lang-abc397_f">
+							<select class="form-control" data-placeholder="-" style="width:300px;">
+								<option></option>
+								
+									<option value="5001" data-ace-mode="c_cpp">C&#43;&#43; 20 (gcc 12.2)</option>
+								
+									<option value="5002" data-ace-mode="golang">Go (go 1.20.6)</option>
+								
+									<option value="5003" data-ace-mode="csharp">C# 11.0 (.NET 7.0.7)</option>
+								
+									<option value="5004" data-ace-mode="kotlin">Kotlin (Kotlin/JVM 1.8.20)</option>
+								
+									<option value="5005" data-ace-mode="java">Java (OpenJDK 17)</option>
+								
+									<option value="5006" data-ace-mode="nim">Nim (Nim 1.6.14)</option>
+								
+									<option value="5007" data-ace-mode="text">V (V 0.4)</option>
+								
+									<option value="5008" data-ace-mode="text">Zig (Zig 0.10.1)</option>
+								
+									<option value="5009" data-ace-mode="javascript">JavaScript (Node.js 18.16.1)</option>
+								
+									<option value="5010" data-ace-mode="javascript">JavaScript (Deno 1.35.1)</option>
+								
+									<option value="5011" data-ace-mode="r">R (GNU R 4.2.1)</option>
+								
+									<option value="5012" data-ace-mode="d">D (DMD 2.104.0)</option>
+								
+									<option value="5013" data-ace-mode="d">D (LDC 1.32.2)</option>
+								
+									<option value="5014" data-ace-mode="swift">Swift (swift 5.8.1)</option>
+								
+									<option value="5015" data-ace-mode="dart">Dart (Dart 3.0.5)</option>
+								
+									<option value="5016" data-ace-mode="php">PHP (php 8.2.8)</option>
+								
+									<option value="5017" data-ace-mode="c_cpp">C (gcc 12.2.0)</option>
+								
+									<option value="5018" data-ace-mode="ruby">Ruby (ruby 3.2.2)</option>
+								
+									<option value="5019" data-ace-mode="crystal">Crystal (Crystal 1.9.1)</option>
+								
+									<option value="5020" data-ace-mode="text">Brainfuck (bf 20041219)</option>
+								
+									<option value="5021" data-ace-mode="fsharp">F# 7.0 (.NET 7.0.7)</option>
+								
+									<option value="5022" data-ace-mode="julia">Julia (Julia 1.9.2)</option>
+								
+									<option value="5023" data-ace-mode="sh">Bash (bash 5.2.2)</option>
+								
+									<option value="5024" data-ace-mode="text">Text (cat 8.32)</option>
+								
+									<option value="5025" data-ace-mode="haskell">Haskell (GHC 9.4.5)</option>
+								
+									<option value="5026" data-ace-mode="fortran">Fortran (gfortran 12.2)</option>
+								
+									<option value="5027" data-ace-mode="lua">Lua (LuaJIT 2.1.0-beta3)</option>
+								
+									<option value="5028" data-ace-mode="c_cpp">C&#43;&#43; 23 (gcc 12.2)</option>
+								
+									<option value="5029" data-ace-mode="lisp">Common Lisp (SBCL 2.3.6)</option>
+								
+									<option value="5030" data-ace-mode="cobol">COBOL (Free) (GnuCOBOL 3.1.2)</option>
+								
+									<option value="5031" data-ace-mode="c_cpp">C&#43;&#43; 23 (Clang 16.0.6)</option>
+								
+									<option value="5032" data-ace-mode="sh">Zsh (Zsh 5.9)</option>
+								
+									<option value="5033" data-ace-mode="python">SageMath (SageMath 9.5)</option>
+								
+									<option value="5034" data-ace-mode="sh">Sed (GNU sed 4.8)</option>
+								
+									<option value="5035" data-ace-mode="text">bc (bc 1.07.1)</option>
+								
+									<option value="5036" data-ace-mode="text">dc (dc 1.07.1)</option>
+								
+									<option value="5037" data-ace-mode="perl">Perl (perl  5.34)</option>
+								
+									<option value="5038" data-ace-mode="sh">AWK (GNU Awk 5.0.1)</option>
+								
+									<option value="5039" data-ace-mode="text">なでしこ (cnako3 3.4.20)</option>
+								
+									<option value="5040" data-ace-mode="text">Assembly x64 (NASM 2.15.05)</option>
+								
+									<option value="5041" data-ace-mode="pascal">Pascal (fpc 3.2.2)</option>
+								
+									<option value="5042" data-ace-mode="csharp">C# 11.0 AOT (.NET 7.0.7)</option>
+								
+									<option value="5043" data-ace-mode="lua">Lua (Lua 5.4.6)</option>
+								
+									<option value="5044" data-ace-mode="prolog">Prolog (SWI-Prolog 9.0.4)</option>
+								
+									<option value="5045" data-ace-mode="sh">PowerShell (PowerShell 7.3.1)</option>
+								
+									<option value="5046" data-ace-mode="scheme">Scheme (Gauche 0.9.12)</option>
+								
+									<option value="5047" data-ace-mode="scala">Scala 3.3.0 (Scala Native 0.4.14)</option>
+								
+									<option value="5048" data-ace-mode="vbscript">Visual Basic 16.9 (.NET 7.0.7)</option>
+								
+									<option value="5049" data-ace-mode="text">Forth (gforth 0.7.3)</option>
+								
+									<option value="5050" data-ace-mode="clojure">Clojure (babashka 1.3.181)</option>
+								
+									<option value="5051" data-ace-mode="erlang">Erlang (Erlang 26.0.2)</option>
+								
+									<option value="5052" data-ace-mode="typescript">TypeScript 5.1 (Deno 1.35.1)</option>
+								
+									<option value="5053" data-ace-mode="c_cpp">C&#43;&#43; 17 (gcc 12.2)</option>
+								
+									<option value="5054" data-ace-mode="rust">Rust (rustc 1.70.0)</option>
+								
+									<option value="5055" data-ace-mode="python">Python (CPython 3.11.4)</option>
+								
+									<option value="5056" data-ace-mode="scala">Scala (Dotty 3.3.0)</option>
+								
+									<option value="5057" data-ace-mode="text">Koka (koka 2.4.0)</option>
+								
+									<option value="5058" data-ace-mode="typescript">TypeScript 5.1 (Node.js 18.16.1)</option>
+								
+									<option value="5059" data-ace-mode="ocaml">OCaml (ocamlopt 5.0.0)</option>
+								
+									<option value="5060" data-ace-mode="raku">Raku (Rakudo 2023.06)</option>
+								
+									<option value="5061" data-ace-mode="text">Vim (vim 9.0.0242)</option>
+								
+									<option value="5062" data-ace-mode="lisp">Emacs Lisp (Native Compile) (GNU Emacs 28.2)</option>
+								
+									<option value="5063" data-ace-mode="python">Python (Mambaforge / CPython 3.10.10)</option>
+								
+									<option value="5064" data-ace-mode="clojure">Clojure (clojure 1.11.1)</option>
+								
+									<option value="5065" data-ace-mode="text">プロデル (mono版プロデル 1.9.1182)</option>
+								
+									<option value="5066" data-ace-mode="text">ECLiPSe (ECLiPSe 7.1_13)</option>
+								
+									<option value="5067" data-ace-mode="text">Nibbles (literate form) (nibbles 1.01)</option>
+								
+									<option value="5068" data-ace-mode="ada">Ada (GNAT 12.2)</option>
+								
+									<option value="5069" data-ace-mode="text">jq (jq 1.6)</option>
+								
+									<option value="5070" data-ace-mode="text">Cyber (Cyber v0.2-Latest)</option>
+								
+									<option value="5071" data-ace-mode="clojure">Carp (Carp 0.5.5)</option>
+								
+									<option value="5072" data-ace-mode="c_cpp">C&#43;&#43; 17 (Clang 16.0.6)</option>
+								
+									<option value="5073" data-ace-mode="c_cpp">C&#43;&#43; 20 (Clang 16.0.6)</option>
+								
+									<option value="5074" data-ace-mode="text">LLVM IR (Clang 16.0.6)</option>
+								
+									<option value="5075" data-ace-mode="lisp">Emacs Lisp (Byte Compile) (GNU Emacs 28.2)</option>
+								
+									<option value="5076" data-ace-mode="text">Factor (Factor 0.98)</option>
+								
+									<option value="5077" data-ace-mode="d">D (GDC 12.2)</option>
+								
+									<option value="5078" data-ace-mode="python">Python (PyPy 3.10-v7.3.12)</option>
+								
+									<option value="5079" data-ace-mode="text">Whitespace (whitespacers 1.0.0)</option>
+								
+									<option value="5080" data-ace-mode="text">&gt;&lt;&gt; (fishr 0.1.0)</option>
+								
+									<option value="5081" data-ace-mode="ocaml">ReasonML (reason 3.9.0)</option>
+								
+									<option value="5082" data-ace-mode="python">Python (Cython 0.29.34)</option>
+								
+									<option value="5083" data-ace-mode="matlab">Octave (GNU Octave 8.2.0)</option>
+								
+									<option value="5084" data-ace-mode="haxe">Haxe (JVM) (Haxe 4.3.1)</option>
+								
+									<option value="5085" data-ace-mode="elixir">Elixir (Elixir 1.15.2)</option>
+								
+									<option value="5086" data-ace-mode="text">Mercury (Mercury 22.01.6)</option>
+								
+									<option value="5087" data-ace-mode="text">Seed7 (Seed7 3.2.1)</option>
+								
+									<option value="5088" data-ace-mode="lisp">Emacs Lisp (No Compile) (GNU Emacs 28.2)</option>
+								
+									<option value="5089" data-ace-mode="text">Unison (Unison M5b)</option>
+								
+									<option value="5090" data-ace-mode="cobol">COBOL (GnuCOBOL(Fixed) 3.1.2)</option>
+								
+							</select>
+						</div>
+					
+						<div id="select-lang-abc397_g">
+							<select class="form-control" data-placeholder="-" style="width:300px;">
+								<option></option>
+								
+									<option value="5001" data-ace-mode="c_cpp">C&#43;&#43; 20 (gcc 12.2)</option>
+								
+									<option value="5002" data-ace-mode="golang">Go (go 1.20.6)</option>
+								
+									<option value="5003" data-ace-mode="csharp">C# 11.0 (.NET 7.0.7)</option>
+								
+									<option value="5004" data-ace-mode="kotlin">Kotlin (Kotlin/JVM 1.8.20)</option>
+								
+									<option value="5005" data-ace-mode="java">Java (OpenJDK 17)</option>
+								
+									<option value="5006" data-ace-mode="nim">Nim (Nim 1.6.14)</option>
+								
+									<option value="5007" data-ace-mode="text">V (V 0.4)</option>
+								
+									<option value="5008" data-ace-mode="text">Zig (Zig 0.10.1)</option>
+								
+									<option value="5009" data-ace-mode="javascript">JavaScript (Node.js 18.16.1)</option>
+								
+									<option value="5010" data-ace-mode="javascript">JavaScript (Deno 1.35.1)</option>
+								
+									<option value="5011" data-ace-mode="r">R (GNU R 4.2.1)</option>
+								
+									<option value="5012" data-ace-mode="d">D (DMD 2.104.0)</option>
+								
+									<option value="5013" data-ace-mode="d">D (LDC 1.32.2)</option>
+								
+									<option value="5014" data-ace-mode="swift">Swift (swift 5.8.1)</option>
+								
+									<option value="5015" data-ace-mode="dart">Dart (Dart 3.0.5)</option>
+								
+									<option value="5016" data-ace-mode="php">PHP (php 8.2.8)</option>
+								
+									<option value="5017" data-ace-mode="c_cpp">C (gcc 12.2.0)</option>
+								
+									<option value="5018" data-ace-mode="ruby">Ruby (ruby 3.2.2)</option>
+								
+									<option value="5019" data-ace-mode="crystal">Crystal (Crystal 1.9.1)</option>
+								
+									<option value="5020" data-ace-mode="text">Brainfuck (bf 20041219)</option>
+								
+									<option value="5021" data-ace-mode="fsharp">F# 7.0 (.NET 7.0.7)</option>
+								
+									<option value="5022" data-ace-mode="julia">Julia (Julia 1.9.2)</option>
+								
+									<option value="5023" data-ace-mode="sh">Bash (bash 5.2.2)</option>
+								
+									<option value="5024" data-ace-mode="text">Text (cat 8.32)</option>
+								
+									<option value="5025" data-ace-mode="haskell">Haskell (GHC 9.4.5)</option>
+								
+									<option value="5026" data-ace-mode="fortran">Fortran (gfortran 12.2)</option>
+								
+									<option value="5027" data-ace-mode="lua">Lua (LuaJIT 2.1.0-beta3)</option>
+								
+									<option value="5028" data-ace-mode="c_cpp">C&#43;&#43; 23 (gcc 12.2)</option>
+								
+									<option value="5029" data-ace-mode="lisp">Common Lisp (SBCL 2.3.6)</option>
+								
+									<option value="5030" data-ace-mode="cobol">COBOL (Free) (GnuCOBOL 3.1.2)</option>
+								
+									<option value="5031" data-ace-mode="c_cpp">C&#43;&#43; 23 (Clang 16.0.6)</option>
+								
+									<option value="5032" data-ace-mode="sh">Zsh (Zsh 5.9)</option>
+								
+									<option value="5033" data-ace-mode="python">SageMath (SageMath 9.5)</option>
+								
+									<option value="5034" data-ace-mode="sh">Sed (GNU sed 4.8)</option>
+								
+									<option value="5035" data-ace-mode="text">bc (bc 1.07.1)</option>
+								
+									<option value="5036" data-ace-mode="text">dc (dc 1.07.1)</option>
+								
+									<option value="5037" data-ace-mode="perl">Perl (perl  5.34)</option>
+								
+									<option value="5038" data-ace-mode="sh">AWK (GNU Awk 5.0.1)</option>
+								
+									<option value="5039" data-ace-mode="text">なでしこ (cnako3 3.4.20)</option>
+								
+									<option value="5040" data-ace-mode="text">Assembly x64 (NASM 2.15.05)</option>
+								
+									<option value="5041" data-ace-mode="pascal">Pascal (fpc 3.2.2)</option>
+								
+									<option value="5042" data-ace-mode="csharp">C# 11.0 AOT (.NET 7.0.7)</option>
+								
+									<option value="5043" data-ace-mode="lua">Lua (Lua 5.4.6)</option>
+								
+									<option value="5044" data-ace-mode="prolog">Prolog (SWI-Prolog 9.0.4)</option>
+								
+									<option value="5045" data-ace-mode="sh">PowerShell (PowerShell 7.3.1)</option>
+								
+									<option value="5046" data-ace-mode="scheme">Scheme (Gauche 0.9.12)</option>
+								
+									<option value="5047" data-ace-mode="scala">Scala 3.3.0 (Scala Native 0.4.14)</option>
+								
+									<option value="5048" data-ace-mode="vbscript">Visual Basic 16.9 (.NET 7.0.7)</option>
+								
+									<option value="5049" data-ace-mode="text">Forth (gforth 0.7.3)</option>
+								
+									<option value="5050" data-ace-mode="clojure">Clojure (babashka 1.3.181)</option>
+								
+									<option value="5051" data-ace-mode="erlang">Erlang (Erlang 26.0.2)</option>
+								
+									<option value="5052" data-ace-mode="typescript">TypeScript 5.1 (Deno 1.35.1)</option>
+								
+									<option value="5053" data-ace-mode="c_cpp">C&#43;&#43; 17 (gcc 12.2)</option>
+								
+									<option value="5054" data-ace-mode="rust">Rust (rustc 1.70.0)</option>
+								
+									<option value="5055" data-ace-mode="python">Python (CPython 3.11.4)</option>
+								
+									<option value="5056" data-ace-mode="scala">Scala (Dotty 3.3.0)</option>
+								
+									<option value="5057" data-ace-mode="text">Koka (koka 2.4.0)</option>
+								
+									<option value="5058" data-ace-mode="typescript">TypeScript 5.1 (Node.js 18.16.1)</option>
+								
+									<option value="5059" data-ace-mode="ocaml">OCaml (ocamlopt 5.0.0)</option>
+								
+									<option value="5060" data-ace-mode="raku">Raku (Rakudo 2023.06)</option>
+								
+									<option value="5061" data-ace-mode="text">Vim (vim 9.0.0242)</option>
+								
+									<option value="5062" data-ace-mode="lisp">Emacs Lisp (Native Compile) (GNU Emacs 28.2)</option>
+								
+									<option value="5063" data-ace-mode="python">Python (Mambaforge / CPython 3.10.10)</option>
+								
+									<option value="5064" data-ace-mode="clojure">Clojure (clojure 1.11.1)</option>
+								
+									<option value="5065" data-ace-mode="text">プロデル (mono版プロデル 1.9.1182)</option>
+								
+									<option value="5066" data-ace-mode="text">ECLiPSe (ECLiPSe 7.1_13)</option>
+								
+									<option value="5067" data-ace-mode="text">Nibbles (literate form) (nibbles 1.01)</option>
+								
+									<option value="5068" data-ace-mode="ada">Ada (GNAT 12.2)</option>
+								
+									<option value="5069" data-ace-mode="text">jq (jq 1.6)</option>
+								
+									<option value="5070" data-ace-mode="text">Cyber (Cyber v0.2-Latest)</option>
+								
+									<option value="5071" data-ace-mode="clojure">Carp (Carp 0.5.5)</option>
+								
+									<option value="5072" data-ace-mode="c_cpp">C&#43;&#43; 17 (Clang 16.0.6)</option>
+								
+									<option value="5073" data-ace-mode="c_cpp">C&#43;&#43; 20 (Clang 16.0.6)</option>
+								
+									<option value="5074" data-ace-mode="text">LLVM IR (Clang 16.0.6)</option>
+								
+									<option value="5075" data-ace-mode="lisp">Emacs Lisp (Byte Compile) (GNU Emacs 28.2)</option>
+								
+									<option value="5076" data-ace-mode="text">Factor (Factor 0.98)</option>
+								
+									<option value="5077" data-ace-mode="d">D (GDC 12.2)</option>
+								
+									<option value="5078" data-ace-mode="python">Python (PyPy 3.10-v7.3.12)</option>
+								
+									<option value="5079" data-ace-mode="text">Whitespace (whitespacers 1.0.0)</option>
+								
+									<option value="5080" data-ace-mode="text">&gt;&lt;&gt; (fishr 0.1.0)</option>
+								
+									<option value="5081" data-ace-mode="ocaml">ReasonML (reason 3.9.0)</option>
+								
+									<option value="5082" data-ace-mode="python">Python (Cython 0.29.34)</option>
+								
+									<option value="5083" data-ace-mode="matlab">Octave (GNU Octave 8.2.0)</option>
+								
+									<option value="5084" data-ace-mode="haxe">Haxe (JVM) (Haxe 4.3.1)</option>
+								
+									<option value="5085" data-ace-mode="elixir">Elixir (Elixir 1.15.2)</option>
+								
+									<option value="5086" data-ace-mode="text">Mercury (Mercury 22.01.6)</option>
+								
+									<option value="5087" data-ace-mode="text">Seed7 (Seed7 3.2.1)</option>
+								
+									<option value="5088" data-ace-mode="lisp">Emacs Lisp (No Compile) (GNU Emacs 28.2)</option>
+								
+									<option value="5089" data-ace-mode="text">Unison (Unison M5b)</option>
+								
+									<option value="5090" data-ace-mode="cobol">COBOL (GnuCOBOL(Fixed) 3.1.2)</option>
+								
+							</select>
+						</div>
+					
+					<span class="error"></span>
+				</div>
+			</div>
+			<script>var currentLang = getLS('defaultLang');</script>
+			
+			
+<div class="form-group">
+	<div class="col-sm-3 col-md-2 editor-label">
+		<label class="control-label" for="sourceCode">ソースコード</label>
+		<div class="editor-buttons">
+			<button id="btn-open-file" type="button" class="btn btn-default btn-sm">
+				<span class="glyphicon glyphicon-folder-open" aria-hidden="true"></span> &nbsp; ファイルを開く
+			</button>
+			<button id="btn-customize" type="button" class="btn btn-default btn-sm">
+				<span class="glyphicon glyphicon-cog" aria-hidden="true"></span> &nbsp; カスタマイズ
+			</button>
+			<button type="button" class="btn btn-default btn-sm btn-toggle-editor" data-toggle="button" autocomplete="off">
+				エディタ切り替え
+			</button>
+			<button type="button" class="btn btn-default btn-sm btn-auto-height" data-toggle="button" autocomplete="off">
+				高さ自動調節
+			</button>
+		</div>
+	</div>
+	<div class="col-sm-9 col-md-10" id="sourceCode">
+		<div id="editor">#include &lt;bits/stdc&#43;&#43;.h&gt;
+#include &lt;cassert&gt;
+using namespace std;
+using ll = long long int;
+using u64 = unsigned long long;
+using pll = pair&lt;ll, ll&gt;;
+// #include &lt;atcoder/all&gt;
+// using namespace atcoder;
+#define REP(i, a, b) for (ll i = (a); i &lt; (b); i&#43;&#43;)
+#define REPrev(i, a, b) for (ll i = (a); i &gt;= (b); i--)
+#define ALL(coll) (coll).begin(), (coll).end()
+#define SIZE(v) ((ll)((v).size()))
+#define REPOUT(i, a, b, exp, sep) REP(i, (a), (b)) cout &lt;&lt; (exp) &lt;&lt; (i &#43; 1 == (b) ? &#34;&#34; : (sep)); cout &lt;&lt; &#34;\n&#34;
+
+// @@ !! LIM(segTree)
+
+// ---- inserted function f:&lt;&lt; from util.cc
+
+// declarations
+
+template &lt;typename T1, typename T2&gt;
+ostream&amp; operator&lt;&lt; (ostream&amp; os, const pair&lt;T1,T2&gt;&amp; p);
+
+template &lt;typename T1, typename T2, typename T3&gt;
+ostream&amp; operator&lt;&lt; (ostream&amp; os, const tuple&lt;T1,T2,T3&gt;&amp; t);
+
+template &lt;typename T1, typename T2, typename T3, typename T4&gt;
+ostream&amp; operator&lt;&lt; (ostream&amp; os, const tuple&lt;T1,T2,T3,T4&gt;&amp; t);
+
+template &lt;typename T1, typename T2, typename T3, typename T4, typename T5&gt;
+ostream&amp; operator&lt;&lt; (ostream&amp; os, const tuple&lt;T1,T2,T3,T4,T5&gt;&amp; t);
+
+template &lt;typename T1, typename T2, typename T3, typename T4, typename T5, typename T6&gt;
+ostream&amp; operator&lt;&lt; (ostream&amp; os, const tuple&lt;T1,T2,T3,T4,T5,T6&gt;&amp; t);
+
+template &lt;typename T&gt;
+ostream&amp; operator&lt;&lt; (ostream&amp; os, const vector&lt;T&gt;&amp; v);
+
+template &lt;typename T, typename C&gt;
+ostream&amp; operator&lt;&lt; (ostream&amp; os, const set&lt;T, C&gt;&amp; v);
+
+template &lt;typename T, typename C&gt;
+ostream&amp; operator&lt;&lt; (ostream&amp; os, const unordered_set&lt;T, C&gt;&amp; v);
+
+template &lt;typename T, typename C&gt;
+ostream&amp; operator&lt;&lt; (ostream&amp; os, const multiset&lt;T, C&gt;&amp; v);
+
+template &lt;typename T1, typename T2, typename C&gt;
+ostream&amp; operator&lt;&lt; (ostream&amp; os, const map&lt;T1, T2, C&gt;&amp; mp);
+
+template &lt;typename T1, typename T2, typename C&gt;
+ostream&amp; operator&lt;&lt; (ostream&amp; os, const unordered_map&lt;T1, T2, C&gt;&amp; mp);
+
+template &lt;typename T, typename T2&gt;
+ostream&amp; operator&lt;&lt; (ostream&amp; os, const queue&lt;T, T2&gt;&amp; orig);
+
+template &lt;typename T, typename T2&gt;
+ostream&amp; operator&lt;&lt; (ostream&amp; os, const deque&lt;T, T2&gt;&amp; orig);
+
+template &lt;typename T, typename T2, typename T3&gt;
+ostream&amp; operator&lt;&lt; (ostream&amp; os, const priority_queue&lt;T, T2, T3&gt;&amp; orig);
+
+template &lt;typename T&gt;
+ostream&amp; operator&lt;&lt; (ostream&amp; os, const stack&lt;T&gt;&amp; st);
+
+#if __cplusplus &gt;= 201703L
+template &lt;typename T&gt;
+ostream&amp; operator&lt;&lt; (ostream&amp; os, const optional&lt;T&gt;&amp; t);
+#endif
+
+ostream&amp; operator&lt;&lt; (ostream&amp; os, int8_t x);
+
+ostream&amp; operator&lt;&lt; (ostream&amp; os, const __int128&amp; x);
+
+// definitions
+
+template &lt;typename T1, typename T2&gt;
+ostream&amp; operator&lt;&lt; (ostream&amp; os, const pair&lt;T1,T2&gt;&amp; p) {
+  os &lt;&lt; &#34;(&#34; &lt;&lt; p.first &lt;&lt; &#34;, &#34; &lt;&lt; p.second &lt;&lt; &#34;)&#34;;
+  return os;
+}
+
+template &lt;typename T1, typename T2, typename T3&gt;
+ostream&amp; operator&lt;&lt; (ostream&amp; os, const tuple&lt;T1,T2,T3&gt;&amp; t) {
+  os &lt;&lt; &#34;(&#34; &lt;&lt; get&lt;0&gt;(t) &lt;&lt; &#34;, &#34; &lt;&lt; get&lt;1&gt;(t)
+     &lt;&lt; &#34;, &#34; &lt;&lt; get&lt;2&gt;(t) &lt;&lt; &#34;)&#34;;
+  return os;
+}
+
+template &lt;typename T1, typename T2, typename T3, typename T4&gt;
+ostream&amp; operator&lt;&lt; (ostream&amp; os, const tuple&lt;T1,T2,T3,T4&gt;&amp; t) {
+  os &lt;&lt; &#34;(&#34; &lt;&lt; get&lt;0&gt;(t) &lt;&lt; &#34;, &#34; &lt;&lt; get&lt;1&gt;(t)
+     &lt;&lt; &#34;, &#34; &lt;&lt; get&lt;2&gt;(t) &lt;&lt; &#34;, &#34; &lt;&lt; get&lt;3&gt;(t) &lt;&lt; &#34;)&#34;;
+  return os;
+}
+
+template &lt;typename T1, typename T2, typename T3, typename T4, typename T5&gt;
+ostream&amp; operator&lt;&lt; (ostream&amp; os, const tuple&lt;T1,T2,T3,T4,T5&gt;&amp; t) {
+  os &lt;&lt; &#34;(&#34; &lt;&lt; get&lt;0&gt;(t) &lt;&lt; &#34;, &#34; &lt;&lt; get&lt;1&gt;(t)
+     &lt;&lt; &#34;, &#34; &lt;&lt; get&lt;2&gt;(t) &lt;&lt; &#34;, &#34; &lt;&lt; get&lt;3&gt;(t) &lt;&lt; &#34;, &#34; &lt;&lt; get&lt;4&gt;(t) &lt;&lt; &#34;)&#34;;
+  return os;
+}
+
+template &lt;typename T1, typename T2, typename T3, typename T4, typename T5, typename T6&gt;
+ostream&amp; operator&lt;&lt; (ostream&amp; os, const tuple&lt;T1,T2,T3,T4,T5,T6&gt;&amp; t) {
+  os &lt;&lt; &#34;(&#34; &lt;&lt; get&lt;0&gt;(t) &lt;&lt; &#34;, &#34; &lt;&lt; get&lt;1&gt;(t)
+     &lt;&lt; &#34;, &#34; &lt;&lt; get&lt;2&gt;(t) &lt;&lt; &#34;, &#34; &lt;&lt; get&lt;3&gt;(t) &lt;&lt; &#34;, &#34; &lt;&lt; get&lt;4&gt;(t) &lt;&lt; &#34;, &#34; &lt;&lt; get&lt;5&gt;(t) &lt;&lt; &#34;)&#34;;
+  return os;
+}
+
+template &lt;typename T&gt;
+ostream&amp; operator&lt;&lt; (ostream&amp; os, const vector&lt;T&gt;&amp; v) {
+  os &lt;&lt; &#39;[&#39;;
+  for (auto it = v.begin(); it != v.end(); it&#43;&#43;) {
+    if (it != v.begin()) os &lt;&lt; &#34;, &#34;;
+    os &lt;&lt; *it;
+  }
+  os &lt;&lt; &#39;]&#39;;
+
+  return os;
+}
+
+template &lt;typename T, typename C&gt;
+ostream&amp; operator&lt;&lt; (ostream&amp; os, const set&lt;T, C&gt;&amp; v) {
+  os &lt;&lt; &#39;{&#39;;
+  for (auto it = v.begin(); it != v.end(); it&#43;&#43;) {
+    if (it != v.begin()) os &lt;&lt; &#34;, &#34;;
+    os &lt;&lt; *it;
+  }
+  os &lt;&lt; &#39;}&#39;;
+
+  return os;
+}
+
+template &lt;typename T, typename C&gt;
+ostream&amp; operator&lt;&lt; (ostream&amp; os, const unordered_set&lt;T, C&gt;&amp; v) {
+  os &lt;&lt; &#39;{&#39;;
+  for (auto it = v.begin(); it != v.end(); it&#43;&#43;) {
+    if (it != v.begin()) os &lt;&lt; &#34;, &#34;;
+    os &lt;&lt; *it;
+  }
+  os &lt;&lt; &#39;}&#39;;
+
+  return os;
+}
+
+template &lt;typename T, typename C&gt;
+ostream&amp; operator&lt;&lt; (ostream&amp; os, const multiset&lt;T, C&gt;&amp; v) {
+  os &lt;&lt; &#39;{&#39;;
+  for (auto it = v.begin(); it != v.end(); it&#43;&#43;) {
+    if (it != v.begin()) os &lt;&lt; &#34;, &#34;;
+    os &lt;&lt; *it;
+  }
+  os &lt;&lt; &#39;}&#39;;
+
+  return os;
+}
+
+template &lt;typename T1, typename T2, typename C&gt;
+ostream&amp; operator&lt;&lt; (ostream&amp; os, const map&lt;T1, T2, C&gt;&amp; mp) {
+  os &lt;&lt; &#39;[&#39;;
+  for (auto it = mp.begin(); it != mp.end(); it&#43;&#43;) {
+    if (it != mp.begin()) os &lt;&lt; &#34;, &#34;;
+    os &lt;&lt; it-&gt;first &lt;&lt; &#34;: &#34; &lt;&lt; it-&gt;second;
+  }
+  os &lt;&lt; &#39;]&#39;;
+
+  return os;
+}
+
+template &lt;typename T1, typename T2, typename C&gt;
+ostream&amp; operator&lt;&lt; (ostream&amp; os, const unordered_map&lt;T1, T2, C&gt;&amp; mp) {
+  os &lt;&lt; &#39;[&#39;;
+  for (auto it = mp.begin(); it != mp.end(); it&#43;&#43;) {
+    if (it != mp.begin()) os &lt;&lt; &#34;, &#34;;
+    os &lt;&lt; it-&gt;first &lt;&lt; &#34;: &#34; &lt;&lt; it-&gt;second;
+  }
+  os &lt;&lt; &#39;]&#39;;
+
+  return os;
+}
+
+template &lt;typename T, typename T2&gt;
+ostream&amp; operator&lt;&lt; (ostream&amp; os, const queue&lt;T, T2&gt;&amp; orig) {
+  queue&lt;T, T2&gt; que(orig);
+  bool first = true;
+  os &lt;&lt; &#39;[&#39;;
+  while (!que.empty()) {
+    T x = que.front(); que.pop();
+    if (!first) os &lt;&lt; &#34;, &#34;;
+    os &lt;&lt; x;
+    first = false;
+  }
+  return os &lt;&lt; &#39;]&#39;;
+}
+
+template &lt;typename T, typename T2&gt;
+ostream&amp; operator&lt;&lt; (ostream&amp; os, const deque&lt;T, T2&gt;&amp; orig) {
+  deque&lt;T, T2&gt; que(orig);
+  bool first = true;
+  os &lt;&lt; &#39;[&#39;;
+  while (!que.empty()) {
+    T x = que.front(); que.pop_front();
+    if (!first) os &lt;&lt; &#34;, &#34;;
+    os &lt;&lt; x;
+    first = false;
+  }
+  return os &lt;&lt; &#39;]&#39;;
+}
+
+template &lt;typename T, typename T2, typename T3&gt;
+ostream&amp; operator&lt;&lt; (ostream&amp; os, const priority_queue&lt;T, T2, T3&gt;&amp; orig) {
+  priority_queue&lt;T, T2, T3&gt; pq(orig);
+  bool first = true;
+  os &lt;&lt; &#39;[&#39;;
+  while (!pq.empty()) {
+    T x = pq.top(); pq.pop();
+    if (!first) os &lt;&lt; &#34;, &#34;;
+    os &lt;&lt; x;
+    first = false;
+  }
+  return os &lt;&lt; &#39;]&#39;;
+}
+
+template &lt;typename T&gt;
+ostream&amp; operator&lt;&lt; (ostream&amp; os, const stack&lt;T&gt;&amp; st) {
+  stack&lt;T&gt; tmp(st);
+  os &lt;&lt; &#39;[&#39;;
+  bool first = true;
+  while (!tmp.empty()) {
+    T&amp; t = tmp.top();
+    if (first) first = false;
+    else os &lt;&lt; &#34;, &#34;;
+    os &lt;&lt; t;
+    tmp.pop();
+  }
+  os &lt;&lt; &#39;]&#39;;
+  return os;
+}
+
+#if __cplusplus &gt;= 201703L
+template &lt;typename T&gt;
+ostream&amp; operator&lt;&lt; (ostream&amp; os, const optional&lt;T&gt;&amp; t) {
+  if (t.has_value()) os &lt;&lt; &#34;v(&#34; &lt;&lt; t.value() &lt;&lt; &#34;)&#34;;
+  else               os &lt;&lt; &#34;nullopt&#34;;
+  return os;
+}
+#endif
+
+ostream&amp; operator&lt;&lt; (ostream&amp; os, int8_t x) {
+  os &lt;&lt; (int32_t)x;
+  return os;
+}
+
+// for Enum type; just displays ordinals.
+template &lt;typename E&gt;
+typename std::enable_if&lt;std::is_enum&lt;E&gt;::value, std::ostream&amp;&gt;::type
+operator&lt;&lt;(std::ostream&amp; os, E e) {
+    return os &lt;&lt; static_cast&lt;typename std::underlying_type&lt;E&gt;::type&gt;(e);
+}
+
+// This is a very ad-hoc implementation...
+ostream&amp; operator&lt;&lt;(ostream&amp; os, const __int128&amp; v) {
+  unsigned __int128 a = v &lt; 0 ? -v : v;
+  ll i = 0;
+  string s(64, &#39; &#39;);
+  if (v == 0) {
+    s[i&#43;&#43;] = &#39;0&#39;;
+  }else {
+    while (a &gt; 0) {
+      s[i&#43;&#43;] = &#39;0&#39; &#43; (char)(a % 10);
+      a /= 10;
+    }
+  }
+  if (v &lt; 0) {
+    s[i&#43;&#43;] = &#39;-&#39;;
+  }
+  s.erase(s.begin() &#43; i, s.end());
+  reverse(s.begin(), s.end());
+  os &lt;&lt; s;
+  return os;
+}
+
+
+// ---- end f:&lt;&lt;
+
+// ---- inserted library file segTree.cc
+
+// It seems that we should keep the size power of two,
+// considering the binary search.
+
+pair&lt;int, int&gt; segtree_range_of_node(int ht, unsigned i) {
+  unsigned m = bit_floor(i);
+  unsigned w = ht &#43; 1 - bit_width(i);
+  int lo = (i ^ m) &lt;&lt; w;
+  int hi = lo &#43; (1LL &lt;&lt; w);
+  return make_pair(lo, hi);
+}
+
+vector&lt;int&gt; segtree_nodes_for_range(int ht, unsigned lo, unsigned hi) {
+  vector&lt;int&gt; left;
+  vector&lt;int&gt; right;
+  lo = (1 &lt;&lt; ht) &#43; lo;
+  hi = (1 &lt;&lt; ht) &#43; hi - 1;
+  while (lo &lt;= hi) {
+    if (lo == hi) {
+      left.push_back(lo);
+      break;
+    }
+    if (lo &amp; 1) {
+      left.push_back(lo);
+      lo&#43;&#43;;
+    }
+    if (not (hi &amp; 1)) {
+      right.push_back(hi);
+      hi--;
+    }
+    lo &gt;&gt;= 1;
+    hi &gt;&gt;= 1;
+  }
+  while (not right.empty()) {
+    left.push_back(right.back());
+    right.pop_back();
+  }
+  return left;
+}
+
+template &lt;typename DAT, typename OP,
+	  typename ADD_t, typename COMP_t, typename APPL_t, bool lazy&gt; 
+struct GenSegTree {
+  using GST = GenSegTree&lt;DAT, OP, ADD_t, COMP_t, APPL_t, lazy&gt;;
+
+  int orig_size;     // size of initdat
+  int size;	     // power of two; &gt;= 2
+  int height;        // size = 1 &lt;&lt; height;
+  vector&lt;DAT&gt; node;  // vector of size 2*size.
+                     // 0                 : unused
+                     // 1    ... size-1   : interval
+                     // size ... 2*size-1 : leaf
+  vector&lt;OP&gt; susp;   // vector of size size.
+                     // suspended operation FOR CHILDREN
+                     // (already applied to this node)
+  DAT unit_dat;
+  OP unit_op;
+  ADD_t add;
+  COMP_t comp;
+  APPL_t appl;
+    
+  GenSegTree() {}
+
+  GenSegTree(DAT unit_dat_, OP unit_op_, ADD_t add_, COMP_t comp_, APPL_t appl_,
+             const vector&lt;DAT&gt;&amp; initdat = vector&lt;DAT&gt;())
+    : unit_dat(unit_dat_), unit_op(unit_op_),
+      add(add_), comp(comp_), appl(appl_) { set_data(initdat); }
+
+  void set_data(const vector&lt;DAT&gt;&amp; initdat) {
+    orig_size = initdat.size();
+    if (initdat.size() &lt;= 1) height = 0;
+    else   height = sizeof(int) * 8 - __builtin_clz(initdat.size() - 1);
+    size = 1 &lt;&lt; height;
+    node.resize(2*size, unit_dat);
+    for (int i = 0; i &lt; (int)initdat.size(); i&#43;&#43;) node[size &#43; i] = initdat[i];
+    for (int t = size - 1; t &gt;= 1; t--) node[t] = add(node[t&lt;&lt;1|0], node[t&lt;&lt;1|1]);
+    susp.resize(size, unit_op);
+  }
+
+  void child_updated_sub(int t) {
+    node[t] = appl(susp[t], add(node[t&lt;&lt;1|0], node[t&lt;&lt;1|1]));
+  }
+
+  void child_updated(int l, int r) {
+    r--;
+    while (l &gt; 1) {
+      l &gt;&gt;= 1;
+      r &gt;&gt;= 1;
+      child_updated_sub(l);
+      if (l &lt; r) child_updated_sub(r);
+    }
+  }
+
+  void node_op(int i, OP f) {
+    node[i] = appl(f, node[i]);
+    if (i &lt; size) susp[i] = comp(f, susp[i]);
+  }
+
+  // Note that susp[i] HAS ALREADY BEEN APPLIED TO node[i].
+  // When push_one(i) is called, susp[j] is updated (for j : i&#39;s child) and it is applied to node[j].
+  void push_one(int i) {
+    node_op(i&lt;&lt;1|0, susp[i]);
+    node_op(i&lt;&lt;1|1, susp[i]);
+    susp[i] = unit_op;
+  }
+
+  void push_upto(int l, int r) {
+    for (int s = height; s &gt;= 1; s--) {
+      int lz = l &gt;&gt; s;
+      int rz = (r-1) &gt;&gt; s;
+      push_one(lz);
+      if (lz &lt; rz) push_one(rz);
+    }
+  }
+
+  DAT query(int l, int r) {
+    if (l &gt;= r) return unit_dat;
+    DAT ret_l = unit_dat;
+    DAT ret_r = unit_dat;
+    l &#43;= size;
+    r &#43;= size;
+    if constexpr(lazy) push_upto(l, r);
+    while (l &lt; r) {
+      if (l &amp; 1) {
+	ret_l = add(ret_l, node[l]);
+	l&#43;&#43;;
+      }
+      if (r &amp; 1) {
+	ret_r = add(node[r-1], ret_r);
+      }
+      l &gt;&gt;= 1;
+      r &gt;&gt;= 1;
+    }
+    DAT ret = add(ret_l, ret_r);
+    return ret;
+  }
+
+  const DAT&amp; at(int i) {
+    if constexpr(lazy) push_upto(size &#43; i, size &#43; i &#43; 1);
+    return node[size &#43; i];
+  }
+
+  const DAT&amp; set_single(int i, const DAT&amp; t) {
+    ll x = size &#43; i;
+    if constexpr(lazy) push_upto(x, x &#43; 1);
+    node[x] = t;
+    for (x &gt;&gt;= 1; x &gt;= 1; x &gt;&gt;= 1) node[x] = add(node[x&lt;&lt;1|0], node[x&lt;&lt;1|1]);
+    return t;
+  }
+
+  struct STSubst {
+    GenSegTree&amp; st;
+    int i;
+    STSubst(GenSegTree&amp; st_, int i_) : st(st_), i(i_) {}
+    const DAT&amp; operator=(const DAT&amp; t) { return st.set_single(i, t); }
+  };
+
+  // Reference for Substitution
+  STSubst rs(int i) { return STSubst(*this, i); }
+
+  // obsolete
+  template&lt;bool xx = lazy&gt; enable_if_t&lt;! xx&gt; update(int i, DAT t) {
+    ll x = size &#43; i;
+    node[x] = t;
+    for (x &gt;&gt;= 1; x &gt;= 1; x &gt;&gt;= 1) node[x] = add(node[x&lt;&lt;1|0], node[x&lt;&lt;1|1]);
+  }
+
+  template&lt;bool xx = lazy&gt; enable_if_t&lt;xx&gt; update(int l, int r, const OP&amp; f) {
+    if (l &gt;= r) return;
+    l &#43;= size;
+    r &#43;= size;
+    push_upto(l, r);
+    int l0 = l, r0 = r;
+    while (l &lt; r) {
+      if (l &amp; 1) {
+	node_op(l, f);
+	l&#43;&#43;;
+      }
+      if (r &amp; 1) {
+	node_op(r-1, f);
+      }
+      l &gt;&gt;= 1;
+      r &gt;&gt;= 1;
+    }
+    child_updated(l0, r0);
+  }
+
+  pair&lt;int, int&gt; range_of_node(unsigned i) { return segtree_range_of_node(height, i); }
+
+  vector&lt;int&gt; nodes_for_range(unsigned lo, unsigned hi) { return segtree_nodes_for_range(height, lo, hi); }
+
+  friend ostream&amp; operator&lt;&lt;(ostream&amp; os, GenSegTree&amp; st) {
+    os &lt;&lt; &#39;[&#39;;
+    for (int i = 0; i &lt; st.orig_size; i&#43;&#43;) {
+      if (i &gt; 0) os &lt;&lt; &#34;, &#34;;
+      os &lt;&lt; st.at(i);
+    }
+    os &lt;&lt; &#39;]&#39;;
+    return os;
+  }
+
+  int binsearch_r_until(const auto&amp; check, int l) {
+    // DLOGKL(&#34;in: binsearch_r_until&#34;, l);
+    if (not check(unit_dat)) return l - 1;
+    if (l == orig_size) return l;
+    DAT val = unit_dat;
+    int x = l &#43; size;
+    if constexpr(lazy) push_upto(x, x &#43; 1);
+    while (true) {
+      if (x &amp; 1) {
+        DAT t = add(val, node[x]);
+        if (not check(t)) break;
+        val = t;
+        x&#43;&#43;;
+        if (__builtin_popcountll(x) == 1) return orig_size;
+      }
+      x &gt;&gt;= 1;
+      // DLOGKL(&#34;1: &#34;, x, val);
+    }
+    while (x &lt; size) {
+      if constexpr(lazy) push_one(x);
+      x &lt;&lt;= 1;
+      DAT t = add(val, node[x]);
+      if (check(t)) {
+        x&#43;&#43;;
+        val = t;
+      }
+      // DLOGKL(&#34;2: &#34;, x, val);
+    }
+    // DLOGKL(&#34;3: &#34;, x - size, orig_size);
+    return min(x - size, orig_size);
+  }
+
+  int binsearch_r_from(const auto&amp; check, int l) {
+    return binsearch_r_until([&amp;](DAT x) { return not check(x); }, l) &#43; 1;
+  }
+
+  int binsearch_l_until(const auto&amp; check, int r) {
+    if (not check(unit_dat)) return r &#43; 1;
+    if (r == 0) return 0;
+    DAT val = unit_dat;
+    int x = r &#43; size;
+    if (x == 2 * size) {
+      if (check(node[1])) return 0;
+      x = 1;
+    }else {
+      if constexpr(lazy) push_upto(x - 1, x);
+      while (true) {
+        if (x &amp; 1) {
+          x--;
+          DAT t = add(node[x], val);
+          if (not check(t)) break;
+          val = t;
+          if (__builtin_popcountll(x) == 1) return 0;
+        }
+        x &gt;&gt;= 1;
+      }
+    }
+    while (x &lt; size) {
+      if constexpr(lazy) push_one(x);
+      x = x &lt;&lt; 1 | 1;
+      DAT t = add(node[x], val);
+      if (check(t)) {
+        val = t;
+        x--;
+      }
+    }
+    return x &#43; 1 - size;
+  }
+
+  int binsearch_l_from(const auto&amp; check, int r) {
+    return binsearch_l_until([&amp;](DAT x) { return not check(x); }, r) - 1;
+  }
+
+  vector&lt;DAT&gt; vec_view() {
+    vector&lt;DAT&gt; ret(orig_size);
+    for (int i = 0; i &lt;  orig_size; i&#43;&#43;) ret[i] = at(i);
+    return ret;
+  };
+
+};
+
+template&lt;typename DAT, typename OP&gt;
+auto make_seg_tree_lazy(DAT unit_dat, OP unit_op, auto add, auto comp, auto appl,
+                        const vector&lt;DAT&gt;&amp; initdat = vector&lt;DAT&gt;()) {
+  using ret_t = GenSegTree&lt;DAT, OP, decltype(add), decltype(comp), decltype(appl), true&gt;;
+  return ret_t(unit_dat, unit_op, add, comp, appl, initdat);
+}
+
+void* dummy_comp(void* x, void* y) { return nullptr; }
+template&lt;typename DAT&gt;
+DAT dummy_appl(void* x, const DAT&amp; y) { return y; }
+
+template&lt;typename DAT&gt;
+auto make_seg_tree(DAT unit_dat, auto add, const vector&lt;DAT&gt;&amp; initdat = vector&lt;DAT&gt;()) {
+  using ret_t = GenSegTree&lt;DAT, void*, decltype(add), void* (*)(void*, void*), DAT (*)(void*, const DAT&amp;), false&gt;;
+  return ret_t(unit_dat, nullptr, add, dummy_comp, dummy_appl&lt;DAT&gt;, initdat);
+}
+
+// ---- end segTree.cc
+
+// @@ !! LIM -- end mark --
+
+int main(/* int argc, char *argv[] */) {
+  ios_base::sync_with_stdio(false);
+  cin.tie(nullptr);
+  cout &lt;&lt; setprecision(20);
+
+  ll N; cin &gt;&gt; N;
+  // @InpVec(N, A, dec=1) [qWmAidqL]
+  auto A = vector(N, ll());
+  for (int i = 0; i &lt; N; i&#43;&#43;) { ll v; cin &gt;&gt; v; v -= 1; A[i] = v; }
+  // @End [qWmAidqL]
+
+  vector&lt;ll&gt; L(N &#43; 1);
+  vector&lt;ll&gt; R(N &#43; 1);
+  {
+    vector tmp(N, false);
+    REP(i, 0, N) {
+      if (not tmp[A[i]]) {
+        tmp[A[i]] = true;
+        L[i &#43; 1] = L[i] &#43; 1;
+      }else {
+        L[i &#43; 1] = L[i];
+      }
+    }
+  }
+  {
+    vector tmp(N, false);
+    REPrev(i, N - 1, 0) {
+      if (not tmp[A[i]]) {
+        tmp[A[i]] = true;
+        R[i] = R[i &#43; 1] &#43; 1;
+      }else {
+        R[i] = R[i &#43; 1];
+      }
+    }
+  }
+  vector&lt;ll&gt; apppos(N);
+  {
+    vector tmp(N, -1LL);
+    REP(i, 0, N) {
+      apppos[i] = tmp[A[i]];
+      tmp[A[i]] = i;
+    }
+  }
+
+  auto mymax = [](ll x, ll y) -&gt; ll { return max(x, y); };
+  auto st = make_seg_tree_lazy(0LL, 0LL, mymax, plus&lt;ll&gt;(), plus&lt;ll&gt;());
+  st.set_data(vector&lt;ll&gt;(N &#43; 1, 0LL));
+  ll ans = R[0];
+  REP(i, 0, N) {
+    ll j = apppos[i];
+    if (j &lt; 0) st.update(0, i &#43; 1, 1);
+    else st.update(j &#43; 1, i &#43; 1, 1);
+    st.rs(i &#43; 1) = L[i &#43; 1];
+    ll v = st.query(0, i &#43; 2);
+    ans = max(ans, v &#43; R[i &#43; 1]);
+  }
+  cout &lt;&lt; ans &lt;&lt; endl;
+
+  return 0;
+}
+
+</div>
+		<textarea id="plain-textarea" class="form-control" style="display:none;" name="sourceCode">#include &lt;bits/stdc&#43;&#43;.h&gt;
+#include &lt;cassert&gt;
+using namespace std;
+using ll = long long int;
+using u64 = unsigned long long;
+using pll = pair&lt;ll, ll&gt;;
+// #include &lt;atcoder/all&gt;
+// using namespace atcoder;
+#define REP(i, a, b) for (ll i = (a); i &lt; (b); i&#43;&#43;)
+#define REPrev(i, a, b) for (ll i = (a); i &gt;= (b); i--)
+#define ALL(coll) (coll).begin(), (coll).end()
+#define SIZE(v) ((ll)((v).size()))
+#define REPOUT(i, a, b, exp, sep) REP(i, (a), (b)) cout &lt;&lt; (exp) &lt;&lt; (i &#43; 1 == (b) ? &#34;&#34; : (sep)); cout &lt;&lt; &#34;\n&#34;
+
+// @@ !! LIM(segTree)
+
+// ---- inserted function f:&lt;&lt; from util.cc
+
+// declarations
+
+template &lt;typename T1, typename T2&gt;
+ostream&amp; operator&lt;&lt; (ostream&amp; os, const pair&lt;T1,T2&gt;&amp; p);
+
+template &lt;typename T1, typename T2, typename T3&gt;
+ostream&amp; operator&lt;&lt; (ostream&amp; os, const tuple&lt;T1,T2,T3&gt;&amp; t);
+
+template &lt;typename T1, typename T2, typename T3, typename T4&gt;
+ostream&amp; operator&lt;&lt; (ostream&amp; os, const tuple&lt;T1,T2,T3,T4&gt;&amp; t);
+
+template &lt;typename T1, typename T2, typename T3, typename T4, typename T5&gt;
+ostream&amp; operator&lt;&lt; (ostream&amp; os, const tuple&lt;T1,T2,T3,T4,T5&gt;&amp; t);
+
+template &lt;typename T1, typename T2, typename T3, typename T4, typename T5, typename T6&gt;
+ostream&amp; operator&lt;&lt; (ostream&amp; os, const tuple&lt;T1,T2,T3,T4,T5,T6&gt;&amp; t);
+
+template &lt;typename T&gt;
+ostream&amp; operator&lt;&lt; (ostream&amp; os, const vector&lt;T&gt;&amp; v);
+
+template &lt;typename T, typename C&gt;
+ostream&amp; operator&lt;&lt; (ostream&amp; os, const set&lt;T, C&gt;&amp; v);
+
+template &lt;typename T, typename C&gt;
+ostream&amp; operator&lt;&lt; (ostream&amp; os, const unordered_set&lt;T, C&gt;&amp; v);
+
+template &lt;typename T, typename C&gt;
+ostream&amp; operator&lt;&lt; (ostream&amp; os, const multiset&lt;T, C&gt;&amp; v);
+
+template &lt;typename T1, typename T2, typename C&gt;
+ostream&amp; operator&lt;&lt; (ostream&amp; os, const map&lt;T1, T2, C&gt;&amp; mp);
+
+template &lt;typename T1, typename T2, typename C&gt;
+ostream&amp; operator&lt;&lt; (ostream&amp; os, const unordered_map&lt;T1, T2, C&gt;&amp; mp);
+
+template &lt;typename T, typename T2&gt;
+ostream&amp; operator&lt;&lt; (ostream&amp; os, const queue&lt;T, T2&gt;&amp; orig);
+
+template &lt;typename T, typename T2&gt;
+ostream&amp; operator&lt;&lt; (ostream&amp; os, const deque&lt;T, T2&gt;&amp; orig);
+
+template &lt;typename T, typename T2, typename T3&gt;
+ostream&amp; operator&lt;&lt; (ostream&amp; os, const priority_queue&lt;T, T2, T3&gt;&amp; orig);
+
+template &lt;typename T&gt;
+ostream&amp; operator&lt;&lt; (ostream&amp; os, const stack&lt;T&gt;&amp; st);
+
+#if __cplusplus &gt;= 201703L
+template &lt;typename T&gt;
+ostream&amp; operator&lt;&lt; (ostream&amp; os, const optional&lt;T&gt;&amp; t);
+#endif
+
+ostream&amp; operator&lt;&lt; (ostream&amp; os, int8_t x);
+
+ostream&amp; operator&lt;&lt; (ostream&amp; os, const __int128&amp; x);
+
+// definitions
+
+template &lt;typename T1, typename T2&gt;
+ostream&amp; operator&lt;&lt; (ostream&amp; os, const pair&lt;T1,T2&gt;&amp; p) {
+  os &lt;&lt; &#34;(&#34; &lt;&lt; p.first &lt;&lt; &#34;, &#34; &lt;&lt; p.second &lt;&lt; &#34;)&#34;;
+  return os;
+}
+
+template &lt;typename T1, typename T2, typename T3&gt;
+ostream&amp; operator&lt;&lt; (ostream&amp; os, const tuple&lt;T1,T2,T3&gt;&amp; t) {
+  os &lt;&lt; &#34;(&#34; &lt;&lt; get&lt;0&gt;(t) &lt;&lt; &#34;, &#34; &lt;&lt; get&lt;1&gt;(t)
+     &lt;&lt; &#34;, &#34; &lt;&lt; get&lt;2&gt;(t) &lt;&lt; &#34;)&#34;;
+  return os;
+}
+
+template &lt;typename T1, typename T2, typename T3, typename T4&gt;
+ostream&amp; operator&lt;&lt; (ostream&amp; os, const tuple&lt;T1,T2,T3,T4&gt;&amp; t) {
+  os &lt;&lt; &#34;(&#34; &lt;&lt; get&lt;0&gt;(t) &lt;&lt; &#34;, &#34; &lt;&lt; get&lt;1&gt;(t)
+     &lt;&lt; &#34;, &#34; &lt;&lt; get&lt;2&gt;(t) &lt;&lt; &#34;, &#34; &lt;&lt; get&lt;3&gt;(t) &lt;&lt; &#34;)&#34;;
+  return os;
+}
+
+template &lt;typename T1, typename T2, typename T3, typename T4, typename T5&gt;
+ostream&amp; operator&lt;&lt; (ostream&amp; os, const tuple&lt;T1,T2,T3,T4,T5&gt;&amp; t) {
+  os &lt;&lt; &#34;(&#34; &lt;&lt; get&lt;0&gt;(t) &lt;&lt; &#34;, &#34; &lt;&lt; get&lt;1&gt;(t)
+     &lt;&lt; &#34;, &#34; &lt;&lt; get&lt;2&gt;(t) &lt;&lt; &#34;, &#34; &lt;&lt; get&lt;3&gt;(t) &lt;&lt; &#34;, &#34; &lt;&lt; get&lt;4&gt;(t) &lt;&lt; &#34;)&#34;;
+  return os;
+}
+
+template &lt;typename T1, typename T2, typename T3, typename T4, typename T5, typename T6&gt;
+ostream&amp; operator&lt;&lt; (ostream&amp; os, const tuple&lt;T1,T2,T3,T4,T5,T6&gt;&amp; t) {
+  os &lt;&lt; &#34;(&#34; &lt;&lt; get&lt;0&gt;(t) &lt;&lt; &#34;, &#34; &lt;&lt; get&lt;1&gt;(t)
+     &lt;&lt; &#34;, &#34; &lt;&lt; get&lt;2&gt;(t) &lt;&lt; &#34;, &#34; &lt;&lt; get&lt;3&gt;(t) &lt;&lt; &#34;, &#34; &lt;&lt; get&lt;4&gt;(t) &lt;&lt; &#34;, &#34; &lt;&lt; get&lt;5&gt;(t) &lt;&lt; &#34;)&#34;;
+  return os;
+}
+
+template &lt;typename T&gt;
+ostream&amp; operator&lt;&lt; (ostream&amp; os, const vector&lt;T&gt;&amp; v) {
+  os &lt;&lt; &#39;[&#39;;
+  for (auto it = v.begin(); it != v.end(); it&#43;&#43;) {
+    if (it != v.begin()) os &lt;&lt; &#34;, &#34;;
+    os &lt;&lt; *it;
+  }
+  os &lt;&lt; &#39;]&#39;;
+
+  return os;
+}
+
+template &lt;typename T, typename C&gt;
+ostream&amp; operator&lt;&lt; (ostream&amp; os, const set&lt;T, C&gt;&amp; v) {
+  os &lt;&lt; &#39;{&#39;;
+  for (auto it = v.begin(); it != v.end(); it&#43;&#43;) {
+    if (it != v.begin()) os &lt;&lt; &#34;, &#34;;
+    os &lt;&lt; *it;
+  }
+  os &lt;&lt; &#39;}&#39;;
+
+  return os;
+}
+
+template &lt;typename T, typename C&gt;
+ostream&amp; operator&lt;&lt; (ostream&amp; os, const unordered_set&lt;T, C&gt;&amp; v) {
+  os &lt;&lt; &#39;{&#39;;
+  for (auto it = v.begin(); it != v.end(); it&#43;&#43;) {
+    if (it != v.begin()) os &lt;&lt; &#34;, &#34;;
+    os &lt;&lt; *it;
+  }
+  os &lt;&lt; &#39;}&#39;;
+
+  return os;
+}
+
+template &lt;typename T, typename C&gt;
+ostream&amp; operator&lt;&lt; (ostream&amp; os, const multiset&lt;T, C&gt;&amp; v) {
+  os &lt;&lt; &#39;{&#39;;
+  for (auto it = v.begin(); it != v.end(); it&#43;&#43;) {
+    if (it != v.begin()) os &lt;&lt; &#34;, &#34;;
+    os &lt;&lt; *it;
+  }
+  os &lt;&lt; &#39;}&#39;;
+
+  return os;
+}
+
+template &lt;typename T1, typename T2, typename C&gt;
+ostream&amp; operator&lt;&lt; (ostream&amp; os, const map&lt;T1, T2, C&gt;&amp; mp) {
+  os &lt;&lt; &#39;[&#39;;
+  for (auto it = mp.begin(); it != mp.end(); it&#43;&#43;) {
+    if (it != mp.begin()) os &lt;&lt; &#34;, &#34;;
+    os &lt;&lt; it-&gt;first &lt;&lt; &#34;: &#34; &lt;&lt; it-&gt;second;
+  }
+  os &lt;&lt; &#39;]&#39;;
+
+  return os;
+}
+
+template &lt;typename T1, typename T2, typename C&gt;
+ostream&amp; operator&lt;&lt; (ostream&amp; os, const unordered_map&lt;T1, T2, C&gt;&amp; mp) {
+  os &lt;&lt; &#39;[&#39;;
+  for (auto it = mp.begin(); it != mp.end(); it&#43;&#43;) {
+    if (it != mp.begin()) os &lt;&lt; &#34;, &#34;;
+    os &lt;&lt; it-&gt;first &lt;&lt; &#34;: &#34; &lt;&lt; it-&gt;second;
+  }
+  os &lt;&lt; &#39;]&#39;;
+
+  return os;
+}
+
+template &lt;typename T, typename T2&gt;
+ostream&amp; operator&lt;&lt; (ostream&amp; os, const queue&lt;T, T2&gt;&amp; orig) {
+  queue&lt;T, T2&gt; que(orig);
+  bool first = true;
+  os &lt;&lt; &#39;[&#39;;
+  while (!que.empty()) {
+    T x = que.front(); que.pop();
+    if (!first) os &lt;&lt; &#34;, &#34;;
+    os &lt;&lt; x;
+    first = false;
+  }
+  return os &lt;&lt; &#39;]&#39;;
+}
+
+template &lt;typename T, typename T2&gt;
+ostream&amp; operator&lt;&lt; (ostream&amp; os, const deque&lt;T, T2&gt;&amp; orig) {
+  deque&lt;T, T2&gt; que(orig);
+  bool first = true;
+  os &lt;&lt; &#39;[&#39;;
+  while (!que.empty()) {
+    T x = que.front(); que.pop_front();
+    if (!first) os &lt;&lt; &#34;, &#34;;
+    os &lt;&lt; x;
+    first = false;
+  }
+  return os &lt;&lt; &#39;]&#39;;
+}
+
+template &lt;typename T, typename T2, typename T3&gt;
+ostream&amp; operator&lt;&lt; (ostream&amp; os, const priority_queue&lt;T, T2, T3&gt;&amp; orig) {
+  priority_queue&lt;T, T2, T3&gt; pq(orig);
+  bool first = true;
+  os &lt;&lt; &#39;[&#39;;
+  while (!pq.empty()) {
+    T x = pq.top(); pq.pop();
+    if (!first) os &lt;&lt; &#34;, &#34;;
+    os &lt;&lt; x;
+    first = false;
+  }
+  return os &lt;&lt; &#39;]&#39;;
+}
+
+template &lt;typename T&gt;
+ostream&amp; operator&lt;&lt; (ostream&amp; os, const stack&lt;T&gt;&amp; st) {
+  stack&lt;T&gt; tmp(st);
+  os &lt;&lt; &#39;[&#39;;
+  bool first = true;
+  while (!tmp.empty()) {
+    T&amp; t = tmp.top();
+    if (first) first = false;
+    else os &lt;&lt; &#34;, &#34;;
+    os &lt;&lt; t;
+    tmp.pop();
+  }
+  os &lt;&lt; &#39;]&#39;;
+  return os;
+}
+
+#if __cplusplus &gt;= 201703L
+template &lt;typename T&gt;
+ostream&amp; operator&lt;&lt; (ostream&amp; os, const optional&lt;T&gt;&amp; t) {
+  if (t.has_value()) os &lt;&lt; &#34;v(&#34; &lt;&lt; t.value() &lt;&lt; &#34;)&#34;;
+  else               os &lt;&lt; &#34;nullopt&#34;;
+  return os;
+}
+#endif
+
+ostream&amp; operator&lt;&lt; (ostream&amp; os, int8_t x) {
+  os &lt;&lt; (int32_t)x;
+  return os;
+}
+
+// for Enum type; just displays ordinals.
+template &lt;typename E&gt;
+typename std::enable_if&lt;std::is_enum&lt;E&gt;::value, std::ostream&amp;&gt;::type
+operator&lt;&lt;(std::ostream&amp; os, E e) {
+    return os &lt;&lt; static_cast&lt;typename std::underlying_type&lt;E&gt;::type&gt;(e);
+}
+
+// This is a very ad-hoc implementation...
+ostream&amp; operator&lt;&lt;(ostream&amp; os, const __int128&amp; v) {
+  unsigned __int128 a = v &lt; 0 ? -v : v;
+  ll i = 0;
+  string s(64, &#39; &#39;);
+  if (v == 0) {
+    s[i&#43;&#43;] = &#39;0&#39;;
+  }else {
+    while (a &gt; 0) {
+      s[i&#43;&#43;] = &#39;0&#39; &#43; (char)(a % 10);
+      a /= 10;
+    }
+  }
+  if (v &lt; 0) {
+    s[i&#43;&#43;] = &#39;-&#39;;
+  }
+  s.erase(s.begin() &#43; i, s.end());
+  reverse(s.begin(), s.end());
+  os &lt;&lt; s;
+  return os;
+}
+
+
+// ---- end f:&lt;&lt;
+
+// ---- inserted library file segTree.cc
+
+// It seems that we should keep the size power of two,
+// considering the binary search.
+
+pair&lt;int, int&gt; segtree_range_of_node(int ht, unsigned i) {
+  unsigned m = bit_floor(i);
+  unsigned w = ht &#43; 1 - bit_width(i);
+  int lo = (i ^ m) &lt;&lt; w;
+  int hi = lo &#43; (1LL &lt;&lt; w);
+  return make_pair(lo, hi);
+}
+
+vector&lt;int&gt; segtree_nodes_for_range(int ht, unsigned lo, unsigned hi) {
+  vector&lt;int&gt; left;
+  vector&lt;int&gt; right;
+  lo = (1 &lt;&lt; ht) &#43; lo;
+  hi = (1 &lt;&lt; ht) &#43; hi - 1;
+  while (lo &lt;= hi) {
+    if (lo == hi) {
+      left.push_back(lo);
+      break;
+    }
+    if (lo &amp; 1) {
+      left.push_back(lo);
+      lo&#43;&#43;;
+    }
+    if (not (hi &amp; 1)) {
+      right.push_back(hi);
+      hi--;
+    }
+    lo &gt;&gt;= 1;
+    hi &gt;&gt;= 1;
+  }
+  while (not right.empty()) {
+    left.push_back(right.back());
+    right.pop_back();
+  }
+  return left;
+}
+
+template &lt;typename DAT, typename OP,
+	  typename ADD_t, typename COMP_t, typename APPL_t, bool lazy&gt; 
+struct GenSegTree {
+  using GST = GenSegTree&lt;DAT, OP, ADD_t, COMP_t, APPL_t, lazy&gt;;
+
+  int orig_size;     // size of initdat
+  int size;	     // power of two; &gt;= 2
+  int height;        // size = 1 &lt;&lt; height;
+  vector&lt;DAT&gt; node;  // vector of size 2*size.
+                     // 0                 : unused
+                     // 1    ... size-1   : interval
+                     // size ... 2*size-1 : leaf
+  vector&lt;OP&gt; susp;   // vector of size size.
+                     // suspended operation FOR CHILDREN
+                     // (already applied to this node)
+  DAT unit_dat;
+  OP unit_op;
+  ADD_t add;
+  COMP_t comp;
+  APPL_t appl;
+    
+  GenSegTree() {}
+
+  GenSegTree(DAT unit_dat_, OP unit_op_, ADD_t add_, COMP_t comp_, APPL_t appl_,
+             const vector&lt;DAT&gt;&amp; initdat = vector&lt;DAT&gt;())
+    : unit_dat(unit_dat_), unit_op(unit_op_),
+      add(add_), comp(comp_), appl(appl_) { set_data(initdat); }
+
+  void set_data(const vector&lt;DAT&gt;&amp; initdat) {
+    orig_size = initdat.size();
+    if (initdat.size() &lt;= 1) height = 0;
+    else   height = sizeof(int) * 8 - __builtin_clz(initdat.size() - 1);
+    size = 1 &lt;&lt; height;
+    node.resize(2*size, unit_dat);
+    for (int i = 0; i &lt; (int)initdat.size(); i&#43;&#43;) node[size &#43; i] = initdat[i];
+    for (int t = size - 1; t &gt;= 1; t--) node[t] = add(node[t&lt;&lt;1|0], node[t&lt;&lt;1|1]);
+    susp.resize(size, unit_op);
+  }
+
+  void child_updated_sub(int t) {
+    node[t] = appl(susp[t], add(node[t&lt;&lt;1|0], node[t&lt;&lt;1|1]));
+  }
+
+  void child_updated(int l, int r) {
+    r--;
+    while (l &gt; 1) {
+      l &gt;&gt;= 1;
+      r &gt;&gt;= 1;
+      child_updated_sub(l);
+      if (l &lt; r) child_updated_sub(r);
+    }
+  }
+
+  void node_op(int i, OP f) {
+    node[i] = appl(f, node[i]);
+    if (i &lt; size) susp[i] = comp(f, susp[i]);
+  }
+
+  // Note that susp[i] HAS ALREADY BEEN APPLIED TO node[i].
+  // When push_one(i) is called, susp[j] is updated (for j : i&#39;s child) and it is applied to node[j].
+  void push_one(int i) {
+    node_op(i&lt;&lt;1|0, susp[i]);
+    node_op(i&lt;&lt;1|1, susp[i]);
+    susp[i] = unit_op;
+  }
+
+  void push_upto(int l, int r) {
+    for (int s = height; s &gt;= 1; s--) {
+      int lz = l &gt;&gt; s;
+      int rz = (r-1) &gt;&gt; s;
+      push_one(lz);
+      if (lz &lt; rz) push_one(rz);
+    }
+  }
+
+  DAT query(int l, int r) {
+    if (l &gt;= r) return unit_dat;
+    DAT ret_l = unit_dat;
+    DAT ret_r = unit_dat;
+    l &#43;= size;
+    r &#43;= size;
+    if constexpr(lazy) push_upto(l, r);
+    while (l &lt; r) {
+      if (l &amp; 1) {
+	ret_l = add(ret_l, node[l]);
+	l&#43;&#43;;
+      }
+      if (r &amp; 1) {
+	ret_r = add(node[r-1], ret_r);
+      }
+      l &gt;&gt;= 1;
+      r &gt;&gt;= 1;
+    }
+    DAT ret = add(ret_l, ret_r);
+    return ret;
+  }
+
+  const DAT&amp; at(int i) {
+    if constexpr(lazy) push_upto(size &#43; i, size &#43; i &#43; 1);
+    return node[size &#43; i];
+  }
+
+  const DAT&amp; set_single(int i, const DAT&amp; t) {
+    ll x = size &#43; i;
+    if constexpr(lazy) push_upto(x, x &#43; 1);
+    node[x] = t;
+    for (x &gt;&gt;= 1; x &gt;= 1; x &gt;&gt;= 1) node[x] = add(node[x&lt;&lt;1|0], node[x&lt;&lt;1|1]);
+    return t;
+  }
+
+  struct STSubst {
+    GenSegTree&amp; st;
+    int i;
+    STSubst(GenSegTree&amp; st_, int i_) : st(st_), i(i_) {}
+    const DAT&amp; operator=(const DAT&amp; t) { return st.set_single(i, t); }
+  };
+
+  // Reference for Substitution
+  STSubst rs(int i) { return STSubst(*this, i); }
+
+  // obsolete
+  template&lt;bool xx = lazy&gt; enable_if_t&lt;! xx&gt; update(int i, DAT t) {
+    ll x = size &#43; i;
+    node[x] = t;
+    for (x &gt;&gt;= 1; x &gt;= 1; x &gt;&gt;= 1) node[x] = add(node[x&lt;&lt;1|0], node[x&lt;&lt;1|1]);
+  }
+
+  template&lt;bool xx = lazy&gt; enable_if_t&lt;xx&gt; update(int l, int r, const OP&amp; f) {
+    if (l &gt;= r) return;
+    l &#43;= size;
+    r &#43;= size;
+    push_upto(l, r);
+    int l0 = l, r0 = r;
+    while (l &lt; r) {
+      if (l &amp; 1) {
+	node_op(l, f);
+	l&#43;&#43;;
+      }
+      if (r &amp; 1) {
+	node_op(r-1, f);
+      }
+      l &gt;&gt;= 1;
+      r &gt;&gt;= 1;
+    }
+    child_updated(l0, r0);
+  }
+
+  pair&lt;int, int&gt; range_of_node(unsigned i) { return segtree_range_of_node(height, i); }
+
+  vector&lt;int&gt; nodes_for_range(unsigned lo, unsigned hi) { return segtree_nodes_for_range(height, lo, hi); }
+
+  friend ostream&amp; operator&lt;&lt;(ostream&amp; os, GenSegTree&amp; st) {
+    os &lt;&lt; &#39;[&#39;;
+    for (int i = 0; i &lt; st.orig_size; i&#43;&#43;) {
+      if (i &gt; 0) os &lt;&lt; &#34;, &#34;;
+      os &lt;&lt; st.at(i);
+    }
+    os &lt;&lt; &#39;]&#39;;
+    return os;
+  }
+
+  int binsearch_r_until(const auto&amp; check, int l) {
+    // DLOGKL(&#34;in: binsearch_r_until&#34;, l);
+    if (not check(unit_dat)) return l - 1;
+    if (l == orig_size) return l;
+    DAT val = unit_dat;
+    int x = l &#43; size;
+    if constexpr(lazy) push_upto(x, x &#43; 1);
+    while (true) {
+      if (x &amp; 1) {
+        DAT t = add(val, node[x]);
+        if (not check(t)) break;
+        val = t;
+        x&#43;&#43;;
+        if (__builtin_popcountll(x) == 1) return orig_size;
+      }
+      x &gt;&gt;= 1;
+      // DLOGKL(&#34;1: &#34;, x, val);
+    }
+    while (x &lt; size) {
+      if constexpr(lazy) push_one(x);
+      x &lt;&lt;= 1;
+      DAT t = add(val, node[x]);
+      if (check(t)) {
+        x&#43;&#43;;
+        val = t;
+      }
+      // DLOGKL(&#34;2: &#34;, x, val);
+    }
+    // DLOGKL(&#34;3: &#34;, x - size, orig_size);
+    return min(x - size, orig_size);
+  }
+
+  int binsearch_r_from(const auto&amp; check, int l) {
+    return binsearch_r_until([&amp;](DAT x) { return not check(x); }, l) &#43; 1;
+  }
+
+  int binsearch_l_until(const auto&amp; check, int r) {
+    if (not check(unit_dat)) return r &#43; 1;
+    if (r == 0) return 0;
+    DAT val = unit_dat;
+    int x = r &#43; size;
+    if (x == 2 * size) {
+      if (check(node[1])) return 0;
+      x = 1;
+    }else {
+      if constexpr(lazy) push_upto(x - 1, x);
+      while (true) {
+        if (x &amp; 1) {
+          x--;
+          DAT t = add(node[x], val);
+          if (not check(t)) break;
+          val = t;
+          if (__builtin_popcountll(x) == 1) return 0;
+        }
+        x &gt;&gt;= 1;
+      }
+    }
+    while (x &lt; size) {
+      if constexpr(lazy) push_one(x);
+      x = x &lt;&lt; 1 | 1;
+      DAT t = add(node[x], val);
+      if (check(t)) {
+        val = t;
+        x--;
+      }
+    }
+    return x &#43; 1 - size;
+  }
+
+  int binsearch_l_from(const auto&amp; check, int r) {
+    return binsearch_l_until([&amp;](DAT x) { return not check(x); }, r) - 1;
+  }
+
+  vector&lt;DAT&gt; vec_view() {
+    vector&lt;DAT&gt; ret(orig_size);
+    for (int i = 0; i &lt;  orig_size; i&#43;&#43;) ret[i] = at(i);
+    return ret;
+  };
+
+};
+
+template&lt;typename DAT, typename OP&gt;
+auto make_seg_tree_lazy(DAT unit_dat, OP unit_op, auto add, auto comp, auto appl,
+                        const vector&lt;DAT&gt;&amp; initdat = vector&lt;DAT&gt;()) {
+  using ret_t = GenSegTree&lt;DAT, OP, decltype(add), decltype(comp), decltype(appl), true&gt;;
+  return ret_t(unit_dat, unit_op, add, comp, appl, initdat);
+}
+
+void* dummy_comp(void* x, void* y) { return nullptr; }
+template&lt;typename DAT&gt;
+DAT dummy_appl(void* x, const DAT&amp; y) { return y; }
+
+template&lt;typename DAT&gt;
+auto make_seg_tree(DAT unit_dat, auto add, const vector&lt;DAT&gt;&amp; initdat = vector&lt;DAT&gt;()) {
+  using ret_t = GenSegTree&lt;DAT, void*, decltype(add), void* (*)(void*, void*), DAT (*)(void*, const DAT&amp;), false&gt;;
+  return ret_t(unit_dat, nullptr, add, dummy_comp, dummy_appl&lt;DAT&gt;, initdat);
+}
+
+// ---- end segTree.cc
+
+// @@ !! LIM -- end mark --
+
+int main(/* int argc, char *argv[] */) {
+  ios_base::sync_with_stdio(false);
+  cin.tie(nullptr);
+  cout &lt;&lt; setprecision(20);
+
+  ll N; cin &gt;&gt; N;
+  // @InpVec(N, A, dec=1) [qWmAidqL]
+  auto A = vector(N, ll());
+  for (int i = 0; i &lt; N; i&#43;&#43;) { ll v; cin &gt;&gt; v; v -= 1; A[i] = v; }
+  // @End [qWmAidqL]
+
+  vector&lt;ll&gt; L(N &#43; 1);
+  vector&lt;ll&gt; R(N &#43; 1);
+  {
+    vector tmp(N, false);
+    REP(i, 0, N) {
+      if (not tmp[A[i]]) {
+        tmp[A[i]] = true;
+        L[i &#43; 1] = L[i] &#43; 1;
+      }else {
+        L[i &#43; 1] = L[i];
+      }
+    }
+  }
+  {
+    vector tmp(N, false);
+    REPrev(i, N - 1, 0) {
+      if (not tmp[A[i]]) {
+        tmp[A[i]] = true;
+        R[i] = R[i &#43; 1] &#43; 1;
+      }else {
+        R[i] = R[i &#43; 1];
+      }
+    }
+  }
+  vector&lt;ll&gt; apppos(N);
+  {
+    vector tmp(N, -1LL);
+    REP(i, 0, N) {
+      apppos[i] = tmp[A[i]];
+      tmp[A[i]] = i;
+    }
+  }
+
+  auto mymax = [](ll x, ll y) -&gt; ll { return max(x, y); };
+  auto st = make_seg_tree_lazy(0LL, 0LL, mymax, plus&lt;ll&gt;(), plus&lt;ll&gt;());
+  st.set_data(vector&lt;ll&gt;(N &#43; 1, 0LL));
+  ll ans = R[0];
+  REP(i, 0, N) {
+    ll j = apppos[i];
+    if (j &lt; 0) st.update(0, i &#43; 1, 1);
+    else st.update(j &#43; 1, i &#43; 1, 1);
+    st.rs(i &#43; 1) = L[i &#43; 1];
+    ll v = st.query(0, i &#43; 2);
+    ans = max(ans, v &#43; R[i &#43; 1]);
+  }
+  cout &lt;&lt; ans &lt;&lt; endl;
+
+  return 0;
+}
+
+</textarea>
+		<p>
+			<span class="gray">※ 512 KiB まで</span><br>
+			<span class="gray">※ ソースコードは「Main.<i>拡張子</i>」で保存されます</span>
+		</p>
+	</div>
+	<input id="input-open-file" type="file" style="display:none;">
+</div>
+
+
+			<input type="hidden" name="csrf_token" value="xq/2/1/cd0OKZhkOMPzGHO28HpSv5GCbMjIXdzS6eNY=" />
+			<div class="form-group">
+				<label class="control-label col-sm-3 col-md-2"></label>
+				<div class="col-sm-5">
+					
+					<script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
+
+<div class="cf-challenge" data-sitekey="0x4AAAAAAA6HJUmmLP7mLxx0" data-theme="light"></div>
+
+					
+					<button id="submit" type="submit" class="btn btn-primary">提出</button>
+				</div>
+			</div>
+		</form>
+		
+	</div>
+</div>
+
+
+
+
+		
+			<hr>
+			
+			
+			
+<div class="a2a_kit a2a_kit_size_20 a2a_default_style pull-right" data-a2a-url="https://atcoder.jp/contests/abc397/submit?lang=ja" data-a2a-title="提出 - オムロンプログラミングコンテスト2025（AtCoder Beginner Contest 397）">
+	<a class="a2a_button_facebook"></a>
+	<a class="a2a_button_twitter"></a>
+	
+		<a class="a2a_button_hatena"></a>
+	
+	<a class="a2a_dd" href="https://www.addtoany.com/share"></a>
+</div>
+
+		
+		<script async src="//static.addtoany.com/menu/page.js"></script>
+		
+	</div> 
+	<hr>
+</div> 
+
+	<div class="container" style="margin-bottom: 80px;">
+			<footer class="footer">
+			
+				<ul>
+					<li><a href="/contests/abc397/rules">ルール</a></li>
+					<li><a href="/contests/abc397/glossary">用語集</a></li>
+					
+				</ul>
+			
+			<ul>
+				<li><a href="/tos">利用規約</a></li>
+				<li><a href="/privacy">プライバシーポリシー</a></li>
+				<li><a href="/personal">個人情報保護方針</a></li>
+				<li><a href="/company">企業情報</a></li>
+				<li><a href="/faq">よくある質問</a></li>
+				<li><a href="/contact">お問い合わせ</a></li>
+				<li><a href="/documents/request">資料請求</a></li>
+			</ul>
+			<div class="text-center">
+					<small id="copyright">Copyright Since 2012 &copy;<a href="http://atcoder.co.jp">AtCoder Inc.</a> All rights reserved.</small>
+			</div>
+			</footer>
+	</div>
+	<p id="fixed-server-timer" class="contest-timer"></p>
+	<div id="scroll-page-top" style="display:none;"><span class="glyphicon glyphicon-arrow-up" aria-hidden="true"></span> ページトップ</div>
+
+</body>
+</html>
+
+
+

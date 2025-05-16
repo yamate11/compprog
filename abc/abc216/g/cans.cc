@@ -1,11 +1,78 @@
 #include <bits/stdc++.h>
 #include <cassert>
-typedef long long int ll;
 using namespace std;
+using ll = long long int;
+using u64 = unsigned long long;
+using pll = pair<ll, ll>;
 // #include <atcoder/all>
 // using namespace atcoder;
+#define REP(i, a, b) for (ll i = (a); i < (b); i++)
+#define REPrev(i, a, b) for (ll i = (a); i >= (b); i--)
+#define ALL(coll) (coll).begin(), (coll).end()
+#define SIZE(v) ((ll)((v).size()))
+#define REPOUT(i, a, b, exp, sep) REP(i, (a), (b)) cout << (exp) << (i + 1 == (b) ? "" : (sep)); cout << "\n"
 
-// @@ !! LIM()
+// @@ !! LIM(bellmanford)
+
+// ---- inserted library file bellmanford.cc
+
+struct BellmanFord {
+  const ll big = 2e18; // should not be LLONG_MAX to detect negative cycles
+  ll n;
+  vector<tuple<ll, ll, ll>> fwd;
+  vector<ll> dist;
+  BellmanFord(ll n_) : n(n_), fwd{}, dist(n, big) {}
+  void add_edge(ll from, ll to, ll cost) { fwd.emplace_back(from, to, cost); }
+  bool _update() {
+    bool ret = false;
+    for (auto [from, to, cost] : fwd) {
+      if (dist[from] + cost < dist[to]) {
+        ret = true;
+        dist[to] = dist[from] + cost;
+      }
+    }
+    return ret;
+  }
+  bool run(ll start) {
+    dist[start] = 0;
+    if (fwd.empty()) return true;
+    // Changes can occur (n - 1) times (the length of the path).  In that case, the stable state can only be detected
+    // at the n-th update.
+    for(ll _r = 0; _r < n; _r++) if (not _update()) return true;
+    return false;
+  }
+};
+
+struct UshiGame {
+  ll n;
+  BellmanFord bf;
+  UshiGame(ll n_) : n(n_), bf(n_) {}
+
+  // v_to - v_from <= c
+  void add_constrLE(ll from, ll to, ll c) { bf.add_edge(from, to, c); }
+
+  // v_to - v_from >= c
+  void add_constrGE(ll from, ll to, ll c) { add_constrLE(to, from, -c); }
+  
+  // maximize v_from - v_to
+  optional<ll> getmax(ll from, ll to) {
+    bool b = bf.run(from);
+    if (not b) return nullopt;
+    else return bf.dist[to];
+  }
+
+  // minimize v_from - v_to
+  optional<ll> getmin(ll from, ll to) {
+    bool b = bf.run(to);
+    if (not b) return nullopt;
+    else return -bf.dist[from];
+  }
+};
+
+
+// ---- end bellmanford.cc
+
+// @@ !! LIM -- end mark --
 
 int main(/* int argc, char *argv[] */) {
   ios_base::sync_with_stdio(false);
@@ -13,52 +80,21 @@ int main(/* int argc, char *argv[] */) {
   cout << setprecision(20);
 
   ll N, M; cin >> N >> M;
-  using ev_t = tuple<ll, ll, ll, ll>;
-  vector<ev_t> event;
-  const ll START = 1;
-  const ll END = 0;
-  for (ll i = 0; i < M; i++) {
+  UshiGame ug(N + 1);
+  REP(i, 0, M) {
     ll l, r, x; cin >> l >> r >> x; l--;
-    event.emplace_back(l, START, i, r - l - x);
-    event.emplace_back(r, END, i, -1);
+    ug.add_constrGE(l, r, x);
   }
-  sort(event.begin(), event.end());
-  event.emplace_back(1e9, -1, -1, -1);
-
+  REP(i, 0, N) {
+    ug.add_constrGE(i, i + 1, 0);
+    ug.add_constrLE(i, i + 1, 1);
+  }
+  ug.getmin(0, N);
   vector<ll> ans(N);
-  using sta = pair<ll, ll>;
-  priority_queue<sta, vector<sta>, greater<sta>> pque;
-  ll evi = 0;
-  ll step = 0;
-  vector<bool> finished(M);
-  for (ll i = 0; i < N; i++) {
-    for (;; evi++) {
-      auto [t, type, j, y] = event[evi];
-      if (i != t) break;
-      if (type == END) {
-        finished[j] = true;
-      }else if (type == START) {
-        pque.emplace(step + y, j);
-      }
-    }
-    ll st = -1;
-    while (! pque.empty()) {
-      auto [s, j] = pque.top();
-      if (!finished[j]) {
-        st = s;
-        break;
-      }
-      pque.pop();
-    }
-    if (step == st) {
-      ans[i] = 1;
-    }else {
-      ans[i] = 0;
-      step++;
-    }
+  REP(i, 0, N) {
+    ans[i] = ug.bf.dist[i + 1] - ug.bf.dist[i];
   }
-  for (ll x : ans) cout << x << " ";
-  cout << endl;
+  REPOUT(i, 0, N, ans[i], " ");
 
   return 0;
 }

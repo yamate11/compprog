@@ -593,30 +593,58 @@ int main(/* int argc, char *argv[] */) {
   cin.tie(nullptr);
   cout << setprecision(20);
 
-  ll N; cin >> N:
-  // @InpVec(N, A) [bs1Ee8Gu]
+  ll N; cin >> N;
+  // @InpVec(N, A, dec=1) [qWmAidqL]
   auto A = vector(N, ll());
-  for (int i = 0; i < N; i++) { ll v; cin >> v; A[i] = v; }
-  // @End [bs1Ee8Gu]
+  for (int i = 0; i < N; i++) { ll v; cin >> v; v -= 1; A[i] = v; }
+  // @End [qWmAidqL]
 
-  vector pos(N + 1);
-  REP(i, 0, N) pos[A[i]].push_back(i);
-  
-  set<ll> ss;
-  REP(i, 0, N) ss.insert(A[i]);
-  ll tot = ssize(ss);
-  
-  auto mymax = [&](ll x, ll y) -> ll { return max(x, y); };
-  auto st = make_seg_tree_lazy(0LL, 0LL, mymax, plus<ll>(), vector<ll>(N + 1, 0LL));
-  st.rs(0) = tot;
-  REP(i, 0, N) {
-    ll a = A[i];
-    ll j = pos[a].lower_bound(i) - pos[a].begin();
-    if (j > 0) {
-      ll p = pos[a][j - 1];
-      
+  vector<ll> L(N + 1);
+  vector<ll> R(N + 1);
+  {
+    vector tmp(N, false);
+    REP(i, 0, N) {
+      if (not tmp[A[i]]) {
+        tmp[A[i]] = true;
+        L[i + 1] = L[i] + 1;
+      }else {
+        L[i + 1] = L[i];
+      }
     }
   }
+  {
+    vector tmp(N, false);
+    REPrev(i, N - 1, 0) {
+      if (not tmp[A[i]]) {
+        tmp[A[i]] = true;
+        R[i] = R[i + 1] + 1;
+      }else {
+        R[i] = R[i + 1];
+      }
+    }
+  }
+  vector<ll> apppos(N);
+  {
+    vector tmp(N, -1LL);
+    REP(i, 0, N) {
+      apppos[i] = tmp[A[i]];
+      tmp[A[i]] = i;
+    }
+  }
+
+  auto mymax = [](ll x, ll y) -> ll { return max(x, y); };
+  auto st = make_seg_tree_lazy(0LL, 0LL, mymax, plus<ll>(), plus<ll>());
+  st.set_data(vector<ll>(N + 1, 0LL));
+  ll ans = R[0];
+  REP(i, 0, N) {
+    ll j = apppos[i];
+    if (j < 0) st.update(0, i + 1, 1);
+    else st.update(j + 1, i + 1, 1);
+    st.rs(i + 1) = L[i + 1];
+    ll v = st.query(0, i + 2);
+    ans = max(ans, v + R[i + 1]);
+  }
+  cout << ans << endl;
 
   return 0;
 }

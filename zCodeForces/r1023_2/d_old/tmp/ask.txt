@@ -1,0 +1,5 @@
+C++ で，整数を格納する std::set を vector に入れて使おうとしています．
+  vector<set<int>> vsi;
+整数の順序を比較する関数を指定しようと思います．
+
+vector vsi(N, set<int, decltype(&f)>{f});

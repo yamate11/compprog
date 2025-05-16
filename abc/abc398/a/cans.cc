@@ -21,14 +21,9 @@ int main(/* int argc, char *argv[] */) {
 
   ll N; cin >> N;
   string ans(N, '-');
-  if (N % 2 == 0) {
-    ll x = N / 2;
-    ans[x - 1]= '=';
-    ans[x] = '=';
-  }else {
-    ll x = N / 2;
-    ans[x] = '=';
-  }
+  ll x = N / 2;
+  if (N % 2 == 0) ans[x - 1] = ans[x] = '=';
+  else ans[x] = '=';
   cout << ans << endl;
 
   return 0;
