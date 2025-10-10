@@ -2,6 +2,7 @@
 #include <cassert>
 using namespace std;
 using ll = long long int;
+using u64 = unsigned long long;
 using pll = pair<ll, ll>;
 // #include <atcoder/all>
 // using namespace atcoder;
@@ -11,13 +12,59 @@ using pll = pair<ll, ll>;
 #define SIZE(v) ((ll)((v).size()))
 #define REPOUT(i, a, b, exp, sep) REP(i, (a), (b)) cout << (exp) << (i + 1 == (b) ? "" : (sep)); cout << "\n"
 
-// @@ !! LIM(input debug)
+// @@ !! LIM(f:updMaxMin cartesianTree debug)
 
-// ---- inserted library file input.cc
+// ---- inserted function f:updMaxMin from util.cc
+template<typename T>
+bool updMax(T& tmax, const T& x) {
+  if (x > tmax) { tmax = x; return true;  }
+  else          {           return false; }
+}
+template<typename T>
+bool updMin(T& tmin, const T& x) {
+  if (x < tmin) { tmin = x; return true;  }
+  else          {           return false; }
+}
+// ---- end f:updMaxMin
 
-// The contents are empty.
+// ---- inserted library file cartesianTree.cc
 
-// ---- end input.cc
+template<typename T>
+struct CartesianTree {
+  int root;
+  vector<int> left;
+  vector<int> right;
+
+  CartesianTree() : root(-1), left(), right() {}
+  template<typename Comp = less<typename T::value_type>>
+  CartesianTree(const T& vec, Comp comp = Comp()) { build(vec, comp); }
+
+  template<typename Comp = less<typename T::value_type>>
+  void build(const T& vec, Comp comp = Comp()) {
+    int n = ssize(vec);
+    root = -1;
+    left = vector<int>(n, -1);
+    right = vector<int>(n, -1);
+    vector<int> stack{-1};
+    for (int i = 0; i < n; i++) {
+      int left_cand = -1;
+      while (true) {
+        if (int j = stack.back(); j == -1 or comp(vec[j], vec[i])) {
+          left[i] = left_cand;
+          if (j == -1) root = i;
+          else         right[j] = i;
+          stack.push_back(i);
+          break;
+        }else {
+          left_cand = j;
+          stack.pop_back();
+        }
+      }
+    }
+  }
+};
+
+// ---- end cartesianTree.cc
 
 // ---- inserted function f:<< from util.cc
 
@@ -31,6 +78,12 @@ ostream& operator<< (ostream& os, const tuple<T1,T2,T3>& t);
 
 template <typename T1, typename T2, typename T3, typename T4>
 ostream& operator<< (ostream& os, const tuple<T1,T2,T3,T4>& t);
+
+template <typename T1, typename T2, typename T3, typename T4, typename T5>
+ostream& operator<< (ostream& os, const tuple<T1,T2,T3,T4,T5>& t);
+
+template <typename T1, typename T2, typename T3, typename T4, typename T5, typename T6>
+ostream& operator<< (ostream& os, const tuple<T1,T2,T3,T4,T5,T6>& t);
 
 template <typename T>
 ostream& operator<< (ostream& os, const vector<T>& v);
@@ -69,6 +122,8 @@ ostream& operator<< (ostream& os, const optional<T>& t);
 
 ostream& operator<< (ostream& os, int8_t x);
 
+ostream& operator<< (ostream& os, const __int128& x);
+
 // definitions
 
 template <typename T1, typename T2>
@@ -88,6 +143,20 @@ template <typename T1, typename T2, typename T3, typename T4>
 ostream& operator<< (ostream& os, const tuple<T1,T2,T3,T4>& t) {
   os << "(" << get<0>(t) << ", " << get<1>(t)
      << ", " << get<2>(t) << ", " << get<3>(t) << ")";
+  return os;
+}
+
+template <typename T1, typename T2, typename T3, typename T4, typename T5>
+ostream& operator<< (ostream& os, const tuple<T1,T2,T3,T4,T5>& t) {
+  os << "(" << get<0>(t) << ", " << get<1>(t)
+     << ", " << get<2>(t) << ", " << get<3>(t) << ", " << get<4>(t) << ")";
+  return os;
+}
+
+template <typename T1, typename T2, typename T3, typename T4, typename T5, typename T6>
+ostream& operator<< (ostream& os, const tuple<T1,T2,T3,T4,T5,T6>& t) {
+  os << "(" << get<0>(t) << ", " << get<1>(t)
+     << ", " << get<2>(t) << ", " << get<3>(t) << ", " << get<4>(t) << ", " << get<5>(t) << ")";
   return os;
 }
 
@@ -235,6 +304,36 @@ ostream& operator<< (ostream& os, int8_t x) {
   return os;
 }
 
+// for Enum type; just displays ordinals.
+template <typename E>
+typename std::enable_if<std::is_enum<E>::value, std::ostream&>::type
+operator<<(std::ostream& os, E e) {
+    return os << static_cast<typename std::underlying_type<E>::type>(e);
+}
+
+// This is a very ad-hoc implementation...
+ostream& operator<<(ostream& os, const __int128& v) {
+  unsigned __int128 a = v < 0 ? -v : v;
+  ll i = 0;
+  string s(64, ' ');
+  if (v == 0) {
+    s[i++] = '0';
+  }else {
+    while (a > 0) {
+      s[i++] = '0' + (char)(a % 10);
+      a /= 10;
+    }
+  }
+  if (v < 0) {
+    s[i++] = '-';
+  }
+  s.erase(s.begin() + i, s.end());
+  reverse(s.begin(), s.end());
+  os << s;
+  return os;
+}
+
+
 // ---- end f:<<
 
 // ---- inserted library file debug.cc
@@ -311,71 +410,39 @@ void dbgLog(bool with_nl, Head&& head, Tail&&... tail)
 
 // @@ !! LIM -- end mark --
 
-using u64 = unsigned long long;
-
 int main(/* int argc, char *argv[] */) {
   ios_base::sync_with_stdio(false);
   cin.tie(nullptr);
   cout << setprecision(20);
 
   ll N, M; cin >> N >> M;
-  // @InpGrid(N, M, A) [qLQ5BKCM]
+  // @InpGrid(N, M, A) [Fa9Q6hOw]
   auto A = vector(N, vector(M, ll()));
   for (int i = 0; i < N; i++) for (int j = 0; j < M; j++) { ll v; cin >> v; A[i][j] = v; }
-  // @End [qLQ5BKCM]
-
-  vector B(N, 0LL);
-  vector C(N, 0LL);
-
-  auto func = [&]() -> ll {
-    vector parent(N, -1LL);
-    vector<ll> stack;
-    REP(i, 0, N) {
-      if (i == 0) stack.push_back(0);
-      else {
-        ll j = -1;
-        while (not stack.empty() and C[stack.back()] > C[i]) {
-          j = stack.back(); stack.pop_back();
-        }
-        if (j >= 0) parent[j] = i;
-        if (not stack.empty()) parent[i] = stack.back();
-        stack.push_back(i);
-      }
-    }
-    DLOGK(B, C, parent);
-    vector child(N, pll(-1, -1));
-    ll root = -1;
-    REP(i, 0, N) {
-      ll p = parent[i];
-      if (p < 0) root = i;
-      else if (i < p) child[p].first = i;
-      else child[p].second = i;
-    }
-    ll fret = 0;
-    auto dfs = [&](auto rF, ll nd) -> ll {
-      auto [c1, c2] = child[nd];
-      ll s1 = (c1 >= 0) ? rF(rF, c1) : 0;
-      ll s2 = (c2 >= 0) ? rF(rF, c2) : 0;
-      ll ret = s1 + s2 + B[nd];
-      fret = max(fret, ret * C[nd]);
-      return ret;
-    };
-    dfs(dfs, root);
-    DLOGK(B, C, fret);
-    return fret;
-  };
+  // @End [Fa9Q6hOw]
 
   ll ans = 0;
-  REP(ly, 0, M) REP(ry, ly + 1, M + 1) {
-    if (ry == ly + 1) {
-      REP(i, 0, N) B[i] = C[i] = A[i][ly];
-    }else {
-      REP(i, 0, N) {
-        B[i] += A[i][ry - 1];
-        C[i] = min(C[i], A[i][ry - 1]);
+  ll big = 1e18;
+  REP(xL, 0, N) {
+    vector<ll> B(M, 0LL);
+    vector<ll> C(M, big);
+    REP(xH, xL + 1, N + 1) {
+      REP(j, 0, M) {
+        B[j] += A[xH - 1][j];
+        updMin(C[j], A[xH - 1][j]);
       }
+      vector<ll> D(M + 1, 0LL);
+      REP(j, 0, M) D[j + 1] = D[j] + B[j];
+      CartesianTree ct(C);
+      auto f = [&](auto rF, ll lo, ll hi, ll x) -> void {
+        if (x < 0) return;
+        updMax(ans, C[x] * (D[hi] - D[lo]));
+        rF(rF, lo,    x,  ct.left[x]);
+        rF(rF, x + 1, hi, ct.right[x]);
+      };
+      f(f, 0, M, ct.root);
+
     }
-    ans = max(ans, func());
   }
   cout << ans << endl;
 

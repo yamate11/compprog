@@ -1,0 +1,30 @@
+#!/usr/bin/env python3
+
+def main():
+
+    lstA = ["" for _ in range(2001)]
+    lstB = ["" for _ in range(2001)]
+    i = 1
+    with open('a.log') as fp:
+        for line in fp:
+            s = line.strip()
+            lstA[i] = s
+            i += 1
+    i = 1
+    with open('b.log') as fp:
+        for line in fp:
+            s = line.strip()
+            lstB[i] = s
+            i += 1
+
+    for i in range(1, 2001):
+        if (len(lstA[i]) != len(lstB[i])):
+            print(i)
+            print(lstA[i])
+            print(lstB[i])
+            return
+
+main()
+
+
+

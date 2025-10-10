@@ -1,0 +1,947 @@
+
+
+
+
+
+
+
+
+<!DOCTYPE html>
+<html>
+<head>
+	<title>M - DAG ゲーム</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+	<meta http-equiv="Content-Language" content="ja">
+	<meta name="viewport" content="width=device-width,initial-scale=1.0">
+	<meta name="format-detection" content="telephone=no">
+	<meta name="google-site-verification" content="nXGC_JxO0yoP1qBzMnYD_xgufO6leSLw1kyNo2HZltM" />
+
+	
+	<script async src="https://www.googletagmanager.com/gtag/js?id=G-RC512FD18N"></script>
+	<script>
+		window.dataLayer = window.dataLayer || [];
+		function gtag(){dataLayer.push(arguments);}
+		gtag('js', new Date());
+		gtag('set', 'user_properties', {
+			
+				'login_status': 'logged_in',
+			
+		});
+		gtag('config', 'G-RC512FD18N');
+	</script>
+
+	
+	<meta name="description" content="プログラミング初級者から上級者まで楽しめる、競技プログラミングコンテストサイト「AtCoder」。オンラインで毎週開催プログラミングコンテストを開催しています。競技プログラミングを用いて、客観的に自分のスキルを計ることのできるサービスです。">
+	<meta name="author" content="AtCoder Inc.">
+
+	<meta property="og:site_name" content="AtCoder">
+	
+	<meta property="og:title" content="M - DAG ゲーム" />
+	<meta property="og:description" content="プログラミング初級者から上級者まで楽しめる、競技プログラミングコンテストサイト「AtCoder」。オンラインで毎週開催プログラミングコンテストを開催しています。競技プログラミングを用いて、客観的に自分のスキルを計ることのできるサービスです。" />
+	<meta property="og:type" content="website" />
+	<meta property="og:url" content="https://atcoder.jp/contests/past19-open/tasks/past19_m" />
+	<meta property="og:image" content="https://img.atcoder.jp/assets/atcoder.png" />
+	<meta name="twitter:card" content="summary" />
+	<meta name="twitter:site" content="@atcoder" />
+	
+	<meta property="twitter:title" content="M - DAG ゲーム" />
+
+	<link href="//fonts.googleapis.com/css?family=Lato:400,700" rel="stylesheet" type="text/css">
+	<link rel="stylesheet" type="text/css" href="//img.atcoder.jp/public/c3146f6/css/bootstrap.min.css">
+	<link rel="stylesheet" type="text/css" href="//img.atcoder.jp/public/c3146f6/css/base.css">
+	<link rel="shortcut icon" type="image/png" href="//img.atcoder.jp/assets/favicon.png">
+	<link rel="apple-touch-icon" href="//img.atcoder.jp/assets/atcoder.png">
+	<script src="//img.atcoder.jp/public/c3146f6/js/lib/jquery-1.9.1.min.js"></script>
+	<script src="//img.atcoder.jp/public/c3146f6/js/lib/bootstrap.min.js"></script>
+	<script src="//img.atcoder.jp/public/c3146f6/js/cdn/js.cookie.min.js"></script>
+	<script src="//img.atcoder.jp/public/c3146f6/js/cdn/moment.min.js"></script>
+	<script src="//img.atcoder.jp/public/c3146f6/js/cdn/moment_js-ja.js"></script>
+	<script>
+		var LANG = "ja";
+		var userScreenName = "yamate11";
+		var csrfToken = "xq/2/1/cd0OKZhkOMPzGHO28HpSv5GCbMjIXdzS6eNY="
+	</script>
+	<script src="//img.atcoder.jp/public/c3146f6/js/utils.js"></script>
+	
+	
+		<script src="//img.atcoder.jp/public/c3146f6/js/contest.js"></script>
+		<link href="//img.atcoder.jp/public/c3146f6/css/contest.css" rel="stylesheet" />
+		<script>
+			var contestScreenName = "past19-open";
+			var remainingText = "残り時間";
+			var countDownText = "開始まであと";
+			var startTime = moment("2024-06-01T13:00:00+09:00");
+			var endTime = moment("2024-06-01T18:00:00+09:00");
+		</script>
+		<style></style>
+	
+	
+		<link href="//img.atcoder.jp/public/c3146f6/css/cdn/select2.min.css" rel="stylesheet" />
+		<link href="//img.atcoder.jp/public/c3146f6/css/cdn/select2-bootstrap.min.css" rel="stylesheet" />
+		<script src="//img.atcoder.jp/public/c3146f6/js/lib/select2.min.js"></script>
+	
+	
+		<script src="//img.atcoder.jp/public/c3146f6/js/ace/ace.js"></script>
+		<script src="//img.atcoder.jp/public/c3146f6/js/ace/ext-language_tools.js"></script>
+	
+	
+		<script src="//img.atcoder.jp/public/c3146f6/js/cdn/run_prettify.js"></script>
+	
+	
+		<link rel="stylesheet" href="//img.atcoder.jp/public/c3146f6/css/cdn/katex.min.css">
+		<script defer src="//img.atcoder.jp/public/c3146f6/js/cdn/katex.min.js"></script>
+		<script defer src="//img.atcoder.jp/public/c3146f6/js/cdn/auto-render.min.js"></script>
+		<script>$(function(){$('var').each(function(){var html=$(this).html().replace(/<sub>/g,'_{').replace(/<\/sub>/g,'}');$(this).html('\\('+html+'\\)');});});</script>
+		<script>
+			var katexOptions = {
+				delimiters: [
+					{left: "$$", right: "$$", display: true},
+					
+					{left: "\\(", right: "\\)", display: false},
+					{left: "\\[", right: "\\]", display: true}
+				],
+      	ignoredTags: ["script", "noscript", "style", "textarea", "code", "option"],
+				ignoredClasses: ["prettyprint", "source-code-for-copy"],
+				throwOnError: false
+			};
+			document.addEventListener("DOMContentLoaded", function() { renderMathInElement(document.body, katexOptions);});
+		</script>
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	<script src="//img.atcoder.jp/public/c3146f6/js/base.js"></script>
+</head>
+
+<body>
+
+<script type="text/javascript">
+	var __pParams = __pParams || [];
+	__pParams.push({client_id: '468', c_1: 'atcodercontest', c_2: 'ClientSite'});
+</script>
+<script type="text/javascript" src="https://cdn.d2-apps.net/js/tr.js" async></script>
+
+
+<div id="modal-contest-start" class="modal fade" tabindex="-1" role="dialog">
+	<div class="modal-dialog" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+				<h4 class="modal-title">コンテスト開始</h4>
+			</div>
+			<div class="modal-body">
+				<p>第19回 アルゴリズム実技検定(過去問)が開始されました。</p>
+			</div>
+			<div class="modal-footer">
+				
+					<button type="button" class="btn btn-default" data-dismiss="modal">閉じる</button>
+				
+			</div>
+		</div>
+	</div>
+</div>
+<div id="modal-contest-end" class="modal fade" tabindex="-1" role="dialog">
+	<div class="modal-dialog" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+				<h4 class="modal-title">コンテスト終了</h4>
+			</div>
+			<div class="modal-body">
+				<p>第19回 アルゴリズム実技検定(過去問)は終了しました。</p>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-default" data-dismiss="modal">閉じる</button>
+			</div>
+		</div>
+	</div>
+</div>
+<div id="main-div" class="float-container">
+
+
+	<nav class="navbar navbar-inverse navbar-fixed-top">
+		<div class="container-fluid">
+			<div class="navbar-header">
+				<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapse" aria-expanded="false">
+					<span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span>
+				</button>
+				<a class="navbar-brand" href="/home"></a>
+			</div>
+			<div class="collapse navbar-collapse" id="navbar-collapse">
+				<ul class="nav navbar-nav">
+				
+					<li><a class="contest-title" href="/contests/past19-open">第19回 アルゴリズム実技検定(過去問)</a></li>
+				
+				</ul>
+				<ul class="nav navbar-nav navbar-right">
+					
+					<li class="dropdown">
+						<a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
+							<img src='//img.atcoder.jp/assets/top/img/flag-lang/ja.png'> 日本語 <span class="caret"></span>
+						</a>
+						<ul class="dropdown-menu">
+							<li><a href="/contests/past19-open/tasks/past19_m?lang=ja"><img src='//img.atcoder.jp/assets/top/img/flag-lang/ja.png'> 日本語</a></li>
+							<li><a href="/contests/past19-open/tasks/past19_m?lang=en"><img src='//img.atcoder.jp/assets/top/img/flag-lang/en.png'> English</a></li>
+						</ul>
+					</li>
+					
+					
+						<li class="dropdown">
+							<a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
+								<span class="glyphicon glyphicon-cog" aria-hidden="true"></span> yamate11 (Guest) <span class="caret"></span>
+							</a>
+							<ul class="dropdown-menu">
+								<li><a href="/users/yamate11"><span class="glyphicon glyphicon-user" aria-hidden="true"></span> マイプロフィール</a></li>
+								<li class="divider"></li>
+								<li><a href="/settings"><span class="glyphicon glyphicon-wrench" aria-hidden="true"></span> 基本設定</a></li>
+								<li><a href="/settings/icon"><span class="glyphicon glyphicon-picture" aria-hidden="true"></span> アイコン設定</a></li>
+								<li><a href="/settings/password"><span class="glyphicon glyphicon-lock" aria-hidden="true"></span> パスワードの変更</a></li>
+								<li><a href="/settings/fav"><span class="glyphicon glyphicon-star" aria-hidden="true"></span> お気に入り管理</a></li>
+								
+								
+								
+								<li class="divider"></li>
+								<li><a href="javascript:void(form_logout.submit())"><span class="glyphicon glyphicon-log-out" aria-hidden="true"></span> ログアウト</a></li>
+							</ul>
+						</li>
+					
+				</ul>
+			</div>
+		</div>
+	</nav>
+
+	<form method="POST" name="form_logout" action="/logout?continue=https%3A%2F%2Fatcoder.jp%2Fcontests%2Fpast19-open%2Ftasks%2Fpast19_m">
+		<input type="hidden" name="csrf_token" value="xq/2/1/cd0OKZhkOMPzGHO28HpSv5GCbMjIXdzS6eNY=" />
+	</form>
+	<div id="main-container" class="container"
+		 	style="padding-top:50px;">
+		
+
+
+<div class="row">
+	<div id="contest-nav-tabs" class="col-sm-12 mb-2 cnvtb-fixed">
+	<div>
+		<small class="contest-duration">
+			
+				コンテスト時間:
+				<a href='http://www.timeanddate.com/worldclock/fixedtime.html?iso=20240601T1300&p1=248' target='blank'><time class='fixtime fixtime-full'>2024-06-01 13:00:00+0900</time></a> ~ <a href='http://www.timeanddate.com/worldclock/fixedtime.html?iso=20240601T1800&p1=248' target='blank'><time class='fixtime fixtime-full'>2024-06-01 18:00:00+0900</time></a> 
+				(300分)
+			
+		</small>
+		<small class="back-to-home pull-right"><a href="/home">AtCoderホームへ戻る</a></small>
+	</div>
+	<ul class="nav nav-tabs">
+		<li><a href="/contests/past19-open"><span class="glyphicon glyphicon-home" aria-hidden="true"></span> トップ</a></li>
+		
+			<li class="active"><a href="/contests/past19-open/tasks"><span class="glyphicon glyphicon-tasks" aria-hidden="true"></span> 問題</a></li>
+		
+
+		
+			<li><a href="/contests/past19-open/clarifications"><span class="glyphicon glyphicon-question-sign" aria-hidden="true"></span> 質問 <span id="clar-badge" class="badge" ></span></a></li>
+		
+
+		
+			<li><a href="/contests/past19-open/submit?taskScreenName=past19_m"><span class="glyphicon glyphicon-send" aria-hidden="true"></span> 提出</a></li>
+		
+
+		
+			<li>
+				<a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false"><span class="glyphicon glyphicon-list" aria-hidden="true"></span> 提出結果<span class="caret"></span></a>
+				<ul class="dropdown-menu">
+					<li><a href="/contests/past19-open/submissions"><span class="glyphicon glyphicon-globe" aria-hidden="true"></span> すべての提出</a></li>
+					
+						<li><a href="/contests/past19-open/submissions/me"><span class="glyphicon glyphicon-user" aria-hidden="true"></span> 自分の提出</a></li>
+						
+						
+							<li class="divider"></li>
+							<li><a href="/contests/past19-open/score"><span class="glyphicon glyphicon-dashboard" aria-hidden="true"></span> 自分の得点状況</a></li>
+						
+					
+				</ul>
+			</li>
+		
+
+		
+			
+				
+					<li><a href="/contests/past19-open/standings"><span class="glyphicon glyphicon-sort-by-attributes-alt" aria-hidden="true"></span> 順位表</a></li>
+				
+			
+				
+					<li><a href="/contests/past19-open/standings/virtual"><span class="glyphicon glyphicon-sort-by-attributes-alt" aria-hidden="true"></span> バーチャル順位表</a></li>
+				
+			
+		
+
+		
+			<li><a href="/contests/past19-open/custom_test"><span class="glyphicon glyphicon-wrench" aria-hidden="true"></span> コードテスト</a></li>
+		
+
+		
+			<li><a href="/contests/past19-open/editorial"><span class="glyphicon glyphicon-book" aria-hidden="true"></span> 解説</a></li>
+		
+		
+
+		<li class="pull-right"><a id="fix-cnvtb" href="javascript:void(0)"><span class="glyphicon glyphicon-pushpin" aria-hidden="true"></span></a></li>
+	</ul>
+</div>
+	<div class="col-sm-12">
+		<span class="h2">
+			M - DAG ゲーム
+			<a class="btn btn-default btn-sm" href="/contests/past19-open/tasks/past19_m/editorial">解説</a>
+		</span>
+		<span id="task-lang-btn" class="pull-right"><span data-lang="ja"><img src='//img.atcoder.jp/assets/top/img/flag-lang/ja.png'></span> / <span data-lang="en"><img src='//img.atcoder.jp/assets/top/img/flag-lang/en.png'></span></span>
+		<script>
+			$(function() {
+				var ts = $('#task-statement span.lang');
+				if (ts.children('span').size() <= 1) {
+					$('#task-lang-btn').hide();
+					ts.children('span').show();
+					return;
+				}
+
+				var REMEMBER_LB = 5;
+				var LS_KEY = 'task_lang';
+				var taskLang = getLS(LS_KEY) || '';
+				function isTaskLangSet(taskLang) { return taskLang === 'ja' || taskLang === 'en';}
+				if (isTaskLangSet(taskLang)) {
+					const params = new URLSearchParams(window.location.search);
+					if (params.get('lang')) {
+						setLS(LS_KEY, REMEMBER_LB);
+						taskLang = LANG;
+					}
+				} else {
+					taskLang = LANG;
+				}
+				ts.children('span.lang-' + taskLang).show();
+
+				$('#task-lang-btn span').click(function() {
+					var l = $(this).data('lang');
+					ts.children('span').hide();
+					ts.children('span.lang-' + l).show();
+
+					taskLang = getLS(LS_KEY) || '';
+					let changeTimes = 0;
+					if (isTaskLangSet(taskLang)) {
+						changeTimes = REMEMBER_LB;
+					} else {
+						changeTimes = parseInt(taskLang, 10);
+						if (isNaN(changeTimes)) changeTimes = 0;
+						changeTimes++;
+					}
+					if (changeTimes < REMEMBER_LB) setLS(LS_KEY, changeTimes);
+					else setLS(LS_KEY, l);
+				});
+			});
+		</script>
+		<hr/>
+		<p>
+			実行時間制限: 2 sec / メモリ制限: 1024 MiB
+			
+			
+		</p>
+
+		<div id="task-statement">
+			
+
+
+	
+	
+
+			<span class="lang">
+<span class="lang-ja">
+
+<div class="part">
+<section>
+<h3>問題文</h3><p><var>N</var> 頂点 <var>M</var> 辺の単純有向グラフが与えられます。
+頂点には <var>1</var> から <var>N</var> までの番号が、辺には <var>1</var> から <var>M</var> までの番号がそれぞれ付けられており、辺 <var>j</var> は頂点 <var>U_j</var> から頂点 <var>V_j</var> に向かって伸びています。
+各頂点には<strong>得点</strong>と呼ばれる整数値が定まっており、頂点 <var>i</var> の得点は <var>P_i</var> です。
+また、各辺には<strong>減衰率</strong>と呼ばれる <var>0</var> 以上 <var>1</var> 以下の実数値が定まっており、辺 <var>j</var> の減衰率は <var>W_j</var> です。
+なお、与えられるグラフには有向閉路が存在しないことが保証されます（すなわち、ある頂点 <var>i</var> からいくつか辺を辿って再び頂点 <var>i</var> に戻ってくる方法は存在しません）。</p>
+<p>高橋君はこのグラフ上でゲームをしようとしています。
+最初、頂点 <var>1</var> にコマが <var>1</var> つおいてあり、高橋君のスコアは <var>0</var> です。
+高橋君は、今から以下のように操作を行うことで、コマを頂点 <var>N</var> まで動かしながらスコアを増やしていきます。</p>
+<ol>
+<li>現在コマが置いてある頂点の番号を <var>i</var> とする。頂点 <var>i</var> の得点 <var>P_i</var> をスコアに加算する。</li>
+<li><var>i=N</var> ならばゲームを<strong>成功</strong>として終了する。</li>
+<li>頂点 <var>i</var> から伸びている辺が存在しないならば、ゲームを<strong>失敗</strong>として終了する。そうでないならば、頂点 <var>i</var> から伸びている辺を <var>1</var> 本選ぶ。</li>
+<li>選んだ辺の番号を <var>j</var> とする。各頂点の得点に辺 <var>j</var> の減衰率をかける。すなわち、各 <var>i\ (1\leq i\leq N)</var> に対して <var>P_i \leftarrow P_i\times W_j</var> とする。</li>
+<li>コマを頂点 <var>V_j</var> に動かし、1. に戻る。</li>
+</ol>
+<p>高橋君がゲームを成功として終了させることが可能かどうか判定し、可能ならばゲーム終了時におけるスコアの最大値を求めてください。</p>
+</section>
+</div>
+
+<div class="part">
+<section>
+<h3>制約</h3><ul>
+<li><var>N,M,P_i,U_j,V_j</var> は整数</li>
+<li><var>2\leq N \leq 10^5</var></li>
+<li><var>1\leq M \leq 10^5</var></li>
+<li><var>1\leq P_i\leq 10^4</var></li>
+<li><var>U_j \neq V_j</var></li>
+<li><var>(U_j,V_j)\neq (U_k, V_k)\ (j\neq k)</var></li>
+<li><var>0\leq W_j\leq 1</var></li>
+<li><var>W_j</var> は <var>10^{-6}</var> の倍数であり、小数点以下第 <var>6</var> 位まで与えられる</li>
+<li>与えられるグラフに有向閉路は存在しない</li>
+</ul>
+</section>
+</div>
+
+<hr />
+<div class="io-style">
+<div class="part">
+<section>
+<h3>入力</h3><p>入力は以下の形式で標準入力から与えられる。</p>
+<pre><var>N</var> <var>M</var>
+<var>P_1</var> <var>P_2</var> <var>\dots</var> <var>P_N</var>
+<var>U_1</var> <var>V_1</var> <var>W_1</var>
+<var>U_2</var> <var>V_2</var> <var>W_2</var>
+<var>\vdots</var>
+<var>U_M</var> <var>V_M</var> <var>W_M</var>
+</pre>
+</section>
+</div>
+
+<div class="part">
+<section>
+<h3>出力</h3><p>高橋君がゲームを成功として終了させることが可能ならばゲーム終了時におけるスコアの最大値を、不可能ならば <code>-1</code> を出力せよ。
+なお、前者の場合、真の値との絶対誤差または相対誤差が <var>10^{−6}</var> 以下であれば正解として扱われる。</p>
+</section>
+</div>
+</div>
+
+<hr />
+<div class="part">
+<section>
+<h3>入力例 1</h3><pre>4 4
+2 5 3 1
+1 3 0.500000
+1 2 0.250000
+2 3 0.250000
+3 4 0.500000
+</pre>
+</section>
+</div>
+
+<div class="part">
+<section>
+<h3>出力例 1</h3><pre>3.7500000000
+</pre>
+<p>以下、数列 <var>(P_1,P_2,P_3,P_4)</var> のことを簡単に <var>P</var> と表記します。
+最初、<var>P=(2,5,3,1)</var> です。</p>
+<p>コマを頂点 <var>1\rightarrow 3\rightarrow 4</var> と動かすとき、ゲームは以下のように進行します。</p>
+<ol>
+<li>頂点 <var>1</var> の得点 <var>P_1=2</var> をスコアに加算する。</li>
+<li>頂点 <var>1</var> から伸びている辺のうち辺 <var>1</var> を選ぶ。</li>
+<li>各頂点の得点に辺 <var>1</var> の減衰率 <var>W_1=0.5</var> をかける。<var>P=(1,2.5,1.5,0.5)</var> になる。</li>
+<li>コマを頂点 <var>V_1=3</var> に動かす。</li>
+<li>頂点 <var>3</var> の得点 <var>P_3=1.5</var> をスコアに加算する。</li>
+<li>頂点 <var>3</var> から伸びている辺のうち辺 <var>4</var> を選ぶ。</li>
+<li>各頂点の得点に辺 <var>4</var> の減衰率 <var>W_4=0.5</var> をかける。<var>P=(0.5,1.25,0.75,0.25)</var> になる。</li>
+<li>コマを頂点 <var>V_4=4</var> に動かす。</li>
+<li>頂点 <var>4</var> の得点 <var>P_4=0.25</var> をスコアに加算する。</li>
+<li>ゲームを成功として終了する。</li>
+</ol>
+<p>このとき、ゲーム終了時におけるスコアは <var>2+1.5+0.25=3.75</var> となり、これが最大値です。</p>
+</section>
+</div>
+
+<hr />
+<div class="part">
+<section>
+<h3>入力例 2</h3><pre>3 1
+1 1 1
+1 2 0.000000
+</pre>
+</section>
+</div>
+
+<div class="part">
+<section>
+<h3>出力例 2</h3><pre>-1
+</pre>
+<p>ゲームを成功として終了させることはできません。</p>
+</section>
+</div>
+
+<hr />
+<div class="part">
+<section>
+<h3>入力例 3</h3><pre>6 12
+22 75 26 45 72 81
+4 6 0.185514
+3 6 0.758252
+2 3 0.622989
+2 4 0.984614
+1 3 0.465086
+1 5 0.396959
+5 3 0.618272
+5 2 0.016128
+1 2 0.869673
+1 4 0.363219
+2 6 0.097935
+5 4 0.877468
+</pre>
+</section>
+</div>
+
+<div class="part">
+<section>
+<h3>出力例 3</h3><pre>138.6258141601
+</pre></section>
+</div>
+</span>
+<span class="lang-en">
+
+<div class="part">
+<section>
+<h3>Problem Statement</h3><p>You are given an <var>N</var>-vertex <var>M</var>-edge simple directed graph.
+The vertices are numbered <var>1</var> through <var>N</var>, and the edges are numbered <var>1</var> through <var>M</var>.  Edge <var>j</var> directs from vertex <var>U_j</var> to vertex <var>V_j</var>.
+Each vertex has an integer attribute <strong>point</strong>: the point of vertex <var>i</var> is <var>P_i</var>.
+Also, each edge has a real attribute <strong>decay</strong> between <var>0</var> and <var>1</var>: the decay of edge <var>j</var> is <var>W_j</var>.
+It is guaranteed that the given graph does not have a closed cycle.  (In other words, there is no way to travel from a vertex <var>i</var> along edges to go back to vertex <var>i</var>.)</p>
+<p>Takahashi is going to play a game on this graph.
+Initially, vertex <var>1</var> has a piece on it, and Takahashi's score is <var>0</var>.
+He performs the following procedure to move the piece to vertex <var>N</var> while accumulating his score.</p>
+<ol>
+<li>Let <var>i</var> be the current number of vertex with the piece.  Add the point <var>P_i</var> of vertex <var>i</var> to his score.</li>
+<li>If <var>i=N</var>, he ends the game <strong>successfully</strong>.</li>
+<li>If there is no edge going from vertex <var>i</var>, he ends the game <strong>unsuccessfully</strong>.  Otherwise, choose an edge going from vertex <var>i</var>.</li>
+<li>Let <var>j</var> be the number of the chosen edge.  Multiply the point of each vertex by the decay of edge <var>j</var>.  In other words, let <var>P_i \leftarrow P_i\times W_j</var> for each <var>i\ (1\leq i\leq N)</var>.</li>
+<li>Move the piece to vertex <var>V_j</var>, and jump to step 1.</li>
+</ol>
+<p>Determine if he can end the game successfully.  If it is possible, print the maximum possible final score of the game.</p>
+</section>
+</div>
+
+<div class="part">
+<section>
+<h3>Constraints</h3><ul>
+<li><var>N,M,P_i,U_j</var>, and <var>V_j</var> are integers.</li>
+<li><var>2\leq N \leq 10^5</var></li>
+<li><var>1\leq M \leq 10^5</var></li>
+<li><var>1\leq P_i\leq 10^4</var></li>
+<li><var>U_j \neq V_j</var></li>
+<li><var>(U_j,V_j)\neq (U_k, V_k)\ (j\neq k)</var></li>
+<li><var>0\leq W_j\leq 1</var></li>
+<li><var>W_j</var> is a multiple of <var>10^{-6}</var> and given with six decimal places.</li>
+<li>The given graph does not have a directed cycle.</li>
+</ul>
+</section>
+</div>
+
+<hr />
+<div class="io-style">
+<div class="part">
+<section>
+<h3>Input</h3><p>The input is given from Standard Input in the following format:</p>
+<pre><var>N</var> <var>M</var>
+<var>P_1</var> <var>P_2</var> <var>\dots</var> <var>P_N</var>
+<var>U_1</var> <var>V_1</var> <var>W_1</var>
+<var>U_2</var> <var>V_2</var> <var>W_2</var>
+<var>\vdots</var>
+<var>U_M</var> <var>V_M</var> <var>W_M</var>
+</pre>
+</section>
+</div>
+
+<div class="part">
+<section>
+<h3>Output</h3><p>Print the maximum possible final score if he can successfully end the game, and <code>-1</code> otherwise.
+In the former case, your answer is considered correct if the absolute or relative error from the true value is at most <var>10^{−6}</var>.</p>
+</section>
+</div>
+</div>
+
+<hr />
+<div class="part">
+<section>
+<h3>Sample Input 1</h3><pre>4 4
+2 5 3 1
+1 3 0.500000
+1 2 0.250000
+2 3 0.250000
+3 4 0.500000
+</pre>
+</section>
+</div>
+
+<div class="part">
+<section>
+<h3>Sample Output 1</h3><pre>3.7500000000
+</pre>
+<p>We denote the sequence <var>(P_1,P_2,P_3,P_4)</var> simply by <var>P</var>.
+Initially, <var>P=(2,5,3,1)</var>.</p>
+<p>If he moves the piece along vertices <var>1\rightarrow 3\rightarrow 4</var>, the game proceeds as follows.</p>
+<ol>
+<li>Add the point <var>P_1=2</var> of vertex <var>1</var> to his score.</li>
+<li>Among the edges going from vertex <var>1</var>, choose edge <var>1</var>.</li>
+<li>Multiply the point of each vertex by the decay <var>W_1=0.5</var> of edge <var>1</var>.  Now, <var>P=(1,2.5,1.5,0.5)</var>.</li>
+<li>Move the piece to vertex <var>V_1=3</var>.</li>
+<li>Add the point <var>P_3=1.5</var> of vertex <var>3</var> to his score.</li>
+<li>Among the edges going from vertex <var>3</var>, choose edge <var>4</var>.</li>
+<li>Multiply the point of each vertex by the decay <var>W_4=0.5</var> of edge <var>4</var>.  Now, <var>P=(0.5,1.25,0.75,0.25)</var>.</li>
+<li>Move the piece to vertex <var>V_4=4</var>.</li>
+<li>Add the point <var>P_4=0.25</var> of vertex <var>4</var> to his score.</li>
+<li>He ends the game successfully.</li>
+</ol>
+<p>In this case, the final score is <var>2+1.5+0.25=3.75</var>, which is maximum possible.</p>
+</section>
+</div>
+
+<hr />
+<div class="part">
+<section>
+<h3>Sample Input 2</h3><pre>3 1
+1 1 1
+1 2 0.000000
+</pre>
+</section>
+</div>
+
+<div class="part">
+<section>
+<h3>Sample Output 2</h3><pre>-1
+</pre>
+<p>He cannot end the game successfully.</p>
+</section>
+</div>
+
+<hr />
+<div class="part">
+<section>
+<h3>Sample Input 3</h3><pre>6 12
+22 75 26 45 72 81
+4 6 0.185514
+3 6 0.758252
+2 3 0.622989
+2 4 0.984614
+1 3 0.465086
+1 5 0.396959
+5 3 0.618272
+5 2 0.016128
+1 2 0.869673
+1 4 0.363219
+2 6 0.097935
+5 4 0.877468
+</pre>
+</section>
+</div>
+
+<div class="part">
+<section>
+<h3>Sample Output 3</h3><pre>138.6258141601
+</pre></section>
+</div>
+</span>
+</span>
+
+		</div>
+
+		
+
+		
+		<hr/>
+		<form class="form-horizontal form-code-submit" action="/contests/past19-open/submit" method="POST">
+			<input type="hidden" name="data.TaskScreenName" value="past19_m" />
+			
+			<div class="form-group ">
+				<label class="control-label col-sm-3 col-md-2" for="select-lang">言語</label>
+				<div id="select-lang" class="col-sm-5" data-name="data.LanguageId">
+					<select class="form-control current" data-placeholder="-" name="data.LanguageId" required>
+						<option></option>
+						
+							<option value="5001" data-ace-mode="c_cpp">C&#43;&#43; 20 (gcc 12.2)</option>
+						
+							<option value="5002" data-ace-mode="golang">Go (go 1.20.6)</option>
+						
+							<option value="5003" data-ace-mode="csharp">C# 11.0 (.NET 7.0.7)</option>
+						
+							<option value="5004" data-ace-mode="kotlin">Kotlin (Kotlin/JVM 1.8.20)</option>
+						
+							<option value="5005" data-ace-mode="java">Java (OpenJDK 17)</option>
+						
+							<option value="5006" data-ace-mode="nim">Nim (Nim 1.6.14)</option>
+						
+							<option value="5007" data-ace-mode="text">V (V 0.4)</option>
+						
+							<option value="5008" data-ace-mode="text">Zig (Zig 0.10.1)</option>
+						
+							<option value="5009" data-ace-mode="javascript">JavaScript (Node.js 18.16.1)</option>
+						
+							<option value="5010" data-ace-mode="javascript">JavaScript (Deno 1.35.1)</option>
+						
+							<option value="5011" data-ace-mode="r">R (GNU R 4.2.1)</option>
+						
+							<option value="5012" data-ace-mode="d">D (DMD 2.104.0)</option>
+						
+							<option value="5013" data-ace-mode="d">D (LDC 1.32.2)</option>
+						
+							<option value="5014" data-ace-mode="swift">Swift (swift 5.8.1)</option>
+						
+							<option value="5015" data-ace-mode="dart">Dart (Dart 3.0.5)</option>
+						
+							<option value="5016" data-ace-mode="php">PHP (php 8.2.8)</option>
+						
+							<option value="5017" data-ace-mode="c_cpp">C (gcc 12.2.0)</option>
+						
+							<option value="5018" data-ace-mode="ruby">Ruby (ruby 3.2.2)</option>
+						
+							<option value="5019" data-ace-mode="crystal">Crystal (Crystal 1.9.1)</option>
+						
+							<option value="5020" data-ace-mode="text">Brainfuck (bf 20041219)</option>
+						
+							<option value="5021" data-ace-mode="fsharp">F# 7.0 (.NET 7.0.7)</option>
+						
+							<option value="5022" data-ace-mode="julia">Julia (Julia 1.9.2)</option>
+						
+							<option value="5023" data-ace-mode="sh">Bash (bash 5.2.2)</option>
+						
+							<option value="5024" data-ace-mode="text">Text (cat 8.32)</option>
+						
+							<option value="5025" data-ace-mode="haskell">Haskell (GHC 9.4.5)</option>
+						
+							<option value="5026" data-ace-mode="fortran">Fortran (gfortran 12.2)</option>
+						
+							<option value="5027" data-ace-mode="lua">Lua (LuaJIT 2.1.0-beta3)</option>
+						
+							<option value="5028" data-ace-mode="c_cpp">C&#43;&#43; 23 (gcc 12.2)</option>
+						
+							<option value="5029" data-ace-mode="lisp">Common Lisp (SBCL 2.3.6)</option>
+						
+							<option value="5030" data-ace-mode="cobol">COBOL (Free) (GnuCOBOL 3.1.2)</option>
+						
+							<option value="5031" data-ace-mode="c_cpp">C&#43;&#43; 23 (Clang 16.0.6)</option>
+						
+							<option value="5032" data-ace-mode="sh">Zsh (Zsh 5.9)</option>
+						
+							<option value="5033" data-ace-mode="python">SageMath (SageMath 9.5)</option>
+						
+							<option value="5034" data-ace-mode="sh">Sed (GNU sed 4.8)</option>
+						
+							<option value="5035" data-ace-mode="text">bc (bc 1.07.1)</option>
+						
+							<option value="5036" data-ace-mode="text">dc (dc 1.07.1)</option>
+						
+							<option value="5037" data-ace-mode="perl">Perl (perl  5.34)</option>
+						
+							<option value="5038" data-ace-mode="sh">AWK (GNU Awk 5.0.1)</option>
+						
+							<option value="5039" data-ace-mode="text">なでしこ (cnako3 3.4.20)</option>
+						
+							<option value="5040" data-ace-mode="text">Assembly x64 (NASM 2.15.05)</option>
+						
+							<option value="5041" data-ace-mode="pascal">Pascal (fpc 3.2.2)</option>
+						
+							<option value="5042" data-ace-mode="csharp">C# 11.0 AOT (.NET 7.0.7)</option>
+						
+							<option value="5043" data-ace-mode="lua">Lua (Lua 5.4.6)</option>
+						
+							<option value="5044" data-ace-mode="prolog">Prolog (SWI-Prolog 9.0.4)</option>
+						
+							<option value="5045" data-ace-mode="sh">PowerShell (PowerShell 7.3.1)</option>
+						
+							<option value="5046" data-ace-mode="scheme">Scheme (Gauche 0.9.12)</option>
+						
+							<option value="5047" data-ace-mode="scala">Scala 3.3.0 (Scala Native 0.4.14)</option>
+						
+							<option value="5048" data-ace-mode="vbscript">Visual Basic 16.9 (.NET 7.0.7)</option>
+						
+							<option value="5049" data-ace-mode="text">Forth (gforth 0.7.3)</option>
+						
+							<option value="5050" data-ace-mode="clojure">Clojure (babashka 1.3.181)</option>
+						
+							<option value="5051" data-ace-mode="erlang">Erlang (Erlang 26.0.2)</option>
+						
+							<option value="5052" data-ace-mode="typescript">TypeScript 5.1 (Deno 1.35.1)</option>
+						
+							<option value="5053" data-ace-mode="c_cpp">C&#43;&#43; 17 (gcc 12.2)</option>
+						
+							<option value="5054" data-ace-mode="rust">Rust (rustc 1.70.0)</option>
+						
+							<option value="5055" data-ace-mode="python">Python (CPython 3.11.4)</option>
+						
+							<option value="5056" data-ace-mode="scala">Scala (Dotty 3.3.0)</option>
+						
+							<option value="5057" data-ace-mode="text">Koka (koka 2.4.0)</option>
+						
+							<option value="5058" data-ace-mode="typescript">TypeScript 5.1 (Node.js 18.16.1)</option>
+						
+							<option value="5059" data-ace-mode="ocaml">OCaml (ocamlopt 5.0.0)</option>
+						
+							<option value="5060" data-ace-mode="raku">Raku (Rakudo 2023.06)</option>
+						
+							<option value="5061" data-ace-mode="text">Vim (vim 9.0.0242)</option>
+						
+							<option value="5062" data-ace-mode="lisp">Emacs Lisp (Native Compile) (GNU Emacs 28.2)</option>
+						
+							<option value="5063" data-ace-mode="python">Python (Mambaforge / CPython 3.10.10)</option>
+						
+							<option value="5064" data-ace-mode="clojure">Clojure (clojure 1.11.1)</option>
+						
+							<option value="5065" data-ace-mode="text">プロデル (mono版プロデル 1.9.1182)</option>
+						
+							<option value="5066" data-ace-mode="text">ECLiPSe (ECLiPSe 7.1_13)</option>
+						
+							<option value="5067" data-ace-mode="text">Nibbles (literate form) (nibbles 1.01)</option>
+						
+							<option value="5068" data-ace-mode="ada">Ada (GNAT 12.2)</option>
+						
+							<option value="5069" data-ace-mode="text">jq (jq 1.6)</option>
+						
+							<option value="5070" data-ace-mode="text">Cyber (Cyber v0.2-Latest)</option>
+						
+							<option value="5071" data-ace-mode="clojure">Carp (Carp 0.5.5)</option>
+						
+							<option value="5072" data-ace-mode="c_cpp">C&#43;&#43; 17 (Clang 16.0.6)</option>
+						
+							<option value="5073" data-ace-mode="c_cpp">C&#43;&#43; 20 (Clang 16.0.6)</option>
+						
+							<option value="5074" data-ace-mode="text">LLVM IR (Clang 16.0.6)</option>
+						
+							<option value="5075" data-ace-mode="lisp">Emacs Lisp (Byte Compile) (GNU Emacs 28.2)</option>
+						
+							<option value="5076" data-ace-mode="text">Factor (Factor 0.98)</option>
+						
+							<option value="5077" data-ace-mode="d">D (GDC 12.2)</option>
+						
+							<option value="5078" data-ace-mode="python">Python (PyPy 3.10-v7.3.12)</option>
+						
+							<option value="5079" data-ace-mode="text">Whitespace (whitespacers 1.0.0)</option>
+						
+							<option value="5080" data-ace-mode="text">&gt;&lt;&gt; (fishr 0.1.0)</option>
+						
+							<option value="5081" data-ace-mode="ocaml">ReasonML (reason 3.9.0)</option>
+						
+							<option value="5082" data-ace-mode="python">Python (Cython 0.29.34)</option>
+						
+							<option value="5083" data-ace-mode="matlab">Octave (GNU Octave 8.2.0)</option>
+						
+							<option value="5084" data-ace-mode="haxe">Haxe (JVM) (Haxe 4.3.1)</option>
+						
+							<option value="5085" data-ace-mode="elixir">Elixir (Elixir 1.15.2)</option>
+						
+							<option value="5086" data-ace-mode="text">Mercury (Mercury 22.01.6)</option>
+						
+							<option value="5087" data-ace-mode="text">Seed7 (Seed7 3.2.1)</option>
+						
+							<option value="5088" data-ace-mode="lisp">Emacs Lisp (No Compile) (GNU Emacs 28.2)</option>
+						
+							<option value="5089" data-ace-mode="text">Unison (Unison M5b)</option>
+						
+							<option value="5090" data-ace-mode="cobol">COBOL (GnuCOBOL(Fixed) 3.1.2)</option>
+						
+					</select>
+					<span class="error"></span>
+				</div>
+			</div>
+			<script>var currentLang = getLS('defaultLang');</script>
+			
+			
+<div class="form-group">
+	<div class="col-sm-3 col-md-2 editor-label">
+		<label class="control-label" for="sourceCode">ソースコード</label>
+		<div class="editor-buttons">
+			<button id="btn-open-file" type="button" class="btn btn-default btn-sm">
+				<span class="glyphicon glyphicon-folder-open" aria-hidden="true"></span> &nbsp; ファイルを開く
+			</button>
+			<button id="btn-customize" type="button" class="btn btn-default btn-sm">
+				<span class="glyphicon glyphicon-cog" aria-hidden="true"></span> &nbsp; カスタマイズ
+			</button>
+			<button type="button" class="btn btn-default btn-sm btn-toggle-editor" data-toggle="button" autocomplete="off">
+				エディタ切り替え
+			</button>
+			<button type="button" class="btn btn-default btn-sm btn-auto-height" data-toggle="button" autocomplete="off">
+				高さ自動調節
+			</button>
+		</div>
+	</div>
+	<div class="col-sm-9 col-md-10" id="sourceCode">
+		<div id="editor"></div>
+		<textarea id="plain-textarea" class="form-control" style="display:none;" name="sourceCode"></textarea>
+		<p>
+			<span class="gray">※ 512 KiB まで</span><br>
+		</p>
+	</div>
+	<input id="input-open-file" type="file" style="display:none;">
+</div>
+
+
+			<input type="hidden" name="csrf_token" value="xq/2/1/cd0OKZhkOMPzGHO28HpSv5GCbMjIXdzS6eNY=" />
+			<div class="form-group">
+				<label class="control-label col-sm-3 col-md-2"></label>
+				<div class="col-sm-5">
+					
+					<script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
+
+<div class="cf-challenge" data-sitekey="0x4AAAAAAA6HJUmmLP7mLxx0" data-theme="light"></div>
+
+					
+					<button type="submit" class="btn btn-primary" id="submit">提出</button>
+				</div>
+			</div>
+		</form>
+		
+	</div>
+</div>
+
+
+
+
+		
+			<hr>
+			
+			
+			
+<div class="a2a_kit a2a_kit_size_20 a2a_default_style pull-right" data-a2a-url="https://atcoder.jp/contests/past19-open/tasks/past19_m?lang=ja" data-a2a-title="M - DAG ゲーム">
+	<a class="a2a_button_facebook"></a>
+	<a class="a2a_button_twitter"></a>
+	
+		<a class="a2a_button_hatena"></a>
+	
+	<a class="a2a_dd" href="https://www.addtoany.com/share"></a>
+</div>
+
+		
+		<script async src="//static.addtoany.com/menu/page.js"></script>
+		
+	</div> 
+	<hr>
+</div> 
+
+	<div class="container" style="margin-bottom: 80px;">
+			<footer class="footer">
+			
+				<ul>
+					<li><a href="/contests/past19-open/rules">ルール</a></li>
+					<li><a href="/contests/past19-open/glossary">用語集</a></li>
+					
+				</ul>
+			
+			<ul>
+				<li><a href="/tos">利用規約</a></li>
+				<li><a href="/privacy">プライバシーポリシー</a></li>
+				<li><a href="/personal">個人情報保護方針</a></li>
+				<li><a href="/company">企業情報</a></li>
+				<li><a href="/faq">よくある質問</a></li>
+				<li><a href="/contact">お問い合わせ</a></li>
+				<li><a href="/documents/request">資料請求</a></li>
+			</ul>
+			<div class="text-center">
+					<small id="copyright">Copyright Since 2012 &copy;<a href="http://atcoder.co.jp">AtCoder Inc.</a> All rights reserved.</small>
+			</div>
+			</footer>
+	</div>
+	<p id="fixed-server-timer" class="contest-timer"></p>
+	<div id="scroll-page-top" style="display:none;"><span class="glyphicon glyphicon-arrow-up" aria-hidden="true"></span> ページトップ</div>
+
+</body>
+</html>
+
+

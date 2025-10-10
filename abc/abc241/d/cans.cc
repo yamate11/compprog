@@ -1,378 +1,160 @@
 #include <bits/stdc++.h>
 #include <cassert>
-typedef long long int ll;
 using namespace std;
+using ll = long long int;
+using u64 = unsigned long long;
+using pll = pair<ll, ll>;
 // #include <atcoder/all>
 // using namespace atcoder;
-#define REP2(i, a, b) for (ll i = (a); i < (b); i++)
-#define REP2R(i, a, b) for (ll i = (a); i >= (b); i--)
-#define REP(i, b) REP2(i, 0, b)
+#define REP(i, a, b) for (ll i = (a); i < (b); i++)
+#define REPrev(i, a, b) for (ll i = (a); i >= (b); i--)
 #define ALL(coll) (coll).begin(), (coll).end()
 #define SIZE(v) ((ll)((v).size()))
+#define REPOUT(i, a, b, exp, sep) REP(i, (a), (b)) cout << (exp) << (i + 1 == (b) ? "" : (sep)); cout << "\n"
 
-// @@ !! LIM(bintrie debug)
+// @@ !! LIM(wavelet)
 
-// ---- inserted library file bintrie.cc
+// ---- inserted library file wavelet.cc
 
-struct BTNode {
-  int ne; // number of elements stored
-  int p0; // index for 0 successor (-1 if not exists)
-  int p1; // index for 1 successor (-1 if not exists)
-  BTNode() : ne(0), p0(-1), p1(-1) {}
-  int& nxt(int b) { return b == 0 ? p0 : p1; }
+struct BitVector {
+  ll N;
+  ll vsize;
+  vector<int> vs;
+  vector<u64> vb;
+  bool built;
+  BitVector() = default;
+  BitVector(ll N_) : N(N_), vsize((N + 63) / 64), vs(vsize + 1), vb(vsize), built(false) {}
+  void set(bool val, int k) {
+    if (built) throw runtime_error("already built.");
+    if (val) vb[k >> 6] |=   1ULL << (k & 63);
+    else     vb[k >> 6] &= ~(1ULL << (k & 63));
+  }
+  bool at(ll k) { return static_cast<bool>(vb[k >> 6] >> (k & 63) & 1); }
+  void build() {
+    if (not built) {
+      for (ll i = 0; i < vsize; i++) vs[i + 1] = vs[i] + popcount(vb[i]);
+      built = true;
+    }
+  }
+  ll rank(bool val, ll k) {
+    if (not built) build();
+    ll cnt1 = (k >= N) ? vs.back() : vs[k >> 6] + popcount(vb[k >> 6] & ((1ULL << (k & 63)) - 1));
+    if (val) return cnt1;
+    else     return k - cnt1;
+  }
+
+  // for debugging
+  vector<bool> vec_view() {
+    vector<bool> vec(N);
+    for (ll i = 0; i < N; i++) vec[i] = at(i);
+    return vec;
+  }
+
 };
 
-struct BinTrie {
-  int len;
-  vector<BTNode> body;
+template<typename INT=ll>
+struct WaveletMatrix {
+  ll N;
+  ll ht;
+  vector<BitVector> vbv;
+  vector<int> mid;
 
-  BinTrie(int len_) : len(len_), body(1) {}
+  pair<bool, INT> _h_rest(ll h, INT t) { return {t >> h & 1, t & ((static_cast<INT>(1) << h) - 1)}; }
 
-  int _num_branch(int b, int idx) {
-    int p = body[idx].nxt(b);
-    return p < 0 ? 0 : body[p].ne;
-  }
-
-  void insert(ll x, int num = 1) {
-    int idx = 0;
-    for (int i = len - 1; i >= 0; i--) {
-      int& pp = body[idx].nxt(x >> i & 1);
-      if (pp < 0) {
-        pp = body.size();
-        body.resize(pp + 1);
-        // Caution: now pp is invalidated
+  WaveletMatrix() = default;
+  WaveletMatrix(const auto& vec, ll amax) { _init(vec, amax); }
+  void _init(const auto& vec, ll amax) {
+    if (amax < 0) amax = vec.empty() ? 1 : *max_element(vec.begin(), vec.end());
+    N = ssize(vec);
+    ht = bit_width((u64)amax);
+    vbv = vector(ht, BitVector(N));
+    mid = vector<int>(ht);
+    vector tmpA{vec, vector<INT>(N)};
+    vector tmpB(2, vector<INT>(N));
+    vector<ll> a{N, 0};
+    vector<ll> b{0, 0};
+    for (ll h = ht - 1; h >= 0; h--) {
+      for (int e = 0; e < 2; e++) {
+        for (ll i = 0; i < a[e]; i++) {
+          auto [x, y] = _h_rest(h, tmpA[e][i]);
+          vbv[h].set(x, e == 0 ? i : a[0] + i);
+          tmpB[x][b[x]++] = y;
+        }
       }
-      body[idx].ne += num;
-      idx = body[idx].nxt(x >> i & 1);
+      mid[h] = b[0];
+      swap(tmpA, tmpB);
+      a = b;
+      b[0] = b[1] = 0;
     }
-    body[idx].ne += num;
   }
-
-  int find(ll x) {
-    int idx = 0;
-    for (int i = len - 1; i >= 0; i--) {
-      int& pp = body[idx].nxt(x >> i & 1);
-      if (pp < 0) return 0;
-      idx = pp;
-    }
-    return body[idx].ne;
-  }
-
-  void erase(ll x, int num = 1) { insert(x, -num); }
-
-  int erase_safe(ll x, int num = 1) {
-    int m = find(x);
-    if (m == 0) return 0;
-    int k = min(m, num);
-    insert(x, -k);
-    return k;
-  }
-
-  int num_le(ll x) {
-    if (x < 0) return 0;
-    if (x >= (1LL << len)) return body[0].ne;
-    int ret = 0;
-    int idx = 0;
-    for (int i = len - 1; i >= 0; i--) {
-      int b = x >> i & 1;
-      if (b == 1) ret += _num_branch(0, idx);
-      if (_num_branch(b, idx) == 0) return ret;
-      idx = body[idx].nxt(b);
-    }
-    ret += body[idx].ne;
-    return ret;
-  }
-
-  int num_lt(ll x) { return num_le(x - 1); }
-
-  ll kth(int k) {  // 0-indexed.  i.e. kth(0) is the minimum element.
-    if (k >= body[0].ne) return -1LL;
-    ll ret = 0;
-    int idx = 0;
-    for (int i = len - 1; i >= 0; i--) {
-      int t = _num_branch(0, idx);
-      if (k < t) idx = body[idx].p0;
-      else {
-        k -= t;
-        ret |= (1LL << i);
-        idx = body[idx].p1;
-      }
-    }
-    return ret;
-  }
-
-  ll lower_bound(ll x) {
-    if (body[0].ne == 0) return -1;
-    int idx = 0;
-    int cand_i = -1, cand_idx = -1;
-    int i;
-    for (i = len - 1; i >= 0; i--) {
-      int b = x >> i & 1;
-      if (b == 0 and _num_branch(1, idx) > 0) { cand_i = i; cand_idx = idx; }
-      if (_num_branch(b, idx) == 0) break;
-      idx = body[idx].nxt(b);
-    }
-    if (i < 0) return x;
-    if (cand_i < 0) return -1;
-    i = cand_i;
-    idx = cand_idx;
-    ll mask = ~((1LL << (i + 1)) - 1);
-    ll ret = (x & mask) | (1LL << i) ;
-    idx = body[idx].p1;
-    i--;
-    for (; i >= 0; i--) {
-      int b = _num_branch(0, idx) > 0 ? 0 : 1;
-      ret |= (ll(b) << i);
-      idx = body[idx].nxt(b);
-    }
-    return ret;
-  }
-
-  ll upper_bound(ll x) { return lower_bound(x + 1); }
   
-};    
-
-
-// ---- end bintrie.cc
-
-// ---- inserted function f:<< from util.cc
-template <typename T1, typename T2>
-ostream& operator<< (ostream& os, const pair<T1,T2>& p) {
-  os << "(" << p.first << ", " << p.second << ")";
-  return os;
-}
-
-template <typename T1, typename T2, typename T3>
-ostream& operator<< (ostream& os, const tuple<T1,T2,T3>& t) {
-  os << "(" << get<0>(t) << ", " << get<1>(t)
-     << ", " << get<2>(t) << ")";
-  return os;
-}
-
-template <typename T1, typename T2, typename T3, typename T4>
-ostream& operator<< (ostream& os, const tuple<T1,T2,T3,T4>& t) {
-  os << "(" << get<0>(t) << ", " << get<1>(t)
-     << ", " << get<2>(t) << ", " << get<3>(t) << ")";
-  return os;
-}
-
-template <typename T>
-ostream& operator<< (ostream& os, const vector<T>& v) {
-  os << '[';
-  for (auto it = v.begin(); it != v.end(); it++) {
-    if (it != v.begin()) os << ", ";
-    os << *it;
+  pair<ll, ll> _next_range(bool x, ll l, ll r, ll h) {
+    return {x * mid[h] + vbv[h].rank(x, l), x * mid[h] + vbv[h].rank(x, r)};
   }
-  os << ']';
 
-  return os;
-}
-
-template <typename T, typename C>
-ostream& operator<< (ostream& os, const set<T, C>& v) {
-  os << '{';
-  for (auto it = v.begin(); it != v.end(); it++) {
-    if (it != v.begin()) os << ", ";
-    os << *it;
+  // vec[p]
+  INT access(ll p) {
+    INT ret = 0;
+    for (ll h = ht - 1; h >= 0; h--) {
+      bool x = vbv[h].at(p);
+      if (x == 1) ret |= INT(1) << h;
+      if (x == 0) p =          vbv[h].rank(0, p);
+      else        p = mid[h] + vbv[h].rank(1, p);
+    }
+    return ret;
   }
-  os << '}';
 
-  return os;
-}
-
-template <typename T, typename C>
-ostream& operator<< (ostream& os, const unordered_set<T, C>& v) {
-  os << '{';
-  for (auto it = v.begin(); it != v.end(); it++) {
-    if (it != v.begin()) os << ", ";
-    os << *it;
+  // #{ i < r : vec[i] == t }
+  ll rank(INT t, ll r) {
+    if (bit_width((u64)t) > ht) return 0;
+    ll l = 0;
+    for (ll h = ht - 1; h >= 0; h--) {
+      ll x = t >> h & 1;
+      tie (l, r) = _next_range(x, l, r, h);
+    }
+    return r - l;
   }
-  os << '}';
 
-  return os;
-}
-
-template <typename T, typename C>
-ostream& operator<< (ostream& os, const multiset<T, C>& v) {
-  os << '{';
-  for (auto it = v.begin(); it != v.end(); it++) {
-    if (it != v.begin()) os << ", ";
-    os << *it;
+  // k-th smallest value in vec[l, r)   (0-indexed)
+  INT kth_smallest(ll k, ll l, ll r) {
+    if (k < 0 or k >= r - l) throw runtime_error("k out of range");
+    INT ret = 0;
+    for (ll h = ht - 1; h >= 0; h--) {
+      ll num0 = vbv[h].rank(0, r) - vbv[h].rank(0, l);
+      bool x = k >= num0;
+      if (x) {
+        k -= num0;
+        ret |= INT(1) << h;
+      }
+      tie(l, r) = _next_range(x, l, r, h);
+    }
+    return ret;
   }
-  os << '}';
 
-  return os;
-}
+  // k-th largest value in vec[l, r)   (0-indexed)
+  INT kth_largest(ll k, ll l, ll r) { return kth_smallest(r - l - 1 - k, l, r); }
 
-template <typename T1, typename T2, typename C>
-ostream& operator<< (ostream& os, const map<T1, T2, C>& mp) {
-  os << '[';
-  for (auto it = mp.begin(); it != mp.end(); it++) {
-    if (it != mp.begin()) os << ", ";
-    os << it->first << ": " << it->second;
+  // #{ i \in [l, r) : vec[i] < hi }
+  ll range_freq(INT hi, ll l, ll r) {
+    if (bit_width((u64)hi) > ht) return r - l;
+    ll ret = 0;
+    for (ll h = ht - 1; h >= 0; h--) {
+      ll x = hi >> h & 1;
+      if (x == 1) ret += vbv[h].rank(0, r) - vbv[h].rank(0, l);
+      tie(l, r) = _next_range(x, l, r, h);
+    }
+    return ret;
   }
-  os << ']';
 
-  return os;
-}
+  // #{i \in [l, r) : lo <= vec[i] < hi }
+  ll range_freq(INT lo, INT hi, ll l, ll r) { return range_freq(hi, l, r) - range_freq(lo, l, r); }
 
-template <typename T1, typename T2, typename C>
-ostream& operator<< (ostream& os, const unordered_map<T1, T2, C>& mp) {
-  os << '[';
-  for (auto it = mp.begin(); it != mp.end(); it++) {
-    if (it != mp.begin()) os << ", ";
-    os << it->first << ": " << it->second;
-  }
-  os << ']';
 
-  return os;
-}
+};
 
-template <typename T, typename T2>
-ostream& operator<< (ostream& os, const queue<T, T2>& orig) {
-  queue<T, T2> que(orig);
-  bool first = true;
-  os << '[';
-  while (!que.empty()) {
-    T x = que.front(); que.pop();
-    if (!first) os << ", ";
-    os << x;
-    first = false;
-  }
-  return os << ']';
-}
 
-template <typename T, typename T2>
-ostream& operator<< (ostream& os, const deque<T, T2>& orig) {
-  deque<T, T2> que(orig);
-  bool first = true;
-  os << '[';
-  while (!que.empty()) {
-    T x = que.front(); que.pop_front();
-    if (!first) os << ", ";
-    os << x;
-    first = false;
-  }
-  return os << ']';
-}
 
-template <typename T, typename T2, typename T3>
-ostream& operator<< (ostream& os, const priority_queue<T, T2, T3>& orig) {
-  priority_queue<T, T2, T3> pq(orig);
-  bool first = true;
-  os << '[';
-  while (!pq.empty()) {
-    T x = pq.top(); pq.pop();
-    if (!first) os << ", ";
-    os << x;
-    first = false;
-  }
-  return os << ']';
-}
-
-template <typename T>
-ostream& operator<< (ostream& os, const stack<T>& st) {
-  stack<T> tmp(st);
-  os << '[';
-  bool first = true;
-  while (!tmp.empty()) {
-    T& t = tmp.top();
-    if (first) first = false;
-    else os << ", ";
-    os << t;
-    tmp.pop();
-  }
-  os << ']';
-  return os;
-}
-
-#if __cplusplus >= 201703L
-template <typename T>
-ostream& operator<< (ostream& os, const optional<T>& t) {
-  if (t.has_value()) os << "v(" << t.value() << ")";
-  else               os << "nullopt";
-  return os;
-}
-#endif
-
-ostream& operator<< (ostream& os, int8_t x) {
-  os << (int32_t)x;
-  return os;
-}
-
-// ---- end f:<<
-
-// ---- inserted library file debug.cc
-template <class... Args>
-string dbgFormat(const char* fmt, Args... args) {
-  size_t len = snprintf(nullptr, 0, fmt, args...);
-  char buf[len + 1];
-  snprintf(buf, len + 1, fmt, args...);
-  return string(buf);
-}
-
-template <class Head>
-void dbgLog(bool with_nl, Head&& head) {
-  cerr << head;
-  if (with_nl) cerr << endl;
-}
-
-template <class Head, class... Tail>
-void dbgLog(bool with_nl, Head&& head, Tail&&... tail)
-{
-  cerr << head << " ";
-  dbgLog(with_nl, forward<Tail>(tail)...);
-}
-
-#if DEBUG
-  #define DLOG(...)        dbgLog(true, __VA_ARGS__)
-  #define DLOGNNL(...)     dbgLog(false, __VA_ARGS__)
-  #define DFMT(...)        cerr << dbgFormat(__VA_ARGS__) << endl
-  #define DCALL(func, ...) func(__VA_ARGS__)
-#else
-  #define DLOG(...)
-  #define DLOGNNL(...)
-  #define DFMT(...)
-  #define DCALL(func, ...)
-#endif
-
-/*
-#if DEBUG_LIB
-  #define DLOG_LIB(...)        dbgLog(true, __VA_ARGS__)
-  #define DLOGNNL_LIB(...)     dbgLog(false, __VA_ARGS__)
-  #define DFMT_LIB(...)        cerr << dbgFormat(__VA_ARGS__) << endl
-  #define DCALL_LIB(func, ...) func(__VA_ARGS__)
-#else
-  #define DLOG_LIB(...)
-  #define DFMT_LIB(...)
-  #define DCALL_LIB(func, ...)
-#endif
-*/
-
-#define DUP1(E1)       #E1 "=", E1
-#define DUP2(E1,E2)    DUP1(E1), DUP1(E2)
-#define DUP3(E1,...)   DUP1(E1), DUP2(__VA_ARGS__)
-#define DUP4(E1,...)   DUP1(E1), DUP3(__VA_ARGS__)
-#define DUP5(E1,...)   DUP1(E1), DUP4(__VA_ARGS__)
-#define DUP6(E1,...)   DUP1(E1), DUP5(__VA_ARGS__)
-#define DUP7(E1,...)   DUP1(E1), DUP6(__VA_ARGS__)
-#define DUP8(E1,...)   DUP1(E1), DUP7(__VA_ARGS__)
-#define DUP9(E1,...)   DUP1(E1), DUP8(__VA_ARGS__)
-#define DUP10(E1,...)   DUP1(E1), DUP9(__VA_ARGS__)
-#define DUP11(E1,...)   DUP1(E1), DUP10(__VA_ARGS__)
-#define DUP12(E1,...)   DUP1(E1), DUP11(__VA_ARGS__)
-#define GET_MACRO(_1,_2,_3,_4,_5,_6,_7,_8,_9,_10,_11,_12,NAME,...) NAME
-#define DUP(...)          GET_MACRO(__VA_ARGS__, DUP12, DUP11, DUP10, DUP9, DUP8, DUP7, DUP6, DUP5, DUP4, DUP3, DUP2, DUP1)(__VA_ARGS__)
-#define DLOGK(...)        DLOG(DUP(__VA_ARGS__))
-#define DLOGKL(lab, ...)  DLOG(lab, DUP(__VA_ARGS__))
-
-#if DEBUG_LIB
-  #define DLOG_LIB   DLOG
-  #define DLOGK_LIB  DLOGK
-  #define DLOGKL_LIB DLOGKL
-#endif
-
-// ---- end debug.cc
+// ---- end wavelet.cc
 
 // @@ !! LIM -- end mark --
 
@@ -381,24 +163,42 @@ int main(/* int argc, char *argv[] */) {
   cin.tie(nullptr);
   cout << setprecision(20);
 
-  BinTrie bt(60);
-
   ll Q; cin >> Q;
-  REP(q_, Q) {
-    ll tp, x; cin >> tp >> x;
+  using sta = tuple<ll, ll, ll>;
+  vector<sta> vec;
+  REP(i, 0, Q) {
+    ll tp; cin >> tp;
     if (tp == 1) {
-      bt.insert(x);
-    }else if (tp == 2) {
-      ll k; cin >> k;
-      ll t = bt.num_le(x) - k;
-      ll y = t >= 0 ? bt.kth(t) : -1;
-      cout << y << "\n";
+      ll x; cin >> x;
+      vec.emplace_back(tp, x, -1);
+    }else {
+      ll x, k; cin >> x >> k;
+      vec.emplace_back(tp, x, k);
+    }
+  }
+
+  vector<ll> A;
+  REP(i, 0, Q) {
+    auto [tp, x, k] = vec[i];
+    if (tp == 1) A.push_back(x);
+  }
+  WaveletMatrix wm(A, -1);
+
+  ll big = 2e18;
+  ll r = 0;
+  REP(i, 0, Q) {
+    auto [tp, x, k] = vec[i];
+    if (tp == 1) r++;
+    else if (tp == 2) {
+      ll m = wm.range_freq(x + 1, big, 0, r);
+      ll k1 = k + m - 1;
+      if (r <= k1) cout << -1 << "\n";
+      else cout << wm.kth_largest(k1, 0, r) << "\n";
     }else if (tp == 3) {
-      ll k; cin >> k;
-      ll t = bt.num_lt(x);
-      ll y = bt.kth(t + k - 1);
-      DLOGK(t, t + k - 1, y);
-      cout << y << "\n";
+      ll m = wm.range_freq(0, x, 0, r);
+      ll k1 = k + m - 1;
+      if (r <= k1) cout << -1 << "\n";
+      else cout << wm.kth_smallest(k1, 0, r) << "\n";
     }
   }
 

@@ -27,6 +27,12 @@ ostream& operator<< (ostream& os, const tuple<T1,T2,T3>& t);
 template <typename T1, typename T2, typename T3, typename T4>
 ostream& operator<< (ostream& os, const tuple<T1,T2,T3,T4>& t);
 
+template <typename T1, typename T2, typename T3, typename T4, typename T5>
+ostream& operator<< (ostream& os, const tuple<T1,T2,T3,T4,T5>& t);
+
+template <typename T1, typename T2, typename T3, typename T4, typename T5, typename T6>
+ostream& operator<< (ostream& os, const tuple<T1,T2,T3,T4,T5,T6>& t);
+
 template <typename T>
 ostream& operator<< (ostream& os, const vector<T>& v);
 
@@ -85,6 +91,20 @@ template <typename T1, typename T2, typename T3, typename T4>
 ostream& operator<< (ostream& os, const tuple<T1,T2,T3,T4>& t) {
   os << "(" << get<0>(t) << ", " << get<1>(t)
      << ", " << get<2>(t) << ", " << get<3>(t) << ")";
+  return os;
+}
+
+template <typename T1, typename T2, typename T3, typename T4, typename T5>
+ostream& operator<< (ostream& os, const tuple<T1,T2,T3,T4,T5>& t) {
+  os << "(" << get<0>(t) << ", " << get<1>(t)
+     << ", " << get<2>(t) << ", " << get<3>(t) << ", " << get<4>(t) << ")";
+  return os;
+}
+
+template <typename T1, typename T2, typename T3, typename T4, typename T5, typename T6>
+ostream& operator<< (ostream& os, const tuple<T1,T2,T3,T4,T5,T6>& t) {
+  os << "(" << get<0>(t) << ", " << get<1>(t)
+     << ", " << get<2>(t) << ", " << get<3>(t) << ", " << get<4>(t) << ", " << get<5>(t) << ")";
   return os;
 }
 
@@ -344,84 +364,38 @@ int main(/* int argc, char *argv[] */) {
   cout << setprecision(20);
 
   ll N, K; cin >> N >> K;
-  // @InpVec(N, P, dec=1) [Ya7t0p5t]
+  // @InpVec(N, P, dec=1) [qpDsFm28]
   auto P = vector(N, ll());
   for (int i = 0; i < N; i++) { ll v; cin >> v; v -= 1; P[i] = v; }
-  // @End [Ya7t0p5t]
+  // @End [qpDsFm28]
 
-  vector<set<pll>> left(N);
-  vector<set<pll>> right(N);
-  // using sta = tuple<ll, ll, ll>;
-  //   set<sta> theset;
+  using sta = pll;
+  vector<sta> vec;
+  vector vec1(N, vector<ll>());
+  vector<ll> vec2;
   ll cnt = 0;
-  REP(i, 0, N) REP(j, i + 1, N) {
-    if (j - i >= K and P[i] > P[j]) {
-      // theset.emplace(P[i] - P[j], i, j);
-      left[j].emplace(P[i], i);
-      right[i].emplace(-P[j], j);
-      cnt++;
-    }
-  }
-
-  vector<pll> ans;
-
-  auto modify = [&](ll p, ll q) -> void {
-    for (auto [px, x] : right[p]) {
-      left[x].erase(pll(P[p], p));
-      left[x].insert(pll(P[q], p));
-    }
-    for (auto [py, y] : left[p]) {
-      right[y].erase(pll(-P[p], p));
-      right[y].insert(pll(-P[q], p));
-    }
-  };
-
-  auto amend = [&](ll p, ll q) -> void {
-    ans.emplace_back(p, q);
-
-    right[p].erase(pll(-P[q], q));
-    left[q].erase(pll(P[p], p));
-    modify(p, q);
-    modify(q, p);
-
-    swap(P[p], P[q]);
-    DLOGKL("amend", p, q);
-#if DEBUG
-    REP(ii, 0, N) {
-      DLOGK(ii, left[ii]);
-      DLOGK(ii, right[ii]);
-    }
-#endif
-  };
-
-  auto check_left = [&](auto ref_right, ll i) -> pll {
-    auto [px, x] = *left[i].begin();
-    auto [py, y] = *right[x].begin();
-    if (i == y) return pll(x, i);
-    return ref_right(ref_right, x);
-  };
-
-  auto check_right = [&](auto ref_right, ll i) -> pll {
-    auto [px, x] = *right[i].begin();
-    auto [py, y] = *left[x].begin();
-    if (i == y) return pll(i, x);
-    return check_left(ref_right, x);
-  };
-
   REP(i, 0, N) {
-    while (not left[i].empty()) {
-      auto [p, q] = check_left(check_right, i);
-      amend(p, q);
+    REP(j, i + 1, N) {
+      if (i + K <= j and P[i] > P[j]) {
+        vec1[i].push_back(j);
+        cnt++;
+      }
     }
-    while (not right[i].empty()) {
-      auto [p, q] = check_right(check_right, i);
-      amend(p, q);
+    if (not vec1[i].empty()) {
+      vec2.push_back(i);
     }
   }
-
-  cout << ssize(ans) << "\n";
-  for (auto [a, b] : ans) {
-    cout << a + 1 << " " << b + 1 << "\n";
+  sort(ALL(vec2), [&](ll i, ll j) -> bool { return P[i] < P[j]; });
+  DLOGK(vec2);
+  cout << cnt << "\n";
+  for (ll i : vec2) {
+    sort(ALL(vec1[i]), [&](ll p, ll q) -> bool { return P[p] > P[q]; });
+    for (ll j : vec1[i]) {
+      DLOGK(i, j, P[i], P[j]);
+      assert(i + K <= j and P[i] > P[j]);
+      cout << i + 1 << " " << j + 1 << "\n";
+      swap(P[i], P[j]);
+    }
   }
 
 

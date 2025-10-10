@@ -1,0 +1,19 @@
+5
+2
+a ba
+ba bbba
+2
+a bb
+bbb aaaa
+1
+b aaabbb
+3
+a bb
+a ab
+a aa
+5
+a bbbb
+a bb
+ba bbbbb
+bbb aabb
+bbbbb aaabbb

@@ -1,0 +1,1428 @@
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN">
+<html lang="en">
+<head>
+        <script async src="https://www.googletagmanager.com/gtag/js?id=UA-743380-5"></script>
+        <script>
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+            gtag('config', 'UA-743380-5');
+        </script>
+
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <meta name="X-Csrf-Token" content="a3100e6429b530e7d180ada942773eab"/>
+    <meta id="viewport" name="viewport" content="width=device-width, initial-scale=0.01"/>
+    <meta name="robots" content="noai">
+    <meta name="robots" content="noimageai">
+
+    <script type="text/javascript" src="//codeforces.org/s/85693/js/jquery-1.8.3.js"></script>
+    <script type="application/javascript">
+        window.locale = "en";
+        window.standaloneContest = false;
+        function adjustViewport() {
+            var screenWidthPx = Math.min($(window).width(), window.screen.width);
+            var siteWidthPx = 1100; // min width of site
+            var ratio = Math.min(screenWidthPx / siteWidthPx, 1.0);
+            var viewport = "width=device-width, initial-scale=" + ratio;
+            $('#viewport').attr('content', viewport);
+            var style = $('<style>html * { max-height: 1000000px; }</style>');
+            $('html > head').append(style);
+        }
+
+        if ( /Android|webOS|iPhone|iPad|iPod|BlackBerry/i.test(navigator.userAgent) ) {
+            adjustViewport();
+        }
+
+        /* Protection against trailing dot in domain. */
+        let hostLength = window.location.host.length;
+        if (hostLength > 1 && window.location.host[hostLength - 1] === '.') {
+            window.location = window.location.protocol + "//" + window.location.host.substring(0, hostLength - 1);
+        }
+    </script>
+
+    <meta http-equiv="pragma" content="no-cache">
+    <meta http-equiv="expires" content="-1">
+    <meta http-equiv="profileName" content="j1">
+    <meta name="google-site-verification" content="OTd2dN5x4nS4OPknPI9JFg36fKxjqY0i1PSfFPv_J90"/>
+    <meta property="fb:admins" content="100001352546622" />
+    <meta property="og:image" content="//codeforces.org/s/85693/images/codeforces-sponsored-by-ton.png" />
+    <link rel="image_src" href="//codeforces.org/s/85693/images/codeforces-sponsored-by-ton.png" />
+    <meta property="og:title" content="Problems - Codeforces"/>
+    <meta property="og:description" content=""/>
+    
+    <meta property="og:site_name" content="Codeforces"/>
+    
+    
+    
+    
+    
+    
+    <meta name="utc_offset" content="+03:00"/>
+    <meta name="verify-reformal" content="f56f99fd7e087fb6ccb48ef2" />
+    <title>Problems - Codeforces</title>
+        <meta name="description" content="Codeforces. Programming competitions and contests, programming community" />
+        <meta name="keywords" content="programming algorithm contest competition informatics olympiads c++ java graphs vkcup" />
+    <meta name="robots" content="index, follow" />
+
+    <link rel="stylesheet" href="//codeforces.org/s/85693/css/font-awesome.min.css" type="text/css" charset="utf-8" />
+    <link rel="stylesheet" href="//codeforces.org/s/85693/css/line-awesome.min.css" type="text/css" charset="utf-8" />
+
+        <link href='//fonts.googleapis.com/css?family=PT+Sans+Narrow:400,700&subset=latin,cyrillic' rel='stylesheet' type='text/css'>
+        <link href='//fonts.googleapis.com/css?family=Cuprum&subset=latin,cyrillic' rel='stylesheet' type='text/css'>
+
+
+    <link rel="apple-touch-icon" sizes="57x57" href="//codeforces.org/s/85693/apple-icon-57x57.png">
+    <link rel="apple-touch-icon" sizes="60x60" href="//codeforces.org/s/85693/apple-icon-60x60.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="//codeforces.org/s/85693/apple-icon-72x72.png">
+    <link rel="apple-touch-icon" sizes="76x76" href="//codeforces.org/s/85693/apple-icon-76x76.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="//codeforces.org/s/85693/apple-icon-114x114.png">
+    <link rel="apple-touch-icon" sizes="120x120" href="//codeforces.org/s/85693/apple-icon-120x120.png">
+    <link rel="apple-touch-icon" sizes="144x144" href="//codeforces.org/s/85693/apple-icon-144x144.png">
+    <link rel="apple-touch-icon" sizes="152x152" href="//codeforces.org/s/85693/apple-icon-152x152.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="//codeforces.org/s/85693/apple-icon-180x180.png">
+    <link rel="icon" type="image/png" sizes="192x192"  href="//codeforces.org/s/85693/android-icon-192x192.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="//codeforces.org/s/85693/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="96x96" href="//codeforces.org/s/85693/favicon-96x96.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="//codeforces.org/s/85693/favicon-16x16.png">
+    <link rel="manifest" href="/manifest.json">
+    <meta name="msapplication-TileColor" content="#ffffff">
+    <meta name="msapplication-TileImage" content="//codeforces.org/s/85693/ms-icon-144x144.png">
+    <meta name="theme-color" content="#ffffff">
+
+    <!--CombineResourcesFilter-->
+    <link rel="stylesheet" href="//codeforces.org/s/85693/css/prettify.css" type="text/css" charset="utf-8" />
+    <link rel="stylesheet" href="//codeforces.org/s/85693/css/clear.css" type="text/css" charset="utf-8" />
+    <link rel="stylesheet" href="//codeforces.org/s/85693/css/style.css" type="text/css" charset="utf-8" />
+    <link rel="stylesheet" href="//codeforces.org/s/85693/css/ttypography.css" type="text/css" charset="utf-8" />
+    <link rel="stylesheet" href="//codeforces.org/s/85693/css/problem-statement.css" type="text/css" charset="utf-8" />
+    <link rel="stylesheet" href="//codeforces.org/s/85693/css/second-level-menu.css" type="text/css" charset="utf-8" />
+    <link rel="stylesheet" href="//codeforces.org/s/85693/css/roundbox.css" type="text/css" charset="utf-8" />
+    <link rel="stylesheet" href="//codeforces.org/s/85693/css/datatable.css" type="text/css" charset="utf-8" />
+    <link rel="stylesheet" href="//codeforces.org/s/85693/css/table-form.css" type="text/css" charset="utf-8" />
+    <link rel="stylesheet" href="//codeforces.org/s/85693/css/topic.css" type="text/css" charset="utf-8" />
+    <link rel="stylesheet" href="//codeforces.org/s/85693/css/jquery.jgrowl.css" type="text/css" charset="utf-8" />
+    <link rel="stylesheet" href="//codeforces.org/s/85693/css/facebox.css" type="text/css" charset="utf-8" />
+    <link rel="stylesheet" href="//codeforces.org/s/85693/css/jquery.wysiwyg.css" type="text/css" charset="utf-8" />
+    <link rel="stylesheet" href="//codeforces.org/s/85693/css/jquery.autocomplete.css" type="text/css" charset="utf-8" />
+    <link rel="stylesheet" href="//codeforces.org/s/85693/css/codeforces.datepick.css" type="text/css" charset="utf-8" />
+    <link rel="stylesheet" href="//codeforces.org/s/85693/css/colorbox.css" type="text/css" charset="utf-8" />
+    <link rel="stylesheet" href="//codeforces.org/s/85693/css/jquery.drafts.css" type="text/css" charset="utf-8" />
+        <link rel="stylesheet" href="//codeforces.org/s/85693/css/community.css" type="text/css" charset="utf-8" />
+        <link rel="stylesheet" href="//codeforces.org/s/85693/css/sidebar-menu.css" type="text/css" charset="utf-8" />
+
+    <!-- MathJax -->
+    <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {inlineMath: [['$$$','$$$']], displayMath: [['$$$$$$','$$$$$$']]}
+    });
+    MathJax.Hub.Register.StartupHook("End", function () {
+        Codeforces.runMathJaxListeners();
+    });
+    </script>
+    <script type="text/javascript" async
+            src="https://codeforces.com/mathjax.codeforces.org/MathJax.js?config=TeX-AMS_HTML-full"
+    >
+    </script>
+    <!-- /MathJax -->
+
+    <script type="text/javascript" src="//codeforces.org/s/85693/js/prettify/prettify.js"></script>
+    <script type="text/javascript" src="//codeforces.org/s/85693/js/moment-with-locales.min.js"></script>
+    <script type="text/javascript" src="//codeforces.org/s/85693/js/pushstream.js"></script>
+    <script type="text/javascript" src="//codeforces.org/s/85693/js/jquery.easing.min.js"></script>
+    <script type="text/javascript" src="//codeforces.org/s/85693/js/jquery.lavalamp.min.js"></script>
+    <script type="text/javascript" src="//codeforces.org/s/85693/js/jquery.jgrowl.js"></script>
+    <script type="text/javascript" src="//codeforces.org/s/85693/js/jquery.swipe.js"></script>
+    <script type="text/javascript" src="//codeforces.org/s/85693/js/jquery.hotkeys.js"></script>
+    <script type="text/javascript" src="//codeforces.org/s/85693/js/facebox.js"></script>
+    <script type="text/javascript" src="//codeforces.org/s/85693/js/jquery.wysiwyg.js"></script>
+    <script type="text/javascript" src="//codeforces.org/s/85693/js/controls/wysiwyg.colorpicker.js"></script>
+    <script type="text/javascript" src="//codeforces.org/s/85693/js/controls/wysiwyg.table.js"></script>
+    <script type="text/javascript" src="//codeforces.org/s/85693/js/controls/wysiwyg.image.js"></script>
+    <script type="text/javascript" src="//codeforces.org/s/85693/js/controls/wysiwyg.link.js"></script>
+    <script type="text/javascript" src="//codeforces.org/s/85693/js/jquery.autocomplete.js"></script>
+    <script type="text/javascript" src="//codeforces.org/s/85693/js/jquery.datepick.js"></script>
+    <script type="text/javascript" src="//codeforces.org/s/85693/js/jquery.ie6blocker.js"></script>
+    <script type="text/javascript" src="//codeforces.org/s/85693/js/jquery.colorbox-min.js"></script>
+    <script type="text/javascript" src="//codeforces.org/s/85693/js/jquery.ba-bbq.js"></script>
+    <script type="text/javascript" src="//codeforces.org/s/85693/js/jquery.drafts.js"></script>
+    <script type="text/javascript" src="//codeforces.org/s/85693/js/clipboard.min.js"></script>
+    <script type="text/javascript" src="//codeforces.org/s/85693/js/autosize.min.js"></script>
+    <script type="text/javascript" src="//codeforces.org/s/85693/js/sjcl.js"></script>
+    <script type="text/javascript" src="/scripts/5677bb7566b78d0cb69ed1034f5a5b71/en/codeforces-options.js"></script>
+    <script type="text/javascript" src="//codeforces.org/s/85693/js/codeforces.js?v=20160131"></script>
+    <script type="text/javascript" src="//codeforces.org/s/85693/js/EventCatcher.js?v=20160131"></script>
+    <script type="text/javascript" src="//codeforces.org/s/85693/js/preparedVerdictFormats-en.js"></script>
+    <script type="text/javascript" src="//codeforces.org/s/85693/js/confetti.min.js"></script>
+    <script type="text/javascript" src="//codeforces.org/s/85693/js/purify.min.js"></script>
+    <!--/CombineResourcesFilter-->
+
+    <link rel="stylesheet" href="//codeforces.org/s/85693/markitup/skins/markitup/style.css" type="text/css" charset="utf-8" />
+    <link rel="stylesheet" href="//codeforces.org/s/85693/markitup/sets/markdown/style.css" type="text/css" charset="utf-8" />
+
+
+    <script type="text/javascript" src="//codeforces.org/s/85693/markitup/jquery.markitup.js"></script>
+    <script type="text/javascript" src="//codeforces.org/s/85693/markitup/sets/markdown/set.js"></script>
+
+    <!--[if IE]>
+    <style>
+        #sidebar {
+            padding-left: 1em;
+            margin: 1em 1em 1em 0;
+        }
+    </style>
+    <![endif]-->
+
+
+
+
+</head>
+<body class=" "><span style='display:none;' class='csrf-token' data-csrf='a3100e6429b530e7d180ada942773eab'>&nbsp;</span>
+
+<!-- .notificationTextCleaner used in Codeforces.showAnnouncements() -->
+<div class="notificationTextCleaner" style="font-size: 0"></div>
+<div class="button-up" style="display: none; opacity: 0.7; width: 50px; height:100%; position: fixed; left: 0; top: 0; cursor: pointer; text-align: center; line-height: 35px; color: #d3dbe4; font-weight: bold; font-size: 3.0rem;"><i class="icon-circle-arrow-up"></i></div>
+<div class="verdictPrototypeDiv" style="display: none;"></div>
+
+<!-- Codeforces JavaScripts. -->
+<script type="text/javascript">
+    String.prototype.hashCode = function() {
+        var hash = 0, i, chr;
+        if (this.length === 0) return hash;
+        for (i = 0; i < this.length; i++) {
+            chr   = this.charCodeAt(i);
+            hash  = ((hash << 5) - hash) + chr;
+            hash |= 0; // Convert to 32bit integer
+        }
+        return hash;
+    };
+
+    var queryMobile = Codeforces.queryString.mobile;
+    if (queryMobile === "true" || queryMobile === "false") {
+        Codeforces.putToStorage("useMobile", queryMobile === "true");
+    } else {
+        var useMobile = Codeforces.getFromStorage("useMobile");
+        if (useMobile === true || useMobile === false) {
+            if (useMobile != false) {
+                Codeforces.redirect(Codeforces.updateUrlParameter(document.location.href, "mobile", useMobile));
+            }
+        }
+    }
+</script>
+
+<script type="text/javascript">
+    if (window.parent.frames.length > 0) {
+        window.stop();
+    }
+</script>
+
+
+
+
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+    (function () {
+        jQuery.expr[':'].containsCI = function(elem, index, match) {
+            return !match || !match.length || match.length < 4 || !match[3] || (
+                    elem.textContent || elem.innerText || jQuery(elem).text() || ''
+            ).toLowerCase().indexOf(match[3].toLowerCase()) >= 0;
+        }
+    }(jQuery));
+
+    $.ajaxPrefilter(function(options, originalOptions, xhr) {
+        var csrf = Codeforces.getCsrfToken();
+
+        if (csrf) {
+            var data = originalOptions.data;
+            if (originalOptions.data !== undefined) {
+                if (Object.prototype.toString.call(originalOptions.data) === '[object String]') {
+                    data = $.deparam(originalOptions.data);
+                }
+            } else {
+                data = {};
+            }
+            options.data = $.param($.extend(data, { csrf_token: csrf }));
+        }
+    });
+
+    window.getCodeforcesServerTime = function(callback) {
+        $.post("/data/time", {}, callback, "json");
+    }
+
+    window.updateTypography = function () {
+        $("div.ttypography code").addClass("tt");
+        $("div.ttypography pre>code").addClass("prettyprint").removeClass("tt");
+        $("div.ttypography table").addClass("bordertable");
+        prettyPrint();
+    }
+
+    $.ajaxSetup({ scriptCharset: "utf-8" ,contentType: "application/x-www-form-urlencoded; charset=UTF-8", headers: {
+        'X-Csrf-Token': Codeforces.getCsrfToken()
+    }, beforeSend: function(jqXHR, settings) {
+        const url = new URL(settings.url, window.location.href);
+        const urlHref = url.href;
+        url.searchParams.set('rv', Math.random().toString(36).substr(2, 9)); // Generate a random value
+        settings.url = url.href;
+    }});
+
+    window.updateTypography();
+    Codeforces.signForms();
+
+    setTimeout(function() {
+        $(".second-level-menu-list").lavaLamp({
+            fx: "backout",
+            speed: 700
+        });
+    }, 100);
+
+
+    Codeforces.countdown();
+    $("a[rel='photobox']").colorbox();
+
+        var count = 0;
+
+        function getDelay() {
+            var delay = 0;
+            var last = Codeforces.getFromStorage("LastOnlineTimeUpdaterMillis", 0);
+            if (last && last != null) {
+                var period = count < 20 ? 360 * 1000 : 600 * 1000; // 6 or 10 minutes.
+                delay = period - (new Date().getTime() - last);
+                if (delay < 0)
+                    delay = 0;
+            }
+            return delay;
+        }
+
+        window.setInterval(function () {
+            if (getDelay() <= 0 && count < 120) {
+                ++count;
+                Codeforces.ping("/data/update-online");
+            }
+        }, 5000);
+
+        var handle = "yamate11";
+        $("a.rated-user:contains(" + handle + "), span.participant:contains(" + handle + ")").each(function () {
+            if ($(this).text() == handle) {
+                var td = $(this).parent();
+                var tr = $(this).parent().parent();
+                if (td.is("td") && tr.is("tr") && !tr.hasClass("disable-highlight-self")) {
+                    info(handle);
+                    tr.addClass("highlighted-row");
+                }
+            }
+        });
+
+    function showAnnouncements(json) {
+        if (json.t === "a") {
+            setTimeout(function() {
+               Codeforces.showAnnouncements(json.d, "en");
+            }, Math.random() * 500);
+        }
+    }
+
+    function showEventCatcherUserMessage(json) {
+        if (json.t === "s") {
+            var points = json.d[5];
+            var passedTestCount = json.d[7];
+            var judgedTestCount = json.d[8];
+            var verdict = preparedVerdictFormats[json.d[12]];
+            var verdictPrototypeDiv = $(".verdictPrototypeDiv");
+            verdictPrototypeDiv.html(verdict);
+            if (judgedTestCount != null && judgedTestCount != undefined) {
+                verdictPrototypeDiv.find(".verdict-format-judged").text(judgedTestCount);
+            }
+            if (passedTestCount != null && passedTestCount != undefined) {
+                verdictPrototypeDiv.find(".verdict-format-passed").text(passedTestCount);
+            }
+            if (points != null && points != undefined) {
+                verdictPrototypeDiv.find(".verdict-format-points").text(points);
+            }
+            Codeforces.showMessage(verdictPrototypeDiv.text());
+        }
+    }
+
+    $(".clickable-title").each(function() {
+        var title = $(this).attr("data-title");
+        if (title) {
+            var tmp = document.createElement("DIV");
+            tmp.innerHTML = title;
+            $(this).attr("title", tmp.textContent || tmp.innerText || "");
+        }
+    });
+
+    $(".clickable-title").click(function() {
+        const title = $(this).attr("data-title");
+        const clazz = $(this).attr("data-clazz");
+        const props = {};
+        if (typeof (clazz) !== 'undefined') {
+            props['clazz'] = clazz;
+        }
+        if (title) {
+            Codeforces.alert(title, null, null, props);
+        } else {
+            Codeforces.alert($(this).attr("title"), null, null, props);
+        }
+    }).css("position", "relative").css("bottom", "3px");
+
+        Codeforces.showDelayedMessage();
+
+    Codeforces.reformatTimes();
+
+    //Codeforces.initializePubSub();
+    if (window.codeforcesOptions.subscribeServerUrl) {
+        window.eventCatcher = new EventCatcher(
+            window.codeforcesOptions.subscribeServerUrl,
+            [
+                Codeforces.getGlobalChannel(),
+                Codeforces.getUserChannel(),
+                Codeforces.getUserShowMessageChannel(),
+                Codeforces.getContestChannel(),
+                Codeforces.getParticipantChannel(),
+                Codeforces.getTalkChannel()
+            ]
+        );
+
+        if (Codeforces.getParticipantChannel()) {
+            window.eventCatcher.subscribe(Codeforces.getParticipantChannel(), function(json) {
+                showAnnouncements(json);
+            });
+        }
+
+        if (Codeforces.getContestChannel()) {
+            window.eventCatcher.subscribe(Codeforces.getContestChannel(), function(json) {
+                showAnnouncements(json);
+            });
+        }
+
+        if (Codeforces.getGlobalChannel()) {
+            window.eventCatcher.subscribe(Codeforces.getGlobalChannel(), function(json) {
+                showAnnouncements(json);
+            });
+        }
+
+        if (Codeforces.getUserChannel()) {
+            window.eventCatcher.subscribe(Codeforces.getUserChannel(), function(json) {
+                showAnnouncements(json);
+            });
+        }
+
+        if (Codeforces.getUserShowMessageChannel()) {
+            window.eventCatcher.subscribe(Codeforces.getUserShowMessageChannel(), function(json) {
+                showEventCatcherUserMessage(json);
+            });
+        }
+    }
+
+    Codeforces.setupContestTimes("/data/contests");
+    Codeforces.setupSpoilers();
+    Codeforces.setupTutorials("/data/problemTutorial");
+        });
+    </script>
+
+
+<div id="body">
+<div style="width: 950px; margin: 0 auto;" class="compact-problemset">
+    <div id="header" style="position: relative; margin: 0;">
+        <div style="float:left;">
+                  <a href="/"><img height="65" style="height: 65px;" src="//codeforces.org/s/85693/images/codeforces-sponsored-by-ton.png" alt="Codeforces"/></a>
+        </div>
+        <div class="lang">
+            <div style="text-align: right;">
+                <a href="?locale=en"><img src="//codeforces.org/s/85693/images/flags/24/gb.png" title="In English" alt="In English"/></a>
+                <a href="?locale=ru"><img src="//codeforces.org/s/85693/images/flags/24/ru.png" title="По-русски" alt="По-русски"/></a>
+            </div>
+        </div>
+        <br style="clear: both;"/>
+    </div>
+
+    <br style="clear: both;"/>
+
+    <div style="text-align: center; font-size: 1.8rem; margin-bottom: 0.5em;"
+         class="caption">Atto Round 1 (Codeforces Round 1041, Div. 1 + Div. 2)</div>
+    <div style="border-top: 1px solid #ccc; height: 1em;"></div>
+
+    <div class="problem-frames">
+        <div
+                    style="margin-bottom: 2em;"
+        >
+<style>
+        #facebox .content:has(.diff-popup) {
+            width: 90vw;
+            max-width: 120rem !important;
+        }
+
+        .testCaseMarker {
+            position: absolute;
+            font-weight: bold;
+            font-size: 1rem;
+        }
+
+        .diff-popup {
+            width: 90vw;
+            max-width: 120rem !important;
+            display: none;
+            overflow: auto;
+        }
+
+        .input-output-copier {
+            font-size: 1.2rem;
+            float: right;
+            color: #888 !important;
+            cursor: pointer;
+            border: 1px solid rgb(185, 185, 185);
+            padding: 3px;
+            margin: 1px;
+            line-height: 1.1rem;
+            text-transform: none;
+        }
+
+        .input-output-copier:hover {
+            background-color: #def;
+        }
+
+        .test-explanation textarea {
+            width: 100%;
+            height: 1.5em;
+        }
+
+        .pending-submission-message {
+            color: darkorange !important;
+        }
+    </style>
+    <script>
+        const OPENING_SPACE = String.fromCharCode(1001);
+        const CLOSING_SPACE = String.fromCharCode(1002);
+
+        const nodeToText = function (node, pre) {
+            let result = [];
+
+            if (node.tagName === "SCRIPT" || node.tagName === "math"
+                || (node.classList && node.classList.contains("input-output-copier")))
+                return [];
+
+            if (node.tagName === "NOBR") {
+                result.push(OPENING_SPACE);
+            }
+
+            if (node.nodeType === Node.TEXT_NODE) {
+                let s = node.textContent;
+                if (!pre) {
+                    s = s.replace(/\s+/g, " ");
+                }
+                if (s.length > 0) {
+                    result.push(s);
+                }
+            }
+
+            if (pre && node.tagName === "BR") {
+                result.push("\n");
+            }
+
+            node.childNodes.forEach(function (child) {
+                result.push(nodeToText(child, node.tagName === "PRE").join(""));
+            });
+
+            if (node.tagName === "DIV"
+                || node.tagName === "P"
+                || node.tagName === "PRE"
+                || node.tagName === "UL"
+                || node.tagName === "LI"
+            ) {
+                result.push("\n");
+            }
+
+            if (node.tagName === "NOBR") {
+                result.push(CLOSING_SPACE);
+            }
+
+            return result;
+        }
+
+        const isSpecial = function (c) {
+            return c === ',' || c === '.' || c === ';' || c === ')' || c === ' ';
+        }
+
+        const convertStatementToText = function(statmentNode) {
+            const text = nodeToText(statmentNode, false).join("").replace(/ +/g, " ").replace(/\n\n+/g, "\n\n");
+            let result = [];
+            for (let i = 0; i < text.length; i++) {
+                const c = text.charAt(i);
+                if (c === OPENING_SPACE) {
+                    if (!((i > 0 && text.charAt(i - 1) === '(') || (result.length > 0 && result[result.length - 1] === ' '))) {
+                        result.push('+');
+                    }
+                } else if (c === CLOSING_SPACE) {
+                    if (!(i + 1 < text.length && isSpecial(text.charAt(i + 1)))) {
+                        result.push('-');
+                    }
+                } else {
+                    result.push(c);
+                }
+            }
+            return result.join("").split("\n").map(value => value.trim()).join("\n");
+        };
+    </script>
+    <div class="diff-popup">
+    </div>
+
+<div class="problemindexholder" problemindex="A" data-uuid="ps_bd96cdbb9f35d555fb468a80da46b931468d9acb">
+    <div style="display: none; margin:1em 0;text-align: center; position: relative;" class="alert alert-info diff-notifier">
+        <div>The problem statement has recently been changed. <a class="view-changes" href="#">View the changes.</a></div>
+        <span class="diff-notifier-close" style="position: absolute; top: 0.2em; right: 0.3em; cursor: pointer; font-size: 1.4em;">&times;</span>
+    </div>
+        <div class="ttypography"><div class="problem-statement"><div class="header"><div class="title">A. Mix Mex Max</div><div class="time-limit"><div class="property-title">time limit per test</div>1 second</div><div class="memory-limit"><div class="property-title">memory limit per test</div>256 megabytes</div><div class="input-file input-standard"><div class="property-title">input</div>standard input</div><div class="output-file output-standard"><div class="property-title">output</div>standard output</div></div><div><p> </p><p>You are given an array $$$a$$$ consisting of $$$n$$$ non-negative integers. However, some elements of $$$a$$$ are missing, and they are represented by $$$−1$$$.</p><p>We define that the array $$$a$$$ is <span class="tex-font-style-it">good</span> if and only if the following holds for every $$$1 \leq i \leq n-2$$$:</p><p>$$$$$$ \operatorname{mex}([a_i, a_{i+1}, a_{i+2}]) = \max([a_i, a_{i+1}, a_{i+2}]) - \min([a_i, a_{i+1}, a_{i+2}]), $$$$$$</p><p>where $$$\operatorname{mex}(b)$$$ denotes the minimum excluded (MEX)$$$^{\text{∗}}$$$ of the integers in $$$b$$$. </p><p>You have to determine whether you can make $$$a$$$ <span class="tex-font-style-it">good</span> after replacing each $$$-1$$$ in $$$a$$$ with a non-negative integer.</p><div class="statement-footnote"><p>$$$^{\text{∗}}$$$The minimum excluded (MEX) of a collection of integers $$$b_1, b_2, \ldots, b_k$$$ is defined as the smallest non-negative integer $$$x$$$ which does not occur in the collection $$$b$$$.  For example, $$$\operatorname{mex}([2,2,1])=0$$$ because $$$0$$$ does not belong to the array, and $$$\operatorname{mex}([0,3,1,2])=4$$$ because $$$0$$$, $$$1$$$, $$$2$$$, and $$$3$$$ appear in the array, but $$$4$$$ does not.</p></div></div><div class="input-specification"><div class="section-title">Input</div><p>Each test contains multiple test cases. The first line contains the number of test cases $$$t$$$ ($$$1 \le t \le 500$$$). The description of the test cases follows. </p><p>The first line of each test case contains a single integer $$$n$$$ ($$$3 \leq n \leq 100$$$) — the length of $$$a$$$.</p><p>The second line contains $$$n$$$ integers $$$a_1,a_2,\ldots,a_n$$$ ($$$-1 \leq a_i \leq 100$$$) — the elements of $$$a$$$. $$$a_i = -1$$$ denotes that this element is missing.</p></div><div class="output-specification"><div class="section-title">Output</div><p>For each test case, output &quot;<span class="tex-font-style-tt">YES</span>&quot; if it is possible to make $$$a$$$ <span class="tex-font-style-it">good</span>, and &quot;<span class="tex-font-style-tt">NO</span>&quot; otherwise.</p><p>You can output the answer in any case (upper or lower). For example, the strings &quot;<span class="tex-font-style-tt">yEs</span>&quot;, &quot;<span class="tex-font-style-tt">yes</span>&quot;, &quot;<span class="tex-font-style-tt">Yes</span>&quot;, and &quot;<span class="tex-font-style-tt">YES</span>&quot; will be recognized as positive responses.</p></div><div class="sample-tests"><div class="section-title">Example</div><div class="sample-test"><div class="input"><div class="title">Input</div><pre>
+<div class="test-example-line test-example-line-even test-example-line-0">8</div><div class="test-example-line test-example-line-odd test-example-line-1">3</div><div class="test-example-line test-example-line-odd test-example-line-1">-1 -1 -1</div><div class="test-example-line test-example-line-even test-example-line-2">5</div><div class="test-example-line test-example-line-even test-example-line-2">1 1 1 1 0</div><div class="test-example-line test-example-line-odd test-example-line-3">6</div><div class="test-example-line test-example-line-odd test-example-line-3">5 5 1 -1 -1 1</div><div class="test-example-line test-example-line-even test-example-line-4">4</div><div class="test-example-line test-example-line-even test-example-line-4">-1 -1 0 -1</div><div class="test-example-line test-example-line-odd test-example-line-5">4</div><div class="test-example-line test-example-line-odd test-example-line-5">-1 1 1 -1</div><div class="test-example-line test-example-line-even test-example-line-6">3</div><div class="test-example-line test-example-line-even test-example-line-6">3 3 -1</div><div class="test-example-line test-example-line-odd test-example-line-7">5</div><div class="test-example-line test-example-line-odd test-example-line-7">0 0 0 0 0</div><div class="test-example-line test-example-line-even test-example-line-8">7</div><div class="test-example-line test-example-line-even test-example-line-8">3 0 1 4 -1 2 3</div></pre></div><div class="output"><div class="title">Output</div><pre>
+YES
+NO
+NO
+NO
+YES
+YES
+NO
+NO
+</pre></div></div></div><div class="note"><div class="section-title">Note</div><p>In the first test case, we can put $$$ a_1 = a_2 = a_3 = 1 $$$. Then,</p><ul> <li> $$$\operatorname{mex}([a_1, a_2, a_3]) = \operatorname{mex}([1, 1, 1]) = 0$$$; </li><li> $$$\max([a_1, a_2, a_3]) = \max([1, 1, 1]) = 1$$$; </li><li> $$$\min([a_1, a_2, a_3]) = \min([1, 1, 1]) = 1$$$. </li></ul><p>And $$$0 = 1 - 1$$$. Thus, the array $$$a$$$ is <span class="tex-font-style-it">good</span>.</p><p>In the second test case, none of the elements in $$$a$$$ is missing. And we have</p><ul> <li> $$$\operatorname{mex}([a_1, a_2, a_3]) = \max([a_1, a_2, a_3]) - \min([a_1, a_2, a_3])$$$, </li><li> $$$\operatorname{mex}([a_2, a_3, a_4]) = \max([a_2, a_3, a_4]) - \min([a_2, a_3, a_4])$$$, but </li><li> $$$\operatorname{mex}([a_3, a_4, a_5]) \ne \max([a_3, a_4, a_5]) - \min([a_3, a_4, a_5])$$$. </li></ul><p>Thus, the array $$$a$$$ cannot be <span class="tex-font-style-it">good</span>.</p><p>In the third test case, none of $$$a_1$$$, $$$a_2$$$, or $$$a_3$$$ is missing. However, </p><ul> <li> $$$\operatorname{mex}([a_1, a_2, a_3]) = \operatorname{mex}([5, 5, 1]) = 0$$$; </li><li> $$$\max([a_1, a_2, a_3]) = \max([5, 5, 1]) = 5$$$; </li><li> $$$\min([a_1, a_2, a_3]) = \min([5, 5, 1]) = 1$$$. </li></ul><p>And $$$0\ne 5 - 1$$$. So the array $$$a$$$ cannot be <span class="tex-font-style-it">good</span>, no matter how you replace the missing elements.</p></div></div><p>  </p></div>
+</div>
+
+    <script>
+        $(function () {
+            Codeforces.addMathJaxListener(function () {
+                let $problem = $("div[problemindex=A]");
+                let uuid = $problem.attr("data-uuid");
+                let statementText = convertStatementToText($problem.find(".ttypography").get(0));
+
+                let previousStatementText = Codeforces.getFromStorage(uuid);
+                if (previousStatementText) {
+                    if (previousStatementText !== statementText) {
+                        $problem.find(".diff-notifier").show();
+
+                        $problem.find(".diff-notifier-close").click(function() {
+                            Codeforces.putToStorageTtl(uuid, statementText, 6 * 60 * 60);
+                            $problem.find(".diff-notifier").hide();
+                        });
+
+                        $problem.find("a.view-changes").click(function() {
+                            $.post("/data/diff", {action: "getDiff", a: previousStatementText, b: statementText}, function (result) {
+                                if (result["success"] === "true") {
+                                    Codeforces.facebox(".diff-popup", "//codeforces.org/s/85693");
+                                    $("#facebox .diff-popup").html(result["diff"]);
+                                }
+                            }, "json");
+                        });
+                    }
+                } else {
+                    Codeforces.putToStorageTtl(uuid, statementText, 6 * 60 * 60);
+                }
+            });
+        });
+    </script>
+
+
+<script type="text/javascript">
+    $(document).ready(function () {
+            window.changedTests = new Set();
+
+        const inputFileDiv = $("div.input-file");
+        const inputFile = inputFileDiv.text();
+        const outputFileDiv = $("div.output-file");
+        const outputFile = outputFileDiv.text();
+
+
+        if (!endsWith(inputFile, "standard input")
+            && !endsWith(inputFile, "standard input")) {
+            inputFileDiv.attr("style", "font-weight: bold");
+        }
+
+        if (!endsWith(outputFile, "standard output")
+            && !endsWith(outputFile, "standard output")) {
+            outputFileDiv.attr("style", "font-weight: bold");
+        }
+
+        const titleDiv = $("div.header div.title");
+
+
+
+        String.prototype.replaceAll = function (search, replace) {
+            return this.split(search).join(replace);
+        };
+
+        $(".sample-test .title").each(function () {
+            const preId = ("id" + Math.random()).replaceAll(".", "0");
+            const cpyId = ("id" + Math.random()).replaceAll(".", "0");
+
+            $(this).parent().find("pre").attr("id", preId);
+            const $copy = $("<div title='Copy' data-clipboard-target='#" + preId + "' id='" + cpyId + "' class='input-output-copier'>Copy</div>");
+            $(this).append($copy);
+
+            const clipboard = new Clipboard('#' + cpyId, {
+                text: function (trigger) {
+                    const pre = document.querySelector('#' + preId);
+                    const lines = pre.querySelectorAll(".test-example-line");
+                    return Codeforces.filterClipboardText(pre.innerText, lines.length);
+                }
+            });
+
+            const isInput = $(this).parent().hasClass("input");
+
+            clipboard.on('success', function (e) {
+                if (isInput) {
+                    Codeforces.showMessage("The example input has been copied into the clipboard");
+                } else {
+                    Codeforces.showMessage("The example output has been copied into the clipboard");
+                }
+                e.clearSelection();
+            });
+        });
+
+        $(".test-form-item input").change(function () {
+            addPendingSubmissionMessage($($(this).closest("form")), "You changed the answer, do not forget to submit it if you want to save the changes");
+            const index = $(this).closest(".problemindexholder").attr("problemindex");
+            let test = "";
+            $(this).closest("form input").each(function () {
+                const test_ = $(this).attr("name");
+                if (test_ && test_.substring(0, 4) === "test") {
+                    test = test_;
+                }
+            });
+            if (index.length > 0 && test.length > 0) {
+                const indexTest = index + "::" + test;
+                window.changedTests.add(indexTest);
+            }
+        });
+
+        $(window).on('beforeunload', function () {
+            if (window.changedTests.size > 0) {
+                return 'Dialog text here';
+            }
+        });
+
+        autosize($('.test-explanation textarea'));
+
+        $(".test-example-line").hover(function() {
+            $(this).attr("class").split(" ").forEach((clazz) => {
+                if (clazz.substr(0, "test-example-line-".length) === "test-example-line-") {
+                    let end = clazz.substr("test-example-line-".length);
+                    if (end !== "even" && end !== "odd" && end !== "0") {
+                        let top = 1E20;
+                        let left = 1E20;
+                        let problem = $(this).closest(".problemindexholder");
+                        $(this).closest(".input").find("." + clazz).css("background-color", "#FFFDE7").each(function() {
+                            top = Math.min(top, $(this).offset().top);
+                            left = Math.min(left, $(this).offset().left);
+                        });
+                        let testCaseMarker = problem.find(".testCaseMarker_" + end);
+                        if (testCaseMarker.length === 0) {
+                            const html = "<div class=\"testCaseMarker testCaseMarker_" + end + " notice\"></div>";
+                            problem.append($(html));
+                            testCaseMarker = problem.find(".testCaseMarker_" + end);
+                        }
+                        if (testCaseMarker) {
+                            testCaseMarker.show()
+                                    .offset({top, left: left - 20})
+                                    .text(end);
+                        }
+                    }
+                }
+            });
+        }, function() {
+            $(this).attr("class").split(" ").forEach((clazz) => {
+                if (clazz.substr(0, "test-example-line-".length) === "test-example-line-") {
+                    let end = clazz.substr("test-example-line-".length);
+                    if (end !== "even" && end !== "odd" && end !== "0") {
+                        $("." + clazz).css("background-color", "");
+                        $(this).closest(".problemindexholder").find(".testCaseMarker_" + end).hide();
+                    }
+                }
+            });
+        });
+
+    });
+</script>        </div>
+        <div
+                    style="margin-bottom: 2em;"
+        >
+<div class="problemindexholder" problemindex="B" data-uuid="ps_61d36b87e9ed89064107ad715b2a21df7181f676">
+    <div style="display: none; margin:1em 0;text-align: center; position: relative;" class="alert alert-info diff-notifier">
+        <div>The problem statement has recently been changed. <a class="view-changes" href="#">View the changes.</a></div>
+        <span class="diff-notifier-close" style="position: absolute; top: 0.2em; right: 0.3em; cursor: pointer; font-size: 1.4em;">&times;</span>
+    </div>
+        <div class="ttypography"><div class="problem-statement"><div class="header"><div class="title">B. Hamiiid, Haaamid... Hamid?</div><div class="time-limit"><div class="property-title">time limit per test</div>1 second</div><div class="memory-limit"><div class="property-title">memory limit per test</div>256 megabytes</div><div class="input-file input-standard"><div class="property-title">input</div>standard input</div><div class="output-file output-standard"><div class="property-title">output</div>standard output</div></div><div><p> </p><p>Mani has locked Hamid in a $$$1 \times n$$$ grid. Initially, some cells of the grid contain walls and the rest are empty, and Hamid is in an empty cell.</p><p>In each day, the following events happen in order:</p><ol><li> Mani selects an empty cell and builds a wall in that cell. Note that he can <span class="tex-font-style-bf">not</span> build a wall in the cell which Hamid currently is at; </li><li> Hamid selects a direction (left or right), then<ul><li> If there are no walls in that direction, he will escape the grid; </li><li> Otherwise, he will move to the nearest wall in that direction and destroy that wall. Hamid is at the position of the destroyed wall after this day.</li></ul></li></ol><p>Here is an example of a possible sequence of actions when $$$n=6$$$:</p><center> <img class="tex-graphics" src="https://espresso.codeforces.com/ab63de6cab77bb94ac6f75d262ea734dd81cc4c7.png" style="max-width: 100.0%;max-height: 100.0%;" />  </center><p>Hamid is <span class="tex-font-style-bf">always</span> aware of where the walls are. He wants to minimize the number of days that he needs to escape the grid, while Mani wants to maximize it.</p><p>You have to determine the number of days Hamid needs to escape the grid if they both act optimally.</p></div><div class="input-specification"><div class="section-title">Input</div><p>Each test contains multiple test cases. The first line contains the number of test cases $$$t$$$ ($$$1 \le t \le 10^4$$$). The description of the test cases follows. </p><p>The first line of each test case contains two integers $$$n$$$ and $$$x$$$ ($$$2 \leq n \leq 2 \cdot 10^5$$$, $$$1 \leq x \leq n$$$) — the size of the grid and the initial position of Hamid. He is at the $$$x$$$-th cell from left to right initially.</p><p>The second line contains a string $$$s$$$ of length $$$n$$$ ($$$s_i=\texttt{&quot;#&quot;}$$$ or $$$\texttt{&quot;.&quot;}$$$) — the initial state of the grid. The $$$i$$$-th cell of the grid contains a wall if $$$s_i= \texttt{&quot;#&quot;}$$$, and it is empty if $$$s_i=\texttt{&quot;.&quot;}$$$.</p><p>It is guaranteed that the $$$x$$$-th cell is empty, and there are at least two empty cells in the grid.</p><p>It is guaranteed that the sum of $$$n$$$ over all test cases does not exceed $$$2 \cdot 10^5$$$. </p></div><div class="output-specification"><div class="section-title">Output</div><p>For each test case, output a single integer — the number of days Hamid needs to escape the grid if they both act optimally.</p></div><div class="sample-tests"><div class="section-title">Example</div><div class="sample-test"><div class="input"><div class="title">Input</div><pre>
+<div class="test-example-line test-example-line-even test-example-line-0">4</div><div class="test-example-line test-example-line-odd test-example-line-1">3 1</div><div class="test-example-line test-example-line-odd test-example-line-1">..#</div><div class="test-example-line test-example-line-even test-example-line-2">4 2</div><div class="test-example-line test-example-line-even test-example-line-2">....</div><div class="test-example-line test-example-line-odd test-example-line-3">5 3</div><div class="test-example-line test-example-line-odd test-example-line-3">##..#</div><div class="test-example-line test-example-line-even test-example-line-4">6 4</div><div class="test-example-line test-example-line-even test-example-line-4">#...#.</div></pre></div><div class="output"><div class="title">Output</div><pre>
+1
+1
+3
+3
+</pre></div></div></div><div class="note"><div class="section-title">Note</div><p>In the first test case, Mani must build a wall in cell $$$2$$$, so Hamid can escape from the left side of the grid on the first day.</p><p>In the second test case, if Mani places the wall to the left of Hamid, Hamid can escape from the right. And if the wall is to Hamid's right, he can escape from the left. Thus, the answer is $$$1$$$.</p><p>In the third test case:</p><center> <img class="tex-graphics" src="https://espresso.codeforces.com/07a95f34ca3e675f2017588a71e411156b3efc40.png" style="max-width: 100.0%;max-height: 100.0%;" />  </center><p>It can be shown that both players acted optimally in the above illustration.</p><p>In the fourth test case, we have shown an example of actions in the statements. Note that the players did <span class="tex-font-style-bf">not</span> act optimally in this example.</p></div></div><p>  </p></div>
+</div>
+
+    <script>
+        $(function () {
+            Codeforces.addMathJaxListener(function () {
+                let $problem = $("div[problemindex=B]");
+                let uuid = $problem.attr("data-uuid");
+                let statementText = convertStatementToText($problem.find(".ttypography").get(0));
+
+                let previousStatementText = Codeforces.getFromStorage(uuid);
+                if (previousStatementText) {
+                    if (previousStatementText !== statementText) {
+                        $problem.find(".diff-notifier").show();
+
+                        $problem.find(".diff-notifier-close").click(function() {
+                            Codeforces.putToStorageTtl(uuid, statementText, 6 * 60 * 60);
+                            $problem.find(".diff-notifier").hide();
+                        });
+
+                        $problem.find("a.view-changes").click(function() {
+                            $.post("/data/diff", {action: "getDiff", a: previousStatementText, b: statementText}, function (result) {
+                                if (result["success"] === "true") {
+                                    Codeforces.facebox(".diff-popup", "//codeforces.org/s/85693");
+                                    $("#facebox .diff-popup").html(result["diff"]);
+                                }
+                            }, "json");
+                        });
+                    }
+                } else {
+                    Codeforces.putToStorageTtl(uuid, statementText, 6 * 60 * 60);
+                }
+            });
+        });
+    </script>
+
+
+<script type="text/javascript">
+    $(document).ready(function () {
+
+        const inputFileDiv = $("div.input-file");
+        const inputFile = inputFileDiv.text();
+        const outputFileDiv = $("div.output-file");
+        const outputFile = outputFileDiv.text();
+
+
+        if (!endsWith(inputFile, "standard input")
+            && !endsWith(inputFile, "standard input")) {
+            inputFileDiv.attr("style", "font-weight: bold");
+        }
+
+        if (!endsWith(outputFile, "standard output")
+            && !endsWith(outputFile, "standard output")) {
+            outputFileDiv.attr("style", "font-weight: bold");
+        }
+
+        const titleDiv = $("div.header div.title");
+
+
+
+
+    });
+</script>        </div>
+        <div
+                    style="margin-bottom: 2em;"
+        >
+<div class="problemindexholder" problemindex="C" data-uuid="ps_2687cd6f5157659604c0fc1e6c388add4eced549">
+    <div style="display: none; margin:1em 0;text-align: center; position: relative;" class="alert alert-info diff-notifier">
+        <div>The problem statement has recently been changed. <a class="view-changes" href="#">View the changes.</a></div>
+        <span class="diff-notifier-close" style="position: absolute; top: 0.2em; right: 0.3em; cursor: pointer; font-size: 1.4em;">&times;</span>
+    </div>
+        <div class="ttypography"><div class="problem-statement"><div class="header"><div class="title">C. Trip Shopping</div><div class="time-limit"><div class="property-title">time limit per test</div>2 seconds</div><div class="memory-limit"><div class="property-title">memory limit per test</div>256 megabytes</div><div class="input-file input-standard"><div class="property-title">input</div>standard input</div><div class="output-file output-standard"><div class="property-title">output</div>standard output</div></div><div><p> </p><p><span class="tex-font-style-it">Ali and Bahamin decided to spend their summer vacation on the beautiful southern coasts of Iran. They also agreed to do some shopping during the trip — but instead of setting a fixed budget, they decided to determine how much they would spend by playing a game.</span></p><p>The game is played on two arrays $$$a$$$ and $$$b$$$, each containing $$$n$$$ integers.</p><p>The game will last for $$$k$$$ rounds. In one round: </p><ul> <li> First, Ali selects two indices $$$i$$$ and $$$j$$$ ($$$1 \leq i &lt; j \leq n$$$); </li><li> Then, Bahamin rearranges the four integers $$$a_i$$$, $$$a_j$$$, $$$b_i$$$, and $$$b_j$$$ <span class="tex-font-style-bf">arbitrarily</span>. Note that Bahamin can swap numbers between two arrays. He can also keep the two arrays unchanged. </li></ul> <p>After all the $$$k$$$ rounds, the <span class="tex-font-style-it">value</span> of the game is defined as $$$v=\sum\limits_{i=1}^{n} |a_i-b_i|$$$. Ali and Bahamin will spend exactly $$$v$$$ coins during their trip.</p><p>However, their goals are quite different: </p><ul> <li> Ali wants to spend as little as possible, that is, to minimize $$$v$$$; </li><li> Bahamin wants to spend as much as possible, that is, to maximize $$$v$$$. </li></ul><p>You have to find the final amount of coins they will spend if both Ali and Bahamin play optimally.</p></div><div class="input-specification"><div class="section-title">Input</div><p>Each test contains multiple test cases. The first line contains the number of test cases $$$t$$$ ($$$1 \le t \le 10^4$$$). The description of the test cases follows. </p><p>The first line of each test case contains two integers $$$n$$$ and $$$k$$$ ($$$2 \leq n \leq 2 \cdot 10^5$$$, $$$1 \leq k \leq n$$$) — the length of $$$a$$$ and $$$b$$$, and the number of rounds.</p><p>The second line contains $$$n$$$ integers $$$a_1,a_2,\ldots,a_n$$$ ($$$1 \leq a_i \leq 10^9$$$) — the elements of $$$a$$$.</p><p>The third line contains $$$n$$$ integers $$$b_1,b_2,\ldots,b_n$$$ ($$$1 \leq b_i \leq 10^9$$$) — the elements of $$$b$$$.</p><p>It is guaranteed that the sum of $$$n$$$ over all test cases does not exceed $$$2 \cdot 10^5$$$. </p></div><div class="output-specification"><div class="section-title">Output</div><p>For each test case, output a single integer — the final amount of coins they will spend if both Ali and Bahamin play optimally.</p></div><div class="sample-tests"><div class="section-title">Example</div><div class="sample-test"><div class="input"><div class="title">Input</div><pre>
+<div class="test-example-line test-example-line-even test-example-line-0">5</div><div class="test-example-line test-example-line-odd test-example-line-1">2 1</div><div class="test-example-line test-example-line-odd test-example-line-1">1 7</div><div class="test-example-line test-example-line-odd test-example-line-1">3 5</div><div class="test-example-line test-example-line-even test-example-line-2">3 2</div><div class="test-example-line test-example-line-even test-example-line-2">1 5 3</div><div class="test-example-line test-example-line-even test-example-line-2">6 2 4</div><div class="test-example-line test-example-line-odd test-example-line-3">5 4</div><div class="test-example-line test-example-line-odd test-example-line-3">1 16 10 10 16</div><div class="test-example-line test-example-line-odd test-example-line-3">3 2 2 15 15</div><div class="test-example-line test-example-line-even test-example-line-4">4 1</div><div class="test-example-line test-example-line-even test-example-line-4">23 1 18 4</div><div class="test-example-line test-example-line-even test-example-line-4">19 2 10 3</div><div class="test-example-line test-example-line-odd test-example-line-5">10 10</div><div class="test-example-line test-example-line-odd test-example-line-5">4 3 2 100 4 1 2 4 5 5</div><div class="test-example-line test-example-line-odd test-example-line-5">1 200 4 5 6 1 10 2 3 4</div></pre></div><div class="output"><div class="title">Output</div><pre>
+8
+9
+30
+16
+312
+</pre></div></div></div><div class="note"><div class="section-title">Note</div><p>In the first test case, Ali can only choose $$$(i, j) = (1, 2)$$$, and Bahamin can rearrange all four numbers. Thus, he can assign $$$a = [5, 1]$$$ and $$$b = [3, 7]$$$. And the <span class="tex-font-style-it">value</span> of the game will be $$$v=|5 - 3| + |1 - 7| = 8$$$. It can be shown that this is the maximum possible <span class="tex-font-style-it">value</span> reachable for Bahamin — Other arrangements like $$$a = [5, 7],\space b = [1, 3]$$$ are also possible, but they don't have larger values. </p><p>In the second test case, the best strategy for Bahamin is to keep the two arrays unchanged, regardless of what indices Ali selects. And the <span class="tex-font-style-it">value</span> of the game will be $$$v=|1 - 6| + |5 - 2| + |3 - 4| = 9$$$. </p></div></div><p>  </p></div>
+</div>
+
+    <script>
+        $(function () {
+            Codeforces.addMathJaxListener(function () {
+                let $problem = $("div[problemindex=C]");
+                let uuid = $problem.attr("data-uuid");
+                let statementText = convertStatementToText($problem.find(".ttypography").get(0));
+
+                let previousStatementText = Codeforces.getFromStorage(uuid);
+                if (previousStatementText) {
+                    if (previousStatementText !== statementText) {
+                        $problem.find(".diff-notifier").show();
+
+                        $problem.find(".diff-notifier-close").click(function() {
+                            Codeforces.putToStorageTtl(uuid, statementText, 6 * 60 * 60);
+                            $problem.find(".diff-notifier").hide();
+                        });
+
+                        $problem.find("a.view-changes").click(function() {
+                            $.post("/data/diff", {action: "getDiff", a: previousStatementText, b: statementText}, function (result) {
+                                if (result["success"] === "true") {
+                                    Codeforces.facebox(".diff-popup", "//codeforces.org/s/85693");
+                                    $("#facebox .diff-popup").html(result["diff"]);
+                                }
+                            }, "json");
+                        });
+                    }
+                } else {
+                    Codeforces.putToStorageTtl(uuid, statementText, 6 * 60 * 60);
+                }
+            });
+        });
+    </script>
+
+
+<script type="text/javascript">
+    $(document).ready(function () {
+
+        const inputFileDiv = $("div.input-file");
+        const inputFile = inputFileDiv.text();
+        const outputFileDiv = $("div.output-file");
+        const outputFile = outputFileDiv.text();
+
+
+        if (!endsWith(inputFile, "standard input")
+            && !endsWith(inputFile, "standard input")) {
+            inputFileDiv.attr("style", "font-weight: bold");
+        }
+
+        if (!endsWith(outputFile, "standard output")
+            && !endsWith(outputFile, "standard output")) {
+            outputFileDiv.attr("style", "font-weight: bold");
+        }
+
+        const titleDiv = $("div.header div.title");
+
+
+
+
+    });
+</script>        </div>
+        <div
+                    style="margin-bottom: 2em;"
+        >
+<div class="problemindexholder" problemindex="D" data-uuid="ps_b1e411327a526a79ba95abb706b636a69d21afa1">
+    <div style="display: none; margin:1em 0;text-align: center; position: relative;" class="alert alert-info diff-notifier">
+        <div>The problem statement has recently been changed. <a class="view-changes" href="#">View the changes.</a></div>
+        <span class="diff-notifier-close" style="position: absolute; top: 0.2em; right: 0.3em; cursor: pointer; font-size: 1.4em;">&times;</span>
+    </div>
+        <div class="ttypography"><div class="problem-statement"><div class="header"><div class="title">D. Root was Built by Love, Broken by Destiny</div><div class="time-limit"><div class="property-title">time limit per test</div>2 seconds</div><div class="memory-limit"><div class="property-title">memory limit per test</div>256 megabytes</div><div class="input-file input-standard"><div class="property-title">input</div>standard input</div><div class="output-file output-standard"><div class="property-title">output</div>standard output</div></div><div><p>Heartfall River runs horizontally through Destinyland and divides it into the northern and southern sides.</p><p>Engineer Root wants to build $$$n$$$ houses along the river, numbered from $$$1$$$ to $$$n$$$. All houses on the northern side and all houses on the southern side must lie along straight lines parallel to Heartfall River.</p><p>There will be $$$m$$$ bridges, with the $$$i$$$-th bridge connecting house $$$u_i$$$ and house $$$v_i$$$ ($$$u_i \ne v_i$$$). It is guaranteed that all $$$n$$$ houses are connected by these bridges, that is, you can travel from any house to any other by crossing bridges. Also, there are no two bridges connecting the same pair of houses.</p><p>Root wants to know how many ways there are to arrange the $$$n$$$ houses along the river, modulo $$$10^9+7$$$, such that the following conditions hold for the planned $$$m$$$ bridges:</p><ul> <li> For every bridge, the two houses it connects lie on opposite sides of the river; </li><li> The bridges do not cross when drawn as straight lines between the houses. </li></ul><center> <img class="tex-graphics" src="https://espresso.codeforces.com/f06223cbf8cd2173865938cd07af3b413993629e.png" style="zoom: 50.0%;max-width: 100.0%;max-height: 100.0%;" /> <span class="tex-font-size-small">A possible arrangement of the houses when $$$n=5$$$.</span> </center><p>Two arrangements are considered different if at least one of the following conditions holds:</p><ul> <li> There exists a house that lies on a different side in each arrangement; </li><li> There exist two houses $$$a$$$ and $$$b$$$ that are on the same side in both arrangements, but $$$a$$$ comes before $$$b$$$ in one arrangement and $$$b$$$ comes before $$$a$$$ in the other. </li></ul><p>Since Root is distracted by his ex, whom destiny separated from him, he asks you to calculate the number of ways to arrange the houses along the river, modulo $$$10^9+7$$$.</p></div><div class="input-specification"><div class="section-title">Input</div><p>Each test contains multiple test cases. The first line contains the number of test cases $$$t$$$ ($$$1 \le t \le 10^4$$$). The description of the test cases follows. </p><p>The first line of each test case contains two integers $$$n$$$ and $$$m$$$ ($$$2 \leq n \leq 2 \cdot 10^5$$$, $$$n-1 \leq m \leq \min\left(\frac{n(n-1)}{2}, 2 \cdot 10^5\right)$$$) — the number of houses and the number of bridges.</p><p>Then $$$m$$$ lines follow, the $$$i$$$-th line containing two integers $$$u_i$$$ and $$$v_i$$$ ($$$1 \leq u_i,v_i \leq n$$$, $$$u_i\ne v_i$$$) — the two houses that the $$$i$$$-th bridge connects.</p><p>It is guaranteed that all the $$$n$$$ houses are connected by the bridges, and there are no two bridges connecting the same pair of houses.</p><p>It is guaranteed that the sum of $$$n$$$ over all test cases does not exceed $$$2 \cdot 10^5$$$, and the sum of $$$m$$$ over all test cases does not exceed $$$2 \cdot 10^5$$$.</p></div><div class="output-specification"><div class="section-title">Output</div><p>For each test case, output a single integer — the number of ways to arrange the $$$n$$$ houses along the river, modulo $$$10^9+7$$$.</p></div><div class="sample-tests"><div class="section-title">Example</div><div class="sample-test"><div class="input"><div class="title">Input</div><pre>
+<div class="test-example-line test-example-line-even test-example-line-0">4</div><div class="test-example-line test-example-line-odd test-example-line-1">2 1</div><div class="test-example-line test-example-line-odd test-example-line-1">1 2</div><div class="test-example-line test-example-line-even test-example-line-2">3 3</div><div class="test-example-line test-example-line-even test-example-line-2">1 2</div><div class="test-example-line test-example-line-even test-example-line-2">1 3</div><div class="test-example-line test-example-line-even test-example-line-2">2 3</div><div class="test-example-line test-example-line-odd test-example-line-3">5 4</div><div class="test-example-line test-example-line-odd test-example-line-3">1 2</div><div class="test-example-line test-example-line-odd test-example-line-3">1 3</div><div class="test-example-line test-example-line-odd test-example-line-3">3 4</div><div class="test-example-line test-example-line-odd test-example-line-3">3 5</div><div class="test-example-line test-example-line-even test-example-line-4">4 3</div><div class="test-example-line test-example-line-even test-example-line-4">1 2</div><div class="test-example-line test-example-line-even test-example-line-4">1 3</div><div class="test-example-line test-example-line-even test-example-line-4">1 4</div></pre></div><div class="output"><div class="title">Output</div><pre>
+2
+0
+8
+12
+</pre></div></div></div><div class="note"><div class="section-title">Note</div><p>In the first test case, either house $$$1$$$ should be built on the northern side and house $$$2$$$ on the southern side, or vice versa.</p><p>In the second test case, at least two houses must be built on the same side of the river. But every pair of houses is connected by a bridge. So in every arrangement, at least one bridge will not cross the river. Thus, the answer is $$$0$$$.</p><p>In the third test case, one of the possible arrangements of the houses is provided in the problem statement.</p></div></div><p>  </p></div>
+</div>
+
+    <script>
+        $(function () {
+            Codeforces.addMathJaxListener(function () {
+                let $problem = $("div[problemindex=D]");
+                let uuid = $problem.attr("data-uuid");
+                let statementText = convertStatementToText($problem.find(".ttypography").get(0));
+
+                let previousStatementText = Codeforces.getFromStorage(uuid);
+                if (previousStatementText) {
+                    if (previousStatementText !== statementText) {
+                        $problem.find(".diff-notifier").show();
+
+                        $problem.find(".diff-notifier-close").click(function() {
+                            Codeforces.putToStorageTtl(uuid, statementText, 6 * 60 * 60);
+                            $problem.find(".diff-notifier").hide();
+                        });
+
+                        $problem.find("a.view-changes").click(function() {
+                            $.post("/data/diff", {action: "getDiff", a: previousStatementText, b: statementText}, function (result) {
+                                if (result["success"] === "true") {
+                                    Codeforces.facebox(".diff-popup", "//codeforces.org/s/85693");
+                                    $("#facebox .diff-popup").html(result["diff"]);
+                                }
+                            }, "json");
+                        });
+                    }
+                } else {
+                    Codeforces.putToStorageTtl(uuid, statementText, 6 * 60 * 60);
+                }
+            });
+        });
+    </script>
+
+
+<script type="text/javascript">
+    $(document).ready(function () {
+
+        const inputFileDiv = $("div.input-file");
+        const inputFile = inputFileDiv.text();
+        const outputFileDiv = $("div.output-file");
+        const outputFile = outputFileDiv.text();
+
+
+        if (!endsWith(inputFile, "standard input")
+            && !endsWith(inputFile, "standard input")) {
+            inputFileDiv.attr("style", "font-weight: bold");
+        }
+
+        if (!endsWith(outputFile, "standard output")
+            && !endsWith(outputFile, "standard output")) {
+            outputFileDiv.attr("style", "font-weight: bold");
+        }
+
+        const titleDiv = $("div.header div.title");
+
+
+
+
+    });
+</script>        </div>
+        <div
+                    style="margin-bottom: 2em;"
+        >
+<div class="problemindexholder" problemindex="E" data-uuid="ps_8563a37c136c7f64fe3c8288b5bf0c95738c1d28">
+    <div style="display: none; margin:1em 0;text-align: center; position: relative;" class="alert alert-info diff-notifier">
+        <div>The problem statement has recently been changed. <a class="view-changes" href="#">View the changes.</a></div>
+        <span class="diff-notifier-close" style="position: absolute; top: 0.2em; right: 0.3em; cursor: pointer; font-size: 1.4em;">&times;</span>
+    </div>
+        <div class="ttypography"><div class="problem-statement"><div class="header"><div class="title">E. Ancient Tree</div><div class="time-limit"><div class="property-title">time limit per test</div>4 seconds</div><div class="memory-limit"><div class="property-title">memory limit per test</div>256 megabytes</div><div class="input-file input-standard"><div class="property-title">input</div>standard input</div><div class="output-file output-standard"><div class="property-title">output</div>standard output</div></div><div><p>   </p><p><span class="tex-font-style-it">Bahamin came from the past to visit Ali — who came from the future. He also brought an ancient tree as a gift for Ali. He noticed some of its vertices have lost their color. Bahamin needs to repaint these vertices, but he is very busy with fixing his time machine. Fortunately (or unfortunately), dinosaurs now handle such tasks — for a fee, of course. He needs your help to find the coloring with minimum cost. So he gives you the problem as follows.</span></p><p>You are given a rooted tree$$$^{\text{∗}}$$$ of $$$n$$$ vertices, where vertex $$$1$$$ is the root. Each vertex has an integer weight $$$w_i$$$ and a color $$$c_i$$$, where the colors are integers between $$$1$$$ and $$$k$$$. However, some vertices have lost their colors, represented by $$$c_i = 0$$$.</p><p>We call vertex $$$v$$$ <span class="tex-font-style-it">cutie</span> if there <span class="tex-font-style-bf">exists</span> two vertices $$$x$$$ and $$$y$$$, such that</p><ul> <li> $$$\operatorname{lca}(x, y)$$$$$$^{\text{†}}$$$ $$$= v$$$, </li><li> $$$c_x = c_y$$$, and </li><li> $$$c_x \neq c_v$$$. </li></ul><p>The <span class="tex-font-style-it">cost</span> of the tree is the sum of weights of all <span class="tex-font-style-it">cutie</span> vertices.</p><p>You have to assign colors between $$$1$$$ and $$$k$$$ to all the vertices which have lost their colors. Find the minimum possible <span class="tex-font-style-it">cost</span> among all valid colorings and provide a coloring with the minimum possible <span class="tex-font-style-it">cost</span>.</p><div class="statement-footnote"><p>$$$^{\text{∗}}$$$A tree is a connected graph without cycles.  A rooted tree is a tree where one vertex is special and called the root. </p><p>$$$^{\text{†}}$$$$$$\operatorname{lca}(x, y)$$$ denotes the <a href="https://en.wikipedia.org/wiki/Lowest_common_ancestor">lowest common ancestor (LCA)</a> of $$$x$$$ and $$$y$$$.</p></div></div><div class="input-specification"><div class="section-title">Input</div><p>Each test contains multiple test cases. The first line contains the number of test cases $$$t$$$ ($$$1 \le t \le 10^4$$$). The description of the test cases follows. </p><p>The first line of each test case contains two integers $$$n$$$ and $$$k$$$ ($$$3 \leq n \leq 2 \cdot 10^5$$$, $$$2 \leq k \leq n$$$) — the number of vertices and the number of colors.</p><p>The second line contains $$$n$$$ integers $$$w_1,w_2,\ldots,w_n$$$ ($$$1 \leq w_i \leq 10^9$$$) — the weight of vertices.</p><p>The third line contains $$$n$$$ integers $$$c_1,c_2,\ldots,c_n$$$ ($$$0 \leq c_i \leq k$$$) — the color of vertices. $$$c_i=0$$$ means that vertex $$$i$$$ has lost its color.</p><p>Then $$$n−1$$$ lines follow, the $$$i$$$-th line containing two integers $$$u$$$ and $$$v$$$ ($$$1 \leq u, v \leq n$$$) — the two vertices that the $$$i$$$-th edge connects.</p><p>It is guaranteed that the given edges form a tree.</p><p>It is guaranteed that the sum of $$$n$$$ over all test cases does not exceed $$$2 \cdot 10^5$$$. </p></div><div class="output-specification"><div class="section-title">Output</div><p>For each test case, in the first line output a single integer — the minimum possible <span class="tex-font-style-it">cost</span> among all valid colorings.</p><p>In the second line output $$$n$$$ integers $$$c'_1, c'_2, \ldots, c'_n$$$ — a coloring with the minimum possible <span class="tex-font-style-it">cost</span>. You need to guarantee that:</p><ul> <li> $$$c'_i = c_i$$$ if $$$c_i \neq 0$$$; </li><li> $$$1 \leq c'_i \leq k$$$ if $$$c_i = 0$$$. </li></ul><p>If there are multiple colorings with the minimum possible <span class="tex-font-style-it">cost</span>, you can output any of them.</p></div><div class="sample-tests"><div class="section-title">Example</div><div class="sample-test"><div class="input"><div class="title">Input</div><pre>
+<div class="test-example-line test-example-line-even test-example-line-0">4</div><div class="test-example-line test-example-line-odd test-example-line-1">4 4</div><div class="test-example-line test-example-line-odd test-example-line-1">5 5 5 5</div><div class="test-example-line test-example-line-odd test-example-line-1">1 0 2 3</div><div class="test-example-line test-example-line-odd test-example-line-1">1 2</div><div class="test-example-line test-example-line-odd test-example-line-1">1 3</div><div class="test-example-line test-example-line-odd test-example-line-1">1 4</div><div class="test-example-line test-example-line-even test-example-line-2">5 2</div><div class="test-example-line test-example-line-even test-example-line-2">3 1 4 1 5</div><div class="test-example-line test-example-line-even test-example-line-2">1 2 1 2 2</div><div class="test-example-line test-example-line-even test-example-line-2">1 4</div><div class="test-example-line test-example-line-even test-example-line-2">2 1</div><div class="test-example-line test-example-line-even test-example-line-2">3 4</div><div class="test-example-line test-example-line-even test-example-line-2">4 5</div><div class="test-example-line test-example-line-odd test-example-line-3">11 3</div><div class="test-example-line test-example-line-odd test-example-line-3">3 1 4 3 1 4 3 1 4 5 6</div><div class="test-example-line test-example-line-odd test-example-line-3">0 0 0 2 1 2 1 2 2 1 1</div><div class="test-example-line test-example-line-odd test-example-line-3">1 2</div><div class="test-example-line test-example-line-odd test-example-line-3">2 3</div><div class="test-example-line test-example-line-odd test-example-line-3">2 4</div><div class="test-example-line test-example-line-odd test-example-line-3">2 5</div><div class="test-example-line test-example-line-odd test-example-line-3">2 6</div><div class="test-example-line test-example-line-odd test-example-line-3">1 7</div><div class="test-example-line test-example-line-odd test-example-line-3">7 8</div><div class="test-example-line test-example-line-odd test-example-line-3">7 9</div><div class="test-example-line test-example-line-odd test-example-line-3">10 3</div><div class="test-example-line test-example-line-odd test-example-line-3">3 11</div><div class="test-example-line test-example-line-even test-example-line-4">4 3</div><div class="test-example-line test-example-line-even test-example-line-4">2 3 2 3</div><div class="test-example-line test-example-line-even test-example-line-4">2 1 0 0</div><div class="test-example-line test-example-line-even test-example-line-4">3 1</div><div class="test-example-line test-example-line-even test-example-line-4">1 2</div><div class="test-example-line test-example-line-even test-example-line-4">2 4</div></pre></div><div class="output"><div class="title">Output</div><pre>
+0
+1 4 2 3
+3
+1 2 1 2 2
+7
+2 3 1 2 1 2 1 2 2 1 1
+0
+2 1 3 1
+</pre></div></div></div><div class="note"><div class="section-title">Note</div><p>In the first test case, there are four choices for the missing color:</p><ul> <li> $$$c_2 = 1$$$ makes no vertex <span class="tex-font-style-it">cutie</span>, so the <span class="tex-font-style-it">cost</span> is $$$0$$$; </li><li> $$$c_2 = 2$$$ makes vertex $$$1$$$ <span class="tex-font-style-it">cutie</span>, since $$$c_2 = c_3 = 2$$$, $$$\operatorname{lca}(2, 3) = 1$$$ and $$$c_1 \neq 2$$$. Thus, the <span class="tex-font-style-it">cost</span> is $$$w_1 = 5$$$; </li><li> $$$c_2 = 3$$$ makes vertex $$$1$$$ <span class="tex-font-style-it">cutie</span>, since $$$c_2 = c_4 = 3$$$, $$$\operatorname{lca}(2, 4) = 1$$$ and $$$c_1 \neq 3$$$. Thus, the <span class="tex-font-style-it">cost</span> is $$$w_1 = 5$$$; </li><li> $$$c_2 = 4$$$ makes no vertex <span class="tex-font-style-it">cutie</span>, so the <span class="tex-font-style-it">cost</span> is $$$0$$$. </li></ul><p>Thus, the minimum possible <span class="tex-font-style-it">cost</span> among different colorings is $$$0$$$.</p><p>In the second test case, every vertex has a color. So current <span class="tex-font-style-it">cost</span> is not changeable. And since we have $$$c_5 = c_2 = 2$$$, $$$\operatorname{lca}(2, 5) = 1$$$ and $$$c_1 \neq 2$$$, vertex $$$1$$$ is <span class="tex-font-style-it">cutie</span> and current <span class="tex-font-style-it">cost</span> is equal to $$$w_1 = 3$$$.</p><p>In the third test case, a possible coloring with the minimum cost is shown below: </p><center> <img class="tex-graphics" src="https://espresso.codeforces.com/6dddeef700dc1ca9c69ffd90f8eae6eedb8f5151.png" style="zoom: 23.0%;max-width: 100.0%;max-height: 100.0%;" /> </center><p>Some other valid colorings are:</p><ul> <li> $$$c = [3, 1, 2, 2, 1, 2, 1, 2, 2, 1, 1]$$$ which makes vertices $$$1, 2, 3, 7$$$ <span class="tex-font-style-it">cutie</span>: <ul> <li> $$$\operatorname{lca}(4, 8) = 1$$$; </li><li> $$$\operatorname{lca}(3, 4) = 2$$$; </li><li> $$$\operatorname{lca}(10, 11) = 3$$$; </li><li> $$$\operatorname{lca}(8, 9) = 7$$$. </li></ul> All pairs of vertices mentioned have a different color from their LCA. So the <span class="tex-font-style-it">cost</span> will be $$$w_1 + w_2 + w_3 + w_7 = 11$$$. </li><li> $$$c = [3, 2, 1, 2, 1, 2, 1, 2, 2, 1, 1]$$$ which makes vertices $$$1, 2, 7$$$ <span class="tex-font-style-it">cutie</span>: <ul> <li> $$$\operatorname{lca}(5, 7) = 1$$$; </li><li> $$$\operatorname{lca}(5, 11) = 2$$$; </li><li> $$$\operatorname{lca}(8, 9) = 7$$$. </li></ul> All pairs of vertices mentioned have a different color from their LCA. So the <span class="tex-font-style-it">cost</span> will be $$$w_1 + w_2 + w_7 = 7$$$. </li></ul><p>It can be shown that no coloring with <span class="tex-font-style-it">cost</span> smaller than $$$7$$$ exists.</p></div></div><p>  </p></div>
+</div>
+
+    <script>
+        $(function () {
+            Codeforces.addMathJaxListener(function () {
+                let $problem = $("div[problemindex=E]");
+                let uuid = $problem.attr("data-uuid");
+                let statementText = convertStatementToText($problem.find(".ttypography").get(0));
+
+                let previousStatementText = Codeforces.getFromStorage(uuid);
+                if (previousStatementText) {
+                    if (previousStatementText !== statementText) {
+                        $problem.find(".diff-notifier").show();
+
+                        $problem.find(".diff-notifier-close").click(function() {
+                            Codeforces.putToStorageTtl(uuid, statementText, 6 * 60 * 60);
+                            $problem.find(".diff-notifier").hide();
+                        });
+
+                        $problem.find("a.view-changes").click(function() {
+                            $.post("/data/diff", {action: "getDiff", a: previousStatementText, b: statementText}, function (result) {
+                                if (result["success"] === "true") {
+                                    Codeforces.facebox(".diff-popup", "//codeforces.org/s/85693");
+                                    $("#facebox .diff-popup").html(result["diff"]);
+                                }
+                            }, "json");
+                        });
+                    }
+                } else {
+                    Codeforces.putToStorageTtl(uuid, statementText, 6 * 60 * 60);
+                }
+            });
+        });
+    </script>
+
+
+<script type="text/javascript">
+    $(document).ready(function () {
+
+        const inputFileDiv = $("div.input-file");
+        const inputFile = inputFileDiv.text();
+        const outputFileDiv = $("div.output-file");
+        const outputFile = outputFileDiv.text();
+
+
+        if (!endsWith(inputFile, "standard input")
+            && !endsWith(inputFile, "standard input")) {
+            inputFileDiv.attr("style", "font-weight: bold");
+        }
+
+        if (!endsWith(outputFile, "standard output")
+            && !endsWith(outputFile, "standard output")) {
+            outputFileDiv.attr("style", "font-weight: bold");
+        }
+
+        const titleDiv = $("div.header div.title");
+
+
+
+
+    });
+</script>        </div>
+        <div
+                    style="margin-bottom: 2em;"
+        >
+<div class="problemindexholder" problemindex="F" data-uuid="ps_4f46b6ae9f46baad145b6503b4f90765ebc87328">
+    <div style="display: none; margin:1em 0;text-align: center; position: relative;" class="alert alert-info diff-notifier">
+        <div>The problem statement has recently been changed. <a class="view-changes" href="#">View the changes.</a></div>
+        <span class="diff-notifier-close" style="position: absolute; top: 0.2em; right: 0.3em; cursor: pointer; font-size: 1.4em;">&times;</span>
+    </div>
+        <div class="ttypography"><div class="problem-statement"><div class="header"><div class="title">F. Hamed and AghaBalaSar</div><div class="time-limit"><div class="property-title">time limit per test</div>2 seconds</div><div class="memory-limit"><div class="property-title">memory limit per test</div>512 megabytes</div><div class="input-file input-standard"><div class="property-title">input</div>standard input</div><div class="output-file output-standard"><div class="property-title">output</div>standard output</div></div><div><p> </p><p><span class="tex-font-style-it">Hamid wrote $$$3014$$$ lines of code for the a+b problem and gave $$$10$$$ lines of it to Hamed; then the following problem came to Hamed's mind.</span></p><p>You are given two integers $$$n$$$ and $$$m$$$.</p><p>An array $$$a_1,a_2,\ldots,a_n$$$ is called <span class="tex-font-style-it">snake</span> if and only if all of the following conditions hold: </p><ul> <li> All elements in $$$a$$$ are integers between $$$0$$$ and $$$m$$$; </li><li> $$$a_1 + a_2 + \cdots + a_n = m$$$; </li><li> $$$a_n=\max\left([a_1, a_2, \ldots, a_n]\right)$$$. </li></ul><p>We define $$$f(a)$$$ as in the following pseudocode:</p><pre class="lstlisting"><code class="prettyprint">function f(array a):<br />    pos := 1<br />    res := 0<br />    let nxt[x] be an array such that nxt[x] is the smallest index y such that<br />                                    y &gt; x and a[y] &gt; a[x],<br />                              or undefined if no such y exists<br />    while pos &lt; n:<br />        if a[pos] &lt; a[n]:<br />            res += a[nxt[pos]] - a[pos]<br />            pos := nxt[pos]<br />        else:<br />            pos += 1<br />    return res<br /></code></pre><p>Find the sum of $$$f(a)$$$ over all <span class="tex-font-style-it">snake</span> arrays $$$a_1,a_2,\ldots,a_n$$$, modulo $$$10^9+7$$$.</p></div><div class="input-specification"><div class="section-title">Input</div><p>Each test contains multiple test cases. The first line contains the number of test cases $$$t$$$ ($$$1 \le t \le 10^4$$$). The description of the test cases follows. </p><p>The first line of each test case contains two integers $$$n$$$ and $$$m$$$ ($$$2 \leq n \leq 2 \cdot 10^5$$$, $$$0 \leq m \leq 2 \cdot 10^5$$$) — the length of a <span class="tex-font-style-it">snake</span> array and the sum of all elements in a <span class="tex-font-style-it">snake</span> array.</p><p>It is guaranteed that the sum of $$$m$$$ over all test cases does not exceed $$$2 \cdot 10^5$$$. </p></div><div class="output-specification"><div class="section-title">Output</div><p>For each test case, output a single integer — the sum of $$$f(a)$$$ over all <span class="tex-font-style-it">snake</span> arrays $$$a_1,a_2,\ldots,a_n$$$, modulo $$$10^9+7$$$.</p></div><div class="sample-tests"><div class="section-title">Example</div><div class="sample-test"><div class="input"><div class="title">Input</div><pre>
+<div class="test-example-line test-example-line-even test-example-line-0">8</div><div class="test-example-line test-example-line-odd test-example-line-1">2 5</div><div class="test-example-line test-example-line-even test-example-line-2">3 4</div><div class="test-example-line test-example-line-odd test-example-line-3">4 6</div><div class="test-example-line test-example-line-even test-example-line-4">5 10</div><div class="test-example-line test-example-line-odd test-example-line-5">6 23</div><div class="test-example-line test-example-line-even test-example-line-6">100 100</div><div class="test-example-line test-example-line-odd test-example-line-7">142857 33333</div><div class="test-example-line test-example-line-even test-example-line-8">200000 0</div></pre></div><div class="output"><div class="title">Output</div><pre>
+9
+14
+76
+985
+142112
+771227753
+865580631
+0
+</pre></div></div></div><div class="note"><div class="section-title">Note</div><p>In the first test case, there are three <span class="tex-font-style-it">snake</span> arrays:</p><ul> <li> $$$f([0, 5]) = 5$$$; </li><li> $$$f([1, 4]) = 3$$$; </li><li> $$$f([2, 3]) = 1$$$. </li></ul><p>Thus, the answer is $$$5+3+1=9$$$.</p><p>In the second test case, there are six <span class="tex-font-style-it">snake</span> arrays:</p><ul> <li> $$$f([0, 0, 4]) = 4$$$; </li><li> $$$f([0, 1, 3]) = 3$$$; </li><li> $$$f([1, 0, 3]) = 2$$$; </li><li> $$$f([1, 1, 2]) = 1$$$; </li><li> $$$f([0, 2, 2]) = 2$$$; </li><li> $$$f([2, 0, 2]) = 2$$$. </li></ul><p>Thus, the answer is $$$4+3+2+1+2+2=14$$$.</p><p>In the fifth test case, a possible <span class="tex-font-style-it">snake</span> array is:</p><ul> <li> $$$f([3, 1, 4, 1, 5, 9]) = 6$$$. </li></ul></div></div><p>  </p></div>
+</div>
+
+    <script>
+        $(function () {
+            Codeforces.addMathJaxListener(function () {
+                let $problem = $("div[problemindex=F]");
+                let uuid = $problem.attr("data-uuid");
+                let statementText = convertStatementToText($problem.find(".ttypography").get(0));
+
+                let previousStatementText = Codeforces.getFromStorage(uuid);
+                if (previousStatementText) {
+                    if (previousStatementText !== statementText) {
+                        $problem.find(".diff-notifier").show();
+
+                        $problem.find(".diff-notifier-close").click(function() {
+                            Codeforces.putToStorageTtl(uuid, statementText, 6 * 60 * 60);
+                            $problem.find(".diff-notifier").hide();
+                        });
+
+                        $problem.find("a.view-changes").click(function() {
+                            $.post("/data/diff", {action: "getDiff", a: previousStatementText, b: statementText}, function (result) {
+                                if (result["success"] === "true") {
+                                    Codeforces.facebox(".diff-popup", "//codeforces.org/s/85693");
+                                    $("#facebox .diff-popup").html(result["diff"]);
+                                }
+                            }, "json");
+                        });
+                    }
+                } else {
+                    Codeforces.putToStorageTtl(uuid, statementText, 6 * 60 * 60);
+                }
+            });
+        });
+    </script>
+
+
+<script type="text/javascript">
+    $(document).ready(function () {
+
+        const inputFileDiv = $("div.input-file");
+        const inputFile = inputFileDiv.text();
+        const outputFileDiv = $("div.output-file");
+        const outputFile = outputFileDiv.text();
+
+
+        if (!endsWith(inputFile, "standard input")
+            && !endsWith(inputFile, "standard input")) {
+            inputFileDiv.attr("style", "font-weight: bold");
+        }
+
+        if (!endsWith(outputFile, "standard output")
+            && !endsWith(outputFile, "standard output")) {
+            outputFileDiv.attr("style", "font-weight: bold");
+        }
+
+        const titleDiv = $("div.header div.title");
+
+
+
+
+    });
+</script>        </div>
+        <div
+                    style="margin-bottom: 2em;"
+        >
+<div class="problemindexholder" problemindex="G1" data-uuid="ps_6756d372436516090b9478907b327b3d73f8bbf3">
+    <div style="display: none; margin:1em 0;text-align: center; position: relative;" class="alert alert-info diff-notifier">
+        <div>The problem statement has recently been changed. <a class="view-changes" href="#">View the changes.</a></div>
+        <span class="diff-notifier-close" style="position: absolute; top: 0.2em; right: 0.3em; cursor: pointer; font-size: 1.4em;">&times;</span>
+    </div>
+        <div class="ttypography"><div class="problem-statement"><div class="header"><div class="title">G1. Inter Active (Easy Version)</div><div class="time-limit"><div class="property-title">time limit per test</div>2 seconds</div><div class="memory-limit"><div class="property-title">memory limit per test</div>512 megabytes</div><div class="input-file input-standard"><div class="property-title">input</div>standard input</div><div class="output-file output-standard"><div class="property-title">output</div>standard output</div></div><div><p>     </p><p><span class="tex-font-style-bf">This is the easy version of the problem. The difference between the versions is that in this version, you can make at most $$$15\cdot n$$$ queries. You can hack only if you solved all versions of this problem.</span> </p><p><span class="tex-font-style-it">Ali loved Bahamin's gift (from problem E) so much that he illegally traveled from Qazvin to Liverpool to have the gift signed by football players. Now Interpol is searching for him, but they've offered a deal: solve a problem, and he can stay in Liverpool. But since he's currently at the stadium, he can't solve it — so he asked you to do it.</span></p><p><span class="tex-font-style-it">This is an interactive problem.</span> </p><p>There is a hidden permutation$$$^{\text{∗}}$$$ $$$p$$$ of length $$$n\ge 4$$$, where $$$p_i \neq i$$$ for each $$$1 \leq i \leq n$$$.</p><p>Initially, you should give the jury a positive integer $$$k\le n$$$, which will be <span class="tex-font-style-bf">constant</span> through future queries. Then you need to find permutation $$$p$$$ using some queries.</p><p>In each query, you give a permutation $$$q_1, q_2, \ldots, q_n$$$ to the jury. In response, you will receive the number of pairs $$$(i, j)$$$ such that all of the following conditions hold:</p><ul> <li> $$$i \lt j$$$; </li><li> $$$p_{q_i} = q_j$$$; </li><li> $$$i \neq k$$$. ($$$k$$$ is the constant you have given to the jury) </li></ul><p>You are given $$$n$$$, and you need to find the permutation $$$p$$$ in at most $$$15\cdot n$$$ queries.</p><div class="statement-footnote"><p>$$$^{\text{∗}}$$$A permutation of length $$$n$$$ is an array consisting of $$$n$$$ distinct integers from $$$1$$$ to $$$n$$$ in arbitrary order. For example, $$$[2,3,1,5,4]$$$ is a permutation, but $$$[1,2,2]$$$ is not a permutation ($$$2$$$ appears twice in the array), and $$$[1,3,4]$$$ is also not a permutation ($$$n=3$$$ but there is $$$4$$$ in the array). </p></div></div><div class="input-specification"><div class="section-title">Input</div><p>Each test contains multiple test cases. The first line contains the number of test cases $$$t$$$ ($$$1 \le t \le 500$$$). The description of the test cases follows. </p><p>The only line of each test case contains a single integer $$$n$$$ ($$$4 \leq n \leq 100$$$) — the length of $$$p$$$.</p><p>It is guaranteed that the sum of $$$n^2$$$ over all test cases does not exceed $$$10^4$$$. </p></div><div><div class="section-title">Interaction</div><p>The interaction for each test case begins with reading the integer $$$n$$$.</p><p>Then you should output the integer $$$k$$$ ($$$1 \leq k \leq n$$$). This is not considered as a query.</p><p>Then you can ask up to $$$15\cdot n$$$ queries.</p><p>To make a query, output a line in the following format: </p><ul> <li> $$$\texttt{?}\,q_1\,q_2\,\ldots\,q_n$$$ </li></ul><p>The jury will return the answer to the query.</p><p>When you find the permutation $$$p$$$, output a single line in the following format: </p><ul> <li> $$$\texttt{!}\,p_1\,p_2\,\ldots\,p_n$$$ </li></ul><p>This is also not considered as a query.</p><p>After that, proceed to process the next test case or terminate the program if it is the last test case.</p><p>The interactor is <span class="tex-font-style-bf">not</span> adaptive, which means that the permutation is determined before the participant outputs $$$k$$$.</p><p>If your program makes more than $$$15\cdot n$$$ queries, your program should immediately terminate to receive the verdict <span class="tex-font-style-tt">Wrong answer</span>. Otherwise, you can get an arbitrary verdict because your solution will continue to read from a closed stream.</p><p>After printing each query do not forget to output the end of line and flush$$$^{\text{∗}}$$$ the output. Otherwise, you will get <span class="tex-font-style-tt">Idleness limit exceeded</span> verdict.</p><p>If, at any interaction step, you read $$$-1$$$ instead of valid data, your solution must exit immediately. This means that your solution will receive <span class="tex-font-style-tt">Wrong answer</span> because of an invalid query or any other mistake. Failing to exit can result in an arbitrary verdict because your solution will continue to read from a closed stream. </p><p><span><span class="tex-font-style-bf">Hacks</span></span></p><p>To perform a hack, use the following format:</p><p>Each test contains multiple test cases. The first line contains the number of test cases $$$t$$$ ($$$1 \le t \le 500$$$). The description of the test cases follows. </p><p>The first line of each test case contains a single integer $$$n$$$ ($$$4 \leq n \leq 100$$$) — the length of $$$p$$$.</p><p>The second line contains $$$n$$$ integers $$$p_1, p_2, \ldots, p_n$$$ ($$$1 \le p_i \le n$$$, $$$p_i\ne i$$$, all $$$p_i$$$-s are distinct) — the permutation $$$p$$$.</p><p>It is guaranteed that the sum of $$$n^2$$$ over all test cases does not exceed $$$10^4$$$. </p><div class="statement-footnote"><p>$$$^{\text{∗}}$$$To flush, use: </p><ul> <li> <span class="tex-font-style-tt">fflush(stdout)</span> or <span class="tex-font-style-tt">cout.flush()</span> in C++; </li><li> <span class="tex-font-style-tt">sys.stdout.flush()</span> in Python; </li><li> see the documentation for other languages. </li></ul></div></div><div class="sample-tests"><div class="section-title">Example</div><div class="sample-test"><div class="input"><div class="title">Input</div><pre>
+2
+4
+
+
+1
+
+5
+
+
+1
+
+2
+</pre></div><div class="output"><div class="title">Output</div><pre>
+
+1
+? 1 2 3 4
+
+! 3 1 4 2
+
+3
+? 1 2 5 4 3
+
+? 2 1 4 3 5
+
+! 3 1 2 5 4
+</pre></div></div></div><div class="note"><div class="section-title">Note</div><p>In the first test case, $$$p = [3, 1, 4, 2]$$$. The solution selected $$$k=1$$$, then it asked permutation $$$q = [1, 2, 3, 4]$$$. Only pair $$$(3,4)$$$ satisfies the conditions.</p><p>In the second test case, $$$p = [3, 1, 2, 5, 4]$$$. The solution selected $$$k=3$$$. </p><ul> <li> For permutation $$$q = [1, 2, 5, 4, 3]$$$, only pair $$$(1, 5)$$$ satisfies the conditions. </li><li> For permutation $$$q = [2, 1, 4, 3, 5]$$$, pairs $$$(1, 2)$$$ and $$$(2, 4)$$$ satisfy the conditions. </li></ul></div></div><p>  </p></div>
+</div>
+
+    <script>
+        $(function () {
+            Codeforces.addMathJaxListener(function () {
+                let $problem = $("div[problemindex=G1]");
+                let uuid = $problem.attr("data-uuid");
+                let statementText = convertStatementToText($problem.find(".ttypography").get(0));
+
+                let previousStatementText = Codeforces.getFromStorage(uuid);
+                if (previousStatementText) {
+                    if (previousStatementText !== statementText) {
+                        $problem.find(".diff-notifier").show();
+
+                        $problem.find(".diff-notifier-close").click(function() {
+                            Codeforces.putToStorageTtl(uuid, statementText, 6 * 60 * 60);
+                            $problem.find(".diff-notifier").hide();
+                        });
+
+                        $problem.find("a.view-changes").click(function() {
+                            $.post("/data/diff", {action: "getDiff", a: previousStatementText, b: statementText}, function (result) {
+                                if (result["success"] === "true") {
+                                    Codeforces.facebox(".diff-popup", "//codeforces.org/s/85693");
+                                    $("#facebox .diff-popup").html(result["diff"]);
+                                }
+                            }, "json");
+                        });
+                    }
+                } else {
+                    Codeforces.putToStorageTtl(uuid, statementText, 6 * 60 * 60);
+                }
+            });
+        });
+    </script>
+
+
+<script type="text/javascript">
+    $(document).ready(function () {
+
+        const inputFileDiv = $("div.input-file");
+        const inputFile = inputFileDiv.text();
+        const outputFileDiv = $("div.output-file");
+        const outputFile = outputFileDiv.text();
+
+
+        if (!endsWith(inputFile, "standard input")
+            && !endsWith(inputFile, "standard input")) {
+            inputFileDiv.attr("style", "font-weight: bold");
+        }
+
+        if (!endsWith(outputFile, "standard output")
+            && !endsWith(outputFile, "standard output")) {
+            outputFileDiv.attr("style", "font-weight: bold");
+        }
+
+        const titleDiv = $("div.header div.title");
+
+
+
+
+    });
+</script>        </div>
+        <div
+                    style="margin-bottom: 2em;"
+        >
+<div class="problemindexholder" problemindex="G2" data-uuid="ps_d2b0afb885944373bf883663b5228e00dcc91db6">
+    <div style="display: none; margin:1em 0;text-align: center; position: relative;" class="alert alert-info diff-notifier">
+        <div>The problem statement has recently been changed. <a class="view-changes" href="#">View the changes.</a></div>
+        <span class="diff-notifier-close" style="position: absolute; top: 0.2em; right: 0.3em; cursor: pointer; font-size: 1.4em;">&times;</span>
+    </div>
+        <div class="ttypography"><div class="problem-statement"><div class="header"><div class="title">G2. Inter Active (Hard Version)</div><div class="time-limit"><div class="property-title">time limit per test</div>2 seconds</div><div class="memory-limit"><div class="property-title">memory limit per test</div>512 megabytes</div><div class="input-file input-standard"><div class="property-title">input</div>standard input</div><div class="output-file output-standard"><div class="property-title">output</div>standard output</div></div><div><p>     </p><p><span class="tex-font-style-bf">This is the hard version of the problem. The difference between the versions is that in this version, you can make at most $$$10\cdot n$$$ queries. You can hack only if you solved all versions of this problem.</span> </p><p><span class="tex-font-style-it">Ali loved Bahamin's gift (from problem E) so much that he illegally traveled from Qazvin to Liverpool to have the gift signed by football players. Now Interpol is searching for him, but they've offered a deal: solve a problem, and he can stay in Liverpool. But since he's currently at the stadium, he can't solve it — so he asked you to do it.</span></p><p><span class="tex-font-style-it">This is an interactive problem.</span> </p><p>There is a hidden permutation$$$^{\text{∗}}$$$ $$$p$$$ of length $$$n\ge 4$$$, where $$$p_i \neq i$$$ for each $$$1 \leq i \leq n$$$.</p><p>Initially, you should give the jury a positive integer $$$k\le n$$$, which will be <span class="tex-font-style-bf">constant</span> through future queries. Then you need to find permutation $$$p$$$ using some queries.</p><p>In each query, you give a permutation $$$q_1, q_2, \ldots, q_n$$$ to the jury. In response, you will receive the number of pairs $$$(i, j)$$$ such that all of the following conditions hold:</p><ul> <li> $$$i \lt j$$$; </li><li> $$$p_{q_i} = q_j$$$; </li><li> $$$i \neq k$$$. ($$$k$$$ is the constant you have given to the jury) </li></ul><p>You are given $$$n$$$, and you need to find the permutation $$$p$$$ in at most $$$10\cdot n$$$ queries.</p><div class="statement-footnote"><p>$$$^{\text{∗}}$$$A permutation of length $$$n$$$ is an array consisting of $$$n$$$ distinct integers from $$$1$$$ to $$$n$$$ in arbitrary order. For example, $$$[2,3,1,5,4]$$$ is a permutation, but $$$[1,2,2]$$$ is not a permutation ($$$2$$$ appears twice in the array), and $$$[1,3,4]$$$ is also not a permutation ($$$n=3$$$ but there is $$$4$$$ in the array). </p></div></div><div class="input-specification"><div class="section-title">Input</div><p>Each test contains multiple test cases. The first line contains the number of test cases $$$t$$$ ($$$1 \le t \le 500$$$). The description of the test cases follows. </p><p>The only line of each test case contains a single integer $$$n$$$ ($$$4 \leq n \leq 100$$$) — the length of $$$p$$$.</p><p>It is guaranteed that the sum of $$$n^2$$$ over all test cases does not exceed $$$10^4$$$. </p></div><div><div class="section-title">Interaction</div><p>The interaction for each test case begins with reading the integer $$$n$$$.</p><p>Then you should output the integer $$$k$$$ ($$$1 \leq k \leq n$$$). This is not considered as a query.</p><p>Then you can ask up to $$$10\cdot n$$$ queries.</p><p>To make a query, output a line in the following format: </p><ul> <li> $$$\texttt{?}\,q_1\,q_2\,\ldots\,q_n$$$ </li></ul><p>The jury will return the answer to the query.</p><p>When you find the permutation $$$p$$$, output a single line in the following format: </p><ul> <li> $$$\texttt{!}\,p_1\,p_2\,\ldots\,p_n$$$ </li></ul><p>This is also not considered as a query.</p><p>After that, proceed to process the next test case or terminate the program if it is the last test case.</p><p>The interactor is <span class="tex-font-style-bf">not</span> adaptive, which means that the permutation is determined before the participant outputs $$$k$$$.</p><p>If your program makes more than $$$10\cdot n$$$ queries, your program should immediately terminate to receive the verdict <span class="tex-font-style-tt">Wrong answer</span>. Otherwise, you can get an arbitrary verdict because your solution will continue to read from a closed stream.</p><p>After printing each query do not forget to output the end of line and flush$$$^{\text{∗}}$$$ the output. Otherwise, you will get <span class="tex-font-style-tt">Idleness limit exceeded</span> verdict.</p><p>If, at any interaction step, you read $$$-1$$$ instead of valid data, your solution must exit immediately. This means that your solution will receive <span class="tex-font-style-tt">Wrong answer</span> because of an invalid query or any other mistake. Failing to exit can result in an arbitrary verdict because your solution will continue to read from a closed stream. </p><p><span><span class="tex-font-style-bf">Hacks</span></span></p><p>To perform a hack, use the following format:</p><p>Each test contains multiple test cases. The first line contains the number of test cases $$$t$$$ ($$$1 \le t \le 500$$$). The description of the test cases follows. </p><p>The first line of each test case contains a single integer $$$n$$$ ($$$4 \leq n \leq 100$$$) — the length of $$$p$$$.</p><p>The second line contains $$$n$$$ integers $$$p_1, p_2, \ldots, p_n$$$ ($$$1 \le p_i \le n$$$, $$$p_i\ne i$$$, all $$$p_i$$$-s are distinct) — the permutation $$$p$$$.</p><p>It is guaranteed that the sum of $$$n^2$$$ over all test cases does not exceed $$$10^4$$$. </p><div class="statement-footnote"><p>$$$^{\text{∗}}$$$To flush, use: </p><ul> <li> <span class="tex-font-style-tt">fflush(stdout)</span> or <span class="tex-font-style-tt">cout.flush()</span> in C++; </li><li> <span class="tex-font-style-tt">sys.stdout.flush()</span> in Python; </li><li> see the documentation for other languages. </li></ul></div></div><div class="sample-tests"><div class="section-title">Example</div><div class="sample-test"><div class="input"><div class="title">Input</div><pre>
+2
+4
+
+
+1
+
+5
+
+
+1
+
+2
+</pre></div><div class="output"><div class="title">Output</div><pre>
+
+1
+? 1 2 3 4
+
+! 3 1 4 2
+
+3
+? 1 2 5 4 3
+
+? 2 1 4 3 5
+
+! 3 1 2 5 4
+</pre></div></div></div><div class="note"><div class="section-title">Note</div><p>In the first test case, $$$p = [3, 1, 4, 2]$$$. The solution selected $$$k=1$$$, then it asked permutation $$$q = [1, 2, 3, 4]$$$. Only pair $$$(3,4)$$$ satisfies the conditions.</p><p>In the second test case, $$$p = [3, 1, 2, 5, 4]$$$. The solution selected $$$k=3$$$. </p><ul> <li> For permutation $$$q = [1, 2, 5, 4, 3]$$$, only pair $$$(1, 5)$$$ satisfies the conditions. </li><li> For permutation $$$q = [2, 1, 4, 3, 5]$$$, pairs $$$(1, 2)$$$ and $$$(2, 4)$$$ satisfy the conditions. </li></ul></div></div><p>  </p></div>
+</div>
+
+    <script>
+        $(function () {
+            Codeforces.addMathJaxListener(function () {
+                let $problem = $("div[problemindex=G2]");
+                let uuid = $problem.attr("data-uuid");
+                let statementText = convertStatementToText($problem.find(".ttypography").get(0));
+
+                let previousStatementText = Codeforces.getFromStorage(uuid);
+                if (previousStatementText) {
+                    if (previousStatementText !== statementText) {
+                        $problem.find(".diff-notifier").show();
+
+                        $problem.find(".diff-notifier-close").click(function() {
+                            Codeforces.putToStorageTtl(uuid, statementText, 6 * 60 * 60);
+                            $problem.find(".diff-notifier").hide();
+                        });
+
+                        $problem.find("a.view-changes").click(function() {
+                            $.post("/data/diff", {action: "getDiff", a: previousStatementText, b: statementText}, function (result) {
+                                if (result["success"] === "true") {
+                                    Codeforces.facebox(".diff-popup", "//codeforces.org/s/85693");
+                                    $("#facebox .diff-popup").html(result["diff"]);
+                                }
+                            }, "json");
+                        });
+                    }
+                } else {
+                    Codeforces.putToStorageTtl(uuid, statementText, 6 * 60 * 60);
+                }
+            });
+        });
+    </script>
+
+
+<script type="text/javascript">
+    $(document).ready(function () {
+
+        const inputFileDiv = $("div.input-file");
+        const inputFile = inputFileDiv.text();
+        const outputFileDiv = $("div.output-file");
+        const outputFile = outputFileDiv.text();
+
+
+        if (!endsWith(inputFile, "standard input")
+            && !endsWith(inputFile, "standard input")) {
+            inputFileDiv.attr("style", "font-weight: bold");
+        }
+
+        if (!endsWith(outputFile, "standard output")
+            && !endsWith(outputFile, "standard output")) {
+            outputFileDiv.attr("style", "font-weight: bold");
+        }
+
+        const titleDiv = $("div.header div.title");
+
+
+
+
+    });
+</script>        </div>
+        <div
+                    style="margin-bottom: 1em;"
+        >
+<div class="problemindexholder" problemindex="H" data-uuid="ps_6b28a6d49681aacfa9c1af9bad7e9b6bc1123ba7">
+    <div style="display: none; margin:1em 0;text-align: center; position: relative;" class="alert alert-info diff-notifier">
+        <div>The problem statement has recently been changed. <a class="view-changes" href="#">View the changes.</a></div>
+        <span class="diff-notifier-close" style="position: absolute; top: 0.2em; right: 0.3em; cursor: pointer; font-size: 1.4em;">&times;</span>
+    </div>
+        <div class="ttypography"><div class="problem-statement"><div class="header"><div class="title">H. 23 Rises Again</div><div class="time-limit"><div class="property-title">time limit per test</div>5 seconds</div><div class="memory-limit"><div class="property-title">memory limit per test</div>1024 megabytes</div><div class="input-file input-standard"><div class="property-title">input</div>standard input</div><div class="output-file output-standard"><div class="property-title">output</div>standard output</div></div><div><p> </p><p><span class="tex-font-style-it">Kiarash is picking strawberries to take home...</span></p><p>A graph is called <span class="tex-font-style-it">candy</span> if and only if the degree of every vertex in it is at most $$$2$$$.</p><p>You are given a simple, undirected, and connected graph $$$G$$$ of $$$n\le 30$$$ vertices, with a special property: <span class="tex-font-style-bf">each vertex belongs to at most $$$5$$$ simple cycles$$$^{\text{∗}}$$$</span>.</p><p>What is the maximum number of edges among all subgraphs$$$^{\text{†}}$$$ of $$$G$$$ that are <span class="tex-font-style-it">candy</span>?</p><div class="statement-footnote"><p>$$$^{\text{∗}}$$$A simple cycle is a connected subgraph such that each vertex has a degree of exactly $$$2$$$</p><p>$$$^{\text{†}}$$$A subgraph of $$$G$$$ is a graph whose vertices and edges are subsets of $$$G$$$.</p></div></div><div class="input-specification"><div class="section-title">Input</div><p>Each test contains multiple test cases. The first line contains the number of test cases $$$t$$$ ($$$1 \le t \le 50$$$). The description of the test cases follows. </p><p>The first line of each test case contains two integers $$$n$$$ and $$$m$$$ ($$$3 \leq n \leq 30$$$, $$$n-1 \leq m \leq \frac{n(n-1)}{2}$$$) — the number of vertices and the number of edges.</p><p>Then $$$m$$$ lines follow, the $$$i$$$-th line containing two integers $$$u$$$ and $$$v$$$ ($$$1 \leq u, v \leq n$$$) — the two vertices that the $$$i$$$-th edge connects.</p><p>It is guaranteed that the given graph is simple and connected, and each vertex belongs to at most $$$5$$$ simple cycles.</p><p>It is guaranteed that the sum of $$$n^2$$$ over all test cases does not exceed $$$900$$$. </p></div><div class="output-specification"><div class="section-title">Output</div><p>For each test case, output a single integer — the maximum number of edges among all subgraphs that are <span class="tex-font-style-it">candy graphs</span>.</p></div><div class="sample-tests"><div class="section-title">Example</div><div class="sample-test"><div class="input"><div class="title">Input</div><pre>
+<div class="test-example-line test-example-line-even test-example-line-0">3</div><div class="test-example-line test-example-line-odd test-example-line-1">4 4</div><div class="test-example-line test-example-line-odd test-example-line-1">1 2</div><div class="test-example-line test-example-line-odd test-example-line-1">1 3</div><div class="test-example-line test-example-line-odd test-example-line-1">2 3</div><div class="test-example-line test-example-line-odd test-example-line-1">3 4</div><div class="test-example-line test-example-line-even test-example-line-2">7 10</div><div class="test-example-line test-example-line-even test-example-line-2">1 2</div><div class="test-example-line test-example-line-even test-example-line-2">1 3</div><div class="test-example-line test-example-line-even test-example-line-2">1 4</div><div class="test-example-line test-example-line-even test-example-line-2">2 4</div><div class="test-example-line test-example-line-even test-example-line-2">3 4</div><div class="test-example-line test-example-line-even test-example-line-2">4 5</div><div class="test-example-line test-example-line-even test-example-line-2">4 6</div><div class="test-example-line test-example-line-even test-example-line-2">5 6</div><div class="test-example-line test-example-line-even test-example-line-2">5 7</div><div class="test-example-line test-example-line-even test-example-line-2">6 7</div><div class="test-example-line test-example-line-odd test-example-line-3">9 10</div><div class="test-example-line test-example-line-odd test-example-line-3">1 2</div><div class="test-example-line test-example-line-odd test-example-line-3">1 3</div><div class="test-example-line test-example-line-odd test-example-line-3">3 4</div><div class="test-example-line test-example-line-odd test-example-line-3">3 7</div><div class="test-example-line test-example-line-odd test-example-line-3">4 5</div><div class="test-example-line test-example-line-odd test-example-line-3">4 6</div><div class="test-example-line test-example-line-odd test-example-line-3">5 6</div><div class="test-example-line test-example-line-odd test-example-line-3">7 8</div><div class="test-example-line test-example-line-odd test-example-line-3">7 9</div><div class="test-example-line test-example-line-odd test-example-line-3">8 9</div></pre></div><div class="output"><div class="title">Output</div><pre>
+3
+7
+8
+</pre></div></div></div><div class="note"><div class="section-title">Note</div><p>In the first test case, you can select the edges marked in the image below. On the other hand, you can't select all the edges because the degree of vertex $$$3$$$ would exceed $$$2$$$. So the maximum number of edges among all subgraphs that are <span class="tex-font-style-it">candy</span> is $$$3$$$. </p><center> <img class="tex-graphics" src="https://espresso.codeforces.com/e1323270125fe963f64ba88d06d8677eedab7c1a.png" style="zoom: 100.0%;max-width: 100.0%;max-height: 100.0%;" /> </center><p>In the second test case, you can select the edges marked in the image below. It can be proven that any subgraph that is <span class="tex-font-style-it">candy</span> has at most $$$7$$$ edges. </p><center> <img class="tex-graphics" src="https://espresso.codeforces.com/27c8b10642e508603ef6c12d8fe6cd47be5ae648.png" style="zoom: 100.0%;max-width: 100.0%;max-height: 100.0%;" /> </center><p>In the third test case, the image below shows one of the subgraphs with the maximum possible number of edges that is <span class="tex-font-style-it">candy</span>. </p><center> <img class="tex-graphics" src="https://espresso.codeforces.com/69f398ebaa4d2cb5faba21bbf422e396e314264b.png" style="zoom: 100.0%;max-width: 100.0%;max-height: 100.0%;" /> </center></div></div><p>  </p></div>
+</div>
+
+    <script>
+        $(function () {
+            Codeforces.addMathJaxListener(function () {
+                let $problem = $("div[problemindex=H]");
+                let uuid = $problem.attr("data-uuid");
+                let statementText = convertStatementToText($problem.find(".ttypography").get(0));
+
+                let previousStatementText = Codeforces.getFromStorage(uuid);
+                if (previousStatementText) {
+                    if (previousStatementText !== statementText) {
+                        $problem.find(".diff-notifier").show();
+
+                        $problem.find(".diff-notifier-close").click(function() {
+                            Codeforces.putToStorageTtl(uuid, statementText, 6 * 60 * 60);
+                            $problem.find(".diff-notifier").hide();
+                        });
+
+                        $problem.find("a.view-changes").click(function() {
+                            $.post("/data/diff", {action: "getDiff", a: previousStatementText, b: statementText}, function (result) {
+                                if (result["success"] === "true") {
+                                    Codeforces.facebox(".diff-popup", "//codeforces.org/s/85693");
+                                    $("#facebox .diff-popup").html(result["diff"]);
+                                }
+                            }, "json");
+                        });
+                    }
+                } else {
+                    Codeforces.putToStorageTtl(uuid, statementText, 6 * 60 * 60);
+                }
+            });
+        });
+    </script>
+
+
+<script type="text/javascript">
+    $(document).ready(function () {
+
+        const inputFileDiv = $("div.input-file");
+        const inputFile = inputFileDiv.text();
+        const outputFileDiv = $("div.output-file");
+        const outputFile = outputFileDiv.text();
+
+
+        if (!endsWith(inputFile, "standard input")
+            && !endsWith(inputFile, "standard input")) {
+            inputFileDiv.attr("style", "font-weight: bold");
+        }
+
+        if (!endsWith(outputFile, "standard output")
+            && !endsWith(outputFile, "standard output")) {
+            outputFileDiv.attr("style", "font-weight: bold");
+        }
+
+        const titleDiv = $("div.header div.title");
+
+
+
+
+    });
+</script>        </div>
+    </div>
+
+    <div id="footer">
+        <div><a href="https://codeforces.com/">Codeforces</a> (c) Copyright 2010-2025 Mike Mirzayanov</div>
+        <div>The only programming contests Web 2.0 platform</div>
+
+    </div>
+
+</div>
+</div>
+    <script type="application/javascript">
+        if ('serviceWorker' in navigator && 'fetch' in window && 'caches' in window) {
+            navigator.serviceWorker.register('/service-worker-85693.js')
+                .then(function (registration) {
+                    console.log('Service worker registered: ', registration);
+                })
+                .catch(function (error) {
+                    console.log('Registration failed: ', error);
+                });
+        }
+    </script>
+<script defer src="https://static.cloudflareinsights.com/beacon.min.js/vcd15cbe7772f49c399c6a5babf22c1241717689176015" integrity="sha512-ZpsOmlRQV6y907TI0dKBHq9Md29nnaEIPlkf84rnaERnq6zvWvPUqr2ft8M1aS28oN72PdrCzSjY4U6VaAw1EQ==" data-cf-beacon='{"version":"2024.11.0","token":"316c29dfa3804effb5a91c52a59b5bd0","server_timing":{"name":{"cfCacheStatus":true,"cfEdge":true,"cfExtPri":true,"cfL4":true,"cfOrigin":true,"cfSpeedBrain":true},"location_startswith":null}}' crossorigin="anonymous"></script>
+</body>
+</html>

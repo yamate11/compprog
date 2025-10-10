@@ -2,6 +2,7 @@
 #include <cassert>
 using namespace std;
 using ll = long long int;
+using u64 = unsigned long long;
 using pll = pair<ll, ll>;
 // #include <atcoder/all>
 // using namespace atcoder;
@@ -11,13 +12,59 @@ using pll = pair<ll, ll>;
 #define SIZE(v) ((ll)((v).size()))
 #define REPOUT(i, a, b, exp, sep) REP(i, (a), (b)) cout << (exp) << (i + 1 == (b) ? "" : (sep)); cout << "\n"
 
-// @@ !! LIM(input debug)
+// @@ !! LIM(f:updMaxMin cartesianTree debug)
 
-// ---- inserted library file input.cc
+// ---- inserted function f:updMaxMin from util.cc
+template<typename T>
+bool updMax(T& tmax, const T& x) {
+  if (x > tmax) { tmax = x; return true;  }
+  else          {           return false; }
+}
+template<typename T>
+bool updMin(T& tmin, const T& x) {
+  if (x < tmin) { tmin = x; return true;  }
+  else          {           return false; }
+}
+// ---- end f:updMaxMin
 
-// The contents are empty.
+// ---- inserted library file cartesianTree.cc
 
-// ---- end input.cc
+template<typename T>
+struct CartesianTree {
+  int root;
+  vector<int> left;
+  vector<int> right;
+
+  CartesianTree() : root(-1), left(), right() {}
+  template<typename Comp = less<typename T::value_type>>
+  CartesianTree(const T& vec, Comp comp = Comp()) { build(vec, comp); }
+
+  template<typename Comp = less<typename T::value_type>>
+  void build(const T& vec, Comp comp = Comp()) {
+    int n = ssize(vec);
+    root = -1;
+    left = vector<int>(n, -1);
+    right = vector<int>(n, -1);
+    vector<int> stack{-1};
+    for (int i = 0; i < n; i++) {
+      int left_cand = -1;
+      while (true) {
+        if (int j = stack.back(); j == -1 or comp(vec[j], vec[i])) {
+          left[i] = left_cand;
+          if (j == -1) root = i;
+          else         right[j] = i;
+          stack.push_back(i);
+          break;
+        }else {
+          left_cand = j;
+          stack.pop_back();
+        }
+      }
+    }
+  }
+};
+
+// ---- end cartesianTree.cc
 
 // ---- inserted function f:<< from util.cc
 
@@ -31,6 +78,12 @@ ostream& operator<< (ostream& os, const tuple<T1,T2,T3>& t);
 
 template <typename T1, typename T2, typename T3, typename T4>
 ostream& operator<< (ostream& os, const tuple<T1,T2,T3,T4>& t);
+
+template <typename T1, typename T2, typename T3, typename T4, typename T5>
+ostream& operator<< (ostream& os, const tuple<T1,T2,T3,T4,T5>& t);
+
+template <typename T1, typename T2, typename T3, typename T4, typename T5, typename T6>
+ostream& operator<< (ostream& os, const tuple<T1,T2,T3,T4,T5,T6>& t);
 
 template <typename T>
 ostream& operator<< (ostream& os, const vector<T>& v);
@@ -69,6 +122,8 @@ ostream& operator<< (ostream& os, const optional<T>& t);
 
 ostream& operator<< (ostream& os, int8_t x);
 
+ostream& operator<< (ostream& os, const __int128& x);
+
 // definitions
 
 template <typename T1, typename T2>
@@ -88,6 +143,20 @@ template <typename T1, typename T2, typename T3, typename T4>
 ostream& operator<< (ostream& os, const tuple<T1,T2,T3,T4>& t) {
   os << "(" << get<0>(t) << ", " << get<1>(t)
      << ", " << get<2>(t) << ", " << get<3>(t) << ")";
+  return os;
+}
+
+template <typename T1, typename T2, typename T3, typename T4, typename T5>
+ostream& operator<< (ostream& os, const tuple<T1,T2,T3,T4,T5>& t) {
+  os << "(" << get<0>(t) << ", " << get<1>(t)
+     << ", " << get<2>(t) << ", " << get<3>(t) << ", " << get<4>(t) << ")";
+  return os;
+}
+
+template <typename T1, typename T2, typename T3, typename T4, typename T5, typename T6>
+ostream& operator<< (ostream& os, const tuple<T1,T2,T3,T4,T5,T6>& t) {
+  os << "(" << get<0>(t) << ", " << get<1>(t)
+     << ", " << get<2>(t) << ", " << get<3>(t) << ", " << get<4>(t) << ", " << get<5>(t) << ")";
   return os;
 }
 
@@ -235,6 +304,36 @@ ostream& operator<< (ostream& os, int8_t x) {
   return os;
 }
 
+// for Enum type; just displays ordinals.
+template <typename E>
+typename std::enable_if<std::is_enum<E>::value, std::ostream&>::type
+operator<<(std::ostream& os, E e) {
+    return os << static_cast<typename std::underlying_type<E>::type>(e);
+}
+
+// This is a very ad-hoc implementation...
+ostream& operator<<(ostream& os, const __int128& v) {
+  unsigned __int128 a = v < 0 ? -v : v;
+  ll i = 0;
+  string s(64, ' ');
+  if (v == 0) {
+    s[i++] = '0';
+  }else {
+    while (a > 0) {
+      s[i++] = '0' + (char)(a % 10);
+      a /= 10;
+    }
+  }
+  if (v < 0) {
+    s[i++] = '-';
+  }
+  s.erase(s.begin() + i, s.end());
+  reverse(s.begin(), s.end());
+  os << s;
+  return os;
+}
+
+
 // ---- end f:<<
 
 // ---- inserted library file debug.cc
@@ -311,95 +410,48 @@ void dbgLog(bool with_nl, Head&& head, Tail&&... tail)
 
 // @@ !! LIM -- end mark --
 
-using u64 = unsigned long long;
-
 int main(/* int argc, char *argv[] */) {
   ios_base::sync_with_stdio(false);
   cin.tie(nullptr);
   cout << setprecision(20);
 
   ll N, M; cin >> N >> M;
-  // @InpGrid(N, M, A) [qLQ5BKCM]
+  // @InpGrid(N, M, A) [Fa9Q6hOw]
   auto A = vector(N, vector(M, ll()));
   for (int i = 0; i < N; i++) for (int j = 0; j < M; j++) { ll v; cin >> v; A[i][j] = v; }
-  // @End [qLQ5BKCM]
+  // @End [Fa9Q6hOw]
 
   ll vmax = 0;
-  REP(i, 0, N) REP(j, 0, M) vmax = max(vmax, A[i][j]);
+  REP(i, 0, N) REP(j, 0, M) updMax(vmax, A[i][j]);
 
-  vector S(N + 1, vector(M + 1, 0LL));
-  REP(i, 0, N) REP(j, 0, M) S[i + 1][j + 1] = A[i][j];
-  REP(i, 1, N + 1) REP(j, 1, M + 1) S[i][j] += S[i][j - 1];
-  REP(j, 1, M + 1) REP(i, 1, N + 1) S[i][j] += S[i - 1][j];
-  DLOGK(S);
-
-  using sta = tuple<ll, ll, ll>;
-  auto mymin = [&](const sta& x1, const sta& x2) -> sta {
-    auto [v1, i1, j1] = x1;
-    auto [v2, i2, j2] = x2;
-    if (v1 <= v2) return x1;
-    else return x2;
-  };
-  ll KN = countr_zero(bit_ceil((u64)(N + 1)));
-  ll KM = countr_zero(bit_ceil((u64)(M + 1)));
-  vector V(N, vector(KM, vector(M, sta())));
-  vector W(KN, vector(KM, vector(N, vector(M, sta()))));
-  REP(i, 0, N) REP(k, 0, KM) {
-    ll t = 1LL << k;
-    REP(j, 0, M - t + 1) {
-      if (k == 0) V[i][0][j] = sta(A[i][j], i, j);
-      else V[i][k][j] = mymin(V[i][k - 1][j], V[i][k - 1][j + t/2]);
-    }
-  }
-  REP(ki, 0, KN) {
-    ll ti = 1LL << ki;
-    REP(kj, 0, KM) REP(i, 0, N - ti + 1) {
-      ll tj = 1LL << kj;
-      REP(j, 0, M - tj + 1) {
-        if (ki == 0) W[0][kj][i][j] = V[i][kj][j];
-        else W[ki][kj][i][j] = mymin(W[ki - 1][kj][i][j], W[ki - 1][kj][i + ti / 2][j]);
-      }
-    }
-  }
-
-  auto getsum = [&](ll x1, ll y1, ll x2, ll y2) -> ll {
-    return S[x2][y2] + S[x1][y1] - S[x1][y2] - S[x2][y1];
-  };
-
-  auto getmin = [&](ll x1, ll y1, ll x2, ll y2) -> sta {
-    ll kx = countr_zero(bit_floor((u64)(x2 - x1)));
-    ll ky = countr_zero(bit_floor((u64)(y2 - y1)));
-    sta ret = W[kx][ky][x1][y1];
-    ret = mymin(ret, W[kx][ky][x1][y2 - (1LL << ky)]);
-    ret = mymin(ret, W[kx][ky][x2 - (1LL << kx)][y1]);
-    ret = mymin(ret, W[kx][ky][x2 - (1LL << kx)][y2 - (1LL << ky)]);
-    return ret;
-  };
-
-  using stb = tuple<ll, ll, ll, ll>;
-  set<stb> seen;
-  vector<stb> cand{stb(0, 0, N, M)};
-  auto reg = [&](ll x1, ll y1, ll x2, ll y2) -> void {
-    if (not (x1 < x2 and y1 < y2)) return;
-    DLOGKL("reg", x1, y1, x2, y2);
-    stb t(x1, y1, x2, y2);
-    if (seen.contains(t)) return;
-    seen.insert(t);
-    cand.push_back(t);
-  };
   ll ans = 0;
-  while (not cand.empty()) {
-    auto [x1, y1, x2, y2] = cand.back(); cand.pop_back();
-    DLOGKL("popped", x1, y1, x2, y2);
-    ll s = getsum(x1, y1, x2, y2);
-    auto [m, xx, yy] = getmin(x1, y1, x2, y2);
-    ans = max(ans, s * m);
-    DLOGK(vmax, s, vmax * s, ans);
-    if (vmax * s >= ans) {
-      reg(x1, y1, xx, y2);
-      reg(xx + 1, y1, x2, y2);
-      reg(x1, y1, x2, yy);
-      reg(x1, yy + 1, x2, y2);
+  REP(m0, 1, vmax + 1) {
+    REP(i, 0, N) REP(j, 0, M) if (A[i][j] < m0) A[i][j] = 0;
+    DLOGK(m0);
+    DLOGK(A);
+    vector B(N + 1, vector(M + 1, 0LL));
+    REP(i, 0, N) REP(j, 0, M) B[i + 1][j + 1] = A[i][j];
+    REP(i, 1, N + 1) REP(j, 1, M + 1) B[i][j] += B[i][j - 1];
+    REP(i, 1, N + 1) REP(j, 1, M + 1) B[i][j] += B[i - 1][j];
+    DLOGK(A);
+    DLOGK(B);
+    vector H(N + 1, vector(M, 0LL));
+    REPrev(i, N - 1, 0) REP(j, 0, M) {
+      if (A[i][j] == 0) H[i][j] = 0;
+      else              H[i][j] = H[i + 1][j] + 1;
+    }
+    REP(i, 0, N) {
+      CartesianTree ct(H[i]);
+      DLOGK(m0, i, H[i]);
+      auto f = [&](auto rF, ll lo, ll hi, ll x) -> void {
+        if (x < 0) return;
+        ll v = m0 * (B[i][lo] + B[i + H[i][x]][hi] - B[i][hi] - B[i + H[i][x]][lo]);
+        DLOGK(m0, i, lo, hi, x, v);
+        updMax(ans, v);
+        rF(rF, lo, x, ct.left[x]);
+        rF(rF, x + 1, hi, ct.right[x]);
+      };
+      f(f, 0, M, ct.root);
     }
   }
   cout << ans << endl;

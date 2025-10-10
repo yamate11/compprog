@@ -1,0 +1,77 @@
+#!/usr/bin/env python3
+
+import argparse, sys
+from random import randrange, choice, shuffle, sample
+
+class Case:
+    def __init__(self):
+        self.buf = []
+
+    def p(self, *args):
+        def cvt(a):
+            if isinstance(a, list):
+                return ' '.join(map(str, a))
+            else:
+                return str(a)
+        self.buf.append(' '.join(map(cvt, args)) + '\n')
+
+def generate():
+    while True:
+        case = Case()
+        onecase(case)
+        yield ''.join(case.buf)
+
+def main():
+    ap = argparse.ArgumentParser();
+    ap.add_argument('-r', '--repeat', action='store_true',
+                    help='Repeatedly generates cases',)
+    ap.add_argument('--one', action='store_true',
+                    help='One case only.  No end mark')
+    args = ap.parse_args()
+
+    end_mark = '^__=end=__^'
+    end_file_mark = '^__=end_file=__^'
+
+    try:
+        if args.one:
+            for s in generate():
+                print(s.rstrip())
+                break
+        elif args.repeat:
+            for s in generate():
+                print(s.rstrip())
+                print(end_mark)
+            print(end_file_mark)
+        else:
+            for (i, s) in enumerate(generate()):
+                print(s.rstrip())
+                print(end_mark)
+                if (i == 4):
+                    break
+    except BrokenPipeError as e:
+        # print('caught: BrokenPipeError', file=sys.stderr)
+        pass
+
+######################################################################
+# This "onecase" is the function you should edit.
+
+# Sample
+#    n = randrange(2, 5)
+#    m = randrange(2, 5)
+#    case.p(n, m)                                   # like print()
+#    case.p([randrange(1, 10) for _ in range(n)])   # lists are printed with space inserted
+#    case.p([choice('UDLR' for _ in range(m))])
+
+# Tips
+#    sample(seq, k)  can be used to get k distinct elemets from seq.
+#    If you need l and r from [1, n] with l < r, use
+#           (l, r) = sorted(sample(range(1, n + 1), 2))
+
+def onecase(case):
+    n = randrange(1, 10)
+    m = randrange(2, 6)
+    vec = [randrange(0, m) for _ in range(n)]
+    case.p(n, m)
+    case.p(vec)
+
+main()

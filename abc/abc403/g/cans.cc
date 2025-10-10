@@ -12,7 +12,7 @@ using pll = pair<ll, ll>;
 #define SIZE(v) ((ll)((v).size()))
 #define REPOUT(i, a, b, exp, sep) REP(i, (a), (b)) cout << (exp) << (i + 1 == (b) ? "" : (sep)); cout << "\n"
 
-// @@ !! LIM(debug)
+// @@ !! LIM(debug cmpNaive)
 
 // ---- inserted function f:<< from util.cc
 
@@ -356,71 +356,191 @@ void dbgLog(bool with_nl, Head&& head, Tail&&... tail)
 
 // ---- end debug.cc
 
-// @@ !! LIM -- end mark --
+// ---- inserted library file cmpNaive.cc
 
-struct Node {
-  Node* lc;
-  Node* rc;
-  ll lo;
-  ll hi;
-  ll num;
-  ll esum;
-  ll osum;
-  Node() : lc(nullptr), rc(nullptr), lo(-1), hi(-1), num(0), esum(0), osum(0) {}
-  Node(ll lo_, ll hi_) : lc(nullptr), rc(nullptr), lo(lo_), hi(hi_), num(0), esum(0), osum(0) {}
-  ~Node() {
-    if (lc) delete lc;
-    if (rc) delete rc;
-  }
+const string end_mark("^__=end=__^");
 
-#define GET(ptr, member) ((ptr) ? (ptr)->member : 0)
+int naive(istream& cin, ostream& cout);
+int body(istream& cin, ostream& cout);
 
-  void add(ll x) {
-    assert(lo <= x and x < hi);
-    if (lo + 1 == hi) {
-      num++;
-      esum = x * ((num + 1) / 2);
-      osum = x * (num / 2);
+void cmpNaive() {
+  while (true) {
+    string s;
+    getline(cin, s);
+    bool run_body;
+    if (s.at(0) == 'Q') {
+      return;
+    }else if (s.at(0) == 'B') {
+      run_body = true;
+    }else if (s.at(0) == 'N') {
+      run_body = false;
     }else {
-      ll mid = (lo + hi) / 2;
-      if (x < mid) {
-        if (not lc) lc = new Node(lo, mid);
-        lc->add(x);
-      }else {
-        if (not rc) rc = new Node(mid, hi);
-        rc->add(x);
-      }
-      num = GET(lc, num) + GET(rc, num);
-      if (GET(lc, num) % 2 == 0) {
-        esum = GET(lc, esum) + GET(rc, esum);
-        osum = GET(lc, osum) + GET(rc, osum);
-      }else {
-        esum = GET(lc, esum) + GET(rc, osum);
-        osum = GET(lc, osum) + GET(rc, esum);
-      }
+      cerr << "Unknown body/naive specifier.\n";
+      exit(1);
     }
-    DLOGK(lo, hi, x, num, esum, osum);
+    string input_s;
+    while (true) {
+      getline(cin, s);
+      if (s == end_mark) break;
+      input_s += s;
+      input_s += "\n";
+    }
+    stringstream ss_in(move(input_s));
+    stringstream ss_out;
+    ss_out << setprecision(20);
+    if (run_body) {
+      body(ss_in, ss_out);
+    }else {
+      naive(ss_in, ss_out);
+    }
+    cout << ss_out.str() << end_mark << endl;
   }
+}
 
-};
-
-int main(/* int argc, char *argv[] */) {
+int main(int argc, char *argv[]) {
   ios_base::sync_with_stdio(false);
   cin.tie(nullptr);
   cout << setprecision(20);
 
-  ll M = (ll)1e9;
-  Node root(0, M + 10);
+#if CMPNAIVE
+  if (argc == 2) {
+    if (strcmp(argv[1], "cmpNaive") == 0) {
+      cmpNaive();
+    }else if (strcmp(argv[1], "naive") == 0) {
+      naive(cin, cout);
+    }else if (strcmp(argv[1], "skip") == 0) {
+      exit(0);
+    }else {
+      cerr << "Unknown argument.\n";
+      exit(1);
+    }
+  }else {
+#endif
+    body(cin, cout);
+#if CMPNAIVE
+  }
+#endif
+  return 0;
+}
+
+/*
+int naive(istream& cin, ostream& cout) {
+  return 0;
+}
+int body(istream& cin, ostream& cout) {
+  return 0;
+}
+*/
+
+// ---- end cmpNaive.cc
+
+// @@ !! LIM -- end mark --
+
+struct Node {
+  ll v_lo;
+  ll v_hi;
+  Node* cld_lo;
+  Node* cld_hi;
+  ll numeff;
+  ll sum_even;
+  ll sum_odd;
+  Node(ll v_lo_ = 0, ll v_hi_ = 0) : v_lo(v_lo_), v_hi(v_hi_),
+                                   cld_lo(nullptr), cld_hi(nullptr), numeff(0), sum_even(0), sum_odd(0) {}
+  
+  void update() {
+    DLOGKL("update", v_lo, v_hi);
+    ll n = 0;
+    ll e = 0;
+    ll o = 0;
+    if (cld_lo) {
+      n = cld_lo->numeff;
+      e = cld_lo->sum_even;
+      o = cld_lo->sum_odd;
+      DLOGKL("upd1", n, e, o);
+    }
+    if (cld_hi) {
+      if (n % 2 == 0) {
+        e += cld_hi->sum_even;
+        o += cld_hi->sum_odd;
+        DLOGKL("upd2", n, e, o);
+      }else {
+        e += cld_hi->sum_odd;
+        o += cld_hi->sum_even;
+        DLOGKL("upd3", n, e, o);
+      }
+      n += cld_hi->numeff;
+      DLOGKL("upd4", n, e, o);
+    }
+    numeff = n;
+    sum_even = e;
+    sum_odd = o;
+    DLOGKL("upd5", n, e, o);
+  }
+
+  void insert(ll x) {
+    if (v_lo + 1 == v_hi) {
+      if (numeff % 2 == 0) {
+        sum_even += x;
+      }else {
+        sum_odd += x;
+      }
+      numeff ++;
+      return;
+    }
+    ll mid = (v_lo + v_hi) / 2;
+    auto get_cld = [&](bool b) -> Node* {
+      if (b) {
+        if (not cld_hi) {
+          cld_hi = new Node(mid, v_hi);
+        }
+        return cld_hi;
+      }else {
+        if (not cld_lo) {
+          cld_lo = new Node(v_lo, mid);
+        }
+        return cld_lo;
+      }
+    };
+    get_cld(mid < x) -> insert(x);
+    update();
+    DLOGKL("insert", x, v_lo, v_hi, numeff, sum_even, sum_odd);
+  }
+};
+
+ll lim = 1e9;
+
+int naive(istream& cin, ostream& cout) {
+  vector<ll> A;
   ll Q; cin >> Q;
   ll z = 0;
-  REP(i, 0, Q) {
+  REP(_q, 0, Q) {
     ll y; cin >> y;
-    ll x = ((y + z) % M) + 1;
-    root.add(x);
-    z = root.esum;
+    ll x = 1 + (y + z) % lim;
+    A.push_back(x);
+    sort(ALL(A));
+    ll t = 0;
+    REP(i, 0, ssize(A)) {
+      if (i % 2 == 0) t += A[i];
+    }
+    cout << t << "\n";
+    z = t;
+  }
+
+
+  return 0;
+}
+int body(istream& cin, ostream& cout) {
+
+  Node root(0, lim + 1);
+  ll Q; cin >> Q;
+  ll z = 0;
+  REP(_q, 0, Q) {
+    ll y; cin >> y;
+    ll x = 1 + (y + z) % lim;
+    root.insert(x);
+    z = root.sum_even;
     cout << z << "\n";
   }
-  
   
 
   return 0;

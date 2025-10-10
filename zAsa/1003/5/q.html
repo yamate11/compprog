@@ -1,0 +1,1073 @@
+
+
+
+
+
+
+
+
+<!DOCTYPE html>
+<html>
+<head>
+	<title>D - Takahashi&#39;s Expectation</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+	<meta http-equiv="Content-Language" content="ja">
+	<meta name="viewport" content="width=device-width,initial-scale=1.0">
+	<meta name="format-detection" content="telephone=no">
+	<meta name="google-site-verification" content="nXGC_JxO0yoP1qBzMnYD_xgufO6leSLw1kyNo2HZltM" />
+
+	
+	<script async src="https://www.googletagmanager.com/gtag/js?id=G-RC512FD18N"></script>
+	<script>
+		window.dataLayer = window.dataLayer || [];
+		function gtag(){dataLayer.push(arguments);}
+		gtag('js', new Date());
+		gtag('set', 'user_properties', {
+			
+				'login_status': 'logged_in',
+			
+		});
+		gtag('config', 'G-RC512FD18N');
+	</script>
+
+	
+	<meta name="description" content="プログラミング初級者から上級者まで楽しめる、競技プログラミングコンテストサイト「AtCoder」。オンラインで毎週開催プログラミングコンテストを開催しています。競技プログラミングを用いて、客観的に自分のスキルを計ることのできるサービスです。">
+	<meta name="author" content="AtCoder Inc.">
+
+	<meta property="og:site_name" content="AtCoder">
+	
+	<meta property="og:title" content="D - Takahashi&#39;s Expectation" />
+	<meta property="og:description" content="プログラミング初級者から上級者まで楽しめる、競技プログラミングコンテストサイト「AtCoder」。オンラインで毎週開催プログラミングコンテストを開催しています。競技プログラミングを用いて、客観的に自分のスキルを計ることのできるサービスです。" />
+	<meta property="og:type" content="website" />
+	<meta property="og:url" content="https://atcoder.jp/contests/abc417/tasks/abc417_d" />
+	<meta property="og:image" content="https://img.atcoder.jp/assets/atcoder.png" />
+	<meta name="twitter:card" content="summary" />
+	<meta name="twitter:site" content="@atcoder" />
+	
+	<meta property="twitter:title" content="D - Takahashi&#39;s Expectation" />
+
+	<link href="//fonts.googleapis.com/css?family=Lato:400,700" rel="stylesheet" type="text/css">
+	<link rel="stylesheet" type="text/css" href="//img.atcoder.jp/public/d7f7070/css/bootstrap.min.css">
+	<link rel="stylesheet" type="text/css" href="//img.atcoder.jp/public/d7f7070/css/base.css">
+	<link rel="shortcut icon" type="image/png" href="//img.atcoder.jp/assets/favicon.png">
+	<link rel="apple-touch-icon" href="//img.atcoder.jp/assets/atcoder.png">
+	<script src="//img.atcoder.jp/public/d7f7070/js/lib/jquery-1.9.1.min.js"></script>
+	<script src="//img.atcoder.jp/public/d7f7070/js/lib/bootstrap.min.js"></script>
+	<script src="//img.atcoder.jp/public/d7f7070/js/cdn/js.cookie.min.js"></script>
+	<script src="//img.atcoder.jp/public/d7f7070/js/cdn/moment.min.js"></script>
+	<script src="//img.atcoder.jp/public/d7f7070/js/cdn/moment_js-ja.js"></script>
+	<script>
+		var LANG = "ja";
+		var userScreenName = "yamate11";
+		var csrfToken = "xq/2/1/cd0OKZhkOMPzGHO28HpSv5GCbMjIXdzS6eNY="
+	</script>
+	<script src="//img.atcoder.jp/public/d7f7070/js/utils.js"></script>
+	
+	
+		<script src="//img.atcoder.jp/public/d7f7070/js/contest.js"></script>
+		<link href="//img.atcoder.jp/public/d7f7070/css/contest.css" rel="stylesheet" />
+		<script>
+			var contestScreenName = "abc417";
+			var remainingText = "残り時間";
+			var countDownText = "開始まであと";
+			var startTime = moment("2025-08-02T21:00:00+09:00");
+			var endTime = moment("2025-08-02T22:40:00+09:00");
+		</script>
+		<style></style>
+	
+	
+		<link href="//img.atcoder.jp/public/d7f7070/css/cdn/select2.min.css" rel="stylesheet" />
+		<link href="//img.atcoder.jp/public/d7f7070/css/cdn/select2-bootstrap.min.css" rel="stylesheet" />
+		<script src="//img.atcoder.jp/public/d7f7070/js/lib/select2.min.js"></script>
+	
+	
+		<script src="//img.atcoder.jp/public/d7f7070/js/ace/ace.js"></script>
+		<script src="//img.atcoder.jp/public/d7f7070/js/ace/ext-language_tools.js"></script>
+	
+	
+		<script src="//img.atcoder.jp/public/d7f7070/js/cdn/run_prettify.js"></script>
+	
+	
+		<link rel="stylesheet" href="//img.atcoder.jp/public/d7f7070/css/cdn/katex.min.css">
+		<script defer src="//img.atcoder.jp/public/d7f7070/js/cdn/katex.min.js"></script>
+		<script defer src="//img.atcoder.jp/public/d7f7070/js/cdn/auto-render.min.js"></script>
+		<script>$(function(){$('var').each(function(){var html=$(this).html().replace(/<sub>/g,'_{').replace(/<\/sub>/g,'}');$(this).html('\\('+html+'\\)');});});</script>
+		<script>
+			var katexOptions = {
+				delimiters: [
+					{left: "$$", right: "$$", display: true},
+					
+					{left: "\\(", right: "\\)", display: false},
+					{left: "\\[", right: "\\]", display: true}
+				],
+      	ignoredTags: ["script", "noscript", "style", "textarea", "code", "option"],
+				ignoredClasses: ["prettyprint", "source-code-for-copy"],
+				throwOnError: false
+			};
+			document.addEventListener("DOMContentLoaded", function() { renderMathInElement(document.body, katexOptions);});
+		</script>
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	<script src="//img.atcoder.jp/public/d7f7070/js/base.js"></script>
+</head>
+
+<body>
+
+<script type="text/javascript">
+	var __pParams = __pParams || [];
+	__pParams.push({client_id: '468', c_1: 'atcodercontest', c_2: 'ClientSite'});
+</script>
+<script type="text/javascript" src="https://cdn.d2-apps.net/js/tr.js" async></script>
+
+
+<div id="modal-contest-start" class="modal fade" tabindex="-1" role="dialog">
+	<div class="modal-dialog" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+				<h4 class="modal-title">コンテスト開始</h4>
+			</div>
+			<div class="modal-body">
+				<p>AtCoder Beginner Contest 417が開始されました。</p>
+			</div>
+			<div class="modal-footer">
+				
+					<a class="btn btn-primary" href='/contests/abc417/tasks'>問題一覧ページへ移動</a>
+				
+			</div>
+		</div>
+	</div>
+</div>
+<div id="modal-contest-end" class="modal fade" tabindex="-1" role="dialog">
+	<div class="modal-dialog" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+				<h4 class="modal-title">コンテスト終了</h4>
+			</div>
+			<div class="modal-body">
+				<p>AtCoder Beginner Contest 417は終了しました。</p>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-default" data-dismiss="modal">閉じる</button>
+			</div>
+		</div>
+	</div>
+</div>
+<div id="main-div" class="float-container">
+
+
+	<nav class="navbar navbar-inverse navbar-fixed-top">
+		<div class="container-fluid">
+			<div class="navbar-header">
+				<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapse" aria-expanded="false">
+					<span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span>
+				</button>
+				<a class="navbar-brand" href="/home"></a>
+			</div>
+			<div class="collapse navbar-collapse" id="navbar-collapse">
+				<ul class="nav navbar-nav">
+				
+					<li><a class="contest-title" href="/contests/abc417">AtCoder Beginner Contest 417</a></li>
+				
+				</ul>
+				<ul class="nav navbar-nav navbar-right">
+					
+					<li class="dropdown">
+						<a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
+							<img src='//img.atcoder.jp/assets/top/img/flag-lang/ja.png'> 日本語 <span class="caret"></span>
+						</a>
+						<ul class="dropdown-menu">
+							<li><a href="/contests/abc417/tasks/abc417_d?lang=ja"><img src='//img.atcoder.jp/assets/top/img/flag-lang/ja.png'> 日本語</a></li>
+							<li><a href="/contests/abc417/tasks/abc417_d?lang=en"><img src='//img.atcoder.jp/assets/top/img/flag-lang/en.png'> English</a></li>
+						</ul>
+					</li>
+					
+					
+						<li class="dropdown">
+							<a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
+								<span class="glyphicon glyphicon-cog" aria-hidden="true"></span> yamate11 (Contestant) <span class="caret"></span>
+							</a>
+							<ul class="dropdown-menu">
+								<li><a href="/users/yamate11"><span class="glyphicon glyphicon-user" aria-hidden="true"></span> マイプロフィール</a></li>
+								<li class="divider"></li>
+								<li><a href="/settings"><span class="glyphicon glyphicon-wrench" aria-hidden="true"></span> 基本設定</a></li>
+								<li><a href="/settings/icon"><span class="glyphicon glyphicon-picture" aria-hidden="true"></span> アイコン設定</a></li>
+								<li><a href="/settings/password"><span class="glyphicon glyphicon-lock" aria-hidden="true"></span> パスワードの変更</a></li>
+								<li><a href="/settings/fav"><span class="glyphicon glyphicon-star" aria-hidden="true"></span> お気に入り管理</a></li>
+								
+								
+								
+								<li class="divider"></li>
+								<li><a href="javascript:void(form_logout.submit())"><span class="glyphicon glyphicon-log-out" aria-hidden="true"></span> ログアウト</a></li>
+							</ul>
+						</li>
+					
+				</ul>
+			</div>
+		</div>
+	</nav>
+
+	<form method="POST" name="form_logout" action="/logout?continue=https%3A%2F%2Fatcoder.jp%2Fcontests%2Fabc417%2Ftasks%2Fabc417_d">
+		<input type="hidden" name="csrf_token" value="xq/2/1/cd0OKZhkOMPzGHO28HpSv5GCbMjIXdzS6eNY=" />
+	</form>
+	<div id="main-container" class="container"
+		 	style="padding-top:50px;">
+		
+
+
+<div class="row">
+	<div id="contest-nav-tabs" class="col-sm-12 mb-2 cnvtb-fixed">
+	<div>
+		<small class="contest-duration">
+			
+				コンテスト時間:
+				<a href='http://www.timeanddate.com/worldclock/fixedtime.html?iso=20250802T2100&p1=248' target='blank'><time class='fixtime fixtime-full'>2025-08-02 21:00:00+0900</time></a> ~ <a href='http://www.timeanddate.com/worldclock/fixedtime.html?iso=20250802T2240&p1=248' target='blank'><time class='fixtime fixtime-full'>2025-08-02 22:40:00+0900</time></a> 
+				(100分)
+			
+		</small>
+		<small class="back-to-home pull-right"><a href="/home">AtCoderホームへ戻る</a></small>
+	</div>
+	<ul class="nav nav-tabs">
+		<li><a href="/contests/abc417"><span class="glyphicon glyphicon-home" aria-hidden="true"></span> トップ</a></li>
+		
+			<li class="active"><a href="/contests/abc417/tasks"><span class="glyphicon glyphicon-tasks" aria-hidden="true"></span> 問題</a></li>
+		
+
+		
+			<li><a href="/contests/abc417/clarifications"><span class="glyphicon glyphicon-question-sign" aria-hidden="true"></span> 質問 <span id="clar-badge" class="badge" ></span></a></li>
+		
+
+		
+			<li><a href="/contests/abc417/submit?taskScreenName=abc417_d"><span class="glyphicon glyphicon-send" aria-hidden="true"></span> 提出</a></li>
+		
+
+		
+			<li>
+				<a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false"><span class="glyphicon glyphicon-list" aria-hidden="true"></span> 提出結果<span class="caret"></span></a>
+				<ul class="dropdown-menu">
+					<li><a href="/contests/abc417/submissions"><span class="glyphicon glyphicon-globe" aria-hidden="true"></span> すべての提出</a></li>
+					
+						<li><a href="/contests/abc417/submissions/me"><span class="glyphicon glyphicon-user" aria-hidden="true"></span> 自分の提出</a></li>
+						
+						
+							<li class="divider"></li>
+							<li><a href="/contests/abc417/score"><span class="glyphicon glyphicon-dashboard" aria-hidden="true"></span> 自分の得点状況</a></li>
+						
+					
+				</ul>
+			</li>
+		
+
+		
+			
+				
+					<li><a href="/contests/abc417/standings"><span class="glyphicon glyphicon-sort-by-attributes-alt" aria-hidden="true"></span> 順位表</a></li>
+				
+			
+				
+					<li><a href="/contests/abc417/standings/virtual"><span class="glyphicon glyphicon-sort-by-attributes-alt" aria-hidden="true"></span> バーチャル順位表</a></li>
+				
+			
+		
+
+		
+			<li><a href="/contests/abc417/custom_test"><span class="glyphicon glyphicon-wrench" aria-hidden="true"></span> コードテスト</a></li>
+		
+
+		
+			<li><a href="/contests/abc417/editorial"><span class="glyphicon glyphicon-book" aria-hidden="true"></span> 解説</a></li>
+		
+		
+
+		<li class="pull-right"><a id="fix-cnvtb" href="javascript:void(0)"><span class="glyphicon glyphicon-pushpin" aria-hidden="true"></span></a></li>
+	</ul>
+</div>
+	<div class="col-sm-12">
+		<span class="h2">
+			D - Takahashi&#39;s Expectation
+			<a class="btn btn-default btn-sm" href="/contests/abc417/tasks/abc417_d/editorial">解説</a>
+		</span>
+		<span id="task-lang-btn" class="pull-right"><span data-lang="ja"><img src='//img.atcoder.jp/assets/top/img/flag-lang/ja.png'></span> / <span data-lang="en"><img src='//img.atcoder.jp/assets/top/img/flag-lang/en.png'></span></span>
+		<script>
+			$(function() {
+				var ts = $('#task-statement span.lang');
+				if (ts.children('span').size() <= 1) {
+					$('#task-lang-btn').hide();
+					ts.children('span').show();
+					return;
+				}
+
+				var REMEMBER_LB = 5;
+				var LS_KEY = 'task_lang';
+				var taskLang = getLS(LS_KEY) || '';
+				function isTaskLangSet(taskLang) { return taskLang === 'ja' || taskLang === 'en';}
+				if (isTaskLangSet(taskLang)) {
+					const params = new URLSearchParams(window.location.search);
+					if (params.get('lang')) {
+						setLS(LS_KEY, REMEMBER_LB);
+						taskLang = LANG;
+					}
+				} else {
+					taskLang = LANG;
+				}
+				ts.children('span.lang-' + taskLang).show();
+
+				$('#task-lang-btn span').click(function() {
+					var l = $(this).data('lang');
+					ts.children('span').hide();
+					ts.children('span.lang-' + l).show();
+
+					taskLang = getLS(LS_KEY) || '';
+					let changeTimes = 0;
+					if (isTaskLangSet(taskLang)) {
+						changeTimes = REMEMBER_LB;
+					} else {
+						changeTimes = parseInt(taskLang, 10);
+						if (isNaN(changeTimes)) changeTimes = 0;
+						changeTimes++;
+					}
+					if (changeTimes < REMEMBER_LB) setLS(LS_KEY, changeTimes);
+					else setLS(LS_KEY, l);
+				});
+			});
+		</script>
+		<hr/>
+		<p>
+			実行時間制限: 2 sec / メモリ制限: 1024 MiB
+			
+			
+		</p>
+
+		<div id="task-statement">
+			
+
+
+	
+	
+
+			<span class="lang">
+<span class="lang-ja">
+<p>配点 : <var>425</var> 点</p>
+
+<div class="part">
+<section>
+<h3>問題文</h3><p>高橋くんは、これから <var>N</var> 個のプレゼントをもらいます。</p>
+<p>高橋くんにはテンションという非負整数のパラメータがあり、テンションはプレゼントをもらうごとに変動します。
+それぞれのプレゼントは価値 <var>P</var> 、テンション上げ度 <var>A</var> 、テンション下げ度 <var>B</var> という <var>3</var> つのパラメータをもち、これらのパラメータによって高橋くんのテンションは次のように変動します。</p>
+<ul>
+<li>もらったプレゼントの価値 <var>P</var> がテンションの値以上であるとき、高橋くんはプレゼントに喜び、テンションが <var>A</var> だけ増加する。</li>
+<li>もらったプレゼントの価値 <var>P</var> がテンションの値より小さいとき、高橋くんはプレゼントにがっかりし、テンションが <var>B</var> だけ減少する。ただし、高橋くんのテンションの値が <var>B</var> より小さかった場合、高橋くんのテンションは <var>0</var> になる。</li>
+</ul>
+<p><var>i</var> 番目 <var>(1\le i\le N)</var> に受け取るプレゼントの価値は <var>P _ i</var> 、テンション上げ度は <var>A _ i</var> 、テンション下げ度は <var>B _ i</var> です。</p>
+<p><var>Q</var> 個の質問が与えられるので、その全てに答えてください。
+<var>i</var> 番目 <var>(1\le i\le Q)</var> の質問では、非負整数 <var>X _ i</var> が与えられるので次の質問に答えてください。</p>
+<blockquote>
+<p>高橋くんのテンションがはじめ <var>X _ i</var> だったときの、<var>N</var> 個のプレゼントをすべて受け取ったあとの高橋くんのテンションを求めよ。</p>
+</blockquote>
+</section>
+</div>
+
+<div class="part">
+<section>
+<h3>制約</h3><ul>
+<li><var>1\le N\le10000</var></li>
+<li><var>1\le P _ i\le500\ (1\le i\le N)</var></li>
+<li><var>1\le A _ i\le500\ (1\le i\le N)</var></li>
+<li><var>1\le B _ i\le500\ (1\le i\le N)</var></li>
+<li><var>1\le Q\le5\times10 ^ 5</var></li>
+<li><var>0\le X _ i\le10 ^ 9\ (1\le i\le Q)</var></li>
+<li>入力はすべて整数</li>
+</ul>
+</section>
+</div>
+
+<hr />
+<div class="io-style">
+<div class="part">
+<section>
+<h3>入力</h3><p>入力は以下の形式で標準入力から与えられる。</p>
+<pre><var>N</var>
+<var>P _ 1</var> <var>A _ 1</var> <var>B _ 1</var>
+<var>P _ 2</var> <var>A _ 2</var> <var>B _ 2</var>
+<var>\vdots</var>
+<var>P _ N</var> <var>A _ N</var> <var>B _ N</var>
+<var>Q</var>
+<var>X _ 1</var>
+<var>X _ 2</var>
+<var>\vdots</var>
+<var>X _ Q</var>
+</pre>
+</section>
+</div>
+
+<div class="part">
+<section>
+<h3>出力</h3><p><var>Q</var> 行にわたって出力せよ。
+<var>i</var> 行目には、<var>i</var> 番目の質問に対する答えを出力せよ。</p>
+</section>
+</div>
+</div>
+
+<hr />
+<div class="part">
+<section>
+<h3>入力例 1</h3><pre>4
+3 1 4
+1 5 9
+2 6 5
+3 5 8
+11
+0
+1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+</pre>
+</section>
+</div>
+
+<div class="part">
+<section>
+<h3>出力例 1</h3><pre>6
+0
+0
+0
+5
+6
+0
+0
+0
+0
+0
+</pre>
+<p>高橋くんのテンションがはじめ <var>10</var> だったとき、高橋くんのテンションは以下のように変動します。</p>
+<ul>
+<li><var>1</var> つめのプレゼントの価値 <var>3</var> は高橋くんのテンション <var>10</var> 未満なので、テンション下げ度 <var>4</var> だけ高橋くんのテンションが減少し、高橋くんのテンションが <var>6</var> になる。</li>
+<li><var>2</var> つめのプレゼントの価値 <var>1</var> は高橋くんのテンション <var>6</var> 未満で、高橋くんのテンション <var>6</var> はテンション下げ度 <var>9</var> 未満なので、高橋くんのテンションが <var>0</var> になる。</li>
+<li><var>3</var> つめのプレゼントの価値 <var>2</var> は高橋くんのテンション <var>0</var> 以上なので、テンション上げ度 <var>6</var> だけ高橋くんのテンションが増加し、高橋くんのテンションが <var>6</var> になる。</li>
+<li><var>4</var> つめのプレゼントの価値 <var>3</var> は高橋くんのテンション <var>6</var> 未満で、高橋くんのテンション <var>6</var> はテンション下げ度 <var>8</var> 未満なので、高橋くんのテンションが <var>0</var> になる。</li>
+</ul>
+<p>よって、最終的な高橋くんのテンションは <var>0</var> になります。</p>
+</section>
+</div>
+
+<hr />
+<div class="part">
+<section>
+<h3>入力例 2</h3><pre>3
+500 500 500
+500 500 500
+500 500 500
+1
+1000000000
+</pre>
+</section>
+</div>
+
+<div class="part">
+<section>
+<h3>出力例 2</h3><pre>999998500
+</pre>
+<p>高橋くんのテンションが高すぎるため、最高のプレゼントを貰っていても高橋くんのテンションは下がり続けます。</p>
+</section>
+</div>
+
+<hr />
+<div class="part">
+<section>
+<h3>入力例 3</h3><pre>20
+124 370 105
+280 200 420
+425 204 302
+435 141 334
+212 287 231
+262 410 481
+227 388 466
+222 314 366
+307 205 401
+226 460 452
+336 291 119
+302 104 432
+478 348 292
+246 337 403
+102 404 371
+368 399 417
+291 416 351
+236 263 231
+170 415 482
+101 339 184
+20
+1162
+1394
+1695
+2501
+3008
+3298
+4053
+4093
+4330
+5199
+5302
+5869
+5875
+6332
+6567
+7483
+7562
+7725
+9723
+9845
+</pre>
+</section>
+</div>
+
+<div class="part">
+<section>
+<h3>出力例 3</h3><pre>339
+339
+339
+339
+339
+339
+339
+339
+339
+339
+339
+339
+339
+389
+339
+643
+722
+885
+2883
+3005
+</pre></section>
+</div>
+</span>
+<span class="lang-en">
+<p>Score : <var>425</var> points</p>
+
+<div class="part">
+<section>
+<h3>Problem Statement</h3><p>Takahashi will receive <var>N</var> presents.</p>
+<p>He has a parameter called mood, which is a non-negative integer, and his mood changes every time he receives a present.
+Each present has three parameters: value <var>P</var>, mood increase <var>A</var>, and mood decrease <var>B</var>, and his mood changes as follows based on these parameters:</p>
+<ul>
+<li>When the value <var>P</var> of the received present is greater than or equal to his mood, he is happy with the present, and his mood increases by <var>A</var>.</li>
+<li>When the value <var>P</var> of the received present is less than his mood, he is disappointed with the present, and his mood decreases by <var>B</var>. However, if his mood is originally less than <var>B</var>, it becomes <var>0</var>.</li>
+</ul>
+<p>The <var>i</var>-th <var>(1\le i\le N)</var> present he receives has value <var>P _ i</var>, mood increase <var>A _ i</var>, and mood decrease <var>B _ i</var>.</p>
+<p>You are given <var>Q</var> questions, so answer all of them.
+In the <var>i</var>-th <var>(1\le i\le Q)</var> question, you are given a non-negative integer <var>X _ i</var>, so answer the following question:</p>
+<blockquote>
+<p>Find Takahashi's mood after receiving all <var>N</var> presents when his mood is initially <var>X _ i</var>.</p>
+</blockquote>
+</section>
+</div>
+
+<div class="part">
+<section>
+<h3>Constraints</h3><ul>
+<li><var>1\le N\le10000</var></li>
+<li><var>1\le P _ i\le500\ (1\le i\le N)</var></li>
+<li><var>1\le A _ i\le500\ (1\le i\le N)</var></li>
+<li><var>1\le B _ i\le500\ (1\le i\le N)</var></li>
+<li><var>1\le Q\le5\times10 ^ 5</var></li>
+<li><var>0\le X _ i\le10 ^ 9\ (1\le i\le Q)</var></li>
+<li>All input values are integers.</li>
+</ul>
+</section>
+</div>
+
+<hr />
+<div class="io-style">
+<div class="part">
+<section>
+<h3>Input</h3><p>The input is given from Standard Input in the following format:</p>
+<pre><var>N</var>
+<var>P _ 1</var> <var>A _ 1</var> <var>B _ 1</var>
+<var>P _ 2</var> <var>A _ 2</var> <var>B _ 2</var>
+<var>\vdots</var>
+<var>P _ N</var> <var>A _ N</var> <var>B _ N</var>
+<var>Q</var>
+<var>X _ 1</var>
+<var>X _ 2</var>
+<var>\vdots</var>
+<var>X _ Q</var>
+</pre>
+</section>
+</div>
+
+<div class="part">
+<section>
+<h3>Output</h3><p>Output <var>Q</var> lines.
+The <var>i</var>-th line should contain the answer to the <var>i</var>-th question.</p>
+</section>
+</div>
+</div>
+
+<hr />
+<div class="part">
+<section>
+<h3>Sample Input 1</h3><pre>4
+3 1 4
+1 5 9
+2 6 5
+3 5 8
+11
+0
+1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+</pre>
+</section>
+</div>
+
+<div class="part">
+<section>
+<h3>Sample Output 1</h3><pre>6
+0
+0
+0
+5
+6
+0
+0
+0
+0
+0
+</pre>
+<p>When Takahashi's initial mood is <var>10</var>, his mood changes as follows:</p>
+<ul>
+<li>The value <var>3</var> of the first present is less than his mood <var>10</var>, so his mood decreases by the mood decrease <var>4</var>, and his mood becomes <var>6</var>.</li>
+<li>The value <var>1</var> of the second present is less than his mood <var>6</var>, and Takahashi's mood <var>6</var> is less than the mood decrease <var>9</var>, so his mood becomes <var>0</var>.</li>
+<li>The value <var>2</var> of the third present is not less than his mood <var>0</var>, so his mood increases by the mood increase <var>6</var>, and his mood becomes <var>6</var>.</li>
+<li>The value <var>3</var> of the fourth present is less than his mood <var>6</var>, and Takahashi's mood <var>6</var> is less than the mood decrease <var>8</var>, so his mood becomes <var>0</var>.</li>
+</ul>
+<p>Therefore, his final mood is <var>0</var>.</p>
+</section>
+</div>
+
+<hr />
+<div class="part">
+<section>
+<h3>Sample Input 2</h3><pre>3
+500 500 500
+500 500 500
+500 500 500
+1
+1000000000
+</pre>
+</section>
+</div>
+
+<div class="part">
+<section>
+<h3>Sample Output 2</h3><pre>999998500
+</pre>
+<p>Because Takahashi's mood is too high, his mood keeps decreasing even when he receives the best presents.</p>
+</section>
+</div>
+
+<hr />
+<div class="part">
+<section>
+<h3>Sample Input 3</h3><pre>20
+124 370 105
+280 200 420
+425 204 302
+435 141 334
+212 287 231
+262 410 481
+227 388 466
+222 314 366
+307 205 401
+226 460 452
+336 291 119
+302 104 432
+478 348 292
+246 337 403
+102 404 371
+368 399 417
+291 416 351
+236 263 231
+170 415 482
+101 339 184
+20
+1162
+1394
+1695
+2501
+3008
+3298
+4053
+4093
+4330
+5199
+5302
+5869
+5875
+6332
+6567
+7483
+7562
+7725
+9723
+9845
+</pre>
+</section>
+</div>
+
+<div class="part">
+<section>
+<h3>Sample Output 3</h3><pre>339
+339
+339
+339
+339
+339
+339
+339
+339
+339
+339
+339
+339
+389
+339
+643
+722
+885
+2883
+3005
+</pre></section>
+</div>
+</span>
+</span>
+
+		</div>
+
+		
+
+		
+		<hr/>
+		<form class="form-horizontal form-code-submit" action="/contests/abc417/submit" method="POST">
+			<input type="hidden" name="data.TaskScreenName" value="abc417_d" />
+			
+			<div class="form-group ">
+				<label class="control-label col-sm-3 col-md-2" for="select-lang">言語</label>
+				<div id="select-lang" class="col-sm-5" data-name="data.LanguageId">
+					<select class="form-control current" data-placeholder="-" name="data.LanguageId" required>
+						<option></option>
+						
+							<option value="5001" data-ace-mode="c_cpp">C&#43;&#43; 20 (gcc 12.2)</option>
+						
+							<option value="5002" data-ace-mode="golang">Go (go 1.20.6)</option>
+						
+							<option value="5003" data-ace-mode="csharp">C# 11.0 (.NET 7.0.7)</option>
+						
+							<option value="5004" data-ace-mode="kotlin">Kotlin (Kotlin/JVM 1.8.20)</option>
+						
+							<option value="5005" data-ace-mode="java">Java (OpenJDK 17)</option>
+						
+							<option value="5006" data-ace-mode="nim">Nim (Nim 1.6.14)</option>
+						
+							<option value="5007" data-ace-mode="text">V (V 0.4)</option>
+						
+							<option value="5008" data-ace-mode="text">Zig (Zig 0.10.1)</option>
+						
+							<option value="5009" data-ace-mode="javascript">JavaScript (Node.js 18.16.1)</option>
+						
+							<option value="5010" data-ace-mode="javascript">JavaScript (Deno 1.35.1)</option>
+						
+							<option value="5011" data-ace-mode="r">R (GNU R 4.2.1)</option>
+						
+							<option value="5012" data-ace-mode="d">D (DMD 2.104.0)</option>
+						
+							<option value="5013" data-ace-mode="d">D (LDC 1.32.2)</option>
+						
+							<option value="5014" data-ace-mode="swift">Swift (swift 5.8.1)</option>
+						
+							<option value="5015" data-ace-mode="dart">Dart (Dart 3.0.5)</option>
+						
+							<option value="5016" data-ace-mode="php">PHP (php 8.2.8)</option>
+						
+							<option value="5017" data-ace-mode="c_cpp">C (gcc 12.2.0)</option>
+						
+							<option value="5018" data-ace-mode="ruby">Ruby (ruby 3.2.2)</option>
+						
+							<option value="5019" data-ace-mode="crystal">Crystal (Crystal 1.9.1)</option>
+						
+							<option value="5020" data-ace-mode="text">Brainfuck (bf 20041219)</option>
+						
+							<option value="5021" data-ace-mode="fsharp">F# 7.0 (.NET 7.0.7)</option>
+						
+							<option value="5022" data-ace-mode="julia">Julia (Julia 1.9.2)</option>
+						
+							<option value="5023" data-ace-mode="sh">Bash (bash 5.2.2)</option>
+						
+							<option value="5024" data-ace-mode="text">Text (cat 8.32)</option>
+						
+							<option value="5025" data-ace-mode="haskell">Haskell (GHC 9.4.5)</option>
+						
+							<option value="5026" data-ace-mode="fortran">Fortran (gfortran 12.2)</option>
+						
+							<option value="5027" data-ace-mode="lua">Lua (LuaJIT 2.1.0-beta3)</option>
+						
+							<option value="5028" data-ace-mode="c_cpp">C&#43;&#43; 23 (gcc 12.2)</option>
+						
+							<option value="5029" data-ace-mode="lisp">Common Lisp (SBCL 2.3.6)</option>
+						
+							<option value="5030" data-ace-mode="cobol">COBOL (Free) (GnuCOBOL 3.1.2)</option>
+						
+							<option value="5031" data-ace-mode="c_cpp">C&#43;&#43; 23 (Clang 16.0.6)</option>
+						
+							<option value="5032" data-ace-mode="sh">Zsh (Zsh 5.9)</option>
+						
+							<option value="5033" data-ace-mode="python">SageMath (SageMath 9.5)</option>
+						
+							<option value="5034" data-ace-mode="sh">Sed (GNU sed 4.8)</option>
+						
+							<option value="5035" data-ace-mode="text">bc (bc 1.07.1)</option>
+						
+							<option value="5036" data-ace-mode="text">dc (dc 1.07.1)</option>
+						
+							<option value="5037" data-ace-mode="perl">Perl (perl  5.34)</option>
+						
+							<option value="5038" data-ace-mode="sh">AWK (GNU Awk 5.0.1)</option>
+						
+							<option value="5039" data-ace-mode="text">なでしこ (cnako3 3.4.20)</option>
+						
+							<option value="5040" data-ace-mode="text">Assembly x64 (NASM 2.15.05)</option>
+						
+							<option value="5041" data-ace-mode="pascal">Pascal (fpc 3.2.2)</option>
+						
+							<option value="5042" data-ace-mode="csharp">C# 11.0 AOT (.NET 7.0.7)</option>
+						
+							<option value="5043" data-ace-mode="lua">Lua (Lua 5.4.6)</option>
+						
+							<option value="5044" data-ace-mode="prolog">Prolog (SWI-Prolog 9.0.4)</option>
+						
+							<option value="5045" data-ace-mode="sh">PowerShell (PowerShell 7.3.1)</option>
+						
+							<option value="5046" data-ace-mode="scheme">Scheme (Gauche 0.9.12)</option>
+						
+							<option value="5047" data-ace-mode="scala">Scala 3.3.0 (Scala Native 0.4.14)</option>
+						
+							<option value="5048" data-ace-mode="vbscript">Visual Basic 16.9 (.NET 7.0.7)</option>
+						
+							<option value="5049" data-ace-mode="text">Forth (gforth 0.7.3)</option>
+						
+							<option value="5050" data-ace-mode="clojure">Clojure (babashka 1.3.181)</option>
+						
+							<option value="5051" data-ace-mode="erlang">Erlang (Erlang 26.0.2)</option>
+						
+							<option value="5052" data-ace-mode="typescript">TypeScript 5.1 (Deno 1.35.1)</option>
+						
+							<option value="5053" data-ace-mode="c_cpp">C&#43;&#43; 17 (gcc 12.2)</option>
+						
+							<option value="5054" data-ace-mode="rust">Rust (rustc 1.70.0)</option>
+						
+							<option value="5055" data-ace-mode="python">Python (CPython 3.11.4)</option>
+						
+							<option value="5056" data-ace-mode="scala">Scala (Dotty 3.3.0)</option>
+						
+							<option value="5057" data-ace-mode="text">Koka (koka 2.4.0)</option>
+						
+							<option value="5058" data-ace-mode="typescript">TypeScript 5.1 (Node.js 18.16.1)</option>
+						
+							<option value="5059" data-ace-mode="ocaml">OCaml (ocamlopt 5.0.0)</option>
+						
+							<option value="5060" data-ace-mode="raku">Raku (Rakudo 2023.06)</option>
+						
+							<option value="5061" data-ace-mode="text">Vim (vim 9.0.0242)</option>
+						
+							<option value="5062" data-ace-mode="lisp">Emacs Lisp (Native Compile) (GNU Emacs 28.2)</option>
+						
+							<option value="5063" data-ace-mode="python">Python (Mambaforge / CPython 3.10.10)</option>
+						
+							<option value="5064" data-ace-mode="clojure">Clojure (clojure 1.11.1)</option>
+						
+							<option value="5065" data-ace-mode="text">プロデル (mono版プロデル 1.9.1182)</option>
+						
+							<option value="5066" data-ace-mode="text">ECLiPSe (ECLiPSe 7.1_13)</option>
+						
+							<option value="5067" data-ace-mode="text">Nibbles (literate form) (nibbles 1.01)</option>
+						
+							<option value="5068" data-ace-mode="ada">Ada (GNAT 12.2)</option>
+						
+							<option value="5069" data-ace-mode="text">jq (jq 1.6)</option>
+						
+							<option value="5070" data-ace-mode="text">Cyber (Cyber v0.2-Latest)</option>
+						
+							<option value="5071" data-ace-mode="clojure">Carp (Carp 0.5.5)</option>
+						
+							<option value="5072" data-ace-mode="c_cpp">C&#43;&#43; 17 (Clang 16.0.6)</option>
+						
+							<option value="5073" data-ace-mode="c_cpp">C&#43;&#43; 20 (Clang 16.0.6)</option>
+						
+							<option value="5074" data-ace-mode="text">LLVM IR (Clang 16.0.6)</option>
+						
+							<option value="5075" data-ace-mode="lisp">Emacs Lisp (Byte Compile) (GNU Emacs 28.2)</option>
+						
+							<option value="5076" data-ace-mode="text">Factor (Factor 0.98)</option>
+						
+							<option value="5077" data-ace-mode="d">D (GDC 12.2)</option>
+						
+							<option value="5078" data-ace-mode="python">Python (PyPy 3.10-v7.3.12)</option>
+						
+							<option value="5079" data-ace-mode="text">Whitespace (whitespacers 1.0.0)</option>
+						
+							<option value="5080" data-ace-mode="text">&gt;&lt;&gt; (fishr 0.1.0)</option>
+						
+							<option value="5081" data-ace-mode="ocaml">ReasonML (reason 3.9.0)</option>
+						
+							<option value="5082" data-ace-mode="python">Python (Cython 0.29.34)</option>
+						
+							<option value="5083" data-ace-mode="matlab">Octave (GNU Octave 8.2.0)</option>
+						
+							<option value="5084" data-ace-mode="haxe">Haxe (JVM) (Haxe 4.3.1)</option>
+						
+							<option value="5085" data-ace-mode="elixir">Elixir (Elixir 1.15.2)</option>
+						
+							<option value="5086" data-ace-mode="text">Mercury (Mercury 22.01.6)</option>
+						
+							<option value="5087" data-ace-mode="text">Seed7 (Seed7 3.2.1)</option>
+						
+							<option value="5088" data-ace-mode="lisp">Emacs Lisp (No Compile) (GNU Emacs 28.2)</option>
+						
+							<option value="5089" data-ace-mode="text">Unison (Unison M5b)</option>
+						
+							<option value="5090" data-ace-mode="cobol">COBOL (GnuCOBOL(Fixed) 3.1.2)</option>
+						
+					</select>
+					<span class="error"></span>
+				</div>
+			</div>
+			<script>var currentLang = getLS('defaultLang');</script>
+			
+			
+<div class="form-group">
+	<div class="col-sm-3 col-md-2 editor-label">
+		<label class="control-label" for="sourceCode">ソースコード</label>
+		<div class="editor-buttons">
+			<button id="btn-open-file" type="button" class="btn btn-default btn-sm">
+				<span class="glyphicon glyphicon-folder-open" aria-hidden="true"></span> &nbsp; ファイルを開く
+			</button>
+			<button id="btn-customize" type="button" class="btn btn-default btn-sm">
+				<span class="glyphicon glyphicon-cog" aria-hidden="true"></span> &nbsp; カスタマイズ
+			</button>
+			<button type="button" class="btn btn-default btn-sm btn-toggle-editor" data-toggle="button" autocomplete="off">
+				エディタ切り替え
+			</button>
+			<button type="button" class="btn btn-default btn-sm btn-auto-height" data-toggle="button" autocomplete="off">
+				高さ自動調節
+			</button>
+		</div>
+	</div>
+	<div class="col-sm-9 col-md-10" id="sourceCode">
+		<div id="editor"></div>
+		<textarea id="plain-textarea" class="form-control" style="display:none;" name="sourceCode"></textarea>
+		<p>
+			<span class="gray">※ 512 KiB まで</span><br>
+		</p>
+	</div>
+	<input id="input-open-file" type="file" style="display:none;">
+</div>
+
+
+			<input type="hidden" name="csrf_token" value="xq/2/1/cd0OKZhkOMPzGHO28HpSv5GCbMjIXdzS6eNY=" />
+			<div class="form-group">
+				<label class="control-label col-sm-3 col-md-2"></label>
+				<div class="col-sm-5">
+					
+					<script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
+
+<div class="cf-challenge" data-sitekey="0x4AAAAAAA6HJUmmLP7mLxx0" data-theme="light"></div>
+
+					
+					<button type="submit" class="btn btn-primary" id="submit">提出</button>
+				</div>
+			</div>
+		</form>
+		
+	</div>
+</div>
+
+
+
+
+		
+			<hr>
+			
+			
+			
+<div class="a2a_kit a2a_kit_size_20 a2a_default_style pull-right" data-a2a-url="https://atcoder.jp/contests/abc417/tasks/abc417_d?lang=ja" data-a2a-title="D - Takahashi&#39;s Expectation">
+	<a class="a2a_button_facebook"></a>
+	<a class="a2a_button_twitter"></a>
+	
+		<a class="a2a_button_hatena"></a>
+	
+	<a class="a2a_dd" href="https://www.addtoany.com/share"></a>
+</div>
+
+		
+		<script async src="//static.addtoany.com/menu/page.js"></script>
+		
+	</div> 
+	<hr>
+</div> 
+
+	<div class="container" style="margin-bottom: 80px;">
+			<footer class="footer">
+			
+				<ul>
+					<li><a href="/contests/abc417/rules">ルール</a></li>
+					<li><a href="/contests/abc417/glossary">用語集</a></li>
+					
+				</ul>
+			
+			<ul>
+				<li><a href="/tos">利用規約</a></li>
+				<li><a href="/privacy">プライバシーポリシー</a></li>
+				<li><a href="/personal">個人情報保護方針</a></li>
+				<li><a href="/company">企業情報</a></li>
+				<li><a href="/faq">よくある質問</a></li>
+				<li><a href="/contact">お問い合わせ</a></li>
+				<li><a href="/documents/request">資料請求</a></li>
+			</ul>
+			<div class="text-center">
+					<small id="copyright">Copyright Since 2012 &copy;<a href="http://atcoder.co.jp">AtCoder Inc.</a> All rights reserved.</small>
+			</div>
+			</footer>
+	</div>
+	<p id="fixed-server-timer" class="contest-timer"></p>
+	<div id="scroll-page-top" style="display:none;"><span class="glyphicon glyphicon-arrow-up" aria-hidden="true"></span> ページトップ</div>
+
+</body>
+</html>
+
+

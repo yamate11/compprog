@@ -1,73 +1,43 @@
 #!/usr/bin/env python3
 
 import argparse, sys
-from random import randrange, choice, shuffle
+from random import randrange, choice, shuffle, sample
 
-def show_list(lst):
-    return ' '.join(map(str,lst))
+class Case:
+    def __init__(self):
+        self.buf = []
 
-# Function generate() should yield test cases of type string repeatedly.
-# E.g.,
+    def p(self, *args):
+        def cvt(a):
+            if isinstance(a, list):
+                return ' '.join(map(str, a))
+            else:
+                return str(a)
+        self.buf.append(' '.join(map(cvt, args)) + '\n')
 
-def generate_seq():
-    for x in range(1, 10):
-        for cdir in ['N', 'E', 'S', 'W']:
-            yield f'{x}\n{cdir}\n'
-
-# or E.g.,
-
-def generate_random():
-
-    # This is the function you should edit.
-    # You can use prcase() to print the value to the case
-    def onecase():
-        Q = 10
-        lim = 10
-        prcase(Q)
-        for q in range(Q):
-            tp = randrange(1, 4)
-            x = randrange(1, lim + 1)
-            if tp == 1:
-                prcase(1, x)
-            elif tp == 2:
-                k = randrange(1, 6)
-                prcase(2, x, k)
-            elif tp == 3:
-                k = randrange(1, 6)
-                prcase(3, x, k)
-
-    # do not edit
-    def prcase(*args):
-        nonlocal case
-        for i, a in enumerate(args):
-            if i > 0:
-                case += ' '
-            case += str(a)
-        case += '\n'
-
-    # do not edit
+def generate():
     while True:
-        case = ''
-        onecase()
-        yield case
-
-# generate = generate_seq
-generate = generate_random
-
-######################################################################
-# Hope that you need not edit the following code.
-
-end_mark = '^__=end=__^'
-end_file_mark = '^__=end_file=__^'
+        case = Case()
+        onecase(case)
+        yield ''.join(case.buf)
 
 def main():
     ap = argparse.ArgumentParser();
     ap.add_argument('-r', '--repeat', action='store_true',
                     help='Repeatedly generates cases',)
+    ap.add_argument('--one', action='store_true',
+                    help='One case only.  No end mark')
     args = ap.parse_args()
 
+    end_mark = '^__=end=__^'
+    end_file_mark = '^__=end_file=__^'
+
     try:
-        if args.repeat:
+        if args.one:
+            for s in generate():
+                print(s.rstrip())
+                break
+        elif args.repeat:
             for s in generate():
                 print(s.rstrip())
                 print(end_mark)
@@ -81,5 +51,34 @@ def main():
     except BrokenPipeError as e:
         # print('caught: BrokenPipeError', file=sys.stderr)
         pass
+
+######################################################################
+# This "onecase" is the function you should edit.
+
+# Sample
+#    n = randrange(2, 5)
+#    m = randrange(2, 5)
+#    case.p(n, m)                                   # like print()
+#    case.p([randrange(1, 10) for _ in range(n)])   # lists are printed with space inserted
+#    case.p([choice('UDLR' for _ in range(m))])
+
+# Tips
+#    sample(seq, k)  can be used to get k distinct elemets from seq.
+#    If you need l and r from [1, n] with l < r, use
+#           (l, r) = sorted(sample(range(1, n + 1), 2))
+
+def onecase(case):
+    Q = randrange(1, 5)
+    case.p(Q)
+    for _q in range(Q):
+        tp = randrange(1, 4)
+        # x = randrange(1, 10**18 + 1)
+        x = randrange(1, 5)
+        k = randrange(1, 6)
+        if tp == 1:
+            case.p(tp, x)
+        else:
+            case.p(tp, x, k)
+            
 
 main()
