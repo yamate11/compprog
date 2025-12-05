@@ -19,6 +19,20 @@ int main(/* int argc, char *argv[] */) {
   cin.tie(nullptr);
   cout << setprecision(20);
 
+  ll N, M; cin >> N >> M;
+  vector<ll> C(N);
+  REP(i, 0, M) {
+    ll u, v; cin >> u >> v; u--; v--;
+    C[u]++;
+    C[v]++;
+  }
+  ll ans = 0;
+  REP(i, 0, N) {
+    if (C[i] % 2 == 0) ans += 2 * ((N - 1) / 2);
+    else ans += 2 * ((N - 2) / 2) + 1;
+  }
+  cout << ans / 2 << endl;
+
   return 0;
 }
 

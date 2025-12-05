@@ -1,0 +1,914 @@
+
+
+
+
+
+
+
+
+<!DOCTYPE html>
+<html>
+<head>
+	<title>E - Avoid Eye Contact</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+	<meta http-equiv="Content-Language" content="ja">
+	<meta name="viewport" content="width=device-width,initial-scale=1.0">
+	<meta name="format-detection" content="telephone=no">
+	<meta name="google-site-verification" content="nXGC_JxO0yoP1qBzMnYD_xgufO6leSLw1kyNo2HZltM" />
+
+	
+	<script async src="https://www.googletagmanager.com/gtag/js?id=G-RC512FD18N"></script>
+	<script>
+		window.dataLayer = window.dataLayer || [];
+		function gtag(){dataLayer.push(arguments);}
+		gtag('js', new Date());
+		gtag('set', 'user_properties', {
+			
+				'login_status': 'logged_in',
+			
+		});
+		gtag('config', 'G-RC512FD18N');
+	</script>
+
+	
+	<meta name="description" content="プログラミング初級者から上級者まで楽しめる、競技プログラミングコンテストサイト「AtCoder」。オンラインで毎週開催プログラミングコンテストを開催しています。競技プログラミングを用いて、客観的に自分のスキルを計ることのできるサービスです。">
+	<meta name="author" content="AtCoder Inc.">
+
+	<meta property="og:site_name" content="AtCoder">
+	
+	<meta property="og:title" content="E - Avoid Eye Contact" />
+	<meta property="og:description" content="プログラミング初級者から上級者まで楽しめる、競技プログラミングコンテストサイト「AtCoder」。オンラインで毎週開催プログラミングコンテストを開催しています。競技プログラミングを用いて、客観的に自分のスキルを計ることのできるサービスです。" />
+	<meta property="og:type" content="website" />
+	<meta property="og:url" content="https://atcoder.jp/contests/abc317/tasks/abc317_e" />
+	<meta property="og:image" content="https://img.atcoder.jp/assets/atcoder.png" />
+	<meta name="twitter:card" content="summary" />
+	<meta name="twitter:site" content="@atcoder" />
+	
+	<meta property="twitter:title" content="E - Avoid Eye Contact" />
+
+	<link href="//fonts.googleapis.com/css?family=Lato:400,700" rel="stylesheet" type="text/css">
+	<link rel="stylesheet" type="text/css" href="//img.atcoder.jp/public/fbb0a8f/css/bootstrap.min.css">
+	<link rel="stylesheet" type="text/css" href="//img.atcoder.jp/public/fbb0a8f/css/base.css">
+	<link rel="shortcut icon" type="image/png" href="//img.atcoder.jp/assets/favicon.png">
+	<link rel="apple-touch-icon" href="//img.atcoder.jp/assets/atcoder.png">
+	<script src="//img.atcoder.jp/public/fbb0a8f/js/lib/jquery-1.9.1.min.js"></script>
+	<script src="//img.atcoder.jp/public/fbb0a8f/js/lib/bootstrap.min.js"></script>
+	<script src="//img.atcoder.jp/public/fbb0a8f/js/cdn/js.cookie.min.js"></script>
+	<script src="//img.atcoder.jp/public/fbb0a8f/js/cdn/moment.min.js"></script>
+	<script src="//img.atcoder.jp/public/fbb0a8f/js/cdn/moment_js-ja.js"></script>
+	<script>
+		var LANG = "ja";
+		var userScreenName = "yamate11";
+		var csrfToken = "xq/2/1/cd0OKZhkOMPzGHO28HpSv5GCbMjIXdzS6eNY="
+	</script>
+	<script src="//img.atcoder.jp/public/fbb0a8f/js/utils.js"></script>
+	
+	
+		<script src="//img.atcoder.jp/public/fbb0a8f/js/contest.js"></script>
+		<link href="//img.atcoder.jp/public/fbb0a8f/css/contest.css" rel="stylesheet" />
+		<script>
+			var contestScreenName = "abc317";
+			var remainingText = "残り時間";
+			var countDownText = "開始まであと";
+			var startTime = moment("2023-08-26T21:00:00+09:00");
+			var endTime = moment("2023-08-26T22:40:00+09:00");
+		</script>
+		<style>#contest-statement h2 {
+    font-size: 2.2rem;
+    line-height: 1.2;
+    color: #fff;
+    font-weight: bold;
+    background: #333;
+    padding: 1.2rem 1.5rem;
+    border: 1px solid #333;
+    border-radius: 1.5rem;
+    margin: 6rem 0 3rem
+}
+#contest-statement h3 {
+    font-size: 1.5rem;
+    line-height: 1.2;
+    color: #fff;
+    font-weight: bold;
+    background: #333;
+    padding: 1.1rem 1.2rem;
+    border: 1px solid #333;
+    border-radius: 1.3rem;
+    margin: 3rem 0 1.5rem
+}
+#contest-statement h4 {
+    margin: 1vh 1vh 1vh 1.2vw;
+    color: #333;
+}
+
+#contest-statement span.marker {
+    font-weight: bold;
+    background: linear-gradient(transparent 60%,#ffdead 100%)
+}
+#contest-statement span.color {
+    color: #1771c6;
+    font-weight: bold;
+}
+
+#contest-statement .pic-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: stretch;
+}
+
+#contest-statement .child-pic-container {
+    display: flex;
+    flex-flow: column;
+    filter: drop-shadow(2px 2px 2px #aaa);
+    margin: 1vh 1vw 2vh;
+    min-height: 70px;
+    width: 300px;
+}
+#contest-statement .pic-text {
+    background-color: #ffffff;
+    box-sizing: border-box;
+}
+</style>
+	
+	
+		<link href="//img.atcoder.jp/public/fbb0a8f/css/cdn/select2.min.css" rel="stylesheet" />
+		<link href="//img.atcoder.jp/public/fbb0a8f/css/cdn/select2-bootstrap.min.css" rel="stylesheet" />
+		<script src="//img.atcoder.jp/public/fbb0a8f/js/lib/select2.min.js"></script>
+	
+	
+		<script src="//img.atcoder.jp/public/fbb0a8f/js/ace/ace.js"></script>
+		<script src="//img.atcoder.jp/public/fbb0a8f/js/ace/ext-language_tools.js"></script>
+	
+	
+		<script src="//img.atcoder.jp/public/fbb0a8f/js/cdn/run_prettify.js"></script>
+	
+	
+		<link rel="stylesheet" href="//img.atcoder.jp/public/fbb0a8f/css/cdn/katex.min.css">
+		<script defer src="//img.atcoder.jp/public/fbb0a8f/js/cdn/katex.min.js"></script>
+		<script defer src="//img.atcoder.jp/public/fbb0a8f/js/cdn/auto-render.min.js"></script>
+		<script>$(function(){$('var').each(function(){var html=$(this).html().replace(/<sub>/g,'_{').replace(/<\/sub>/g,'}');$(this).html('\\('+html+'\\)');});});</script>
+		<script>
+			var katexOptions = {
+				delimiters: [
+					{left: "$$", right: "$$", display: true},
+					
+					{left: "\\(", right: "\\)", display: false},
+					{left: "\\[", right: "\\]", display: true}
+				],
+      	ignoredTags: ["script", "noscript", "style", "textarea", "code", "option"],
+				ignoredClasses: ["prettyprint", "source-code-for-copy"],
+				throwOnError: false
+			};
+			document.addEventListener("DOMContentLoaded", function() { renderMathInElement(document.body, katexOptions);});
+		</script>
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	<script src="//img.atcoder.jp/public/fbb0a8f/js/base.js"></script>
+</head>
+
+<body>
+
+<script type="text/javascript">
+	var __pParams = __pParams || [];
+	__pParams.push({client_id: '468', c_1: 'atcodercontest', c_2: 'ClientSite'});
+</script>
+<script type="text/javascript" src="https://cdn.d2-apps.net/js/tr.js" async></script>
+
+
+<div id="modal-contest-start" class="modal fade" tabindex="-1" role="dialog">
+	<div class="modal-dialog" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+				<h4 class="modal-title">コンテスト開始</h4>
+			</div>
+			<div class="modal-body">
+				<p>ゲームフリーク Programming Contest 2023（AtCoder Beginner Contest 317）が開始されました。</p>
+			</div>
+			<div class="modal-footer">
+				
+					<a class="btn btn-primary" href='/contests/abc317/tasks'>問題一覧ページへ移動</a>
+				
+			</div>
+		</div>
+	</div>
+</div>
+<div id="modal-contest-end" class="modal fade" tabindex="-1" role="dialog">
+	<div class="modal-dialog" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+				<h4 class="modal-title">コンテスト終了</h4>
+			</div>
+			<div class="modal-body">
+				<p>ゲームフリーク Programming Contest 2023（AtCoder Beginner Contest 317）は終了しました。</p>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-default" data-dismiss="modal">閉じる</button>
+			</div>
+		</div>
+	</div>
+</div>
+<div id="main-div" class="float-container">
+
+
+	<nav class="navbar navbar-inverse navbar-fixed-top">
+		<div class="container-fluid">
+			<div class="navbar-header">
+				<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapse" aria-expanded="false">
+					<span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span>
+				</button>
+				<a class="navbar-brand" href="/home"></a>
+			</div>
+			<div class="collapse navbar-collapse" id="navbar-collapse">
+				<ul class="nav navbar-nav">
+				
+					<li><a class="contest-title" href="/contests/abc317">ゲームフリーク Programming Contest 2023（AtCoder Beginner Contest 317）</a></li>
+				
+				</ul>
+				<ul class="nav navbar-nav navbar-right">
+					
+					<li class="dropdown">
+						<a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
+							<img src='//img.atcoder.jp/assets/top/img/flag-lang/ja.png'> 日本語 <span class="caret"></span>
+						</a>
+						<ul class="dropdown-menu">
+							<li><a href="/contests/abc317/tasks/abc317_e?lang=ja"><img src='//img.atcoder.jp/assets/top/img/flag-lang/ja.png'> 日本語</a></li>
+							<li><a href="/contests/abc317/tasks/abc317_e?lang=en"><img src='//img.atcoder.jp/assets/top/img/flag-lang/en.png'> English</a></li>
+						</ul>
+					</li>
+					
+					
+						<li class="dropdown">
+							<a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
+								<span class="glyphicon glyphicon-cog" aria-hidden="true"></span> yamate11 (Contestant) <span class="caret"></span>
+							</a>
+							<ul class="dropdown-menu">
+								<li><a href="/users/yamate11"><span class="glyphicon glyphicon-user" aria-hidden="true"></span> マイプロフィール</a></li>
+								<li class="divider"></li>
+								<li><a href="/settings"><span class="glyphicon glyphicon-wrench" aria-hidden="true"></span> 基本設定</a></li>
+								<li><a href="/settings/icon"><span class="glyphicon glyphicon-picture" aria-hidden="true"></span> アイコン設定</a></li>
+								<li><a href="/settings/password"><span class="glyphicon glyphicon-lock" aria-hidden="true"></span> パスワードの変更</a></li>
+								<li><a href="/settings/fav"><span class="glyphicon glyphicon-star" aria-hidden="true"></span> お気に入り管理</a></li>
+								
+								
+								
+								<li class="divider"></li>
+								<li><a href="javascript:void(form_logout.submit())"><span class="glyphicon glyphicon-log-out" aria-hidden="true"></span> ログアウト</a></li>
+							</ul>
+						</li>
+					
+				</ul>
+			</div>
+		</div>
+	</nav>
+
+	<form method="POST" name="form_logout" action="/logout?continue=https%3A%2F%2Fatcoder.jp%2Fcontests%2Fabc317%2Ftasks%2Fabc317_e">
+		<input type="hidden" name="csrf_token" value="xq/2/1/cd0OKZhkOMPzGHO28HpSv5GCbMjIXdzS6eNY=" />
+	</form>
+	<div id="main-container" class="container"
+		 	style="padding-top:50px;">
+		
+
+
+<div class="row">
+	<div id="contest-nav-tabs" class="col-sm-12 mb-2 cnvtb-fixed">
+	<div>
+		<small class="contest-duration">
+			
+				コンテスト時間:
+				<a href='http://www.timeanddate.com/worldclock/fixedtime.html?iso=20230826T2100&p1=248' target='blank'><time class='fixtime fixtime-full'>2023-08-26 21:00:00+0900</time></a> ~ <a href='http://www.timeanddate.com/worldclock/fixedtime.html?iso=20230826T2240&p1=248' target='blank'><time class='fixtime fixtime-full'>2023-08-26 22:40:00+0900</time></a> 
+				(100分)
+			
+		</small>
+		<small class="back-to-home pull-right"><a href="/home">AtCoderホームへ戻る</a></small>
+	</div>
+	<ul class="nav nav-tabs">
+		<li><a href="/contests/abc317"><span class="glyphicon glyphicon-home" aria-hidden="true"></span> トップ</a></li>
+		
+			<li class="active"><a href="/contests/abc317/tasks"><span class="glyphicon glyphicon-tasks" aria-hidden="true"></span> 問題</a></li>
+		
+
+		
+			<li><a href="/contests/abc317/clarifications"><span class="glyphicon glyphicon-question-sign" aria-hidden="true"></span> 質問 <span id="clar-badge" class="badge" ></span></a></li>
+		
+
+		
+			<li><a href="/contests/abc317/submit?taskScreenName=abc317_e"><span class="glyphicon glyphicon-send" aria-hidden="true"></span> 提出</a></li>
+		
+
+		
+			<li>
+				<a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false"><span class="glyphicon glyphicon-list" aria-hidden="true"></span> 提出結果<span class="caret"></span></a>
+				<ul class="dropdown-menu">
+					<li><a href="/contests/abc317/submissions"><span class="glyphicon glyphicon-globe" aria-hidden="true"></span> すべての提出</a></li>
+					
+						<li><a href="/contests/abc317/submissions/me"><span class="glyphicon glyphicon-user" aria-hidden="true"></span> 自分の提出</a></li>
+						
+						
+							<li class="divider"></li>
+							<li><a href="/contests/abc317/score"><span class="glyphicon glyphicon-dashboard" aria-hidden="true"></span> 自分の得点状況</a></li>
+						
+					
+				</ul>
+			</li>
+		
+
+		
+			
+				
+					<li><a href="/contests/abc317/standings"><span class="glyphicon glyphicon-sort-by-attributes-alt" aria-hidden="true"></span> 順位表</a></li>
+				
+			
+				
+					<li><a href="/contests/abc317/standings/virtual"><span class="glyphicon glyphicon-sort-by-attributes-alt" aria-hidden="true"></span> バーチャル順位表</a></li>
+				
+			
+		
+
+		
+			<li><a href="/contests/abc317/custom_test"><span class="glyphicon glyphicon-wrench" aria-hidden="true"></span> コードテスト</a></li>
+		
+
+		
+			<li><a href="/contests/abc317/editorial"><span class="glyphicon glyphicon-book" aria-hidden="true"></span> 解説</a></li>
+		
+		
+
+		<li class="pull-right"><a id="fix-cnvtb" href="javascript:void(0)"><span class="glyphicon glyphicon-pushpin" aria-hidden="true"></span></a></li>
+	</ul>
+</div>
+	<div class="col-sm-12">
+		<span class="h2">
+			E - Avoid Eye Contact
+			<a class="btn btn-default btn-sm" href="/contests/abc317/tasks/abc317_e/editorial">解説</a>
+		</span>
+		<span id="task-lang-btn" class="pull-right"><span data-lang="ja"><img src='//img.atcoder.jp/assets/top/img/flag-lang/ja.png'></span> / <span data-lang="en"><img src='//img.atcoder.jp/assets/top/img/flag-lang/en.png'></span></span>
+		<script>
+			$(function() {
+				var ts = $('#task-statement span.lang');
+				if (ts.children('span').size() <= 1) {
+					$('#task-lang-btn').hide();
+					ts.children('span').show();
+					return;
+				}
+
+				var REMEMBER_LB = 5;
+				var LS_KEY = 'task_lang';
+				var taskLang = getLS(LS_KEY) || '';
+				function isTaskLangSet(taskLang) { return taskLang === 'ja' || taskLang === 'en';}
+				if (isTaskLangSet(taskLang)) {
+					const params = new URLSearchParams(window.location.search);
+					if (params.get('lang')) {
+						setLS(LS_KEY, REMEMBER_LB);
+						taskLang = LANG;
+					}
+				} else {
+					taskLang = LANG;
+				}
+				ts.children('span.lang-' + taskLang).show();
+
+				$('#task-lang-btn span').click(function() {
+					var l = $(this).data('lang');
+					ts.children('span').hide();
+					ts.children('span.lang-' + l).show();
+
+					taskLang = getLS(LS_KEY) || '';
+					let changeTimes = 0;
+					if (isTaskLangSet(taskLang)) {
+						changeTimes = REMEMBER_LB;
+					} else {
+						changeTimes = parseInt(taskLang, 10);
+						if (isNaN(changeTimes)) changeTimes = 0;
+						changeTimes++;
+					}
+					if (changeTimes < REMEMBER_LB) setLS(LS_KEY, changeTimes);
+					else setLS(LS_KEY, l);
+				});
+			});
+		</script>
+		<hr/>
+		<p>
+			実行時間制限: 3 sec / メモリ制限: 1024 MiB
+			
+			
+		</p>
+
+		<div id="task-statement">
+			
+
+
+	
+	
+
+			<span class="lang">
+<span class="lang-ja">
+<p>配点 : <var>425</var> 点</p>
+
+<div class="part">
+<section>
+<h3>問題文</h3><p><var>H</var> 行 <var>W</var> 列のグリッド状に分割されたフィールドがあります。<br />
+北 (上側) から <var>i</var> 行目、西 (左側) から <var>j</var> 列目のマスは文字 <var>A_{i, j}</var> で表されます。各文字の意味は次の通りです。</p>
+<ul>
+<li><code>.</code> : 空きマス。進入できる。</li>
+<li><code>#</code> : 障害物。進入できない。</li>
+<li><code>&gt;</code>, <code>v</code>, <code>&lt;</code>, <code>^</code> : それぞれ東・南・西・北を向いている人がいるマス。進入できない。人の視線は <var>1</var> マス分の幅を持ち、人が向いている方向にまっすぐ伸び、障害物や別の人に遮られる。(入出力例 <var>1</var> にある説明も参考にしてください。)</li>
+<li><code>S</code> : スタート地点。進入できる。ちょうど <var>1</var> ヵ所だけ存在する。人の視線に入っていないことが保証される。</li>
+<li><code>G</code> : ゴール地点。進入できる。ちょうど <var>1</var> ヵ所だけ存在する。人の視線に入っていないことが保証される。</li>
+</ul>
+<p>ナオヒロくんはスタート地点にいて、東西南北への <var>1</var> マス分の移動を好きな回数行えます。ただし、進入できないマスへの移動やフィールドの外への移動はできません。<br />
+彼が人の視線に一度も入らずにゴール地点に到達できるか判定して、できる場合はそのために最小で何回の移動が必要か求めてください。</p>
+</section>
+</div>
+
+<div class="part">
+<section>
+<h3>制約</h3><ul>
+<li><var>2 \leq H, W \leq 2000</var></li>
+<li><var>A_{i,j}</var> は <code>.</code>, <code>#</code>, <code>&gt;</code>, <code>v</code>, <code>&lt;</code>, <code>^</code>, <code>S</code>, <code>G</code> のいずれかである</li>
+<li><code>S</code>, <code>G</code> は <var>A_{i, j}</var> の中にちょうど <var>1</var> 回ずつ現れる</li>
+<li>スタート地点・ゴール地点はともに人の視線に入っていない</li>
+</ul>
+</section>
+</div>
+
+<hr />
+<div class="io-style">
+<div class="part">
+<section>
+<h3>入力</h3><p>入力は以下の形式で標準入力から与えられる。</p>
+<pre><var>H</var> <var>W</var>
+<var>A_{1,1}A_{1,2}\dots A_{1,W}</var>
+<var>A_{2,1}A_{2,2}\dots A_{2,W}</var>
+<var>\vdots</var>
+<var>A_{H,1}A_{H,2}\dots A_{H,W}</var>
+</pre>
+</section>
+</div>
+
+<div class="part">
+<section>
+<h3>出力</h3><p>ナオヒロ君が人の視線に一度も入らずにゴール地点に到達できる場合は、そのために必要な(最小の)移動回数を出力せよ。できない場合は <code>-1</code> を出力せよ。</p>
+</section>
+</div>
+</div>
+
+<hr />
+<div class="part">
+<section>
+<h3>入力例 1</h3><pre>5 7
+....Sv.
+.&gt;.....
+.......
+&gt;..&lt;.#&lt;
+^G....&gt;
+</pre>
+</section>
+</div>
+
+<div class="part">
+<section>
+<h3>出力例 1</h3><pre>15
+</pre>
+<p>入力例 <var>1</var> について、<var>1</var> 人以上の視線に入っている空きマスを <code>!</code> で表すと次の図のようになります。</p>
+<p><img alt="image2" src="https://img.atcoder.jp/abc317/8a40fc4c621cfef326cc25a1f69c0300.jpg" /></p>
+<p>いくつかのマスについて具体的に説明すると次のようになります。(ここで、北から <var>i</var> 行目、西から <var>j</var> 列目のマスを <var>(i, j)</var> と表します。)</p>
+<ul>
+<li><var>(2, 4)</var> は <var>(2, 2)</var> にいる東を向いている人からの視線に入っているマスである。</li>
+<li><var>(2, 6)</var> は <var>(2, 2)</var> にいる東を向いている人と <var>(1, 6)</var> にいる南を向いている人の <var>2</var> 人の視線に入っているマスである。</li>
+<li><var>(4, 5)</var> は誰の視線にも入っていないマスである。<var>(4, 7)</var> にいる西を向いている人の視線は <var>(4, 6)</var> の障害物に遮られていて、<var>(4, 1)</var> にいる東を向いている人の視線は <var>(4, 4)</var> の人に遮られている。</li>
+</ul>
+<p>ナオヒロ君は進入できないマス・視線に入っているマスのどちらも通らずにゴール地点へ行く必要があります。</p>
+</section>
+</div>
+
+<hr />
+<div class="part">
+<section>
+<h3>入力例 2</h3><pre>4 3
+S..
+.&lt;.
+.&gt;.
+..G
+</pre>
+</section>
+</div>
+
+<div class="part">
+<section>
+<h3>出力例 2</h3><pre>-1
+</pre>
+<p>ナオヒロ君がゴール地点に到達できない場合は <code>-1</code> を出力してください。</p></section>
+</div>
+</span>
+<span class="lang-en">
+<p>Score : <var>425</var> points</p>
+
+<div class="part">
+<section>
+<h3>Problem Statement</h3><p>There is a field divided into a grid of <var>H</var> rows and <var>W</var> columns.<br />
+The square at the <var>i</var>-th row from the north (top) and the <var>j</var>-th column from the west (left) is represented by the character <var>A_{i, j}</var>. Each character represents the following.</p>
+<ul>
+<li><code>.</code> : An empty square. Passable.</li>
+<li><code>#</code> : An obstacle. Impassable.</li>
+<li><code>&gt;</code>, <code>v</code>, <code>&lt;</code>, <code>^</code> : Squares with a person facing east, south, west, and north, respectively. Impassable. The person's line of sight is one square wide and extends straight in the direction the person is facing, and is blocked by an obstacle or another person. (See also the description at Sample Input/Output <var>1</var>.)</li>
+<li><code>S</code> : The starting point. Passable. There is exactly one starting point. It is guaranteed not to be in a person's line of sight.</li>
+<li><code>G</code> : The goal. Passable. There is exactly one goal. It is guaranteed not to be in a person's line of sight.</li>
+</ul>
+<p>Naohiro is at the starting point and can move one square to the east, west, south, and north as many times as he wants. However, he cannot enter an impassable square or leave the field.<br />
+Determine if he can reach the goal without entering a person's line of sight, and if so, find the minimum number of moves required to do so.</p>
+</section>
+</div>
+
+<div class="part">
+<section>
+<h3>Constraints</h3><ul>
+<li><var>2 \leq H, W \leq 2000</var></li>
+<li><var>A_{i,j}</var> is <code>.</code>, <code>#</code>, <code>&gt;</code>, <code>v</code>, <code>&lt;</code>, <code>^</code>, <code>S</code>, or <code>G</code>.</li>
+<li>Each of <code>S</code> and <code>G</code> occurs exactly once among <var>A_{i, j}</var>.</li>
+<li>Neither the starting point nor the goal is in a person's line of sight.</li>
+</ul>
+</section>
+</div>
+
+<hr />
+<div class="io-style">
+<div class="part">
+<section>
+<h3>Input</h3><p>The input is given from Standard Input in the following format:</p>
+<pre><var>H</var> <var>W</var>
+<var>A_{1,1}A_{1,2}\dots A_{1,W}</var>
+<var>A_{2,1}A_{2,2}\dots A_{2,W}</var>
+<var>\vdots</var>
+<var>A_{H,1}A_{H,2}\dots A_{H,W}</var>
+</pre>
+</section>
+</div>
+
+<div class="part">
+<section>
+<h3>Output</h3><p>If Naohiro can reach the goal without entering a person's line of sight, print the (minimum) number of moves required to do so. Otherwise, print <code>-1</code>.</p>
+</section>
+</div>
+</div>
+
+<hr />
+<div class="part">
+<section>
+<h3>Sample Input 1</h3><pre>5 7
+....Sv.
+.&gt;.....
+.......
+&gt;..&lt;.#&lt;
+^G....&gt;
+</pre>
+</section>
+</div>
+
+<div class="part">
+<section>
+<h3>Sample Output 1</h3><pre>15
+</pre>
+<p>For Sample Input <var>1</var>, the following figure shows the empty squares that are in the lines of sight of one or more people as <code>!</code>. </p>
+<p><img alt="image2" src="https://img.atcoder.jp/abc317/8a40fc4c621cfef326cc25a1f69c0300.jpg" /></p>
+<p>Let us describe some of the squares. (Let <var>(i, j)</var> denote the square in the <var>i</var>-th row from the north and the <var>j</var>-th column from the west.)</p>
+<ul>
+<li><var>(2, 4)</var> is a square in the line of sight of the east-facing person at <var>(2, 2)</var>.</li>
+<li><var>(2, 6)</var> is a square in the lines of sight of two people, one facing east at <var>(2, 2)</var> and the other facing south at <var>(1, 6)</var>.</li>
+<li>The square <var>(4, 5)</var> is not in anyone's line of sight. The line of sight of the west-facing person at <var>(4, 7)</var> is blocked by the obstacle at <var>(4, 6)</var>, and the line of sight of the east-facing person at <var>(4, 1)</var> is blocked by the person at <var>(4, 4)</var>.</li>
+</ul>
+<p>Naohiro must reach the goal without passing through impassable squares or squares in a person's line of sight.</p>
+</section>
+</div>
+
+<hr />
+<div class="part">
+<section>
+<h3>Sample Input 2</h3><pre>4 3
+S..
+.&lt;.
+.&gt;.
+..G
+</pre>
+</section>
+</div>
+
+<div class="part">
+<section>
+<h3>Sample Output 2</h3><pre>-1
+</pre>
+<p>Print <code>-1</code> if he cannot reach the goal.</p></section>
+</div>
+</span>
+</span>
+
+		</div>
+
+		
+
+		
+		<hr/>
+		<form class="form-horizontal form-code-submit" action="/contests/abc317/submit" method="POST">
+			<input type="hidden" name="data.TaskScreenName" value="abc317_e" />
+			
+			<div class="form-group ">
+				<label class="control-label col-sm-3 col-md-2" for="select-lang">言語</label>
+				<div id="select-lang" class="col-sm-5" data-name="data.LanguageId">
+					<select class="form-control current" data-placeholder="-" name="data.LanguageId" required>
+						<option></option>
+						
+							<option value="5001" data-ace-mode="c_cpp">C&#43;&#43; 20 (gcc 12.2)</option>
+						
+							<option value="5002" data-ace-mode="golang">Go (go 1.20.6)</option>
+						
+							<option value="5003" data-ace-mode="csharp">C# 11.0 (.NET 7.0.7)</option>
+						
+							<option value="5004" data-ace-mode="kotlin">Kotlin (Kotlin/JVM 1.8.20)</option>
+						
+							<option value="5005" data-ace-mode="java">Java (OpenJDK 17)</option>
+						
+							<option value="5006" data-ace-mode="nim">Nim (Nim 1.6.14)</option>
+						
+							<option value="5007" data-ace-mode="text">V (V 0.4)</option>
+						
+							<option value="5008" data-ace-mode="text">Zig (Zig 0.10.1)</option>
+						
+							<option value="5009" data-ace-mode="javascript">JavaScript (Node.js 18.16.1)</option>
+						
+							<option value="5010" data-ace-mode="javascript">JavaScript (Deno 1.35.1)</option>
+						
+							<option value="5011" data-ace-mode="r">R (GNU R 4.2.1)</option>
+						
+							<option value="5012" data-ace-mode="d">D (DMD 2.104.0)</option>
+						
+							<option value="5013" data-ace-mode="d">D (LDC 1.32.2)</option>
+						
+							<option value="5014" data-ace-mode="swift">Swift (swift 5.8.1)</option>
+						
+							<option value="5015" data-ace-mode="dart">Dart (Dart 3.0.5)</option>
+						
+							<option value="5016" data-ace-mode="php">PHP (php 8.2.8)</option>
+						
+							<option value="5017" data-ace-mode="c_cpp">C (gcc 12.2.0)</option>
+						
+							<option value="5018" data-ace-mode="ruby">Ruby (ruby 3.2.2)</option>
+						
+							<option value="5019" data-ace-mode="crystal">Crystal (Crystal 1.9.1)</option>
+						
+							<option value="5020" data-ace-mode="text">Brainfuck (bf 20041219)</option>
+						
+							<option value="5021" data-ace-mode="fsharp">F# 7.0 (.NET 7.0.7)</option>
+						
+							<option value="5022" data-ace-mode="julia">Julia (Julia 1.9.2)</option>
+						
+							<option value="5023" data-ace-mode="sh">Bash (bash 5.2.2)</option>
+						
+							<option value="5024" data-ace-mode="text">Text (cat 8.32)</option>
+						
+							<option value="5025" data-ace-mode="haskell">Haskell (GHC 9.4.5)</option>
+						
+							<option value="5026" data-ace-mode="fortran">Fortran (gfortran 12.2)</option>
+						
+							<option value="5027" data-ace-mode="lua">Lua (LuaJIT 2.1.0-beta3)</option>
+						
+							<option value="5028" data-ace-mode="c_cpp">C&#43;&#43; 23 (gcc 12.2)</option>
+						
+							<option value="5029" data-ace-mode="lisp">Common Lisp (SBCL 2.3.6)</option>
+						
+							<option value="5030" data-ace-mode="cobol">COBOL (Free) (GnuCOBOL 3.1.2)</option>
+						
+							<option value="5031" data-ace-mode="c_cpp">C&#43;&#43; 23 (Clang 16.0.6)</option>
+						
+							<option value="5032" data-ace-mode="sh">Zsh (Zsh 5.9)</option>
+						
+							<option value="5033" data-ace-mode="python">SageMath (SageMath 9.5)</option>
+						
+							<option value="5034" data-ace-mode="sh">Sed (GNU sed 4.8)</option>
+						
+							<option value="5035" data-ace-mode="text">bc (bc 1.07.1)</option>
+						
+							<option value="5036" data-ace-mode="text">dc (dc 1.07.1)</option>
+						
+							<option value="5037" data-ace-mode="perl">Perl (perl  5.34)</option>
+						
+							<option value="5038" data-ace-mode="sh">AWK (GNU Awk 5.0.1)</option>
+						
+							<option value="5039" data-ace-mode="text">なでしこ (cnako3 3.4.20)</option>
+						
+							<option value="5040" data-ace-mode="text">Assembly x64 (NASM 2.15.05)</option>
+						
+							<option value="5041" data-ace-mode="pascal">Pascal (fpc 3.2.2)</option>
+						
+							<option value="5042" data-ace-mode="csharp">C# 11.0 AOT (.NET 7.0.7)</option>
+						
+							<option value="5043" data-ace-mode="lua">Lua (Lua 5.4.6)</option>
+						
+							<option value="5044" data-ace-mode="prolog">Prolog (SWI-Prolog 9.0.4)</option>
+						
+							<option value="5045" data-ace-mode="sh">PowerShell (PowerShell 7.3.1)</option>
+						
+							<option value="5046" data-ace-mode="scheme">Scheme (Gauche 0.9.12)</option>
+						
+							<option value="5047" data-ace-mode="scala">Scala 3.3.0 (Scala Native 0.4.14)</option>
+						
+							<option value="5048" data-ace-mode="vbscript">Visual Basic 16.9 (.NET 7.0.7)</option>
+						
+							<option value="5049" data-ace-mode="text">Forth (gforth 0.7.3)</option>
+						
+							<option value="5050" data-ace-mode="clojure">Clojure (babashka 1.3.181)</option>
+						
+							<option value="5051" data-ace-mode="erlang">Erlang (Erlang 26.0.2)</option>
+						
+							<option value="5052" data-ace-mode="typescript">TypeScript 5.1 (Deno 1.35.1)</option>
+						
+							<option value="5053" data-ace-mode="c_cpp">C&#43;&#43; 17 (gcc 12.2)</option>
+						
+							<option value="5054" data-ace-mode="rust">Rust (rustc 1.70.0)</option>
+						
+							<option value="5055" data-ace-mode="python">Python (CPython 3.11.4)</option>
+						
+							<option value="5056" data-ace-mode="scala">Scala (Dotty 3.3.0)</option>
+						
+							<option value="5057" data-ace-mode="text">Koka (koka 2.4.0)</option>
+						
+							<option value="5058" data-ace-mode="typescript">TypeScript 5.1 (Node.js 18.16.1)</option>
+						
+							<option value="5059" data-ace-mode="ocaml">OCaml (ocamlopt 5.0.0)</option>
+						
+							<option value="5060" data-ace-mode="raku">Raku (Rakudo 2023.06)</option>
+						
+							<option value="5061" data-ace-mode="text">Vim (vim 9.0.0242)</option>
+						
+							<option value="5062" data-ace-mode="lisp">Emacs Lisp (Native Compile) (GNU Emacs 28.2)</option>
+						
+							<option value="5063" data-ace-mode="python">Python (Mambaforge / CPython 3.10.10)</option>
+						
+							<option value="5064" data-ace-mode="clojure">Clojure (clojure 1.11.1)</option>
+						
+							<option value="5065" data-ace-mode="text">プロデル (mono版プロデル 1.9.1182)</option>
+						
+							<option value="5066" data-ace-mode="text">ECLiPSe (ECLiPSe 7.1_13)</option>
+						
+							<option value="5067" data-ace-mode="text">Nibbles (literate form) (nibbles 1.01)</option>
+						
+							<option value="5068" data-ace-mode="ada">Ada (GNAT 12.2)</option>
+						
+							<option value="5069" data-ace-mode="text">jq (jq 1.6)</option>
+						
+							<option value="5070" data-ace-mode="text">Cyber (Cyber v0.2-Latest)</option>
+						
+							<option value="5071" data-ace-mode="clojure">Carp (Carp 0.5.5)</option>
+						
+							<option value="5072" data-ace-mode="c_cpp">C&#43;&#43; 17 (Clang 16.0.6)</option>
+						
+							<option value="5073" data-ace-mode="c_cpp">C&#43;&#43; 20 (Clang 16.0.6)</option>
+						
+							<option value="5074" data-ace-mode="text">LLVM IR (Clang 16.0.6)</option>
+						
+							<option value="5075" data-ace-mode="lisp">Emacs Lisp (Byte Compile) (GNU Emacs 28.2)</option>
+						
+							<option value="5076" data-ace-mode="text">Factor (Factor 0.98)</option>
+						
+							<option value="5077" data-ace-mode="d">D (GDC 12.2)</option>
+						
+							<option value="5078" data-ace-mode="python">Python (PyPy 3.10-v7.3.12)</option>
+						
+							<option value="5079" data-ace-mode="text">Whitespace (whitespacers 1.0.0)</option>
+						
+							<option value="5080" data-ace-mode="text">&gt;&lt;&gt; (fishr 0.1.0)</option>
+						
+							<option value="5081" data-ace-mode="ocaml">ReasonML (reason 3.9.0)</option>
+						
+							<option value="5082" data-ace-mode="python">Python (Cython 0.29.34)</option>
+						
+							<option value="5083" data-ace-mode="matlab">Octave (GNU Octave 8.2.0)</option>
+						
+							<option value="5084" data-ace-mode="haxe">Haxe (JVM) (Haxe 4.3.1)</option>
+						
+							<option value="5085" data-ace-mode="elixir">Elixir (Elixir 1.15.2)</option>
+						
+							<option value="5086" data-ace-mode="text">Mercury (Mercury 22.01.6)</option>
+						
+							<option value="5087" data-ace-mode="text">Seed7 (Seed7 3.2.1)</option>
+						
+							<option value="5088" data-ace-mode="lisp">Emacs Lisp (No Compile) (GNU Emacs 28.2)</option>
+						
+							<option value="5089" data-ace-mode="text">Unison (Unison M5b)</option>
+						
+							<option value="5090" data-ace-mode="cobol">COBOL (GnuCOBOL(Fixed) 3.1.2)</option>
+						
+					</select>
+					<span class="error"></span>
+				</div>
+			</div>
+			<script>var currentLang = getLS('defaultLang');</script>
+			
+			
+<div class="form-group">
+	<div class="col-sm-3 col-md-2 editor-label">
+		<label class="control-label" for="sourceCode">ソースコード</label>
+		<div class="editor-buttons">
+			<button id="btn-open-file" type="button" class="btn btn-default btn-sm">
+				<span class="glyphicon glyphicon-folder-open" aria-hidden="true"></span> &nbsp; ファイルを開く
+			</button>
+			<button id="btn-customize" type="button" class="btn btn-default btn-sm">
+				<span class="glyphicon glyphicon-cog" aria-hidden="true"></span> &nbsp; カスタマイズ
+			</button>
+			<button type="button" class="btn btn-default btn-sm btn-toggle-editor" data-toggle="button" autocomplete="off">
+				エディタ切り替え
+			</button>
+			<button type="button" class="btn btn-default btn-sm btn-auto-height" data-toggle="button" autocomplete="off">
+				高さ自動調節
+			</button>
+		</div>
+	</div>
+	<div class="col-sm-9 col-md-10" id="sourceCode">
+		<div id="editor"></div>
+		<textarea id="plain-textarea" class="form-control" style="display:none;" name="sourceCode"></textarea>
+		<p>
+			<span class="gray">※ 512 KiB まで</span><br>
+		</p>
+	</div>
+	<input id="input-open-file" type="file" style="display:none;">
+</div>
+
+
+			<input type="hidden" name="csrf_token" value="xq/2/1/cd0OKZhkOMPzGHO28HpSv5GCbMjIXdzS6eNY=" />
+			<div class="form-group">
+				<label class="control-label col-sm-3 col-md-2"></label>
+				<div class="col-sm-5">
+					
+					<script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
+
+<div class="cf-challenge" data-sitekey="0x4AAAAAAA6HJUmmLP7mLxx0" data-theme="light"></div>
+
+					
+					<button type="submit" class="btn btn-primary" id="submit">提出</button>
+				</div>
+			</div>
+		</form>
+		
+	</div>
+</div>
+
+
+
+
+		
+			<hr>
+			
+			
+			
+<div class="a2a_kit a2a_kit_size_20 a2a_default_style pull-right" data-a2a-url="https://atcoder.jp/contests/abc317/tasks/abc317_e?lang=ja" data-a2a-title="E - Avoid Eye Contact">
+	<a class="a2a_button_facebook"></a>
+	<a class="a2a_button_twitter"></a>
+	
+		<a class="a2a_button_hatena"></a>
+	
+	<a class="a2a_dd" href="https://www.addtoany.com/share"></a>
+</div>
+
+		
+		<script async src="//static.addtoany.com/menu/page.js"></script>
+		
+	</div> 
+	<hr>
+</div> 
+
+	<div class="container" style="margin-bottom: 80px;">
+			<footer class="footer">
+			
+				<ul>
+					<li><a href="/contests/abc317/rules">ルール</a></li>
+					<li><a href="/contests/abc317/glossary">用語集</a></li>
+					
+				</ul>
+			
+			<ul>
+				<li><a href="/tos">利用規約</a></li>
+				<li><a href="/privacy">プライバシーポリシー</a></li>
+				<li><a href="/personal">個人情報保護方針</a></li>
+				<li><a href="/company">企業情報</a></li>
+				<li><a href="/faq">よくある質問</a></li>
+				<li><a href="/contact">お問い合わせ</a></li>
+				<li><a href="/documents/request">資料請求</a></li>
+			</ul>
+			<div class="text-center">
+					<small id="copyright">Copyright Since 2012 &copy;<a href="http://atcoder.co.jp">AtCoder Inc.</a> All rights reserved.</small>
+			</div>
+			</footer>
+	</div>
+	<p id="fixed-server-timer" class="contest-timer"></p>
+	<div id="scroll-page-top" style="display:none;"><span class="glyphicon glyphicon-arrow-up" aria-hidden="true"></span> ページトップ</div>
+
+</body>
+</html>
+
+
