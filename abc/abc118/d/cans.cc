@@ -1,144 +1,111 @@
 #include <bits/stdc++.h>
 #include <cassert>
-typedef long long int ll;
 using namespace std;
+using ll = long long int;
+using u64 = unsigned long long;
+using pll = pair<ll, ll>;
+// #include <atcoder/all>
+// using namespace atcoder;
+#define REP(i, a, b) for (ll i = (a); i < (b); i++)
+#define REPrev(i, a, b) for (ll i = (a); i >= (b); i--)
+#define ALL(coll) (coll).begin(), (coll).end()
+#define SIZE(v) ((ll)((v).size()))
+#define REPOUT(i, a, b, exp, sep) REP(i, (a), (b)) cout << (exp) << (i + 1 == (b) ? "" : (sep)); cout << "\n"
 
-// --- DEBUG begin --- cut here ---
-template <class... Args>
-string dbgFormat(const char* fmt, Args... args) {
-  size_t len = snprintf(nullptr, 0, fmt, args...);
-  char buf[len + 1];
-  snprintf(buf, len + 1, fmt, args...);
-  return string(buf);
-}
+// @@ !! LIM(forall)
 
-template <class Head>
-void dbgLog(Head&& head) {
-  cerr << head << endl;
-}
+// ---- inserted library file forall.cc
 
-template <class Head, class... Tail>
-void dbgLog(Head&& head, Tail&&... tail)
-{
-  cerr << head << " ";
-  dbgLog(forward<Tail>(tail)...);
-}
+#define EX_REP_LL(i, from, to) for (ll i = (from); i < (to); i++)
+#define EX_REP_RB(x, coll) for (auto x : coll)
+#define EXGEN(rep_part, cond, yes, no_behaviour) ([&]() { rep_part if (cond) return (yes); no_behaviour; }())
+#define EXISTS_BASE(rep_part, cond) EXGEN(rep_part, cond, true, return false)
+#define EXFIND_BASE(rep_part, cond, t) EXGEN(rep_part, cond, t, assert(0))
+#define EXFIND_D_BASE(rep_part, cond, t, def) EXGEN(rep_part, cond, t, return def)
 
-#if DEBUG
-  #define DLOG(...)        dbgLog(__VA_ARGS__)
-  #define DFMT(...)        cerr << dbgFormat(__VA_ARGS__) << endl
-  #define DCALL(func, ...) func(__VA_ARGS__)
-#else
-  #define DLOG(...)
-  #define DFMT(...)
-  #define DCALL(func, ...)
-#endif
+#define EXISTS(i, from, to, cond) EXISTS_BASE(EX_REP_LL(i, from, to), cond)
+#define FORALL(i, from, to, cond) (not EXISTS(i, from, to, not (cond)))
+#define EXFIND(i, from, to, cond) EXFIND_BASE(EX_REP_LL(i, from, to), cond, i)
+#define EXFIND_D(i, from, to, cond, def) EXFIND_D_BASE(EX_REP_LL(i, from, to), cond, i, def)
 
-// operator<< definitions for some classes
+#define EXISTS_C(x, coll, cond) EXISTS_BASE(EX_REP_RB(x, coll), cond)
+#define FORALL_C(x, coll, cond) (not EXISTS_C(x, coll, not (cond)))
+#define EXFIND_C(x, coll, cond) EXFIND_BASE(EX_REP_RB(x, coll), cond, x)
+#define EXFIND_D_C(x, coll, cond, def) EXFIND_D_BASE(EX_REP_RB(x, coll), cond, x, def)
 
-template <typename T1, typename T2>
-ostream& operator<< (ostream& os, const pair<T1,T2>& p) {
-  os << "(" << p.first << ", " << p.second << ")";
-  return os;
-}
+#define COUNT_BASE(rep_part, cond) ([&](){ ll ret = 0; rep_part if (cond) ret++; return ret; }())
+#define COUNT(i, from, to, cond) COUNT_BASE(EX_REP_LL(i, from, to), cond)
+#define COUNT_C(x, coll, cond) COUNT_BASE(EX_REP_RB(x, coll), cond)
 
-template <typename T>
-ostream& operator<< (ostream& os, const vector<T>& v) {
-  os << '[';
-  for (auto it = v.begin(); it != v.end(); it++) {
-    if (it != v.begin()) os << ", ";
-    os << *it;
-  }
-  os << ']';
+#define IMPLIES(a, b) (not (a) or (b))
 
-  return os;
-}
+// ---- end forall.cc
 
-template <typename T, typename T2, typename T3>
-ostream& operator<< (ostream& os, const priority_queue<T, T2, T3>& orig) {
-  priority_queue<T, T2, T3> pq(orig);
-  bool first = true;
-  os << '[';
-  while (!pq.empty()) {
-    T x = pq.top(); pq.pop();
-    if (!first) os << ", ";
-    os << x;
-    first = false;
-  }
-  return os << ']';
-}
-// --- DEBUG end --- cut here ---
+// @@ !! LIM -- end mark --
 
-//-----fix-----cut here-----cut here--
-template<typename F>
-class FixPoint : private F {
-public:
-  explicit constexpr FixPoint(F&& f) noexcept : F(forward<F>(f)) {}
-
-  template<typename... Args>
-  constexpr decltype(auto) operator()(Args&&... args) const {
-    return F::operator()(*this, forward<Args>(args)...);
-  }
-};
-
-template<typename F>
-static inline constexpr decltype(auto) fix(F&& f) noexcept {
-  return FixPoint<F>{forward<F>(f)};
-}
-//-----fix--------cut here-----cut here--
-
-int main(int argc, char *argv[]) {
-  // C-style stdio functions should not be used.
+int main(/* int argc, char *argv[] */) {
   ios_base::sync_with_stdio(false);
   cin.tie(nullptr);
   cout << setprecision(20);
 
-  vector<int> use({0,2,5,5,4,5,6,3,7,6});
-  int N, M; cin >> N >> M;
-  vector<bool> ex(10);
-  int minU = 10;
-  for (int i = 0; i < M; i++) {
-    int a; cin >> a;
-    ex.at(a) = true;
-    minU = min(minU, use.at(a));
+  ll N, M; cin >> N >> M;
+  // @InpVec(M, A) [QnFqJ1pu]
+  auto A = vector(M, ll());
+  for (int i = 0; i < M; i++) { ll v; cin >> v; A[i] = v; }
+  // @End [QnFqJ1pu]
+  vector<ll> req{0, 2, 5, 5, 4, 5, 6, 3, 7, 6};
+  
+  ranges::sort(A, greater<>());
+  ll rmin = req[A[0]];
+  REP(i, 1, M) rmin = min(rmin, req[A[i]]);
+
+  vector<pll> B;
+  REP(i, 0, M) {
+    if (EXISTS(j, 0, ssize(B), B[j].second == req[A[i]])) continue;
+    B.emplace_back(A[i], req[A[i]]);
   }
-  if (ex.at(2) && (ex.at(3) || ex.at(5))) ex.at(2) = false;
-  if (ex.at(3) && ex.at(5)) ex.at(3) = false;
-  if (ex.at(6) && ex.at(9)) ex.at(6) = false;
-  vector<int> vEx;
-  for (int i = 1; i <= 9; i++) if (ex.at(i)) vEx.push_back(i);
-  int esize = vEx.size();
-  vector<vector<int>>
-    res(esize, vector<int>(N+1, -1)), acc(esize + 1, vector<int>(N+1, -1));
-  acc.at(0).at(0) = 0;
-  for (int i = 0; i < esize; i++) {
-    int a = vEx.at(i);
-    int u = use.at(a);
-    for (int x = 0; x <= N; x++) {
-      int vmax = -1;
-      int arg = -1;
-      for (int k = 0; x - k * u >= 0; k++) {
-	int prev = acc.at(i).at(x - k*u);
-	if (prev < 0) continue;
-	if (prev + k >= vmax) {
-	  vmax = prev + k;
-	  arg = k;
-	}
+  M = ssize(B);
+  vector<ll> C(M);
+  C[M - 1] = 10000;
+  REPrev(i, M - 2, 0) C[i] = min(C[i + 1], B[i + 1].second);
+  
+  vector<ll> vec(M);
+  auto f = [&](ll k0) -> bool {
+    auto g = [&](auto rF, ll i, ll k, ll n) -> bool {
+      ll r = B[i].second;
+      if (i == M - 1) {
+        if (k * r == n) {
+          vec[i] = k;
+          return true;
+        }else return false;
       }
-      res.at(i).at(x) = arg;
-      acc.at(i+1).at(x) = vmax;
-    }
-    DLOG("i", i);
-    DLOG("res", res.at(i));
-    DLOG("acc", acc.at(i+1));
+      if (r > C[i]) {
+        if (n - C[i] * k < 0) return false;
+        ll tmax = (n - C[i] * k) / (r - C[i]);
+        REPrev(t, min(k, tmax), 0) {
+          vec[i] = t;
+          if (rF(rF, i + 1, k - t, n - r * t)) return true;
+        }
+        return false;
+      }else {
+        REPrev(t, k, 0) {
+          vec[i] = t;
+          if (rF(rF, i + 1, k - t, n - r * t)) return true;
+        }
+        return false;
+      }
+    };
+    return g(g, 0, k0, N);
+  };
+
+  ll kmax = N / rmin;
+  REPrev(k, kmax, 1) {
+    if (f(k)) break;
   }
-  int n = N;
-  for (int i = esize-1; i >= 0; i--) {
-    for (int p = 0; p < res.at(i).at(n); p++) cout << vEx.at(i);
-    n -= res.at(i).at(n) * use.at(vEx.at(i));
+  REP(i, 0, M) {
+    REP(j, 0, vec[i]) cout << B[i].first;
   }
   cout << endl;
-
   return 0;
 }
 

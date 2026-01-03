@@ -12,7 +12,7 @@ using pll = pair<ll, ll>;
 #define SIZE(v) ((ll)((v).size()))
 #define REPOUT(i, a, b, exp, sep) REP(i, (a), (b)) cout << (exp) << (i + 1 == (b) ? "" : (sep)); cout << "\n"
 
-// @@ !! LIM(mod)
+// @@ !! LIM(mod fastTransform)
 
 // ---- inserted library file algOp.cc
 
@@ -404,7 +404,42 @@ using FpB = FpG<primeB, ll>;
 
 // ---- end mod.cc
 
-// @@ !! LIM -- end mark --
+// ---- inserted library file fastTransform.cc
+
+template <typename T>
+int trans_resize(vector<T>& x, vector<T>& y) {
+  int n = max(x.size(), y.size());
+  int p = 31 - __builtin_clz(n);
+  int t = 1 << p;
+  if (n > t) t *= 2;
+  x.resize(t);
+  y.resize(t);
+  return t;
+}
+
+template<typename T>
+int trans_resize(vector<T>& x) { return trans_resize(x, x); }
+
+template<typename T, int p1, int p2, int p3, int p4, int div>
+void _trans_form(vector<T>& f) {
+  int n = f.size();
+  for (int i = 1; i < n; i *= 2) {
+    for (int j = 0; j < n; j++) {
+      if ((j & i) == 0) {
+        T x = f[j];
+        T y = f[j | i];
+        f[j    ] = (p1 * x + p2 * y) / div;
+        f[j | i] = (p3 * x + p4 * y) / div;
+      }
+    }
+  }
+}
+
+template <typename T>
+void hadamard(vector<T>& f) { _trans_form<T, 1, 1, 1, -1, 1>(f); }
+
+template <typename T>
+void inv_hadamard(vector<T>& f) { _trans_form<T, 1, 1, 1, -1, 2>(f); }
 
 template<bool IS_LOWER, bool IS_ZETA>
 void gen_zeta(auto& vec) {
@@ -418,25 +453,55 @@ void gen_zeta(auto& vec) {
 }
 void zeta_lower(   auto& vec) { return gen_zeta<true,  true >(vec); }
 void moebius_lower(auto& vec) { return gen_zeta<true,  false>(vec); }
+void zeta_upper(   auto& vec) { return gen_zeta<false, true >(vec); }
+void moebius_upper(auto& vec) { return gen_zeta<false, false>(vec); }
 
-
-/*
-void zeta_lower(auto& vec) {
-  ll n = countr_zero(vec.size());
-  assert(ssize(vec) == 1LL << n);
-  REP(i, 0, n) {
-    REP(x, 0, ssize(vec)) if (x >> i & 1) vec[x] += vec[x ^ 1LL << i];
-  }
+template<typename T>
+void _conv_dest_form(vector<T>& x, vector<T>& y,
+                     void fwd(vector<T>&), void bwd(vector<T>&)) {
+  int t = trans_resize(x, y);
+  fwd(x);
+  fwd(y);
+  for (int i = 0; i < t; i++) x[i] *= y[i];
+  bwd(x);
 }
 
-void moebius_lower(auto& vec) {
-  ll n = countr_zero(vec.size());
-  assert(ssize(vec) == 1LL << n);
-  REPrev(i, n - 1, 0) {
-    REP(x, 0, ssize(vec)) if (x >> i & 1) vec[x] -= vec[x ^ 1LL << i];
-  }
+template<typename T>
+void xor_conv_dest(vector<T>& x, vector<T>& y) {
+  _conv_dest_form(x, y, hadamard, inv_hadamard);
 }
-*/
+
+template<typename T>
+void and_conv_dest(vector<T>& x, vector<T>& y) {
+  _conv_dest_form(x, y, zeta_upper, moebius_upper);
+}
+
+template<typename T>
+void or_conv_dest(vector<T>& x, vector<T>& y) {
+  _conv_dest_form(x, y, zeta_lower, moebius_lower);
+}
+
+template <typename T>
+vector<T> xor_conv(vector<T> x, vector<T> y) {
+  xor_conv_dest(x, y);
+  return x;
+}
+
+template <typename T>
+vector<T> and_conv(vector<T> x, vector<T> y) {
+  and_conv_dest(x, y);
+  return x;
+}
+
+template <typename T>
+vector<T> or_conv(vector<T> x, vector<T> y) {
+  or_conv_dest(x, y);
+  return x;
+}
+
+// ---- end fastTransform.cc
+
+// @@ !! LIM -- end mark --
 
 using Fp = FpB;
 

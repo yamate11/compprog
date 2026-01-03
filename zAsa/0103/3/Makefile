@@ -12,7 +12,7 @@ endif
 
 WARNINGS := -Wall -Wno-format-security -Wshadow -fconcepts
 
-CXXFLAGS := -std=gnu++20 $(DEBUGFLAGS) $(WARNINGS)
+CXXFLAGS := -std=gnu++23 $(DEBUGFLAGS) $(WARNINGS)
 
 CXXFLAGS := $(CXXFLAGS) -I/home/y-tanabe/lib/boost_1_73_0
 CXXFLAGS := $(CXXFLAGS) -I/home/y-tanabe/proj/compprog/clib/ac-library

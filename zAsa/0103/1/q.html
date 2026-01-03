@@ -9,9 +9,9 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>A - Fighting over Candies</title>
+	<title>A - Two Lucky Numbers</title>
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-	<meta http-equiv="Content-Language" content="en">
+	<meta http-equiv="Content-Language" content="ja">
 	<meta name="viewport" content="width=device-width,initial-scale=1.0">
 	<meta name="format-detection" content="telephone=no">
 	<meta name="google-site-verification" content="nXGC_JxO0yoP1qBzMnYD_xgufO6leSLw1kyNo2HZltM" />
@@ -31,66 +31,66 @@
 	</script>
 
 	
-	<meta name="description" content="AtCoder is a programming contest site for anyone from beginners to experts. We hold weekly programming contests online.">
+	<meta name="description" content="プログラミング初級者から上級者まで楽しめる、競技プログラミングコンテストサイト「AtCoder」。オンラインで毎週開催プログラミングコンテストを開催しています。競技プログラミングを用いて、客観的に自分のスキルを計ることのできるサービスです。">
 	<meta name="author" content="AtCoder Inc.">
 
 	<meta property="og:site_name" content="AtCoder">
 	
-	<meta property="og:title" content="A - Fighting over Candies" />
-	<meta property="og:description" content="AtCoder is a programming contest site for anyone from beginners to experts. We hold weekly programming contests online." />
+	<meta property="og:title" content="A - Two Lucky Numbers" />
+	<meta property="og:description" content="プログラミング初級者から上級者まで楽しめる、競技プログラミングコンテストサイト「AtCoder」。オンラインで毎週開催プログラミングコンテストを開催しています。競技プログラミングを用いて、客観的に自分のスキルを計ることのできるサービスです。" />
 	<meta property="og:type" content="website" />
-	<meta property="og:url" content="https://atcoder.jp/contests/abc047/tasks/abc047_a" />
+	<meta property="og:url" content="https://atcoder.jp/contests/arc131/tasks/arc131_a" />
 	<meta property="og:image" content="https://img.atcoder.jp/assets/atcoder.png" />
 	<meta name="twitter:card" content="summary" />
 	<meta name="twitter:site" content="@atcoder" />
 	
-	<meta property="twitter:title" content="A - Fighting over Candies" />
+	<meta property="twitter:title" content="A - Two Lucky Numbers" />
 
 	<link href="//fonts.googleapis.com/css?family=Lato:400,700" rel="stylesheet" type="text/css">
-	<link rel="stylesheet" type="text/css" href="//img.atcoder.jp/public/22afd08/css/bootstrap.min.css">
-	<link rel="stylesheet" type="text/css" href="//img.atcoder.jp/public/22afd08/css/base.css">
+	<link rel="stylesheet" type="text/css" href="//img.atcoder.jp/public/e45d3eb/css/bootstrap.min.css">
+	<link rel="stylesheet" type="text/css" href="//img.atcoder.jp/public/e45d3eb/css/base.css">
 	<link rel="shortcut icon" type="image/png" href="//img.atcoder.jp/assets/favicon.png">
 	<link rel="apple-touch-icon" href="//img.atcoder.jp/assets/atcoder.png">
-	<script src="//img.atcoder.jp/public/22afd08/js/lib/jquery-1.9.1.min.js"></script>
-	<script src="//img.atcoder.jp/public/22afd08/js/lib/bootstrap.min.js"></script>
-	<script src="//img.atcoder.jp/public/22afd08/js/cdn/js.cookie.min.js"></script>
-	<script src="//img.atcoder.jp/public/22afd08/js/cdn/moment.min.js"></script>
-	<script src="//img.atcoder.jp/public/22afd08/js/cdn/moment_js-ja.js"></script>
+	<script src="//img.atcoder.jp/public/e45d3eb/js/lib/jquery-1.9.1.min.js"></script>
+	<script src="//img.atcoder.jp/public/e45d3eb/js/lib/bootstrap.min.js"></script>
+	<script src="//img.atcoder.jp/public/e45d3eb/js/cdn/js.cookie.min.js"></script>
+	<script src="//img.atcoder.jp/public/e45d3eb/js/cdn/moment.min.js"></script>
+	<script src="//img.atcoder.jp/public/e45d3eb/js/cdn/moment_js-ja.js"></script>
 	<script>
-		var LANG = "en";
+		var LANG = "ja";
 		var userScreenName = "yamate11";
-		var csrfToken = "D4WNZRgtLGU9GLJqOVddyPQSQMkfBuvcRQ0oCnKtSDE="
+		var csrfToken = "xq/2/1/cd0OKZhkOMPzGHO28HpSv5GCbMjIXdzS6eNY="
 	</script>
-	<script src="//img.atcoder.jp/public/22afd08/js/utils.js"></script>
+	<script src="//img.atcoder.jp/public/e45d3eb/js/utils.js"></script>
 	
 	
-		<script src="//img.atcoder.jp/public/22afd08/js/contest.js"></script>
-		<link href="//img.atcoder.jp/public/22afd08/css/contest.css" rel="stylesheet" />
+		<script src="//img.atcoder.jp/public/e45d3eb/js/contest.js"></script>
+		<link href="//img.atcoder.jp/public/e45d3eb/css/contest.css" rel="stylesheet" />
 		<script>
-			var contestScreenName = "abc047";
-			var remainingText = "Remaining Time";
-			var countDownText = "Contest begins in";
-			var startTime = moment("2016-11-06T21:00:00+09:00");
-			var endTime = moment("2016-11-06T22:40:00+09:00");
+			var contestScreenName = "arc131";
+			var remainingText = "残り時間";
+			var countDownText = "開始まであと";
+			var startTime = moment("2021-12-05T21:00:00+09:00");
+			var endTime = moment("2021-12-05T23:00:00+09:00");
 		</script>
 		<style></style>
 	
 	
-		<link href="//img.atcoder.jp/public/22afd08/css/cdn/select2.min.css" rel="stylesheet" />
-		<link href="//img.atcoder.jp/public/22afd08/css/cdn/select2-bootstrap.min.css" rel="stylesheet" />
-		<script src="//img.atcoder.jp/public/22afd08/js/lib/select2.min.js"></script>
+		<link href="//img.atcoder.jp/public/e45d3eb/css/cdn/select2.min.css" rel="stylesheet" />
+		<link href="//img.atcoder.jp/public/e45d3eb/css/cdn/select2-bootstrap.min.css" rel="stylesheet" />
+		<script src="//img.atcoder.jp/public/e45d3eb/js/lib/select2.min.js"></script>
 	
 	
-		<script src="//img.atcoder.jp/public/22afd08/js/ace/ace.js"></script>
-		<script src="//img.atcoder.jp/public/22afd08/js/ace/ext-language_tools.js"></script>
+		<script src="//img.atcoder.jp/public/e45d3eb/js/ace/ace.js"></script>
+		<script src="//img.atcoder.jp/public/e45d3eb/js/ace/ext-language_tools.js"></script>
 	
 	
-		<script src="//img.atcoder.jp/public/22afd08/js/cdn/run_prettify.js"></script>
+		<script src="//img.atcoder.jp/public/e45d3eb/js/cdn/run_prettify.js"></script>
 	
 	
-		<link rel="stylesheet" href="//img.atcoder.jp/public/22afd08/css/cdn/katex.min.css">
-		<script defer src="//img.atcoder.jp/public/22afd08/js/cdn/katex.min.js"></script>
-		<script defer src="//img.atcoder.jp/public/22afd08/js/cdn/auto-render.min.js"></script>
+		<link rel="stylesheet" href="//img.atcoder.jp/public/e45d3eb/css/cdn/katex.min.css">
+		<script defer src="//img.atcoder.jp/public/e45d3eb/js/cdn/katex.min.js"></script>
+		<script defer src="//img.atcoder.jp/public/e45d3eb/js/cdn/auto-render.min.js"></script>
 		<script>$(function(){$('var').each(function(){var html=$(this).html().replace(/<sub>/g,'_{').replace(/<\/sub>/g,'}');$(this).html('\\('+html+'\\)');});});</script>
 		<script>
 			var katexOptions = {
@@ -115,7 +115,7 @@
 	
 	
 	
-	<script src="//img.atcoder.jp/public/22afd08/js/base.js"></script>
+	<script src="//img.atcoder.jp/public/e45d3eb/js/base.js"></script>
 </head>
 
 <body>
@@ -132,14 +132,14 @@
 		<div class="modal-content">
 			<div class="modal-header">
 				<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-				<h4 class="modal-title">Contest started</h4>
+				<h4 class="modal-title">コンテスト開始</h4>
 			</div>
 			<div class="modal-body">
-				<p>AtCoder Beginner Contest 047 has begun.</p>
+				<p>AtCoder Regular Contest 131が開始されました。</p>
 			</div>
 			<div class="modal-footer">
 				
-					<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+					<button type="button" class="btn btn-default" data-dismiss="modal">閉じる</button>
 				
 			</div>
 		</div>
@@ -150,13 +150,13 @@
 		<div class="modal-content">
 			<div class="modal-header">
 				<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-				<h4 class="modal-title">Contest is over</h4>
+				<h4 class="modal-title">コンテスト終了</h4>
 			</div>
 			<div class="modal-body">
-				<p>AtCoder Beginner Contest 047 has ended.</p>
+				<p>AtCoder Regular Contest 131は終了しました。</p>
 			</div>
 			<div class="modal-footer">
-				<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+				<button type="button" class="btn btn-default" data-dismiss="modal">閉じる</button>
 			</div>
 		</div>
 	</div>
@@ -175,18 +175,18 @@
 			<div class="collapse navbar-collapse" id="navbar-collapse">
 				<ul class="nav navbar-nav">
 				
-					<li><a class="contest-title" href="/contests/abc047">AtCoder Beginner Contest 047</a></li>
+					<li><a class="contest-title" href="/contests/arc131">AtCoder Regular Contest 131</a></li>
 				
 				</ul>
 				<ul class="nav navbar-nav navbar-right">
 					
 					<li class="dropdown">
 						<a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
-							<img src='//img.atcoder.jp/assets/top/img/flag-lang/en.png'> English <span class="caret"></span>
+							<img src='//img.atcoder.jp/assets/top/img/flag-lang/ja.png'> 日本語 <span class="caret"></span>
 						</a>
 						<ul class="dropdown-menu">
-							<li><a href="/contests/abc047/tasks/abc047_a?lang=ja"><img src='//img.atcoder.jp/assets/top/img/flag-lang/ja.png'> 日本語</a></li>
-							<li><a href="/contests/abc047/tasks/abc047_a?lang=en"><img src='//img.atcoder.jp/assets/top/img/flag-lang/en.png'> English</a></li>
+							<li><a href="/contests/arc131/tasks/arc131_a?lang=ja"><img src='//img.atcoder.jp/assets/top/img/flag-lang/ja.png'> 日本語</a></li>
+							<li><a href="/contests/arc131/tasks/arc131_a?lang=en"><img src='//img.atcoder.jp/assets/top/img/flag-lang/en.png'> English</a></li>
 						</ul>
 					</li>
 					
@@ -196,17 +196,17 @@
 								<span class="glyphicon glyphicon-cog" aria-hidden="true"></span> yamate11 (Guest) <span class="caret"></span>
 							</a>
 							<ul class="dropdown-menu">
-								<li><a href="/users/yamate11"><span class="glyphicon glyphicon-user" aria-hidden="true"></span> My Profile</a></li>
+								<li><a href="/users/yamate11"><span class="glyphicon glyphicon-user" aria-hidden="true"></span> マイプロフィール</a></li>
 								<li class="divider"></li>
-								<li><a href="/settings"><span class="glyphicon glyphicon-wrench" aria-hidden="true"></span> General Settings</a></li>
-								<li><a href="/settings/icon"><span class="glyphicon glyphicon-picture" aria-hidden="true"></span> Change Photo</a></li>
-								<li><a href="/settings/password"><span class="glyphicon glyphicon-lock" aria-hidden="true"></span> Change Password</a></li>
-								<li><a href="/settings/fav"><span class="glyphicon glyphicon-star" aria-hidden="true"></span> Manage Fav</a></li>
+								<li><a href="/settings"><span class="glyphicon glyphicon-wrench" aria-hidden="true"></span> 基本設定</a></li>
+								<li><a href="/settings/icon"><span class="glyphicon glyphicon-picture" aria-hidden="true"></span> アイコン設定</a></li>
+								<li><a href="/settings/password"><span class="glyphicon glyphicon-lock" aria-hidden="true"></span> パスワードの変更</a></li>
+								<li><a href="/settings/fav"><span class="glyphicon glyphicon-star" aria-hidden="true"></span> お気に入り管理</a></li>
 								
 								
 								
 								<li class="divider"></li>
-								<li><a href="javascript:void(form_logout.submit())"><span class="glyphicon glyphicon-log-out" aria-hidden="true"></span> Sign Out</a></li>
+								<li><a href="javascript:void(form_logout.submit())"><span class="glyphicon glyphicon-log-out" aria-hidden="true"></span> ログアウト</a></li>
 							</ul>
 						</li>
 					
@@ -215,8 +215,8 @@
 		</div>
 	</nav>
 
-	<form method="POST" name="form_logout" action="/logout?continue=https%3A%2F%2Fatcoder.jp%2Fcontests%2Fabc047%2Ftasks%2Fabc047_a">
-		<input type="hidden" name="csrf_token" value="D4WNZRgtLGU9GLJqOVddyPQSQMkfBuvcRQ0oCnKtSDE=" />
+	<form method="POST" name="form_logout" action="/logout?continue=https%3A%2F%2Fatcoder.jp%2Fcontests%2Farc131%2Ftasks%2Farc131_a">
+		<input type="hidden" name="csrf_token" value="xq/2/1/cd0OKZhkOMPzGHO28HpSv5GCbMjIXdzS6eNY=" />
 	</form>
 	<div id="main-container" class="container"
 		 	style="padding-top:50px;">
@@ -228,37 +228,39 @@
 	<div>
 		<small class="contest-duration">
 			
-				Contest Duration:
-				<a href='http://www.timeanddate.com/worldclock/fixedtime.html?iso=20161106T2100&p1=248' target='blank'><time class='fixtime fixtime-full'>2016-11-06 21:00:00+0900</time></a> - <a href='http://www.timeanddate.com/worldclock/fixedtime.html?iso=20161106T2240&p1=248' target='blank'><time class='fixtime fixtime-full'>2016-11-06 22:40:00+0900</time></a> (local time)
-				(100 minutes)
+				コンテスト時間:
+				<a href='http://www.timeanddate.com/worldclock/fixedtime.html?iso=20211205T2100&p1=248' target='blank'><time class='fixtime fixtime-full'>2021-12-05 21:00:00+0900</time></a> ~ <a href='http://www.timeanddate.com/worldclock/fixedtime.html?iso=20211205T2300&p1=248' target='blank'><time class='fixtime fixtime-full'>2021-12-05 23:00:00+0900</time></a> 
+				(120分)
 			
 		</small>
-		<small class="back-to-home pull-right"><a href="/home">Back to Home</a></small>
+		<small class="back-to-home pull-right"><a href="/home">AtCoderホームへ戻る</a></small>
 	</div>
 	<ul class="nav nav-tabs">
-		<li><a href="/contests/abc047"><span class="glyphicon glyphicon-home" aria-hidden="true"></span> Top</a></li>
+		<li><a href="/contests/arc131"><span class="glyphicon glyphicon-home" aria-hidden="true"></span> トップ</a></li>
 		
-			<li class="active"><a href="/contests/abc047/tasks"><span class="glyphicon glyphicon-tasks" aria-hidden="true"></span> Tasks</a></li>
-		
-
-		
-			<li><a href="/contests/abc047/clarifications"><span class="glyphicon glyphicon-question-sign" aria-hidden="true"></span> Clarifications <span id="clar-badge" class="badge" ></span></a></li>
+			<li class="active"><a href="/contests/arc131/tasks"><span class="glyphicon glyphicon-tasks" aria-hidden="true"></span> 問題</a></li>
 		
 
 		
-			<li><a href="/contests/abc047/submit?taskScreenName=abc047_a"><span class="glyphicon glyphicon-send" aria-hidden="true"></span> Submit</a></li>
+			<li><a href="/contests/arc131/clarifications"><span class="glyphicon glyphicon-question-sign" aria-hidden="true"></span> 質問 <span id="clar-badge" class="badge" ></span></a></li>
+		
+
+		
+			<li><a href="/contests/arc131/submit?taskScreenName=arc131_a"><span class="glyphicon glyphicon-send" aria-hidden="true"></span> 提出</a></li>
 		
 
 		
 			<li>
-				<a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false"><span class="glyphicon glyphicon-list" aria-hidden="true"></span> Results<span class="caret"></span></a>
+				<a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false"><span class="glyphicon glyphicon-list" aria-hidden="true"></span> 提出結果<span class="caret"></span></a>
 				<ul class="dropdown-menu">
-					<li><a href="/contests/abc047/submissions"><span class="glyphicon glyphicon-globe" aria-hidden="true"></span> All Submissions</a></li>
+					<li><a href="/contests/arc131/submissions"><span class="glyphicon glyphicon-globe" aria-hidden="true"></span> すべての提出</a></li>
 					
-						<li><a href="/contests/abc047/submissions/me"><span class="glyphicon glyphicon-user" aria-hidden="true"></span> My Submissions</a></li>
+						<li><a href="/contests/arc131/submissions/me"><span class="glyphicon glyphicon-user" aria-hidden="true"></span> 自分の提出</a></li>
 						
-						<li class="divider"></li>
-						<li><a href="/contests/abc047/score"><span class="glyphicon glyphicon-dashboard" aria-hidden="true"></span> My Score</a></li>
+						
+							<li class="divider"></li>
+							<li><a href="/contests/arc131/score"><span class="glyphicon glyphicon-dashboard" aria-hidden="true"></span> 自分の得点状況</a></li>
+						
 					
 				</ul>
 			</li>
@@ -267,25 +269,22 @@
 		
 			
 				
-					<li><a href="/contests/abc047/standings"><span class="glyphicon glyphicon-sort-by-attributes-alt" aria-hidden="true"></span> Standings</a></li>
+					<li><a href="/contests/arc131/standings"><span class="glyphicon glyphicon-sort-by-attributes-alt" aria-hidden="true"></span> 順位表</a></li>
 				
 			
 				
-					<li><a href="/contests/abc047/standings/virtual"><span class="glyphicon glyphicon-sort-by-attributes-alt" aria-hidden="true"></span> Virtual Standings</a></li>
+					<li><a href="/contests/arc131/standings/virtual"><span class="glyphicon glyphicon-sort-by-attributes-alt" aria-hidden="true"></span> バーチャル順位表</a></li>
 				
 			
 		
 
 		
-			<li><a href="/contests/abc047/custom_test"><span class="glyphicon glyphicon-wrench" aria-hidden="true"></span> Custom Test</a></li>
+			<li><a href="/contests/arc131/custom_test"><span class="glyphicon glyphicon-wrench" aria-hidden="true"></span> コードテスト</a></li>
 		
 
 		
-			<li><a href="/contests/abc047/editorial"><span class="glyphicon glyphicon-book" aria-hidden="true"></span> Editorial</a></li>
+			<li><a href="/contests/arc131/editorial"><span class="glyphicon glyphicon-book" aria-hidden="true"></span> 解説</a></li>
 		
-		
-			
-			
 		
 
 		<li class="pull-right"><a id="fix-cnvtb" href="javascript:void(0)"><span class="glyphicon glyphicon-pushpin" aria-hidden="true"></span></a></li>
@@ -293,8 +292,8 @@
 </div>
 	<div class="col-sm-12">
 		<span class="h2">
-			A - Fighting over Candies
-			<a class="btn btn-default btn-sm" href="/contests/abc047/tasks/abc047_a/editorial">Editorial</a>
+			A - Two Lucky Numbers
+			<a class="btn btn-default btn-sm" href="/contests/arc131/tasks/arc131_a/editorial">解説</a>
 		</span>
 		<span id="task-lang-btn" class="pull-right"><span data-lang="ja"><img src='//img.atcoder.jp/assets/top/img/flag-lang/ja.png'></span> / <span data-lang="en"><img src='//img.atcoder.jp/assets/top/img/flag-lang/en.png'></span></span>
 		<script>
@@ -305,19 +304,18 @@
 					ts.children('span').show();
 					return;
 				}
+
 				var REMEMBER_LB = 5;
 				var LS_KEY = 'task_lang';
 				var taskLang = getLS(LS_KEY) || '';
-				var changeTimes = 0;
-				if (taskLang == 'ja' || taskLang == 'en') {
-					changeTimes = REMEMBER_LB;
-				} else {
-					var changeTimes = parseInt(taskLang, 10);
-					if (isNaN(changeTimes)) {
-						changeTimes = 0;
-						delLS(LS_KEY);
+				function isTaskLangSet(taskLang) { return taskLang === 'ja' || taskLang === 'en';}
+				if (isTaskLangSet(taskLang)) {
+					const params = new URLSearchParams(window.location.search);
+					if (params.get('lang')) {
+						setLS(LS_KEY, REMEMBER_LB);
+						taskLang = LANG;
 					}
-					changeTimes++;
+				} else {
 					taskLang = LANG;
 				}
 				ts.children('span.lang-' + taskLang).show();
@@ -326,6 +324,16 @@
 					var l = $(this).data('lang');
 					ts.children('span').hide();
 					ts.children('span.lang-' + l).show();
+
+					taskLang = getLS(LS_KEY) || '';
+					let changeTimes = 0;
+					if (isTaskLangSet(taskLang)) {
+						changeTimes = REMEMBER_LB;
+					} else {
+						changeTimes = parseInt(taskLang, 10);
+						if (isNaN(changeTimes)) changeTimes = 0;
+						changeTimes++;
+					}
 					if (changeTimes < REMEMBER_LB) setLS(LS_KEY, changeTimes);
 					else setLS(LS_KEY, l);
 				});
@@ -333,7 +341,7 @@
 		</script>
 		<hr/>
 		<p>
-			Time Limit: 2 sec / Memory Limit: 256 MB
+			実行時間制限: 2 sec / メモリ制限: 1024 MiB
 			
 			
 		</p>
@@ -347,32 +355,41 @@
 
 			<span class="lang">
 <span class="lang-ja">
-<p>配点 : <var>100</var> 点</p>
+<p>配点 : <var>300</var> 点</p>
 
 <div class="part">
 <section>
-<h3>問題文</h3><p>競プロ幼稚園に通う <var>2</var> 人の子供がキャンディーの取り合いをしています。</p>
-<p><var>3</var> 個のキャンディーパックがあり、それぞれのパックにはキャンディーが <var>a</var>, <var>b</var>, <var>c</var> 個入っています。</p>
-<p>えび先生はこの <var>3</var> 個のパックを、キャンディーの個数が等しくなるように <var>2</var> 人に分けようとしています。そのような分け方が可能かどうかを判定してください。</p>
-<p>ただし、キャンディーをパックから取り出すことはできず、それぞれのパックをそのままどちらかの子供にあげる必要があります。</p>
+<h3>問題文</h3>
+<p>AtCoder さんは新聞で、今日のラッキーナンバーが正の整数 <var>A</var> で、明日のラッキーナンバーが正の整数 <var>B</var> であることを知りました。</p>
+<p>ここで、次の条件を両方とも満たす正の整数 <var>x</var> を「超ラッキーな数」ということにしました。</p>
+<ul>
+<li><var>x</var> を十進法で書いたときに、連続する部分文字列として <var>A</var> が現れる</li>
+<li><var>2x</var> を十進法で書いたときに、連続する部分文字列として <var>B</var> が現れる</li>
+</ul>
+<p>実は、本問題の制約の範囲内では、<var>10^{18}</var> 未満の超ラッキーな数が必ず存在します。これを <var>1</var> つ探してみてください。</p>
 </section>
 </div>
 
 <div class="part">
 <section>
-<h3>制約</h3><ul>
-<li><var>1 ≦ a, b, c ≦ 100</var></li>
+<h3>制約</h3>
+<ul>
+<li><var>1 \leq A &lt; 10^8</var></li>
+<li><var>1 \leq B &lt; 10^8</var></li>
+<li><var>A, B</var> の先頭に余分な <code>0</code> は現れない</li>
+<li>入力はすべて整数</li>
 </ul>
 </section>
 </div>
 
 <hr />
-
 <div class="io-style">
 <div class="part">
 <section>
-<h3>入力</h3><p>入力は以下の形式で標準入力から与えられる。</p>
-<pre><var>a</var> <var>b</var> <var>c</var>
+<h3>入力</h3>
+<p>入力は以下の形式で標準入力から与えられます。  </p>
+<pre><var>A</var>
+<var>B</var>
 </pre>
 
 </section>
@@ -380,16 +397,17 @@
 
 <div class="part">
 <section>
-<h3>出力</h3><p>キャンディーを同じ個数に分けられるなら <code>Yes</code> を、そうでなければ <code>No</code> を出力せよ。</p>
+<h3>出力</h3>
+<p><var>10^{18}</var> 未満の超ラッキーな数を <var>1</var> つ出力してください。ただし、答えが複数通りあり得る場合は、そのうちどれを出力しても構いません。</p>
 </section>
 </div>
 </div>
 
 <hr />
-
 <div class="part">
 <section>
-<h3>入力例 1</h3><pre>10 30 20
+<h3>入力例 1</h3><pre>13
+62
 </pre>
 
 </section>
@@ -397,38 +415,24 @@
 
 <div class="part">
 <section>
-<h3>出力例 1</h3><pre>Yes
+<h3>出力例 1</h3><pre>131
 </pre>
 
-<p>ひとりめの子供に <var>30</var> 個のキャンディーの入ったパックを、もう一方の子供に <var>10</var> 個と <var>20</var> 個のキャンディーの入ったパックをあげると、<var>2</var> 人のもらうキャンディーの個数を等しくすることができます。</p>
-</section>
-</div>
-
-<hr />
-
-<div class="part">
-<section>
-<h3>入力例 2</h3><pre>30 30 100
-</pre>
-
-</section>
-</div>
-
-<div class="part">
-<section>
-<h3>出力例 2</h3><pre>No
-</pre>
-
-<p>この場合、<var>100</var> 個のキャンディーの入ったパックを貰った子供は必ずもう一方の子供より多くのキャンディーを貰うことになってしまいます。</p>
-<p><var>3</var> つすべてのパックをどちらかの子供にあげるように分けなければならないことに注意してください。</p>
+<p>例えば <var>x = 131</var> は超ラッキーな数です。なぜなら、</p>
+<ul>
+<li><var>x = 131</var> の部分文字列として <var>13</var> が現れる（<var>1</var> ～ <var>2</var> 文字目）</li>
+<li><var>2x = 262</var> の部分文字列として <var>62</var> が現れる（<var>2</var> ～ <var>3</var> 文字目）</li>
+</ul>
+<p>からです。</p>
+<p>それ以外にも、例えば <var>313</var> や <var>8135</var>、<var>135797531</var> などが超ラッキーな数であり、これらを出力しても正解になります。</p>
 </section>
 </div>
 
 <hr />
-
 <div class="part">
 <section>
-<h3>入力例 3</h3><pre>56 25 31
+<h3>入力例 2</h3><pre>69120
+824
 </pre>
 
 </section>
@@ -436,37 +440,73 @@
 
 <div class="part">
 <section>
-<h3>出力例 3</h3><pre>Yes
-</pre></section>
+<h3>出力例 2</h3><pre>869120
+</pre>
+
+<p>例えば <var>x = 869120</var> は超ラッキーな数です。なぜなら、</p>
+<ul>
+<li><var>x = 869120</var> の部分文字列として <var>69120</var> が現れる（<var>2</var> ～ <var>6</var> 文字目）</li>
+<li><var>2x = 1738240</var> の部分文字列として <var>824</var> が現れる（<var>4</var> ～ <var>6</var> 文字目）</li>
+</ul>
+<p>からです。</p>
+<p>最小の超ラッキーな数は <var>69120</var> ですが、<var>18</var> 桁以下の超ラッキーな数ならどれを出力してもよいことにご注意ください。</p>
+</section>
+</div>
+
+<hr />
+<div class="part">
+<section>
+<h3>入力例 3</h3><pre>6283185
+12566370
+</pre>
+
+</section>
+</div>
+
+<div class="part">
+<section>
+<h3>出力例 3</h3><pre>6283185
+</pre>
+
+<p><var>x = 6283185</var> のとき、<var>x</var> に <var>A</var> が、<var>2x</var> に <var>B</var> がそのまま現れます。このようなときも、<var>x</var> は超ラッキーな数になります。</p></section>
 </div>
 </span>
 <span class="lang-en">
-<p>Score : <var>100</var> points</p>
+<p>Score : <var>300</var> points</p>
 
 <div class="part">
 <section>
-<h3>Problem Statement</h3><p>Two students of AtCoder Kindergarten are fighting over candy packs.</p>
-<p>There are three candy packs, each of which contains <var>a</var>, <var>b</var>, and <var>c</var> candies, respectively.</p>
-<p>Teacher Evi is trying to distribute the packs between the two students so that each student gets the same number of candies. Determine whether it is possible.</p>
-<p>Note that Evi cannot take candies out of the packs, and the whole contents of each pack must be given to one of the students.</p>
+<h3>Problem Statement</h3>
+<p>Mr. AtCoder reads in the newspaper that today's lucky number is a positive integer <var>A</var> and tomorrow's is a positive integer <var>B</var>.</p>
+<p>Here, he defines a positive integer <var>x</var> that satisfies both of the following conditions as a super-lucky number.</p>
+<ul>
+<li>The decimal notation of <var>x</var> contains <var>A</var> as a contiguous substring.</li>
+<li>The decimal notation of <var>2x</var> contains <var>B</var> as a contiguous substring.</li>
+</ul>
+<p>Actually, under the Constraints of this problem, there is always a super-lucky number less than <var>10^{18}</var>. Find one such number.</p>
 </section>
 </div>
 
 <div class="part">
 <section>
-<h3>Constraints</h3><ul>
-<li><var>1 ≦ a, b, c ≦ 100</var></li>
+<h3>Constraints</h3>
+<ul>
+<li><var>1 \leq A &lt; 10^8</var></li>
+<li><var>1 \leq B &lt; 10^8</var></li>
+<li><var>A</var> and <var>B</var> have no leading <code>0</code>s.</li>
+<li>All values in input are integers.</li>
 </ul>
 </section>
 </div>
 
 <hr />
-
 <div class="io-style">
 <div class="part">
 <section>
-<h3>Input</h3><p>The input is given from Standard Input in the following format:</p>
-<pre><var>a</var> <var>b</var> <var>c</var>
+<h3>Input</h3>
+<p>Input is given from Standard Input in the following format:</p>
+<pre><var>A</var>
+<var>B</var>
 </pre>
 
 </section>
@@ -474,16 +514,17 @@
 
 <div class="part">
 <section>
-<h3>Output</h3><p>If it is possible to distribute the packs so that each student gets the same number of candies, print <code>Yes</code>. Otherwise, print <code>No</code>.</p>
+<h3>Output</h3>
+<p>Print one super-lucky number less than <var>10^{18}</var>. If multiple solutions exist, you may print any of them.</p>
 </section>
 </div>
 </div>
 
 <hr />
-
 <div class="part">
 <section>
-<h3>Sample Input 1</h3><pre>10 30 20
+<h3>Sample Input 1</h3><pre>13
+62
 </pre>
 
 </section>
@@ -491,38 +532,23 @@
 
 <div class="part">
 <section>
-<h3>Sample Output 1</h3><pre>Yes
+<h3>Sample Output 1</h3><pre>131
 </pre>
 
-<p>Give the pack with <var>30</var> candies to one student, and give the two packs with <var>10</var> and <var>20</var> candies to the other. Then, each gets <var>30</var> candies.</p>
-</section>
-</div>
-
-<hr />
-
-<div class="part">
-<section>
-<h3>Sample Input 2</h3><pre>30 30 100
-</pre>
-
-</section>
-</div>
-
-<div class="part">
-<section>
-<h3>Sample Output 2</h3><pre>No
-</pre>
-
-<p>In this case, the student who gets the pack with <var>100</var> candies always has more candies than the other.</p>
-<p>Note that every pack must be given to one of them.</p>
+<p>One super-lucky number is <var>x = 131</var>, because:</p>
+<ul>
+<li><var>x = 131</var> contains <var>13</var> as a substring. (<var>1</var>-st through <var>2</var>-nd characters)</li>
+<li><var>2x = 262</var> contains <var>62</var> as a substring. (<var>2</var>-nd through <var>3</var>-rd characters)</li>
+</ul>
+<p>Some other super-lucky numbers are <var>313</var>, <var>8135</var>, and <var>135797531</var>, which would also be accepted.</p>
 </section>
 </div>
 
 <hr />
-
 <div class="part">
 <section>
-<h3>Sample Input 3</h3><pre>56 25 31
+<h3>Sample Input 2</h3><pre>69120
+824
 </pre>
 
 </section>
@@ -530,8 +556,34 @@
 
 <div class="part">
 <section>
-<h3>Sample Output 3</h3><pre>Yes
-</pre></section>
+<h3>Sample Output 2</h3><pre>869120
+</pre>
+
+<p>One super-lucky number is <var>x = 869120</var>, because:</p>
+<ul>
+<li><var>x = 869120</var> contains <var>69120</var> as a substring. (<var>2</var>-nd through <var>6</var>-th characters)</li>
+<li><var>2x = 1738240</var> contains <var>824</var> as a substring. (<var>4</var>-th through <var>6</var>-th characters)</li>
+</ul>
+<p>The smallest super-lucky number is <var>69120</var>, but note that any lucky number with at most <var>18</var> digits would be accepted.</p>
+</section>
+</div>
+
+<hr />
+<div class="part">
+<section>
+<h3>Sample Input 3</h3><pre>6283185
+12566370
+</pre>
+
+</section>
+</div>
+
+<div class="part">
+<section>
+<h3>Sample Output 3</h3><pre>6283185
+</pre>
+
+<p>When <var>x = 6283185</var>, <var>x</var> is <var>A</var> itself, and <var>2x</var> is <var>B</var> itself. In such a case too, <var>x</var> is a super-lucky number.</p></section>
 </div>
 </span>
 </span>
@@ -542,194 +594,246 @@
 
 		
 		<hr/>
-		<form class="form-horizontal form-code-submit" action="/contests/abc047/submit" method="POST">
-			<input type="hidden" name="data.TaskScreenName" value="abc047_a" />
+		<form class="form-horizontal form-code-submit" action="/contests/arc131/submit" method="POST">
+			<input type="hidden" name="data.TaskScreenName" value="arc131_a" />
 			
 			<div class="form-group ">
-				<label class="control-label col-sm-3 col-md-2" for="select-lang">Language</label>
+				<label class="control-label col-sm-3 col-md-2" for="select-lang">言語</label>
 				<div id="select-lang" class="col-sm-5" data-name="data.LanguageId">
 					<select class="form-control current" data-placeholder="-" name="data.LanguageId" required>
 						<option></option>
 						
-							<option value="5001" data-ace-mode="c_cpp">C&#43;&#43; 20 (gcc 12.2)</option>
+							<option value="6001" data-ace-mode="text">&gt;&lt;&gt; (fishr 0.1.0)</option>
 						
-							<option value="5002" data-ace-mode="golang">Go (go 1.20.6)</option>
+							<option value="6002" data-ace-mode="ada">Ada 2022 (GNAT 15.2.0)</option>
 						
-							<option value="5003" data-ace-mode="csharp">C# 11.0 (.NET 7.0.7)</option>
+							<option value="6003" data-ace-mode="text">APL (GNU APL 1.9)</option>
 						
-							<option value="5004" data-ace-mode="kotlin">Kotlin (Kotlin/JVM 1.8.20)</option>
+							<option value="6004" data-ace-mode="mips">Assembly MIPS O32 ABI (GNU assembler 2.42)</option>
 						
-							<option value="5005" data-ace-mode="java">Java (OpenJDK 17)</option>
+							<option value="6005" data-ace-mode="assembly_x86">Assembly x64 (NASM 2.16.03)</option>
 						
-							<option value="5006" data-ace-mode="nim">Nim (Nim 1.6.14)</option>
+							<option value="6006" data-ace-mode="text">AWK (GNU awk 5.2.1)</option>
 						
-							<option value="5007" data-ace-mode="text">V (V 0.4)</option>
+							<option value="6007" data-ace-mode="text">A言語 (interpreter af48a2a)</option>
 						
-							<option value="5008" data-ace-mode="text">Zig (Zig 0.10.1)</option>
+							<option value="6008" data-ace-mode="sh">Bash (bash 5.3)</option>
 						
-							<option value="5009" data-ace-mode="javascript">JavaScript (Node.js 18.16.1)</option>
+							<option value="6009" data-ace-mode="basic">BASIC (FreeBASIC 1.10.1)</option>
 						
-							<option value="5010" data-ace-mode="javascript">JavaScript (Deno 1.35.1)</option>
+							<option value="6010" data-ace-mode="text">bc (GNU bc 1.08.2)</option>
 						
-							<option value="5011" data-ace-mode="r">R (GNU R 4.2.1)</option>
+							<option value="6011" data-ace-mode="text">Befunge93 (TBC 1.0)</option>
 						
-							<option value="5012" data-ace-mode="d">D (DMD 2.104.0)</option>
+							<option value="6012" data-ace-mode="text">Brainfuck (Tritium 1.2.73)</option>
 						
-							<option value="5013" data-ace-mode="d">D (LDC 1.32.2)</option>
+							<option value="6013" data-ace-mode="c_cpp">C23 (Clang 21.1.0)</option>
 						
-							<option value="5014" data-ace-mode="swift">Swift (swift 5.8.1)</option>
+							<option value="6014" data-ace-mode="c_cpp">C23 (GCC 14.2.0)</option>
 						
-							<option value="5015" data-ace-mode="dart">Dart (Dart 3.0.5)</option>
+							<option value="6015" data-ace-mode="csharp">C# 13.0 (.NET 9.0.8)</option>
 						
-							<option value="5016" data-ace-mode="php">PHP (php 8.2.8)</option>
+							<option value="6016" data-ace-mode="csharp">C# 13.0 (.NET Native AOT 9.0.8)</option>
 						
-							<option value="5017" data-ace-mode="c_cpp">C (gcc 12.2.0)</option>
+							<option value="6017" data-ace-mode="c_cpp">C&#43;&#43;23 (GCC 15.2.0)</option>
 						
-							<option value="5018" data-ace-mode="ruby">Ruby (ruby 3.2.2)</option>
+							<option value="6018" data-ace-mode="text">C3 (c3c 0.7.5)</option>
 						
-							<option value="5019" data-ace-mode="crystal">Crystal (Crystal 1.9.1)</option>
+							<option value="6019" data-ace-mode="text">Carp(Carp 0.5.5)</option>
 						
-							<option value="5020" data-ace-mode="text">Brainfuck (bf 20041219)</option>
+							<option value="6020" data-ace-mode="c_cpp">cLay (cLay 20250308-1 (GCC 15.2.0))</option>
 						
-							<option value="5021" data-ace-mode="fsharp">F# 7.0 (.NET 7.0.7)</option>
+							<option value="6021" data-ace-mode="clojure">Clojure (babashka 1.12.208)</option>
 						
-							<option value="5022" data-ace-mode="julia">Julia (Julia 1.9.2)</option>
+							<option value="6022" data-ace-mode="clojure">Clojure (clojure 1.12.2)</option>
 						
-							<option value="5023" data-ace-mode="sh">Bash (bash 5.2.2)</option>
+							<option value="6023" data-ace-mode="clojure">Clojure (Clojure AOT 1.12.2)</option>
 						
-							<option value="5024" data-ace-mode="text">Text (cat 8.32)</option>
+							<option value="6025" data-ace-mode="clojure">Clojure (ClojureScript 1.12.42 (Clojure 1.12.2 Node.js 22.19.0))</option>
 						
-							<option value="5025" data-ace-mode="haskell">Haskell (GHC 9.4.5)</option>
+							<option value="6026" data-ace-mode="cobol">COBOL (Free) (GnuCOBOL 3.2)</option>
 						
-							<option value="5026" data-ace-mode="fortran">Fortran (gfortran 12.2)</option>
+							<option value="6027" data-ace-mode="lisp">Common Lisp (SBCL 2.5.8)</option>
 						
-							<option value="5027" data-ace-mode="lua">Lua (LuaJIT 2.1.0-beta3)</option>
+							<option value="6028" data-ace-mode="crystal">Crystal (Crystal 1.17.0)</option>
 						
-							<option value="5028" data-ace-mode="c_cpp">C&#43;&#43; 23 (gcc 12.2)</option>
+							<option value="6029" data-ace-mode="text">Cyber (Cyber v0.3)</option>
 						
-							<option value="5029" data-ace-mode="lisp">Common Lisp (SBCL 2.3.6)</option>
+							<option value="6030" data-ace-mode="d">D (DMD 2.111.0)</option>
 						
-							<option value="5030" data-ace-mode="cobol">COBOL (Free) (GnuCOBOL 3.1.2)</option>
+							<option value="6031" data-ace-mode="d">D (GDC 15.2)</option>
 						
-							<option value="5031" data-ace-mode="c_cpp">C&#43;&#43; 23 (Clang 16.0.6)</option>
+							<option value="6032" data-ace-mode="d">D (LDC 1.41.0)</option>
 						
-							<option value="5032" data-ace-mode="sh">Zsh (Zsh 5.9)</option>
+							<option value="6033" data-ace-mode="dart">Dart (Dart 3.9.2)</option>
 						
-							<option value="5033" data-ace-mode="python">SageMath (SageMath 9.5)</option>
+							<option value="6034" data-ace-mode="text">dc 1.5.2 (GNU bc 1.08.2)</option>
 						
-							<option value="5034" data-ace-mode="sh">Sed (GNU sed 4.8)</option>
+							<option value="6035" data-ace-mode="prolog">ECLiPSe (ECLiPSe 7.1_13)</option>
 						
-							<option value="5035" data-ace-mode="text">bc (bc 1.07.1)</option>
+							<option value="6036" data-ace-mode="eiffel">Eiffel (Gobo Eiffel 22.01)</option>
 						
-							<option value="5036" data-ace-mode="text">dc (dc 1.07.1)</option>
+							<option value="6037" data-ace-mode="eiffel">Eiffel (Liberty Eiffel 07829e3)</option>
 						
-							<option value="5037" data-ace-mode="perl">Perl (perl  5.34)</option>
+							<option value="6038" data-ace-mode="elixir">Elixir (Elixir 1.18.4 (OTP 28.0.2))</option>
 						
-							<option value="5038" data-ace-mode="sh">AWK (GNU Awk 5.0.1)</option>
+							<option value="6039" data-ace-mode="lisp">Emacs Lisp(Native Compile)(GNU Emacs 29.4)</option>
 						
-							<option value="5039" data-ace-mode="text">なでしこ (cnako3 3.4.20)</option>
+							<option value="6040" data-ace-mode="text">Emojicode 1.0 beta 2 (emojicodec 1.0 beta 2)</option>
 						
-							<option value="5040" data-ace-mode="text">Assembly x64 (NASM 2.15.05)</option>
+							<option value="6041" data-ace-mode="erlang">Erlang (Erlang 28.0.2)</option>
 						
-							<option value="5041" data-ace-mode="pascal">Pascal (fpc 3.2.2)</option>
+							<option value="6042" data-ace-mode="fsharp">F# 9.0 (.NET 9.0.8)</option>
 						
-							<option value="5042" data-ace-mode="csharp">C# 11.0 AOT (.NET 7.0.7)</option>
+							<option value="6043" data-ace-mode="text">Factor (Factor 0.100)</option>
 						
-							<option value="5043" data-ace-mode="lua">Lua (Lua 5.4.6)</option>
+							<option value="6044" data-ace-mode="sh">Fish (fish 4.0.2)</option>
 						
-							<option value="5044" data-ace-mode="prolog">Prolog (SWI-Prolog 9.0.4)</option>
+							<option value="6045" data-ace-mode="forth">Forth (gforth 0.7.3)</option>
 						
-							<option value="5045" data-ace-mode="sh">PowerShell (PowerShell 7.3.1)</option>
+							<option value="6046" data-ace-mode="fortran">Fortran2018 (Flang 20.1.7)</option>
 						
-							<option value="5046" data-ace-mode="scheme">Scheme (Gauche 0.9.12)</option>
+							<option value="6047" data-ace-mode="fortran">Fortran2023 (GCC 14.2.0)</option>
 						
-							<option value="5047" data-ace-mode="scala">Scala 3.3.0 (Scala Native 0.4.14)</option>
+							<option value="6048" data-ace-mode="fortran">FORTRAN77 (GCC 14.2.0)</option>
 						
-							<option value="5048" data-ace-mode="vbscript">Visual Basic 16.9 (.NET 7.0.7)</option>
+							<option value="6049" data-ace-mode="text">Gleam (Gleam 1.12.0 (OTP 28.0.2))</option>
 						
-							<option value="5049" data-ace-mode="text">Forth (gforth 0.7.3)</option>
+							<option value="6050" data-ace-mode="golang">Go 1.18 (gccgo 15.2.0)</option>
 						
-							<option value="5050" data-ace-mode="clojure">Clojure (babashka 1.3.181)</option>
+							<option value="6051" data-ace-mode="golang">Go (go 1.25.1)</option>
 						
-							<option value="5051" data-ace-mode="erlang">Erlang (Erlang 26.0.2)</option>
+							<option value="6052" data-ace-mode="haskell">Haskell (GHC 9.8.4)</option>
 						
-							<option value="5052" data-ace-mode="typescript">TypeScript 5.1 (Deno 1.35.1)</option>
+							<option value="6053" data-ace-mode="haxe">Haxe/JVM 4.3.7 (hxjava 4.2.0)</option>
 						
-							<option value="5053" data-ace-mode="c_cpp">C&#43;&#43; 17 (gcc 12.2)</option>
+							<option value="6054" data-ace-mode="c_cpp">C&#43;&#43; IOI-Style(GNU&#43;&#43;20) (GCC 14.2.0)</option>
 						
-							<option value="5054" data-ace-mode="rust">Rust (rustc 1.70.0)</option>
+							<option value="6055" data-ace-mode="lisp">ISLisp (Easy-ISLisp 5.43)</option>
 						
-							<option value="5055" data-ace-mode="python">Python (CPython 3.11.4)</option>
+							<option value="6056" data-ace-mode="java">Java24 (OpenJDK 24.0.2)</option>
 						
-							<option value="5056" data-ace-mode="scala">Scala (Dotty 3.3.0)</option>
+							<option value="6057" data-ace-mode="javascript">JavaScript (Bun 1.2.21)</option>
 						
-							<option value="5057" data-ace-mode="text">Koka (koka 2.4.0)</option>
+							<option value="6058" data-ace-mode="javascript">JavaScript (Deno 2.4.5)</option>
 						
-							<option value="5058" data-ace-mode="typescript">TypeScript 5.1 (Node.js 18.16.1)</option>
+							<option value="6059" data-ace-mode="javascript">JavaScript (Node.js 22.19.0)</option>
 						
-							<option value="5059" data-ace-mode="ocaml">OCaml (ocamlopt 5.0.0)</option>
+							<option value="6060" data-ace-mode="text">Jule (jule 0.1.6)</option>
 						
-							<option value="5060" data-ace-mode="raku">Raku (Rakudo 2023.06)</option>
+							<option value="6061" data-ace-mode="text">Koka (koka v3.2.2)</option>
 						
-							<option value="5061" data-ace-mode="text">Vim (vim 9.0.0242)</option>
+							<option value="6062" data-ace-mode="kotlin">Kotlin (Kotlin/JVM 2.2.10)</option>
 						
-							<option value="5062" data-ace-mode="lisp">Emacs Lisp (Native Compile) (GNU Emacs 28.2)</option>
+							<option value="6063" data-ace-mode="text">Kuin (kuincl v.2021.8.17)</option>
 						
-							<option value="5063" data-ace-mode="python">Python (Mambaforge / CPython 3.10.10)</option>
+							<option value="6064" data-ace-mode="text">Lazy K (irori v1.0.0)</option>
 						
-							<option value="5064" data-ace-mode="clojure">Clojure (clojure 1.11.1)</option>
+							<option value="6065" data-ace-mode="text">Lean (lean v4.22.0)</option>
 						
-							<option value="5065" data-ace-mode="text">プロデル (mono版プロデル 1.9.1182)</option>
+							<option value="6066" data-ace-mode="text">LLVM IR (Clang 21.1.0)</option>
 						
-							<option value="5066" data-ace-mode="text">ECLiPSe (ECLiPSe 7.1_13)</option>
+							<option value="6067" data-ace-mode="lua">Lua (Lua 5.4.7)</option>
 						
-							<option value="5067" data-ace-mode="text">Nibbles (literate form) (nibbles 1.01)</option>
+							<option value="6068" data-ace-mode="lua">Lua (LuaJIT 2.1.1703358377)</option>
 						
-							<option value="5068" data-ace-mode="ada">Ada (GNAT 12.2)</option>
+							<option value="6069" data-ace-mode="text">Mercury (Mercury 22.01.8)</option>
 						
-							<option value="5069" data-ace-mode="text">jq (jq 1.6)</option>
+							<option value="6071" data-ace-mode="nim">Nim (Nim 1.6.20)</option>
 						
-							<option value="5070" data-ace-mode="text">Cyber (Cyber v0.2-Latest)</option>
+							<option value="6072" data-ace-mode="nim">Nim (Nim 2.2.4)</option>
 						
-							<option value="5071" data-ace-mode="clojure">Carp (Carp 0.5.5)</option>
+							<option value="6073" data-ace-mode="ocaml">OCaml (ocamlopt 5.3.0)</option>
 						
-							<option value="5072" data-ace-mode="c_cpp">C&#43;&#43; 17 (Clang 16.0.6)</option>
+							<option value="6074" data-ace-mode="text">Octave (GNU Octave 10.2.0)</option>
 						
-							<option value="5073" data-ace-mode="c_cpp">C&#43;&#43; 20 (Clang 16.0.6)</option>
+							<option value="6075" data-ace-mode="pascal">Pascal (fpc 3.2.2)</option>
 						
-							<option value="5074" data-ace-mode="text">LLVM IR (Clang 16.0.6)</option>
+							<option value="6076" data-ace-mode="perl">Perl (perl 5.38.2)</option>
 						
-							<option value="5075" data-ace-mode="lisp">Emacs Lisp (Byte Compile) (GNU Emacs 28.2)</option>
+							<option value="6077" data-ace-mode="php">PHP (PHP 8.4.12)</option>
 						
-							<option value="5076" data-ace-mode="text">Factor (Factor 0.98)</option>
+							<option value="6078" data-ace-mode="text">Piet (your-diary/piet_programming_language 3.0.0) (PPM image)</option>
 						
-							<option value="5077" data-ace-mode="d">D (GDC 12.2)</option>
+							<option value="6079" data-ace-mode="text">Pony (ponyc 0.59.0)</option>
 						
-							<option value="5078" data-ace-mode="python">Python (PyPy 3.10-v7.3.12)</option>
+							<option value="6080" data-ace-mode="powershell">PowerShell (PowerShell 7.5.2)</option>
 						
-							<option value="5079" data-ace-mode="text">Whitespace (whitespacers 1.0.0)</option>
+							<option value="6081" data-ace-mode="prolog">Prolog (SWI-Prolog 9.2.9)</option>
 						
-							<option value="5080" data-ace-mode="text">&gt;&lt;&gt; (fishr 0.1.0)</option>
+							<option value="6082" data-ace-mode="python">Python (CPython 3.13.7)</option>
 						
-							<option value="5081" data-ace-mode="ocaml">ReasonML (reason 3.9.0)</option>
+							<option value="6083" data-ace-mode="python">Python (PyPy 3.11-v7.3.20)</option>
 						
-							<option value="5082" data-ace-mode="python">Python (Cython 0.29.34)</option>
+							<option value="6084" data-ace-mode="r">R (GNU R 4.5.0)</option>
 						
-							<option value="5083" data-ace-mode="matlab">Octave (GNU Octave 8.2.0)</option>
+							<option value="6085" data-ace-mode="text">ReasonML (reson 3.16.0)</option>
 						
-							<option value="5084" data-ace-mode="haxe">Haxe (JVM) (Haxe 4.3.1)</option>
+							<option value="6086" data-ace-mode="ruby">Ruby 3.3 (truffleruby 25.0.0)</option>
 						
-							<option value="5085" data-ace-mode="elixir">Elixir (Elixir 1.15.2)</option>
+							<option value="6087" data-ace-mode="ruby">Ruby 3.4 (ruby 3.4.5)</option>
 						
-							<option value="5086" data-ace-mode="text">Mercury (Mercury 22.01.6)</option>
+							<option value="6088" data-ace-mode="rust">Rust (rustc 1.89.0)</option>
 						
-							<option value="5087" data-ace-mode="text">Seed7 (Seed7 3.2.1)</option>
+							<option value="6089" data-ace-mode="python">SageMath (SageMath 10.7)</option>
 						
-							<option value="5088" data-ace-mode="lisp">Emacs Lisp (No Compile) (GNU Emacs 28.2)</option>
+							<option value="6090" data-ace-mode="scala">Scala (Dotty 3.7.2)</option>
 						
-							<option value="5089" data-ace-mode="text">Unison (Unison M5b)</option>
+							<option value="6091" data-ace-mode="scala">Scala 3.7.2 (Scala Native 0.5.8)</option>
 						
-							<option value="5090" data-ace-mode="cobol">COBOL (GnuCOBOL(Fixed) 3.1.2)</option>
+							<option value="6092" data-ace-mode="scheme">Scheme (ChezScheme 10.2.0)</option>
+						
+							<option value="6093" data-ace-mode="scheme">Scheme (Gauche 0.9.15)</option>
+						
+							<option value="6094" data-ace-mode="text">Seed7 (Seed7 3.5.0)</option>
+						
+							<option value="6095" data-ace-mode="swift">Swift 6.2</option>
+						
+							<option value="6096" data-ace-mode="tcl">Tcl (tclsh 9.0.1)</option>
+						
+							<option value="6097" data-ace-mode="text">Terra (Terra 1.2.0)</option>
+						
+							<option value="6098" data-ace-mode="tex">TeX (tex 3.141592653)</option>
+						
+							<option value="6099" data-ace-mode="text">Text (cat 9.4)</option>
+						
+							<option value="6100" data-ace-mode="typescript">TypeScript 5.8 (Deno 2.4.5)</option>
+						
+							<option value="6101" data-ace-mode="typescript">TypeScript 5.9 (tsc 5.9.2 (Bun 1.2.21))</option>
+						
+							<option value="6102" data-ace-mode="typescript">TypeScript 5.9 (tsc 5.9.2 (Node.js 22.19.0))</option>
+						
+							<option value="6103" data-ace-mode="text">Uiua (uiua 0.16.2)</option>
+						
+							<option value="6104" data-ace-mode="text">Unison (Unison 0.5.47)</option>
+						
+							<option value="6105" data-ace-mode="text">V (0.4.10)</option>
+						
+							<option value="6106" data-ace-mode="vala">Vala (valac 0.56.18)</option>
+						
+							<option value="6107" data-ace-mode="verilog">Verilog 2012 (Icarus Verilog 12.0)</option>
+						
+							<option value="6108" data-ace-mode="text">Veryl (veryl 0.16.4)</option>
+						
+							<option value="6109" data-ace-mode="text">WebAssembly (wabt 1.0.34 &#43; iwasm 2.4.1)</option>
+						
+							<option value="6110" data-ace-mode="text">Whitespace (whitespacers 1.3.0)</option>
+						
+							<option value="6111" data-ace-mode="zig">Zig (Zig 0.15.1)</option>
+						
+							<option value="6112" data-ace-mode="text">なでしこ (cnako3 3.7.8 (Node.js 22.19.0))</option>
+						
+							<option value="6113" data-ace-mode="text">プロデル (mono版プロデル 2.0.1353)</option>
+						
+							<option value="6114" data-ace-mode="julia">Julia (Julia 1.11.6)</option>
+						
+							<option value="6115" data-ace-mode="python">Python (Codon 0.19.3)</option>
+						
+							<option value="6116" data-ace-mode="c_cpp">C&#43;&#43;23 (Clang 21.1.0)</option>
+						
+							<option value="6117" data-ace-mode="text">Fix (1.1.0-alpha.12)</option>
+						
+							<option value="6118" data-ace-mode="sql">SQL (DuckDB 1.3.2)</option>
 						
 					</select>
 					<span class="error"></span>
@@ -740,19 +844,19 @@
 			
 <div class="form-group">
 	<div class="col-sm-3 col-md-2 editor-label">
-		<label class="control-label" for="sourceCode">Source Code</label>
+		<label class="control-label" for="sourceCode">ソースコード</label>
 		<div class="editor-buttons">
 			<button id="btn-open-file" type="button" class="btn btn-default btn-sm">
-				<span class="glyphicon glyphicon-folder-open" aria-hidden="true"></span> &nbsp; Open File
+				<span class="glyphicon glyphicon-folder-open" aria-hidden="true"></span> &nbsp; ファイルを開く
 			</button>
 			<button id="btn-customize" type="button" class="btn btn-default btn-sm">
-				<span class="glyphicon glyphicon-cog" aria-hidden="true"></span> &nbsp; Customize
+				<span class="glyphicon glyphicon-cog" aria-hidden="true"></span> &nbsp; カスタマイズ
 			</button>
 			<button type="button" class="btn btn-default btn-sm btn-toggle-editor" data-toggle="button" autocomplete="off">
-				Toggle Editor
+				エディタ切り替え
 			</button>
 			<button type="button" class="btn btn-default btn-sm btn-auto-height" data-toggle="button" autocomplete="off">
-				Auto Height
+				高さ自動調節
 			</button>
 		</div>
 	</div>
@@ -760,19 +864,24 @@
 		<div id="editor"></div>
 		<textarea id="plain-textarea" class="form-control" style="display:none;" name="sourceCode"></textarea>
 		<p>
-			<span class="gray">* at most 512 KiB</span><br>
-			<span class="gray">* Your source code will be saved as Main.<i>extension</i>.</span>
+			<span class="gray">※ 512 KiB まで</span><br>
 		</p>
 	</div>
 	<input id="input-open-file" type="file" style="display:none;">
 </div>
 
 
-			<input type="hidden" name="csrf_token" value="D4WNZRgtLGU9GLJqOVddyPQSQMkfBuvcRQ0oCnKtSDE=" />
+			<input type="hidden" name="csrf_token" value="xq/2/1/cd0OKZhkOMPzGHO28HpSv5GCbMjIXdzS6eNY=" />
 			<div class="form-group">
 				<label class="control-label col-sm-3 col-md-2"></label>
 				<div class="col-sm-5">
-					<button type="submit" class="btn btn-primary" id="submit">Submit</button>
+					
+					<script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
+
+<div class="cf-challenge" data-sitekey="0x4AAAAAAA6HJUmmLP7mLxx0" data-theme="light"></div>
+
+					
+					<button type="submit" class="btn btn-primary" id="submit">提出</button>
 				</div>
 			</div>
 		</form>
@@ -788,11 +897,11 @@
 			
 			
 			
-<div class="a2a_kit a2a_kit_size_20 a2a_default_style pull-right" data-a2a-url="https://atcoder.jp/contests/abc047/tasks/abc047_a?lang=en" data-a2a-title="A - Fighting over Candies">
+<div class="a2a_kit a2a_kit_size_20 a2a_default_style pull-right" data-a2a-url="https://atcoder.jp/contests/arc131/tasks/arc131_a?lang=ja" data-a2a-title="A - Two Lucky Numbers">
 	<a class="a2a_button_facebook"></a>
 	<a class="a2a_button_twitter"></a>
 	
-		<a class="a2a_button_telegram"></a>
+		<a class="a2a_button_hatena"></a>
 	
 	<a class="a2a_dd" href="https://www.addtoany.com/share"></a>
 </div>
@@ -808,19 +917,19 @@
 			<footer class="footer">
 			
 				<ul>
-					<li><a href="/contests/abc047/rules">Rule</a></li>
-					<li><a href="/contests/abc047/glossary">Glossary</a></li>
+					<li><a href="/contests/arc131/rules">ルール</a></li>
+					<li><a href="/contests/arc131/glossary">用語集</a></li>
 					
 				</ul>
 			
 			<ul>
-				<li><a href="/tos">Terms of service</a></li>
-				<li><a href="/privacy">Privacy Policy</a></li>
-				<li><a href="/personal">Information Protection Policy</a></li>
-				<li><a href="/company">Company</a></li>
-				<li><a href="/faq">FAQ</a></li>
-				<li><a href="/contact">Contact</a></li>
-				
+				<li><a href="/tos">利用規約</a></li>
+				<li><a href="/privacy">プライバシーポリシー</a></li>
+				<li><a href="/personal">個人情報保護方針</a></li>
+				<li><a href="/company">企業情報</a></li>
+				<li><a href="/faq">よくある質問</a></li>
+				<li><a href="/contact">お問い合わせ</a></li>
+				<li><a href="/documents/request">資料請求</a></li>
 			</ul>
 			<div class="text-center">
 					<small id="copyright">Copyright Since 2012 &copy;<a href="http://atcoder.co.jp">AtCoder Inc.</a> All rights reserved.</small>
@@ -828,7 +937,7 @@
 			</footer>
 	</div>
 	<p id="fixed-server-timer" class="contest-timer"></p>
-	<div id="scroll-page-top" style="display:none;"><span class="glyphicon glyphicon-arrow-up" aria-hidden="true"></span> Page Top</div>
+	<div id="scroll-page-top" style="display:none;"><span class="glyphicon glyphicon-arrow-up" aria-hidden="true"></span> ページトップ</div>
 
 </body>
 </html>
