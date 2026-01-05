@@ -637,97 +637,16 @@ namespace ddfa {  // digit DFA
   using tr_comp_t = decltype(tr_comp(declval<DFA1>(), declval<DFA2>()));
 };
 
-template<int na, typename I>  // na: number of alphabets
+template<int na, typename I, typename tr_t>  // na: number of alphabets
 struct DFA {
-  vector<DFA_prim> prims;
-  int ns;
-
-  DFA() {}
-  DFA(vector<DFA_prim> prims_) : prims(move(prims_)) {
-    ns = 1;
-    for (const auto& dfa : prims) ns *= dfa.ns;
-  }
-  I run(int len) {
-    ll np = ssize(prims);
-    for (int i = 0; i < np; i++) if (prims[i].acc[prims[i].ini_s] == ddfa::STABLE_UNACC) return I{};
-
-    vector<int> sk(np + 1);
-    sk[np] = 1;
-    for (int i = np - 1; i >= 0; i--) sk[i] = sk[i + 1] * prims[i].ns;
-    vector<int> nxt_pos(ns);
-    for (i = 0; i < ns; i++) nxt_pos[i] = np - 1;
-    for (int i = np - 2; i >= 0; i--) {
-      for (int s = 0; s < prims[i].ns; s++) {
-        if (prims[i].acc[s] == ddfa::STABLE_UNACC) {
-          for (int e = s * sk[i + 1]; e < ns; e += sk[i]) nxt_pos[e] = i;
-        }
-      }
-    }
-    auot upd_cur = [&](int& cur_e, auto& cur_v) -> void {
-      cur_e += sk[nxt_pos[e] + 1];
-      for (int j = nxt_pos[e]; j >= 0; j--) {
-        if (cur_v[j] + 1 < prims[j].ns) {
-          cur_v[j]++;
-          break;
-        }else {
-          cur_v[j] = 0;
-        }
-      }
-    };
-
-    vector<I> tbl(ns);
-    ll e_ini = 0;
-    for (int i = 0; i < np; i++) { e_ini = e_ini * prims[i].ns + prims[i].ini_s; }
-    tbl[e_ini] = 1;
-    vector<int> cur_v(np);
-    for (int i = 0; i < len; i++) {
-      auto prev = move(tbl);
-      tbl = vector<I>(ns);
-      for (int cur_e = 0; cur_e < ns; upd_cur(cur_e, cur_v)) {
-        if (prev[cur_e] != I{}) {
-          for (int a = 0; a < na; a++) {
-            vector<int> nxt(np);
-            int nxt_e = 0;
-            bool su = false;
-            for (j = 0; j < np; j++) {
-              if (su) {
-                nxt_e = nxt_e * prims[j].ns;
-              }else {
-                int z = prims[j].trans(cur_v[j], a, i);
-                if (prims[j].acc[z] == ddfa::STABLE_UNACC) {
-                  su = true;
-                  nxt_e = z;
-                }else {
-                  nxt_e = nxt_e * prims[j].ns + z;
-                }
-              }
-            }
-            tbl[nxt_e] += prev[cur_e];
-          }
-        }
-      }
-    }
-    
-    I ret;
-    cur_v = vector<int>(np);
-    for (int cur_e = 0; cur_e < ns; upd_cur(cur_e, cur_v)) {
-      bool ok = true;
-      for (int j = 0; j < np; j++) if (prims[j].acc[cur_v[j]] <= ddfa::UNACC) { ok = false; break; }
-      if (ok) ret += tbl[cur_e];
-    }
-    return ret;
-  }
-
-};
-
-template<int na, typename I, typename tr_t>
-struct DFA_prim {
   int ns; // number of states
-  int ini_s;
+  int init_state;
   vector<int> acc;
   tr_t tr;
-  DFA_prim() {}
-  DFA_prim(int ns_, int ini_s_, vector<int> acc_, auto tr_) : ns(ns_), ini_s(ini_s_), acc(move(acc_)), tr(tr_) {}
+  int right_size;
+  vector<I> result;
+  DFA(int ns_, int init_state_, const vector<int>& acc_, auto tr_, int rs = 0)
+    : ns(ns_), init_state(init_state_), acc(acc_), tr(tr_), right_size(rs) {}
   
   int trans(int s, int a, int i) const {
     if (ddfa::is_stable(acc[s])) return s;
