@@ -27,8 +27,17 @@ ostream& operator<< (ostream& os, const tuple<T1,T2,T3>& t);
 template <typename T1, typename T2, typename T3, typename T4>
 ostream& operator<< (ostream& os, const tuple<T1,T2,T3,T4>& t);
 
+template <typename T1, typename T2, typename T3, typename T4, typename T5>
+ostream& operator<< (ostream& os, const tuple<T1,T2,T3,T4,T5>& t);
+
+template <typename T1, typename T2, typename T3, typename T4, typename T5, typename T6>
+ostream& operator<< (ostream& os, const tuple<T1,T2,T3,T4,T5,T6>& t);
+
 template <typename T>
 ostream& operator<< (ostream& os, const vector<T>& v);
+
+template <typename T, size_t N>
+ostream& operator<< (ostream& os, const array<T, N>& v);
 
 template <typename T, typename C>
 ostream& operator<< (ostream& os, const set<T, C>& v);
@@ -64,6 +73,8 @@ ostream& operator<< (ostream& os, const optional<T>& t);
 
 ostream& operator<< (ostream& os, int8_t x);
 
+ostream& operator<< (ostream& os, const __int128& x);
+
 // definitions
 
 template <typename T1, typename T2>
@@ -86,8 +97,34 @@ ostream& operator<< (ostream& os, const tuple<T1,T2,T3,T4>& t) {
   return os;
 }
 
+template <typename T1, typename T2, typename T3, typename T4, typename T5>
+ostream& operator<< (ostream& os, const tuple<T1,T2,T3,T4,T5>& t) {
+  os << "(" << get<0>(t) << ", " << get<1>(t)
+     << ", " << get<2>(t) << ", " << get<3>(t) << ", " << get<4>(t) << ")";
+  return os;
+}
+
+template <typename T1, typename T2, typename T3, typename T4, typename T5, typename T6>
+ostream& operator<< (ostream& os, const tuple<T1,T2,T3,T4,T5,T6>& t) {
+  os << "(" << get<0>(t) << ", " << get<1>(t)
+     << ", " << get<2>(t) << ", " << get<3>(t) << ", " << get<4>(t) << ", " << get<5>(t) << ")";
+  return os;
+}
+
 template <typename T>
 ostream& operator<< (ostream& os, const vector<T>& v) {
+  os << '[';
+  for (auto it = v.begin(); it != v.end(); it++) {
+    if (it != v.begin()) os << ", ";
+    os << *it;
+  }
+  os << ']';
+
+  return os;
+}
+
+template <typename T, size_t N>
+ostream& operator<< (ostream& os, const array<T, N>& v) {
   os << '[';
   for (auto it = v.begin(); it != v.end(); it++) {
     if (it != v.begin()) os << ", ";
@@ -230,6 +267,37 @@ ostream& operator<< (ostream& os, int8_t x) {
   return os;
 }
 
+// for Enum type; just displays ordinals.
+template <typename E>
+typename std::enable_if<std::is_enum<E>::value, std::ostream&>::type
+operator<<(std::ostream& os, E e) {
+    return os << static_cast<typename std::underlying_type<E>::type>(e);
+}
+
+// This is a very ad-hoc implementation...
+// Known problem: "1 << 127" cannot be handled.
+ostream& operator<<(ostream& os, const __int128& v) {
+  unsigned __int128 a = v < 0 ? -v : v;
+  ll i = 0;
+  string s(64, ' ');
+  if (v == 0) {
+    s[i++] = '0';
+  }else {
+    while (a > 0) {
+      s[i++] = '0' + (char)(a % 10);
+      a /= 10;
+    }
+  }
+  if (v < 0) {
+    s[i++] = '-';
+  }
+  s.erase(s.begin() + i, s.end());
+  reverse(s.begin(), s.end());
+  os << s;
+  return os;
+}
+
+
 // ---- end f:<<
 
 // ---- inserted library file debug.cc
@@ -311,68 +379,47 @@ int main(/* int argc, char *argv[] */) {
   cin.tie(nullptr);
   cout << setprecision(20);
 
-  vector pow10(19, 1LL);
-  REP(i, 1, 19) pow10[i] = pow10[i - 1] * 10;
+  string x; cin >> x;   // x は文字列で読むことにする．
 
-  auto dec_floor = [&](ll x) -> ll {
-    auto it = lower_bound(ALL(pow10), x);
-    if (x == *it) return x;
-    return *(prev(it));
-  };
+  vector tbl_init(2, vector(3, pll(0, 0)));
+  auto tbl = tbl_init;
 
-  auto acc = [&](ll z) -> ll {
-    ll ret = 0;
-    while (z > 0) {
-      ret += z;
-      z /= 10;
-    }
-    return ret;
-  };
-
-  auto peel = [&](auto rF, ll wx, ll x) -> ll {
-    if (wx == 1) {
-      if (x <= 1) return 0;
-      return 1;
-    }
-    if (x > wx * 2) {
-      ll ret = wx;
-      ret += rF(rF, wx / 10, x - wx);
-      DLOGKL("peel", wx, x, ret);
-      return ret;
-    }else {
-      ll ret = x - wx;
-      if (x - wx > wx / 10) {
-        ret += rF(rF, wx / 10, x - wx);
+  tbl[1][0] = pll(1, 0);
+  for (int i = 0; i < ssize(x); i++) {
+    int t = x[i] - '0';
+    auto prev = move(tbl);
+    tbl = tbl_init;
+    REP(eq,0,2) REP(v,0,3) {
+      auto [num, val] = prev[eq][v];
+      if (num == 0) continue;
+      REP(d,0,10) {
+        if (eq and d > t) continue; 
+        int new_eq = eq and d == t;
+        int new_v;
+        if (v == 0) {
+          if (d == 0)      new_v = 0;
+          else if (d == 1) new_v = 1;
+          else             new_v = 2;
+        }else if (v == 1) {
+          if (d == 1)      new_v = 1;
+          else             new_v = 2;
+        }else              new_v = 2;
+        // tbl[new_eq][new_az][new_v1][new_v2] += prev[eq][az][v1][v2]; 
+        auto& [new_num, new_val] = tbl[new_eq][new_v];
+        new_num += num;
+        new_val += val;
+        if (new_v == 1) new_val += num;
+        DLOGK(eq, v, d, new_eq, new_v, tbl[new_eq][new_v]);
       }
-      DLOGKL("peel", wx, x, ret);
-      return ret;
     }
-  };
-
-  auto f = [&](auto rF, ll x) -> ll {
-    if (x <= 10) {
-      return 1;
-    }
-    ll wx = dec_floor(x);
-    if (wx == x) {
-      ll z = wx / 10;
-      ll ret = rF(rF, z) + acc(z);
-      DLOGK(x, ret);
-      return ret;
-    }
-    ll y = x / wx;
-    if (y >= 2) {
-      ll ret = rF(rF, wx) + acc(wx);
-      DLOGK(x, ret);
-      return ret;
-    }else { // y == 1
-      ll ret = rF(rF, wx) + peel(peel, wx, x);
-      DLOGK(x, ret);
-      return ret;
-    }
-  };
-  ll N; cin >> N;
-  cout << f(f, N + 1) << endl;
+    DLOGK(i, tbl[0], tbl[1]);
+  }
+  ll ans = 0;
+  REP(eq, 0, 2) REP(v, 1, 3) {
+    DLOGK(eq, v, tbl[eq][v]);
+    ans += tbl[eq][v].second;
+  }
+  cout << ans << endl;
 
   return 0;
 }

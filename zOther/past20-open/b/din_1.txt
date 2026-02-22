@@ -1,0 +1,6 @@
+5
+Aoki 2
+Takahashi 3
+Takahashi 5
+Aoki 10
+Takahashi 15

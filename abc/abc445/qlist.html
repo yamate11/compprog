@@ -1,0 +1,640 @@
+
+
+
+
+<!DOCTYPE html>
+<html>
+<head>
+	<title>問題 - AtCoder Beginner Contest 445</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+	<meta http-equiv="Content-Language" content="ja">
+	<meta name="viewport" content="width=device-width,initial-scale=1.0">
+	<meta name="format-detection" content="telephone=no">
+	<meta name="google-site-verification" content="nXGC_JxO0yoP1qBzMnYD_xgufO6leSLw1kyNo2HZltM" />
+
+	
+	<script async src="https://www.googletagmanager.com/gtag/js?id=G-RC512FD18N"></script>
+	<script>
+		window.dataLayer = window.dataLayer || [];
+		function gtag(){dataLayer.push(arguments);}
+		gtag('js', new Date());
+		gtag('set', 'user_properties', {
+			
+				'login_status': 'logged_in',
+			
+		});
+		gtag('config', 'G-RC512FD18N');
+	</script>
+
+	
+	<meta name="description" content="プログラミング初級者から上級者まで楽しめる、競技プログラミングコンテストサイト「AtCoder」。オンラインで毎週開催プログラミングコンテストを開催しています。競技プログラミングを用いて、客観的に自分のスキルを計ることのできるサービスです。">
+	<meta name="author" content="AtCoder Inc.">
+
+	<meta property="og:site_name" content="AtCoder">
+	
+	<meta property="og:title" content="問題 - AtCoder Beginner Contest 445" />
+	<meta property="og:description" content="プログラミング初級者から上級者まで楽しめる、競技プログラミングコンテストサイト「AtCoder」。オンラインで毎週開催プログラミングコンテストを開催しています。競技プログラミングを用いて、客観的に自分のスキルを計ることのできるサービスです。" />
+	<meta property="og:type" content="website" />
+	<meta property="og:url" content="https://atcoder.jp/contests/abc445/tasks" />
+	<meta property="og:image" content="https://img.atcoder.jp/assets/atcoder.png" />
+	<meta name="twitter:card" content="summary" />
+	<meta name="twitter:site" content="@atcoder" />
+	
+	<meta property="twitter:title" content="問題 - AtCoder Beginner Contest 445" />
+
+	<link href="//fonts.googleapis.com/css?family=Lato:400,700" rel="stylesheet" type="text/css">
+	<link rel="stylesheet" type="text/css" href="//img.atcoder.jp/public/8c9b94e/css/bootstrap.min.css">
+	<link rel="stylesheet" type="text/css" href="//img.atcoder.jp/public/8c9b94e/css/base.css">
+	<link rel="shortcut icon" type="image/png" href="//img.atcoder.jp/assets/favicon.png">
+	<link rel="apple-touch-icon" href="//img.atcoder.jp/assets/atcoder.png">
+	<script src="//img.atcoder.jp/public/8c9b94e/js/lib/jquery-1.9.1.min.js"></script>
+	<script src="//img.atcoder.jp/public/8c9b94e/js/lib/bootstrap.min.js"></script>
+	<script src="//img.atcoder.jp/public/8c9b94e/js/cdn/js.cookie.min.js"></script>
+	<script src="//img.atcoder.jp/public/8c9b94e/js/cdn/moment.min.js"></script>
+	<script src="//img.atcoder.jp/public/8c9b94e/js/cdn/moment_js-ja.js"></script>
+	<script>
+		var LANG = "ja";
+		var userScreenName = "yamate11";
+		var csrfToken = "xq/2/1/cd0OKZhkOMPzGHO28HpSv5GCbMjIXdzS6eNY="
+	</script>
+	<script src="//img.atcoder.jp/public/8c9b94e/js/utils.js"></script>
+	
+	
+		<script src="//img.atcoder.jp/public/8c9b94e/js/contest.js"></script>
+		<link href="//img.atcoder.jp/public/8c9b94e/css/contest.css" rel="stylesheet" />
+		<script>
+			var contestScreenName = "abc445";
+			var remainingText = "残り時間";
+			var countDownText = "開始まであと";
+			var startTime = moment("2026-02-14T21:00:00+09:00");
+			var endTime = moment("2026-02-14T22:40:00+09:00");
+		</script>
+		<style>/* ===== AHF announce block ===== */
+.ahf-announce{
+  --fg:#1f2937;
+  --muted:#6b7280;
+  --bg:#ffffff;
+  --card:#f8fafc;
+  --border:#e5e7eb;
+  --accent:#2563eb;
+  --accent-2:#0ea5e9;
+
+  color: var(--fg);
+  background: var(--bg);
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue",
+               Arial, "Noto Sans JP", "Hiragino Kaku Gothic ProN",
+               "Yu Gothic", Meiryo, sans-serif;
+  line-height: 1.75;
+  max-width: 860px;
+  margin: 0 auto;
+  padding: 20px 18px;
+}
+
+/* title */
+.ahf-announce h3{
+  margin: 0 0 12px;
+  font-size: clamp(20px, 2.2vw, 26px);
+  line-height: 1.35;
+  font-weight: 800;
+  letter-spacing: .02em;
+  padding-left: 12px;
+  border-left: 6px solid var(--accent);
+}
+
+/* paragraphs */
+.ahf-announce p{
+  margin: 10px 0;
+  font-size: 15.5px;
+}
+.ahf-announce strong{
+  font-weight: 800;
+}
+
+/* links */
+.ahf-announce a{
+  color: var(--accent);
+  text-decoration: none;
+  font-weight: 700;
+}
+.ahf-announce a:hover{
+  text-decoration: underline;
+}
+
+/* info list (date/place/fee) */
+.ahf-announce ul{
+  list-style: none;
+  padding: 0;
+  margin: 14px 0 16px;
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  overflow: hidden;
+}
+.ahf-announce li{
+  padding: 10px 12px;
+  border-top: 1px solid var(--border);
+  display: flex;
+  gap: 10px;
+}
+.ahf-announce li:first-child{
+  border-top: none;
+}
+.ahf-announce li::before{
+  content: "•";
+  color: var(--accent-2);
+  font-weight: 900;
+}
+
+/* theme highlight block */
+.ahf-announce .ahf-theme{
+  margin: 14px 0;
+  padding: 12px 14px;
+  border: 1px solid color-mix(in srgb, var(--accent) 25%, var(--border));
+  background: color-mix(in srgb, var(--accent) 6%, white);
+  border-radius: 12px;
+}
+.ahf-announce .ahf-theme strong{
+  color: #0f172a;
+}
+
+/* CTA */
+.ahf-announce .ahf-cta{
+  margin: 16px 0 8px;
+  padding: 14px;
+  border-radius: 14px;
+  border: 1px solid var(--border);
+  background: linear-gradient(180deg, #ffffff 0%, #f8fafc 100%);
+}
+.ahf-announce .ahf-cta strong{
+  display: inline-block;
+  margin-top: 6px;
+  font-size: 16px;
+}
+.ahf-announce .ahf-cta a{
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 12px;
+  border-radius: 12px;
+  border: 1px solid color-mix(in srgb, var(--accent) 35%, var(--border));
+  background: color-mix(in srgb, var(--accent) 7%, white);
+}
+.ahf-announce .ahf-cta a:hover{
+  background: color-mix(in srgb, var(--accent) 12%, white);
+}
+
+/* small note */
+.ahf-announce small{
+  display: inline-block;
+  color: var(--muted);
+  font-size: 13px;
+  line-height: 1.6;
+}
+
+/* past event */
+.ahf-announce .ahf-past{
+  margin-top: 14px;
+  padding-top: 12px;
+  border-top: 1px dashed var(--border);
+  color: var(--muted);
+}
+
+/* ===== speakers (final) ===== */
+.ahf-announce .ahf-speakers{
+  margin: 4px 0 8px;
+  padding: 0;
+  border: none;
+  background: transparent;
+  display: block;
+  text-align: left;
+}
+.ahf-announce .ahf-speaker-name{
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 15.5px;
+  font-weight: 800;
+  line-height: 1.4;
+  margin: 0 0 2px;
+}
+.ahf-announce .ahf-speaker-comment{
+  display: block;
+  margin: 0 0 0 1.6em;
+  font-size: 14.5px;
+  color: var(--muted);
+  line-height: 1.6;
+}
+.ahf-announce .ahf-speaker-comment::before{
+  content: "— ";
+  opacity: 0.5;
+}
+.ahf-announce .ahf-speaker-name img{
+  display: inline-block;
+  vertical-align: middle;
+}
+
+/* responsive tweaks */
+@media (max-width: 520px){
+  .ahf-announce{
+    padding: 16px 12px;
+  }
+  .ahf-announce li{
+    flex-direction: column;
+    gap: 2px;
+  }
+  .ahf-announce .ahf-speaker-comment{
+    margin-left: 1.2em;
+  }
+}</style>
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	<script src="//img.atcoder.jp/public/8c9b94e/js/base.js"></script>
+</head>
+
+<body>
+
+<script type="text/javascript">
+	var __pParams = __pParams || [];
+	__pParams.push({client_id: '468', c_1: 'atcodercontest', c_2: 'ClientSite'});
+</script>
+<script type="text/javascript" src="https://cdn.d2-apps.net/js/tr.js" async></script>
+
+
+<div id="modal-contest-start" class="modal fade" tabindex="-1" role="dialog">
+	<div class="modal-dialog" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+				<h4 class="modal-title">コンテスト開始</h4>
+			</div>
+			<div class="modal-body">
+				<p>AtCoder Beginner Contest 445が開始されました。</p>
+			</div>
+			<div class="modal-footer">
+				
+					<a class="btn btn-primary" href='/contests/abc445/tasks'>問題一覧ページへ移動</a>
+				
+			</div>
+		</div>
+	</div>
+</div>
+<div id="modal-contest-end" class="modal fade" tabindex="-1" role="dialog">
+	<div class="modal-dialog" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+				<h4 class="modal-title">コンテスト終了</h4>
+			</div>
+			<div class="modal-body">
+				<p>AtCoder Beginner Contest 445は終了しました。</p>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-default" data-dismiss="modal">閉じる</button>
+			</div>
+		</div>
+	</div>
+</div>
+<div id="main-div" class="float-container">
+
+
+	<nav class="navbar navbar-inverse navbar-fixed-top">
+		<div class="container-fluid">
+			<div class="navbar-header">
+				<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapse" aria-expanded="false">
+					<span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span>
+				</button>
+				<a class="navbar-brand" href="/home"></a>
+			</div>
+			<div class="collapse navbar-collapse" id="navbar-collapse">
+				<ul class="nav navbar-nav">
+				
+					<li><a class="contest-title" href="/contests/abc445">AtCoder Beginner Contest 445</a></li>
+				
+				</ul>
+				<ul class="nav navbar-nav navbar-right">
+					
+					<li class="dropdown">
+						<a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
+							<img src='//img.atcoder.jp/assets/top/img/flag-lang/ja.png'> 日本語 <span class="caret"></span>
+						</a>
+						<ul class="dropdown-menu">
+							<li><a href="/contests/abc445/tasks?lang=ja"><img src='//img.atcoder.jp/assets/top/img/flag-lang/ja.png'> 日本語</a></li>
+							<li><a href="/contests/abc445/tasks?lang=en"><img src='//img.atcoder.jp/assets/top/img/flag-lang/en.png'> English</a></li>
+						</ul>
+					</li>
+					
+					
+						<li class="dropdown">
+							<a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
+								<span class="glyphicon glyphicon-cog" aria-hidden="true"></span> yamate11 (Contestant) <span class="caret"></span>
+							</a>
+							<ul class="dropdown-menu">
+								<li><a href="/users/yamate11"><span class="glyphicon glyphicon-user" aria-hidden="true"></span> マイプロフィール</a></li>
+								<li class="divider"></li>
+								<li><a href="/settings"><span class="glyphicon glyphicon-wrench" aria-hidden="true"></span> 基本設定</a></li>
+								<li><a href="/settings/icon"><span class="glyphicon glyphicon-picture" aria-hidden="true"></span> アイコン設定</a></li>
+								<li><a href="/settings/password"><span class="glyphicon glyphicon-lock" aria-hidden="true"></span> パスワードの変更</a></li>
+								<li><a href="/settings/fav"><span class="glyphicon glyphicon-star" aria-hidden="true"></span> お気に入り管理</a></li>
+								
+								
+								
+								<li class="divider"></li>
+								<li><a href="javascript:void(form_logout.submit())"><span class="glyphicon glyphicon-log-out" aria-hidden="true"></span> ログアウト</a></li>
+							</ul>
+						</li>
+					
+				</ul>
+			</div>
+		</div>
+	</nav>
+
+	<form method="POST" name="form_logout" action="/logout?continue=https%3A%2F%2Fatcoder.jp%2Fcontests%2Fabc445%2Ftasks">
+		<input type="hidden" name="csrf_token" value="xq/2/1/cd0OKZhkOMPzGHO28HpSv5GCbMjIXdzS6eNY=" />
+	</form>
+	<div id="main-container" class="container"
+		 	style="padding-top:50px;">
+		
+
+
+<div class="row">
+	<div id="contest-nav-tabs" class="col-sm-12 mb-2 cnvtb-fixed">
+	<div>
+		<small class="contest-duration">
+			
+				コンテスト時間:
+				<a href='http://www.timeanddate.com/worldclock/fixedtime.html?iso=20260214T2100&p1=248' target='blank'><time class='fixtime fixtime-full'>2026-02-14 21:00:00+0900</time></a> ~ <a href='http://www.timeanddate.com/worldclock/fixedtime.html?iso=20260214T2240&p1=248' target='blank'><time class='fixtime fixtime-full'>2026-02-14 22:40:00+0900</time></a> 
+				(100分)
+			
+		</small>
+		<small class="back-to-home pull-right"><a href="/home">AtCoderホームへ戻る</a></small>
+	</div>
+	<ul class="nav nav-tabs">
+		<li><a href="/contests/abc445"><span class="glyphicon glyphicon-home" aria-hidden="true"></span> トップ</a></li>
+		
+			<li class="active"><a href="/contests/abc445/tasks"><span class="glyphicon glyphicon-tasks" aria-hidden="true"></span> 問題</a></li>
+		
+
+		
+			<li><a href="/contests/abc445/clarifications"><span class="glyphicon glyphicon-question-sign" aria-hidden="true"></span> 質問 <span id="clar-badge" class="badge" ></span></a></li>
+		
+
+		
+			<li><a href="/contests/abc445/submit"><span class="glyphicon glyphicon-send" aria-hidden="true"></span> 提出</a></li>
+		
+
+		
+			<li>
+				<a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false"><span class="glyphicon glyphicon-list" aria-hidden="true"></span> 提出結果<span class="caret"></span></a>
+				<ul class="dropdown-menu">
+					
+					
+						<li><a href="/contests/abc445/submissions/me"><span class="glyphicon glyphicon-user" aria-hidden="true"></span> 自分の提出</a></li>
+						
+						
+							<li class="divider"></li>
+							<li><a href="/contests/abc445/score"><span class="glyphicon glyphicon-dashboard" aria-hidden="true"></span> 自分の得点状況</a></li>
+						
+					
+				</ul>
+			</li>
+		
+
+		
+			
+				
+					<li><a href="/contests/abc445/standings"><span class="glyphicon glyphicon-sort-by-attributes-alt" aria-hidden="true"></span> 順位表</a></li>
+				
+			
+		
+
+		
+			<li><a href="/contests/abc445/custom_test"><span class="glyphicon glyphicon-wrench" aria-hidden="true"></span> コードテスト</a></li>
+		
+
+		
+		
+
+		<li class="pull-right"><a id="fix-cnvtb" href="javascript:void(0)"><span class="glyphicon glyphicon-pushpin" aria-hidden="true"></span></a></li>
+	</ul>
+</div>
+	<div class="col-sm-12">
+		<h2>問題</h2>
+		<hr>
+		
+			<div class="panel panel-default table-responsive"><table class="table table-bordered table-striped">
+				<thead>
+					<tr>
+						<th width="3%" class="text-center"></th>
+						<th>問題名</th>
+						<th width="10%" class="text-right no-break">実行時間制限</th>
+						<th width="10%" class="text-right no-break">メモリ制限</th>
+						<th width="5%"></th>
+					</tr>
+				</thead>
+				<tbody>
+					
+						<tr>
+							<td class="text-center no-break"><a href="/contests/abc445/tasks/abc445_a">A</a></td>
+							<td><a href="/contests/abc445/tasks/abc445_a">Strong Word</a></td>
+							<td class="text-right">2 sec</td>
+							<td class="text-right">1024 MiB</td>
+							
+								<td class="no-break text-center">
+									
+										<a href="/contests/abc445/submit?taskScreenName=abc445_a">提出</a>
+									
+									
+								</td>
+							
+						</tr>
+					
+						<tr>
+							<td class="text-center no-break"><a href="/contests/abc445/tasks/abc445_b">B</a></td>
+							<td><a href="/contests/abc445/tasks/abc445_b">Center Alignment</a></td>
+							<td class="text-right">2 sec</td>
+							<td class="text-right">1024 MiB</td>
+							
+								<td class="no-break text-center">
+									
+										<a href="/contests/abc445/submit?taskScreenName=abc445_b">提出</a>
+									
+									
+								</td>
+							
+						</tr>
+					
+						<tr>
+							<td class="text-center no-break"><a href="/contests/abc445/tasks/abc445_c">C</a></td>
+							<td><a href="/contests/abc445/tasks/abc445_c">Sugoroku Destination</a></td>
+							<td class="text-right">2 sec</td>
+							<td class="text-right">1024 MiB</td>
+							
+								<td class="no-break text-center">
+									
+										<a href="/contests/abc445/submit?taskScreenName=abc445_c">提出</a>
+									
+									
+								</td>
+							
+						</tr>
+					
+						<tr>
+							<td class="text-center no-break"><a href="/contests/abc445/tasks/abc445_d">D</a></td>
+							<td><a href="/contests/abc445/tasks/abc445_d">Reconstruct Chocolate</a></td>
+							<td class="text-right">2 sec</td>
+							<td class="text-right">1024 MiB</td>
+							
+								<td class="no-break text-center">
+									
+										<a href="/contests/abc445/submit?taskScreenName=abc445_d">提出</a>
+									
+									
+								</td>
+							
+						</tr>
+					
+						<tr>
+							<td class="text-center no-break"><a href="/contests/abc445/tasks/abc445_e">E</a></td>
+							<td><a href="/contests/abc445/tasks/abc445_e">Many LCMs</a></td>
+							<td class="text-right">2 sec</td>
+							<td class="text-right">1024 MiB</td>
+							
+								<td class="no-break text-center">
+									
+										<a href="/contests/abc445/submit?taskScreenName=abc445_e">提出</a>
+									
+									
+								</td>
+							
+						</tr>
+					
+						<tr>
+							<td class="text-center no-break"><a href="/contests/abc445/tasks/abc445_f">F</a></td>
+							<td><a href="/contests/abc445/tasks/abc445_f">Exactly K Steps 2</a></td>
+							<td class="text-right">2 sec</td>
+							<td class="text-right">1024 MiB</td>
+							
+								<td class="no-break text-center">
+									
+										<a href="/contests/abc445/submit?taskScreenName=abc445_f">提出</a>
+									
+									
+								</td>
+							
+						</tr>
+					
+						<tr>
+							<td class="text-center no-break"><a href="/contests/abc445/tasks/abc445_g">G</a></td>
+							<td><a href="/contests/abc445/tasks/abc445_g">Knight Placement</a></td>
+							<td class="text-right">3 sec</td>
+							<td class="text-right">1024 MiB</td>
+							
+								<td class="no-break text-center">
+									
+										<a href="/contests/abc445/submit?taskScreenName=abc445_g">提出</a>
+									
+									
+								</td>
+							
+						</tr>
+					
+				</tbody>
+			</table></div>
+		
+		<p class="btn-text-group">
+			
+			
+				
+					<a class="btn-text" href="/contests/abc445/score">自分の得点状況</a>
+					<span class="divider"></span>
+				
+			
+			<a class="btn-text" href="/contests/abc445/tasks_print">印刷用問題文</a>
+		</p>
+		
+		
+
+
+		
+<hr>
+<h1 class="text-center">Sponsored by</h1>
+<div class="row sponsor_banners">
+	
+		<div class="col-sm-12 text-center">
+			
+				<a class="ads-tracking sponsor_banner_3" data-ads-segment="sponsor_banner" href="https://www.future.co.jp/recruit/?utm_source=atcoder&amp;utm_medium=referral&amp;utm_campaign=yearly&amp;utm_content=sponsorlogo" target="_blank">
+					<img src="https://img.atcoder.jp/img/future2023.png">
+				</a>
+			
+		</div>
+	
+</div>
+
+	</div>
+</div>
+
+
+
+
+		
+			<hr>
+			
+			
+			
+<div class="a2a_kit a2a_kit_size_20 a2a_default_style pull-right" data-a2a-url="https://atcoder.jp/contests/abc445/tasks?lang=ja" data-a2a-title="問題 - AtCoder Beginner Contest 445">
+	<a class="a2a_button_facebook"></a>
+	<a class="a2a_button_twitter"></a>
+	
+		<a class="a2a_button_hatena"></a>
+	
+	<a class="a2a_dd" href="https://www.addtoany.com/share"></a>
+</div>
+
+		
+		<script async src="//static.addtoany.com/menu/page.js"></script>
+		
+	</div> 
+	<hr>
+</div> 
+
+	<div class="container" style="margin-bottom: 80px;">
+			<footer class="footer">
+			
+				<ul>
+					<li><a href="/contests/abc445/rules">ルール</a></li>
+					<li><a href="/contests/abc445/glossary">用語集</a></li>
+					
+				</ul>
+			
+			<ul>
+				<li><a href="/tos">利用規約</a></li>
+				<li><a href="/privacy">プライバシーポリシー</a></li>
+				<li><a href="/personal">個人情報保護方針</a></li>
+				<li><a href="/company">企業情報</a></li>
+				<li><a href="/faq">よくある質問</a></li>
+				<li><a href="/contact">お問い合わせ</a></li>
+				<li><a href="/documents/request">資料請求</a></li>
+			</ul>
+			<div class="text-center">
+					<small id="copyright">Copyright Since 2012 &copy;<a href="http://atcoder.co.jp">AtCoder Inc.</a> All rights reserved.</small>
+			</div>
+			</footer>
+	</div>
+	<p id="fixed-server-timer" class="contest-timer"></p>
+	<div id="scroll-page-top" style="display:none;"><span class="glyphicon glyphicon-arrow-up" aria-hidden="true"></span> ページトップ</div>
+
+</body>
+</html>
+
+
