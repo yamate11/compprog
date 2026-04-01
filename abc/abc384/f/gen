@@ -3,13 +3,6 @@
 import argparse, sys
 from random import randrange, choice, shuffle, sample
 
-def choose2(l, r, ordered=False):
-    if r < l + 2:
-        raise Exception(f'Fatal: choose2: r < l + 2 should hold.  (l = {l}, r = {r})')
-    while True:
-        (x, y) = sample(range(l, r), 2)
-        return (y, x) if not ordered and x > y else (x, y)
-
 class Case:
     def __init__(self):
         self.buf = []
@@ -60,23 +53,24 @@ def main():
         pass
 
 ######################################################################
-# This is the function you should edit.
-# You can use case.p() to print the value to the case
+# This "onecase" is the function you should edit.
+
+# Sample
+#    n = randrange(2, 5)
+#    m = randrange(2, 5)
+#    case.p(n, m)                                   # like print()
+#    case.p([randrange(1, 10) for _ in range(n)])   # lists are printed with space inserted
+#    case.p([choice('UDLR' for _ in range(m))])
+
+# Tips
+#    sample(seq, k)  can be used to get k distinct elemets from seq.
+#    If you need l and r from [1, n] with l < r, use
+#           (l, r) = sorted(sample(range(1, n + 1), 2))
+
 def onecase(case):
-
-    n = randrange(2, 10)
-    lst = [randrange(1, 100) for _ in range(n)]
-    case.p(n)
+    N = 10
+    lst = [randrange(1, 20) for _ in range(N)]
+    case.p(N)
     case.p(lst)
-
-    # n = randrange(2, 5)
-    # m = randrange(2, 5)
-    # case.p(n, m)    # like print()
-    # case.p([randrange(1, 10) for _ in range(n)])   # lists are printed with space inserted
-    # case.p([choice('UDLR' for _ in range(m))])
-    # (l, r) = choose2(0, n)  # Chooses two distinct values from [0, n) (l < r)
-    #                         # choose2(0, n, ordered=True) may return (l, r) with l > r.
-    # case.p(l, r)
-    # You can use sample(seq, k) to get k distinct elements from seq.
 
 main()

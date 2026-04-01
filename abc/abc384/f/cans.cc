@@ -12,252 +12,291 @@ using pll = pair<ll, ll>;
 #define SIZE(v) ((ll)((v).size()))
 #define REPOUT(i, a, b, exp, sep) REP(i, (a), (b)) cout << (exp) << (i + 1 == (b) ? "" : (sep)); cout << "\n"
 
-// @@ !! LIM(trie cmpNaive debug)
+// @@ !! LIM(trie digit debug cmpNaive)
 
 // ---- inserted library file trie.cc
 
-/**
- * @brief Trie木
- *
- * テンプレートパラメタ T には，ユーザデータを格納するデータ型を指定する．
- *   特に使わないときには，仮に，T = ll としておく．
- */
-
-template <typename T = ll>
-struct TrieNode {
-  /** このノードに対応する文字列が Trie に格納されている数 */
-  int _num;
-  /** このノード以下に存在する要素の数 */
-  int _size;
-  /** ユーザデータ */
-  T user;
-  
-  /** コンストラクタ */
-  TrieNode(int n = 0, int s = 0, const T& u = T())
-    : _num(n), _size(s), user(u) {};
-};
-
-template <typename T = ll>
+template <int bt_size, char from, typename User = monostate,
+  typename S = string, bool compact = 2 < bt_size, bool has_offset = true>
 struct Trie {
-  /** 最初の文字 */
-  char from;
-  /** 文字の種類数 */
-  int br_size;
-  /** ノード．nodes[0] は，空文字列に対応する．*/
-  vector<TrieNode<T>> nodes;
-  /** 添字 
-      若干奇妙ではあるが，第 i 番目のノードに対応する文字列を s とするとき，
-      その親ノードの添字を index[i * (br_size + 1)] に格納し，
-      j 番目の子供，つまり，s + (char)(from + j) に対応するノードの添字を index[i * (br_size + 1) + (1 + j)]
-      に格納している．
-      つまり，index は (1 + br_size) ずつのグループになっており，
-      各グループには先頭に親の添字を，そのあとは from, (char)(from + 1), ... の添字を格納している．
-  */
-  vector<int> index;
 
-  /** コンストラクタ */
-  Trie(char from_, int br_size_) : from(from_), br_size(br_size_), nodes(1), index(br_size + 1, -1) {}
+  Trie* parent = nullptr;
 
-  int& _parent_index(int idx) { return index[idx * (br_size + 1)]; }
-  int& _child_index(int idx, char ch) { return index[idx * (br_size + 1) + 1 + (ch - from)]; }
+  using c_pat_t = conditional_t<compact, unsigned long long, monostate>;
+  [[no_unique_address]] c_pat_t c_pat{};
 
-  /** 親ノードの添字 */
-  int parent_index(int idx) { return _parent_index(idx); }
+  using cpt_children_t = conditional_t<compact, vector<Trie*>, monostate>;
+  [[no_unique_address]] cpt_children_t cpt_children{};
 
-  /** 子ノードの添字．create = true の時には，ノードが存在しなければ作成する */
-  int child_index(int idx, char ch, bool create = false) {
-    int i = _child_index(idx, ch);
-    if (i >= 0) return i;
-    if (not create) return -1;
-    int new_idx = nodes.size();
-    nodes.resize(new_idx + 1);
-    index.resize((new_idx + 1) * (br_size + 1), -1);
-    _child_index(idx, ch) = new_idx;
-    _parent_index(new_idx) = idx;
-    return new_idx;
+  using children_t = conditional_t<compact, monostate, array<Trie*, bt_size>>;
+  [[no_unique_address]] children_t children{};
+
+  using offset_t = conditional_t<has_offset, int, monostate>;
+  static consteval offset_t make_default_offset() {
+    if constexpr (is_same_v<offset_t, int>) return -1;
+    else return {};
+  }
+  [[no_unique_address]] offset_t offset = make_default_offset();
+
+  bool reside = false;
+
+  int size_st = 0;
+
+  [[no_unique_address]] User user{};
+
+  Trie() = default;
+  Trie(Trie* p, int offset_) : parent(p) {
+    if constexpr (has_offset) offset = offset_;
   }
 
-  /** 文字列ノードの添字 (途中から) */
-  int prefixed_string_index(int idx, const string& s, bool create = false) {
-    int cur = idx;
-    for (size_t i = 0; i < s.size(); i++) {
-      cur = child_index(cur, s[i], create);
-      if (cur < 0) return cur;
+  Trie* get_child_val(int c, bool create = false) { return get_child_offset(c - from, create); }
+
+  Trie* get_child_offset(int d, bool create = false) {
+    if constexpr(compact) {
+      ll idx = popcount(c_pat & ((1ULL << d) - 1));
+      if (c_pat >> d & 1) return cpt_children[idx];
+      if (not create) return nullptr;
+      Trie* p = new Trie(this, d);
+      cpt_children.insert(cpt_children.begin() + idx, p);
+      c_pat |= 1ULL << d;
+      return p;
+    }else {
+      Trie* p = children[d];
+      if (p) return p;
+      if (not create) return nullptr;
+      p = children[d] = new Trie(this, d);
+      return p;
     }
-    return cur;
   }
 
-  /** 文字列ノードの添字 */
-  int string_index(const string& s, bool create = false) { return prefixed_string_index(0, s, create); }
+  struct children_iterator {
+    Trie* node;
+    int idx;
+    int offset;
+    explicit children_iterator(Trie* node_, int idx_, int offset_) : node(node_), idx(idx_), offset(offset_) {
+      _next_effective_child();
+    }
+    pair<Trie*, char> operator*() const {
+      Trie* p;
+      if constexpr (compact) p = node->cpt_children[idx];
+      else                   p = node->children[idx];
+      return make_pair(p, from + offset);
+    }
+    void _next_effective_child() {
+      if constexpr (compact) {
+        if constexpr (has_offset) {
+          if (idx < ssize(node->cpt_children)) offset = node->cpt_children[idx]->offset;
+          else offset = bt_size;
+        }else {
+          while (offset < bt_size and not (node->c_pat >> offset & 1)) offset++;
+        }
+      }else {
+        while (idx < bt_size and not node->children[idx]) idx++;
+        offset = idx;
+      }
+    }
+    const children_iterator& operator++() {
+      idx++;
+      offset++;
+      _next_effective_child();
+      return *this;
+    }
+    bool operator !=(const children_iterator& o) const { return node != o.node or offset != o.offset; }
+  };
 
-  /** 指定された添字を持つノードの文字列の存在個数 */
-  int num(int idx) { return idx < 0 ? 0 : nodes[idx]._num; }
+  struct children_view {
+    Trie* node;
+    children_view(Trie* node_) : node(node_) {}
+    children_iterator begin() const { return children_iterator(node, 0, 0); }
+    children_iterator end() const { return children_iterator(node, bt_size, bt_size); }
+  };
 
-  /** 指定された添字を持つノード以下にある文字列の存在個数 */
-  int size(int idx) { return idx < 0 ? 0 : nodes[idx]._size; }
+  auto children_w_val() { return children_view(this); }
 
-  /** 文字列の存在個数を返す */
-  int num_string(const string& s) { return num(string_index(s)); }
-
-  /** 指定された prefix を持つ文字列の存在個数を返す */
-  int num_prefix(const string& prefix) { return size(string_index(prefix)); }
-
-  /** 文字列を1個追加する．対応するノードの添字を返す */
-  int insert(const string& s) {
-    int idx = string_index(s, true);
-    nodes[idx]._num++;
-    for (int i = idx; i >= 0; i = _parent_index(i)) nodes[i]._size++;
-    return idx;
+  Trie* get_node(const auto& s, bool create = false) {
+    Trie* tr = this;
+    for (auto c : s) {
+      auto cld = tr->get_child_val(c, create);
+      if (not cld) return nullptr;
+      tr = cld;
+    }
+    return tr;
   }
-  
-  /** 文字列を1個削除する */
-  void erase(const string& s) {
-    int idx = string_index(s);
-    if (idx < 0) throw runtime_error("Trie: tried to erase non-existing node.");
-    if (nodes[idx]._num == 0) throw runtime_error("Trie: tried to remove a number from zero.");
-    nodes[idx]._num--;
-    for (int i = idx; i >= 0; i = _parent_index(i)) nodes[i]._size--;
+  Trie* get_node(const char* s, bool create = false) { return get_node(string(s), create); }
+
+  Trie* search(const auto& s) {
+    Trie* p = get_node(s);
+    if (p and not p->reside) p = nullptr;
+    return p;
+  }
+  Trie* search(const char* s) { return search(string(s)); }
+
+  Trie* insert(const auto& s) {
+    Trie* tr = get_node(s, true);
+    if (not tr->reside) {
+      tr->reside = true;
+      for (Trie* p = tr; p; p = p->parent) p->size_st++;
+    }
+    return tr;
+  }
+  Trie* insert(const char* s) { return insert(string(s)); }
+
+  void erase() {
+    if (reside) for (Trie* tr = this; tr; tr = tr->parent) tr->size_st--;
+    reside = false;
   }
 
-  /** 指定された添字のノードの文字列を返す．低効率デバッグ用 */
-  string node_to_str(int idx) {
-    string ret;
-    while (idx > 0) {
-      int p = _parent_index(idx);
-      char ch = from;
-      for (; child_index(p, ch) != idx; ch++);
-      ret.push_back(ch);
-      idx = p;
+  int get_offset() {
+    if constexpr (has_offset) return offset;
+    else {
+      Trie* p = parent;
+      if (not p) return -1;
+      for (int d = 0; d < bt_size; d++) if (p->get_child_offset(d) == this) return d;
+      assert(0);
+    }
+  }
+
+  S repr() {
+    S ret;
+    for (Trie* tr = this; true; tr = tr->parent) {
+      ll d = tr->get_offset();
+      if (d < 0) break;
+      ret.push_back(from + tr->get_offset());
     }
     reverse(ret.begin(), ret.end());
     return ret;
   }
 
-  vector<string> _sub_string_set(int idx, const string& prefix) {
-    vector<string> ret;
-    for (int k = 0; k < num(idx); k++) ret.push_back(prefix);
-    for (int i = 0; i < br_size; i++) {
-      int j = _child_index(idx, from + i);
-      if (j < 0) continue;
-      auto vv = _sub_string_set(j, prefix + (char)(from + i));
-      copy(vv.begin(), vv.end(), back_inserter(ret));
+  void _show_sub(auto& vec) {
+    if (reside) vec.push_back(repr());
+    for (int i = 0; i < bt_size; i++) {
+      Trie* p = get_child_offset(i);
+      if (p) p->_show_sub(vec);
     }
+  }
+
+  vector<S> show() {
+    vector<S> ret;
+    _show_sub(ret);
     return ret;
   }
 
-  /** 格納されている文字列のリスト (vector<string>) を返す．デバッグ用 */
-  vector<string> string_set() {
-    return _sub_string_set(0, "");
-  }
 
 };
-
-template <typename T = ll>
-Trie<T> create_trie(char from_, char to_) {
-  Trie t(from_, to_ - from_ + 1);
-  return t;
-}
-
-template <typename T = ll>
-ostream& operator<<(ostream& ostr, Trie<T> trie) {
-  ostr << trie.string_set();
-  return ostr;
-}
-
-/* Poorman's Binary Trie */
-
-string ull2binstr(unsigned long long x, int len = 64) {
-  string ret(len, ' ');
-  for (int i = 0; i < len; i++) ret[i] = (x >> (len - 1 - i) & 1) ? '1' : '0';
-  return ret;
-}
-
-unsigned long long binstr2ull(string s) {
-  unsigned long long ret = 0;
-  for (char c : s) ret = 2 * ret + (c - '0');
-  return ret;
-}
 
 
 // ---- end trie.cc
 
-// ---- inserted library file cmpNaive.cc
+// ---- inserted library file digit.cc
 
-const string end_mark("^__=end=__^");
+struct digit_util {
+  const ll base;
+  const vector<ll> _pow;
 
-int naive(istream& cin, ostream& cout);
-int body(istream& cin, ostream& cout);
-
-void cmpNaive() {
-  while (true) {
-    string s;
-    getline(cin, s);
-    bool run_body;
-    if (s.at(0) == 'Q') {
-      return;
-    }else if (s.at(0) == 'B') {
-      run_body = true;
-    }else if (s.at(0) == 'N') {
-      run_body = false;
-    }else {
-      cerr << "Unknown body/naive specifier.\n";
-      exit(1);
-    }
-    string input_s;
+  static vector<ll> _make_pow(ll b) {
+    vector<ll> ret;
+    ll t = 1;
     while (true) {
-      getline(cin, s);
-      if (s == end_mark) break;
-      input_s += s;
-      input_s += "\n";
+      ret.push_back(t);
+      if (__builtin_smulll_overflow(t, b, &t)) break;
     }
-    stringstream ss_in(move(input_s));
-    stringstream ss_out;
-    ss_out << setprecision(20);
-    if (run_body) {
-      body(ss_in, ss_out);
-    }else {
-      naive(ss_in, ss_out);
-    }
-    cout << ss_out.str() << end_mark << endl;
+    return ret;
+  };
+
+  digit_util(ll base_ = 10) : base(base_), _pow(_make_pow(base_)) {}
+    
+  ll pow_size() const { return _pow.size(); }
+  ll pow(ll i) const {
+    if (i < 0 or ssize(_pow) <= i) return -1;
+    return _pow[i];
   }
-}
 
-int main(int argc, char *argv[]) {
-  ios_base::sync_with_stdio(false);
-  cin.tie(nullptr);
-  cout << setprecision(20);
-
-#if CMPNAIVE
-  if (argc == 2) {
-    if (strcmp(argv[1], "cmpNaive") == 0) {
-      cmpNaive();
-    }else if (strcmp(argv[1], "naive") == 0) {
-      naive(cin, cout);
-    }else if (strcmp(argv[1], "skip") == 0) {
-      exit(0);
-    }else {
-      cerr << "Unknown argument.\n";
-      exit(1);
-    }
-  }else {
-#endif
-    body(cin, cout);
-#if CMPNAIVE
+  ll width(ll x) const {
+    if (x < 0) return -1;
+    if (base == 2) return bit_width((unsigned long long)x);
+    if (x == 0) return 0;
+    ll ret = 0;
+    for (; x != 0; x /= base) ret++;
+    return ret;
   }
-#endif
-  return 0;
-}
 
-/*
-int naive(istream& cin, ostream& cout) {
-  return 0;
-}
-int body(istream& cin, ostream& cout) {
-  return 0;
-}
-*/
+  ll nd_min(ll i) const { return i < 0 ? -1 : i == 0 ? 0 : pow(i - 1); }
+  ll nd_max(ll i) const { return i < 0 ? -1 : i == 0 ? 0 : nd_min(i + 1) - 1; }
 
-// ---- end cmpNaive.cc
+  ll floor(ll x) const { return (x < 0) ? -1 : x == 0 ? 0 : _pow[width(x) - 1]; }
+
+  ll ceil(ll x) const {
+    if (x < 0) return -1;
+    if (x == 0) return 0;
+    ll p = _pow[width(x) - 1];
+    return (x == p) ? p : (p * base);
+  }
+
+  ll log(ll x) const { return (x <= 0) ? -1 : width(x) - 1; }
+
+  ll d_at(ll x, ll i) const {
+    if (x < 0) return -1;
+    if (x == 0) return 0;
+    if (i < 0) i += width(x);
+    return (x / pow(i)) % base;
+  }
+
+  ll d_sub(ll x, ll pos, ll len) const {
+    if (x < 0) return -1;
+    if (x == 0) return 0;
+    ll w = width(x);
+    if (pos < 0) pos += w;
+    if (len < 0) { len = -len; pos = pos - len + 1; }
+    if (pos < 0) { len += pos; pos = 0; }
+    if (pos + len > w) len = w - pos;
+    return (x % pow(pos + len)) / pow(pos);
+  }
+
+  vector<ll> to_vector(ll x) const {
+    if (x < 0) return vector<ll>{};
+    if (x == 0) return vector<ll>{0};
+    vector<ll> ret;
+    ret.reserve(width(x));
+    for ( ; x != 0; x /= base) { ret.push_back(x % base); }
+    return ret;
+  }
+
+  string to_string(ll x, bool upcase = false) const {
+    if (x < 0) return string();
+    if (x == 0) return string("0");
+    char ten = upcase ? 'A' : 'a';
+    ll w = width(x);
+    string ret(w, ' ');
+    for (ll i = w - 1; x != 0; x /= base, i--) {
+      ll y = x % base;
+      ret[i] = y < 10 ? '0' + y : ten + (y - 10);
+    }
+    return ret;
+  }
+
+  ll from_vector(const vector<ll>& vec) const {
+    ll ret = 0;
+    for (ll i = 0; i < ssize(vec); i++) ret += vec[i] * pow(i);
+    return ret;
+  }
+
+  static ll _get_digit_char(char c) {
+    if ('0' <= c and c <= '9')      return c - '0';
+    else if ('a' <= c and c <= 'z') return c - 'a' + 10;
+    else if ('A' <= c and c <= 'Z') return c - 'A' + 10;
+    else throw runtime_error("_get_digit_char: unknown letter");
+  }
+
+  ll from_string(string s) const {
+    ll ret = 0;
+    for (ll i = 0; i < ssize(s); i++) ret += _get_digit_char(s[i]) * pow(ssize(s) - 1 - i);
+    return ret;
+  }
+
+
+};
+
+// ---- end digit.cc
 
 // ---- inserted function f:<< from util.cc
 
@@ -280,6 +319,9 @@ ostream& operator<< (ostream& os, const tuple<T1,T2,T3,T4,T5,T6>& t);
 
 template <typename T>
 ostream& operator<< (ostream& os, const vector<T>& v);
+
+template <typename T, size_t N>
+ostream& operator<< (ostream& os, const array<T, N>& v);
 
 template <typename T, typename C>
 ostream& operator<< (ostream& os, const set<T, C>& v);
@@ -355,6 +397,18 @@ ostream& operator<< (ostream& os, const tuple<T1,T2,T3,T4,T5,T6>& t) {
 
 template <typename T>
 ostream& operator<< (ostream& os, const vector<T>& v) {
+  os << '[';
+  for (auto it = v.begin(); it != v.end(); it++) {
+    if (it != v.begin()) os << ", ";
+    os << *it;
+  }
+  os << ']';
+
+  return os;
+}
+
+template <typename T, size_t N>
+ostream& operator<< (ostream& os, const array<T, N>& v) {
   os << '[';
   for (auto it = v.begin(); it != v.end(); it++) {
     if (it != v.begin()) os << ", ";
@@ -505,6 +559,7 @@ operator<<(std::ostream& os, E e) {
 }
 
 // This is a very ad-hoc implementation...
+// Known problem: "1 << 127" cannot be handled.
 ostream& operator<<(ostream& os, const __int128& v) {
   unsigned __int128 a = v < 0 ? -v : v;
   ll i = 0;
@@ -601,76 +656,188 @@ void dbgLog(bool with_nl, Head&& head, Tail&&... tail)
 
 // ---- end debug.cc
 
+// ---- inserted library file cmpNaive.cc
+
+const string end_mark("^__=end=__^");
+
+int naive(istream& cin, ostream& cout);
+int body(istream& cin, ostream& cout);
+
+void cmpNaive() {
+  while (true) {
+    string s;
+    getline(cin, s);
+    bool run_body;
+    if (s.at(0) == 'Q') {
+      return;
+    }else if (s.at(0) == 'B') {
+      run_body = true;
+    }else if (s.at(0) == 'N') {
+      run_body = false;
+    }else {
+      cerr << "Unknown body/naive specifier.\n";
+      exit(1);
+    }
+    string input_s;
+    while (true) {
+      getline(cin, s);
+      if (s == end_mark) break;
+      input_s += s;
+      input_s += "\n";
+    }
+    stringstream ss_in(move(input_s));
+    stringstream ss_out;
+    ss_out << setprecision(20);
+    if (run_body) {
+      body(ss_in, ss_out);
+    }else {
+      naive(ss_in, ss_out);
+    }
+    cout << ss_out.str() << end_mark << endl;
+  }
+}
+
+int main(int argc, char *argv[]) {
+  ios_base::sync_with_stdio(false);
+  cin.tie(nullptr);
+  cout << setprecision(20);
+
+#if CMPNAIVE
+  if (argc == 2) {
+    if (strcmp(argv[1], "cmpNaive") == 0) {
+      cmpNaive();
+    }else if (strcmp(argv[1], "naive") == 0) {
+      naive(cin, cout);
+    }else if (strcmp(argv[1], "skip") == 0) {
+      exit(0);
+    }else {
+      cerr << "Unknown argument.\n";
+      exit(1);
+    }
+  }else {
+#endif
+    body(cin, cout);
+#if CMPNAIVE
+  }
+#endif
+  return 0;
+}
+
+/*
+int naive(istream& cin, ostream& cout) {
+  return 0;
+}
+int body(istream& cin, ostream& cout) {
+  return 0;
+}
+*/
+
+// ---- end cmpNaive.cc
+
 // @@ !! LIM -- end mark --
 
 int naive(istream& cin, ostream& cout) {
   ll N; cin >> N;
-  // @InpVec(N, A) [hrzKWetp]
+  // @InpVec(N, A) [OGwogUje]
   auto A = vector(N, ll());
   for (int i = 0; i < N; i++) { ll v; cin >> v; A[i] = v; }
-  // @End [hrzKWetp]
-
-  auto f = [&](ll x0) -> ll {
-    ll x = x0;
-    while (x % 2 == 0) x /= 2;
-    return x;
-  };
-
+  // @End [OGwogUje]
   ll ans = 0;
-  REP(i, 0, N) REP(j, i, N) { ans += f(A[i] + A[j]); }
+  REP(i, 0, N) REP(j, i, N) {
+    ll x = A[i] + A[j];
+    ll k = countr_zero((u64)x);
+    ans += (x >> k);
+  }
   cout << ans << endl;
 
   return 0;
 }
 int body(istream& cin, ostream& cout) {
 
+  digit_util du2(2);
+
   ll N; cin >> N;
-  // @InpVec(N, A) [hrzKWetp]
+  // @InpVec(N, A) [5R8G20iN]
   auto A = vector(N, ll());
   for (int i = 0; i < N; i++) { ll v; cin >> v; A[i] = v; }
-  // @End [hrzKWetp]
-  sort(ALL(A));
+  // @End [5R8G20iN]
 
-  ll width = bit_width((u64)A[N - 1]) + 2;
-  auto f = [&](auto rF, auto& vec) -> ll {
-    if (vec.empty()) return 0LL;
-    vector<ll> even;
-    vector<ll> odd;
-    for (ll x : vec) {
-      if (x % 2 == 0) even.push_back(x);
-      else odd.push_back(x);
-    }
-    ll a = accumulate(ALL(even), 0LL) * ssize(odd) + accumulate(ALL(odd), 0LL) * ssize(even);
-    vector<ll> half;
-    for (ll e : even) half.push_back(e / 2);
-    ll b = rF(rF, half);
-    
-    ll c1 = accumulate(ALL(odd), 0LL);
-    ll c2 = 0;
-    vector onum(width, unordered_map<ll, ll>());
-    vector osum(width, unordered_map<ll, ll>());
-    for (ll x : odd) {
-      u64 xv = (~x) + 1;
-      REP(k, 1, width - 1) {
-        u64 y = xv & ((1ULL << (k + 1)) - 1);
-        y ^= (1ULL << k);
-        ll z = onum[k + 1][y] * x + osum[k + 1][y];
-        assert ((z & ((1LL << k) - 1)) == 0);
-        c2 += (z >> k);
-      }
-      REP(k, 2, width) {
-        ll y = x & ((1LL << k) - 1);
-        onum[k][y] += 1;
-        osum[k][y] += x;
-      }
-      DLOGK(x, onum, osum);
-    }
-    ll c = c1 + c2;
-    DLOGK(a, b, c, c1, c2);
-    return a + b + c;
-  };
+  ll K = 0;
+  REP(i, 0, N) K = max(K, (ll)bit_width((u64)A[i]));
 
-  cout << f(f, A) << endl;
+  auto root = new Trie<2, '0', pll>();
+
+  REP(i, 0, N) {
+    string s = du2.to_string(A[i]);
+    ranges::reverse(s);
+    if (ssize(s) < K) s += string(K - ssize(s), '0');
+    auto p = root->insert(s);
+    while (true) {
+      p->user.first++;
+      p->user.second += A[i];
+      if (p == root) break;
+      p = p->parent;
+    }
+  }
+  DLOGK(root->show());
+
+  ll ans = 0;
+  REP(i, 0, N) {
+    string s = du2.to_string(A[i]);
+    ranges::reverse(s);
+    if (ssize(s) < K) s += string(K - ssize(s), '0');
+    ll cur = 0;
+    bool az = true;
+    auto p = root;
+    ll pat = 0;
+    REP(k, 0, ssize(s)) {
+      if (not p) break;
+      auto pn = p->get_child_offset(s[k] - '0');
+      auto pr = p->get_child_offset(1 - (s[k] - '0'));
+      if (az) {
+        if (pr) {
+          DLOGKL("  ", i, k, pr->user.second, pr->user.first);
+          cur += (pr->user.second + A[i] * pr->user.first) >> k;
+        }
+        if (k == ssize(s) - 1) {
+          if (pn) cur += pn->user.first;
+        }else {
+          az = s[k] == '0';
+          p = pn;
+          pat += ((s[k] - '0') << k);
+        }
+      }else {
+        if (pn) {
+          DLOGKL("  ", i, k, pat, pn->user.second, pn->user.first);
+          cur += (((pn->user.second - pat * pn->user.first) >> k) + ((A[i] >> k) * pn->user.first)) + pn->user.first;
+        }
+        if (k == ssize(s) - 1) {
+          if (pr) cur += pr->user.first;
+        }else {
+          az = false;
+          p = pr;
+          pat += ((1 - (s[k] - '0')) << k);
+        }
+      }
+      DLOGK(i, k, cur);
+    }
+    /*
+    if (p) {
+      cur += ((p->user.second - pat * p->user.first) >> ssize(s)) + p->user.first;
+    }
+    DLOGK(i, cur);
+    */
+    ans += cur;
+  }
+  DLOGKL("raw", ans);
+  ll diag = 0;
+  REP(i, 0, N) {
+    ll k = countr_zero((u64)A[i]);
+    diag += (A[i] >> k);
+  }
+  DLOGK(diag);
+  ans = diag + (ans - diag) / 2;
+  cout << ans << endl;
 
   return 0;
 }

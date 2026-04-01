@@ -1,0 +1,5 @@
+4
+ing
+string
+abc
+str

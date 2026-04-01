@@ -1,0 +1,5 @@
+4 900
+apple 300
+orange 200
+lemon 500
+pomegranate 1000

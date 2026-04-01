@@ -12,50 +12,7 @@ using pll = pair<ll, ll>;
 #define SIZE(v) ((ll)((v).size()))
 #define REPOUT(i, a, b, exp, sep) REP(i, (a), (b)) cout << (exp) << (i + 1 == (b) ? "" : (sep)); cout << "\n"
 
-// @@ !! LIM(f:intDiv segTree cmpNaive debug)
-
-// ---- inserted function f:intDiv from util.cc
-// imod, divFloor, divCeil
-
-// imod(x, y) : remainder of x for y
-// for y > 0:
-//   imod(x, y)  = r where x = dy + r, 0 <= r < y
-//   imod(x, -y) = r where x = dy + r, 0 >= r > y
-// Thus, imod( 10,  7) =  3
-//       imod(-10,  7) =  4
-//       imod( 10, -7) = -4
-//       imod(-10, -7) = -3
-ll imod(ll x, ll y) {
-  ll v = x % y;
-  if ((x >= 0) == (y >= 0)) return v;
-  else                      return v == 0 ? 0 : v + y;
-}
-
-// Integer Division; regardless pos/neg
-ll divFloor(ll x, ll y) {
-  if (x > 0) {
-    if (y > 0) return x / y;
-    else       return (x - y - 1) / y;
-  }else {
-    if (y > 0) return (x - y + 1) / y;
-    else       return x / y;
-  }
-}
-
-ll divCeil(ll x, ll y) {
-  if (x > 0) {
-    if (y > 0) return (x + y - 1) / y;
-    else       return x / y;
-  }else {
-    if (y > 0) return x / y;
-    else       return (x + y + 1) / y;
-  }
-}
-//   Just a note.  For d \in Z and t \in R,
-//       d < t <=> d < ceil(t),     d <= t <=> d <= floor(t),
-//       d > t <=> d > floor(t),    d >= t <=> d >= ceil(t).
-
-// ---- end f:intDiv
+// @@ !! LIM(segTree power)
 
 // ---- inserted function f:<< from util.cc
 
@@ -78,6 +35,9 @@ ostream& operator<< (ostream& os, const tuple<T1,T2,T3,T4,T5,T6>& t);
 
 template <typename T>
 ostream& operator<< (ostream& os, const vector<T>& v);
+
+template <typename T, size_t N>
+ostream& operator<< (ostream& os, const array<T, N>& v);
 
 template <typename T, typename C>
 ostream& operator<< (ostream& os, const set<T, C>& v);
@@ -153,6 +113,18 @@ ostream& operator<< (ostream& os, const tuple<T1,T2,T3,T4,T5,T6>& t) {
 
 template <typename T>
 ostream& operator<< (ostream& os, const vector<T>& v) {
+  os << '[';
+  for (auto it = v.begin(); it != v.end(); it++) {
+    if (it != v.begin()) os << ", ";
+    os << *it;
+  }
+  os << ']';
+
+  return os;
+}
+
+template <typename T, size_t N>
+ostream& operator<< (ostream& os, const array<T, N>& v) {
   os << '[';
   for (auto it = v.begin(); it != v.end(); it++) {
     if (it != v.begin()) os << ", ";
@@ -303,6 +275,7 @@ operator<<(std::ostream& os, E e) {
 }
 
 // This is a very ad-hoc implementation...
+// Known problem: "1 << 127" cannot be handled.
 ostream& operator<<(ostream& os, const __int128& v) {
   unsigned __int128 a = v < 0 ? -v : v;
   ll i = 0;
@@ -629,254 +602,269 @@ auto make_seg_tree(DAT unit_dat, auto add, const vector<DAT>& initdat = vector<D
 
 // ---- end segTree.cc
 
-// ---- inserted library file cmpNaive.cc
+// ---- inserted library file algOp.cc
 
-const string end_mark("^__=end=__^");
+// Common definitions
+//    zero, one, inverse
 
-int naive(istream& cin, ostream& cout);
-int body(istream& cin, ostream& cout);
-
-void cmpNaive() {
-  while (true) {
-    string s;
-    getline(cin, s);
-    bool run_body;
-    if (s.at(0) == 'Q') {
-      return;
-    }else if (s.at(0) == 'B') {
-      run_body = true;
-    }else if (s.at(0) == 'N') {
-      run_body = false;
-    }else {
-      cerr << "Unknown body/naive specifier.\n";
-      exit(1);
-    }
-    string input_s;
-    while (true) {
-      getline(cin, s);
-      if (s == end_mark) break;
-      input_s += s;
-      input_s += "\n";
-    }
-    stringstream ss_in(move(input_s));
-    stringstream ss_out;
-    ss_out << setprecision(20);
-    if (run_body) {
-      body(ss_in, ss_out);
-    }else {
-      naive(ss_in, ss_out);
-    }
-    cout << ss_out.str() << end_mark << endl;
-  }
+template<typename T>
+const T zero(const T& t) {
+  if constexpr (is_integral_v<T> || is_floating_point_v<T>) { return (T)0; }
+  else { return t.zero(); }
 }
 
-int main(int argc, char *argv[]) {
+template<typename T>
+const T one(const T& t) {
+  if constexpr (is_integral_v<T> || is_floating_point_v<T>) { return (T)1; }
+  else { return t.one(); }
+}
+
+template<typename T>
+const T inverse(const T& t) {
+  if constexpr (is_floating_point_v<T>) { return 1.0 / t; }
+  else { return t.inverse(); }
+}
+
+#ifdef BOOST_MP_CPP_INT_HPP
+template<> const cpp_int zero(const cpp_int& t) { return cpp_int(0); }
+template<> const cpp_int one(const cpp_int& t) { return cpp_int(1); }
+#endif // BOOST_MP_CPP_INT_HPP
+
+// begin -- detection ideom
+//    cf. https://blog.tartanllama.xyz/detection-idiom/
+
+namespace tartan_detail {
+  template <template <class...> class Trait, class Enabler, class... Args>
+  struct is_detected : false_type{};
+
+  template <template <class...> class Trait, class... Args>
+  struct is_detected<Trait, void_t<Trait<Args...>>, Args...> : true_type{};
+}
+
+template <template <class...> class Trait, class... Args>
+using is_detected = typename tartan_detail::is_detected<Trait, void, Args...>::type;
+
+// end -- detection ideom
+
+
+template<typename T>
+// using subst_add_t = decltype(T::subst_add(declval<typename T::value_type &>(), declval<typename T::value_type>()));
+using subst_add_t = decltype(T::subst_add);
+template<typename T>
+using has_subst_add = is_detected<subst_add_t, T>;
+
+template<typename T>
+using add_t = decltype(T::add);
+template<typename T>
+using has_add = is_detected<add_t, T>;
+
+template<typename T>
+using subst_mult_t = decltype(T::subst_mult);
+template<typename T>
+using has_subst_mult = is_detected<subst_mult_t, T>;
+
+template<typename T>
+using mult_t = decltype(T::mult);
+template<typename T>
+using has_mult = is_detected<mult_t, T>;
+
+template<typename T>
+using subst_subt_t = decltype(T::subst_subt);
+template<typename T>
+using has_subst_subt = is_detected<subst_subt_t, T>;
+
+template<typename T>
+using subt_t = decltype(T::subt);
+template<typename T>
+using has_subt = is_detected<subt_t, T>;
+
+template <typename Opdef>
+struct MyAlg {
+  using T = typename Opdef::value_type;
+  using value_type = T;
+  T v;
+  MyAlg() {}
+  MyAlg(const T& v_) : v(v_) {}
+  MyAlg(T&& v_) : v(move(v_)) {}
+  bool operator==(MyAlg o) const { return v == o.v; }
+  bool operator!=(MyAlg o) const { return v != o.v; }
+  operator T() const { return v; }
+  MyAlg zero() const { return MyAlg(Opdef::zero(v)); }
+  MyAlg one() const { return MyAlg(Opdef::one(v)); }
+  MyAlg inverse() const { return MyAlg(Opdef::inverse(v)); }
+  MyAlg operator/=(const MyAlg& o) { return *this *= o.inverse(); }
+  MyAlg operator/(const MyAlg& o) const { return (*this) * o.inverse(); }
+  MyAlg operator-() const { return zero() - *this; }
+
+  MyAlg& operator +=(const MyAlg& o) { 
+    if constexpr (has_subst_add<Opdef>::value) {
+      Opdef::subst_add(v, o.v);
+      return *this;
+    }else if constexpr (has_add<Opdef>::value) {
+      v = Opdef::add(v, o.v);
+      return *this;
+    }else static_assert("either subst_add or add is needed.");
+
+  }
+  MyAlg operator +(const MyAlg& o) const { 
+    if constexpr (has_add<Opdef>::value) {
+      return MyAlg(Opdef::add(v, o.v));
+    }else if constexpr (has_subst_add<Opdef>::value) {
+      MyAlg ret(v);
+      Opdef::subst_add(ret.v, o.v);
+      return ret;
+    }else static_assert("either subst_add or add is needed.");
+  }
+  MyAlg& operator *=(const MyAlg& o) { 
+    if constexpr (has_subst_mult<Opdef>::value) {
+      Opdef::subst_mult(v, o.v);
+      return *this;
+    }else if constexpr (has_mult<Opdef>::value) {
+      v = Opdef::mult(v, o.v);
+      return *this;
+    }else static_assert("either subst_mult or mult is needed.");
+
+  }
+  MyAlg operator *(const MyAlg& o) const { 
+    if constexpr (has_mult<Opdef>::value) {
+      return MyAlg(Opdef::mult(v, o.v));
+    }else if constexpr (has_subst_mult<Opdef>::value) {
+      MyAlg ret(v);
+      Opdef::subst_mult(ret.v, o.v);
+      return ret;
+    }else static_assert("either subst_mult or mult is needed.");
+  }
+  MyAlg& operator -=(const MyAlg& o) { 
+    if constexpr (has_subst_subt<Opdef>::value) {
+      Opdef::subst_subt(v, o.v);
+      return *this;
+    }else if constexpr (has_subt<Opdef>::value) {
+      v = Opdef::subt(v, o.v);
+      return *this;
+    }else static_assert("either subst_subt or subt is needed.");
+
+  }
+  MyAlg operator -(const MyAlg& o) const { 
+    if constexpr (has_subt<Opdef>::value) {
+      return MyAlg(Opdef::subt(v, o.v));
+    }else if constexpr (has_subst_subt<Opdef>::value) {
+      MyAlg ret(v);
+      Opdef::subst_subt(ret.v, o.v);
+      return ret;
+    }else static_assert("either subst_subt or subt is needed.");
+  }
+  friend istream& operator >>(istream& is, MyAlg& t)       { is >> t.v; return is; }
+  friend ostream& operator <<(ostream& os, const MyAlg& t) { os << t.v; return os; }
+};
+
+
+
+
+
+// ---- end algOp.cc
+
+// ---- inserted library file power.cc
+
+template<typename T>
+T power(const T& a, ll b) {
+  auto two_pow = a;
+  auto ret = one<T>(a);
+  while (b > 0) {
+    if (b & 1LL) ret *= two_pow;
+    two_pow *= two_pow;
+    b >>= 1;
+  }
+  return ret;
+}
+
+// a >= 0, b >= 0;  If overflow, returns -1.
+ll llpower(ll a, ll b) {  
+  if (b == 0) return 1;   // 0^0 == 1
+  if (b == 1) return a;
+  if (a == 0) return 0;
+  if (a == 1) return 1;
+  if (a == 2) {
+    if (b >= 63) return -1;
+    else return 1LL << b;
+  }
+  if (b == 2) {
+    ll ret;
+    if (__builtin_smulll_overflow(a, a, &ret)) return -1;
+    return ret;
+  }
+  ll two_pow = a;
+  ll ret = 1;
+  assert(b > 0);
+  while (true) {
+    if (b & 1LL) {
+      if (__builtin_smulll_overflow(ret, two_pow, &ret)) return -1;
+    }
+    b >>= 1;
+    if (b == 0) break;
+    if (__builtin_smulll_overflow(two_pow, two_pow, &two_pow)) return -1;
+  }
+  return ret;
+}
+
+// a >= 0;   Returns x s.t. x*x <= a < (x+1)*(x+1)
+ll llsqrt(ll a) {
+  ll x = llround(sqrt((double)a));
+  ll y;
+  if (__builtin_smulll_overflow(x, x, &y) or a < y) return x - 1;
+  else return x;
+}
+
+// a >= 0, m >= 2;  Returns x s.t. x^m <= a < (x + 1)^m
+ll llroot(ll a, ll m) {
+  ll x = llround(pow(a, 1.0 / m));
+  ll y = llpower(x, m);
+  if (y == -1 or a < y) return x - 1;
+  else return x;
+}
+
+//  base >= 2, a >= 1;  Returns x s.t. base^{x} <= a < base^{x + 1}
+ll lllog(ll base, ll a) {
+  ll x = llround(log(a) / log(base));
+  ll y = llpower(base, x);
+  if (y == -1 or a < y) return x - 1;
+  else return x;
+}
+
+
+// ---- end power.cc
+
+// @@ !! LIM -- end mark --
+
+using Real = long double;
+
+int main(/* int argc, char *argv[] */) {
   ios_base::sync_with_stdio(false);
   cin.tie(nullptr);
   cout << setprecision(20);
 
-#if CMPNAIVE
-  if (argc == 2) {
-    if (strcmp(argv[1], "cmpNaive") == 0) {
-      cmpNaive();
-    }else if (strcmp(argv[1], "naive") == 0) {
-      naive(cin, cout);
-    }else if (strcmp(argv[1], "skip") == 0) {
-      exit(0);
-    }else {
-      cerr << "Unknown argument.\n";
-      exit(1);
-    }
-  }else {
-#endif
-    body(cin, cout);
-#if CMPNAIVE
-  }
-#endif
-  return 0;
-}
-
-/*
-int naive(istream& cin, ostream& cout) {
-  return 0;
-}
-int body(istream& cin, ostream& cout) {
-  return 0;
-}
-*/
-
-// ---- end cmpNaive.cc
-
-// ---- inserted library file debug.cc
-template <class... Args>
-string dbgFormat(const char* fmt, Args... args) {
-  size_t len = snprintf(nullptr, 0, fmt, args...);
-  char buf[len + 1];
-  snprintf(buf, len + 1, fmt, args...);
-  return string(buf);
-}
-
-template <class Head>
-void dbgLog(bool with_nl, Head&& head) {
-  cerr << head;
-  if (with_nl) cerr << endl;
-}
-
-template <class Head, class... Tail>
-void dbgLog(bool with_nl, Head&& head, Tail&&... tail)
-{
-  cerr << head << " ";
-  dbgLog(with_nl, forward<Tail>(tail)...);
-}
-
-#if DEBUG
-  #define DLOG(...)        dbgLog(true, __VA_ARGS__)
-  #define DLOGNNL(...)     dbgLog(false, __VA_ARGS__)
-  #define DFMT(...)        cerr << dbgFormat(__VA_ARGS__) << endl
-  #define DCALL(func, ...) func(__VA_ARGS__)
-#else
-  #define DLOG(...)
-  #define DLOGNNL(...)
-  #define DFMT(...)
-  #define DCALL(func, ...)
-#endif
-
-/*
-#if DEBUG_LIB
-  #define DLOG_LIB(...)        dbgLog(true, __VA_ARGS__)
-  #define DLOGNNL_LIB(...)     dbgLog(false, __VA_ARGS__)
-  #define DFMT_LIB(...)        cerr << dbgFormat(__VA_ARGS__) << endl
-  #define DCALL_LIB(func, ...) func(__VA_ARGS__)
-#else
-  #define DLOG_LIB(...)
-  #define DFMT_LIB(...)
-  #define DCALL_LIB(func, ...)
-#endif
-*/
-
-#define DUP1(E1)       #E1 "=", E1
-#define DUP2(E1,E2)    DUP1(E1), DUP1(E2)
-#define DUP3(E1,...)   DUP1(E1), DUP2(__VA_ARGS__)
-#define DUP4(E1,...)   DUP1(E1), DUP3(__VA_ARGS__)
-#define DUP5(E1,...)   DUP1(E1), DUP4(__VA_ARGS__)
-#define DUP6(E1,...)   DUP1(E1), DUP5(__VA_ARGS__)
-#define DUP7(E1,...)   DUP1(E1), DUP6(__VA_ARGS__)
-#define DUP8(E1,...)   DUP1(E1), DUP7(__VA_ARGS__)
-#define DUP9(E1,...)   DUP1(E1), DUP8(__VA_ARGS__)
-#define DUP10(E1,...)   DUP1(E1), DUP9(__VA_ARGS__)
-#define DUP11(E1,...)   DUP1(E1), DUP10(__VA_ARGS__)
-#define DUP12(E1,...)   DUP1(E1), DUP11(__VA_ARGS__)
-#define GET_MACRO(_1,_2,_3,_4,_5,_6,_7,_8,_9,_10,_11,_12,NAME,...) NAME
-#define DUP(...)          GET_MACRO(__VA_ARGS__, DUP12, DUP11, DUP10, DUP9, DUP8, DUP7, DUP6, DUP5, DUP4, DUP3, DUP2, DUP1)(__VA_ARGS__)
-#define DLOGK(...)        DLOG(DUP(__VA_ARGS__))
-#define DLOGKL(lab, ...)  DLOG(lab, DUP(__VA_ARGS__))
-
-#if DEBUG_LIB
-  #define DLOG_LIB   DLOG
-  #define DLOGK_LIB  DLOGK
-  #define DLOGKL_LIB DLOGKL
-#endif
-
-// ---- end debug.cc
-
-// @@ !! LIM -- end mark --
-
-int naive(istream& cin, ostream& cout) {
   ll N; cin >> N;
-  // @InpVec(N, A) [qrHuS1Wy]
+  // @InpVec(N, A) [LPqEJtKn]
   auto A = vector(N, ll());
   for (int i = 0; i < N; i++) { ll v; cin >> v; A[i] = v; }
-  // @End [qrHuS1Wy]
-  double x; cin >> x;
-  ll Q; cin >> Q;
-  REP(_q, 0, Q) {
-    ll l, r; cin >> l >> r; l--;
-    double ans = 0;
-    double t = 1;
-    REP(i, l, r) {
-      ans += t * A[i];
-      t *= x;
-    }
-    cout << ans << "\n";
-  }
-  return 0;
-}
-int body(istream& cin, ostream& cout) {
-
-#if DEBUG
-  ll mylim = 2;
-#else
-  ll mylim = 100;
-#endif
-
-  ll N; cin >> N;
-  // @InpVec(N, A) [qrHuS1Wy]
-  auto A = vector(N, ll());
-  for (int i = 0; i < N; i++) { ll v; cin >> v; A[i] = v; }
-  // @End [qrHuS1Wy]
-  double x; cin >> x;
-
-  set<ll> pos;
-  REP(i, 0, N) if (A[i] > 0) pos.insert(i);
-
-  ll bsize;
-  if (pow(x, N) > 1e-20) bsize = N;
-  else bsize = -20 * log(10) / log(x);
-  if (bsize >= N) bsize = N;
-  ll numb = divCeil(N, bsize);
-  using sg_t = decltype(make_seg_tree(0.0, plus<double>()));
-  vector<sg_t> sts(bsize >= mylim ? numb : 0);
-  if (bsize >= mylim) {
-    REP(i, 0, numb) {
-      ll sz = bsize;
-      if (i == numb - 1) sz = N - bsize * i;
-      vector<double> v(sz);
-      double t = 1.0;
-      REP(j, 0, sz) {
-        v[j] = t * A[bsize * i + j];
-        t *= x;
-      }
-      sts[i] = make_seg_tree(0.0, plus<double>(), v);
-    }
-  }
-  DLOGK(bsize, numb);
+  // @End [LPqEJtKn]
+  Real x; cin >> x;
+  
+  using sta = pair<Real, ll>;
+  vector<sta> init_vec(N);
+  REP(i, 0, N) init_vec[i] = sta(A[i], 1);
+  auto myadd = [&](sta a, sta b) -> sta {
+    sta ret;
+    ret.first = a.first + power<Real>(x, a.second) * b.first;
+    ret.second = a.second + b.second;
+    return ret;
+  };
+  sta sta_unit(0.0, 0);
+  auto st = make_seg_tree(sta_unit, myadd, init_vec);
 
   ll Q; cin >> Q;
   REP(_q, 0, Q) {
     ll l, r; cin >> l >> r; l--;
-    auto it = pos.lower_bound(l);
-    if (it == pos.end() or *it >= r) {
-      cout << 0.0 << "\n";
-      continue;
-    }
-    double zero_shift = pow(x, *it - l);
-    l = *it;
-
-    if (bsize < mylim) {
-      double ans = 0.0;
-      double t = 1.0;
-      REP(i, 0, min(bsize, r - l)) {
-        ans += t * A[l + i];
-        t *= x;
-      }
-      cout << ans << "\n";
-    }else {
-      ll b0 = l / bsize;
-      ll i0 = l - b0 * bsize;
-      if (r <= (b0 + 1) * bsize) {
-        ll i1 = r - b0 * bsize;
-        double a1 = sts[b0].query(i0, i1) / pow(x, i0);
-        DLOGK(a1, i0, i1, pow(x, i0));
-        cout << zero_shift * a1 << "\n";
-      }else {
-        double a1 = sts[b0].query(i0, bsize) / pow(x, i0);
-        ll i2 = r - (b0 + 1) * bsize;
-        if (i2 >= bsize) i2 = bsize;
-        double a2 = sts[b0 + 1].query(0, i2) * pow(x, bsize - i0);
-        DLOGK(a1, a2, bsize, i0, pow(x, bsize - i0));
-        cout << zero_shift * (a1 + a2) << "\n";
-      }
-    }
+    cout << st.query(l, r).first << "\n";
   }
 
   return 0;

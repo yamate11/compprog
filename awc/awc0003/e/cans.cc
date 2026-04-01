@@ -12,378 +12,104 @@ using pll = pair<ll, ll>;
 #define SIZE(v) ((ll)((v).size()))
 #define REPOUT(i, a, b, exp, sep) REP(i, (a), (b)) cout << (exp) << (i + 1 == (b) ? "" : (sep)); cout << "\n"
 
-// @@ !! LIM(f:updMaxMin debug)
+// @@ !! LIM(fastTransform)
 
-// ---- inserted function f:updMaxMin from util.cc
+// ---- inserted library file fastTransform.cc
+
+template <typename T>
+int trans_resize(vector<T>& x, vector<T>& y) {
+  int n = max(x.size(), y.size());
+  int p = 31 - __builtin_clz(n);
+  int t = 1 << p;
+  if (n > t) t *= 2;
+  x.resize(t);
+  y.resize(t);
+  return t;
+}
+
 template<typename T>
-bool updMax(T& tmax, const T& x) {
-  if (x > tmax) { tmax = x; return true;  }
-  else          {           return false; }
-}
-template<typename T>
-bool updMin(T& tmin, const T& x) {
-  if (x < tmin) { tmin = x; return true;  }
-  else          {           return false; }
-}
-// ---- end f:updMaxMin
+int trans_resize(vector<T>& x) { return trans_resize(x, x); }
 
-// ---- inserted function f:<< from util.cc
-
-// declarations
-
-template <typename T1, typename T2>
-ostream& operator<< (ostream& os, const pair<T1,T2>& p);
-
-template <typename T1, typename T2, typename T3>
-ostream& operator<< (ostream& os, const tuple<T1,T2,T3>& t);
-
-template <typename T1, typename T2, typename T3, typename T4>
-ostream& operator<< (ostream& os, const tuple<T1,T2,T3,T4>& t);
-
-template <typename T1, typename T2, typename T3, typename T4, typename T5>
-ostream& operator<< (ostream& os, const tuple<T1,T2,T3,T4,T5>& t);
-
-template <typename T1, typename T2, typename T3, typename T4, typename T5, typename T6>
-ostream& operator<< (ostream& os, const tuple<T1,T2,T3,T4,T5,T6>& t);
-
-template <typename T>
-ostream& operator<< (ostream& os, const vector<T>& v);
-
-template <typename T, size_t N>
-ostream& operator<< (ostream& os, const array<T, N>& v);
-
-template <typename T, typename C>
-ostream& operator<< (ostream& os, const set<T, C>& v);
-
-template <typename T, typename C>
-ostream& operator<< (ostream& os, const unordered_set<T, C>& v);
-
-template <typename T, typename C>
-ostream& operator<< (ostream& os, const multiset<T, C>& v);
-
-template <typename T1, typename T2, typename C>
-ostream& operator<< (ostream& os, const map<T1, T2, C>& mp);
-
-template <typename T1, typename T2, typename C>
-ostream& operator<< (ostream& os, const unordered_map<T1, T2, C>& mp);
-
-template <typename T, typename T2>
-ostream& operator<< (ostream& os, const queue<T, T2>& orig);
-
-template <typename T, typename T2>
-ostream& operator<< (ostream& os, const deque<T, T2>& orig);
-
-template <typename T, typename T2, typename T3>
-ostream& operator<< (ostream& os, const priority_queue<T, T2, T3>& orig);
-
-template <typename T>
-ostream& operator<< (ostream& os, const stack<T>& st);
-
-#if __cplusplus >= 201703L
-template <typename T>
-ostream& operator<< (ostream& os, const optional<T>& t);
-#endif
-
-ostream& operator<< (ostream& os, int8_t x);
-
-ostream& operator<< (ostream& os, const __int128& x);
-
-// definitions
-
-template <typename T1, typename T2>
-ostream& operator<< (ostream& os, const pair<T1,T2>& p) {
-  os << "(" << p.first << ", " << p.second << ")";
-  return os;
-}
-
-template <typename T1, typename T2, typename T3>
-ostream& operator<< (ostream& os, const tuple<T1,T2,T3>& t) {
-  os << "(" << get<0>(t) << ", " << get<1>(t)
-     << ", " << get<2>(t) << ")";
-  return os;
-}
-
-template <typename T1, typename T2, typename T3, typename T4>
-ostream& operator<< (ostream& os, const tuple<T1,T2,T3,T4>& t) {
-  os << "(" << get<0>(t) << ", " << get<1>(t)
-     << ", " << get<2>(t) << ", " << get<3>(t) << ")";
-  return os;
-}
-
-template <typename T1, typename T2, typename T3, typename T4, typename T5>
-ostream& operator<< (ostream& os, const tuple<T1,T2,T3,T4,T5>& t) {
-  os << "(" << get<0>(t) << ", " << get<1>(t)
-     << ", " << get<2>(t) << ", " << get<3>(t) << ", " << get<4>(t) << ")";
-  return os;
-}
-
-template <typename T1, typename T2, typename T3, typename T4, typename T5, typename T6>
-ostream& operator<< (ostream& os, const tuple<T1,T2,T3,T4,T5,T6>& t) {
-  os << "(" << get<0>(t) << ", " << get<1>(t)
-     << ", " << get<2>(t) << ", " << get<3>(t) << ", " << get<4>(t) << ", " << get<5>(t) << ")";
-  return os;
-}
-
-template <typename T>
-ostream& operator<< (ostream& os, const vector<T>& v) {
-  os << '[';
-  for (auto it = v.begin(); it != v.end(); it++) {
-    if (it != v.begin()) os << ", ";
-    os << *it;
-  }
-  os << ']';
-
-  return os;
-}
-
-template <typename T, size_t N>
-ostream& operator<< (ostream& os, const array<T, N>& v) {
-  os << '[';
-  for (auto it = v.begin(); it != v.end(); it++) {
-    if (it != v.begin()) os << ", ";
-    os << *it;
-  }
-  os << ']';
-
-  return os;
-}
-
-template <typename T, typename C>
-ostream& operator<< (ostream& os, const set<T, C>& v) {
-  os << '{';
-  for (auto it = v.begin(); it != v.end(); it++) {
-    if (it != v.begin()) os << ", ";
-    os << *it;
-  }
-  os << '}';
-
-  return os;
-}
-
-template <typename T, typename C>
-ostream& operator<< (ostream& os, const unordered_set<T, C>& v) {
-  os << '{';
-  for (auto it = v.begin(); it != v.end(); it++) {
-    if (it != v.begin()) os << ", ";
-    os << *it;
-  }
-  os << '}';
-
-  return os;
-}
-
-template <typename T, typename C>
-ostream& operator<< (ostream& os, const multiset<T, C>& v) {
-  os << '{';
-  for (auto it = v.begin(); it != v.end(); it++) {
-    if (it != v.begin()) os << ", ";
-    os << *it;
-  }
-  os << '}';
-
-  return os;
-}
-
-template <typename T1, typename T2, typename C>
-ostream& operator<< (ostream& os, const map<T1, T2, C>& mp) {
-  os << '[';
-  for (auto it = mp.begin(); it != mp.end(); it++) {
-    if (it != mp.begin()) os << ", ";
-    os << it->first << ": " << it->second;
-  }
-  os << ']';
-
-  return os;
-}
-
-template <typename T1, typename T2, typename C>
-ostream& operator<< (ostream& os, const unordered_map<T1, T2, C>& mp) {
-  os << '[';
-  for (auto it = mp.begin(); it != mp.end(); it++) {
-    if (it != mp.begin()) os << ", ";
-    os << it->first << ": " << it->second;
-  }
-  os << ']';
-
-  return os;
-}
-
-template <typename T, typename T2>
-ostream& operator<< (ostream& os, const queue<T, T2>& orig) {
-  queue<T, T2> que(orig);
-  bool first = true;
-  os << '[';
-  while (!que.empty()) {
-    T x = que.front(); que.pop();
-    if (!first) os << ", ";
-    os << x;
-    first = false;
-  }
-  return os << ']';
-}
-
-template <typename T, typename T2>
-ostream& operator<< (ostream& os, const deque<T, T2>& orig) {
-  deque<T, T2> que(orig);
-  bool first = true;
-  os << '[';
-  while (!que.empty()) {
-    T x = que.front(); que.pop_front();
-    if (!first) os << ", ";
-    os << x;
-    first = false;
-  }
-  return os << ']';
-}
-
-template <typename T, typename T2, typename T3>
-ostream& operator<< (ostream& os, const priority_queue<T, T2, T3>& orig) {
-  priority_queue<T, T2, T3> pq(orig);
-  bool first = true;
-  os << '[';
-  while (!pq.empty()) {
-    T x = pq.top(); pq.pop();
-    if (!first) os << ", ";
-    os << x;
-    first = false;
-  }
-  return os << ']';
-}
-
-template <typename T>
-ostream& operator<< (ostream& os, const stack<T>& st) {
-  stack<T> tmp(st);
-  os << '[';
-  bool first = true;
-  while (!tmp.empty()) {
-    T& t = tmp.top();
-    if (first) first = false;
-    else os << ", ";
-    os << t;
-    tmp.pop();
-  }
-  os << ']';
-  return os;
-}
-
-#if __cplusplus >= 201703L
-template <typename T>
-ostream& operator<< (ostream& os, const optional<T>& t) {
-  if (t.has_value()) os << "v(" << t.value() << ")";
-  else               os << "nullopt";
-  return os;
-}
-#endif
-
-ostream& operator<< (ostream& os, int8_t x) {
-  os << (int32_t)x;
-  return os;
-}
-
-// for Enum type; just displays ordinals.
-template <typename E>
-typename std::enable_if<std::is_enum<E>::value, std::ostream&>::type
-operator<<(std::ostream& os, E e) {
-    return os << static_cast<typename std::underlying_type<E>::type>(e);
-}
-
-// This is a very ad-hoc implementation...
-// Known problem: "1 << 127" cannot be handled.
-ostream& operator<<(ostream& os, const __int128& v) {
-  unsigned __int128 a = v < 0 ? -v : v;
-  ll i = 0;
-  string s(64, ' ');
-  if (v == 0) {
-    s[i++] = '0';
-  }else {
-    while (a > 0) {
-      s[i++] = '0' + (char)(a % 10);
-      a /= 10;
+template<typename T, int p1, int p2, int p3, int p4, int div>
+void _trans_form(vector<T>& f) {
+  int n = f.size();
+  for (int i = 1; i < n; i *= 2) {
+    for (int j = 0; j < n; j++) {
+      if ((j & i) == 0) {
+        T x = f[j];
+        T y = f[j | i];
+        f[j    ] = (p1 * x + p2 * y) / div;
+        f[j | i] = (p3 * x + p4 * y) / div;
+      }
     }
   }
-  if (v < 0) {
-    s[i++] = '-';
+}
+
+template <typename T>
+void hadamard(vector<T>& f) { _trans_form<T, 1, 1, 1, -1, 1>(f); }
+
+template <typename T>
+void inv_hadamard(vector<T>& f) { _trans_form<T, 1, 1, 1, -1, 2>(f); }
+
+template<bool IS_LOWER, bool IS_ZETA>
+void gen_zeta(auto& vec) {
+  int n = countr_zero(vec.size());
+  assert(ssize(vec) == (1LL << n));
+  for (int i = 0; i < n; i++) {
+    for (int x = 0; x < ssize(vec); x++) {
+      if ((x >> i & 1) == IS_LOWER) { vec[x] += (IS_ZETA ? 1 : -1) * vec[x ^ 1LL << i]; }
+    }
   }
-  s.erase(s.begin() + i, s.end());
-  reverse(s.begin(), s.end());
-  os << s;
-  return os;
+}
+void zeta_lower(   auto& vec) { return gen_zeta<true,  true >(vec); }
+void moebius_lower(auto& vec) { return gen_zeta<true,  false>(vec); }
+void zeta_upper(   auto& vec) { return gen_zeta<false, true >(vec); }
+void moebius_upper(auto& vec) { return gen_zeta<false, false>(vec); }
+
+template<typename T>
+void _conv_dest_form(vector<T>& x, vector<T>& y,
+                     void fwd(vector<T>&), void bwd(vector<T>&)) {
+  int t = trans_resize(x, y);
+  fwd(x);
+  fwd(y);
+  for (int i = 0; i < t; i++) x[i] *= y[i];
+  bwd(x);
 }
 
-
-// ---- end f:<<
-
-// ---- inserted library file debug.cc
-template <class... Args>
-string dbgFormat(const char* fmt, Args... args) {
-  size_t len = snprintf(nullptr, 0, fmt, args...);
-  char buf[len + 1];
-  snprintf(buf, len + 1, fmt, args...);
-  return string(buf);
+template<typename T>
+void xor_conv_dest(vector<T>& x, vector<T>& y) {
+  _conv_dest_form(x, y, hadamard, inv_hadamard);
 }
 
-template <class Head>
-void dbgLog(bool with_nl, Head&& head) {
-  cerr << head;
-  if (with_nl) cerr << endl;
+template<typename T>
+void and_conv_dest(vector<T>& x, vector<T>& y) {
+  _conv_dest_form(x, y, zeta_upper, moebius_upper);
 }
 
-template <class Head, class... Tail>
-void dbgLog(bool with_nl, Head&& head, Tail&&... tail)
-{
-  cerr << head << " ";
-  dbgLog(with_nl, forward<Tail>(tail)...);
+template<typename T>
+void or_conv_dest(vector<T>& x, vector<T>& y) {
+  _conv_dest_form(x, y, zeta_lower, moebius_lower);
 }
 
-#if DEBUG
-  #define DLOG(...)        dbgLog(true, __VA_ARGS__)
-  #define DLOGNNL(...)     dbgLog(false, __VA_ARGS__)
-  #define DFMT(...)        cerr << dbgFormat(__VA_ARGS__) << endl
-  #define DCALL(func, ...) func(__VA_ARGS__)
-#else
-  #define DLOG(...)
-  #define DLOGNNL(...)
-  #define DFMT(...)
-  #define DCALL(func, ...)
-#endif
+template <typename T>
+vector<T> xor_conv(vector<T> x, vector<T> y) {
+  xor_conv_dest(x, y);
+  return x;
+}
 
-/*
-#if DEBUG_LIB
-  #define DLOG_LIB(...)        dbgLog(true, __VA_ARGS__)
-  #define DLOGNNL_LIB(...)     dbgLog(false, __VA_ARGS__)
-  #define DFMT_LIB(...)        cerr << dbgFormat(__VA_ARGS__) << endl
-  #define DCALL_LIB(func, ...) func(__VA_ARGS__)
-#else
-  #define DLOG_LIB(...)
-  #define DFMT_LIB(...)
-  #define DCALL_LIB(func, ...)
-#endif
-*/
+template <typename T>
+vector<T> and_conv(vector<T> x, vector<T> y) {
+  and_conv_dest(x, y);
+  return x;
+}
 
-#define DUP1(E1)       #E1 "=", E1
-#define DUP2(E1,E2)    DUP1(E1), DUP1(E2)
-#define DUP3(E1,...)   DUP1(E1), DUP2(__VA_ARGS__)
-#define DUP4(E1,...)   DUP1(E1), DUP3(__VA_ARGS__)
-#define DUP5(E1,...)   DUP1(E1), DUP4(__VA_ARGS__)
-#define DUP6(E1,...)   DUP1(E1), DUP5(__VA_ARGS__)
-#define DUP7(E1,...)   DUP1(E1), DUP6(__VA_ARGS__)
-#define DUP8(E1,...)   DUP1(E1), DUP7(__VA_ARGS__)
-#define DUP9(E1,...)   DUP1(E1), DUP8(__VA_ARGS__)
-#define DUP10(E1,...)   DUP1(E1), DUP9(__VA_ARGS__)
-#define DUP11(E1,...)   DUP1(E1), DUP10(__VA_ARGS__)
-#define DUP12(E1,...)   DUP1(E1), DUP11(__VA_ARGS__)
-#define GET_MACRO(_1,_2,_3,_4,_5,_6,_7,_8,_9,_10,_11,_12,NAME,...) NAME
-#define DUP(...)          GET_MACRO(__VA_ARGS__, DUP12, DUP11, DUP10, DUP9, DUP8, DUP7, DUP6, DUP5, DUP4, DUP3, DUP2, DUP1)(__VA_ARGS__)
-#define DLOGK(...)        DLOG(DUP(__VA_ARGS__))
-#define DLOGKL(lab, ...)  DLOG(lab, DUP(__VA_ARGS__))
+template <typename T>
+vector<T> or_conv(vector<T> x, vector<T> y) {
+  or_conv_dest(x, y);
+  return x;
+}
 
-#if DEBUG_LIB
-  #define DLOG_LIB   DLOG
-  #define DLOGK_LIB  DLOGK
-  #define DLOGKL_LIB DLOGKL
-#endif
-
-// ---- end debug.cc
+// ---- end fastTransform.cc
 
 // @@ !! LIM -- end mark --
 
@@ -393,38 +119,31 @@ int main(/* int argc, char *argv[] */) {
   cout << setprecision(20);
 
   ll N, M; cin >> N >> M;
-  // @InpVec(N, W) [jyrV7yr3]
+  // @InpVec(N, W) [0Ji2yTtt]
   auto W = vector(N, ll());
   for (int i = 0; i < N; i++) { ll v; cin >> v; W[i] = v; }
-  // @End [jyrV7yr3]
-  // @InpVec(M, C) [t2KrDlI9]
+  // @End [0Ji2yTtt]
+  // @InpVec(M, C) [mOFKTGEn]
   auto C = vector(M, ll());
   for (int i = 0; i < M; i++) { ll v; cin >> v; C[i] = v; }
-  // @End [t2KrDlI9]
+  // @End [mOFKTGEn]
 
-  vector<pll> A(1LL << N, pll(M, 0));
-  A[0] = pll(0, 0);
-  REP(x, 1, 1LL << N) {
-    REP(i, 0, N) if (x >> i & 1) {
-      ll y = x ^ (1LL << i);
-      auto [idx, used] = A[y];
-      if (idx < M) {
-        if (used + W[i] <= C[idx]) { updMin(A[x], pll(idx, used + W[i])); }
-        else {
-          for (idx++; idx < M; idx++) {
-            if (W[i] <= C[idx]) {
-              updMin(A[x], pll(idx, W[i]));
-              break;
-            }
-          }
-        }
-      }
-    }
-    DLOGK(x, A[x]);
+  vector<ll> V(1LL << N, 0LL);
+  REP(x, 0, 1LL << N) {
+    ll s = 0;
+    REP(i, 0, N) if (x >> i & 1) s += W[i];
+    V[x] = s;
   }
-  if (A[(1LL << N) - 1].first < M) cout << "Yes\n";
-  else cout << "No\n";
 
+  vector<ll> tbl(1LL << N, 0);
+  tbl[0] = 1;
+  REP(i, 0, M) {
+    vector loc(1LL << N, 0LL);
+    REP(x, 0, 1LL << N) if (V[x] <= C[i]) loc[x] = 1;
+    tbl = or_conv(tbl, loc);
+    REP(x, 0, 1LL << N) if (tbl[x] > 0) tbl[x] = 1;
+  }
+  cout << (tbl[(1LL << N) - 1] > 0 ? "Yes\n" : "No\n");
   return 0;
 }
 
