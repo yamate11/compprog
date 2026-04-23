@@ -1,0 +1,7 @@
+6
+PUT 1
+LOOK
+PUT 2
+LOOK
+PUT 4
+LOOK

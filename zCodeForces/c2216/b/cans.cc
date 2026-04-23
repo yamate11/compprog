@@ -1,0 +1,46 @@
+#include <bits/stdc++.h>
+#include <cassert>
+using namespace std;
+using ll = long long int;
+using u64 = unsigned long long;
+using pll = pair<ll, ll>;
+// #include <atcoder/all>
+// using namespace atcoder;
+#define REP(i, a, b) for (ll i = (a); i < (b); i++)
+#define REPrev(i, a, b) for (ll i = (a); i >= (b); i--)
+#define ALL(coll) (coll).begin(), (coll).end()
+#define SIZE(v) ((ll)((v).size()))
+#define REPOUT(i, a, b, exp, sep) REP(i, (a), (b)) cout << (exp) << (i + 1 == (b) ? "" : (sep)); cout << "\n"
+
+// @@ !! LIM()
+
+int main(/* int argc, char *argv[] */) {
+  ios_base::sync_with_stdio(false);
+  cin.tie(nullptr);
+  cout << setprecision(20);
+
+  auto solve = [&]() -> void {
+    ll t, h, u; cin >> t >> h >> u;
+    ll ans = 3 * (t + h + u);
+    ll m = min(t, u);
+    ans -= 2 * m;
+    t -= m;
+    u -= m;
+    ll o = min(t / 2, h);
+    ans -= 2 * o;
+    t -= 2 * o;
+    h -= o;
+    if (h > 0 and t > 0) {
+      ans -= 1;
+    }else if (t > 0) {
+      ans -= t - 1;
+    }
+    cout << ans << "\n";
+  };
+
+  ll T; cin >> T;
+  for (ll _t = 0; _t < T; _t++) solve();
+
+  return 0;
+}
+

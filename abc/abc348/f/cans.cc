@@ -12,18 +12,9 @@ using pll = pair<ll, ll>;
 #define SIZE(v) ((ll)((v).size()))
 #define REPOUT(i, a, b, exp, sep) REP(i, (a), (b)) cout << (exp) << (i + 1 == (b) ? "" : (sep)); cout << "\n"
 
-// @@ !! LIM(input)
+// @@ !! LIM()
 
-// ---- inserted library file input.cc
-
-// The contents are empty.
-
-// ---- end input.cc
-
-// @@ !! LIM -- end mark --
-
-constexpr int MMAX = 2000;
-constexpr int AMAX = 1000;
+using mybs = bitset<2000>;
 
 int main(/* int argc, char *argv[] */) {
   ios_base::sync_with_stdio(false);
@@ -31,22 +22,23 @@ int main(/* int argc, char *argv[] */) {
   cout << setprecision(20);
 
   ll N, M; cin >> N >> M;
-  // @InpGrid(N, M, A) [vgRLHJhL]
+  // @InpGrid(N, M, A) [JfpjsDIJ]
   auto A = vector(N, vector(M, ll()));
   for (int i = 0; i < N; i++) for (int j = 0; j < M; j++) { ll v; cin >> v; A[i][j] = v; }
-  // @End [vgRLHJhL]
+  // @End [JfpjsDIJ]
 
-  vector C(AMAX, bitset<MMAX>());
-
-  vector B(N, bitset<MMAX>());
-  REP(k, 0, M) {
-    REP(i, 0, N) C[A[i][k]].set(i);
-    REP(i, 0, N) B[i] ^= C[A[i][k]];
-    REP(i, 0, N) C[A[i][k]].reset(i);
+  vector<mybs> bs(N);
+  REP(j, 0, M) {
+    vector<mybs> B(1000);
+    REP(i, 0, N) B[A[i][j]][i] = true;
+    REP(i, 0, N) if (B[A[i][j]].count() >= 2) bs[i] ^= B[A[i][j]];
   }
   ll ans = 0;
-  REP(i, 0, N) REP(j, i + 1, N) if (B[i][j]) ans++;
-  cout << ans << endl;
+  REP(i, 0, N) {
+    bs[i][i] = false;
+    ans += bs[i].count();
+  }
+  cout << ans / 2 << endl;
 
   return 0;
 }

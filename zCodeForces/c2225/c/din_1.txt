@@ -1,0 +1,16 @@
+5
+1
+R
+B
+2
+BR
+BR
+3
+RBR
+BRB
+4
+RRBB
+BBRB
+5
+RBRBR
+BBBRB

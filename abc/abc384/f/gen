@@ -68,8 +68,8 @@ def main():
 #           (l, r) = sorted(sample(range(1, n + 1), 2))
 
 def onecase(case):
-    N = 10
-    lst = [randrange(1, 20) for _ in range(N)]
+    N = randrange(1, 9)
+    lst = [randrange(1, 10 ** 1 + 1) for _ in range(N)]
     case.p(N)
     case.p(lst)
 

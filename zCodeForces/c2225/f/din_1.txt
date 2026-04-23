@@ -1,0 +1,11 @@
+5
+9 3 1
+abcccabba
+9 3 2
+abcccabba
+9 3 3
+abcccabba
+9 3 4
+abcccabba
+11 2 5
+abracadabra

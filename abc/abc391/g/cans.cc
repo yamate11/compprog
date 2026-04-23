@@ -12,7 +12,7 @@ using pll = pair<ll, ll>;
 #define SIZE(v) ((ll)((v).size()))
 #define REPOUT(i, a, b, exp, sep) REP(i, (a), (b)) cout << (exp) << (i + 1 == (b) ? "" : (sep)); cout << "\n"
 
-// @@ !! LIM(mod power debug forall)
+// @@ !! LIM(mod debug)
 
 // ---- inserted library file algOp.cc
 
@@ -386,6 +386,7 @@ public:
     for (int i = nMax; i >= 1; i--) vInvFact[i-1] = i * vInvFact[i];
   }
   T fact(int n) { return vFact[n]; }
+  T inv_fact(int n) { return vInvFact[n]; }
   T binom(int n, int r) {
     if (r < 0 || r > n) return (T)0;
     return vFact[n] * vInvFact[r] * vInvFact[n-r];
@@ -403,76 +404,6 @@ using FpA = FpG<primeA, ll>;
 using FpB = FpG<primeB, ll>;
 
 // ---- end mod.cc
-
-// ---- inserted library file power.cc
-
-template<typename T>
-T power(const T& a, ll b) {
-  auto two_pow = a;
-  auto ret = one<T>(a);
-  while (b > 0) {
-    if (b & 1LL) ret *= two_pow;
-    two_pow *= two_pow;
-    b >>= 1;
-  }
-  return ret;
-}
-
-// a >= 0, b >= 0;  If overflow, returns -1.
-ll llpower(ll a, ll b) {  
-  if (b == 0) return 1;   // 0^0 == 1
-  if (b == 1) return a;
-  if (a == 0) return 0;
-  if (a == 1) return 1;
-  if (a == 2) {
-    if (b >= 63) return -1;
-    else return 1LL << b;
-  }
-  if (b == 2) {
-    ll ret;
-    if (__builtin_smulll_overflow(a, a, &ret)) return -1;
-    return ret;
-  }
-  ll two_pow = a;
-  ll ret = 1;
-  assert(b > 0);
-  while (true) {
-    if (b & 1LL) {
-      if (__builtin_smulll_overflow(ret, two_pow, &ret)) return -1;
-    }
-    b >>= 1;
-    if (b == 0) break;
-    if (__builtin_smulll_overflow(two_pow, two_pow, &two_pow)) return -1;
-  }
-  return ret;
-}
-
-// a >= 0;   Returns x s.t. x*x <= a < (x+1)*(x+1)
-ll llsqrt(ll a) {
-  ll x = llround(sqrt((double)a));
-  ll y;
-  if (__builtin_smulll_overflow(x, x, &y) or a < y) return x - 1;
-  else return x;
-}
-
-// a >= 0, m >= 2;  Returns x s.t. x^m <= a < (x + 1)^m
-ll llroot(ll a, ll m) {
-  ll x = llround(pow(a, 1.0 / m));
-  ll y = llpower(x, m);
-  if (y == -1 or a < y) return x - 1;
-  else return x;
-}
-
-//  base >= 2, a >= 1;  Returns x s.t. base^{x} <= a < base^{x + 1}
-ll lllog(ll base, ll a) {
-  ll x = llround(log(a) / log(base));
-  ll y = llpower(base, x);
-  if (y == -1 or a < y) return x - 1;
-  else return x;
-}
-
-
-// ---- end power.cc
 
 // ---- inserted function f:<< from util.cc
 
@@ -495,6 +426,9 @@ ostream& operator<< (ostream& os, const tuple<T1,T2,T3,T4,T5,T6>& t);
 
 template <typename T>
 ostream& operator<< (ostream& os, const vector<T>& v);
+
+template <typename T, size_t N>
+ostream& operator<< (ostream& os, const array<T, N>& v);
 
 template <typename T, typename C>
 ostream& operator<< (ostream& os, const set<T, C>& v);
@@ -570,6 +504,18 @@ ostream& operator<< (ostream& os, const tuple<T1,T2,T3,T4,T5,T6>& t) {
 
 template <typename T>
 ostream& operator<< (ostream& os, const vector<T>& v) {
+  os << '[';
+  for (auto it = v.begin(); it != v.end(); it++) {
+    if (it != v.begin()) os << ", ";
+    os << *it;
+  }
+  os << ']';
+
+  return os;
+}
+
+template <typename T, size_t N>
+ostream& operator<< (ostream& os, const array<T, N>& v) {
   os << '[';
   for (auto it = v.begin(); it != v.end(); it++) {
     if (it != v.begin()) os << ", ";
@@ -720,6 +666,7 @@ operator<<(std::ostream& os, E e) {
 }
 
 // This is a very ad-hoc implementation...
+// Known problem: "1 << 127" cannot be handled.
 ostream& operator<<(ostream& os, const __int128& v) {
   unsigned __int128 a = v < 0 ? -v : v;
   ll i = 0;
@@ -745,6 +692,8 @@ ostream& operator<<(ostream& os, const __int128& v) {
 // ---- end f:<<
 
 // ---- inserted library file debug.cc
+// https://github.com/yamate11/compprog-clib/blob/master/debug.cc
+
 template <class... Args>
 string dbgFormat(const char* fmt, Args... args) {
   size_t len = snprintf(nullptr, 0, fmt, args...);
@@ -816,33 +765,6 @@ void dbgLog(bool with_nl, Head&& head, Tail&&... tail)
 
 // ---- end debug.cc
 
-// ---- inserted library file forall.cc
-
-#define EX_REP_LL(i, from, to) for (ll i = (from); i < (to); i++)
-#define EX_REP_RB(x, coll) for (auto x : coll)
-#define EXGEN(rep_part, cond, yes, no_behaviour) ([&]() { rep_part if (cond) return (yes); no_behaviour; }())
-#define EXISTS_BASE(rep_part, cond) EXGEN(rep_part, cond, true, return false)
-#define EXFIND_BASE(rep_part, cond, t) EXGEN(rep_part, cond, t, assert(0))
-#define EXFIND_D_BASE(rep_part, cond, t, def) EXGEN(rep_part, cond, t, return def)
-
-#define EXISTS(i, from, to, cond) EXISTS_BASE(EX_REP_LL(i, from, to), cond)
-#define FORALL(i, from, to, cond) (not EXISTS(i, from, to, not (cond)))
-#define EXFIND(i, from, to, cond) EXFIND_BASE(EX_REP_LL(i, from, to), cond, i)
-#define EXFIND_D(i, from, to, cond, def) EXFIND_D_BASE(EX_REP_LL(i, from, to), cond, i, def)
-
-#define EXISTS_C(x, coll, cond) EXISTS_BASE(EX_REP_RB(x, coll), cond)
-#define FORALL_C(x, coll, cond) (not EXISTS_C(x, coll, not (cond)))
-#define EXFIND_C(x, coll, cond) EXFIND_BASE(EX_REP_RB(x, coll), cond, x)
-#define EXFIND_D_C(x, coll, cond, def) EXFIND_D_BASE(EX_REP_RB(x, coll), cond, x, def)
-
-#define COUNT_BASE(rep_part, cond) ([&](){ ll ret = 0; rep_part if (cond) ret++; return ret; }())
-#define COUNT(i, from, to, cond) COUNT_BASE(EX_REP_LL(i, from, to), cond)
-#define COUNT_C(x, coll, cond) COUNT_BASE(EX_REP_RB(x, coll), cond)
-
-#define IMPLIES(a, b) (not (a) or (b))
-
-// ---- end forall.cc
-
 // @@ !! LIM -- end mark --
 
 using Fp = FpB;
@@ -852,54 +774,45 @@ int main(/* int argc, char *argv[] */) {
   cin.tie(nullptr);
   cout << setprecision(20);
 
+#if DEBUG
+  ll n_alph = 26;
+#else
+  ll n_alph = 26;
+#endif
+
   ll N, M; cin >> N >> M;
   string S; cin >> S;
   
-  auto enc = [&](const auto& vec) -> ll {
-    ll x = 0;
-    REP(i, 0, N) {
-      if (vec[i + 1] > vec[i]) x |= (1LL << i);
-    }
-    return x;
-  };
-  auto dec = [&](ll x) {
-    vector ret(N + 1, 0LL);
-    REP(i, 0, N) ret[i + 1] = ret[i] + (x >> i & 1);
-    return ret;
-  };
-
-  vector pc(1LL << N, vector(26, 0LL));
+  vector tbl(1LL<< N, vector(n_alph, 0LL));
   REP(x, 0, 1LL << N) {
-    REP(d, 0, 26) {
-      auto prev = dec(x);
-      vector<ll> cur(N + 1);
-      REP(i, 0, N) {
-        cur[i + 1] = max(cur[i], prev[i + 1]);
-        if (S[i] - 'a' == d) cur[i + 1] = max(cur[i + 1], prev[i] + 1);
+    vector v(N + 1, 0LL);
+    REP(i, 0, N) v[i + 1] = v[i] + (x >> i & 1);
+    REP(d, 0, n_alph) {
+      vector w(N + 1, 0LL);
+      REP(i, 1, N + 1) {
+        if (S[i - 1] - 'a' == d) w[i] = v[i - 1] + 1;
+        else w[i] = max(v[i], w[i - 1]);
       }
-      DLOGK(prev, (char)('a' + d), cur);
-      pc[x][d] = enc(cur);
+      tbl[x][d] = 0;
+      REP(i, 0, N) if (w[i + 1] - w[i] > 0) tbl[x][d] |= 1LL << i;
+      DLOGK(x, d, v, w);
+      DLOGK(x, d, tbl[x][d]);
     }
   }
-  vector tbl_init(1LL << N, Fp(0));
-  auto tbl = tbl_init;
-  tbl[0] = 1;
+
+  vector vec_init(1LL << N, Fp(0));
+  auto vec = vec_init;
+  vec[0] = 1;
   REP(i, 0, M) {
-    auto prev = move(tbl);
-    tbl = tbl_init;
-    REP(x, 0, 1LL << N) {
-      REP(d, 0, 26) {
-        tbl[pc[x][d]] += prev[x];
-      }
-    }
+    auto prev = move(vec);
+    vec = vec_init;
+    REP(x, 0, 1LL << N) REP(d, 0, n_alph) vec[tbl[x][d]] += prev[x];
   }
   vector ans(N + 1, Fp(0));
-  REP(x, 0, 1LL<< N) {
-    auto vec = dec(x);
-    DLOGK(vec, x, tbl[x]);
-    ans[vec.back()] += tbl[x];
+  REP(x, 0, 1LL << N) {
+    ans[popcount((u64)x)] += vec[x];
   }
-  REPOUT(k, 0, N + 1, ans[k], " ");
+  REPOUT(i, 0, N + 1, ans[i], " ");
 
   return 0;
 }

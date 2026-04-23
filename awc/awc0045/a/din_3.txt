@@ -1,0 +1,11 @@
+10
+normal 100000
+half 99999
+normal 50000
+half 1
+normal 12345
+half 67890
+normal 1
+half 100000
+normal 99999
+half 55555

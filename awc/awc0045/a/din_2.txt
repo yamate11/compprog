@@ -1,0 +1,6 @@
+5
+normal 2000
+half 1999
+normal 500
+half 750
+normal 1200

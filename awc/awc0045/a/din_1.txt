@@ -1,0 +1,4 @@
+3
+normal 1000
+half 500
+half 300

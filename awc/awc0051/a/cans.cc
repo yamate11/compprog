@@ -1,0 +1,44 @@
+#include <bits/stdc++.h>
+#include <cassert>
+using namespace std;
+using ll = long long int;
+using u64 = unsigned long long;
+using pll = pair<ll, ll>;
+// #include <atcoder/all>
+// using namespace atcoder;
+#define REP(i, a, b) for (ll i = (a); i < (b); i++)
+#define REPrev(i, a, b) for (ll i = (a); i >= (b); i--)
+#define ALL(coll) (coll).begin(), (coll).end()
+#define SIZE(v) ((ll)((v).size()))
+#define REPOUT(i, a, b, exp, sep) REP(i, (a), (b)) cout << (exp) << (i + 1 == (b) ? "" : (sep)); cout << "\n"
+
+// @@ !! LIM()
+
+int main(/* int argc, char *argv[] */) {
+  ios_base::sync_with_stdio(false);
+  cin.tie(nullptr);
+  cout << setprecision(20);
+
+  ll N, M, K; cin >> N >> M >> K;
+  // @InpVec(N, P) [1YnlIH6i]
+  auto P = vector(N, ll());
+  for (int i = 0; i < N; i++) { ll v; cin >> v; P[i] = v; }
+  // @End [1YnlIH6i]
+  // @InpVec(M, L) [rZtwQ727]
+  auto L = vector(M, ll());
+  for (int i = 0; i < M; i++) { ll v; cin >> v; L[i] = v; }
+  // @End [rZtwQ727]
+  // @InpVec(K, T, dec=1) [ocxUa3EM]
+  auto T = vector(K, ll());
+  for (int i = 0; i < K; i++) { ll v; cin >> v; v -= 1; T[i] = v; }
+  // @End [ocxUa3EM]
+
+  ll lev = 0;
+  REP(i, 0, K) lev = max(lev, L[T[i]]);
+  ll ans = 0;
+  REP(i, 0, N) if (P[i] <= lev) ans += P[i];
+  cout << ans << endl;
+
+  return 0;
+}
+
