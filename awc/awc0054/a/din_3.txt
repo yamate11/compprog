@@ -1,0 +1,13 @@
+12
+alpha
+atom
+angle
+beta
+banana
+boat
+boat
+cat
+circle
+cider
+apple
+ant

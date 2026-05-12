@@ -1,0 +1,6 @@
+5
+apple
+apricot
+banana
+avocado
+berry

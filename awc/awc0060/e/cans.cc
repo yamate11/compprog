@@ -1,0 +1,586 @@
+#include <bits/stdc++.h>
+#include <cassert>
+using namespace std;
+using ll = long long int;
+using u64 = unsigned long long;
+using pll = pair<ll, ll>;
+// #include <atcoder/all>
+// using namespace atcoder;
+#define REP(i, a, b) for (ll i = (a); i < (b); i++)
+#define REPrev(i, a, b) for (ll i = (a); i >= (b); i--)
+#define ALL(coll) (coll).begin(), (coll).end()
+#define SIZE(v) ((ll)((v).size()))
+#define REPOUT(i, a, b, exp, sep) REP(i, (a), (b)) cout << (exp) << (i + 1 == (b) ? "" : (sep)); cout << "\n"
+
+// @@ !! LIM(mod doubling)
+
+// ---- inserted library file algOp.cc
+
+// Common definitions
+//    zero, one, inverse
+
+template<typename T>
+const T zero(const T& t) {
+  if constexpr (is_integral_v<T> || is_floating_point_v<T>) { return (T)0; }
+  else { return t.zero(); }
+}
+
+template<typename T>
+const T one(const T& t) {
+  if constexpr (is_integral_v<T> || is_floating_point_v<T>) { return (T)1; }
+  else { return t.one(); }
+}
+
+template<typename T>
+const T inverse(const T& t) {
+  if constexpr (is_floating_point_v<T>) { return 1.0 / t; }
+  else { return t.inverse(); }
+}
+
+#ifdef BOOST_MP_CPP_INT_HPP
+template<> const cpp_int zero(const cpp_int& t) { return cpp_int(0); }
+template<> const cpp_int one(const cpp_int& t) { return cpp_int(1); }
+#endif // BOOST_MP_CPP_INT_HPP
+
+// begin -- detection ideom
+//    cf. https://blog.tartanllama.xyz/detection-idiom/
+
+namespace tartan_detail {
+  template <template <class...> class Trait, class Enabler, class... Args>
+  struct is_detected : false_type{};
+
+  template <template <class...> class Trait, class... Args>
+  struct is_detected<Trait, void_t<Trait<Args...>>, Args...> : true_type{};
+}
+
+template <template <class...> class Trait, class... Args>
+using is_detected = typename tartan_detail::is_detected<Trait, void, Args...>::type;
+
+// end -- detection ideom
+
+
+template<typename T>
+// using subst_add_t = decltype(T::subst_add(declval<typename T::value_type &>(), declval<typename T::value_type>()));
+using subst_add_t = decltype(T::subst_add);
+template<typename T>
+using has_subst_add = is_detected<subst_add_t, T>;
+
+template<typename T>
+using add_t = decltype(T::add);
+template<typename T>
+using has_add = is_detected<add_t, T>;
+
+template<typename T>
+using subst_mult_t = decltype(T::subst_mult);
+template<typename T>
+using has_subst_mult = is_detected<subst_mult_t, T>;
+
+template<typename T>
+using mult_t = decltype(T::mult);
+template<typename T>
+using has_mult = is_detected<mult_t, T>;
+
+template<typename T>
+using subst_subt_t = decltype(T::subst_subt);
+template<typename T>
+using has_subst_subt = is_detected<subst_subt_t, T>;
+
+template<typename T>
+using subt_t = decltype(T::subt);
+template<typename T>
+using has_subt = is_detected<subt_t, T>;
+
+template <typename Opdef>
+struct MyAlg {
+  using T = typename Opdef::value_type;
+  using value_type = T;
+  T v;
+  MyAlg() {}
+  MyAlg(const T& v_) : v(v_) {}
+  MyAlg(T&& v_) : v(move(v_)) {}
+  bool operator==(MyAlg o) const { return v == o.v; }
+  bool operator!=(MyAlg o) const { return v != o.v; }
+  operator T() const { return v; }
+  MyAlg zero() const { return MyAlg(Opdef::zero(v)); }
+  MyAlg one() const { return MyAlg(Opdef::one(v)); }
+  MyAlg inverse() const { return MyAlg(Opdef::inverse(v)); }
+  MyAlg operator/=(const MyAlg& o) { return *this *= o.inverse(); }
+  MyAlg operator/(const MyAlg& o) const { return (*this) * o.inverse(); }
+  MyAlg operator-() const { return zero() - *this; }
+
+  MyAlg& operator +=(const MyAlg& o) { 
+    if constexpr (has_subst_add<Opdef>::value) {
+      Opdef::subst_add(v, o.v);
+      return *this;
+    }else if constexpr (has_add<Opdef>::value) {
+      v = Opdef::add(v, o.v);
+      return *this;
+    }else static_assert("either subst_add or add is needed.");
+
+  }
+  MyAlg operator +(const MyAlg& o) const { 
+    if constexpr (has_add<Opdef>::value) {
+      return MyAlg(Opdef::add(v, o.v));
+    }else if constexpr (has_subst_add<Opdef>::value) {
+      MyAlg ret(v);
+      Opdef::subst_add(ret.v, o.v);
+      return ret;
+    }else static_assert("either subst_add or add is needed.");
+  }
+  MyAlg& operator *=(const MyAlg& o) { 
+    if constexpr (has_subst_mult<Opdef>::value) {
+      Opdef::subst_mult(v, o.v);
+      return *this;
+    }else if constexpr (has_mult<Opdef>::value) {
+      v = Opdef::mult(v, o.v);
+      return *this;
+    }else static_assert("either subst_mult or mult is needed.");
+
+  }
+  MyAlg operator *(const MyAlg& o) const { 
+    if constexpr (has_mult<Opdef>::value) {
+      return MyAlg(Opdef::mult(v, o.v));
+    }else if constexpr (has_subst_mult<Opdef>::value) {
+      MyAlg ret(v);
+      Opdef::subst_mult(ret.v, o.v);
+      return ret;
+    }else static_assert("either subst_mult or mult is needed.");
+  }
+  MyAlg& operator -=(const MyAlg& o) { 
+    if constexpr (has_subst_subt<Opdef>::value) {
+      Opdef::subst_subt(v, o.v);
+      return *this;
+    }else if constexpr (has_subt<Opdef>::value) {
+      v = Opdef::subt(v, o.v);
+      return *this;
+    }else static_assert("either subst_subt or subt is needed.");
+
+  }
+  MyAlg operator -(const MyAlg& o) const { 
+    if constexpr (has_subt<Opdef>::value) {
+      return MyAlg(Opdef::subt(v, o.v));
+    }else if constexpr (has_subst_subt<Opdef>::value) {
+      MyAlg ret(v);
+      Opdef::subst_subt(ret.v, o.v);
+      return ret;
+    }else static_assert("either subst_subt or subt is needed.");
+  }
+  friend istream& operator >>(istream& is, MyAlg& t)       { is >> t.v; return is; }
+  friend ostream& operator <<(ostream& os, const MyAlg& t) { os << t.v; return os; }
+};
+
+
+
+
+
+// ---- end algOp.cc
+
+// ---- inserted function f:gcd from util.cc
+
+// auto [g, s, t] = eGCD(a, b)
+//     g == gcd(|a|, |b|) and as + bt == g           
+//     It guarantees that max(|s|, |t|) <= max(|a| / g, |b| / g)   (when g != 0)
+//     Note that gcd(a, 0) == gcd(0, a) == a.
+template<typename INT=ll>
+tuple<INT, INT, INT> eGCD(INT a, INT b) {
+  INT sa = a < 0 ? -1 : 1;
+  INT ta = 0;
+  INT za = a * sa;
+  INT sb = 0;
+  INT tb = b < 0 ? -1 : 1;
+  INT zb = b * tb;
+  while (zb != 0) {
+    INT q = za / zb;
+    INT r = za % zb;
+    za = zb;
+    zb = r;
+    INT new_sb = sa - q * sb;
+    sa = sb;
+    sb = new_sb;
+    INT new_tb = ta - q * tb;
+    ta = tb;
+    tb = new_tb;
+  }
+  return {za, sa, ta};
+}
+
+pair<ll, ll> crt_sub(ll a1, ll x1, ll a2, ll x2) {
+  // DLOGKL("crt_sub", a1, x1, a2, x2);
+  a1 = a1 % x1;
+  a2 = a2 % x2;
+  auto [g, s, t] = eGCD(x1, -x2);
+  ll gq = (a2 - a1) / g;
+  ll gr = (a2 - a1) % g;
+  if (gr != 0) return {-1, -1};
+  s *= gq;
+  t *= gq;
+  ll z = x1 / g * x2;
+  // DLOGK(z);
+  s = s % (x2 / g);
+  ll r = (x1 * s + a1) % z;
+  // DLOGK(r);
+  if (r < 0) r += z;
+  // DLOGK(r);
+  return {r, z};
+};
+
+// Chinese Remainder Theorem
+//
+//    r = crt(a1, x1, a2, x2)
+//    ==>   r = a1 (mod x1);  r = a2 (mod x2);  0 <= r < lcm(x1, x2)
+//    If no such r exists, returns -1
+//    Note: x1 and x2 should >= 1.  a1 and a2 can be negative or zero.
+//
+//    r = crt(as, xs)
+//    ==>   for all i. r = as[i] (mod xs[i]); 0 <= r < lcm(xs)
+//    If no such r exists, returns -1
+//    Note: xs[i] should >= 1.  as[i] can be negative or zero.
+//          It should hold: len(xs) == len(as) > 0
+
+ll crt(ll a1, ll x1, ll a2, ll x2) { return crt_sub(a1, x1, a2, x2).first; }
+
+ll crt(vector<ll> as, vector<ll> xs) {
+  // DLOGKL("crt", as, xs);
+  assert(xs.size() == as.size() && xs.size() > 0);
+  ll r = as[0];
+  ll z = xs[0];
+  for (size_t i = 1; i < xs.size(); i++) {
+    // DLOGK(i, r, z, as[i], xs[i]);
+    tie(r, z) = crt_sub(r, z, as[i], xs[i]);
+    // DLOGK(r, z);
+    if (r == -1) return -1;
+  }
+  return r;
+}
+
+// ---- end f:gcd
+
+// ---- inserted library file mod.cc
+
+template<int mod=0, typename INT=ll>
+struct FpG {   // G for General
+  static INT dyn_mod;
+
+  static INT getMod() {
+    if (mod == 0) return dyn_mod;
+    else          return (INT)mod;
+  }
+  
+  // Effective only when mod == 0.
+  // _mod must be less than the half of the maximum value of INT.
+  static void setMod(INT _mod) {  
+    dyn_mod = _mod;
+  }
+
+  static INT _conv(INT x) {
+    if (x >= getMod())  return x % getMod();
+    if (x >= 0)         return x;
+    if (x >= -getMod()) return x + getMod();
+    INT y = x % getMod();
+    if (y == 0) return 0;
+    return y + getMod();
+  }
+
+  INT val;
+
+  FpG(INT t = 0) : val(_conv(t)) {}
+  FpG(const FpG& t) : val(t.val) {}
+  FpG& operator =(const FpG& t) { val = t.val; return *this; }
+  FpG& operator =(INT t) { val = _conv(t); return *this; }
+
+  FpG& operator +=(const FpG& t) {
+    val += t.val;
+    if (val >= getMod()) val -= getMod();
+    return *this;
+  }
+
+  FpG& operator -=(const FpG& t) {
+    val -= t.val;
+    if (val < 0) val += getMod();
+    return *this;
+  }
+
+  FpG& operator *=(const FpG& t) {
+    val = (val * t.val) % getMod();
+    return *this;
+  }
+
+  FpG inv() const {
+    if (val == 0) { throw runtime_error("FpG::inv(): called for zero."); }
+    auto [g, u, v] = eGCD(val, getMod());
+    if (g != 1) { throw runtime_error("FpG::inv(): not co-prime."); }
+    return FpG(u);
+  }
+
+  FpG zero() const { return (FpG)0; }
+  FpG one() const { return (FpG)1; }
+  FpG inverse() const { return inv(); }
+
+  FpG& operator /=(const FpG& t) {
+    return (*this) *= t.inv();
+  }
+
+  FpG operator +(const FpG& t) const { return FpG(val) += t; }
+  FpG operator -(const FpG& t) const { return FpG(val) -= t; }
+  FpG operator *(const FpG& t) const { return FpG(val) *= t; }
+  FpG operator /(const FpG& t) const { return FpG(val) /= t; }
+  FpG operator -() const { return FpG(-val); }
+
+  bool operator ==(const FpG& t) const { return val == t.val; }
+  bool operator !=(const FpG& t) const { return val != t.val; }
+  
+  operator INT() const { return val; }
+
+  friend FpG operator +(INT x, const FpG& y) { return FpG(x) + y; }
+  friend FpG operator -(INT x, const FpG& y) { return FpG(x) - y; }
+  friend FpG operator *(INT x, const FpG& y) { return FpG(x) * y; }
+  friend FpG operator /(INT x, const FpG& y) { return FpG(x) / y; }
+  friend bool operator ==(INT x, const FpG& y) { return FpG(x) == y; }
+  friend bool operator !=(INT x, const FpG& y) { return FpG(x) != y; }
+  friend FpG operator +(const FpG& x, INT y) { return x + FpG(y); }
+  friend FpG operator -(const FpG& x, INT y) { return x - FpG(y); }
+  friend FpG operator *(const FpG& x, INT y) { return x * FpG(y); }
+  friend FpG operator /(const FpG& x, INT y) { return x / FpG(y); }
+  friend bool operator ==(const FpG& x, INT y) { return x == FpG(y); }
+  friend bool operator !=(const FpG& x, INT y) { return x != FpG(y); }
+
+  /* The following are needed to avoid warnings in cases such as FpG x; x = 5 + x; rather than x = FpG(5) + x; */
+  friend FpG operator +(int x, const FpG& y) { return FpG(x) + y; }
+  friend FpG operator -(int x, const FpG& y) { return FpG(x) - y; }
+  friend FpG operator *(int x, const FpG& y) { return FpG(x) * y; }
+  friend FpG operator /(int x, const FpG& y) { return FpG(x) / y; }
+  friend bool operator ==(int x, const FpG& y) { return FpG(x) == y; }
+  friend bool operator !=(int x, const FpG& y) { return FpG(x) != y; }
+  friend FpG operator +(const FpG& x, int y) { return x + FpG(y); }
+  friend FpG operator -(const FpG& x, int y) { return x - FpG(y); }
+  friend FpG operator *(const FpG& x, int y) { return x * FpG(y); }
+  friend FpG operator /(const FpG& x, int y) { return x / FpG(y); }
+  friend bool operator ==(const FpG& x, int y) { return x == FpG(y); }
+  friend bool operator !=(const FpG& x, int y) { return x != FpG(y); }
+
+  friend istream& operator>> (istream& is, FpG& t) {
+    INT x; is >> x;
+    t = x;
+    return is;
+  }
+
+  friend ostream& operator<< (ostream& os, const FpG& t) {
+    os << t.val;
+    return os;
+  }
+
+};
+template<int mod, typename INT>
+INT FpG<mod, INT>::dyn_mod;
+
+template<typename T>
+class Comb {
+  int nMax;
+  vector<T> vFact;
+  vector<T> vInvFact;
+public:
+  Comb(int nm) : nMax(nm), vFact(nm+1), vInvFact(nm+1) {
+    vFact[0] = 1;
+    for (int i = 1; i <= nMax; i++) vFact[i] = i * vFact[i-1];
+    vInvFact.at(nMax) = (T)1 / vFact[nMax];
+    for (int i = nMax; i >= 1; i--) vInvFact[i-1] = i * vInvFact[i];
+  }
+  T fact(int n) { return vFact[n]; }
+  T inv_fact(int n) { return vInvFact[n]; }
+  T binom(int n, int r) {
+    if (r < 0 || r > n) return (T)0;
+    return vFact[n] * vInvFact[r] * vInvFact[n-r];
+  }
+  T binom_dup(int n, int r) { return binom(n + r - 1, r); }
+  // The number of permutation extracting r from n.
+  T perm(int n, int r) {
+    return vFact[n] * vInvFact[n-r];
+  }
+};
+
+constexpr int primeA = 1'000'000'007;
+constexpr int primeB = 998'244'353;          // '
+using FpA = FpG<primeA, ll>;
+using FpB = FpG<primeB, ll>;
+
+// ---- end mod.cc
+
+// ---- inserted library file doubling.cc
+
+template<typename T = void, typename Add = void>
+struct Doubling {
+  static constexpr bool HAS_T = not is_void_v<T>;
+  using Node = conditional_t<HAS_T, pair<int, T>, int>;
+
+  int n{};
+  vector<vector<Node>> tbl;
+  [[no_unique_address]] conditional_t<HAS_T, T, monostate> unit{};
+  [[no_unique_address]] conditional_t<HAS_T, Add, monostate> add{};
+
+  int& nd_int(Node& nd) { if constexpr (HAS_T) return nd.first; else return nd; }
+
+  void prepare_tbl(u64 lim, const auto& nxt) {
+    int K = 64 - countl_zero(lim);
+    tbl.resize(K, vector<Node>(n));
+    for (int i = 0; i < n; i++) nd_int(tbl[0][i]) = nxt[i];
+  }
+
+  void fill_tbl(u64 lim) {
+    for (int k = 0; k + 1 < ssize(tbl); k++) {
+      for (int i = 0; i < n; i++) {
+        nd_int(tbl[k + 1][i]) = nd_int(tbl[k][nd_int(tbl[k][i])]);
+        if constexpr (HAS_T) tbl[k + 1][i].second = add(tbl[k][i].second, tbl[k][tbl[k][i].first].second);
+      }
+    }
+  }
+
+  Doubling() {}
+
+  Doubling(ll lim, int n_, const auto& nxt) requires (not HAS_T) : n(n_) {
+    prepare_tbl(lim, nxt);
+    fill_tbl(lim);
+  }
+
+  template<typename U = T, typename A = Add> requires (HAS_T)
+  Doubling(ll lim, int n_, const auto& nxt, const auto& mapping, U unit_, A add_)
+    : n(n_), unit(unit_), add(add_) {
+    prepare_tbl(lim, nxt);
+    for (int i = 0; i < n; i++) tbl[0][i].second = mapping[i];
+    fill_tbl(lim);
+  }
+
+  Node val(ll x, int i) {
+    Node ret;
+    nd_int(ret) = i;
+    if constexpr (HAS_T) ret.second = unit;
+    for (int k = 0; x > 0; x >>= 1, k++) {
+      if (x & 1) {
+        Node cur = tbl[k][nd_int(ret)];
+        nd_int(ret) = nd_int(cur);
+        if constexpr (HAS_T) ret.second = add(ret.second, cur.second);
+      }
+    }
+    return ret;
+  }
+
+};
+
+template<typename T, typename Add>
+auto make_doubling_with_monoid_unit_add(ll lim, int n, const auto& nxt, const auto& mapping, T unit, Add add) {
+  return Doubling<T, decltype(add)>(lim, n, nxt, mapping, unit, add);
+}
+template<typename T>
+auto make_doubling_with_monoid(ll lim, int n, const auto& nxt, const auto& mapping) {
+  return make_doubling_with_monoid_unit_add(lim, n, nxt, mapping, T(), plus<T>());
+}
+
+
+
+/*
+struct DoublingFRel { // from functional relation
+  int n;
+  vector<vector<int>> tbl;
+
+  void _init(ll lim, auto frel) {
+    int K = 64 - countl_zero((u64)lim);
+    tbl.resize(K, vector<int>(n));
+    for (int i = 0; i < n; i++) tbl[0][i] = frel(i);
+    for (int k = 0; k + 1 < K; k++) for (int i = 0; i < n; i++) tbl[k + 1][i] = tbl[k][tbl[k][i]];
+  }
+
+  DoublingFRel(ll lim, int n_, auto frel) : n(n_) { _init(lim, frel); }
+  static DoublingFRel from_container(ll lim, int n, auto vec) {
+    return DoublingFRel(lim, n, [&](int i) { return vec[i]; });
+  }
+
+  int val(ll x, int i) { // Calculates frel^{(x)}(i).  Should be x <= lim.
+    for (int k = 0; x > 0; x >>= 1, k++) if (x & 1) i = tbl[k][i];
+    return i;
+  }
+};
+  
+template <typename T, typename add_t>
+struct DoublingCum {
+  const DoublingFRel& d;
+  T unit;
+  add_t add;
+  vector<vector<T>> tbl;
+
+  void _init(auto mapping) {
+    int K = d.tbl.size();
+    tbl.resize(K, vector<T>(d.n));
+    for (int i = 0; i < d.n; i++) tbl[0][i] = mapping(i);
+    for (int k = 0; k + 1 < K; k++) for (int i = 0; i < d.n; i++) tbl[k + 1][i] = add(tbl[k][i], tbl[k][d.tbl[k][i]]);
+  }
+
+  DoublingCum(const DoublingFRel& d_, auto mapping, T unit_, add_t add_)
+    : d(d_), unit(unit_), add(add_) { _init(mapping); }
+
+  T val(ll x, int i) { // the monoid sum of x objs from i.  i.e. from i to i + x - 1.
+    T ret = unit;
+    for (int k = 0; x > 0; x >>= 1, k++) if (x & 1) {
+        ret = add(ret, tbl[k][i]);
+        i = d.tbl[k][i];
+      }
+    return ret;
+  }
+};
+
+DoublingFRel doubling_from_func(ll lim, int n, auto func) { return DoublingFRel(lim, n, func); }
+DoublingFRel doubling_from_container(ll lim, int n, auto vec) {
+  return DoublingFRel(lim, n, [&vec](int i) { return vec[i]; });
+}
+template<typename T, typename add_t = std::plus<T>>
+auto doubling_cum_from_func(const DoublingFRel& d, auto mapping, T unit = T(), add_t add = plus<T>()) {
+  return DoublingCum<T, decltype(add)>(d, mapping, unit, add);
+}
+template<typename T, typename add_t = std::plus<T>>
+auto doubling_cum_from_container(const DoublingFRel& d, auto vec_mapping, T unit = T(), add_t add = plus<T>()) {
+  return DoublingCum<T, decltype(add)>(d, [&vec_mapping](int i) { return vec_mapping[i]; }, unit, add);
+}
+*/
+
+// ---- end doubling.cc
+
+// @@ !! LIM -- end mark --
+
+using Fp = FpG<0>;
+
+int main(/* int argc, char *argv[] */) {
+  ios_base::sync_with_stdio(false);
+  cin.tie(nullptr);
+  cout << setprecision(20);
+
+  ll N, Q, M; cin >> N >> Q >> M;
+  Fp::setMod(M);
+
+  // @InpMVec(N, (D, (P, dec=1))) [h9XeXVZP]
+  auto D = vector(N, ll());
+  auto P = vector(N, ll());
+  for (int i = 0; i < N; i++) {
+    ll v1; cin >> v1; D[i] = v1;
+    ll v2; cin >> v2; v2 -= 1; P[i] = v2;
+  }
+  // @End [h9XeXVZP]
+
+  ll lim = 1LL << 60;
+  using sta = pair<Fp, Fp>;
+  vector<sta> DD(N);
+  REP(i, 0, N) DD[i] = sta(Fp(D[i]), Fp(10));
+  auto func = [&](sta x, sta y) -> sta {
+    auto [tx, lx] = x;
+    auto [ty, ly] = y;
+    return sta(tx * ly + ty, lx * ly);
+  };
+  auto dobj = make_doubling_with_monoid_unit_add(lim, N, P, DD, sta(Fp(0), Fp(1)), func);
+
+
+  REP(_q, 0, Q) {
+    ll s, k; cin >> s >> k; s--;
+    auto [_j, val] = dobj.val(k, s);
+    cout << val.first << "\n";
+  }
+
+  return 0;
+}
+

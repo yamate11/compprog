@@ -1,0 +1,12 @@
+5
+3 binary search tree
+2 dynamic programming
+1 graph
+2 stack queue
+3 linked list array
+5
+ar
+ra
+i
+zzz
+ee
