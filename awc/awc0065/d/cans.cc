@@ -376,6 +376,16 @@ void dbgLog(bool with_nl, Head&& head, Tail&&... tail)
 
 // @@ !! LIM -- end mark --
 
+template<typename T>
+struct SftVec {
+  ll base;
+  vector<T> body;
+  SftVec(ll from, ll to, T ini = T()) : base(from), body(to - from, ini) {}
+  T& operator[](int i) { return body[i - base]; }
+  const T& operator[](int i) const { return body[i - base]; }
+};
+
+
 int main(/* int argc, char *argv[] */) {
   ios_base::sync_with_stdio(false);
   cin.tie(nullptr);
@@ -409,35 +419,27 @@ int main(/* int argc, char *argv[] */) {
   ll scale = 1000;
 #endif
   ll sz = 4 * (scale + 2);
-  vector V(vector(sz, vector(sz, 0LL)));
-  REP(i, 0, N) {
-    ll a = X[i] + Y[i] + (2 * scale);
-    ll b = X[i] - Y[i] + (2 * scale);
-    V[a][b] += C[i];
-  }
-  DLOGK(V);
-  REP(a, 1, sz) REP(b, 1, sz) V[a][b] += V[a][b - 1];
-  REP(a, 1, sz) REP(b, 1, sz) V[a][b] += V[a - 1][b];
-  DLOGK(V);
-  DLOGK(sz);
+
+  ll bx0 = -2 * scale, bx1 = 2 * scale;
+  ll by0 = -2 * scale, by1 = 2 * scale;
+  
+  SftVec V(bx0, bx1, SftVec(by0, by1, 0LL));
+  REP(i, 0, N) V[X[i] - Y[i]][X[i] + Y[i]] += C[i];
+  REP(i, bx0 + 1, bx1) REP(j, by0 + 1, by1) V[i][j] += V[i - 1][j];
+  REP(i, bx0 + 1, bx1) REP(j, by0 + 1, by1) V[i][j] += V[i][j - 1];
   REP(i, 0, M) {
-    ll aa = P[i] + Q[i] + (2 * scale);
-    ll bb = P[i] - Q[i] + (2 * scale);
-    ll a0 = aa - K[i] - 1, a1 = aa + K[i] + 0;
-    ll b0 = bb - K[i] - 1, b1 = bb + K[i] + 0;
-    if (a0 < 0) a0 = 0;
-    if (b0 < 0) b0 = 0;
-    if (a1 >= sz) a1 = sz - 1;
-    if (b1 >= sz) b1 = sz - 1;
-    ll ans = V[a0][b0] + V[a1][b1] - V[a0][b1] - V[a1][b0];
-    DLOGK(i, aa, bb, a0, a1, b0, b1, ans);
-    
+    ll s0 = P[i] - Q[i] - K[i] - 1;
+    ll s1 = P[i] - Q[i] + K[i];
+    ll t0 = P[i] + Q[i] - K[i] - 1;
+    ll t1 = P[i] + Q[i] + K[i];
+    if (s0 < bx0) s0 = bx0;
+    if (s1 >= bx1) s1 = bx1 - 1;
+    if (t0 < by0) t0 = by0;
+    if (t1 >= by1) t1 = by1 - 1;
+    ll ans = V[s0][t0] + V[s1][t1] - V[s0][t1] - V[s1][t0];
     cout << ans << "\n";
-    
   }
   
-
-
   return 0;
 }
 

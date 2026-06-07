@@ -11,6 +11,7 @@ else
 endif
 
 WARNINGS := -Wall -Wno-format-security -Wshadow -fconcepts
+# "-Wextra" should be added (after we fix unused parameter problems in library files)
 
 CXXFLAGS := -std=gnu++23 $(DEBUGFLAGS) $(WARNINGS)
 
