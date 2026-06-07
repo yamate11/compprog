@@ -1,0 +1,43 @@
+#include <bits/stdc++.h>
+#include <cassert>
+using namespace std;
+using ll = long long int;
+using u64 = unsigned long long;
+using pll = pair<ll, ll>;
+// #include <atcoder/all>
+// using namespace atcoder;
+#define REP(i, a, b) for (ll i = (a); i < (b); i++)
+#define REPrev(i, a, b) for (ll i = (a); i >= (b); i--)
+#define ALL(coll) (coll).begin(), (coll).end()
+#define SIZE(v) ((ll)((v).size()))
+#define REPOUT(i, a, b, exp, sep) REP(i, (a), (b)) cout << (exp) << (i + 1 == (b) ? "" : (sep)); cout << "\n"
+
+// @@ !! LIM()
+
+int main(/* int argc, char *argv[] */) {
+  ios_base::sync_with_stdio(false);
+  cin.tie(nullptr);
+  cout << setprecision(20);
+
+  ll N, Q; cin >> N >> Q;
+  vector<ll> A(N);
+  REP(_q, 0, Q) {
+    ll tp; cin >> tp;
+    if (tp == 1) {
+      ll a, b, v; cin >> a >> b >> v; a--; b--;
+      A[a] -= v;
+      A[b] += v;
+    }else if (tp == 2) {
+      ll x, l, r; cin >> x >> l >> r; x--; l--;
+      ll cnt = 0;
+      REP(i, l, r) if (A[i] > A[x]) cnt++;
+      cout << cnt << "\n";
+    }else if (tp == 3) {
+      ll l, r, v; cin >> l >> r >> v; l--;
+      REP(i, l, r) A[i] += v;
+    }else assert(0);
+  }
+
+  return 0;
+}
+

@@ -1,0 +1,11 @@
+10
+ramen ramen
+sushi sushi
+pizza piza
+burger burger
+salad salad
+omelet omelette
+steak steak
+pasta pasta
+soup soap
+juice juice
