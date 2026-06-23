@@ -1,0 +1,909 @@
+
+
+
+
+
+
+
+
+<!DOCTYPE html>
+<html>
+<head>
+	<title>D - 図書館の本の返却</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+	<meta http-equiv="Content-Language" content="ja">
+	<meta name="viewport" content="width=device-width,initial-scale=1.0">
+	<meta name="format-detection" content="telephone=no">
+	<meta name="google-site-verification" content="nXGC_JxO0yoP1qBzMnYD_xgufO6leSLw1kyNo2HZltM" />
+
+	
+	<script async src="https://www.googletagmanager.com/gtag/js?id=G-RC512FD18N"></script>
+	<script>
+		window.dataLayer = window.dataLayer || [];
+		function gtag(){dataLayer.push(arguments);}
+		gtag('js', new Date());
+		gtag('set', 'user_properties', {
+			
+				'login_status': 'logged_in',
+			
+		});
+		gtag('config', 'G-RC512FD18N');
+	</script>
+
+	
+	<meta name="description" content="プログラミング初級者から上級者まで楽しめる、競技プログラミングコンテストサイト「AtCoder」。オンラインで毎週開催プログラミングコンテストを開催しています。競技プログラミングを用いて、客観的に自分のスキルを計ることのできるサービスです。">
+	<meta name="author" content="AtCoder Inc.">
+
+	<meta property="og:site_name" content="AtCoder">
+	
+	<meta property="og:title" content="D - 図書館の本の返却" />
+	<meta property="og:description" content="プログラミング初級者から上級者まで楽しめる、競技プログラミングコンテストサイト「AtCoder」。オンラインで毎週開催プログラミングコンテストを開催しています。競技プログラミングを用いて、客観的に自分のスキルを計ることのできるサービスです。" />
+	<meta property="og:type" content="website" />
+	<meta property="og:url" content="https://atcoder.jp/contests/awc0087/tasks/awc0087_d" />
+	<meta property="og:image" content="https://img.atcoder.jp/assets/atcoder.png" />
+	<meta name="twitter:card" content="summary" />
+	<meta name="twitter:site" content="@atcoder" />
+	
+	<meta property="twitter:title" content="D - 図書館の本の返却" />
+
+	<link href="//fonts.googleapis.com/css?family=Lato:400,700" rel="stylesheet" type="text/css">
+	<link rel="stylesheet" type="text/css" href="//img.atcoder.jp/public/dddd4c2/css/bootstrap.min.css">
+	<link rel="stylesheet" type="text/css" href="//img.atcoder.jp/public/dddd4c2/css/base.css">
+	<link rel="shortcut icon" type="image/png" href="//img.atcoder.jp/assets/favicon.png">
+	<link rel="apple-touch-icon" href="//img.atcoder.jp/assets/atcoder.png">
+	<script src="//img.atcoder.jp/public/dddd4c2/js/lib/jquery-1.9.1.min.js"></script>
+	<script src="//img.atcoder.jp/public/dddd4c2/js/lib/bootstrap.min.js"></script>
+	<script src="//img.atcoder.jp/public/dddd4c2/js/cdn/js.cookie.min.js"></script>
+	<script src="//img.atcoder.jp/public/dddd4c2/js/cdn/moment.min.js"></script>
+	<script src="//img.atcoder.jp/public/dddd4c2/js/cdn/moment_js-ja.js"></script>
+	<script>
+		var LANG = "ja";
+		var userScreenName = "yamate11";
+		var csrfToken = "AapGcs+m6IwzooLm3xaWeJUYR8j0cbaTCHgxhhUVYsw="
+	</script>
+	<script src="//img.atcoder.jp/public/dddd4c2/js/utils.js"></script>
+	
+	
+		<script src="//img.atcoder.jp/public/dddd4c2/js/contest.js"></script>
+		<link href="//img.atcoder.jp/public/dddd4c2/css/contest.css" rel="stylesheet" />
+		<script>
+			var contestScreenName = "awc0087";
+			var remainingText = "残り時間";
+			var countDownText = "開始まであと";
+			var startTime = moment("2026-06-09T20:00:00+09:00");
+			var endTime = moment("2026-06-09T21:00:00+09:00");
+		</script>
+		<style></style>
+	
+	
+		<link href="//img.atcoder.jp/public/dddd4c2/css/cdn/select2.min.css" rel="stylesheet" />
+		<link href="//img.atcoder.jp/public/dddd4c2/css/cdn/select2-bootstrap.min.css" rel="stylesheet" />
+		<script src="//img.atcoder.jp/public/dddd4c2/js/lib/select2.min.js"></script>
+	
+	
+		<script src="//img.atcoder.jp/public/dddd4c2/js/ace/ace.js"></script>
+		<script src="//img.atcoder.jp/public/dddd4c2/js/ace/ext-language_tools.js"></script>
+	
+	
+		<script src="//img.atcoder.jp/public/dddd4c2/js/cdn/run_prettify.js"></script>
+	
+	
+		<link rel="stylesheet" href="//img.atcoder.jp/public/dddd4c2/css/cdn/katex.min.css">
+		<script defer src="//img.atcoder.jp/public/dddd4c2/js/cdn/katex.min.js"></script>
+		<script defer src="//img.atcoder.jp/public/dddd4c2/js/cdn/auto-render.min.js"></script>
+		<script>$(function(){$('var').each(function(){var html=$(this).html().replace(/<sub>/g,'_{').replace(/<\/sub>/g,'}');$(this).html('\\('+html+'\\)');});});</script>
+		<script>
+			var katexOptions = {
+				delimiters: [
+					{left: "$$", right: "$$", display: true},
+					
+					{left: "\\(", right: "\\)", display: false},
+					{left: "\\[", right: "\\]", display: true}
+				],
+      	ignoredTags: ["script", "noscript", "style", "textarea", "code", "option"],
+				ignoredClasses: ["prettyprint", "source-code-for-copy"],
+				throwOnError: false
+			};
+			document.addEventListener("DOMContentLoaded", function() { renderMathInElement(document.body, katexOptions);});
+		</script>
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	<script src="//img.atcoder.jp/public/dddd4c2/js/base.js"></script>
+</head>
+
+<body>
+
+<div id="modal-contest-start" class="modal fade" tabindex="-1" role="dialog">
+	<div class="modal-dialog" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+				<h4 class="modal-title">コンテスト開始</h4>
+			</div>
+			<div class="modal-body">
+				<p>AtCoder Weekday Contest 0087 Betaが開始されました。</p>
+			</div>
+			<div class="modal-footer">
+				
+					<a class="btn btn-primary" href='/contests/awc0087/tasks'>問題一覧ページへ移動</a>
+				
+			</div>
+		</div>
+	</div>
+</div>
+<div id="modal-contest-end" class="modal fade" tabindex="-1" role="dialog">
+	<div class="modal-dialog" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+				<h4 class="modal-title">コンテスト終了</h4>
+			</div>
+			<div class="modal-body">
+				<p>AtCoder Weekday Contest 0087 Betaは終了しました。</p>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-default" data-dismiss="modal">閉じる</button>
+			</div>
+		</div>
+	</div>
+</div>
+<div id="main-div" class="float-container">
+
+
+	<nav class="navbar navbar-inverse navbar-fixed-top">
+		<div class="container-fluid">
+			<div class="navbar-header">
+				<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapse" aria-expanded="false">
+					<span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span>
+				</button>
+				<a class="navbar-brand" href="/home"></a>
+			</div>
+			<div class="collapse navbar-collapse" id="navbar-collapse">
+				<ul class="nav navbar-nav">
+				
+					<li><a class="contest-title" href="/contests/awc0087">AtCoder Weekday Contest 0087 Beta</a></li>
+				
+				</ul>
+				<ul class="nav navbar-nav navbar-right">
+					
+					<li class="dropdown">
+						<a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
+							<img src='//img.atcoder.jp/assets/top/img/flag-lang/ja.png'> 日本語 <span class="caret"></span>
+						</a>
+						<ul class="dropdown-menu">
+							<li><a href="/contests/awc0087/tasks/awc0087_d?lang=ja"><img src='//img.atcoder.jp/assets/top/img/flag-lang/ja.png'> 日本語</a></li>
+							<li><a href="/contests/awc0087/tasks/awc0087_d?lang=en"><img src='//img.atcoder.jp/assets/top/img/flag-lang/en.png'> English</a></li>
+						</ul>
+					</li>
+					
+					
+						<li class="dropdown">
+							<a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
+								<span class="glyphicon glyphicon-cog" aria-hidden="true"></span> yamate11 (Contestant) <span class="caret"></span>
+							</a>
+							<ul class="dropdown-menu">
+								<li><a href="/users/yamate11"><span class="glyphicon glyphicon-user" aria-hidden="true"></span> マイプロフィール</a></li>
+								<li class="divider"></li>
+								<li><a href="/settings"><span class="glyphicon glyphicon-wrench" aria-hidden="true"></span> 基本設定</a></li>
+								<li><a href="/settings/icon"><span class="glyphicon glyphicon-picture" aria-hidden="true"></span> アイコン設定</a></li>
+								<li><a href="/settings/password"><span class="glyphicon glyphicon-lock" aria-hidden="true"></span> パスワードの変更</a></li>
+								<li><a href="/settings/fav"><span class="glyphicon glyphicon-star" aria-hidden="true"></span> お気に入り管理</a></li>
+								
+								
+								
+								<li class="divider"></li>
+								<li><a href="javascript:void(form_logout.submit())"><span class="glyphicon glyphicon-log-out" aria-hidden="true"></span> ログアウト</a></li>
+							</ul>
+						</li>
+					
+				</ul>
+			</div>
+		</div>
+	</nav>
+
+	<form method="POST" name="form_logout" action="/logout?continue=https%3A%2F%2Fatcoder.jp%2Fcontests%2Fawc0087%2Ftasks%2Fawc0087_d">
+		<input type="hidden" name="csrf_token" value="AapGcs&#43;m6IwzooLm3xaWeJUYR8j0cbaTCHgxhhUVYsw=" />
+	</form>
+	<div id="main-container" class="container"
+		 	style="padding-top:50px;">
+		
+
+
+<div class="row">
+	<div id="contest-nav-tabs" class="col-sm-12 mb-2 cnvtb-fixed">
+	<div>
+		<small class="contest-duration">
+			
+				コンテスト時間:
+				<a href='http://www.timeanddate.com/worldclock/fixedtime.html?iso=20260609T2000&p1=248' target='blank'><time class='fixtime fixtime-full'>2026-06-09 20:00:00+0900</time></a> ~ <a href='http://www.timeanddate.com/worldclock/fixedtime.html?iso=20260609T2100&p1=248' target='blank'><time class='fixtime fixtime-full'>2026-06-09 21:00:00+0900</time></a> 
+				(60分)
+			
+		</small>
+		<small class="back-to-home pull-right"><a href="/home">AtCoderホームへ戻る</a></small>
+	</div>
+	<ul class="nav nav-tabs">
+		<li><a href="/contests/awc0087"><span class="glyphicon glyphicon-home" aria-hidden="true"></span> トップ</a></li>
+		
+			<li class="active"><a href="/contests/awc0087/tasks"><span class="glyphicon glyphicon-tasks" aria-hidden="true"></span> 問題</a></li>
+		
+
+		
+
+		
+			<li><a href="/contests/awc0087/submit?taskScreenName=awc0087_d"><span class="glyphicon glyphicon-send" aria-hidden="true"></span> 提出</a></li>
+		
+
+		
+			<li>
+				<a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false"><span class="glyphicon glyphicon-list" aria-hidden="true"></span> 提出結果<span class="caret"></span></a>
+				<ul class="dropdown-menu">
+					
+					
+						<li><a href="/contests/awc0087/submissions/me"><span class="glyphicon glyphicon-user" aria-hidden="true"></span> 自分の提出</a></li>
+						
+						
+							<li class="divider"></li>
+							<li><a href="/contests/awc0087/score"><span class="glyphicon glyphicon-dashboard" aria-hidden="true"></span> 自分の得点状況</a></li>
+						
+					
+				</ul>
+			</li>
+		
+
+		
+			
+				
+					<li><a href="/contests/awc0087/standings"><span class="glyphicon glyphicon-sort-by-attributes-alt" aria-hidden="true"></span> 順位表</a></li>
+				
+			
+		
+
+		
+			<li><a href="/contests/awc0087/custom_test"><span class="glyphicon glyphicon-wrench" aria-hidden="true"></span> コードテスト</a></li>
+		
+
+		
+		
+
+		<li class="pull-right"><a id="fix-cnvtb" href="javascript:void(0)"><span class="glyphicon glyphicon-pushpin" aria-hidden="true"></span></a></li>
+	</ul>
+</div>
+	<div class="col-sm-12">
+		<span class="h2">
+			D - 図書館の本の返却
+			
+		</span>
+		<span id="task-lang-btn" class="pull-right"><span data-lang="ja"><img src='//img.atcoder.jp/assets/top/img/flag-lang/ja.png'></span> / <span data-lang="en"><img src='//img.atcoder.jp/assets/top/img/flag-lang/en.png'></span></span>
+		<script>
+			$(function() {
+				var ts = $('#task-statement span.lang');
+				if (ts.children('span').size() <= 1) {
+					$('#task-lang-btn').hide();
+					ts.children('span').show();
+					return;
+				}
+
+				var REMEMBER_LB = 5;
+				var LS_KEY = 'task_lang';
+				var taskLang = getLS(LS_KEY) || '';
+				function isTaskLangSet(taskLang) { return taskLang === 'ja' || taskLang === 'en';}
+				if (isTaskLangSet(taskLang)) {
+					const params = new URLSearchParams(window.location.search);
+					if (params.get('lang')) {
+						setLS(LS_KEY, REMEMBER_LB);
+						taskLang = LANG;
+					}
+				} else {
+					taskLang = LANG;
+				}
+				ts.children('span.lang-' + taskLang).show();
+
+				$('#task-lang-btn span').click(function() {
+					var l = $(this).data('lang');
+					ts.children('span').hide();
+					ts.children('span.lang-' + l).show();
+
+					taskLang = getLS(LS_KEY) || '';
+					let changeTimes = 0;
+					if (isTaskLangSet(taskLang)) {
+						changeTimes = REMEMBER_LB;
+					} else {
+						changeTimes = parseInt(taskLang, 10);
+						if (isNaN(changeTimes)) changeTimes = 0;
+						changeTimes++;
+					}
+					if (changeTimes < REMEMBER_LB) setLS(LS_KEY, changeTimes);
+					else setLS(LS_KEY, l);
+				});
+			});
+		</script>
+		<hr/>
+		<p>
+			実行時間制限: 2 sec / メモリ制限: 1024 MiB
+			
+			
+		</p>
+
+		<div id="task-statement">
+			
+
+
+	
+	
+
+			<span class="lang">
+<span class="lang-ja">
+<p>配点 : <var>400</var> 点</p>
+
+<div class="part">
+<section>
+<h3>問題文</h3>
+<p>高橋君は図書館の司書として働いています。今日は利用者から返却された <var>N</var> 冊の本を、それぞれ正しい書棚の位置に戻さなければなりません。</p>
+<p>図書館は数直線上にあり、カウンターは座標 <var>0</var> の位置にあります。<var>i</var> 番目の本 <var>(1 \leq i \leq N)</var> を戻すべき書棚は座標 <var>X_i</var> の位置にあります。書棚はカウンターから見て正の方向にも負の方向にも存在する可能性があります。また、異なる本の戻し先が同じ座標であることもあります。</p>
+<p>高橋君は最初カウンター（座標 <var>0</var>）にいます。高橋君は一度に最大 <var>K</var> 冊の本を持って運ぶことができます。すべての本を戻すまで、以下の手順を繰り返します。</p>
+<ol>
+<li>カウンター（座標 <var>0</var>）にて、まだ戻していない本の中から <var>1</var> 冊以上 <var>K</var> 冊以下を好きに選んで持ち出す。</li>
+<li>数直線上を自由に移動し、持っている本をそれぞれ対応する書棚の座標に到達した時点で降ろす。訪れる書棚の順番は自由に決めてよい。正の方向の書棚と負の方向の書棚を同じ往復の中で訪れてもよい。</li>
+<li>持ち出した本をすべて正しい書棚に降ろし終えたら、カウンター（座標 <var>0</var>）に戻る。この時点で1回の往復が完了する。</li>
+</ol>
+<p>持ち出した本は、その往復中にすべて正しい書棚へ降ろさなければなりません。本をカウンターに持ち帰って次の往復に回すことはできません。最後の往復を含め、毎回必ずカウンターに戻ります。</p>
+<p>1回の往復における移動距離は、その往復中に数直線上で実際に移動した距離の合計です。たとえば、座標 <var>0</var> から座標 <var>5</var> に移動し、そこから座標 <var>-3</var> に移動し、座標 <var>0</var> に戻った場合、移動距離は <var>5 + 8 + 3 = 16</var> です。</p>
+<p>すべての往復の移動距離の合計を <strong>総移動距離</strong> と呼びます。すべての本を正しい書棚に戻し終えてカウンターに戻るまでの、総移動距離の最小値を求めてください。</p>
+</section>
+</div>
+<div class="part">
+<section>
+<h3>制約</h3>
+<ul>
+<li><var>1 \leq N \leq 2 \times 10^5</var></li>
+<li><var>1 \leq K \leq N</var></li>
+<li><var>-10^9 \leq X_i \leq 10^9</var></li>
+<li><var>X_i \neq 0</var> （書棚はカウンターの位置にはない）</li>
+<li>入力はすべて整数である</li>
+</ul>
+</section>
+</div>
+<hr />
+<div class="io-style">
+<div class="part">
+<section>
+<h3>入力</h3>
+<pre>
+<var>N</var> <var>K</var>
+<var>X_1</var> <var>X_2</var> <var>\ldots</var> <var>X_N</var>
+</pre>
+<ul>
+<li><var>1</var> 行目には、本の冊数を表す整数 <var>N</var> と、一度に持てる本の最大冊数を表す整数 <var>K</var> が、スペース区切りで与えられる。</li>
+<li><var>2</var> 行目には、<var>i</var> 番目の本を戻すべき書棚の座標を表す整数 <var>X_1, X_2, \ldots, X_N</var> が、スペース区切りで与えられる。</li>
+</ul>
+</section>
+</div>
+<div class="part">
+<section>
+<h3>出力</h3>
+<p>すべての本を戻し終えてカウンターに戻るまでの最小の総移動距離を整数で <var>1</var> 行に出力せよ。</p>
+</section>
+</div>
+</div>
+<hr />
+<div class="part">
+<section>
+<h3>入力例 1</h3>
+<pre>
+3 2
+1 3 5
+</pre>
+</section>
+</div>
+<div class="part">
+<section>
+<h3>出力例 1</h3>
+<pre>
+12
+</pre>
+</section>
+</div>
+<hr />
+<div class="part">
+<section>
+<h3>入力例 2</h3>
+<pre>
+5 2
+-3 -1 2 4 6
+</pre>
+</section>
+</div>
+<div class="part">
+<section>
+<h3>出力例 2</h3>
+<pre>
+22
+</pre>
+</section>
+</div>
+<hr />
+<div class="part">
+<section>
+<h3>入力例 3</h3>
+<pre>
+8 3
+-7 -5 -2 1 3 4 8 10
+</pre>
+</section>
+</div>
+<div class="part">
+<section>
+<h3>出力例 3</h3>
+<pre>
+40
+</pre>
+</section>
+</div>
+</span>
+<span class="lang-en">
+<p>Score : <var>400</var> pts</p>
+
+<div class="part">
+<section>
+<h3>Problem Statement</h3>
+<p>Takahashi works as a librarian at a library. Today, he must return <var>N</var> books that were returned by patrons to their correct positions on the shelves.</p>
+<p>The library is on a number line, and the counter is located at coordinate <var>0</var>. The shelf where the <var>i</var>-th book <var>(1 \leq i \leq N)</var> should be placed is at coordinate <var>X_i</var>. Shelves can exist in both the positive and negative directions from the counter. Different books may need to be returned to the same coordinate.</p>
+<p>Takahashi starts at the counter (coordinate <var>0</var>). He can carry at most <var>K</var> books at a time. He repeats the following procedure until all books have been returned:</p>
+<ol>
+<li>At the counter (coordinate <var>0</var>), choose between <var>1</var> and <var>K</var> books (inclusive) from among the books not yet returned, and take them out.</li>
+<li>Move freely along the number line, and drop off each book when reaching the coordinate of its corresponding shelf. The order in which shelves are visited is free to choose. It is allowed to visit shelves in both the positive and negative directions within the same trip.</li>
+<li>After all books taken out have been placed on their correct shelves, return to the counter (coordinate <var>0</var>). This completes one round trip.</li>
+</ol>
+<p>All books taken out must be placed on their correct shelves during that round trip. Books cannot be brought back to the counter to be carried on a later trip. After every round trip, including the last one, Takahashi must return to the counter.</p>
+<p>The travel distance of one round trip is the total distance actually traveled along the number line during that trip. For example, if Takahashi moves from coordinate <var>0</var> to coordinate <var>5</var>, then from there to coordinate <var>-3</var>, and then back to coordinate <var>0</var>, the travel distance is <var>5 + 8 + 3 = 16</var>.</p>
+<p>The sum of travel distances across all round trips is called the <strong>total travel distance</strong>. Find the minimum total travel distance to return all books to their correct shelves and return to the counter.</p>
+</section>
+</div>
+<div class="part">
+<section>
+<h3>Constraints</h3>
+<ul>
+<li><var>1 \leq N \leq 2 \times 10^5</var></li>
+<li><var>1 \leq K \leq N</var></li>
+<li><var>-10^9 \leq X_i \leq 10^9</var></li>
+<li><var>X_i \neq 0</var> (no shelf is at the counter's position)</li>
+<li>All input values are integers</li>
+</ul>
+</section>
+</div>
+<hr />
+<div class="io-style">
+<div class="part">
+<section>
+<h3>Input</h3>
+<pre>
+<var>N</var> <var>K</var>
+<var>X_1</var> <var>X_2</var> <var>\ldots</var> <var>X_N</var>
+</pre>
+<ul>
+<li>The first line contains an integer <var>N</var> representing the number of books and an integer <var>K</var> representing the maximum number of books that can be carried at once, separated by a space.</li>
+<li>The second line contains integers <var>X_1, X_2, \ldots, X_N</var> representing the coordinates of the shelves where each book should be returned, separated by spaces.</li>
+</ul>
+</section>
+</div>
+<div class="part">
+<section>
+<h3>Output</h3>
+<p>Print the minimum total travel distance to return all books and come back to the counter, as a single integer on one line.</p>
+</section>
+</div>
+</div>
+<hr />
+<div class="part">
+<section>
+<h3>Sample Input 1</h3>
+<pre>
+3 2
+1 3 5
+</pre>
+</section>
+</div>
+<div class="part">
+<section>
+<h3>Sample Output 1</h3>
+<pre>
+12
+</pre>
+</section>
+</div>
+<hr />
+<div class="part">
+<section>
+<h3>Sample Input 2</h3>
+<pre>
+5 2
+-3 -1 2 4 6
+</pre>
+</section>
+</div>
+<div class="part">
+<section>
+<h3>Sample Output 2</h3>
+<pre>
+22
+</pre>
+</section>
+</div>
+<hr />
+<div class="part">
+<section>
+<h3>Sample Input 3</h3>
+<pre>
+8 3
+-7 -5 -2 1 3 4 8 10
+</pre>
+</section>
+</div>
+<div class="part">
+<section>
+<h3>Sample Output 3</h3>
+<pre>
+40
+</pre>
+</section>
+</div>
+</span>
+</span>
+
+		</div>
+
+		
+
+		
+		<hr/>
+		<form class="form-horizontal form-code-submit" action="/contests/awc0087/submit" method="POST">
+			<input type="hidden" name="data.TaskScreenName" value="awc0087_d" />
+			
+			<div class="form-group ">
+				<label class="control-label col-sm-3 col-md-2" for="select-lang">言語</label>
+				<div id="select-lang" class="col-sm-5" data-name="data.LanguageId">
+					<select class="form-control current" data-placeholder="-" name="data.LanguageId" required>
+						<option></option>
+						
+							<option value="6001" data-ace-mode="text">&gt;&lt;&gt; (fishr 0.1.0)</option>
+						
+							<option value="6002" data-ace-mode="ada">Ada 2022 (GNAT 15.2.0)</option>
+						
+							<option value="6003" data-ace-mode="text">APL (GNU APL 1.9)</option>
+						
+							<option value="6004" data-ace-mode="mips">Assembly MIPS O32 ABI (GNU assembler 2.42)</option>
+						
+							<option value="6005" data-ace-mode="assembly_x86">Assembly x64 (NASM 2.16.03)</option>
+						
+							<option value="6006" data-ace-mode="text">AWK (GNU awk 5.2.1)</option>
+						
+							<option value="6007" data-ace-mode="text">A言語 (interpreter af48a2a)</option>
+						
+							<option value="6008" data-ace-mode="sh">Bash (bash 5.3)</option>
+						
+							<option value="6009" data-ace-mode="basic">BASIC (FreeBASIC 1.10.1)</option>
+						
+							<option value="6010" data-ace-mode="text">bc (GNU bc 1.08.2)</option>
+						
+							<option value="6011" data-ace-mode="text">Befunge93 (TBC 1.0)</option>
+						
+							<option value="6012" data-ace-mode="text">Brainfuck (Tritium 1.2.73)</option>
+						
+							<option value="6013" data-ace-mode="c_cpp">C23 (Clang 21.1.0)</option>
+						
+							<option value="6014" data-ace-mode="c_cpp">C23 (GCC 14.2.0)</option>
+						
+							<option value="6015" data-ace-mode="csharp">C# 13.0 (.NET 9.0.8)</option>
+						
+							<option value="6016" data-ace-mode="csharp">C# 13.0 (.NET Native AOT 9.0.8)</option>
+						
+							<option value="6017" data-ace-mode="c_cpp">C&#43;&#43;23 (GCC 15.2.0)</option>
+						
+							<option value="6018" data-ace-mode="text">C3 (c3c 0.7.5)</option>
+						
+							<option value="6019" data-ace-mode="text">Carp(Carp 0.5.5)</option>
+						
+							<option value="6020" data-ace-mode="c_cpp">cLay (cLay 20250308-1 (GCC 15.2.0))</option>
+						
+							<option value="6021" data-ace-mode="clojure">Clojure (babashka 1.12.208)</option>
+						
+							<option value="6022" data-ace-mode="clojure">Clojure (clojure 1.12.2)</option>
+						
+							<option value="6023" data-ace-mode="clojure">Clojure (Clojure AOT 1.12.2)</option>
+						
+							<option value="6025" data-ace-mode="clojure">Clojure (ClojureScript 1.12.42 (Clojure 1.12.2 Node.js 22.19.0))</option>
+						
+							<option value="6026" data-ace-mode="cobol">COBOL (Free) (GnuCOBOL 3.2)</option>
+						
+							<option value="6027" data-ace-mode="lisp">Common Lisp (SBCL 2.5.8)</option>
+						
+							<option value="6028" data-ace-mode="crystal">Crystal (Crystal 1.17.0)</option>
+						
+							<option value="6029" data-ace-mode="text">Cyber (Cyber v0.3)</option>
+						
+							<option value="6030" data-ace-mode="d">D (DMD 2.111.0)</option>
+						
+							<option value="6031" data-ace-mode="d">D (GDC 15.2)</option>
+						
+							<option value="6032" data-ace-mode="d">D (LDC 1.41.0)</option>
+						
+							<option value="6033" data-ace-mode="dart">Dart (Dart 3.9.2)</option>
+						
+							<option value="6034" data-ace-mode="text">dc 1.5.2 (GNU bc 1.08.2)</option>
+						
+							<option value="6035" data-ace-mode="prolog">ECLiPSe (ECLiPSe 7.1_13)</option>
+						
+							<option value="6036" data-ace-mode="eiffel">Eiffel (Gobo Eiffel 22.01)</option>
+						
+							<option value="6037" data-ace-mode="eiffel">Eiffel (Liberty Eiffel 07829e3)</option>
+						
+							<option value="6038" data-ace-mode="elixir">Elixir (Elixir 1.18.4 (OTP 28.0.2))</option>
+						
+							<option value="6039" data-ace-mode="lisp">Emacs Lisp(Native Compile)(GNU Emacs 29.4)</option>
+						
+							<option value="6040" data-ace-mode="text">Emojicode 1.0 beta 2 (emojicodec 1.0 beta 2)</option>
+						
+							<option value="6041" data-ace-mode="erlang">Erlang (Erlang 28.0.2)</option>
+						
+							<option value="6042" data-ace-mode="fsharp">F# 9.0 (.NET 9.0.8)</option>
+						
+							<option value="6043" data-ace-mode="text">Factor (Factor 0.100)</option>
+						
+							<option value="6044" data-ace-mode="sh">Fish (fish 4.0.2)</option>
+						
+							<option value="6045" data-ace-mode="forth">Forth (gforth 0.7.3)</option>
+						
+							<option value="6046" data-ace-mode="fortran">Fortran2018 (Flang 20.1.7)</option>
+						
+							<option value="6047" data-ace-mode="fortran">Fortran2023 (GCC 14.2.0)</option>
+						
+							<option value="6048" data-ace-mode="fortran">FORTRAN77 (GCC 14.2.0)</option>
+						
+							<option value="6049" data-ace-mode="text">Gleam (Gleam 1.12.0 (OTP 28.0.2))</option>
+						
+							<option value="6050" data-ace-mode="golang">Go 1.18 (gccgo 15.2.0)</option>
+						
+							<option value="6051" data-ace-mode="golang">Go (go 1.25.1)</option>
+						
+							<option value="6052" data-ace-mode="haskell">Haskell (GHC 9.8.4)</option>
+						
+							<option value="6053" data-ace-mode="haxe">Haxe/JVM 4.3.7 (hxjava 4.2.0)</option>
+						
+							<option value="6054" data-ace-mode="c_cpp">C&#43;&#43; IOI-Style(GNU&#43;&#43;20) (GCC 14.2.0)</option>
+						
+							<option value="6055" data-ace-mode="lisp">ISLisp (Easy-ISLisp 5.43)</option>
+						
+							<option value="6056" data-ace-mode="java">Java24 (OpenJDK 24.0.2)</option>
+						
+							<option value="6057" data-ace-mode="javascript">JavaScript (Bun 1.2.21)</option>
+						
+							<option value="6058" data-ace-mode="javascript">JavaScript (Deno 2.4.5)</option>
+						
+							<option value="6059" data-ace-mode="javascript">JavaScript (Node.js 22.19.0)</option>
+						
+							<option value="6060" data-ace-mode="text">Jule (jule 0.1.6)</option>
+						
+							<option value="6061" data-ace-mode="text">Koka (koka v3.2.2)</option>
+						
+							<option value="6062" data-ace-mode="kotlin">Kotlin (Kotlin/JVM 2.2.10)</option>
+						
+							<option value="6063" data-ace-mode="text">Kuin (kuincl v.2021.8.17)</option>
+						
+							<option value="6064" data-ace-mode="text">Lazy K (irori v1.0.0)</option>
+						
+							<option value="6065" data-ace-mode="text">Lean (lean v4.22.0)</option>
+						
+							<option value="6066" data-ace-mode="text">LLVM IR (Clang 21.1.0)</option>
+						
+							<option value="6067" data-ace-mode="lua">Lua (Lua 5.4.7)</option>
+						
+							<option value="6068" data-ace-mode="lua">Lua (LuaJIT 2.1.1703358377)</option>
+						
+							<option value="6069" data-ace-mode="text">Mercury (Mercury 22.01.8)</option>
+						
+							<option value="6071" data-ace-mode="nim">Nim (Nim 1.6.20)</option>
+						
+							<option value="6072" data-ace-mode="nim">Nim (Nim 2.2.4)</option>
+						
+							<option value="6073" data-ace-mode="ocaml">OCaml (ocamlopt 5.3.0)</option>
+						
+							<option value="6074" data-ace-mode="text">Octave (GNU Octave 10.2.0)</option>
+						
+							<option value="6075" data-ace-mode="pascal">Pascal (fpc 3.2.2)</option>
+						
+							<option value="6076" data-ace-mode="perl">Perl (perl 5.38.2)</option>
+						
+							<option value="6077" data-ace-mode="php">PHP (PHP 8.4.12)</option>
+						
+							<option value="6078" data-ace-mode="text">Piet (your-diary/piet_programming_language 3.0.0) (PPM image)</option>
+						
+							<option value="6079" data-ace-mode="text">Pony (ponyc 0.59.0)</option>
+						
+							<option value="6080" data-ace-mode="powershell">PowerShell (PowerShell 7.5.2)</option>
+						
+							<option value="6081" data-ace-mode="prolog">Prolog (SWI-Prolog 9.2.9)</option>
+						
+							<option value="6082" data-ace-mode="python">Python (CPython 3.13.7)</option>
+						
+							<option value="6083" data-ace-mode="python">Python (PyPy 3.11-v7.3.20)</option>
+						
+							<option value="6084" data-ace-mode="r">R (GNU R 4.5.0)</option>
+						
+							<option value="6085" data-ace-mode="text">ReasonML (reson 3.16.0)</option>
+						
+							<option value="6086" data-ace-mode="ruby">Ruby 3.3 (truffleruby 25.0.0)</option>
+						
+							<option value="6087" data-ace-mode="ruby">Ruby 3.4 (ruby 3.4.5)</option>
+						
+							<option value="6088" data-ace-mode="rust">Rust (rustc 1.89.0)</option>
+						
+							<option value="6089" data-ace-mode="python">SageMath (SageMath 10.7)</option>
+						
+							<option value="6090" data-ace-mode="scala">Scala (Dotty 3.7.2)</option>
+						
+							<option value="6091" data-ace-mode="scala">Scala 3.7.2 (Scala Native 0.5.8)</option>
+						
+							<option value="6092" data-ace-mode="scheme">Scheme (ChezScheme 10.2.0)</option>
+						
+							<option value="6093" data-ace-mode="scheme">Scheme (Gauche 0.9.15)</option>
+						
+							<option value="6094" data-ace-mode="text">Seed7 (Seed7 3.5.0)</option>
+						
+							<option value="6095" data-ace-mode="swift">Swift 6.2</option>
+						
+							<option value="6096" data-ace-mode="tcl">Tcl (tclsh 9.0.1)</option>
+						
+							<option value="6097" data-ace-mode="text">Terra (Terra 1.2.0)</option>
+						
+							<option value="6098" data-ace-mode="tex">TeX (tex 3.141592653)</option>
+						
+							<option value="6099" data-ace-mode="text">Text (cat 9.4)</option>
+						
+							<option value="6100" data-ace-mode="typescript">TypeScript 5.8 (Deno 2.4.5)</option>
+						
+							<option value="6101" data-ace-mode="typescript">TypeScript 5.9 (tsc 5.9.2 (Bun 1.2.21))</option>
+						
+							<option value="6102" data-ace-mode="typescript">TypeScript 5.9 (tsc 5.9.2 (Node.js 22.19.0))</option>
+						
+							<option value="6103" data-ace-mode="text">Uiua (uiua 0.16.2)</option>
+						
+							<option value="6104" data-ace-mode="text">Unison (Unison 0.5.47)</option>
+						
+							<option value="6105" data-ace-mode="text">V (0.4.10)</option>
+						
+							<option value="6106" data-ace-mode="vala">Vala (valac 0.56.18)</option>
+						
+							<option value="6107" data-ace-mode="verilog">Verilog 2012 (Icarus Verilog 12.0)</option>
+						
+							<option value="6108" data-ace-mode="text">Veryl (veryl 0.16.4)</option>
+						
+							<option value="6109" data-ace-mode="text">WebAssembly (wabt 1.0.34 &#43; iwasm 2.4.1)</option>
+						
+							<option value="6110" data-ace-mode="text">Whitespace (whitespacers 1.3.0)</option>
+						
+							<option value="6111" data-ace-mode="zig">Zig (Zig 0.15.1)</option>
+						
+							<option value="6112" data-ace-mode="text">なでしこ (cnako3 3.7.8 (Node.js 22.19.0))</option>
+						
+							<option value="6113" data-ace-mode="text">プロデル (mono版プロデル 2.0.1353)</option>
+						
+							<option value="6114" data-ace-mode="julia">Julia (Julia 1.11.6)</option>
+						
+							<option value="6115" data-ace-mode="python">Python (Codon 0.19.3)</option>
+						
+							<option value="6116" data-ace-mode="c_cpp">C&#43;&#43;23 (Clang 21.1.0)</option>
+						
+							<option value="6117" data-ace-mode="text">Fix (1.1.0-alpha.12)</option>
+						
+							<option value="6118" data-ace-mode="sql">SQL (DuckDB 1.3.2)</option>
+						
+					</select>
+					<span class="error"></span>
+				</div>
+			</div>
+			<script>var currentLang = getLS('defaultLang');</script>
+			
+			
+<div class="form-group">
+	<div class="col-sm-3 col-md-2 editor-label">
+		<label class="control-label" for="sourceCode">ソースコード</label>
+		<div class="editor-buttons">
+			<button id="btn-open-file" type="button" class="btn btn-default btn-sm">
+				<span class="glyphicon glyphicon-folder-open" aria-hidden="true"></span> &nbsp; ファイルを開く
+			</button>
+			<button id="btn-customize" type="button" class="btn btn-default btn-sm">
+				<span class="glyphicon glyphicon-cog" aria-hidden="true"></span> &nbsp; カスタマイズ
+			</button>
+			<button type="button" class="btn btn-default btn-sm btn-toggle-editor" data-toggle="button" autocomplete="off">
+				エディタ切り替え
+			</button>
+			<button type="button" class="btn btn-default btn-sm btn-auto-height" data-toggle="button" autocomplete="off">
+				高さ自動調節
+			</button>
+		</div>
+	</div>
+	<div class="col-sm-9 col-md-10" id="sourceCode">
+		<div id="editor"></div>
+		<textarea id="plain-textarea" class="form-control" style="display:none;" name="sourceCode"></textarea>
+		<p>
+			<span class="gray">※ 512 KiB まで</span><br>
+		</p>
+	</div>
+	<input id="input-open-file" type="file" style="display:none;">
+</div>
+
+
+			<input type="hidden" name="csrf_token" value="AapGcs&#43;m6IwzooLm3xaWeJUYR8j0cbaTCHgxhhUVYsw=" />
+			<div class="form-group">
+				<label class="control-label col-sm-3 col-md-2"></label>
+				<div class="col-sm-5">
+					
+					<button type="submit" class="btn btn-primary" id="submit">提出</button>
+				</div>
+			</div>
+		</form>
+		
+	</div>
+</div>
+
+
+
+
+		
+			<hr>
+			
+			
+			
+<div class="a2a_kit a2a_kit_size_20 a2a_default_style pull-right" data-a2a-url="https://atcoder.jp/contests/awc0087/tasks/awc0087_d?lang=ja" data-a2a-title="D - 図書館の本の返却">
+	<a class="a2a_button_facebook"></a>
+	<a class="a2a_button_twitter"></a>
+	
+		<a class="a2a_button_hatena"></a>
+	
+	<a class="a2a_dd" href="https://www.addtoany.com/share"></a>
+</div>
+
+		
+		<script async src="//static.addtoany.com/menu/page.js"></script>
+		
+	</div> 
+	<hr>
+</div> 
+
+	<div class="container" style="margin-bottom: 80px;">
+			<footer class="footer">
+			
+				<ul>
+					<li><a href="/contests/awc0087/rules">ルール</a></li>
+					<li><a href="/contests/awc0087/glossary">用語集</a></li>
+					
+				</ul>
+			
+			<ul>
+				<li><a href="/tos">利用規約</a></li>
+				<li><a href="/privacy">プライバシーポリシー</a></li>
+				<li><a href="/personal">個人情報保護方針</a></li>
+				<li><a href="/company">企業情報</a></li>
+				<li><a href="/faq">よくある質問</a></li>
+				<li><a href="/contact">お問い合わせ</a></li>
+				<li><a href="/documents/request">資料請求</a></li>
+			</ul>
+			<div class="text-center">
+					<small id="copyright">Copyright Since 2012 &copy;<a href="http://atcoder.co.jp">AtCoder Inc.</a> All rights reserved.</small>
+			</div>
+			</footer>
+	</div>
+	<p id="fixed-server-timer" class="contest-timer"></p>
+	<div id="scroll-page-top" style="display:none;"><span class="glyphicon glyphicon-arrow-up" aria-hidden="true"></span> ページトップ</div>
+
+</body>
+</html>
+
+
