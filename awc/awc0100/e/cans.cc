@@ -1,0 +1,39 @@
+#include <bits/stdc++.h>
+#include <cassert>
+using namespace std;
+using ll = long long int;
+using u64 = unsigned long long;
+using pll = pair<ll, ll>;
+// #include <atcoder/all>
+// using namespace atcoder;
+#define REP(i, a, b) for (ll i = (a); i < (b); i++)
+#define REPrev(i, a, b) for (ll i = (a); i >= (b); i--)
+#define ALL(coll) (coll).begin(), (coll).end()
+#define SIZE(v) ((ll)((v).size()))
+#define REPOUT(i, a, b, exp, sep) REP(i, (a), (b)) cout << (exp) << (i + 1 == (b) ? "" : (sep)); cout << "\n"
+
+// @@ !! LIM()
+
+int main(/* int argc, char *argv[] */) {
+  ios_base::sync_with_stdio(false);
+  cin.tie(nullptr);
+  cout << setprecision(20);
+
+  ll N; cin >> N;
+  vector<pll> V;
+  REP(i, 0, N) {
+    ll a; cin >> a;
+    V.emplace_back(a, i);
+  }
+  ranges::sort(V);
+  vector<ll> ans(N);
+  REP(i, 0, N) {
+    auto [a, idx] = V[i];
+    auto n = V.end() - ranges::lower_bound(V, pll(a + 1, -1LL));
+    ans[idx] = n;
+  }
+  REPOUT(i, 0, N, ans[i], " ");
+
+  return 0;
+}
+
