@@ -1,0 +1,13 @@
+12
+apple
+apricot
+banana
+bandit
+banner
+candle
+canary
+cattle
+dog
+dove
+duck
+zebra

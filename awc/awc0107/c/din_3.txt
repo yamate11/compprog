@@ -1,0 +1,19 @@
+10 8
+notebook 1200
+pen 300
+eraser 100
+ruler 500
+pencil 300
+marker 800
+tape 250
+glue 250
+scissors 1500
+stapler 1200
+300
+1200
+100
+700
+2000
+1
+250
+999

@@ -1,0 +1,13 @@
+12
+aaaabbabbaaabbbaabbb
+aaaabbabbaabbaaabbbb
+aaaabbbaaabbabbaabbb
+aaaabbbaabaabbbaabbb
+aaaabbbaabbaaabbabbb
+aaaabbbaabbaabaabbbb
+aaabaabbbaaabbbaabbb
+aaabaabbbaabbaaabbbb
+aaabbaaabbabbaaabbbb
+aaabbaaabbbaaabbabbb
+aaabbaaabbbaabaabbbb
+aaabbaabaabbbaaabbbb

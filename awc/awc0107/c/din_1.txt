@@ -1,0 +1,10 @@
+5 4
+apple 100
+banana 200
+cherry 100
+date 300
+elderberry 500
+100
+250
+300
+150

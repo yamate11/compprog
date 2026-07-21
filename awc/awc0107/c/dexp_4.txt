@@ -1,0 +1,10 @@
+epsilon mu nu
+alpha lambda
+eta
+alpha
+omicron
+kappa
+xi
+kappa
+omicron
+gamma

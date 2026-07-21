@@ -1,0 +1,8 @@
+pen pencil
+notebook stapler
+eraser
+marker
+scissors
+eraser
+tape glue
+marker

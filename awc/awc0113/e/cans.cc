@@ -1,0 +1,845 @@
+#include <bits/stdc++.h>
+#include <cassert>
+using namespace std;
+using ll = long long int;
+using u64 = unsigned long long;
+using pll = pair<ll, ll>;
+// #include <atcoder/all>
+// using namespace atcoder;
+#define REP(i, a, b) for (ll i = (a); i < (b); i++)
+#define REPrev(i, a, b) for (ll i = (a); i >= (b); i--)
+#define ALL(coll) (coll).begin(), (coll).end()
+#define SIZE(v) ((ll)((v).size()))
+#define REPOUT(i, a, b, exp, sep) REP(i, (a), (b)) cout << (exp) << (i + 1 == (b) ? "" : (sep)); cout << "\n"
+
+// @@ !! LIM(fastTransform mod debug cmpNaive forall)
+
+// ---- inserted library file fastTransform.cc
+// published at https://github.com/yamate11/compprog-clib/blob/master/fastTransform.cc
+
+template <typename T>
+int trans_resize(vector<T>& x, vector<T>& y) {
+  int n = max(x.size(), y.size());
+  int p = 31 - __builtin_clz(n);
+  int t = 1 << p;
+  if (n > t) t *= 2;
+  x.resize(t);
+  y.resize(t);
+  return t;
+}
+
+template<typename T>
+int trans_resize(vector<T>& x) { return trans_resize(x, x); }
+
+template<typename T, int p1, int p2, int p3, int p4, int div>
+void _trans_form(vector<T>& f) {
+  int n = f.size();
+  for (int i = 1; i < n; i *= 2) {
+    for (int j = 0; j < n; j++) {
+      if ((j & i) == 0) {
+        T x = f[j];
+        T y = f[j | i];
+        f[j    ] = (p1 * x + p2 * y) / div;
+        f[j | i] = (p3 * x + p4 * y) / div;
+      }
+    }
+  }
+}
+
+template <typename T>
+void hadamard(vector<T>& f) { _trans_form<T, 1, 1, 1, -1, 1>(f); }
+
+template <typename T>
+void inv_hadamard(vector<T>& f) { _trans_form<T, 1, 1, 1, -1, 2>(f); }
+
+template<bool IS_LOWER, bool IS_ZETA>
+void gen_zeta(auto& vec) {
+  int n = countr_zero(vec.size());
+  assert(ssize(vec) == (1LL << n));
+  for (int i = 0; i < n; i++) {
+    for (int x = 0; x < ssize(vec); x++) {
+      if ((x >> i & 1) == IS_LOWER) { vec[x] += (IS_ZETA ? 1 : -1) * vec[x ^ 1LL << i]; }
+    }
+  }
+}
+void zeta_lower(   auto& vec) { return gen_zeta<true,  true >(vec); }
+void moebius_lower(auto& vec) { return gen_zeta<true,  false>(vec); }
+void zeta_upper(   auto& vec) { return gen_zeta<false, true >(vec); }
+void moebius_upper(auto& vec) { return gen_zeta<false, false>(vec); }
+
+template<typename T>
+void _conv_dest_form(vector<T>& x, vector<T>& y,
+                     void fwd(vector<T>&), void bwd(vector<T>&)) {
+  int t = trans_resize(x, y);
+  fwd(x);
+  fwd(y);
+  for (int i = 0; i < t; i++) x[i] *= y[i];
+  bwd(x);
+}
+
+template<typename T>
+void xor_conv_dest(vector<T>& x, vector<T>& y) {
+  _conv_dest_form(x, y, hadamard, inv_hadamard);
+}
+
+template<typename T>
+void and_conv_dest(vector<T>& x, vector<T>& y) {
+  _conv_dest_form(x, y, zeta_upper, moebius_upper);
+}
+
+template<typename T>
+void or_conv_dest(vector<T>& x, vector<T>& y) {
+  _conv_dest_form(x, y, zeta_lower, moebius_lower);
+}
+
+template <typename T>
+vector<T> xor_conv(vector<T> x, vector<T> y) {
+  xor_conv_dest(x, y);
+  return x;
+}
+
+template <typename T>
+vector<T> and_conv(vector<T> x, vector<T> y) {
+  and_conv_dest(x, y);
+  return x;
+}
+
+template <typename T>
+vector<T> or_conv(vector<T> x, vector<T> y) {
+  or_conv_dest(x, y);
+  return x;
+}
+
+// ---- end fastTransform.cc
+
+// ---- inserted function f:gcd from util.cc
+
+// auto [g, s, t] = eGCD(a, b)
+//     g == gcd(|a|, |b|) and as + bt == g           
+//     It guarantees that max(|s|, |t|) <= max(|a| / g, |b| / g)   (when g != 0)
+//     Note that gcd(a, 0) == gcd(0, a) == a.
+template<typename INT=ll>
+tuple<INT, INT, INT> eGCD(INT a, INT b) {
+  INT sa = a < 0 ? -1 : 1;
+  INT ta = 0;
+  INT za = a * sa;
+  INT sb = 0;
+  INT tb = b < 0 ? -1 : 1;
+  INT zb = b * tb;
+  while (zb != 0) {
+    INT q = za / zb;
+    INT r = za % zb;
+    za = zb;
+    zb = r;
+    INT new_sb = sa - q * sb;
+    sa = sb;
+    sb = new_sb;
+    INT new_tb = ta - q * tb;
+    ta = tb;
+    tb = new_tb;
+  }
+  return {za, sa, ta};
+}
+
+pair<ll, ll> crt_sub(ll a1, ll x1, ll a2, ll x2) {
+  // DLOGKL("crt_sub", a1, x1, a2, x2);
+  a1 = a1 % x1;
+  a2 = a2 % x2;
+  auto [g, s, t] = eGCD(x1, -x2);
+  ll gq = (a2 - a1) / g;
+  ll gr = (a2 - a1) % g;
+  if (gr != 0) return {-1, -1};
+  s *= gq;
+  t *= gq;
+  ll z = x1 / g * x2;
+  // DLOGK(z);
+  s = s % (x2 / g);
+  ll r = (x1 * s + a1) % z;
+  // DLOGK(r);
+  if (r < 0) r += z;
+  // DLOGK(r);
+  return {r, z};
+};
+
+// Chinese Remainder Theorem
+//
+//    r = crt(a1, x1, a2, x2)
+//    ==>   r = a1 (mod x1);  r = a2 (mod x2);  0 <= r < lcm(x1, x2)
+//    If no such r exists, returns -1
+//    Note: x1 and x2 should >= 1.  a1 and a2 can be negative or zero.
+//
+//    r = crt(as, xs)
+//    ==>   for all i. r = as[i] (mod xs[i]); 0 <= r < lcm(xs)
+//    If no such r exists, returns -1
+//    Note: xs[i] should >= 1.  as[i] can be negative or zero.
+//          It should hold: len(xs) == len(as) > 0
+
+ll crt(ll a1, ll x1, ll a2, ll x2) { return crt_sub(a1, x1, a2, x2).first; }
+
+ll crt(vector<ll> as, vector<ll> xs) {
+  // DLOGKL("crt", as, xs);
+  assert(xs.size() == as.size() && xs.size() > 0);
+  ll r = as[0];
+  ll z = xs[0];
+  for (size_t i = 1; i < xs.size(); i++) {
+    // DLOGK(i, r, z, as[i], xs[i]);
+    tie(r, z) = crt_sub(r, z, as[i], xs[i]);
+    // DLOGK(r, z);
+    if (r == -1) return -1;
+  }
+  return r;
+}
+
+// ---- end f:gcd
+
+// ---- inserted library file mod.cc
+// published at https://github.com/yamate11/compprog-clib/blob/master/mod.cc
+
+template<int mod=0, typename INT=ll, int dyn_id=0>
+struct FpG {   // G for General
+  inline static INT dyn_mod = 0;
+
+  static INT getMod() {
+    if constexpr (mod == 0) return dyn_mod;
+    else                    return (INT)mod;
+  }
+  
+  // Effective only when mod == 0.
+  static void setMod(INT _mod) { dyn_mod = _mod; }
+
+  static INT _conv(INT x) {
+    if (x >= getMod())  return x % getMod();
+    if (x >= 0)         return x;
+    if (x >= -getMod()) return x + getMod();
+    INT y = x % getMod();
+    if (y == 0) return 0;
+    return y + getMod();
+  }
+
+  INT val;
+
+  FpG(INT t = 0) : val(_conv(t)) {}
+  FpG(const FpG& t) : val(t.val) {}
+  FpG& operator =(const FpG& t) { val = t.val; return *this; }
+  FpG& operator =(INT t) { val = _conv(t); return *this; }
+
+  FpG& operator +=(const FpG& t) {
+    val += t.val;
+    if (val >= getMod()) val -= getMod();
+    return *this;
+  }
+
+  FpG& operator -=(const FpG& t) {
+    val -= t.val;
+    if (val < 0) val += getMod();
+    return *this;
+  }
+
+  FpG& operator *=(const FpG& t) {
+    val = (val * t.val) % getMod();
+    return *this;
+  }
+
+  FpG inv() const {
+    if (val == 0) { throw runtime_error("FpG::inv(): called for zero."); }
+    auto [g, u, v] = eGCD(val, getMod());
+    if (g != 1) { throw runtime_error("FpG::inv(): not co-prime."); }
+    return FpG(u);
+  }
+
+  FpG zero() const { return (FpG)0; }
+  FpG one() const { return (FpG)1; }
+  FpG inverse() const { return inv(); }
+
+  FpG& operator /=(const FpG& t) {
+    return (*this) *= t.inv();
+  }
+
+  FpG operator +(const FpG& t) const { return FpG(val) += t; }
+  FpG operator -(const FpG& t) const { return FpG(val) -= t; }
+  FpG operator *(const FpG& t) const { return FpG(val) *= t; }
+  FpG operator /(const FpG& t) const { return FpG(val) /= t; }
+  FpG operator -() const { return FpG(-val); }
+
+  bool operator ==(const FpG& t) const { return val == t.val; }
+  bool operator !=(const FpG& t) const { return val != t.val; }
+  
+  operator INT() const { return val; }
+
+  friend FpG operator +(INT x, const FpG& y) { return FpG(x) + y; }
+  friend FpG operator -(INT x, const FpG& y) { return FpG(x) - y; }
+  friend FpG operator *(INT x, const FpG& y) { return FpG(x) * y; }
+  friend FpG operator /(INT x, const FpG& y) { return FpG(x) / y; }
+  friend bool operator ==(INT x, const FpG& y) { return FpG(x) == y; }
+  friend bool operator !=(INT x, const FpG& y) { return FpG(x) != y; }
+  friend FpG operator +(const FpG& x, INT y) { return x + FpG(y); }
+  friend FpG operator -(const FpG& x, INT y) { return x - FpG(y); }
+  friend FpG operator *(const FpG& x, INT y) { return x * FpG(y); }
+  friend FpG operator /(const FpG& x, INT y) { return x / FpG(y); }
+  friend bool operator ==(const FpG& x, INT y) { return x == FpG(y); }
+  friend bool operator !=(const FpG& x, INT y) { return x != FpG(y); }
+
+  /* The following are needed to avoid warnings in cases such as FpG x; x = 5 + x; rather than x = FpG(5) + x; */
+  friend FpG operator +(int x, const FpG& y) { return FpG(x) + y; }
+  friend FpG operator -(int x, const FpG& y) { return FpG(x) - y; }
+  friend FpG operator *(int x, const FpG& y) { return FpG(x) * y; }
+  friend FpG operator /(int x, const FpG& y) { return FpG(x) / y; }
+  friend bool operator ==(int x, const FpG& y) { return FpG(x) == y; }
+  friend bool operator !=(int x, const FpG& y) { return FpG(x) != y; }
+  friend FpG operator +(const FpG& x, int y) { return x + FpG(y); }
+  friend FpG operator -(const FpG& x, int y) { return x - FpG(y); }
+  friend FpG operator *(const FpG& x, int y) { return x * FpG(y); }
+  friend FpG operator /(const FpG& x, int y) { return x / FpG(y); }
+  friend bool operator ==(const FpG& x, int y) { return x == FpG(y); }
+  friend bool operator !=(const FpG& x, int y) { return x != FpG(y); }
+
+  friend istream& operator>> (istream& is, FpG& t) {
+    INT x; is >> x;
+    t = x;
+    return is;
+  }
+
+  friend ostream& operator<< (ostream& os, const FpG& t) {
+    os << t.val;
+    return os;
+  }
+};
+
+// for std::format()
+template<int mod, typename INT, int dyn_id>
+struct formatter<FpG<mod, INT, dyn_id>> : formatter<INT>  {
+  auto format(const FpG<mod, INT, dyn_id>& x, format_context& ctx) const {
+    return formatter<INT>::format(static_cast<INT>(x), ctx);
+  }
+};
+
+template<typename T>
+class Comb {
+  int nMax;
+  vector<T> vFact;
+  vector<T> vInvFact;
+public:
+  Comb(int nm) : nMax(nm), vFact(nm+1), vInvFact(nm+1) {
+    vFact[0] = 1;
+    for (int i = 1; i <= nMax; i++) vFact[i] = i * vFact[i-1];
+    vInvFact.at(nMax) = (T)1 / vFact[nMax];
+    for (int i = nMax; i >= 1; i--) vInvFact[i-1] = i * vInvFact[i];
+  }
+  T fact(int n) { return vFact[n]; }
+  T inv_fact(int n) { return vInvFact[n]; }
+  T binom(int n, int r) {
+    if (r < 0 || r > n) return (T)0;
+    return vFact[n] * vInvFact[r] * vInvFact[n-r];
+  }
+  T binom_dup(int n, int r) { return binom(n + r - 1, r); }
+  // The number of permutation extracting r from n.
+  T perm(int n, int r) {
+    return vFact[n] * vInvFact[n-r];
+  }
+};
+
+constexpr int primeA = 1'000'000'007;
+constexpr int primeB = 998'244'353;          // '
+using FpA = FpG<primeA, ll>;
+using FpB = FpG<primeB, ll>;
+
+// ---- end mod.cc
+
+// ---- inserted function f:<< from util.cc
+
+
+// If a struct T has member function "string show() const",
+// (1) operator<< is defined
+// (2) g_show(const T&) is defined.
+// g_show is also defined for integral and floating point types and string.
+
+
+// Declartion of g_show
+
+// If T has member function show(), it is used:
+
+template<typename T>
+concept HasShow = requires(const T& t) {
+  { t.show() } -> convertible_to<string>;
+};
+
+template<class T>
+concept Streamable = requires(ostream& os, const T& x) {
+  os << x;
+};
+
+//   The declaration must be put before calling it.
+
+template<class T>
+string g_show(const T& x);
+
+// Definition of g_show_impl
+//    The separation between g_show and g_show_impl is needed for order independence.
+
+template<HasShow T> string g_show_impl(const T& t) { return t.show(); }
+
+// basic types
+
+inline string g_show_impl(char c) { return string(1, c); }
+inline string g_show_impl(const char* s) { return s ? string(s) : string("(null)"); }
+inline string g_show_impl(bool b) { return b ? "true" : "false"; }
+
+// int, ll, ...; note that this also is applied to "sigend/unsigned char"
+template<integral T>
+  requires (not same_as<T, bool> and not same_as<T, char>)
+string g_show_impl(T t) { return to_string(t); }
+
+// double, long double, ...
+template<floating_point T> string g_show_impl(T t) { return to_string(t); }
+
+// containers in the standard library
+
+//    pair
+template <typename T1, typename T2>
+string g_show_impl(const pair<T1,T2>& p) { return "(" + g_show(p.first) + ", " + g_show(p.second) + ")"; }
+
+//    tuple
+template<class... Ts>
+string g_show_impl(const tuple<Ts...>& t) {
+  string s = "(";
+  bool first = true;
+  apply([&](const auto&... xs) {
+    ((s += (first ? "" : ", "), first = false, s += g_show(xs)),
+     ...);
+  }, t);
+  s += ")";
+  return s;
+}
+
+//   vector, array, deque, (un)ordered set, multiset, (un)ordered map, 
+
+template<typename T, bool pair=false>
+string g_show_with_iterator(const T& v) {
+  string ret = "[";
+  for (auto it = v.begin(); it != v.end(); it++) {
+    if (it != v.begin()) ret += ", ";
+    if constexpr (pair) ret += "(" + g_show(it->first) + ": " + g_show(it->second) + ")";
+    else                ret += g_show(*it);
+  }
+  ret += "]";
+  return ret;
+}
+
+template<typename T>
+string g_show_impl(const vector<T>& v) { return g_show_with_iterator(v); }
+
+template <typename T, size_t N>
+string g_show_impl(const array<T, N>& v) { return g_show_with_iterator(v); }
+
+template <typename T, typename C>
+string g_show_impl(const set<T, C>& v) { return g_show_with_iterator(v); }
+
+template <typename T, typename C>
+string g_show_impl(const unordered_set<T, C>& v) { return g_show_with_iterator(v); }
+
+template <typename T, typename C>
+string g_show_impl(const multiset<T, C>& v) { return g_show_with_iterator(v); }
+
+template <typename T, typename T2>
+string g_show_impl(const deque<T, T2>& v) { return g_show_with_iterator(v); }
+
+template <typename T1, typename T2, typename C>
+string g_show_impl(const map<T1, T2, C>& v) {
+  return g_show_with_iterator<map<T1, T2, C>, true>(v);
+}
+
+template <typename T1, typename T2, typename C>
+string g_show_impl(const unordered_map<T1, T2, C>& v) {
+  return g_show_with_iterator<unordered_map<T1, T2, C>, true>(v);
+}
+
+//   queue, priority-queue
+
+template<typename T>
+string g_show_queue_and_like(const T& v0, auto front_like) {
+  T v = v0;  // copy
+  string ret = "[";
+  bool first = true;
+  while (not v.empty()) {
+    if (not first) ret += ", ";
+    first = false;
+    const auto& x = front_like(v);
+    ret += g_show(x);
+    v.pop();
+  }
+  ret += "]";
+  return ret;
+}
+
+template <typename T, typename T2>
+string g_show_impl(const queue<T, T2>& v) {
+  return g_show_queue_and_like(v, [](const queue<T, T2>& vv) { return vv.front(); });
+}
+
+template <typename T, typename T2, typename T3>
+string g_show_impl(const priority_queue<T, T2, T3>& v) {
+  return g_show_queue_and_like(v, [](const priority_queue<T, T2, T3>& vv) { return vv.top(); });
+}
+
+//    optional
+template <typename T>
+string g_show_impl(const optional<T>& t) { return t ? g_show(*t) : "(nullopt)"; }
+
+//    (signed/unsigned) __int128
+//    operator<< is defined here, and the next section makes g_show
+
+ostream& operator<<(ostream& ostr, unsigned __int128 x) {
+  if (x == 0) return ostr << "0";
+  string s;
+  while (x > 0) {
+    int d = x % 10;
+    s.push_back('0' + d);
+    x /= 10;
+  }
+  reverse(s.begin(), s.end());
+  return ostr << s;
+}
+
+ostream& operator<<(ostream& ostr, __int128 x) {
+  if (x >= 0) {
+    return ostr << (unsigned __int128)x;
+  } else {
+    unsigned __int128 ux = (unsigned __int128)x;
+    ux = ~ux + 1;
+    return ostr << "-" << ux;
+  }
+}
+
+template<class T>
+string g_show(const T& x) {
+  if constexpr (requires { g_show_impl(x); }) {
+    return g_show_impl(x);
+  } else if constexpr (Streamable<T> && (not HasShow<T>)) {
+    ostringstream oss;
+    oss << x;
+    return oss.str();
+  }else {
+    static_assert(sizeof(T) == 0, "g_show: unsupported type");
+  }
+}
+
+// HasGShow
+template<typename T>
+concept HasGShow = requires(const T& t) {
+  { g_show(t) } -> convertible_to<string>;
+};
+
+// ---- end f:<<
+
+// ---- inserted library file debug.cc
+// published at https://github.com/yamate11/compprog-clib/blob/master/debug.cc
+// https://github.com/yamate11/compprog-clib/blob/master/debug.cc
+
+template<class T>
+void dbgPrintOne(const T& x) {
+  if constexpr (HasGShow<T>) {
+    cerr << g_show(x);
+  } else {
+    cerr << x;
+  }
+}
+
+inline void dbgLog(bool with_nl) {
+  if (with_nl) cerr << endl;
+}
+
+template <class Head, class... Tail>
+void dbgLog(bool with_nl, Head&& head, Tail&&... tail) {
+  dbgPrintOne(head);
+  if constexpr (sizeof...(tail) > 0) {
+    cerr << " ";
+    dbgLog(with_nl, forward<Tail>(tail)...);
+  } else {
+    if (with_nl) cerr << endl;
+  }
+}
+
+string dbgTrim(string s) {
+  int l = 0, r = (int)s.size();
+  while (l < r && isspace((unsigned char)s[l])) l++;
+  while (l < r && isspace((unsigned char)s[r - 1])) r--;
+  return s.substr(l, r - l);
+}
+
+vector<string> dbgSplitNames(const string& s) {
+  vector<string> res;
+  string cur;
+  int depth = 0;
+
+  for (char c : s) {
+    if (c == '(' || c == '[' || c == '{') depth++;
+    if (c == ')' || c == ']' || c == '}') depth--;
+
+    if (c == ',' && depth == 0) {
+      res.push_back(dbgTrim(cur));
+      cur.clear();
+    } else {
+      cur += c;
+    }
+  }
+
+  res.push_back(dbgTrim(cur));
+  return res;
+}
+
+template<class T>
+void dbgLogKOne(const string& name, T&& value) {
+  cerr << name << "=";
+  dbgPrintOne(forward<T>(value));
+}
+
+template<class... Args>
+void dbgLogK(const char* names_c, Args&&... args) {
+  vector<string> names = dbgSplitNames(names_c);
+
+  int idx = 0;
+  auto print_one = [&](auto&& x) {
+    if (idx > 0) cerr << " ";
+    if (idx < (int)names.size()) {
+      dbgLogKOne(names[idx], forward<decltype(x)>(x));
+    } else {
+      cerr << "?= ";
+      dbgPrintOne(forward<decltype(x)>(x));
+    }
+    idx++;
+  };
+
+  (print_one(forward<Args>(args)), ...);
+  cerr << endl;
+}
+
+template<class Label, class... Args>
+void dbgLogKL(Label&& label, const char* names_c, Args&&... args) {
+  dbgPrintOne(forward<Label>(label));
+  if constexpr (sizeof...(Args) > 0) cerr << " ";
+
+  vector<string> names = dbgSplitNames(names_c);
+
+  int idx = 0;
+  auto print_one = [&](auto&& x) {
+    if (idx > 0) cerr << " ";
+    if (idx < (int)names.size()) {
+      dbgLogKOne(names[idx], forward<decltype(x)>(x));
+    } else {
+      cerr << "?=";
+      dbgPrintOne(forward<decltype(x)>(x));
+    }
+    idx++;
+  };
+
+  (print_one(forward<Args>(args)), ...);
+  cerr << endl;
+}
+
+#if DEBUG
+  #define DLOG(...)        dbgLog(true, __VA_ARGS__)
+  #define DLOGNNL(...)     dbgLog(false, __VA_ARGS__)
+  #define DCALL(func, ...) func(__VA_ARGS__)
+  #define DLOGK(...)       dbgLogK(#__VA_ARGS__, __VA_ARGS__)
+  #define DLOGKL(lab, ...) dbgLogKL(lab, #__VA_ARGS__, __VA_ARGS__)
+#else
+  #define DLOG(...)
+  #define DLOGNNL(...)
+  #define DCALL(func, ...)
+  #define DLOGK(...)
+  #define DLOGKL(lab, ...)
+#endif
+
+#if DEBUG_LIB
+  #define DLOG_LIB   DLOG
+  #define DLOGK_LIB  DLOGK
+  #define DLOGKL_LIB DLOGKL
+#endif
+
+// ---- end debug.cc
+
+// ---- inserted library file cmpNaive.cc
+// published at https://github.com/yamate11/compprog-clib/blob/master/cmpNaive.cc
+
+const string end_mark("^__=end=__^");
+
+int naive(istream& cin, ostream& cout);
+int body(istream& cin, ostream& cout);
+
+void cmpNaive() {
+  while (true) {
+    string s;
+    getline(cin, s);
+    bool run_body;
+    if (s.at(0) == 'Q') {
+      return;
+    }else if (s.at(0) == 'B') {
+      run_body = true;
+    }else if (s.at(0) == 'N') {
+      run_body = false;
+    }else {
+      cerr << "Unknown body/naive specifier.\n";
+      exit(1);
+    }
+    string input_s;
+    while (true) {
+      getline(cin, s);
+      if (s == end_mark) break;
+      input_s += s;
+      input_s += "\n";
+    }
+    stringstream ss_in(move(input_s));
+    stringstream ss_out;
+    ss_out << setprecision(20);
+    if (run_body) {
+      body(ss_in, ss_out);
+    }else {
+      naive(ss_in, ss_out);
+    }
+    cout << ss_out.str() << end_mark << endl;
+  }
+}
+
+int main(int argc, char *argv[]) {
+  ios_base::sync_with_stdio(false);
+  cin.tie(nullptr);
+  cout << setprecision(20);
+
+#if CMPNAIVE
+  if (argc == 2) {
+    if (strcmp(argv[1], "cmpNaive") == 0) {
+      cmpNaive();
+    }else if (strcmp(argv[1], "naive") == 0) {
+      naive(cin, cout);
+    }else if (strcmp(argv[1], "skip") == 0) {
+      exit(0);
+    }else {
+      cerr << "Unknown argument.\n";
+      exit(1);
+    }
+  }else {
+#endif
+    body(cin, cout);
+#if CMPNAIVE
+  }
+#endif
+  return 0;
+}
+
+/*
+int naive(istream& cin, ostream& cout) {
+  return 0;
+}
+int body(istream& cin, ostream& cout) {
+  return 0;
+}
+*/
+
+// ---- end cmpNaive.cc
+
+// ---- inserted library file forall.cc
+// published at https://github.com/yamate11/compprog-clib/blob/master/forall.cc
+
+#define EX_REP_LL(i, from, to) for (ll i = (from); i < (to); i++)
+#define EX_REP_RB(x, coll) for (auto x : coll)
+#define EXGEN(rep_part, cond, yes, no_behaviour) ([&]() { rep_part if (cond) return (yes); no_behaviour; }())
+#define EXISTS_BASE(rep_part, cond) EXGEN(rep_part, cond, true, return false)
+#define EXFIND_BASE(rep_part, cond, t) EXGEN(rep_part, cond, t, assert(0))
+#define EXFIND_D_BASE(rep_part, cond, t, def) EXGEN(rep_part, cond, t, return def)
+
+#define EXISTS(i, from, to, cond) EXISTS_BASE(EX_REP_LL(i, from, to), cond)
+#define FORALL(i, from, to, cond) (not EXISTS(i, from, to, not (cond)))
+#define EXFIND(i, from, to, cond) EXFIND_BASE(EX_REP_LL(i, from, to), cond, i)
+#define EXFIND_D(i, from, to, cond, def) EXFIND_D_BASE(EX_REP_LL(i, from, to), cond, i, def)
+
+#define EXISTS_C(x, coll, cond) EXISTS_BASE(EX_REP_RB(x, coll), cond)
+#define FORALL_C(x, coll, cond) (not EXISTS_C(x, coll, not (cond)))
+#define EXFIND_C(x, coll, cond) EXFIND_BASE(EX_REP_RB(x, coll), cond, x)
+#define EXFIND_D_C(x, coll, cond, def) EXFIND_D_BASE(EX_REP_RB(x, coll), cond, x, def)
+
+#define COUNT_BASE(rep_part, cond) ([&](){ ll ret = 0; rep_part if (cond) ret++; return ret; }())
+#define COUNT(i, from, to, cond) COUNT_BASE(EX_REP_LL(i, from, to), cond)
+#define COUNT_C(x, coll, cond) COUNT_BASE(EX_REP_RB(x, coll), cond)
+
+#define IMPLIES(a, b) (not (a) or (b))
+
+// ---- end forall.cc
+
+// @@ !! LIM -- end mark --
+
+using Fp = FpB;
+
+int naive(istream& cin, ostream& cout) {
+  ll N, M; cin >> N >> M;
+  vector S(M, vector<ll>());
+  REP(i, 0, M) {
+    ll k; cin >> k;
+    REP(j, 0, k) {
+      ll s; cin >> s; s--;
+      S[i].push_back(s);
+    }
+  }
+  // @InpVec(M, R) [CtbMMsKL]
+  auto R = vector(M, ll());
+  for (int i = 0; i < M; i++) { ll v; cin >> v; R[i] = v; }
+  // @End [CtbMMsKL]
+
+  ll ans = 0;
+  REP(x, 0, 1LL << N) {
+    auto check = [&](ll i) -> bool {
+      ll test_val = EXISTS_C(j, S[i], x >> j & 1) ? 1 : 0;
+      return test_val == R[i];
+    };
+    if (FORALL(i, 0, M, check(i))) ans++;
+  }
+  cout << ans << endl;
+  return 0;
+}
+int body(istream& cin, ostream& cout) {
+
+  ll N, M; cin >> N >> M;
+  vector pow2(N + 1, Fp(1));
+  REP(i, 1, N + 1) pow2[i] = 2 * pow2[i - 1];
+  vector S(M, vector<ll>());
+  vector SS(N, 0ULL);
+  REP(i, 0, M) {
+    ll k; cin >> k;
+    REP(j, 0, k) {
+      ll s; cin >> s; s--;
+      S[i].push_back(s);
+      SS[s] |= 1ULL << i;
+    }
+  }
+  DLOGK(S);
+  DLOGK(SS);
+  // @InpVec(M, R) [CtbMMsKL]
+  auto R = vector(M, ll());
+  for (int i = 0; i < M; i++) { ll v; cin >> v; R[i] = v; }
+  // @End [CtbMMsKL]
+  vector<bool> Shat(N, false);
+  REP(i, 0, M) if (R[i] == 0) for (ll j : S[i]) Shat[j] = true;
+  ll szShat = 0;
+  REP(i, 0, N) if (Shat[i]) szShat++;
+  DLOGK(Shat, szShat);
+  u64 mask0 = 0, mask1 = 0;
+  REP(i, 0, M) {
+    if (R[i] == 0) mask0 |= 1ULL << i;
+    else           mask1 |= 1ULL << i;
+  }
+  DLOGK(mask0, mask1);
+  vector<ll> vecF(1ULL << M);
+  REP(t, 0, N) if (not Shat[t]) vecF[(~SS[t]) & mask1]++;
+  DLOGKL("before", vecF);
+  zeta_upper(vecF);
+  DLOGKL("after", vecF);
+  Fp val = 0;
+  REP(x, 1, 1LL << M) {
+    if (x & mask0) continue;
+    Fp sgn = popcount((u64)x) % 2 == 0 ? -1 : 1;
+    val += sgn * pow2[vecF[x]];
+  }
+  Fp ans = pow2[N - szShat] - val;
+  cout << ans << "\n";
+  return 0;
+}
+
