@@ -1,0 +1,1137 @@
+
+
+
+
+
+
+
+
+<!DOCTYPE html>
+<html>
+<head>
+	<title>E - 社内連絡網</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+	<meta http-equiv="Content-Language" content="ja">
+	<meta name="viewport" content="width=device-width,initial-scale=1.0">
+	<meta name="format-detection" content="telephone=no">
+	<meta name="google-site-verification" content="nXGC_JxO0yoP1qBzMnYD_xgufO6leSLw1kyNo2HZltM" />
+	<meta name="robots" content="noai, noimageai">
+
+	
+	<script async src="https://www.googletagmanager.com/gtag/js?id=G-RC512FD18N"></script>
+	<script>
+		window.dataLayer = window.dataLayer || [];
+		function gtag(){dataLayer.push(arguments);}
+		gtag('js', new Date());
+		gtag('set', 'user_properties', {
+			
+				'login_status': 'logged_in',
+			
+		});
+		gtag('config', 'G-RC512FD18N');
+	</script>
+
+	
+	<meta name="description" content="プログラミング初級者から上級者まで楽しめる、競技プログラミングコンテストサイト「AtCoder」。オンラインで毎週開催プログラミングコンテストを開催しています。競技プログラミングを用いて、客観的に自分のスキルを計ることのできるサービスです。">
+	<meta name="author" content="AtCoder Inc.">
+
+	<meta property="og:site_name" content="AtCoder">
+	
+	<meta property="og:title" content="E - 社内連絡網" />
+	<meta property="og:description" content="プログラミング初級者から上級者まで楽しめる、競技プログラミングコンテストサイト「AtCoder」。オンラインで毎週開催プログラミングコンテストを開催しています。競技プログラミングを用いて、客観的に自分のスキルを計ることのできるサービスです。" />
+	<meta property="og:type" content="website" />
+	<meta property="og:url" content="https://atcoder.jp/contests/awc0143/tasks/awc0143_e" />
+	<meta property="og:image" content="https://img.atcoder.jp/assets/atcoder.png" />
+	<meta name="twitter:card" content="summary" />
+	<meta name="twitter:site" content="@atcoder" />
+	
+	<meta property="twitter:title" content="E - 社内連絡網" />
+
+	<link href="//fonts.googleapis.com/css?family=Lato:400,700" rel="stylesheet" type="text/css">
+	<link rel="stylesheet" type="text/css" href="//img.atcoder.jp/public/594ba2e/css/bootstrap.min.css">
+	<link rel="stylesheet" type="text/css" href="//img.atcoder.jp/public/594ba2e/css/base.css">
+	<link rel="shortcut icon" type="image/png" href="//img.atcoder.jp/assets/favicon.png">
+	<link rel="apple-touch-icon" href="//img.atcoder.jp/assets/atcoder.png">
+	<script src="//img.atcoder.jp/public/594ba2e/js/lib/jquery-1.9.1.min.js"></script>
+	<script src="//img.atcoder.jp/public/594ba2e/js/lib/bootstrap.min.js"></script>
+	<script src="//img.atcoder.jp/public/594ba2e/js/cdn/js.cookie.min.js"></script>
+	<script src="//img.atcoder.jp/public/594ba2e/js/cdn/moment.min.js"></script>
+	<script src="//img.atcoder.jp/public/594ba2e/js/cdn/moment_js-ja.js"></script>
+	<script>
+		var LANG = "ja";
+		var userScreenName = "yamate11";
+		var csrfToken = "AapGcs+m6IwzooLm3xaWeJUYR8j0cbaTCHgxhhUVYsw="
+	</script>
+	<script src="//img.atcoder.jp/public/594ba2e/js/utils.js"></script>
+	
+	
+		<script src="//img.atcoder.jp/public/594ba2e/js/contest.js"></script>
+		<link href="//img.atcoder.jp/public/594ba2e/css/contest.css" rel="stylesheet" />
+		<script>
+			var contestScreenName = "awc0143";
+			var remainingText = "残り時間";
+			var countDownText = "開始まであと";
+			var startTime = moment("2026-08-26T20:00:00+09:00");
+			var endTime = moment("2026-08-26T21:00:00+09:00");
+		</script>
+		<style></style>
+	
+	
+		<link href="//img.atcoder.jp/public/594ba2e/css/cdn/select2.min.css" rel="stylesheet" />
+		<link href="//img.atcoder.jp/public/594ba2e/css/cdn/select2-bootstrap.min.css" rel="stylesheet" />
+		<script src="//img.atcoder.jp/public/594ba2e/js/lib/select2.min.js"></script>
+	
+	
+		<script src="//img.atcoder.jp/public/594ba2e/js/ace/ace.js"></script>
+		<script src="//img.atcoder.jp/public/594ba2e/js/ace/ext-language_tools.js"></script>
+	
+	
+		<script src="//img.atcoder.jp/public/594ba2e/js/cdn/run_prettify.js"></script>
+	
+	
+		<link rel="stylesheet" href="//img.atcoder.jp/public/594ba2e/css/cdn/katex.min.css">
+		<script defer src="//img.atcoder.jp/public/594ba2e/js/cdn/katex.min.js"></script>
+		<script defer src="//img.atcoder.jp/public/594ba2e/js/cdn/auto-render.min.js"></script>
+		<script>$(function(){$('var').each(function(){var html=$(this).html().replace(/<sub>/g,'_{').replace(/<\/sub>/g,'}');$(this).html('\\('+html+'\\)');});});</script>
+		<script>
+			var katexOptions = {
+				delimiters: [
+					{left: "$$", right: "$$", display: true},
+					
+					{left: "\\(", right: "\\)", display: false},
+					{left: "\\[", right: "\\]", display: true}
+				],
+      	ignoredTags: ["script", "noscript", "style", "textarea", "code", "option"],
+				ignoredClasses: ["prettyprint", "source-code-for-copy"],
+				throwOnError: false
+			};
+			document.addEventListener("DOMContentLoaded", function() { renderMathInElement(document.body, katexOptions);});
+		</script>
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	<script src="//img.atcoder.jp/public/594ba2e/js/base.js"></script>
+</head>
+
+<body>
+
+<div id="modal-contest-start" class="modal fade" tabindex="-1" role="dialog">
+	<div class="modal-dialog" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+				<h4 class="modal-title">コンテスト開始</h4>
+			</div>
+			<div class="modal-body">
+				<p>AtCoder Weekday Contest 0143 Betaが開始されました。</p>
+			</div>
+			<div class="modal-footer">
+				
+					<a class="btn btn-primary" href='/contests/awc0143/tasks'>問題一覧ページへ移動</a>
+				
+			</div>
+		</div>
+	</div>
+</div>
+<div id="modal-contest-end" class="modal fade" tabindex="-1" role="dialog">
+	<div class="modal-dialog" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+				<h4 class="modal-title">コンテスト終了</h4>
+			</div>
+			<div class="modal-body">
+				<p>AtCoder Weekday Contest 0143 Betaは終了しました。</p>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-default" data-dismiss="modal">閉じる</button>
+			</div>
+		</div>
+	</div>
+</div>
+<div id="main-div" class="float-container">
+
+
+	<nav class="navbar navbar-inverse navbar-fixed-top">
+		<div class="container-fluid">
+			<div class="navbar-header">
+				<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapse" aria-expanded="false">
+					<span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span>
+				</button>
+				<a class="navbar-brand" href="/home"></a>
+			</div>
+			<div class="collapse navbar-collapse" id="navbar-collapse">
+				<ul class="nav navbar-nav">
+				
+					<li><a class="contest-title" href="/contests/awc0143">AtCoder Weekday Contest 0143 Beta</a></li>
+				
+				</ul>
+				<ul class="nav navbar-nav navbar-right">
+					
+					<li class="dropdown">
+						<a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
+							<img src='//img.atcoder.jp/assets/top/img/flag-lang/ja.png'> 日本語 <span class="caret"></span>
+						</a>
+						<ul class="dropdown-menu">
+							<li><a href="/contests/awc0143/tasks/awc0143_e?lang=ja"><img src='//img.atcoder.jp/assets/top/img/flag-lang/ja.png'> 日本語</a></li>
+							<li><a href="/contests/awc0143/tasks/awc0143_e?lang=en"><img src='//img.atcoder.jp/assets/top/img/flag-lang/en.png'> English</a></li>
+						</ul>
+					</li>
+					
+					
+						<li class="dropdown">
+							<a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
+								<span class="glyphicon glyphicon-cog" aria-hidden="true"></span> yamate11 (Contestant) <span class="caret"></span>
+							</a>
+							<ul class="dropdown-menu">
+								<li><a href="/users/yamate11"><span class="glyphicon glyphicon-user" aria-hidden="true"></span> マイプロフィール</a></li>
+								<li class="divider"></li>
+								<li><a href="/settings"><span class="glyphicon glyphicon-wrench" aria-hidden="true"></span> 基本設定</a></li>
+								<li><a href="/settings/icon"><span class="glyphicon glyphicon-picture" aria-hidden="true"></span> アイコン設定</a></li>
+								<li><a href="/settings/password"><span class="glyphicon glyphicon-lock" aria-hidden="true"></span> パスワードの変更</a></li>
+								<li><a href="/settings/fav"><span class="glyphicon glyphicon-star" aria-hidden="true"></span> お気に入り管理</a></li>
+								
+								
+								
+								<li class="divider"></li>
+								<li><a href="javascript:void(form_logout.submit())"><span class="glyphicon glyphicon-log-out" aria-hidden="true"></span> ログアウト</a></li>
+							</ul>
+						</li>
+					
+				</ul>
+			</div>
+		</div>
+	</nav>
+
+	<form method="POST" name="form_logout" action="/logout?continue=https%3A%2F%2Fatcoder.jp%2Fcontests%2Fawc0143%2Ftasks%2Fawc0143_e">
+		<input type="hidden" name="csrf_token" value="AapGcs&#43;m6IwzooLm3xaWeJUYR8j0cbaTCHgxhhUVYsw=" />
+	</form>
+	<div id="main-container" class="container"
+		 	style="padding-top:50px;">
+		
+
+
+<div class="row">
+	<div id="contest-nav-tabs" class="col-sm-12 mb-2 cnvtb-fixed">
+	<div>
+		<small class="contest-duration">
+			
+				コンテスト時間:
+				<a href='http://www.timeanddate.com/worldclock/fixedtime.html?iso=20260826T2000&p1=248' target='blank'><time class='fixtime fixtime-full'>2026-08-26 20:00:00+0900</time></a> ~ <a href='http://www.timeanddate.com/worldclock/fixedtime.html?iso=20260826T2100&p1=248' target='blank'><time class='fixtime fixtime-full'>2026-08-26 21:00:00+0900</time></a> 
+				(60分)
+			
+		</small>
+		<small class="back-to-home pull-right"><a href="/home">AtCoderホームへ戻る</a></small>
+	</div>
+	<ul class="nav nav-tabs">
+		<li><a href="/contests/awc0143"><span class="glyphicon glyphicon-home" aria-hidden="true"></span> トップ</a></li>
+		
+			<li class="active"><a href="/contests/awc0143/tasks"><span class="glyphicon glyphicon-tasks" aria-hidden="true"></span> 問題</a></li>
+		
+
+		
+
+		
+			<li><a href="/contests/awc0143/submit?taskScreenName=awc0143_e"><span class="glyphicon glyphicon-send" aria-hidden="true"></span> 提出</a></li>
+		
+
+		
+			<li>
+				<a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false"><span class="glyphicon glyphicon-list" aria-hidden="true"></span> 提出結果<span class="caret"></span></a>
+				<ul class="dropdown-menu">
+					
+					
+						<li><a href="/contests/awc0143/submissions/me"><span class="glyphicon glyphicon-user" aria-hidden="true"></span> 自分の提出</a></li>
+						
+						
+							<li class="divider"></li>
+							<li><a href="/contests/awc0143/score"><span class="glyphicon glyphicon-dashboard" aria-hidden="true"></span> 自分の得点状況</a></li>
+						
+					
+				</ul>
+			</li>
+		
+
+		
+			
+				
+					<li><a href="/contests/awc0143/standings"><span class="glyphicon glyphicon-sort-by-attributes-alt" aria-hidden="true"></span> 順位表</a></li>
+				
+			
+		
+
+		
+			<li><a href="/contests/awc0143/custom_test"><span class="glyphicon glyphicon-wrench" aria-hidden="true"></span> コードテスト</a></li>
+		
+
+		
+		
+
+		<li class="pull-right"><a id="fix-cnvtb" href="javascript:void(0)"><span class="glyphicon glyphicon-pushpin" aria-hidden="true"></span></a></li>
+	</ul>
+</div>
+	<div class="col-sm-12">
+		<span class="h2">
+			E - 社内連絡網
+			
+		</span>
+		<span id="task-lang-btn" class="pull-right"><span data-lang="ja"><img src='//img.atcoder.jp/assets/top/img/flag-lang/ja.png'></span> / <span data-lang="en"><img src='//img.atcoder.jp/assets/top/img/flag-lang/en.png'></span></span>
+		<script>
+			$(function() {
+				var ts = $('#task-statement span.lang');
+				if (ts.children('span').size() <= 1) {
+					$('#task-lang-btn').hide();
+					ts.children('span').show();
+					return;
+				}
+
+				var REMEMBER_LB = 5;
+				var LS_KEY = 'task_lang';
+				var taskLang = getLS(LS_KEY) || '';
+				function isTaskLangSet(taskLang) { return taskLang === 'ja' || taskLang === 'en';}
+				if (isTaskLangSet(taskLang)) {
+					const params = new URLSearchParams(window.location.search);
+					if (params.get('lang')) {
+						setLS(LS_KEY, REMEMBER_LB);
+						taskLang = LANG;
+					}
+				} else {
+					taskLang = LANG;
+				}
+				ts.children('span.lang-' + taskLang).show();
+
+				$('#task-lang-btn span').click(function() {
+					var l = $(this).data('lang');
+					ts.children('span').hide();
+					ts.children('span.lang-' + l).show();
+
+					taskLang = getLS(LS_KEY) || '';
+					let changeTimes = 0;
+					if (isTaskLangSet(taskLang)) {
+						changeTimes = REMEMBER_LB;
+					} else {
+						changeTimes = parseInt(taskLang, 10);
+						if (isNaN(changeTimes)) changeTimes = 0;
+						changeTimes++;
+					}
+					if (changeTimes < REMEMBER_LB) setLS(LS_KEY, changeTimes);
+					else setLS(LS_KEY, l);
+				});
+			});
+		</script>
+		<hr/>
+		<p>
+			実行時間制限: 2 sec / メモリ制限: 1024 MiB
+			
+			
+		</p>
+
+		<div id="task-statement">
+			
+
+
+	
+	
+
+			
+			<span class="lang">
+<span class="lang-ja">
+<p>配点 : <var>433</var> 点</p>
+
+<div class="part">
+<section>
+<h3>問題文</h3>
+<p>高橋君は、 <var>N</var> 人の社員からなる会社の管理システムを担当しています。社員には <var>1</var> から <var>N</var> までの番号が付けられています。</p>
+<p>この会社には明確な上下関係があります。社員 <var>1</var> が社長であり、社員 <var>1</var> 以外の各社員 <var>i</var> （ <var>2 \leq i \leq N</var> ）にはちょうど <var>1</var> 人の直属の上司 <var>P_i</var> がいます。この上司関係は、社員 <var>1</var> を根とする根付き木をなしています。</p>
+<p>社員 <var>u</var> と社員 <var>v</var> の<strong>距離</strong> <var>\mathrm{dist}(u, v)</var> とは、根付き木上で <var>u</var> から <var>v</var> へ至る唯一の単純パスに含まれる辺の数のことをいいます。特に、 <var>\mathrm{dist}(u, u) = 0</var> です。</p>
+<p>社員 <var>v</var> の<strong>深さ</strong> <var>\mathrm{depth}(v)</var> とは、根からの距離 <var>\mathrm{dist}(1, v)</var> のことをいいます。</p>
+<p>社員 <var>v</var> が社員 <var>u</var> の<strong>祖先</strong>であるとは、 <var>u</var> から根（社員 <var>1</var> ）に向かって直属の上司を <var>0</var> 回以上繰り返したどっていく過程で <var>v</var> に到達できることをいいます。この定義から、社員 <var>u</var> 自身（ <var>0</var> 回たどった場合）と社員 <var>1</var> （根までたどった場合）は必ず <var>u</var> の祖先となります。</p>
+<p>空でない社員の集合 <var>S</var> の<strong>最小共通祖先（LCA）</strong> <var>\mathrm{LCA}(S)</var> とは、 <var>S</var> に含まれるすべての社員の共通の祖先のうち、深さが最も大きい（根から最も遠い）社員のことをいいます。根付き木の性質から、このような社員はちょうど <var>1</var> 人に定まります。集合の要素が <var>1</var> 人だけの場合、 <var>\mathrm{LCA}(\{u\}) = u</var> です。</p>
+<p>高橋君は <var>Q</var> 回の「会議招集クエリ」を処理しなければなりません。</p>
+<p><var>j</var> 番目のクエリ（ <var>1 \leq j \leq Q</var> ）では、 <var>K_j</var> 人の相異なる社員 <var>V_{j,1}, V_{j,2}, \ldots, V_{j,K_j}</var> が会議に招集されます。会議の進行役は、招集された <var>K_j</var> 人の LCA が務めます。なお、進行役自身が招集メンバーに含まれる場合もあれば、含まれない場合もあります。</p>
+<p>各クエリについて、以下の値 <var>1</var> と値 <var>2</var> を求めてください。</p>
+<hr />
+<p><strong>値 <var>1</var>：</strong> 進行役 <var>r = \mathrm{LCA}(\{V_{j,1}, V_{j,2}, \ldots, V_{j,K_j}\})</var> から、招集された <var>K_j</var> 人の各社員への距離の合計を求めてください。すなわち、</p>
+<p style="text-align:center;"><var>\sum_{i=1}^{K_j} \mathrm{dist}(r, V_{j,i})</var></p>
+<p>を求めてください。（ <var>K_j = 1</var> のときは <var>r = V_{j,1}</var> となるので、値 <var>1</var> は <var>0</var> です。）</p>
+<hr />
+<p><strong>値 <var>2</var>：</strong> 招集された <var>K_j</var> 人のうちちょうど <var>1</var> 人を欠席させ、残りの <var>K_j - 1</var> 人で会議を行うことを考えます。残った <var>K_j - 1</var> 人の LCA を新たな進行役 <var>r&#39;</var> とし、 <var>r&#39;</var> から残った <var>K_j - 1</var> 人の各社員への距離の合計を求めます。欠席させる <var>1</var> 人のすべての選び方（ <var>K_j</var> 通り）の中での、この距離の合計の<strong>最小値</strong>を求めてください。</p>
+<p><var>S_j = \{V_{j,1}, V_{j,2}, \ldots, V_{j,K_j}\}</var> とおくと、求める値は</p>
+<p style="text-align:center;"><var>\min_{1 \leq t \leq K_j} \sum_{\substack{1 \leq i \leq K_j \\ i \neq t}} \mathrm{dist}\!\left(\mathrm{LCA}\!\left(S_j \setminus \{V_{j,t}\}\right),\, V_{j,i}\right)</var></p>
+<p>です。なお、残った <var>K_j - 1</var> 人の進行役 <var>r&#39;</var> もまた、残ったメンバーに含まれる場合と含まれない場合があります。</p>
+<p><strong>ただし <var>K_j = 1</var> の場合</strong>、 <var>1</var> 人を欠席させると集合が空になり LCA が定義できないため、値 <var>2</var> として <var>-1</var> を出力してください。 <var>K_j \geq 2</var> のときは、誰を欠席させても残りの集合は空にならないため、LCA は必ず定まります。</p>
+<hr />
+</section>
+</div>
+<div class="part">
+<section>
+<h3>制約</h3>
+<ul>
+<li><var>1 \leq N \leq 2 \times 10^5</var></li>
+<li><var>1 \leq Q \leq 2 \times 10^5</var></li>
+<li><var>1 \leq P_i \leq i - 1</var> （ <var>2 \leq i \leq N</var> ）</li>
+<li><var>1 \leq K_j \leq N</var> （ <var>1 \leq j \leq Q</var> ）</li>
+<li><var>1 \leq V_{j,k} \leq N</var> （ <var>1 \leq k \leq K_j</var> ）</li>
+<li>各クエリにおいて <var>V_{j,1}, V_{j,2}, \ldots, V_{j,K_j}</var> はすべて相異なる</li>
+<li><var>\displaystyle \sum_{j=1}^{Q} K_j \leq 2 \times 10^5</var></li>
+<li>入力はすべて整数である</li>
+</ul>
+</section>
+</div>
+<hr />
+<div class="io-style">
+<div class="part">
+<section>
+<h3>入力</h3>
+<pre>
+<var>N</var> <var>Q</var>
+<var>P_2</var> <var>P_3</var> <var>\ldots</var> <var>P_N</var>
+<var>K_1</var> <var>V_{1,1}</var> <var>V_{1,2}</var> <var>\ldots</var> <var>V_{1,K_1}</var>
+<var>K_2</var> <var>V_{2,1}</var> <var>V_{2,2}</var> <var>\ldots</var> <var>V_{2,K_2}</var>
+<var>\vdots</var>
+<var>K_Q</var> <var>V_{Q,1}</var> <var>V_{Q,2}</var> <var>\ldots</var> <var>V_{Q,K_Q}</var>
+</pre>
+<ul>
+<li><var>1</var> 行目には、社員の人数を表す整数 <var>N</var> とクエリの個数を表す整数 <var>Q</var> が、スペース区切りで与えられる。</li>
+<li><var>2</var> 行目には、社員 <var>2</var> から社員 <var>N</var> までの直属の上司を表す <var>N - 1</var> 個の整数 <var>P_2, P_3, \ldots, P_N</var> が、スペース区切りで与えられる。 <var>P_i</var> は社員 <var>i</var> の直属の上司の番号である。ただし <var>N=1</var> のときは空行が与えられる。</li>
+<li>続く <var>Q</var> 行にわたって、各クエリが与えられる。 <var>j</var> 番目のクエリ（ <var>1 \leq j \leq Q</var> ）は第 <var>j + 2</var> 行目に記述され、先頭に招集人数を表す整数 <var>K_j</var> 、続いて招集された社員の番号を表す <var>K_j</var> 個の整数 <var>V_{j,1}, V_{j,2}, \ldots, V_{j,K_j}</var> がスペース区切りで与えられる。</li>
+</ul>
+</section>
+</div>
+<div class="part">
+<section>
+<h3>出力</h3>
+<p><var>Q</var> 行出力せよ。 <var>j</var> 行目（ <var>1 \leq j \leq Q</var> ）には、 <var>j</var> 番目のクエリに対する値 <var>1</var> と値 <var>2</var> をスペース区切りで出力せよ。</p>
+</section>
+</div>
+</div>
+<hr />
+<div class="part">
+<section>
+<h3>入力例 1</h3>
+<pre>
+7 4
+1 1 2 2 3 3
+3 4 5 2
+2 4 6
+1 7
+4 4 5 6 7
+</pre>
+</section>
+</div>
+<div class="part">
+<section>
+<h3>出力例 1</h3>
+<pre>
+2 1
+4 0
+0 -1
+8 6
+</pre>
+</section>
+</div>
+<hr />
+<div class="part">
+<section>
+<h3>入力例 2</h3>
+<pre>
+5 5
+1 2 3 4
+1 3
+2 2 5
+3 1 4 5
+1 1
+4 2 3 4 5
+</pre>
+</section>
+</div>
+<div class="part">
+<section>
+<h3>出力例 2</h3>
+<pre>
+0 -1
+3 0
+7 1
+0 -1
+6 3
+</pre>
+</section>
+</div>
+<hr />
+<div class="part">
+<section>
+<h3>入力例 3</h3>
+<pre>
+15 8
+1 1 2 2 3 3 4 4 5 6 6 7 10 10
+5 8 9 14 15 10
+4 11 12 13 7
+6 4 5 6 7 14 15
+3 2 8 9
+7 1 3 6 11 12 13 15
+2 14 15
+1 5
+8 8 9 10 11 12 13 14 15
+</pre>
+</section>
+</div>
+<div class="part">
+<section>
+<h3>出力例 3</h3>
+<pre>
+12 9
+7 5
+16 12
+4 2
+16 12
+2 0
+0 -1
+26 22
+</pre>
+</section>
+</div>
+<hr />
+<div class="part">
+<section>
+<h3>入力例 4</h3>
+<pre>
+30 12
+1 1 1 2 2 3 3 3 4 4 5 5 6 7 7 8 9 9 10 11 11 12 12 14 17 17 19 22 22
+10 23 24 13 25 14 6 20 29 30 22
+8 15 16 26 27 17 18 28 19
+5 2 5 12 23 24
+6 10 20 4 11 21 30
+3 23 25 30
+12 1 2 3 4 5 7 10 12 15 20 23 29
+2 26 27
+1 30
+7 13 14 15 16 17 18 19
+9 6 8 9 11 24 25 26 28 29
+4 3 7 15 16
+5 21 22 29 30 11
+</pre>
+</section>
+</div>
+<div class="part">
+<section>
+<h3>出力例 4</h3>
+<pre>
+34 30
+19 16
+9 5
+9 6
+12 6
+26 22
+2 0
+0 -1
+21 18
+28 24
+5 2
+6 4
+</pre>
+</section>
+</div>
+<hr />
+<div class="part">
+<section>
+<h3>入力例 5</h3>
+<pre>
+1 3
+
+1 1
+1 1
+1 1
+</pre>
+</section>
+</div>
+<div class="part">
+<section>
+<h3>出力例 5</h3>
+<pre>
+0 -1
+0 -1
+0 -1
+</pre>
+</section>
+</div>
+</span>
+<span class="lang-en">
+<p>Score : <var>433</var> pts</p>
+
+<div class="part">
+<section>
+<h3>Problem Statement</h3>
+<p>Takahashi is in charge of the management system for a company consisting of <var>N</var> employees. The employees are numbered <var>1</var> through <var>N</var>.</p>
+<p>The company has a clear hierarchy. Employee <var>1</var> is the president, and each employee <var>i</var> (<var>2 \leq i \leq N</var>) other than employee <var>1</var> has exactly one direct superior <var>P_i</var>. This hierarchy forms a rooted tree with employee <var>1</var> as the root.</p>
+<p>The <strong>distance</strong> <var>\mathrm{dist}(u, v)</var> between employee <var>u</var> and employee <var>v</var> is defined as the number of edges on the unique simple path between <var>u</var> and <var>v</var> on the rooted tree. In particular, <var>\mathrm{dist}(u, u) = 0</var>.</p>
+<p>The <strong>depth</strong> <var>\mathrm{depth}(v)</var> of employee <var>v</var> is defined as the distance from the root, <var>\mathrm{dist}(1, v)</var>.</p>
+<p>Employee <var>v</var> is said to be an <strong>ancestor</strong> of employee <var>u</var> if <var>v</var> can be reached by starting from <var>u</var> and repeatedly moving to the direct superior <var>0</var> or more times toward the root (employee <var>1</var>). By this definition, employee <var>u</var> themself (0 steps) and employee <var>1</var> (tracing all the way to the root) are always ancestors of <var>u</var>.</p>
+<p>The <strong>lowest common ancestor (LCA)</strong> <var>\mathrm{LCA}(S)</var> of a non-empty set of employees <var>S</var> is defined as the employee with the maximum depth (farthest from the root) among all common ancestors of the employees in <var>S</var>. By the properties of rooted trees, such an employee is uniquely determined. If the set contains only one employee, <var>\mathrm{LCA}(\{u\}) = u</var>.</p>
+<p>Takahashi needs to process <var>Q</var> &quot;meeting summons queries&quot;.</p>
+<p>In the <var>j</var>-th query (<var>1 \leq j \leq Q</var>), <var>K_j</var> distinct employees <var>V_{j,1}, V_{j,2}, \ldots, V_{j,K_j}</var> are summoned to a meeting. The facilitator of the meeting is the LCA of the summoned <var>K_j</var> employees. Note that the facilitator may or may not be among the summoned members.</p>
+<p>For each query, find Value 1 and Value 2 described below.</p>
+<hr />
+<p><strong>Value 1:</strong> Find the sum of distances from the facilitator <var>r = \mathrm{LCA}(\{V_{j,1}, V_{j,2}, \ldots, V_{j,K_j}\})</var> to each of the <var>K_j</var> summoned employees. That is, compute</p>
+<p style="text-align:center;"><var>\sum_{i=1}^{K_j} \mathrm{dist}(r, V_{j,i})</var></p>
+<p>(When <var>K_j = 1</var>, <var>r = V_{j,1}</var>, so Value 1 is <var>0</var>.)</p>
+<hr />
+<p><strong>Value 2:</strong> Consider having exactly <var>1</var> of the <var>K_j</var> summoned employees be absent and holding the meeting with the remaining <var>K_j - 1</var> employees. Let <var>r&#39;</var> be the LCA of the remaining <var>K_j - 1</var> employees as the new facilitator, and compute the sum of distances from <var>r&#39;</var> to each of the remaining <var>K_j - 1</var> employees. Find the <strong>minimum</strong> possible sum of distances over all choices of the absent employee (<var>K_j</var> ways).</p>
+<p>Letting <var>S_j = \{V_{j,1}, V_{j,2}, \ldots, V_{j,K_j}\}</var>, the value to find is</p>
+<p style="text-align:center;"><var>\min_{1 \leq t \leq K_j} \sum_{\substack{1 \leq i \leq K_j \\ i \neq t}} \mathrm{dist}\!\left(\mathrm{LCA}\!\left(S_j \setminus \{V_{j,t}\}\right),\, V_{j,i}\right)</var></p>
+<p>Note that the facilitator <var>r&#39;</var> of the remaining <var>K_j - 1</var> employees may or may not be included in the remaining members.</p>
+<p><strong>However, if <var>K_j = 1</var></strong>, leaving <var>1</var> person out results in an empty set and the LCA cannot be defined, so output <var>-1</var> as Value 2. When <var>K_j \geq 2</var>, no matter who is absent, the remaining set is non-empty, so the LCA is always uniquely determined.</p>
+<hr />
+</section>
+</div>
+<div class="part">
+<section>
+<h3>Constraints</h3>
+<ul>
+<li><var>1 \leq N \leq 2 \times 10^5</var></li>
+<li><var>1 \leq Q \leq 2 \times 10^5</var></li>
+<li><var>1 \leq P_i \leq i - 1</var> (<var>2 \leq i \leq N</var>)</li>
+<li><var>1 \leq K_j \leq N</var> (<var>1 \leq j \leq Q</var>)</li>
+<li><var>1 \leq V_{j,k} \leq N</var> (<var>1 \leq k \leq K_j</var>)</li>
+<li><var>V_{j,1}, V_{j,2}, \ldots, V_{j,K_j}</var> are all distinct in each query</li>
+<li><var>\displaystyle \sum_{j=1}^{Q} K_j \leq 2 \times 10^5</var></li>
+<li>All input values are integers.</li>
+</ul>
+</section>
+</div>
+<hr />
+<div class="io-style">
+<div class="part">
+<section>
+<h3>Input</h3>
+<pre>
+<var>N</var> <var>Q</var>
+<var>P_2</var> <var>P_3</var> <var>\ldots</var> <var>P_N</var>
+<var>K_1</var> <var>V_{1,1}</var> <var>V_{1,2}</var> <var>\ldots</var> <var>V_{1,K_1}</var>
+<var>K_2</var> <var>V_{2,1}</var> <var>V_{2,2}</var> <var>\ldots</var> <var>V_{2,K_2}</var>
+<var>\vdots</var>
+<var>K_Q</var> <var>V_{Q,1}</var> <var>V_{Q,2}</var> <var>\ldots</var> <var>V_{Q,K_Q}</var>
+</pre>
+<ul>
+<li>The first line contains an integer <var>N</var> representing the number of employees and an integer <var>Q</var> representing the number of queries, separated by a space.</li>
+<li>The second line contains <var>N - 1</var> integers <var>P_2, P_3, \ldots, P_N</var> separated by spaces, representing the direct superiors of employee <var>2</var> through employee <var>N</var>. <var>P_i</var> is the number of the direct superior of employee <var>i</var>. However, if <var>N=1</var>, an empty line is provided.</li>
+<li>The following <var>Q</var> lines describe the queries. The <var>j</var>-th query (<var>1 \leq j \leq Q</var>) is given on the <var>(j + 2)</var>-th line, starting with an integer <var>K_j</var> representing the number of summoned employees, followed by <var>K_j</var> integers <var>V_{j,1}, V_{j,2}, \ldots, V_{j,K_j}</var> representing the numbers of the summoned employees, separated by spaces.</li>
+</ul>
+</section>
+</div>
+<div class="part">
+<section>
+<h3>Output</h3>
+<p>Print <var>Q</var> lines. The <var>j</var>-th line (<var>1 \leq j \leq Q</var>) should contain Value 1 and Value 2 for the <var>j</var>-th query, separated by a space.</p>
+</section>
+</div>
+</div>
+<hr />
+<div class="part">
+<section>
+<h3>Sample Input 1</h3>
+<pre>
+7 4
+1 1 2 2 3 3
+3 4 5 2
+2 4 6
+1 7
+4 4 5 6 7
+</pre>
+</section>
+</div>
+<div class="part">
+<section>
+<h3>Sample Output 1</h3>
+<pre>
+2 1
+4 0
+0 -1
+8 6
+</pre>
+</section>
+</div>
+<hr />
+<div class="part">
+<section>
+<h3>Sample Input 2</h3>
+<pre>
+5 5
+1 2 3 4
+1 3
+2 2 5
+3 1 4 5
+1 1
+4 2 3 4 5
+</pre>
+</section>
+</div>
+<div class="part">
+<section>
+<h3>Sample Output 2</h3>
+<pre>
+0 -1
+3 0
+7 1
+0 -1
+6 3
+</pre>
+</section>
+</div>
+<hr />
+<div class="part">
+<section>
+<h3>Sample Input 3</h3>
+<pre>
+15 8
+1 1 2 2 3 3 4 4 5 6 6 7 10 10
+5 8 9 14 15 10
+4 11 12 13 7
+6 4 5 6 7 14 15
+3 2 8 9
+7 1 3 6 11 12 13 15
+2 14 15
+1 5
+8 8 9 10 11 12 13 14 15
+</pre>
+</section>
+</div>
+<div class="part">
+<section>
+<h3>Sample Output 3</h3>
+<pre>
+12 9
+7 5
+16 12
+4 2
+16 12
+2 0
+0 -1
+26 22
+</pre>
+</section>
+</div>
+<hr />
+<div class="part">
+<section>
+<h3>Sample Input 4</h3>
+<pre>
+30 12
+1 1 1 2 2 3 3 3 4 4 5 5 6 7 7 8 9 9 10 11 11 12 12 14 17 17 19 22 22
+10 23 24 13 25 14 6 20 29 30 22
+8 15 16 26 27 17 18 28 19
+5 2 5 12 23 24
+6 10 20 4 11 21 30
+3 23 25 30
+12 1 2 3 4 5 7 10 12 15 20 23 29
+2 26 27
+1 30
+7 13 14 15 16 17 18 19
+9 6 8 9 11 24 25 26 28 29
+4 3 7 15 16
+5 21 22 29 30 11
+</pre>
+</section>
+</div>
+<div class="part">
+<section>
+<h3>Sample Output 4</h3>
+<pre>
+34 30
+19 16
+9 5
+9 6
+12 6
+26 22
+2 0
+0 -1
+21 18
+28 24
+5 2
+6 4
+</pre>
+</section>
+</div>
+<hr />
+<div class="part">
+<section>
+<h3>Sample Input 5</h3>
+<pre>
+1 3
+
+1 1
+1 1
+1 1
+</pre>
+</section>
+</div>
+<div class="part">
+<section>
+<h3>Sample Output 5</h3>
+<pre>
+0 -1
+0 -1
+0 -1
+</pre>
+</section>
+</div>
+</span>
+</span>
+
+		</div>
+
+		
+
+		
+		<hr/>
+		<form class="form-horizontal form-code-submit" action="/contests/awc0143/submit" method="POST">
+			<input type="hidden" name="data.TaskScreenName" value="awc0143_e" />
+			
+			<div class="form-group ">
+				<label class="control-label col-sm-3 col-md-2" for="select-lang">言語</label>
+				<div id="select-lang" class="col-sm-5" data-name="data.LanguageId">
+					<select class="form-control current" data-placeholder="-" name="data.LanguageId" required>
+						<option></option>
+						
+							<option value="6001" data-ace-mode="text">&gt;&lt;&gt; (fishr 0.1.0)</option>
+						
+							<option value="6002" data-ace-mode="ada">Ada 2022 (GNAT 15.2.0)</option>
+						
+							<option value="6003" data-ace-mode="text">APL (GNU APL 1.9)</option>
+						
+							<option value="6004" data-ace-mode="mips">Assembly MIPS O32 ABI (GNU assembler 2.42)</option>
+						
+							<option value="6005" data-ace-mode="assembly_x86">Assembly x64 (NASM 2.16.03)</option>
+						
+							<option value="6006" data-ace-mode="text">AWK (GNU awk 5.2.1)</option>
+						
+							<option value="6007" data-ace-mode="text">A言語 (interpreter af48a2a)</option>
+						
+							<option value="6008" data-ace-mode="sh">Bash (bash 5.3)</option>
+						
+							<option value="6009" data-ace-mode="basic">BASIC (FreeBASIC 1.10.1)</option>
+						
+							<option value="6010" data-ace-mode="text">bc (GNU bc 1.08.2)</option>
+						
+							<option value="6011" data-ace-mode="text">Befunge93 (TBC 1.0)</option>
+						
+							<option value="6012" data-ace-mode="text">Brainfuck (Tritium 1.2.73)</option>
+						
+							<option value="6013" data-ace-mode="c_cpp">C23 (Clang 21.1.0)</option>
+						
+							<option value="6014" data-ace-mode="c_cpp">C23 (GCC 14.2.0)</option>
+						
+							<option value="6015" data-ace-mode="csharp">C# 13.0 (.NET 9.0.8)</option>
+						
+							<option value="6016" data-ace-mode="csharp">C# 13.0 (.NET Native AOT 9.0.8)</option>
+						
+							<option value="6017" data-ace-mode="c_cpp">C&#43;&#43;23 (GCC 15.2.0)</option>
+						
+							<option value="6018" data-ace-mode="text">C3 (c3c 0.7.5)</option>
+						
+							<option value="6019" data-ace-mode="text">Carp(Carp 0.5.5)</option>
+						
+							<option value="6020" data-ace-mode="c_cpp">cLay (cLay 20250308-1 (GCC 15.2.0))</option>
+						
+							<option value="6021" data-ace-mode="clojure">Clojure (babashka 1.12.208)</option>
+						
+							<option value="6022" data-ace-mode="clojure">Clojure (clojure 1.12.2)</option>
+						
+							<option value="6023" data-ace-mode="clojure">Clojure (Clojure AOT 1.12.2)</option>
+						
+							<option value="6025" data-ace-mode="clojure">Clojure (ClojureScript 1.12.42 (Clojure 1.12.2 Node.js 22.19.0))</option>
+						
+							<option value="6026" data-ace-mode="cobol">COBOL (Free) (GnuCOBOL 3.2)</option>
+						
+							<option value="6027" data-ace-mode="lisp">Common Lisp (SBCL 2.5.8)</option>
+						
+							<option value="6028" data-ace-mode="crystal">Crystal (Crystal 1.17.0)</option>
+						
+							<option value="6029" data-ace-mode="text">Cyber (Cyber v0.3)</option>
+						
+							<option value="6030" data-ace-mode="d">D (DMD 2.111.0)</option>
+						
+							<option value="6031" data-ace-mode="d">D (GDC 15.2)</option>
+						
+							<option value="6032" data-ace-mode="d">D (LDC 1.41.0)</option>
+						
+							<option value="6033" data-ace-mode="dart">Dart (Dart 3.9.2)</option>
+						
+							<option value="6034" data-ace-mode="text">dc 1.5.2 (GNU bc 1.08.2)</option>
+						
+							<option value="6035" data-ace-mode="prolog">ECLiPSe (ECLiPSe 7.1_13)</option>
+						
+							<option value="6036" data-ace-mode="eiffel">Eiffel (Gobo Eiffel 22.01)</option>
+						
+							<option value="6037" data-ace-mode="eiffel">Eiffel (Liberty Eiffel 07829e3)</option>
+						
+							<option value="6038" data-ace-mode="elixir">Elixir (Elixir 1.18.4 (OTP 28.0.2))</option>
+						
+							<option value="6039" data-ace-mode="lisp">Emacs Lisp(Native Compile)(GNU Emacs 29.4)</option>
+						
+							<option value="6040" data-ace-mode="text">Emojicode 1.0 beta 2 (emojicodec 1.0 beta 2)</option>
+						
+							<option value="6041" data-ace-mode="erlang">Erlang (Erlang 28.0.2)</option>
+						
+							<option value="6042" data-ace-mode="fsharp">F# 9.0 (.NET 9.0.8)</option>
+						
+							<option value="6043" data-ace-mode="text">Factor (Factor 0.100)</option>
+						
+							<option value="6044" data-ace-mode="sh">Fish (fish 4.0.2)</option>
+						
+							<option value="6045" data-ace-mode="forth">Forth (gforth 0.7.3)</option>
+						
+							<option value="6046" data-ace-mode="fortran">Fortran2018 (Flang 20.1.7)</option>
+						
+							<option value="6047" data-ace-mode="fortran">Fortran2023 (GCC 14.2.0)</option>
+						
+							<option value="6048" data-ace-mode="fortran">FORTRAN77 (GCC 14.2.0)</option>
+						
+							<option value="6049" data-ace-mode="text">Gleam (Gleam 1.12.0 (OTP 28.0.2))</option>
+						
+							<option value="6050" data-ace-mode="golang">Go 1.18 (gccgo 15.2.0)</option>
+						
+							<option value="6051" data-ace-mode="golang">Go (go 1.25.1)</option>
+						
+							<option value="6052" data-ace-mode="haskell">Haskell (GHC 9.8.4)</option>
+						
+							<option value="6053" data-ace-mode="haxe">Haxe/JVM 4.3.7 (hxjava 4.2.0)</option>
+						
+							<option value="6054" data-ace-mode="c_cpp">C&#43;&#43; IOI-Style(GNU&#43;&#43;20) (GCC 14.2.0)</option>
+						
+							<option value="6055" data-ace-mode="lisp">ISLisp (Easy-ISLisp 5.43)</option>
+						
+							<option value="6056" data-ace-mode="java">Java24 (OpenJDK 24.0.2)</option>
+						
+							<option value="6057" data-ace-mode="javascript">JavaScript (Bun 1.2.21)</option>
+						
+							<option value="6058" data-ace-mode="javascript">JavaScript (Deno 2.4.5)</option>
+						
+							<option value="6059" data-ace-mode="javascript">JavaScript (Node.js 22.19.0)</option>
+						
+							<option value="6060" data-ace-mode="text">Jule (jule 0.1.6)</option>
+						
+							<option value="6061" data-ace-mode="text">Koka (koka v3.2.2)</option>
+						
+							<option value="6062" data-ace-mode="kotlin">Kotlin (Kotlin/JVM 2.2.10)</option>
+						
+							<option value="6063" data-ace-mode="text">Kuin (kuincl v.2021.8.17)</option>
+						
+							<option value="6064" data-ace-mode="text">Lazy K (irori v1.0.0)</option>
+						
+							<option value="6065" data-ace-mode="text">Lean (lean v4.22.0)</option>
+						
+							<option value="6066" data-ace-mode="text">LLVM IR (Clang 21.1.0)</option>
+						
+							<option value="6067" data-ace-mode="lua">Lua (Lua 5.4.7)</option>
+						
+							<option value="6068" data-ace-mode="lua">Lua (LuaJIT 2.1.1703358377)</option>
+						
+							<option value="6069" data-ace-mode="text">Mercury (Mercury 22.01.8)</option>
+						
+							<option value="6071" data-ace-mode="nim">Nim (Nim 1.6.20)</option>
+						
+							<option value="6072" data-ace-mode="nim">Nim (Nim 2.2.4)</option>
+						
+							<option value="6073" data-ace-mode="ocaml">OCaml (ocamlopt 5.3.0)</option>
+						
+							<option value="6074" data-ace-mode="text">Octave (GNU Octave 10.2.0)</option>
+						
+							<option value="6075" data-ace-mode="pascal">Pascal (fpc 3.2.2)</option>
+						
+							<option value="6076" data-ace-mode="perl">Perl (perl 5.38.2)</option>
+						
+							<option value="6077" data-ace-mode="php">PHP (PHP 8.4.12)</option>
+						
+							<option value="6078" data-ace-mode="text">Piet (your-diary/piet_programming_language 3.0.0) (PPM image)</option>
+						
+							<option value="6079" data-ace-mode="text">Pony (ponyc 0.59.0)</option>
+						
+							<option value="6080" data-ace-mode="powershell">PowerShell (PowerShell 7.5.2)</option>
+						
+							<option value="6081" data-ace-mode="prolog">Prolog (SWI-Prolog 9.2.9)</option>
+						
+							<option value="6082" data-ace-mode="python">Python (CPython 3.13.7)</option>
+						
+							<option value="6083" data-ace-mode="python">Python (PyPy 3.11-v7.3.20)</option>
+						
+							<option value="6084" data-ace-mode="r">R (GNU R 4.5.0)</option>
+						
+							<option value="6085" data-ace-mode="text">ReasonML (reson 3.16.0)</option>
+						
+							<option value="6086" data-ace-mode="ruby">Ruby 3.3 (truffleruby 25.0.0)</option>
+						
+							<option value="6087" data-ace-mode="ruby">Ruby 3.4 (ruby 3.4.5)</option>
+						
+							<option value="6088" data-ace-mode="rust">Rust (rustc 1.89.0)</option>
+						
+							<option value="6089" data-ace-mode="python">SageMath (SageMath 10.7)</option>
+						
+							<option value="6090" data-ace-mode="scala">Scala (Dotty 3.7.2)</option>
+						
+							<option value="6091" data-ace-mode="scala">Scala 3.7.2 (Scala Native 0.5.8)</option>
+						
+							<option value="6092" data-ace-mode="scheme">Scheme (ChezScheme 10.2.0)</option>
+						
+							<option value="6093" data-ace-mode="scheme">Scheme (Gauche 0.9.15)</option>
+						
+							<option value="6094" data-ace-mode="text">Seed7 (Seed7 3.5.0)</option>
+						
+							<option value="6095" data-ace-mode="swift">Swift 6.2</option>
+						
+							<option value="6096" data-ace-mode="tcl">Tcl (tclsh 9.0.1)</option>
+						
+							<option value="6097" data-ace-mode="text">Terra (Terra 1.2.0)</option>
+						
+							<option value="6098" data-ace-mode="tex">TeX (tex 3.141592653)</option>
+						
+							<option value="6099" data-ace-mode="text">Text (cat 9.4)</option>
+						
+							<option value="6100" data-ace-mode="typescript">TypeScript 5.8 (Deno 2.4.5)</option>
+						
+							<option value="6101" data-ace-mode="typescript">TypeScript 5.9 (tsc 5.9.2 (Bun 1.2.21))</option>
+						
+							<option value="6102" data-ace-mode="typescript">TypeScript 5.9 (tsc 5.9.2 (Node.js 22.19.0))</option>
+						
+							<option value="6103" data-ace-mode="text">Uiua (uiua 0.16.2)</option>
+						
+							<option value="6104" data-ace-mode="text">Unison (Unison 0.5.47)</option>
+						
+							<option value="6105" data-ace-mode="text">V (0.4.10)</option>
+						
+							<option value="6106" data-ace-mode="vala">Vala (valac 0.56.18)</option>
+						
+							<option value="6107" data-ace-mode="verilog">Verilog 2012 (Icarus Verilog 12.0)</option>
+						
+							<option value="6108" data-ace-mode="text">Veryl (veryl 0.16.4)</option>
+						
+							<option value="6109" data-ace-mode="text">WebAssembly (wabt 1.0.34 &#43; iwasm 2.4.1)</option>
+						
+							<option value="6110" data-ace-mode="text">Whitespace (whitespacers 1.3.0)</option>
+						
+							<option value="6111" data-ace-mode="zig">Zig (Zig 0.15.1)</option>
+						
+							<option value="6112" data-ace-mode="text">なでしこ (cnako3 3.7.8 (Node.js 22.19.0))</option>
+						
+							<option value="6113" data-ace-mode="text">プロデル (mono版プロデル 2.0.1353)</option>
+						
+							<option value="6114" data-ace-mode="julia">Julia (Julia 1.11.6)</option>
+						
+							<option value="6115" data-ace-mode="python">Python (Codon 0.19.3)</option>
+						
+							<option value="6116" data-ace-mode="c_cpp">C&#43;&#43;23 (Clang 21.1.0)</option>
+						
+							<option value="6117" data-ace-mode="text">Fix (1.1.0-alpha.12)</option>
+						
+							<option value="6118" data-ace-mode="sql">SQL (DuckDB 1.3.2)</option>
+						
+							<option value="6119" data-ace-mode="vbscript">Visual Basic 16.9 (.NET 9.0.8)</option>
+						
+					</select>
+					<span class="error"></span>
+				</div>
+			</div>
+			<script>var currentLang = getLS('defaultLang');</script>
+			
+			
+<div class="form-group">
+	<div class="col-sm-3 col-md-2 editor-label">
+		<label class="control-label" for="sourceCode">ソースコード</label>
+		<div class="editor-buttons">
+			<button id="btn-open-file" type="button" class="btn btn-default btn-sm">
+				<span class="glyphicon glyphicon-folder-open" aria-hidden="true"></span> &nbsp; ファイルを開く
+			</button>
+			<button id="btn-customize" type="button" class="btn btn-default btn-sm">
+				<span class="glyphicon glyphicon-cog" aria-hidden="true"></span> &nbsp; カスタマイズ
+			</button>
+			<button type="button" class="btn btn-default btn-sm btn-toggle-editor" data-toggle="button" autocomplete="off">
+				エディタ切り替え
+			</button>
+			<button type="button" class="btn btn-default btn-sm btn-auto-height" data-toggle="button" autocomplete="off">
+				高さ自動調節
+			</button>
+		</div>
+	</div>
+	<div class="col-sm-9 col-md-10" id="sourceCode">
+		<div id="editor"></div>
+		<textarea id="plain-textarea" class="form-control" style="display:none;" name="sourceCode"></textarea>
+		<p>
+			<span class="gray">※ 512 KiB まで</span><br>
+		</p>
+	</div>
+	<input id="input-open-file" type="file" style="display:none;">
+</div>
+
+
+			<input type="hidden" name="csrf_token" value="AapGcs&#43;m6IwzooLm3xaWeJUYR8j0cbaTCHgxhhUVYsw=" />
+			<div class="form-group">
+				<label class="control-label col-sm-3 col-md-2"></label>
+				<div class="col-sm-5">
+					
+					<button type="submit" class="btn btn-primary" id="submit">提出</button>
+				</div>
+			</div>
+		</form>
+		
+	</div>
+</div>
+
+
+
+
+		
+			<hr>
+			
+			
+			
+<div class="a2a_kit a2a_kit_size_20 a2a_default_style pull-right" data-a2a-url="https://atcoder.jp/contests/awc0143/tasks/awc0143_e?lang=ja" data-a2a-title="E - 社内連絡網">
+	<a class="a2a_button_facebook"></a>
+	<a class="a2a_button_twitter"></a>
+	
+		<a class="a2a_button_hatena"></a>
+	
+	<a class="a2a_dd" href="https://www.addtoany.com/share"></a>
+</div>
+
+		
+		<script async src="//static.addtoany.com/menu/page.js"></script>
+		
+	</div> 
+	<hr>
+</div> 
+
+	<div class="container" style="margin-bottom: 80px;">
+			<footer class="footer">
+			
+				<ul>
+					<li><a href="/contests/awc0143/rules">ルール</a></li>
+					<li><a href="/contests/awc0143/glossary">用語集</a></li>
+					
+				</ul>
+			
+			<ul>
+				<li><a href="/tos">利用規約</a></li>
+				<li><a href="/privacy">プライバシーポリシー</a></li>
+				<li><a href="/personal">個人情報保護方針</a></li>
+				<li><a href="/company">企業情報</a></li>
+				<li><a href="/faq">よくある質問</a></li>
+				<li><a href="/contact">お問い合わせ</a></li>
+				<li><a href="/documents/request">資料請求</a></li>
+			</ul>
+			<div class="text-center">
+					<small id="copyright">Copyright Since 2012 &copy;<a href="http://atcoder.co.jp">AtCoder Inc.</a> All rights reserved.</small>
+			</div>
+			</footer>
+	</div>
+	<p id="fixed-server-timer" class="contest-timer"></p>
+	<div id="scroll-page-top" style="display:none;"><span class="glyphicon glyphicon-arrow-up" aria-hidden="true"></span> ページトップ</div>
+
+</body>
+</html>
+
+

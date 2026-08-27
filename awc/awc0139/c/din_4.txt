@@ -1,0 +1,13 @@
+12 1000000000000000000
+loremipsumdolorsitamet
+thequickbrownfoxjumpsoverthelazydog
+zzzzzzzzzzzzzzzzzzzzzzzzzz
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+cryptographictransformation
+competitiveprogrammingcontest
+oddandevenparitycheck
+wraparoundfromztoa
+reversethestringwhenodd
+shiftletterswheneven
+longmessagewithmanylowercaseletters
+abcxyzabcxyzabcxyzabcxyzabcxyz

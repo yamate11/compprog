@@ -1,0 +1,21 @@
+20
+alice student
+bob teacher
+carol doctor
+dave other
+emma student
+frank doctor
+grace teacher
+henry other
+iris doctor
+jack student
+kate teacher
+leo other
+mia student
+noah doctor
+olivia teacher
+paul other
+quinn doctor
+ruby student
+sam teacher
+tina other

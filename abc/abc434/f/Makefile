@@ -4,13 +4,14 @@ CXX := g++
 ifeq ($(DEBUG),)
   DEBUGFLAGS := -O2
 else
-  DEBUGFLAGS := -g -O0 -D_GLIBCXX_DEBUG -DDEBUG=1 -fsanitize=address,undefined -fno-sanitize-recover -fno-omit-frame-pointer
+  DEBUGFLAGS := -g -O0 -D_GLIBCXX_DEBUG -DDEBUG=1 -fsanitize=address,undefined -fno-sanitize-recover -fno-omit-frame-pointer -fconcepts-diagnostics-depth=3
   ifneq ($(DEBUG_LIB),)
     DEBUGFLAGS := $(DEBUGFLAGS) -DDEBUG_LIB=1
   endif
 endif
 
 WARNINGS := -Wall -Wno-format-security -Wshadow -fconcepts
+# "-Wextra" should be added (after we fix unused parameter problems in library files)
 
 CXXFLAGS := -std=gnu++23 $(DEBUGFLAGS) $(WARNINGS)
 

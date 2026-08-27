@@ -1,0 +1,4 @@
+3
+emma teacher
+frank doctor
+grace student

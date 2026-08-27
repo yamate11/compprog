@@ -1,0 +1,5 @@
+2
+a
+ba
+6
+fibonacci

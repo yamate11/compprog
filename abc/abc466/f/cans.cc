@@ -336,46 +336,34 @@ int main(/* int argc, char *argv[] */) {
 
   auto solve = [&]() -> ll {
     ll N, X; cin >> N >> X;
-    // @InpVec(N, A) [FX3EFdT1]
+    // @InpVec(N, A) [ZUEpvVu8]
     auto A = vector(N, ll());
     for (int i = 0; i < N; i++) { ll v; cin >> v; A[i] = v; }
-    // @End [FX3EFdT1]
-
+    // @End [ZUEpvVu8]
+    
+    vector<ll> B;
+    for (ll a : A) if (B.empty() or B.back() > a) B.push_back(a);
     map<ll, ll> mp;
-    mp[X + 1] = 1;
-    DLOGK(mp);
-    REP(i, 0, N) {
-      ll just = 0;
-      vector<pll> to_add;
-      auto it = prev(mp.end());
-      while (true) {
-        if (it->first <= A[i]) break;
+    mp[X] = 1;
+    for (ll a : B) {
+      auto it0 = mp.lower_bound(a + 1);
+      for (auto it = it0; it != mp.end(); it++) {
         ll x = it->first;
-        ll m = it->second;
-        ll p = x / A[i];
-        ll q = x % A[i];
-        just += p * m;
-        to_add.emplace_back(q, m);
-        if (it == mp.begin()) {
-          mp.erase(it);
-          break;
-        }else {
-          auto it2 = it;
-          it--;
-          mp.erase(it2);
-        }
+        ll p = x / a;
+        ll q = x % a;
+        mp[a] += p * it->second;
+        mp[q] += it->second;
       }
-      for (auto [q, m] : to_add) mp[q] += m;
-      mp[A[i]] += just;
-      DLOGK(i, A[i], mp);
+      for (auto it = it0; it != mp.end(); ) it = mp.erase(it);
+      DLOGK(a, mp);
     }
-    ll ans = 0;
-    for (auto [h, n] : mp) if (h >= 1) ans += n;
-    return ans - 1;
+    return mp[B.back()];
   };
 
   ll T; cin >> T;
-  REP(t, 0, T) cout << solve() << "\n";
+  REP(t, 0, T) {
+    cout << solve() << "\n";
+  }
 
   return 0;
 }

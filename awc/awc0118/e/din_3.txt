@@ -1,0 +1,5 @@
+12 3 4
+abcdefghijkl
+AACBBACCBAAC
+cfil
+1 2 1 3

@@ -12,300 +12,222 @@ using pll = pair<ll, ll>;
 #define SIZE(v) ((ll)((v).size()))
 #define REPOUT(i, a, b, exp, sep) REP(i, (a), (b)) cout << (exp) << (i + 1 == (b) ? "" : (sep)); cout << "\n"
 
-// @@ !! LIM(debug cmpNaive)
+// @@ !! LIM(strSearch debug)
+
+// ---- inserted library file strSearch.cc
+// published at https://github.com/yamate11/compprog-clib/blob/master/strSearch.cc
+vector<int> zAlg(string s) {
+  int n = s.size();
+  vector<int> z(n);
+  z.at(0) = n;
+  int i = 1;
+  int j = 0;
+  while (i < n) {
+    for ( ; i+j < n && s.at(j) == s.at(i+j); j++) {}
+    z.at(i++) = j;
+    if (j > 0) {
+      for (int k = 1; i < n && z.at(k) < j-1; k++, j--, i++) z.at(i) = z.at(k);
+      j--;
+    }
+  }
+  return z;
+}
+
+// matches("abab", "xababab") --> [1,3]
+vector<int> matches(string p, string s, char sepChar = '\xff') {
+  auto v = zAlg(p + string(1, sepChar) + s);
+  int n = p.size();
+  vector<int> res;
+  for (size_t i = 0; i < s.size() - (n-1); i++) {
+    if (v.at(n+1 + i) == n) res.push_back(i);
+  }
+  return res;
+}
+// ---- end strSearch.cc
 
 // ---- inserted function f:<< from util.cc
 
-// declarations
 
-template <typename T1, typename T2>
-ostream& operator<< (ostream& os, const pair<T1,T2>& p);
+// If a struct T has member function "string show() const",
+// (1) operator<< is defined
+// (2) g_show(const T&) is defined.
+// g_show is also defined for integral and floating point types and string.
 
-template <typename T1, typename T2, typename T3>
-ostream& operator<< (ostream& os, const tuple<T1,T2,T3>& t);
 
-template <typename T1, typename T2, typename T3, typename T4>
-ostream& operator<< (ostream& os, const tuple<T1,T2,T3,T4>& t);
+// Declartion of g_show
 
-template <typename T1, typename T2, typename T3, typename T4, typename T5>
-ostream& operator<< (ostream& os, const tuple<T1,T2,T3,T4,T5>& t);
+// If T has member function show(), it is used:
 
-template <typename T1, typename T2, typename T3, typename T4, typename T5, typename T6>
-ostream& operator<< (ostream& os, const tuple<T1,T2,T3,T4,T5,T6>& t);
-
-template <typename T>
-ostream& operator<< (ostream& os, const vector<T>& v);
-
-template <typename T, size_t N>
-ostream& operator<< (ostream& os, const array<T, N>& v);
-
-template <typename T, typename C>
-ostream& operator<< (ostream& os, const set<T, C>& v);
-
-template <typename T, typename C>
-ostream& operator<< (ostream& os, const unordered_set<T, C>& v);
-
-template <typename T, typename C>
-ostream& operator<< (ostream& os, const multiset<T, C>& v);
-
-template <typename T1, typename T2, typename C>
-ostream& operator<< (ostream& os, const map<T1, T2, C>& mp);
-
-template <typename T1, typename T2, typename C>
-ostream& operator<< (ostream& os, const unordered_map<T1, T2, C>& mp);
-
-template <typename T, typename T2>
-ostream& operator<< (ostream& os, const queue<T, T2>& orig);
-
-template <typename T, typename T2>
-ostream& operator<< (ostream& os, const deque<T, T2>& orig);
-
-template <typename T, typename T2, typename T3>
-ostream& operator<< (ostream& os, const priority_queue<T, T2, T3>& orig);
-
-template <typename T>
-ostream& operator<< (ostream& os, const stack<T>& st);
-
-#if __cplusplus >= 201703L
-template <typename T>
-ostream& operator<< (ostream& os, const optional<T>& t);
-#endif
-
-ostream& operator<< (ostream& os, int8_t x);
-
-ostream& operator<< (ostream& os, const __int128& x);
-
-// definitions
-
-template <typename T1, typename T2>
-ostream& operator<< (ostream& os, const pair<T1,T2>& p) {
-  os << "(" << p.first << ", " << p.second << ")";
-  return os;
-}
-
-template <typename T1, typename T2, typename T3>
-ostream& operator<< (ostream& os, const tuple<T1,T2,T3>& t) {
-  os << "(" << get<0>(t) << ", " << get<1>(t)
-     << ", " << get<2>(t) << ")";
-  return os;
-}
-
-template <typename T1, typename T2, typename T3, typename T4>
-ostream& operator<< (ostream& os, const tuple<T1,T2,T3,T4>& t) {
-  os << "(" << get<0>(t) << ", " << get<1>(t)
-     << ", " << get<2>(t) << ", " << get<3>(t) << ")";
-  return os;
-}
-
-template <typename T1, typename T2, typename T3, typename T4, typename T5>
-ostream& operator<< (ostream& os, const tuple<T1,T2,T3,T4,T5>& t) {
-  os << "(" << get<0>(t) << ", " << get<1>(t)
-     << ", " << get<2>(t) << ", " << get<3>(t) << ", " << get<4>(t) << ")";
-  return os;
-}
-
-template <typename T1, typename T2, typename T3, typename T4, typename T5, typename T6>
-ostream& operator<< (ostream& os, const tuple<T1,T2,T3,T4,T5,T6>& t) {
-  os << "(" << get<0>(t) << ", " << get<1>(t)
-     << ", " << get<2>(t) << ", " << get<3>(t) << ", " << get<4>(t) << ", " << get<5>(t) << ")";
-  return os;
-}
-
-template <typename T>
-ostream& operator<< (ostream& os, const vector<T>& v) {
-  os << '[';
-  for (auto it = v.begin(); it != v.end(); it++) {
-    if (it != v.begin()) os << ", ";
-    os << *it;
-  }
-  os << ']';
-
-  return os;
-}
-
-template <typename T, size_t N>
-ostream& operator<< (ostream& os, const array<T, N>& v) {
-  os << '[';
-  for (auto it = v.begin(); it != v.end(); it++) {
-    if (it != v.begin()) os << ", ";
-    os << *it;
-  }
-  os << ']';
-
-  return os;
-}
-
-template <typename T, typename C>
-ostream& operator<< (ostream& os, const set<T, C>& v) {
-  os << '{';
-  for (auto it = v.begin(); it != v.end(); it++) {
-    if (it != v.begin()) os << ", ";
-    os << *it;
-  }
-  os << '}';
-
-  return os;
-}
-
-template <typename T, typename C>
-ostream& operator<< (ostream& os, const unordered_set<T, C>& v) {
-  os << '{';
-  for (auto it = v.begin(); it != v.end(); it++) {
-    if (it != v.begin()) os << ", ";
-    os << *it;
-  }
-  os << '}';
-
-  return os;
-}
-
-template <typename T, typename C>
-ostream& operator<< (ostream& os, const multiset<T, C>& v) {
-  os << '{';
-  for (auto it = v.begin(); it != v.end(); it++) {
-    if (it != v.begin()) os << ", ";
-    os << *it;
-  }
-  os << '}';
-
-  return os;
-}
-
-template <typename T1, typename T2, typename C>
-ostream& operator<< (ostream& os, const map<T1, T2, C>& mp) {
-  os << '[';
-  for (auto it = mp.begin(); it != mp.end(); it++) {
-    if (it != mp.begin()) os << ", ";
-    os << it->first << ": " << it->second;
-  }
-  os << ']';
-
-  return os;
-}
-
-template <typename T1, typename T2, typename C>
-ostream& operator<< (ostream& os, const unordered_map<T1, T2, C>& mp) {
-  os << '[';
-  for (auto it = mp.begin(); it != mp.end(); it++) {
-    if (it != mp.begin()) os << ", ";
-    os << it->first << ": " << it->second;
-  }
-  os << ']';
-
-  return os;
-}
-
-template <typename T, typename T2>
-ostream& operator<< (ostream& os, const queue<T, T2>& orig) {
-  queue<T, T2> que(orig);
-  bool first = true;
-  os << '[';
-  while (!que.empty()) {
-    T x = que.front(); que.pop();
-    if (!first) os << ", ";
-    os << x;
-    first = false;
-  }
-  return os << ']';
-}
-
-template <typename T, typename T2>
-ostream& operator<< (ostream& os, const deque<T, T2>& orig) {
-  deque<T, T2> que(orig);
-  bool first = true;
-  os << '[';
-  while (!que.empty()) {
-    T x = que.front(); que.pop_front();
-    if (!first) os << ", ";
-    os << x;
-    first = false;
-  }
-  return os << ']';
-}
-
-template <typename T, typename T2, typename T3>
-ostream& operator<< (ostream& os, const priority_queue<T, T2, T3>& orig) {
-  priority_queue<T, T2, T3> pq(orig);
-  bool first = true;
-  os << '[';
-  while (!pq.empty()) {
-    T x = pq.top(); pq.pop();
-    if (!first) os << ", ";
-    os << x;
-    first = false;
-  }
-  return os << ']';
-}
-
-template <typename T>
-ostream& operator<< (ostream& os, const stack<T>& st) {
-  stack<T> tmp(st);
-  os << '[';
-  bool first = true;
-  while (!tmp.empty()) {
-    T& t = tmp.top();
-    if (first) first = false;
-    else os << ", ";
-    os << t;
-    tmp.pop();
-  }
-  os << ']';
-  return os;
-}
-
-#if __cplusplus >= 201703L
-template <typename T>
-ostream& operator<< (ostream& os, const optional<T>& t) {
-  if (t.has_value()) os << "v(" << t.value() << ")";
-  else               os << "nullopt";
-  return os;
-}
-#endif
-
-ostream& operator<< (ostream& os, int8_t x) {
-  os << (int32_t)x;
-  return os;
-}
-
-// for Enum type; just displays ordinals.
-template <typename E>
-typename std::enable_if<std::is_enum<E>::value, std::ostream&>::type
-operator<<(std::ostream& os, E e) {
-    return os << static_cast<typename std::underlying_type<E>::type>(e);
-}
-
-// This is a very ad-hoc implementation...
-// Known problem: "1 << 127" cannot be handled.
-ostream& operator<<(ostream& os, const __int128& v) {
-  unsigned __int128 a = v < 0 ? -v : v;
-  ll i = 0;
-  string s(64, ' ');
-  if (v == 0) {
-    s[i++] = '0';
-  }else {
-    while (a > 0) {
-      s[i++] = '0' + (char)(a % 10);
-      a /= 10;
-    }
-  }
-  if (v < 0) {
-    s[i++] = '-';
-  }
-  s.erase(s.begin() + i, s.end());
-  reverse(s.begin(), s.end());
-  os << s;
-  return os;
-}
-
-// If a struct has member function "string show() const", operator<< is defined.
 template<typename T>
 concept HasShow = requires(const T& t) {
-  { t.show() } -> same_as<string>;
+  { t.show() } -> convertible_to<string>;
 };
-template<HasShow T>
-ostream& operator<<(ostream& os, const T& t) {
-  return os << t.show();
+
+template<class T>
+concept Streamable = requires(ostream& os, const T& x) {
+  os << x;
+};
+
+//   The declaration must be put before calling it.
+
+template<class T>
+string g_show(const T& x);
+
+// Definition of g_show_impl
+//    The separation between g_show and g_show_impl is needed for order independence.
+
+template<HasShow T> string g_show_impl(const T& t) { return t.show(); }
+
+// basic types
+
+inline string g_show_impl(char c) { return string(1, c); }
+inline string g_show_impl(const char* s) { return s ? string(s) : string("(null)"); }
+inline string g_show_impl(bool b) { return b ? "true" : "false"; }
+
+// int, ll, ...; note that this also is applied to "sigend/unsigned char"
+template<integral T>
+  requires (not same_as<T, bool> and not same_as<T, char>)
+string g_show_impl(T t) { return to_string(t); }
+
+// double, long double, ...
+template<floating_point T> string g_show_impl(T t) { return to_string(t); }
+
+// containers in the standard library
+
+//    pair
+template <typename T1, typename T2>
+string g_show_impl(const pair<T1,T2>& p) { return "(" + g_show(p.first) + ", " + g_show(p.second) + ")"; }
+
+//    tuple
+template<class... Ts>
+string g_show_impl(const tuple<Ts...>& t) {
+  string s = "(";
+  bool first = true;
+  apply([&](const auto&... xs) {
+    ((s += (first ? "" : ", "), first = false, s += g_show(xs)),
+     ...);
+  }, t);
+  s += ")";
+  return s;
 }
+
+//   vector, array, deque, (un)ordered set, multiset, (un)ordered map, 
+
+template<typename T, bool pair=false>
+string g_show_with_iterator(const T& v) {
+  string ret = "[";
+  for (auto it = v.begin(); it != v.end(); it++) {
+    if (it != v.begin()) ret += ", ";
+    if constexpr (pair) ret += "(" + g_show(it->first) + ": " + g_show(it->second) + ")";
+    else                ret += g_show(*it);
+  }
+  ret += "]";
+  return ret;
+}
+
+template<typename T>
+string g_show_impl(const vector<T>& v) { return g_show_with_iterator(v); }
+
+template <typename T, size_t N>
+string g_show_impl(const array<T, N>& v) { return g_show_with_iterator(v); }
+
+template <typename T, typename C>
+string g_show_impl(const set<T, C>& v) { return g_show_with_iterator(v); }
+
+template <typename T, typename C>
+string g_show_impl(const unordered_set<T, C>& v) { return g_show_with_iterator(v); }
+
+template <typename T, typename C>
+string g_show_impl(const multiset<T, C>& v) { return g_show_with_iterator(v); }
+
+template <typename T, typename T2>
+string g_show_impl(const deque<T, T2>& v) { return g_show_with_iterator(v); }
+
+template <typename T1, typename T2, typename C>
+string g_show_impl(const map<T1, T2, C>& v) {
+  return g_show_with_iterator<map<T1, T2, C>, true>(v);
+}
+
+template <typename T1, typename T2, typename C>
+string g_show_impl(const unordered_map<T1, T2, C>& v) {
+  return g_show_with_iterator<unordered_map<T1, T2, C>, true>(v);
+}
+
+//   queue, priority-queue
+
+template<typename T>
+string g_show_queue_and_like(const T& v0, auto front_like) {
+  T v = v0;  // copy
+  string ret = "[";
+  bool first = true;
+  while (not v.empty()) {
+    if (not first) ret += ", ";
+    first = false;
+    const auto& x = front_like(v);
+    ret += g_show(x);
+    v.pop();
+  }
+  ret += "]";
+  return ret;
+}
+
+template <typename T, typename T2>
+string g_show_impl(const queue<T, T2>& v) {
+  return g_show_queue_and_like(v, [](const queue<T, T2>& vv) { return vv.front(); });
+}
+
+template <typename T, typename T2, typename T3>
+string g_show_impl(const priority_queue<T, T2, T3>& v) {
+  return g_show_queue_and_like(v, [](const priority_queue<T, T2, T3>& vv) { return vv.top(); });
+}
+
+//    optional
+template <typename T>
+string g_show_impl(const optional<T>& t) { return t ? g_show(*t) : "(nullopt)"; }
+
+//    (signed/unsigned) __int128
+//    operator<< is defined here, and the next section makes g_show
+
+ostream& operator<<(ostream& ostr, unsigned __int128 x) {
+  if (x == 0) return ostr << "0";
+  string s;
+  while (x > 0) {
+    int d = x % 10;
+    s.push_back('0' + d);
+    x /= 10;
+  }
+  reverse(s.begin(), s.end());
+  return ostr << s;
+}
+
+ostream& operator<<(ostream& ostr, __int128 x) {
+  if (x >= 0) {
+    return ostr << (unsigned __int128)x;
+  } else {
+    unsigned __int128 ux = (unsigned __int128)x;
+    ux = ~ux + 1;
+    return ostr << "-" << ux;
+  }
+}
+
+template<class T>
+string g_show(const T& x) {
+  if constexpr (requires { g_show_impl(x); }) {
+    return g_show_impl(x);
+  } else if constexpr (Streamable<T> && (not HasShow<T>)) {
+    ostringstream oss;
+    oss << x;
+    return oss.str();
+  }else {
+    static_assert(sizeof(T) == 0, "g_show: unsupported type");
+  }
+}
+
+// HasGShow
+template<typename T>
+concept HasGShow = requires(const T& t) {
+  { g_show(t) } -> convertible_to<string>;
+};
 
 // ---- end f:<<
 
@@ -313,68 +235,120 @@ ostream& operator<<(ostream& os, const T& t) {
 // published at https://github.com/yamate11/compprog-clib/blob/master/debug.cc
 // https://github.com/yamate11/compprog-clib/blob/master/debug.cc
 
-template <class... Args>
-string dbgFormat(const char* fmt, Args... args) {
-  size_t len = snprintf(nullptr, 0, fmt, args...);
-  char buf[len + 1];
-  snprintf(buf, len + 1, fmt, args...);
-  return string(buf);
+template<class T>
+void dbgPrintOne(const T& x) {
+  if constexpr (HasGShow<T>) {
+    cerr << g_show(x);
+  } else {
+    cerr << x;
+  }
 }
 
-template <class Head>
-void dbgLog(bool with_nl, Head&& head) {
-  cerr << head;
+inline void dbgLog(bool with_nl) {
   if (with_nl) cerr << endl;
 }
 
 template <class Head, class... Tail>
-void dbgLog(bool with_nl, Head&& head, Tail&&... tail)
-{
-  cerr << head << " ";
-  dbgLog(with_nl, forward<Tail>(tail)...);
+void dbgLog(bool with_nl, Head&& head, Tail&&... tail) {
+  dbgPrintOne(head);
+  if constexpr (sizeof...(tail) > 0) {
+    cerr << " ";
+    dbgLog(with_nl, forward<Tail>(tail)...);
+  } else {
+    if (with_nl) cerr << endl;
+  }
+}
+
+string dbgTrim(string s) {
+  int l = 0, r = (int)s.size();
+  while (l < r && isspace((unsigned char)s[l])) l++;
+  while (l < r && isspace((unsigned char)s[r - 1])) r--;
+  return s.substr(l, r - l);
+}
+
+vector<string> dbgSplitNames(const string& s) {
+  vector<string> res;
+  string cur;
+  int depth = 0;
+
+  for (char c : s) {
+    if (c == '(' || c == '[' || c == '{') depth++;
+    if (c == ')' || c == ']' || c == '}') depth--;
+
+    if (c == ',' && depth == 0) {
+      res.push_back(dbgTrim(cur));
+      cur.clear();
+    } else {
+      cur += c;
+    }
+  }
+
+  res.push_back(dbgTrim(cur));
+  return res;
+}
+
+template<class T>
+void dbgLogKOne(const string& name, T&& value) {
+  cerr << name << "=";
+  dbgPrintOne(forward<T>(value));
+}
+
+template<class... Args>
+void dbgLogK(const char* names_c, Args&&... args) {
+  vector<string> names = dbgSplitNames(names_c);
+
+  int idx = 0;
+  auto print_one = [&](auto&& x) {
+    if (idx > 0) cerr << " ";
+    if (idx < (int)names.size()) {
+      dbgLogKOne(names[idx], forward<decltype(x)>(x));
+    } else {
+      cerr << "?= ";
+      dbgPrintOne(forward<decltype(x)>(x));
+    }
+    idx++;
+  };
+
+  (print_one(forward<Args>(args)), ...);
+  cerr << endl;
+}
+
+template<class Label, class... Args>
+void dbgLogKL(Label&& label, const char* names_c, Args&&... args) {
+  dbgPrintOne(forward<Label>(label));
+  if constexpr (sizeof...(Args) > 0) cerr << " ";
+
+  vector<string> names = dbgSplitNames(names_c);
+
+  int idx = 0;
+  auto print_one = [&](auto&& x) {
+    if (idx > 0) cerr << " ";
+    if (idx < (int)names.size()) {
+      dbgLogKOne(names[idx], forward<decltype(x)>(x));
+    } else {
+      cerr << "?=";
+      dbgPrintOne(forward<decltype(x)>(x));
+    }
+    idx++;
+  };
+
+  (print_one(forward<Args>(args)), ...);
+  cerr << endl;
 }
 
 #if DEBUG
   #define DLOG(...)        dbgLog(true, __VA_ARGS__)
   #define DLOGNNL(...)     dbgLog(false, __VA_ARGS__)
-  #define DFMT(...)        cerr << dbgFormat(__VA_ARGS__) << endl
   #define DCALL(func, ...) func(__VA_ARGS__)
+  #define DLOGK(...)       dbgLogK(#__VA_ARGS__, __VA_ARGS__)
+  #define DLOGKL(lab, ...) dbgLogKL(lab, #__VA_ARGS__, __VA_ARGS__)
 #else
   #define DLOG(...)
   #define DLOGNNL(...)
-  #define DFMT(...)
   #define DCALL(func, ...)
+  #define DLOGK(...)
+  #define DLOGKL(lab, ...)
 #endif
-
-/*
-#if DEBUG_LIB
-  #define DLOG_LIB(...)        dbgLog(true, __VA_ARGS__)
-  #define DLOGNNL_LIB(...)     dbgLog(false, __VA_ARGS__)
-  #define DFMT_LIB(...)        cerr << dbgFormat(__VA_ARGS__) << endl
-  #define DCALL_LIB(func, ...) func(__VA_ARGS__)
-#else
-  #define DLOG_LIB(...)
-  #define DFMT_LIB(...)
-  #define DCALL_LIB(func, ...)
-#endif
-*/
-
-#define DUP1(E1)       #E1 "=", E1
-#define DUP2(E1,E2)    DUP1(E1), DUP1(E2)
-#define DUP3(E1,...)   DUP1(E1), DUP2(__VA_ARGS__)
-#define DUP4(E1,...)   DUP1(E1), DUP3(__VA_ARGS__)
-#define DUP5(E1,...)   DUP1(E1), DUP4(__VA_ARGS__)
-#define DUP6(E1,...)   DUP1(E1), DUP5(__VA_ARGS__)
-#define DUP7(E1,...)   DUP1(E1), DUP6(__VA_ARGS__)
-#define DUP8(E1,...)   DUP1(E1), DUP7(__VA_ARGS__)
-#define DUP9(E1,...)   DUP1(E1), DUP8(__VA_ARGS__)
-#define DUP10(E1,...)   DUP1(E1), DUP9(__VA_ARGS__)
-#define DUP11(E1,...)   DUP1(E1), DUP10(__VA_ARGS__)
-#define DUP12(E1,...)   DUP1(E1), DUP11(__VA_ARGS__)
-#define GET_MACRO(_1,_2,_3,_4,_5,_6,_7,_8,_9,_10,_11,_12,NAME,...) NAME
-#define DUP(...)          GET_MACRO(__VA_ARGS__, DUP12, DUP11, DUP10, DUP9, DUP8, DUP7, DUP6, DUP5, DUP4, DUP3, DUP2, DUP1)(__VA_ARGS__)
-#define DLOGK(...)        DLOG(DUP(__VA_ARGS__))
-#define DLOGKL(lab, ...)  DLOG(lab, DUP(__VA_ARGS__))
 
 #if DEBUG_LIB
   #define DLOG_LIB   DLOG
@@ -384,310 +358,36 @@ void dbgLog(bool with_nl, Head&& head, Tail&&... tail)
 
 // ---- end debug.cc
 
-// ---- inserted library file trie.cc
-// published at https://github.com/yamate11/compprog-clib/blob/master/trie.cc
+// @@ !! LIM -- end mark --
 
-template <int bt_size, char from, typename User = monostate,
-  typename S = string, bool compact = 2 < bt_size, bool has_offset = true>
-struct Trie {
-
-  Trie* parent = nullptr;
-
-  using c_pat_t = conditional_t<compact, unsigned long long, monostate>;
-  [[no_unique_address]] c_pat_t c_pat{};
-
-  using cpt_children_t = conditional_t<compact, vector<Trie*>, monostate>;
-  [[no_unique_address]] cpt_children_t cpt_children{};
-
-  using children_t = conditional_t<compact, monostate, array<Trie*, bt_size>>;
-  [[no_unique_address]] children_t children{};
-
-  using offset_t = conditional_t<has_offset, int, monostate>;
-  static consteval offset_t make_default_offset() {
-    if constexpr (is_same_v<offset_t, int>) return -1;
-    else return {};
-  }
-  [[no_unique_address]] offset_t offset = make_default_offset();
-
-  bool reside = false;
-
-  int size_st = 0;
-
-  [[no_unique_address]] User user{};
-
-  Trie() = default;
-  Trie(Trie* p, int offset_) : parent(p) {
-    if constexpr (has_offset) offset = offset_;
-  }
-
-  Trie* get_child_val(int c, bool create = false) { return get_child_offset(c - from, create); }
-
-  Trie* get_child_offset(int d, bool create = false) {
-    if constexpr(compact) {
-      ll idx = popcount(c_pat & ((1ULL << d) - 1));
-      if (c_pat >> d & 1) return cpt_children[idx];
-      if (not create) return nullptr;
-      Trie* p = new Trie(this, d);
-      cpt_children.insert(cpt_children.begin() + idx, p);
-      c_pat |= 1ULL << d;
-      return p;
-    }else {
-      Trie* p = children[d];
-      if (p) return p;
-      if (not create) return nullptr;
-      p = children[d] = new Trie(this, d);
-      return p;
-    }
-  }
-
-  struct children_iterator {
-    Trie* node;
-    int idx;
-    int offset;
-    explicit children_iterator(Trie* node_, int idx_, int offset_) : node(node_), idx(idx_), offset(offset_) {
-      _next_effective_child();
-    }
-    pair<Trie*, char> operator*() const {
-      Trie* p;
-      if constexpr (compact) p = node->cpt_children[idx];
-      else                   p = node->children[idx];
-      return make_pair(p, from + offset);
-    }
-    void _next_effective_child() {
-      if constexpr (compact) {
-        if constexpr (has_offset) {
-          if (idx < ssize(node->cpt_children)) offset = node->cpt_children[idx]->offset;
-          else offset = bt_size;
-        }else {
-          while (offset < bt_size and not (node->c_pat >> offset & 1)) offset++;
-        }
-      }else {
-        while (idx < bt_size and not node->children[idx]) idx++;
-        offset = idx;
-      }
-    }
-    const children_iterator& operator++() {
-      idx++;
-      offset++;
-      _next_effective_child();
-      return *this;
-    }
-    bool operator !=(const children_iterator& o) const { return node != o.node or offset != o.offset; }
-  };
-
-  struct children_view {
-    Trie* node;
-    children_view(Trie* node_) : node(node_) {}
-    children_iterator begin() const { return children_iterator(node, 0, 0); }
-    children_iterator end() const { return children_iterator(node, bt_size, bt_size); }
-  };
-
-  auto children_w_val() { return children_view(this); }
-
-  Trie* get_node(const auto& s, bool create = false) {
-    Trie* tr = this;
-    for (auto c : s) {
-      auto cld = tr->get_child_val(c, create);
-      if (not cld) return nullptr;
-      tr = cld;
-    }
-    return tr;
-  }
-  Trie* get_node(const char* s, bool create = false) { return get_node(string(s), create); }
-
-  Trie* search(const auto& s) {
-    Trie* p = get_node(s);
-    if (p and not p->reside) p = nullptr;
-    return p;
-  }
-  Trie* search(const char* s) { return search(string(s)); }
-
-  Trie* insert(const auto& s) {
-    Trie* tr = get_node(s, true);
-    if (not tr->reside) {
-      tr->reside = true;
-      for (Trie* p = tr; p; p = p->parent) p->size_st++;
-    }
-    return tr;
-  }
-  Trie* insert(const char* s) { return insert(string(s)); }
-
-  void erase() {
-    if (reside) for (Trie* tr = this; tr; tr = tr->parent) tr->size_st--;
-    reside = false;
-  }
-
-  int get_offset() {
-    if constexpr (has_offset) return offset;
-    else {
-      Trie* p = parent;
-      if (not p) return -1;
-      for (int d = 0; d < bt_size; d++) if (p->get_child_offset(d) == this) return d;
-      assert(0);
-    }
-  }
-
-  S repr() {
-    S ret;
-    for (Trie* tr = this; true; tr = tr->parent) {
-      ll d = tr->get_offset();
-      if (d < 0) break;
-      ret.push_back(from + tr->get_offset());
-    }
-    reverse(ret.begin(), ret.end());
-    return ret;
-  }
-
-  void _show_sub(auto& vec) {
-    if (reside) vec.push_back(repr());
-    for (int i = 0; i < bt_size; i++) {
-      Trie* p = get_child_offset(i);
-      if (p) p->_show_sub(vec);
-    }
-  }
-
-  vector<S> show() {
-    vector<S> ret;
-    _show_sub(ret);
-    return ret;
-  }
-
-
-};
-
-
-// ---- end trie.cc
-
-// ---- inserted library file cmpNaive.cc
-// published at https://github.com/yamate11/compprog-clib/blob/master/cmpNaive.cc
-
-const string end_mark("^__=end=__^");
-
-int naive(istream& cin, ostream& cout);
-int body(istream& cin, ostream& cout);
-
-void cmpNaive() {
-  while (true) {
-    string s;
-    getline(cin, s);
-    bool run_body;
-    if (s.at(0) == 'Q') {
-      return;
-    }else if (s.at(0) == 'B') {
-      run_body = true;
-    }else if (s.at(0) == 'N') {
-      run_body = false;
-    }else {
-      cerr << "Unknown body/naive specifier.\n";
-      exit(1);
-    }
-    string input_s;
-    while (true) {
-      getline(cin, s);
-      if (s == end_mark) break;
-      input_s += s;
-      input_s += "\n";
-    }
-    stringstream ss_in(move(input_s));
-    stringstream ss_out;
-    ss_out << setprecision(20);
-    if (run_body) {
-      body(ss_in, ss_out);
-    }else {
-      naive(ss_in, ss_out);
-    }
-    cout << ss_out.str() << end_mark << endl;
-  }
-}
-
-int main(int argc, char *argv[]) {
+int main(/* int argc, char *argv[] */) {
   ios_base::sync_with_stdio(false);
   cin.tie(nullptr);
   cout << setprecision(20);
 
-#if CMPNAIVE
-  if (argc == 2) {
-    if (strcmp(argv[1], "cmpNaive") == 0) {
-      cmpNaive();
-    }else if (strcmp(argv[1], "naive") == 0) {
-      naive(cin, cout);
-    }else if (strcmp(argv[1], "skip") == 0) {
-      exit(0);
-    }else {
-      cerr << "Unknown argument.\n";
-      exit(1);
-    }
-  }else {
-#endif
-    body(cin, cout);
-#if CMPNAIVE
-  }
-#endif
-  return 0;
-}
-
-/*
-int naive(istream& cin, ostream& cout) {
-  return 0;
-}
-int body(istream& cin, ostream& cout) {
-  return 0;
-}
-*/
-
-// ---- end cmpNaive.cc
-
-// @@ !! LIM -- end mark --
-
-int naive(istream& cin, ostream& cout) {
   ll N, Q; cin >> N >> Q;
   string S; cin >> S;
-  S = S + S;
-
-  vector C(N, vector(N, string()));
-  REP(i, 0, N) REP(j, 0, N) {
-    C[i][j] = S.substr(i, j + 1);
+  S += S;
+  vector T(N, vector(N, 0LL));
+  REP(i, 0, N) {
+    string t = S.substr(i, N) + "/" + S;
+    auto z = zAlg(t);
+    REP(j, 0, N) {
+      ll len = z[N + 1 + j];
+      if (len < N and t[N + 1 + j + len] < t[len]) T[i][j] = len;
+      else T[i][j] = N;
+    }
   }
-  ll p0 = 0;
+  ll p = 0;
   REP(_q, 0, Q) {
     ll a, l; cin >> a >> l;
-    p0 = (p0 + a) % N;
+    p = (p + a) % N;
     ll ans = 0;
-    REP(i, 0, N) REP(j, 0, l) {
-      if (C[i][j] < C[p0][j]) ans++;
+    REP(i, 0, N) {
+      DLOGK(p, l, T[p]);
+      ans += max(0LL, l - T[p][i]);
     }
     cout << ans << "\n";
-  }
-
-  return 0;
-}
-int body(istream& cin, ostream& cout) {
-  ll N, Q; cin >> N >> Q;
-  string S; cin >> S;
-  S = S + S;
-
-  vector tbl(N, vector(N + 1, 0LL));
-  auto f = [&](auto rF, ll l, const auto& aa) {
-    if (l == N + 1) return;
-    vector vec(26, vector<ll>());
-    for (ll a : aa) vec[S[a + l - 1] - 'a'].push_back(a);
-    ll acc = 0;
-    REP(t, 0, 26) if (not vec[t].empty()) {
-      for (ll a : vec[t]) tbl[a][l] = tbl[a][l - 1]  + acc;
-      rF(rF, l + 1, vec[t]);
-      acc += ssize(vec[t]);
-    }
-  };
-  vector<ll> full(N);
-  REP(i, 0, N) full[i] = i;
-  f(f, 1, full);
-  REP(a, 0, N) REP(l, 1, N + 1) tbl[a][l] += tbl[a][l - 1];
-
-  ll p0 = 0;
-  REP(_q, 0, Q) {
-    ll a, l; cin >> a >> l;
-    p0 = (p0 + a) % N;
-    cout << tbl[p0][l] << "\n";
   }
 
   return 0;

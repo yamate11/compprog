@@ -1,0 +1,41 @@
+  prv(->)  d=0 a=0 gap=1 dec(beta)=(0, 1, 1)
+  prv(->)  d=0 a=0 gap=1 dec(beta)=(1, 2, 1)
+  prv(->)  d=0 a=1 gap=1 dec(beta)=(0, 2, 1)
+  prv(->)  d=0 a=1 gap=1 dec(beta)=(1, 2, 1)
+  prv(->)  d=0 a=2 gap=1 dec(beta)=(0, 0, 1)
+
+
+  prv(->)  d=0 a=2 gap=1 dec(beta)=(1, 3, 0)
+
+
+
+  prv(->)  d=1 a=0 gap=1 dec(beta)=(0, 1, 0)
+  prv(->)  d=1 a=0 gap=1 dec(beta)=(1, 1, 1)
+  prv(->)  d=1 a=0 gap=2 dec(beta)=(0, 1, 1)
+  prv(->)  d=1 a=0 gap=2 dec(beta)=(1, 1, 2)
+  prv(->)  d=1 a=1 gap=1 dec(beta)=(0, 1, 1)
+  prv(->)  d=1 a=1 gap=1 dec(beta)=(1, 2, 1)
+  prv(->)  d=1 a=1 gap=2 dec(beta)=(0, 0, 1)
+  prv(->)  d=1 a=1 gap=2 dec(beta)=(1, 0, 2)
+  prv(->)  d=1 a=2 gap=1 dec(beta)=(0, 0, 2)
+  prv(->)  d=1 a=2 gap=1 dec(beta)=(1, 3, 1)
+  prv(->)  d=1 a=2 gap=2 dec(beta)=(0, 1, 1)
+  prv(->)  d=1 a=2 gap=2 dec(beta)=(1, 1, 2)
+  prv(->)  d=1 a=3 gap=1 dec(beta)=(0, 0, 1)
+  prv(->)  d=1 a=3 gap=1 dec(beta)=(1, 0, 1)
+  prv(->)  d=1 a=3 gap=2 dec(beta)=(0, 0, 1)
+  prv(->)  d=1 a=3 gap=2 dec(beta)=(1, 0, 2)
+cnt=[3, 4, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+d=0 a=0 gap=1 poss=[0, 1, 2]
+       in loop d=0 a=1 gap=1 poss=[1, 2, 0]
+       in loop d=0 a=2 gap=1 poss=[2, 0, 1]
+       in loop d=1 a=3 gap=0 poss=[3, 0, 2]
+  after loop ans=aaab d=1 a=3 gap=0 poss=[3, 0, 2]
+    poss mod poss=[3, 0, 2]
+d=1 a=3 gap=1 poss=[3, 0, 2]
+       in loop d=1 a=0 gap=1 poss=[0, 1, 3]
+       in loop d=0 a=1 gap=0 poss=[1, 1, 0]
+  after loop ans=aaabba d=0 a=1 gap=0 poss=[1, 1, 0]
+    poss mod poss=[1, 0]
+d=0 a=1 gap=2 poss=[1, 0]
+cans: cans.cc:1479: body(std::istream&, std::ostream&)::<lambda(const std::string&)>: Assertion `it1 != nxt.end()' failed.

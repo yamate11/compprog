@@ -1,0 +1,5 @@
+4
+alice student
+bob teacher
+carol other
+dave doctor

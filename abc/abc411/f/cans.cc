@@ -12,341 +12,417 @@ using pll = pair<ll, ll>;
 #define SIZE(v) ((ll)((v).size()))
 #define REPOUT(i, a, b, exp, sep) REP(i, (a), (b)) cout << (exp) << (i + 1 == (b) ? "" : (sep)); cout << "\n"
 
-// @@ !! LIM(debug UnionFind)
+// @@ !! LIM(unordered_map debug)
+
+// ---- inserted library file unordered_map.cc
+// published at https://github.com/yamate11/compprog-clib/blob/master/unordered_map.cc
+
+/* This code is based on https://codeforces.com/blog/entry/62393 */
+
+#include <ext/pb_ds/assoc_container.hpp>
+using namespace __gnu_pbds;
+
+#if !defined(__TEMPLATE_SAFE_CUSTOM_HASH__)
+#define __TEMPLATE_SAFE_CUSTOM_HASH__
+template <typename T, typename Enable = void>
+struct safe_custom_hash;
+#endif
+
+// For integer types (int, ll, u64, unsigned, ....)
+template <typename T>
+struct safe_custom_hash<T, typename enable_if<is_integral<T>::value>::type> {
+  static uint64_t splitmix64(uint64_t x) {
+    // http://xorshift.di.unimi.it/splitmix64.c
+    x += 0x9e3779b97f4a7c15;
+    x = (x ^ (x >> 30)) * 0xbf58476d1ce4e5b9;
+    x = (x ^ (x >> 27)) * 0x94d049bb133111eb;
+    return x ^ (x >> 31);
+  }
+
+  size_t operator()(uint64_t x) const {
+    static const uint64_t FIXED_RANDOM = chrono::steady_clock::now().time_since_epoch().count();
+    return splitmix64(x + FIXED_RANDOM);
+  }
+};
+
+// For string
+template <>
+struct safe_custom_hash<string, void> {
+  static uint64_t mix(uint64_t x) {
+    x += 0x9e3779b97f4a7c15ULL;
+    x = (x ^ (x >> 30)) * 0xbf58476d1ce4e5b9ULL;
+    x = (x ^ (x >> 27)) * 0x94d049bb133111ebULL;
+    return x ^ (x >> 31);
+  }
+
+  size_t operator()(const string& s) const {
+    static const uint64_t seed = chrono::steady_clock::now().time_since_epoch().count();
+    uint64_t h = seed ^ 0x9e3779b97f4a7c15ULL;
+    const unsigned char* p = (const unsigned char*)s.data();
+    size_t n = s.size();
+    while (n >= 8) {
+      uint64_t v;
+      memcpy(&v, p, 8);
+      h = mix(h ^ v);
+      p += 8; n -= 8;
+    }
+    uint64_t tail = 0;
+    for (size_t i = 0; i < n; ++i) tail |= uint64_t(p[i]) << (8*i);
+    h = mix(h ^ tail);
+    return (size_t)h;
+  }
+};
+
+// For pair
+template <typename T1, typename T2>
+struct safe_custom_hash<pair<T1, T2>, void> {
+  size_t operator()(const pair<T1, T2>& x) const {
+    static const uint64_t frand = chrono::steady_clock::now().time_since_epoch().count();
+    static const uint64_t a = (frand ^ 0x9e3779b97f4a7c15) | 1;
+    static const uint64_t b = (frand ^ 0xbf58476d1ce4e5b9) | 1;
+    return a * safe_custom_hash<T1>{}(x.first) + b * safe_custom_hash<T2>{}(x.second);
+  }
+};
+
+// For tuple
+template <typename... Ts>
+struct safe_custom_hash<tuple<Ts...>, void> {
+  size_t operator()(const tuple<Ts...>& x) const { return impl(x, index_sequence_for<Ts...>{}); }
+  static uint64_t splitmix64(uint64_t x) {
+    x += 0x9e3779b97f4a7c15ULL;
+    x = (x ^ (x >> 30)) * 0xbf58476d1ce4e5b9ULL;
+    x = (x ^ (x >> 27)) * 0x94d049bb133111ebULL;
+    return x ^ (x >> 31);
+  }
+  template <size_t... Is>
+  static size_t impl(const tuple<Ts...>& x, index_sequence<Is...>) {
+    static const uint64_t frand = chrono::steady_clock::now().time_since_epoch().count();
+    static const array<uint64_t, sizeof...(Ts)> coef = { (splitmix64(frand + Is) | 1)... };
+    uint64_t h = 0;
+    (
+      void( h += coef[Is] * uint64_t(safe_custom_hash<tuple_element_t<Is, tuple<Ts...>>>{}(get<Is>(x))) ),
+      ...
+    );
+    return h;
+  }
+};
+
+template <typename T_key, typename T_value, bool useGP = false>
+using safe_umap = conditional_t<useGP, gp_hash_table<T_key, T_value, safe_custom_hash<T_key>>,
+                                unordered_map<T_key, T_value, safe_custom_hash<T_key>>>;
+template <typename T_key, bool useGP = false>
+using safe_uset = conditional_t<useGP, gp_hash_table<T_key, null_type, safe_custom_hash<T_key>>,
+                                unordered_set<T_key, safe_custom_hash<T_key>>>;
+template <typename T_key>
+using safe_umultiset = unordered_multiset<T_key, safe_custom_hash<T_key>>;
+
+
+// ---- end unordered_map.cc
 
 // ---- inserted function f:<< from util.cc
 
-// declarations
 
+// If a struct T has member function "string show() const",
+// (1) operator<< is defined
+// (2) g_show(const T&) is defined.
+// g_show is also defined for integral and floating point types and string.
+
+
+// Declartion of g_show
+
+// If T has member function show(), it is used:
+
+template<typename T>
+concept HasShow = requires(const T& t) {
+  { t.show() } -> convertible_to<string>;
+};
+
+template<class T>
+concept Streamable = requires(ostream& os, const T& x) {
+  os << x;
+};
+
+//   The declaration must be put before calling it.
+
+template<class T>
+string g_show(const T& x);
+
+// Definition of g_show_impl
+//    The separation between g_show and g_show_impl is needed for order independence.
+
+template<HasShow T> string g_show_impl(const T& t) { return t.show(); }
+
+// basic types
+
+inline string g_show_impl(char c) { return string(1, c); }
+inline string g_show_impl(const char* s) { return s ? string(s) : string("(null)"); }
+inline string g_show_impl(bool b) { return b ? "true" : "false"; }
+
+// int, ll, ...; note that this also is applied to "sigend/unsigned char"
+template<integral T>
+  requires (not same_as<T, bool> and not same_as<T, char>)
+string g_show_impl(T t) { return to_string(t); }
+
+// double, long double, ...
+template<floating_point T> string g_show_impl(T t) { return to_string(t); }
+
+// containers in the standard library
+
+//    pair
 template <typename T1, typename T2>
-ostream& operator<< (ostream& os, const pair<T1,T2>& p);
+string g_show_impl(const pair<T1,T2>& p) { return "(" + g_show(p.first) + ", " + g_show(p.second) + ")"; }
 
-template <typename T1, typename T2, typename T3>
-ostream& operator<< (ostream& os, const tuple<T1,T2,T3>& t);
-
-template <typename T1, typename T2, typename T3, typename T4>
-ostream& operator<< (ostream& os, const tuple<T1,T2,T3,T4>& t);
-
-template <typename T1, typename T2, typename T3, typename T4, typename T5>
-ostream& operator<< (ostream& os, const tuple<T1,T2,T3,T4,T5>& t);
-
-template <typename T1, typename T2, typename T3, typename T4, typename T5, typename T6>
-ostream& operator<< (ostream& os, const tuple<T1,T2,T3,T4,T5,T6>& t);
-
-template <typename T>
-ostream& operator<< (ostream& os, const vector<T>& v);
-
-template <typename T, typename C>
-ostream& operator<< (ostream& os, const set<T, C>& v);
-
-template <typename T, typename C>
-ostream& operator<< (ostream& os, const unordered_set<T, C>& v);
-
-template <typename T, typename C>
-ostream& operator<< (ostream& os, const multiset<T, C>& v);
-
-template <typename T1, typename T2, typename C>
-ostream& operator<< (ostream& os, const map<T1, T2, C>& mp);
-
-template <typename T1, typename T2, typename C>
-ostream& operator<< (ostream& os, const unordered_map<T1, T2, C>& mp);
-
-template <typename T, typename T2>
-ostream& operator<< (ostream& os, const queue<T, T2>& orig);
-
-template <typename T, typename T2>
-ostream& operator<< (ostream& os, const deque<T, T2>& orig);
-
-template <typename T, typename T2, typename T3>
-ostream& operator<< (ostream& os, const priority_queue<T, T2, T3>& orig);
-
-template <typename T>
-ostream& operator<< (ostream& os, const stack<T>& st);
-
-#if __cplusplus >= 201703L
-template <typename T>
-ostream& operator<< (ostream& os, const optional<T>& t);
-#endif
-
-ostream& operator<< (ostream& os, int8_t x);
-
-ostream& operator<< (ostream& os, const __int128& x);
-
-// definitions
-
-template <typename T1, typename T2>
-ostream& operator<< (ostream& os, const pair<T1,T2>& p) {
-  os << "(" << p.first << ", " << p.second << ")";
-  return os;
-}
-
-template <typename T1, typename T2, typename T3>
-ostream& operator<< (ostream& os, const tuple<T1,T2,T3>& t) {
-  os << "(" << get<0>(t) << ", " << get<1>(t)
-     << ", " << get<2>(t) << ")";
-  return os;
-}
-
-template <typename T1, typename T2, typename T3, typename T4>
-ostream& operator<< (ostream& os, const tuple<T1,T2,T3,T4>& t) {
-  os << "(" << get<0>(t) << ", " << get<1>(t)
-     << ", " << get<2>(t) << ", " << get<3>(t) << ")";
-  return os;
-}
-
-template <typename T1, typename T2, typename T3, typename T4, typename T5>
-ostream& operator<< (ostream& os, const tuple<T1,T2,T3,T4,T5>& t) {
-  os << "(" << get<0>(t) << ", " << get<1>(t)
-     << ", " << get<2>(t) << ", " << get<3>(t) << ", " << get<4>(t) << ")";
-  return os;
-}
-
-template <typename T1, typename T2, typename T3, typename T4, typename T5, typename T6>
-ostream& operator<< (ostream& os, const tuple<T1,T2,T3,T4,T5,T6>& t) {
-  os << "(" << get<0>(t) << ", " << get<1>(t)
-     << ", " << get<2>(t) << ", " << get<3>(t) << ", " << get<4>(t) << ", " << get<5>(t) << ")";
-  return os;
-}
-
-template <typename T>
-ostream& operator<< (ostream& os, const vector<T>& v) {
-  os << '[';
-  for (auto it = v.begin(); it != v.end(); it++) {
-    if (it != v.begin()) os << ", ";
-    os << *it;
-  }
-  os << ']';
-
-  return os;
-}
-
-template <typename T, typename C>
-ostream& operator<< (ostream& os, const set<T, C>& v) {
-  os << '{';
-  for (auto it = v.begin(); it != v.end(); it++) {
-    if (it != v.begin()) os << ", ";
-    os << *it;
-  }
-  os << '}';
-
-  return os;
-}
-
-template <typename T, typename C>
-ostream& operator<< (ostream& os, const unordered_set<T, C>& v) {
-  os << '{';
-  for (auto it = v.begin(); it != v.end(); it++) {
-    if (it != v.begin()) os << ", ";
-    os << *it;
-  }
-  os << '}';
-
-  return os;
-}
-
-template <typename T, typename C>
-ostream& operator<< (ostream& os, const multiset<T, C>& v) {
-  os << '{';
-  for (auto it = v.begin(); it != v.end(); it++) {
-    if (it != v.begin()) os << ", ";
-    os << *it;
-  }
-  os << '}';
-
-  return os;
-}
-
-template <typename T1, typename T2, typename C>
-ostream& operator<< (ostream& os, const map<T1, T2, C>& mp) {
-  os << '[';
-  for (auto it = mp.begin(); it != mp.end(); it++) {
-    if (it != mp.begin()) os << ", ";
-    os << it->first << ": " << it->second;
-  }
-  os << ']';
-
-  return os;
-}
-
-template <typename T1, typename T2, typename C>
-ostream& operator<< (ostream& os, const unordered_map<T1, T2, C>& mp) {
-  os << '[';
-  for (auto it = mp.begin(); it != mp.end(); it++) {
-    if (it != mp.begin()) os << ", ";
-    os << it->first << ": " << it->second;
-  }
-  os << ']';
-
-  return os;
-}
-
-template <typename T, typename T2>
-ostream& operator<< (ostream& os, const queue<T, T2>& orig) {
-  queue<T, T2> que(orig);
+//    tuple
+template<class... Ts>
+string g_show_impl(const tuple<Ts...>& t) {
+  string s = "(";
   bool first = true;
-  os << '[';
-  while (!que.empty()) {
-    T x = que.front(); que.pop();
-    if (!first) os << ", ";
-    os << x;
-    first = false;
+  apply([&](const auto&... xs) {
+    ((s += (first ? "" : ", "), first = false, s += g_show(xs)),
+     ...);
+  }, t);
+  s += ")";
+  return s;
+}
+
+//   vector, array, deque, (un)ordered set, multiset, (un)ordered map, 
+
+template<typename T, bool pair=false>
+string g_show_with_iterator(const T& v) {
+  string ret = "[";
+  for (auto it = v.begin(); it != v.end(); it++) {
+    if (it != v.begin()) ret += ", ";
+    if constexpr (pair) ret += "(" + g_show(it->first) + ": " + g_show(it->second) + ")";
+    else                ret += g_show(*it);
   }
-  return os << ']';
+  ret += "]";
+  return ret;
+}
+
+template<typename T>
+string g_show_impl(const vector<T>& v) { return g_show_with_iterator(v); }
+
+template <typename T, size_t N>
+string g_show_impl(const array<T, N>& v) { return g_show_with_iterator(v); }
+
+template <typename T, typename C>
+string g_show_impl(const set<T, C>& v) { return g_show_with_iterator(v); }
+
+template <typename T, typename C>
+string g_show_impl(const unordered_set<T, C>& v) { return g_show_with_iterator(v); }
+
+template <typename T, typename C>
+string g_show_impl(const multiset<T, C>& v) { return g_show_with_iterator(v); }
+
+template <typename T, typename T2>
+string g_show_impl(const deque<T, T2>& v) { return g_show_with_iterator(v); }
+
+template <typename T1, typename T2, typename C>
+string g_show_impl(const map<T1, T2, C>& v) {
+  return g_show_with_iterator<map<T1, T2, C>, true>(v);
+}
+
+template <typename T1, typename T2, typename C>
+string g_show_impl(const unordered_map<T1, T2, C>& v) {
+  return g_show_with_iterator<unordered_map<T1, T2, C>, true>(v);
+}
+
+//   queue, priority-queue
+
+template<typename T>
+string g_show_queue_and_like(const T& v0, auto front_like) {
+  T v = v0;  // copy
+  string ret = "[";
+  bool first = true;
+  while (not v.empty()) {
+    if (not first) ret += ", ";
+    first = false;
+    const auto& x = front_like(v);
+    ret += g_show(x);
+    v.pop();
+  }
+  ret += "]";
+  return ret;
 }
 
 template <typename T, typename T2>
-ostream& operator<< (ostream& os, const deque<T, T2>& orig) {
-  deque<T, T2> que(orig);
-  bool first = true;
-  os << '[';
-  while (!que.empty()) {
-    T x = que.front(); que.pop_front();
-    if (!first) os << ", ";
-    os << x;
-    first = false;
-  }
-  return os << ']';
+string g_show_impl(const queue<T, T2>& v) {
+  return g_show_queue_and_like(v, [](const queue<T, T2>& vv) { return vv.front(); });
 }
 
 template <typename T, typename T2, typename T3>
-ostream& operator<< (ostream& os, const priority_queue<T, T2, T3>& orig) {
-  priority_queue<T, T2, T3> pq(orig);
-  bool first = true;
-  os << '[';
-  while (!pq.empty()) {
-    T x = pq.top(); pq.pop();
-    if (!first) os << ", ";
-    os << x;
-    first = false;
-  }
-  return os << ']';
+string g_show_impl(const priority_queue<T, T2, T3>& v) {
+  return g_show_queue_and_like(v, [](const priority_queue<T, T2, T3>& vv) { return vv.top(); });
 }
 
+//    optional
 template <typename T>
-ostream& operator<< (ostream& os, const stack<T>& st) {
-  stack<T> tmp(st);
-  os << '[';
-  bool first = true;
-  while (!tmp.empty()) {
-    T& t = tmp.top();
-    if (first) first = false;
-    else os << ", ";
-    os << t;
-    tmp.pop();
+string g_show_impl(const optional<T>& t) { return t ? g_show(*t) : "(nullopt)"; }
+
+//    (signed/unsigned) __int128
+//    operator<< is defined here, and the next section makes g_show
+
+ostream& operator<<(ostream& ostr, unsigned __int128 x) {
+  if (x == 0) return ostr << "0";
+  string s;
+  while (x > 0) {
+    int d = x % 10;
+    s.push_back('0' + d);
+    x /= 10;
   }
-  os << ']';
-  return os;
-}
-
-#if __cplusplus >= 201703L
-template <typename T>
-ostream& operator<< (ostream& os, const optional<T>& t) {
-  if (t.has_value()) os << "v(" << t.value() << ")";
-  else               os << "nullopt";
-  return os;
-}
-#endif
-
-ostream& operator<< (ostream& os, int8_t x) {
-  os << (int32_t)x;
-  return os;
-}
-
-// for Enum type; just displays ordinals.
-template <typename E>
-typename std::enable_if<std::is_enum<E>::value, std::ostream&>::type
-operator<<(std::ostream& os, E e) {
-    return os << static_cast<typename std::underlying_type<E>::type>(e);
-}
-
-// This is a very ad-hoc implementation...
-ostream& operator<<(ostream& os, const __int128& v) {
-  unsigned __int128 a = v < 0 ? -v : v;
-  ll i = 0;
-  string s(64, ' ');
-  if (v == 0) {
-    s[i++] = '0';
-  }else {
-    while (a > 0) {
-      s[i++] = '0' + (char)(a % 10);
-      a /= 10;
-    }
-  }
-  if (v < 0) {
-    s[i++] = '-';
-  }
-  s.erase(s.begin() + i, s.end());
   reverse(s.begin(), s.end());
-  os << s;
-  return os;
+  return ostr << s;
 }
 
+ostream& operator<<(ostream& ostr, __int128 x) {
+  if (x >= 0) {
+    return ostr << (unsigned __int128)x;
+  } else {
+    unsigned __int128 ux = (unsigned __int128)x;
+    ux = ~ux + 1;
+    return ostr << "-" << ux;
+  }
+}
+
+template<class T>
+string g_show(const T& x) {
+  if constexpr (requires { g_show_impl(x); }) {
+    return g_show_impl(x);
+  } else if constexpr (Streamable<T> && (not HasShow<T>)) {
+    ostringstream oss;
+    oss << x;
+    return oss.str();
+  }else {
+    static_assert(sizeof(T) == 0, "g_show: unsupported type");
+  }
+}
+
+// HasGShow
+template<typename T>
+concept HasGShow = requires(const T& t) {
+  { g_show(t) } -> convertible_to<string>;
+};
 
 // ---- end f:<<
 
 // ---- inserted library file debug.cc
-template <class... Args>
-string dbgFormat(const char* fmt, Args... args) {
-  size_t len = snprintf(nullptr, 0, fmt, args...);
-  char buf[len + 1];
-  snprintf(buf, len + 1, fmt, args...);
-  return string(buf);
+// published at https://github.com/yamate11/compprog-clib/blob/master/debug.cc
+// https://github.com/yamate11/compprog-clib/blob/master/debug.cc
+
+template<class T>
+void dbgPrintOne(const T& x) {
+  if constexpr (HasGShow<T>) {
+    cerr << g_show(x);
+  } else {
+    cerr << x;
+  }
 }
 
-template <class Head>
-void dbgLog(bool with_nl, Head&& head) {
-  cerr << head;
+inline void dbgLog(bool with_nl) {
   if (with_nl) cerr << endl;
 }
 
 template <class Head, class... Tail>
-void dbgLog(bool with_nl, Head&& head, Tail&&... tail)
-{
-  cerr << head << " ";
-  dbgLog(with_nl, forward<Tail>(tail)...);
+void dbgLog(bool with_nl, Head&& head, Tail&&... tail) {
+  dbgPrintOne(head);
+  if constexpr (sizeof...(tail) > 0) {
+    cerr << " ";
+    dbgLog(with_nl, forward<Tail>(tail)...);
+  } else {
+    if (with_nl) cerr << endl;
+  }
+}
+
+string dbgTrim(string s) {
+  int l = 0, r = (int)s.size();
+  while (l < r && isspace((unsigned char)s[l])) l++;
+  while (l < r && isspace((unsigned char)s[r - 1])) r--;
+  return s.substr(l, r - l);
+}
+
+vector<string> dbgSplitNames(const string& s) {
+  vector<string> res;
+  string cur;
+  int depth = 0;
+
+  for (char c : s) {
+    if (c == '(' || c == '[' || c == '{') depth++;
+    if (c == ')' || c == ']' || c == '}') depth--;
+
+    if (c == ',' && depth == 0) {
+      res.push_back(dbgTrim(cur));
+      cur.clear();
+    } else {
+      cur += c;
+    }
+  }
+
+  res.push_back(dbgTrim(cur));
+  return res;
+}
+
+template<class T>
+void dbgLogKOne(const string& name, T&& value) {
+  cerr << name << "=";
+  dbgPrintOne(forward<T>(value));
+}
+
+template<class... Args>
+void dbgLogK(const char* names_c, Args&&... args) {
+  vector<string> names = dbgSplitNames(names_c);
+
+  int idx = 0;
+  auto print_one = [&](auto&& x) {
+    if (idx > 0) cerr << " ";
+    if (idx < (int)names.size()) {
+      dbgLogKOne(names[idx], forward<decltype(x)>(x));
+    } else {
+      cerr << "?= ";
+      dbgPrintOne(forward<decltype(x)>(x));
+    }
+    idx++;
+  };
+
+  (print_one(forward<Args>(args)), ...);
+  cerr << endl;
+}
+
+template<class Label, class... Args>
+void dbgLogKL(Label&& label, const char* names_c, Args&&... args) {
+  dbgPrintOne(forward<Label>(label));
+  if constexpr (sizeof...(Args) > 0) cerr << " ";
+
+  vector<string> names = dbgSplitNames(names_c);
+
+  int idx = 0;
+  auto print_one = [&](auto&& x) {
+    if (idx > 0) cerr << " ";
+    if (idx < (int)names.size()) {
+      dbgLogKOne(names[idx], forward<decltype(x)>(x));
+    } else {
+      cerr << "?=";
+      dbgPrintOne(forward<decltype(x)>(x));
+    }
+    idx++;
+  };
+
+  (print_one(forward<Args>(args)), ...);
+  cerr << endl;
 }
 
 #if DEBUG
   #define DLOG(...)        dbgLog(true, __VA_ARGS__)
   #define DLOGNNL(...)     dbgLog(false, __VA_ARGS__)
-  #define DFMT(...)        cerr << dbgFormat(__VA_ARGS__) << endl
   #define DCALL(func, ...) func(__VA_ARGS__)
+  #define DLOGK(...)       dbgLogK(#__VA_ARGS__, __VA_ARGS__)
+  #define DLOGKL(lab, ...) dbgLogKL(lab, #__VA_ARGS__, __VA_ARGS__)
 #else
   #define DLOG(...)
   #define DLOGNNL(...)
-  #define DFMT(...)
   #define DCALL(func, ...)
+  #define DLOGK(...)
+  #define DLOGKL(lab, ...)
 #endif
-
-/*
-#if DEBUG_LIB
-  #define DLOG_LIB(...)        dbgLog(true, __VA_ARGS__)
-  #define DLOGNNL_LIB(...)     dbgLog(false, __VA_ARGS__)
-  #define DFMT_LIB(...)        cerr << dbgFormat(__VA_ARGS__) << endl
-  #define DCALL_LIB(func, ...) func(__VA_ARGS__)
-#else
-  #define DLOG_LIB(...)
-  #define DFMT_LIB(...)
-  #define DCALL_LIB(func, ...)
-#endif
-*/
-
-#define DUP1(E1)       #E1 "=", E1
-#define DUP2(E1,E2)    DUP1(E1), DUP1(E2)
-#define DUP3(E1,...)   DUP1(E1), DUP2(__VA_ARGS__)
-#define DUP4(E1,...)   DUP1(E1), DUP3(__VA_ARGS__)
-#define DUP5(E1,...)   DUP1(E1), DUP4(__VA_ARGS__)
-#define DUP6(E1,...)   DUP1(E1), DUP5(__VA_ARGS__)
-#define DUP7(E1,...)   DUP1(E1), DUP6(__VA_ARGS__)
-#define DUP8(E1,...)   DUP1(E1), DUP7(__VA_ARGS__)
-#define DUP9(E1,...)   DUP1(E1), DUP8(__VA_ARGS__)
-#define DUP10(E1,...)   DUP1(E1), DUP9(__VA_ARGS__)
-#define DUP11(E1,...)   DUP1(E1), DUP10(__VA_ARGS__)
-#define DUP12(E1,...)   DUP1(E1), DUP11(__VA_ARGS__)
-#define GET_MACRO(_1,_2,_3,_4,_5,_6,_7,_8,_9,_10,_11,_12,NAME,...) NAME
-#define DUP(...)          GET_MACRO(__VA_ARGS__, DUP12, DUP11, DUP10, DUP9, DUP8, DUP7, DUP6, DUP5, DUP4, DUP3, DUP2, DUP1)(__VA_ARGS__)
-#define DLOGK(...)        DLOG(DUP(__VA_ARGS__))
-#define DLOGKL(lab, ...)  DLOG(lab, DUP(__VA_ARGS__))
 
 #if DEBUG_LIB
   #define DLOG_LIB   DLOG
@@ -356,120 +432,6 @@ void dbgLog(bool with_nl, Head&& head, Tail&&... tail)
 
 // ---- end debug.cc
 
-// ---- inserted library file UnionFind.cc
-
-struct UFDummyAlg {
-  static UFDummyAlg zero;
-  UFDummyAlg(int x = 0) {}
-  UFDummyAlg operator -() const { return *this; }
-  UFDummyAlg operator +(const UFDummyAlg& o) const { return *this; }
-};
-UFDummyAlg UFDummyAlg::zero;
-
-template<typename T = UFDummyAlg, typename oplus_t = decltype(plus<T>()), typename onegate_t = decltype(negate<T>())>
-struct UnionFind {
-
-  struct GroupInfo {
-    UnionFind& uf;
-    vector<vector<int>> _groups;
-    GroupInfo(UnionFind& uf_) : uf(uf_), _groups(uf.size) {
-      for (int j = 0; j < uf.size; j++) {
-        if (uf.leader(j) == j) {
-          _groups[j].resize(uf.group_size(j));
-          _groups[j].resize(0);
-        }
-      }
-      for (int j = 0; j < uf.size; j++) _groups[uf.leader(j)].push_back(j);
-    }
-    const vector<int>& group(int i) { return _groups[uf.leader(i)]; }
-  };
-
-  int size;
-  T zero;
-  oplus_t oplus;
-  onegate_t onegate;
-  vector<int> _leader;
-  vector<optional<T>> _pot;
-  vector<int> _gsize;
-  int _num_groups;
-  static constexpr bool _with_pot = not is_same_v<T, UFDummyAlg>;
-  
-  UnionFind() : size(0), zero((T)0), oplus(plus<T>()), onegate(negate<T>()),
-                _leader(0), _pot(0), _gsize(0), _num_groups(0) {}
-
-  UnionFind(int size_, T zero_ = (T)0, oplus_t oplus_ = plus<T>(), onegate_t onegate_ = negate<T>())
-    : size(size_), zero(zero_), oplus(oplus_), onegate(onegate_),
-      _leader(size, -1), _pot(0), _gsize(size, 1), _num_groups(size) {
-    if constexpr (_with_pot) _pot.resize(size, zero);
-  }
-
-  void set_size(int size_) {
-    size = size_;
-    _leader.resize(size, -1);
-    if constexpr (_with_pot) _pot.resize(size, zero);
-    _gsize.resize(size, 1);
-  }
-
-  int merge(int i, int j, T p) {
-    int li = leader(i);
-    int lj = leader(j);
-    optional<T> ld_p;
-    if constexpr (_with_pot) {
-      if (_pot[i] and _pot[j]) ld_p = oplus(p, oplus(*_pot[j], onegate(*_pot[i])));
-      else                     ld_p = nullopt;
-    }
-    if (li == lj) {
-      if constexpr (_with_pot) { if (not (ld_p and *ld_p == zero)) _pot[li] = nullopt; }
-      return lj;
-    }
-    _num_groups--;
-    if (_gsize[lj] < _gsize[li]) {
-      swap(li, lj);
-      if constexpr (_with_pot) if (ld_p) ld_p = onegate(*ld_p);
-    }
-    // lj is the newleader
-    _gsize[lj] += _gsize[li];
-    _leader[li] = lj;
-    if constexpr (_with_pot) {
-      if (_pot[lj] and _pot[li]) _pot[li] = ld_p;
-      else _pot[lj] = nullopt;
-    }
-    return lj;
-  }
-
-  template<typename U = T>
-  enable_if_t<is_same_v<U, UFDummyAlg>, int> merge(int i, int j) { return merge(i, j, zero); }
-
-  void _leaderpot(int i) {
-    int oj = _leader[i];
-    if (oj < 0) return;
-    int nj = _leader[i] = leader(oj);
-    if constexpr (_with_pot) {
-      if (_pot[nj]) _pot[i] = oplus(*_pot[i], *_pot[oj]);
-      else _pot[i] = nullopt;
-    }
-  }
-  int leader(int i) {
-    _leaderpot(i);
-    return _leader[i] < 0 ? i : _leader[i];
-  }
-  optional<T> pot(int i)  { _leaderpot(i); return _pot[i]; }
-
-  int group_size(int i) { return _gsize[leader(i)]; }
-
-  int num_groups() { return _num_groups; }
-
-  GroupInfo group_info() { return GroupInfo(*this); }
-
-};
-
-template<typename T = UFDummyAlg>
-auto makeUnionFind(int size, T zero, auto oplus, auto onegate) {
-  return UnionFind<T, decltype(oplus), decltype(onegate)>(size, zero, oplus, onegate);
-}
-
-// ---- end UnionFind.cc
-
 // @@ !! LIM -- end mark --
 
 int main(/* int argc, char *argv[] */) {
@@ -478,61 +440,53 @@ int main(/* int argc, char *argv[] */) {
   cout << setprecision(20);
 
   ll N, M; cin >> N >> M;
-  // @InpMVec(M, ((U, dec=1), (V, dec=1))) [bZfMOUzo]
-  auto U = vector(M, ll());
-  auto V = vector(M, ll());
-  for (int i = 0; i < M; i++) {
-    ll v1; cin >> v1; v1 -= 1; U[i] = v1;
-    ll v2; cin >> v2; v2 -= 1; V[i] = v2;
-  }
-  // @End [bZfMOUzo]
-  vector<set<ll>> nbr(N);
+  vector<pll> edge(M);
+  vector<safe_uset<ll>> nbr(N);
+  vector<ll> contr(N);
+  REP(i, 0, N) contr[i] = i;
+
+  auto leader = [&](ll i) -> ll {
+    ll r = i;
+    while (r != contr[r]) r = contr[r];
+    return r;
+  };
+
   REP(i, 0, M) {
-    nbr[U[i]].insert(V[i]);
-    nbr[V[i]].insert(U[i]);
+    ll u, v; cin >> u >> v ;u--; v--;
+    edge[i] = pll(u, v);
+    nbr[u].insert(v);
+    nbr[v].insert(u);
   }
-
-  UnionFind uf(N);
-  vector<ll> rep(N);
-  REP(i, 0, N) rep[i] = i;
-
-  ll ne = M;
   ll Q; cin >> Q;
+  ll numEdges = M;
   REP(_q, 0, Q) {
     ll x; cin >> x; x--;
-    ll uu = U[x];
-    ll vv = V[x];
-    ll u = rep[uf.leader(uu)];
-    ll v = rep[uf.leader(vv)];
+    auto [u, v] = edge[x];
+    u = leader(u);
+    v = leader(v);
     if (u != v) {
-      ne--;
-      if (ssize(nbr[u]) < ssize(nbr[v])) {
-        swap(u, v);
+      if (ssize(nbr[u]) < ssize(nbr[v])) swap(u, v);
+      for (ll p : nbr[v]) {
+        if (p == u) {
+          nbr[u].erase(v);
+          numEdges--;
+        }else {
+          auto [it, b] = nbr[u].insert(p);
+          if (b) nbr[p].insert(u);
+          else numEdges--;
+          nbr[p].erase(v);
+        }
       }
-      for (ll t : nbr[v]) {
-        auto [it, b] = nbr[u].insert(t);
-        nbr[t].erase(v);
-        if (b) nbr[t].insert(u);
-        else   ne--;
-      }
-      nbr[u].erase(u);
-      nbr[u].erase(v); 
-      ll new_leader = uf.merge(u, v);
-      rep[new_leader] = u;
     }
-    cout << ne << "\n";
-
-
+    cout << numEdges << "\n";
+    contr[v] = u;
 #if DEBUG
-    DLOGK(u, v);
-    REP(i, 0, N) {
-      DLOGK(i, nbr[i]);
-    }
+    DLOGK(_q, numEdges, u, v);
+    REP(i, 0, N) DLOGK(i, nbr[i]);
+    DLOGK(contr);
 #endif
-
   }
 
-  
   return 0;
 }
 

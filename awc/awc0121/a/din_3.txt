@@ -1,0 +1,26 @@
+10 24
+145 190 170 230 155 210 180 200 165 220
+alpha 160
+beta 175
+gamma 225
+alpha 150
+delta 205
+beta 195
+epsilon 140
+gamma 235
+zeta 180
+eta 215
+theta 155
+iota 198
+kappa 221
+delta 199
+epsilon 160
+zeta 175
+eta 225
+theta 166
+iota 188
+kappa 219
+lambda 230
+lambda 120
+mu 1000000000
+mu 210

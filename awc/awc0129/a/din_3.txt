@@ -1,0 +1,11 @@
+10
+akira other
+ben doctor
+chika student
+diana teacher
+eri doctor
+felix other
+gina teacher
+hiro student
+iris other
+jack doctor

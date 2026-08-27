@@ -1,0 +1,12 @@
+1
+6 4
+apple
+grand
+banana
+great
+cherry
+good
+AG
+BG
+CG
+ABC

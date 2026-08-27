@@ -1,0 +1,10 @@
+15 8
+book pen book note pen book desk pen note book lamp pen book note desk
+1 15 book
+1 15 pen
+3 10 book
+5 12 pen
+1 1 book
+7 7 desk
+10 15 note
+1 15 chair

@@ -1,0 +1,41 @@
+#include <bits/stdc++.h>
+#include <cassert>
+using namespace std;
+using ll = long long int;
+using u64 = unsigned long long;
+using pll = pair<ll, ll>;
+// #include <atcoder/all>
+// using namespace atcoder;
+#define REP(i, a, b) for (ll i = (a); i < (b); i++)
+#define REPrev(i, a, b) for (ll i = (a); i >= (b); i--)
+#define ALL(coll) (coll).begin(), (coll).end()
+#define SIZE(v) ((ll)((v).size()))
+#define REPOUT(i, a, b, exp, sep) REP(i, (a), (b)) cout << (exp) << (i + 1 == (b) ? "" : (sep)); cout << "\n"
+
+// @@ !! LIM()
+
+int main(/* int argc, char *argv[] */) {
+  ios_base::sync_with_stdio(false);
+  cin.tie(nullptr);
+  cout << setprecision(20);
+
+  ll N, Q; cin >> N >> Q;
+  string S; cin >> S;
+  ll sp = 0;
+  REP(i, 0, N - 1) {
+    if (S[i] == S[i + 1]) sp++;
+  }
+  REP(_q, 0, Q) {
+    ll i; cin >> i; i--;
+    char c; cin >> c;
+    if (i > 0 and S[i - 1] == S[i]) sp--;
+    if (i + 1 < N and S[i + 1] == S[i]) sp--;
+    S[i] = c;
+    if (i > 0 and S[i - 1] == S[i]) sp++;
+    if (i + 1 < N and S[i + 1] == S[i]) sp++;
+    cout << sp << "\n";
+  }
+
+  return 0;
+}
+
