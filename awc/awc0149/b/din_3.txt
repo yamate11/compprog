@@ -1,0 +1,12 @@
+10 5
+50 30 20 80 10
+ooooo
+oxxxx
+xoxox
+ooxoo
+xxxxx
+oxoxo
+oooox
+xxoox
+xooox
+oxxxo

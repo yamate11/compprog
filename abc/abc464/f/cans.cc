@@ -33,21 +33,38 @@ int main(/* int argc, char *argv[] */) {
   ll H1 = N / 2;
   ll H2 = N - H1;
   ll sz1 = 1LL << H1;
+  vector B(H1, vector(H1 + 1, vector<ll>()));
+  vector C(H1 + 1, vector<ll>());
   REP(x, 0, sz1) {
+    ll n = popcount((u64)x);
     ll v = 0;
     REP(i, 0, H1) if (x >> i & 1) v += A[i];
-    B.emplace_back(v, x);
+    REP(i, 0, H1) if (not (x >> i & 1)) B[i][n].push_back(v);
+    C[n].push_back(v);
   }
-  ranges::sort(B, greater<pll>());
-  vector C(sz1 + 1, vector(H1, 0LL));
-  REP(i, 0, sz1) {
-    REP(j, 0, N) C[i + 1][j] = C[i][j] + ((B[i].second >> i & 1) ? 0 : 1);
-  }
+  REP(i, 0, H1) REP(n, 0, H1 + 1) ranges::sort(B[i][n], greater<ll>());
+  REP(n, 0, H1 + 1) ranges::sort(C[n], greater<ll>());
+
   ll sz2 = 1LL << H2;
   REP(y, 0, sz2) {
+    ll m = popcount((u64)y);
     ll w = 0;
     REP(i, 0, H2) if (y >> i & 1) w += A[H1 + i];
-    ll k = ranges::lower_bound(B, pll(X - w, -1LL)) - B.begin();
+    REP(n, 0, H1 + 1) {
+      ll cnt = ranges::lower_bound(C[n], X - w - 1) - C[n].begin();
+      REP(i, 0, H2) if (not (y >> i & 1)) {
+        ans[H1 + i][n + m] += cnt;
+      }
+    }
+    REP(n, 0, H1 + 1) {
+      REP(i, 0, H1) {
+        ll cnt = ranges::lower_bound(B[i][n], X - w - 1) - B[i][n].begin();
+        ans[i][n + m] += cnt;
+      }
+    }
+
+
+    ll k = ranges::lower_bound(C
     REP(i, 0, H2) if (not (y >> i & 1)) D[k][H1 + i]
   }
 

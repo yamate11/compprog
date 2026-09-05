@@ -1,0 +1,6 @@
+4 4
+10 20 30 40
+ooxx
+xxoo
+oxox
+xoxo

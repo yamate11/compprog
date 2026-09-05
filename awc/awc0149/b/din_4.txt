@@ -1,0 +1,22 @@
+20 8
+15 25 35 45 55 65 75 85
+oooooooo
+xxxxxxxx
+oxoxoxox
+xoxoxoxo
+ooooxxxx
+xxxxoooo
+oxxooxxo
+xooxxoox
+ooxxooxx
+xxooxxoo
+oxooxoxo
+xoxxoxox
+oxxxoooo
+xoooxoox
+oxooxxox
+xoxxoxxo
+oooxoxox
+xxxoxxoo
+oxoxooxx
+xoxooxoo

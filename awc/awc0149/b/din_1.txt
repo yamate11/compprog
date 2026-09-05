@@ -1,0 +1,7 @@
+5 3
+100 200 300
+oxo
+ooo
+xxo
+oox
+xxx
