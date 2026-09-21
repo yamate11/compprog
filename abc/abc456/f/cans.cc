@@ -12,295 +12,196 @@ using pll = pair<ll, ll>;
 #define SIZE(v) ((ll)((v).size()))
 #define REPOUT(i, a, b, exp, sep) REP(i, (a), (b)) cout << (exp) << (i + 1 == (b) ? "" : (sep)); cout << "\n"
 
-// @@ !! LIM(segTree input f:updMaxMin debug)
+// @@ !! LIM(segTree debug matrix f:updMaxMin)
 
 // ---- inserted function f:<< from util.cc
 
-// declarations
 
+// If a struct T has member function "string show() const",
+// (1) operator<< is defined
+// (2) g_show(const T&) is defined.
+// g_show is also defined for integral and floating point types and string.
+
+
+// Declartion of g_show
+
+// If T has member function show(), it is used:
+
+template<typename T>
+concept HasShow = requires(const T& t) {
+  { t.show() } -> convertible_to<string>;
+};
+
+template<class T>
+concept Streamable = requires(ostream& os, const T& x) {
+  os << x;
+};
+
+//   The declaration must be put before calling it.
+
+template<class T>
+string g_show(const T& x);
+
+// Definition of g_show_impl
+//    The separation between g_show and g_show_impl is needed for order independence.
+
+template<HasShow T> string g_show_impl(const T& t) { return t.show(); }
+
+// basic types
+
+inline string g_show_impl(char c) { return string(1, c); }
+inline string g_show_impl(const char* s) { return s ? string(s) : string("(null)"); }
+inline string g_show_impl(bool b) { return b ? "true" : "false"; }
+
+// int, ll, ...; note that this also is applied to "sigend/unsigned char"
+template<integral T>
+  requires (not same_as<T, bool> and not same_as<T, char>)
+string g_show_impl(T t) { return to_string(t); }
+
+// double, long double, ...
+template<floating_point T> string g_show_impl(T t) { return to_string(t); }
+
+// containers in the standard library
+
+//    pair
 template <typename T1, typename T2>
-ostream& operator<< (ostream& os, const pair<T1,T2>& p);
+string g_show_impl(const pair<T1,T2>& p) { return "(" + g_show(p.first) + ", " + g_show(p.second) + ")"; }
 
-template <typename T1, typename T2, typename T3>
-ostream& operator<< (ostream& os, const tuple<T1,T2,T3>& t);
+//    tuple
+template<class... Ts>
+string g_show_impl(const tuple<Ts...>& t) {
+  string s = "(";
+  bool first = true;
+  apply([&](const auto&... xs) {
+    ((s += (first ? "" : ", "), first = false, s += g_show(xs)),
+     ...);
+  }, t);
+  s += ")";
+  return s;
+}
 
-template <typename T1, typename T2, typename T3, typename T4>
-ostream& operator<< (ostream& os, const tuple<T1,T2,T3,T4>& t);
+//   vector, array, deque, (un)ordered set, multiset, (un)ordered map, 
 
-template <typename T1, typename T2, typename T3, typename T4, typename T5>
-ostream& operator<< (ostream& os, const tuple<T1,T2,T3,T4,T5>& t);
+template<typename T, bool pair=false>
+string g_show_with_iterator(const T& v) {
+  string ret = "[";
+  for (auto it = v.begin(); it != v.end(); it++) {
+    if (it != v.begin()) ret += ", ";
+    if constexpr (pair) ret += "(" + g_show(it->first) + ": " + g_show(it->second) + ")";
+    else                ret += g_show(*it);
+  }
+  ret += "]";
+  return ret;
+}
 
-template <typename T1, typename T2, typename T3, typename T4, typename T5, typename T6>
-ostream& operator<< (ostream& os, const tuple<T1,T2,T3,T4,T5,T6>& t);
-
-template <typename T>
-ostream& operator<< (ostream& os, const vector<T>& v);
+template<typename T>
+string g_show_impl(const vector<T>& v) { return g_show_with_iterator(v); }
 
 template <typename T, size_t N>
-ostream& operator<< (ostream& os, const array<T, N>& v);
+string g_show_impl(const array<T, N>& v) { return g_show_with_iterator(v); }
 
 template <typename T, typename C>
-ostream& operator<< (ostream& os, const set<T, C>& v);
+string g_show_impl(const set<T, C>& v) { return g_show_with_iterator(v); }
 
 template <typename T, typename C>
-ostream& operator<< (ostream& os, const unordered_set<T, C>& v);
+string g_show_impl(const unordered_set<T, C>& v) { return g_show_with_iterator(v); }
 
 template <typename T, typename C>
-ostream& operator<< (ostream& os, const multiset<T, C>& v);
-
-template <typename T1, typename T2, typename C>
-ostream& operator<< (ostream& os, const map<T1, T2, C>& mp);
-
-template <typename T1, typename T2, typename C>
-ostream& operator<< (ostream& os, const unordered_map<T1, T2, C>& mp);
+string g_show_impl(const multiset<T, C>& v) { return g_show_with_iterator(v); }
 
 template <typename T, typename T2>
-ostream& operator<< (ostream& os, const queue<T, T2>& orig);
+string g_show_impl(const deque<T, T2>& v) { return g_show_with_iterator(v); }
 
-template <typename T, typename T2>
-ostream& operator<< (ostream& os, const deque<T, T2>& orig);
-
-template <typename T, typename T2, typename T3>
-ostream& operator<< (ostream& os, const priority_queue<T, T2, T3>& orig);
-
-template <typename T>
-ostream& operator<< (ostream& os, const stack<T>& st);
-
-#if __cplusplus >= 201703L
-template <typename T>
-ostream& operator<< (ostream& os, const optional<T>& t);
-#endif
-
-ostream& operator<< (ostream& os, int8_t x);
-
-ostream& operator<< (ostream& os, const __int128& x);
-
-// definitions
-
-template <typename T1, typename T2>
-ostream& operator<< (ostream& os, const pair<T1,T2>& p) {
-  os << "(" << p.first << ", " << p.second << ")";
-  return os;
-}
-
-template <typename T1, typename T2, typename T3>
-ostream& operator<< (ostream& os, const tuple<T1,T2,T3>& t) {
-  os << "(" << get<0>(t) << ", " << get<1>(t)
-     << ", " << get<2>(t) << ")";
-  return os;
-}
-
-template <typename T1, typename T2, typename T3, typename T4>
-ostream& operator<< (ostream& os, const tuple<T1,T2,T3,T4>& t) {
-  os << "(" << get<0>(t) << ", " << get<1>(t)
-     << ", " << get<2>(t) << ", " << get<3>(t) << ")";
-  return os;
-}
-
-template <typename T1, typename T2, typename T3, typename T4, typename T5>
-ostream& operator<< (ostream& os, const tuple<T1,T2,T3,T4,T5>& t) {
-  os << "(" << get<0>(t) << ", " << get<1>(t)
-     << ", " << get<2>(t) << ", " << get<3>(t) << ", " << get<4>(t) << ")";
-  return os;
-}
-
-template <typename T1, typename T2, typename T3, typename T4, typename T5, typename T6>
-ostream& operator<< (ostream& os, const tuple<T1,T2,T3,T4,T5,T6>& t) {
-  os << "(" << get<0>(t) << ", " << get<1>(t)
-     << ", " << get<2>(t) << ", " << get<3>(t) << ", " << get<4>(t) << ", " << get<5>(t) << ")";
-  return os;
-}
-
-template <typename T>
-ostream& operator<< (ostream& os, const vector<T>& v) {
-  os << '[';
-  for (auto it = v.begin(); it != v.end(); it++) {
-    if (it != v.begin()) os << ", ";
-    os << *it;
-  }
-  os << ']';
-
-  return os;
-}
-
-template <typename T, size_t N>
-ostream& operator<< (ostream& os, const array<T, N>& v) {
-  os << '[';
-  for (auto it = v.begin(); it != v.end(); it++) {
-    if (it != v.begin()) os << ", ";
-    os << *it;
-  }
-  os << ']';
-
-  return os;
-}
-
-template <typename T, typename C>
-ostream& operator<< (ostream& os, const set<T, C>& v) {
-  os << '{';
-  for (auto it = v.begin(); it != v.end(); it++) {
-    if (it != v.begin()) os << ", ";
-    os << *it;
-  }
-  os << '}';
-
-  return os;
-}
-
-template <typename T, typename C>
-ostream& operator<< (ostream& os, const unordered_set<T, C>& v) {
-  os << '{';
-  for (auto it = v.begin(); it != v.end(); it++) {
-    if (it != v.begin()) os << ", ";
-    os << *it;
-  }
-  os << '}';
-
-  return os;
-}
-
-template <typename T, typename C>
-ostream& operator<< (ostream& os, const multiset<T, C>& v) {
-  os << '{';
-  for (auto it = v.begin(); it != v.end(); it++) {
-    if (it != v.begin()) os << ", ";
-    os << *it;
-  }
-  os << '}';
-
-  return os;
+template <typename T1, typename T2, typename C>
+string g_show_impl(const map<T1, T2, C>& v) {
+  return g_show_with_iterator<map<T1, T2, C>, true>(v);
 }
 
 template <typename T1, typename T2, typename C>
-ostream& operator<< (ostream& os, const map<T1, T2, C>& mp) {
-  os << '[';
-  for (auto it = mp.begin(); it != mp.end(); it++) {
-    if (it != mp.begin()) os << ", ";
-    os << it->first << ": " << it->second;
-  }
-  os << ']';
-
-  return os;
+string g_show_impl(const unordered_map<T1, T2, C>& v) {
+  return g_show_with_iterator<unordered_map<T1, T2, C>, true>(v);
 }
 
-template <typename T1, typename T2, typename C>
-ostream& operator<< (ostream& os, const unordered_map<T1, T2, C>& mp) {
-  os << '[';
-  for (auto it = mp.begin(); it != mp.end(); it++) {
-    if (it != mp.begin()) os << ", ";
-    os << it->first << ": " << it->second;
-  }
-  os << ']';
+//   queue, priority-queue
 
-  return os;
-}
-
-template <typename T, typename T2>
-ostream& operator<< (ostream& os, const queue<T, T2>& orig) {
-  queue<T, T2> que(orig);
+template<typename T>
+string g_show_queue_and_like(const T& v0, auto front_like) {
+  T v = v0;  // copy
+  string ret = "[";
   bool first = true;
-  os << '[';
-  while (!que.empty()) {
-    T x = que.front(); que.pop();
-    if (!first) os << ", ";
-    os << x;
+  while (not v.empty()) {
+    if (not first) ret += ", ";
     first = false;
+    const auto& x = front_like(v);
+    ret += g_show(x);
+    v.pop();
   }
-  return os << ']';
+  ret += "]";
+  return ret;
 }
 
 template <typename T, typename T2>
-ostream& operator<< (ostream& os, const deque<T, T2>& orig) {
-  deque<T, T2> que(orig);
-  bool first = true;
-  os << '[';
-  while (!que.empty()) {
-    T x = que.front(); que.pop_front();
-    if (!first) os << ", ";
-    os << x;
-    first = false;
-  }
-  return os << ']';
+string g_show_impl(const queue<T, T2>& v) {
+  return g_show_queue_and_like(v, [](const queue<T, T2>& vv) { return vv.front(); });
 }
 
 template <typename T, typename T2, typename T3>
-ostream& operator<< (ostream& os, const priority_queue<T, T2, T3>& orig) {
-  priority_queue<T, T2, T3> pq(orig);
-  bool first = true;
-  os << '[';
-  while (!pq.empty()) {
-    T x = pq.top(); pq.pop();
-    if (!first) os << ", ";
-    os << x;
-    first = false;
-  }
-  return os << ']';
+string g_show_impl(const priority_queue<T, T2, T3>& v) {
+  return g_show_queue_and_like(v, [](const priority_queue<T, T2, T3>& vv) { return vv.top(); });
 }
 
+//    optional
 template <typename T>
-ostream& operator<< (ostream& os, const stack<T>& st) {
-  stack<T> tmp(st);
-  os << '[';
-  bool first = true;
-  while (!tmp.empty()) {
-    T& t = tmp.top();
-    if (first) first = false;
-    else os << ", ";
-    os << t;
-    tmp.pop();
+string g_show_impl(const optional<T>& t) { return t ? g_show(*t) : "(nullopt)"; }
+
+//    (signed/unsigned) __int128
+//    operator<< is defined here, and the next section makes g_show
+
+ostream& operator<<(ostream& ostr, unsigned __int128 x) {
+  if (x == 0) return ostr << "0";
+  string s;
+  while (x > 0) {
+    int d = x % 10;
+    s.push_back('0' + d);
+    x /= 10;
   }
-  os << ']';
-  return os;
-}
-
-#if __cplusplus >= 201703L
-template <typename T>
-ostream& operator<< (ostream& os, const optional<T>& t) {
-  if (t.has_value()) os << "v(" << t.value() << ")";
-  else               os << "nullopt";
-  return os;
-}
-#endif
-
-ostream& operator<< (ostream& os, int8_t x) {
-  os << (int32_t)x;
-  return os;
-}
-
-// for Enum type; just displays ordinals.
-template <typename E>
-typename std::enable_if<std::is_enum<E>::value, std::ostream&>::type
-operator<<(std::ostream& os, E e) {
-    return os << static_cast<typename std::underlying_type<E>::type>(e);
-}
-
-// This is a very ad-hoc implementation...
-// Known problem: "1 << 127" cannot be handled.
-ostream& operator<<(ostream& os, const __int128& v) {
-  unsigned __int128 a = v < 0 ? -v : v;
-  ll i = 0;
-  string s(64, ' ');
-  if (v == 0) {
-    s[i++] = '0';
-  }else {
-    while (a > 0) {
-      s[i++] = '0' + (char)(a % 10);
-      a /= 10;
-    }
-  }
-  if (v < 0) {
-    s[i++] = '-';
-  }
-  s.erase(s.begin() + i, s.end());
   reverse(s.begin(), s.end());
-  os << s;
-  return os;
+  return ostr << s;
 }
 
+ostream& operator<<(ostream& ostr, __int128 x) {
+  if (x >= 0) {
+    return ostr << (unsigned __int128)x;
+  } else {
+    unsigned __int128 ux = (unsigned __int128)x;
+    ux = ~ux + 1;
+    return ostr << "-" << ux;
+  }
+}
+
+template<class T>
+string g_show(const T& x) {
+  if constexpr (requires { g_show_impl(x); }) {
+    return g_show_impl(x);
+  } else if constexpr (Streamable<T> && (not HasShow<T>)) {
+    ostringstream oss;
+    oss << x;
+    return oss.str();
+  }else {
+    static_assert(sizeof(T) == 0, "g_show: unsupported type");
+  }
+}
+
+// HasGShow
+template<typename T>
+concept HasGShow = requires(const T& t) {
+  { g_show(t) } -> convertible_to<string>;
+};
 
 // ---- end f:<<
 
 // ---- inserted library file segTree.cc
+// published at https://github.com/yamate11/compprog-clib/blob/master/segTree.cc
 // https://github.com/yamate11/compprog-clib/blob/master/segTree.cc
 
 // It seems that we should keep the size power of two,
@@ -591,9 +492,9 @@ auto make_seg_tree_lazy(DAT unit_dat, OP unit_op, auto add, auto comp, auto appl
   return ret_t(unit_dat, unit_op, add, comp, appl, initdat);
 }
 
-void* dummy_comp(void* x, void* y) { return nullptr; }
+void* dummy_comp(void*, void*) { return nullptr; }
 template<typename DAT>
-DAT dummy_appl(void* x, const DAT& y) { return y; }
+DAT dummy_appl(void*, const DAT& y) { return y; }
 
 template<typename DAT>
 auto make_seg_tree(DAT unit_dat, auto add, const vector<DAT>& initdat = vector<DAT>()) {
@@ -603,11 +504,668 @@ auto make_seg_tree(DAT unit_dat, auto add, const vector<DAT>& initdat = vector<D
 
 // ---- end segTree.cc
 
-// ---- inserted library file input.cc
+// ---- inserted library file debug.cc
+// published at https://github.com/yamate11/compprog-clib/blob/master/debug.cc
+// https://github.com/yamate11/compprog-clib/blob/master/debug.cc
 
-// The contents are empty.
+template<class T>
+void dbgPrintOne(const T& x) {
+  if constexpr (HasGShow<T>) {
+    cerr << g_show(x);
+  } else {
+    cerr << x;
+  }
+}
 
-// ---- end input.cc
+inline void dbgLog(bool with_nl) {
+  if (with_nl) cerr << endl;
+}
+
+template <class Head, class... Tail>
+void dbgLog(bool with_nl, Head&& head, Tail&&... tail) {
+  dbgPrintOne(head);
+  if constexpr (sizeof...(tail) > 0) {
+    cerr << " ";
+    dbgLog(with_nl, forward<Tail>(tail)...);
+  } else {
+    if (with_nl) cerr << endl;
+  }
+}
+
+string dbgTrim(string s) {
+  int l = 0, r = (int)s.size();
+  while (l < r && isspace((unsigned char)s[l])) l++;
+  while (l < r && isspace((unsigned char)s[r - 1])) r--;
+  return s.substr(l, r - l);
+}
+
+vector<string> dbgSplitNames(const string& s) {
+  vector<string> res;
+  string cur;
+  int depth = 0;
+
+  for (char c : s) {
+    if (c == '(' || c == '[' || c == '{') depth++;
+    if (c == ')' || c == ']' || c == '}') depth--;
+
+    if (c == ',' && depth == 0) {
+      res.push_back(dbgTrim(cur));
+      cur.clear();
+    } else {
+      cur += c;
+    }
+  }
+
+  res.push_back(dbgTrim(cur));
+  return res;
+}
+
+template<class T>
+void dbgLogKOne(const string& name, T&& value) {
+  cerr << name << "=";
+  dbgPrintOne(forward<T>(value));
+}
+
+template<class... Args>
+void dbgLogK(const char* names_c, Args&&... args) {
+  vector<string> names = dbgSplitNames(names_c);
+
+  int idx = 0;
+  auto print_one = [&](auto&& x) {
+    if (idx > 0) cerr << " ";
+    if (idx < (int)names.size()) {
+      dbgLogKOne(names[idx], forward<decltype(x)>(x));
+    } else {
+      cerr << "?= ";
+      dbgPrintOne(forward<decltype(x)>(x));
+    }
+    idx++;
+  };
+
+  (print_one(forward<Args>(args)), ...);
+  cerr << endl;
+}
+
+template<class Label, class... Args>
+void dbgLogKL(Label&& label, const char* names_c, Args&&... args) {
+  dbgPrintOne(forward<Label>(label));
+  if constexpr (sizeof...(Args) > 0) cerr << " ";
+
+  vector<string> names = dbgSplitNames(names_c);
+
+  int idx = 0;
+  auto print_one = [&](auto&& x) {
+    if (idx > 0) cerr << " ";
+    if (idx < (int)names.size()) {
+      dbgLogKOne(names[idx], forward<decltype(x)>(x));
+    } else {
+      cerr << "?=";
+      dbgPrintOne(forward<decltype(x)>(x));
+    }
+    idx++;
+  };
+
+  (print_one(forward<Args>(args)), ...);
+  cerr << endl;
+}
+
+#if DEBUG
+  #define DLOG(...)        dbgLog(true, __VA_ARGS__)
+  #define DLOGNNL(...)     dbgLog(false, __VA_ARGS__)
+  #define DCALL(func, ...) func(__VA_ARGS__)
+  #define DLOGK(...)       dbgLogK(#__VA_ARGS__, __VA_ARGS__)
+  #define DLOGKL(lab, ...) dbgLogKL(lab, #__VA_ARGS__, __VA_ARGS__)
+#else
+  #define DLOG(...)
+  #define DLOGNNL(...)
+  #define DCALL(func, ...)
+  #define DLOGK(...)
+  #define DLOGKL(lab, ...)
+#endif
+
+#if DEBUG_LIB
+  #define DLOG_LIB   DLOG
+  #define DLOGK_LIB  DLOGK
+  #define DLOGKL_LIB DLOGKL
+#endif
+
+// ---- end debug.cc
+
+// ---- inserted library file algOp.cc
+// published at https://github.com/yamate11/compprog-clib/blob/master/algOp.cc
+
+// Common definitions
+//    zero, one, inverse
+
+template<typename T>
+const T zero(const T& t) {
+  if constexpr (is_integral_v<T> || is_floating_point_v<T>) { return (T)0; }
+  else { return t.zero(); }
+}
+
+template<typename T>
+const T one(const T& t) {
+  if constexpr (is_integral_v<T> || is_floating_point_v<T>) { return (T)1; }
+  else { return t.one(); }
+}
+
+template<typename T>
+const T inverse(const T& t) {
+  if constexpr (is_floating_point_v<T>) { return 1.0 / t; }
+  else { return t.inverse(); }
+}
+
+#ifdef BOOST_MP_CPP_INT_HPP
+template<> const cpp_int zero(const cpp_int&) { return cpp_int(0); }
+template<> const cpp_int one(const cpp_int&) { return cpp_int(1); }
+#endif // BOOST_MP_CPP_INT_HPP
+
+// begin -- detection ideom
+//    cf. https://blog.tartanllama.xyz/detection-idiom/
+
+namespace tartan_detail {
+  template <template <class...> class Trait, class Enabler, class... Args>
+  struct is_detected : false_type{};
+
+  template <template <class...> class Trait, class... Args>
+  struct is_detected<Trait, void_t<Trait<Args...>>, Args...> : true_type{};
+}
+
+template <template <class...> class Trait, class... Args>
+using is_detected = typename tartan_detail::is_detected<Trait, void, Args...>::type;
+
+// end -- detection ideom
+
+
+template<typename T>
+// using subst_add_t = decltype(T::subst_add(declval<typename T::value_type &>(), declval<typename T::value_type>()));
+using subst_add_t = decltype(T::subst_add);
+template<typename T>
+using has_subst_add = is_detected<subst_add_t, T>;
+
+template<typename T>
+using add_t = decltype(T::add);
+template<typename T>
+using has_add = is_detected<add_t, T>;
+
+template<typename T>
+using subst_mult_t = decltype(T::subst_mult);
+template<typename T>
+using has_subst_mult = is_detected<subst_mult_t, T>;
+
+template<typename T>
+using mult_t = decltype(T::mult);
+template<typename T>
+using has_mult = is_detected<mult_t, T>;
+
+template<typename T>
+using subst_subt_t = decltype(T::subst_subt);
+template<typename T>
+using has_subst_subt = is_detected<subst_subt_t, T>;
+
+template<typename T>
+using subt_t = decltype(T::subt);
+template<typename T>
+using has_subt = is_detected<subt_t, T>;
+
+template <typename Opdef>
+struct MyAlg {
+  using T = typename Opdef::value_type;
+  using value_type = T;
+  T v;
+  MyAlg() {}
+  MyAlg(const T& v_) : v(v_) {}
+  MyAlg(T&& v_) : v(move(v_)) {}
+  bool operator==(MyAlg o) const { return v == o.v; }
+  bool operator!=(MyAlg o) const { return v != o.v; }
+  operator T() const { return v; }
+  MyAlg zero() const { return MyAlg(Opdef::zero(v)); }
+  MyAlg one() const { return MyAlg(Opdef::one(v)); }
+  MyAlg inverse() const { return MyAlg(Opdef::inverse(v)); }
+  MyAlg operator/=(const MyAlg& o) { return *this *= o.inverse(); }
+  MyAlg operator/(const MyAlg& o) const { return (*this) * o.inverse(); }
+  MyAlg operator-() const { return zero() - *this; }
+
+  MyAlg& operator +=(const MyAlg& o) { 
+    if constexpr (has_subst_add<Opdef>::value) {
+      Opdef::subst_add(v, o.v);
+      return *this;
+    }else if constexpr (has_add<Opdef>::value) {
+      v = Opdef::add(v, o.v);
+      return *this;
+    }else static_assert("either subst_add or add is needed.");
+
+  }
+  MyAlg operator +(const MyAlg& o) const { 
+    if constexpr (has_add<Opdef>::value) {
+      return MyAlg(Opdef::add(v, o.v));
+    }else if constexpr (has_subst_add<Opdef>::value) {
+      MyAlg ret(v);
+      Opdef::subst_add(ret.v, o.v);
+      return ret;
+    }else static_assert("either subst_add or add is needed.");
+  }
+  MyAlg& operator *=(const MyAlg& o) { 
+    if constexpr (has_subst_mult<Opdef>::value) {
+      Opdef::subst_mult(v, o.v);
+      return *this;
+    }else if constexpr (has_mult<Opdef>::value) {
+      v = Opdef::mult(v, o.v);
+      return *this;
+    }else static_assert("either subst_mult or mult is needed.");
+
+  }
+  MyAlg operator *(const MyAlg& o) const { 
+    if constexpr (has_mult<Opdef>::value) {
+      return MyAlg(Opdef::mult(v, o.v));
+    }else if constexpr (has_subst_mult<Opdef>::value) {
+      MyAlg ret(v);
+      Opdef::subst_mult(ret.v, o.v);
+      return ret;
+    }else static_assert("either subst_mult or mult is needed.");
+  }
+  MyAlg& operator -=(const MyAlg& o) { 
+    if constexpr (has_subst_subt<Opdef>::value) {
+      Opdef::subst_subt(v, o.v);
+      return *this;
+    }else if constexpr (has_subt<Opdef>::value) {
+      v = Opdef::subt(v, o.v);
+      return *this;
+    }else static_assert("either subst_subt or subt is needed.");
+
+  }
+  MyAlg operator -(const MyAlg& o) const { 
+    if constexpr (has_subt<Opdef>::value) {
+      return MyAlg(Opdef::subt(v, o.v));
+    }else if constexpr (has_subst_subt<Opdef>::value) {
+      MyAlg ret(v);
+      Opdef::subst_subt(ret.v, o.v);
+      return ret;
+    }else static_assert("either subst_subt or subt is needed.");
+  }
+  friend istream& operator >>(istream& is, MyAlg& t)       { is >> t.v; return is; }
+  friend ostream& operator <<(ostream& os, const MyAlg& t) { os << t.v; return os; }
+};
+
+
+
+
+
+// ---- end algOp.cc
+
+// ---- inserted library file power.cc
+// published at https://github.com/yamate11/compprog-clib/blob/master/power.cc
+
+template<typename T>
+T power(const T& a, ll b) {
+  auto two_pow = a;
+  auto ret = one<T>(a);
+  while (b > 0) {
+    if (b & 1LL) ret *= two_pow;
+    two_pow *= two_pow;
+    b >>= 1;
+  }
+  return ret;
+}
+
+// a >= 0, b >= 0;  If overflow, returns -1.
+ll llpower(ll a, ll b) {  
+  if (b == 0) return 1;   // 0^0 == 1
+  if (b == 1) return a;
+  if (a == 0) return 0;
+  if (a == 1) return 1;
+  if (a == 2) {
+    if (b >= 63) return -1;
+    else return 1LL << b;
+  }
+  if (b == 2) {
+    ll ret;
+    if (__builtin_smulll_overflow(a, a, &ret)) return -1;
+    return ret;
+  }
+  ll two_pow = a;
+  ll ret = 1;
+  assert(b > 0);
+  while (true) {
+    if (b & 1LL) {
+      if (__builtin_smulll_overflow(ret, two_pow, &ret)) return -1;
+    }
+    b >>= 1;
+    if (b == 0) break;
+    if (__builtin_smulll_overflow(two_pow, two_pow, &two_pow)) return -1;
+  }
+  return ret;
+}
+
+// a >= 0;   Returns x s.t. x*x <= a < (x+1)*(x+1)
+ll llsqrt(ll a) {
+  ll x = llround(sqrt((double)a));
+  ll y;
+  if (__builtin_smulll_overflow(x, x, &y) or a < y) return x - 1;
+  else return x;
+}
+
+// a >= 0, m >= 2;  Returns x s.t. x^m <= a < (x + 1)^m
+ll llroot(ll a, ll m) {
+  ll x = llround(pow(a, 1.0 / m));
+  ll y = llpower(x, m);
+  if (y == -1 or a < y) return x - 1;
+  else return x;
+}
+
+//  base >= 2, a >= 1;  Returns x s.t. base^{x} <= a < base^{x + 1}
+ll lllog(ll base, ll a) {
+  ll x = llround(log(a) / log(base));
+  ll y = llpower(base, x);
+  if (y == -1 or a < y) return x - 1;
+  else return x;
+}
+
+
+// ---- end power.cc
+
+// ---- inserted library file matrix.cc
+// published at https://github.com/yamate11/compprog-clib/blob/master/matrix.cc
+
+template <typename T>
+struct Matrix {
+
+  struct Part {
+    const Matrix& mat;
+    int i_size;
+    int j_size;
+    int i_0;
+    int j_0;
+    Part(const Matrix& mat_, int i_size_ = -1, int j_size_ = -1, int i_0_ = 0, int j_0_ = 0)
+      : mat(mat_), i_size(i_size_ >= 0 ? i_size_ : mat.dimI),
+        j_size(j_size_ >= 0 ? j_size_ : mat.dimJ), i_0(i_0_), j_0(j_0_) {
+      if (i_0 + i_size > mat.dimI or j_0 + j_size > mat.dimJ) throw domain_error("part");
+    }
+  };
+
+  int dimI;
+  int dimJ;
+  bool rev_rc = false; // if true, the order in mem is column->row
+  vector<T> mem;
+
+  const T& at(int i, int j) const { return rev_rc ? mem[j*dimI + i] : mem[i*dimJ + j]; }
+  T&       rs(int i, int j)       { return rev_rc ? mem[j*dimI + i] : mem[i*dimJ + j]; }
+  
+  Matrix() : dimI(1), dimJ(1), mem(1) {}
+  Matrix(int dimI_, int dimJ_) : dimI(dimI_), dimJ(dimJ_), mem(dimI*dimJ) {}
+  Matrix(int dimI_, int dimJ_, const T& t) : dimI(dimI_), dimJ(dimJ_), mem(dimI*dimJ, t) {}
+
+  template<typename Z>
+  void _from_vec(int dimI_, int dimJ_, Z&& vec) {
+    int sz = vec.size();
+    dimI = dimI_ <= 0 ? sz / dimJ_ : dimI_;
+    dimJ = dimJ_ <= 0 ? sz / dimI_ : dimJ_;
+    if (dimI * dimJ != sz) throw domain_error("_from_vec: inconsistent sizes");
+    mem = forward<Z>(vec);
+  }
+  Matrix(int dimI_, int dimJ_, const vector<T>& vec) { _from_vec(dimI_, dimJ_, vec); }
+  Matrix(int dimI_, int dimJ_, vector<T>&&      vec) { _from_vec(dimI_, dimJ_, move(vec)); }
+
+  Matrix(initializer_list<initializer_list<T>> il) {
+    dimI = il.size();
+    if (dimI == 0) throw domain_error("from_il: zero rows");
+    dimJ = (*il.begin()).size();
+    if (dimJ == 0) throw domain_error("from_il: zero columns");
+    mem.resize(dimI * dimJ);
+    int i = 0;
+    for (auto it : il) {
+      if ((int)it.size() != dimJ) throw domain_error("from_il: not in rectangular shape");
+      int j = 0;
+      for (const T& t : it) mem[i * dimJ + (j++)] = t;
+      i++;
+    }
+  }
+
+  Matrix(const Part& cs) : dimI(cs.i_size), dimJ(cs.j_size), mem(dimI*dimJ) {
+    for (int i = 0; i < dimI; i++) for (int j = 0; j < dimJ; j++) rs(i, j) = cs.mat.at(cs.i_0 + i, cs.j_0 + j);
+  }
+
+  bool operator ==(const Matrix& r) const {
+    if (dimI != r.dimI or dimJ != r.dimJ) return false;
+    if (rev_rc == r.rev_rc) return mem == r.mem;
+    for (int i = 0; i < dimI; i++) for (int j = 0; j < dimJ; j++) if (at(i, j) != r.at(i, j)) return false;
+    return true;
+  }
+  bool operator !=(const Matrix& r) const { return !(*this == r); }
+
+  T _zero_T() const { return ::zero<T>(at(0, 0)); }
+  T _one_T() const { return ::one<T>(at(0, 0)); }
+
+  template<int sign>
+  Matrix& _add_subt(const Matrix& r) {
+    if (dimI != r.dimI or dimJ != r.dimJ) throw domain_error("_add_subt: dimension mismatch");
+    for (int i = 0; i < dimI; i++) for (int j = 0; j < dimJ; j++) {
+        if constexpr (sign > 0) rs(i, j) += r.at(i, j);
+        else                    rs(i, j) -= r.at(i, j);
+      }
+    return *this;
+  }
+  Matrix& operator +=(const Matrix& r) { return _add_subt<1>(r); }
+  Matrix& operator -=(const Matrix& r) { return _add_subt<-1>(r); }
+  Matrix operator +(const Matrix& r) const { return Matrix(*this) += r; }
+  Matrix operator -(const Matrix& r) const { return Matrix(*this) -= r; }
+
+  Matrix operator *(const Matrix& r) const {
+    if (dimJ != r.dimI) throw domain_error("mult: dimension mismatch");
+    Matrix result(dimI, r.dimJ, _zero_T());
+    for (int i = 0; i < dimI; i++) for (int j = 0; j < r.dimJ; j++) {
+	for (int k = 0; k < dimJ; k++) result.rs(i, j) += at(i, k) * r.at(k, j);
+      }
+    return result;
+  }
+  Matrix& operator *=(const Matrix& r) { return *this = *this * r; }
+
+  Matrix& operator *=(const T& t) {
+    for (int p = 0; p < dimI * dimJ; p++) mem[p] *= t;
+    return *this;
+  }
+  friend Matrix operator *(const Matrix& mat, const T& t) { return Matrix(mat) *= t; }
+  friend Matrix operator *(const T& t, const Matrix& mat) { // Mult of T might be non-commutative
+    Matrix ret(mat);
+    for (int p = 0; p < mat.dimI * mat.dimJ; p++) ret.mem[p] = t * ret.mem[p];
+    return ret;
+  }
+
+  vector<T> operator *(const vector<T>& vec) const {
+    auto m = (*this) * Matrix(0, 1, vec);
+    return m.mem;
+  }
+
+  vector<T> operator *(vector<T>&& vec) const {
+    auto m = (*this) * Matrix(0, 1, move(vec));
+    return m.mem;
+  }
+
+  static Matrix from_vvec(const vector<vector<T>>& vvec) {
+    int dimI_ = vvec.size();
+    if (dimI_ == 0) throw domain_error("from_vvec: zero rows");
+    int dimJ_ = vvec[0].size();
+    if (dimJ_ == 0) throw domain_error("from_vvec: zero columns");
+    Matrix ret(dimI_, dimJ_);
+    for (int i = 0; i < dimI_; i++) {
+      if ((int)vvec[i].size() != dimJ_) throw domain_error("from_vvec: not in rectangular shape");
+      for (int j = 0; j < dimJ_; j++) ret.mem[i*dimJ_ + j] = vvec[i][j];
+    }
+    return ret;
+  }
+
+  Matrix zero() const { return Matrix(dimI, dimJ, _zero_T()); }
+  Matrix unit() const {
+    if (dimI != dimJ) throw domain_error("unit: dimension mismatch");
+    Matrix ret(dimI, dimI, _zero_T());
+    for (int i = 0; i < dimI; i++) ret.rs(i, i) = _one_T();
+    return ret;
+  }
+  Matrix one() const { return unit(); }  // for general operation Ring
+
+  Part part(int i_size_ = -1, int j_size_ = -1, int i_0_ = 0, int j_0_ = 0) const {
+    return Part(*this, i_size_, j_size_, i_0_, j_0_);
+  }
+
+  Matrix rowVec(int i) const { return Matrix(part(1, -1, i, 0)); }
+  Matrix colVec(int j) const { return Matrix(part(-1, 1, 0, j)); }
+
+  void memcopy(const Part& cs, int i_1 = 0, int j_1 = 0) {
+    for (int i = 0; i < cs.i_size; i++) for (int j = 0; j < cs.j_size; j++) {
+        rs(i_1 + i, j_1 + j) = cs.mat.at(cs.i_0 + i, cs.j_0 + j);
+      }
+  }
+
+  Matrix matpower(ll x) const { return power<Matrix>(*this, x); }
+
+  Matrix& self_transpose() {
+    rev_rc = not rev_rc;
+    swap(dimI, dimJ);
+    return *this;
+  }
+  Matrix transpose() { return Matrix(*this).self_transpose(); }
+
+  /* aux functions for sweepout */
+
+  void basic_mult(int i, T t) {               // multiplies i-th row by t
+    for (int j = 0; j < dimJ; j++) rs(i, j) *= t;
+  }
+  void basic_xchg(int i1, int i2) {           // exchanges i1-th and i2-th rows
+    for (int j = 0; j < dimJ; j++) swap(rs(i1, j), rs(i2, j));
+  }
+  void basic_mult_add(int i1, T t, int i2) {  // adds t times of i1-th row to i2-th row
+    for (int j = 0; j < dimJ; j++) rs(i2, j) += t * at(i1, j);
+  }
+
+  pair<int, int> _find_nz(int i0, int j0) const {
+    for ( ; j0 < dimJ; j0++) {
+      int i = i0;
+      for ( ; i < dimI && at(i, j0) == _zero_T(); i++);
+      if (i < dimI) return {i, j0};
+    }
+    return {dimI, dimJ};
+  }
+
+  pair<int, T> self_sweepout() {
+    T det = _one_T();
+    int j0 = 0;
+    int i0 = 0;
+    for ( ; i0 < dimI; i0++, j0++) {
+      auto [i1, j1] = _find_nz(i0, j0);
+      if (i1 == dimI) break;
+      j0 = j1;
+      if (i1 != i0) {
+        det = -det;
+	basic_xchg(i0, i1);
+      }
+      det *= at(i0, j0);
+      basic_mult(i0, ::inverse<T>(at(i0, j0)));
+      for (int i = 0; i < dimI; i++) {
+	if (i == i0) continue;
+        basic_mult_add(i0, -at(i, j0), i);
+      }
+    }
+    return {i0, move(det)};
+  }
+  
+  pair<int, T> sweepout() const { 
+    Matrix res1(*this);
+    return res1.self_sweepout();
+  }
+
+  T determinant() const {
+    auto [rank, det] = sweepout();
+    return (rank == dimI) ? det : _zero_T();
+  }
+
+  optional<Matrix> inv() const {
+    if (dimI != dimJ) throw domain_error("inv: not square");
+    Matrix work(dimI, dimI * 2);
+    work.memcopy(part());
+    work.memcopy(unit().part(), 0, dimI);
+    work.self_sweepout();
+    if (work.at(dimI - 1, dimI - 1) != _one_T()) return {};
+    Matrix ret(dimI, dimI);
+    ret.memcopy(work.part(dimI, dimI, 0, dimI));
+    return ret;
+  }
+
+  Matrix inverse() const { return inv().value(); } // for general operation of Ring / Semi Ring
+
+  template<bool ret_kernel = false>
+  optional<pair<Matrix, vector<Matrix>>> _linSolution(const Matrix& bs) const {
+    if (dimI != bs.dimI or bs.dimJ != 1) throw domain_error("linSolution: invalid bs");
+    Matrix work(dimI, dimJ + 1);
+    work.memcopy(part());
+    work.memcopy(bs.part(), 0, dimJ);
+    auto [rank, _] = work.self_sweepout();
+    Matrix sol(dimJ, 1);
+    vector<Matrix> kernel;
+    if (rank == 0) {
+      if constexpr (not ret_kernel) return make_pair(move(sol), move(kernel));
+      for (int j = 0; j < dimJ; j++) {
+        Matrix m(dimJ, 1);
+        m.rs(j, 0) = _one_T();
+        kernel.push_back(m);
+      }
+      return make_pair(move(sol), move(kernel));
+    }
+    if (not ([&]() -> bool {
+      for (int j = 0; j < dimJ; j++) if (work.at(rank - 1, j) != _zero_T()) return true;
+      return false;
+    })()) return nullopt;
+    for (int i = 0, j = 0; i < rank; i++, j++) {
+      for ( ; work.at(i, j) == _zero_T(); j++);
+      sol.rs(j, 0) = work.at(i, dimJ);
+    }
+    if constexpr (not ret_kernel) return make_pair(move(sol), move(kernel));
+    vector<bool> cor(dimJ, false);
+    int i = 0;
+    for (int j = 0 ; j < dimJ; j++) {
+      if (i == dimI || work.at(i, j) == _zero_T()) {
+        Matrix vec(dimJ, 1);
+        vec.rs(j, 0) = _one_T();
+        for (int p = 0, q = 0; p < i; p++, q++) {
+          while (!cor[q]) q++;
+          vec.rs(q, 0) = -work.at(p, j);
+        }
+        kernel.push_back(move(vec));
+      }else {
+        cor[j] = true;
+        if (i < dimI) i++;
+      }
+    }
+    return make_pair(move(sol), move(kernel));
+  }
+  optional<Matrix> linSolution(const Matrix& bs) const {
+    auto x = _linSolution(bs);
+    if (x) return x->first;
+    else return nullopt;
+  }
+  optional<pair<Matrix, vector<Matrix>>> linSolution_ex(const Matrix& bs) const { return _linSolution<true>(bs); }
+
+  friend istream& operator >>(istream& is, Matrix& mat) {
+    is >> mat.dimI >> mat.dimJ;
+    mat.rev_rc = false;
+    mat.mem.resize(mat.dimI * mat.dimJ);
+    for (int i = 0; i < mat.dimI; i++) for (int j = 0; j < mat.dimJ; j++) is >> mat.rs(i, j);
+    return is;
+  }
+
+  friend ostream& operator <<(ostream& os, const Matrix& mat) {
+    for (int i = 0; i < mat.dimI; i++) {
+      for (int j = 0; j < mat.dimJ; j++) {
+        if (j > 0) os << ", ";
+        os << mat.at(i, j);
+      }
+      os << "\n";
+    }
+    return os;
+  }
+
+};
+
+// ---- end matrix.cc
 
 // ---- inserted function f:updMaxMin from util.cc
 template<typename T>
@@ -622,163 +1180,105 @@ bool updMin(T& tmin, const T& x) {
 }
 // ---- end f:updMaxMin
 
-// ---- inserted library file debug.cc
-// https://github.com/yamate11/compprog-clib/blob/master/debug.cc
-
-template <class... Args>
-string dbgFormat(const char* fmt, Args... args) {
-  size_t len = snprintf(nullptr, 0, fmt, args...);
-  char buf[len + 1];
-  snprintf(buf, len + 1, fmt, args...);
-  return string(buf);
-}
-
-template <class Head>
-void dbgLog(bool with_nl, Head&& head) {
-  cerr << head;
-  if (with_nl) cerr << endl;
-}
-
-template <class Head, class... Tail>
-void dbgLog(bool with_nl, Head&& head, Tail&&... tail)
-{
-  cerr << head << " ";
-  dbgLog(with_nl, forward<Tail>(tail)...);
-}
-
-#if DEBUG
-  #define DLOG(...)        dbgLog(true, __VA_ARGS__)
-  #define DLOGNNL(...)     dbgLog(false, __VA_ARGS__)
-  #define DFMT(...)        cerr << dbgFormat(__VA_ARGS__) << endl
-  #define DCALL(func, ...) func(__VA_ARGS__)
-#else
-  #define DLOG(...)
-  #define DLOGNNL(...)
-  #define DFMT(...)
-  #define DCALL(func, ...)
-#endif
-
-/*
-#if DEBUG_LIB
-  #define DLOG_LIB(...)        dbgLog(true, __VA_ARGS__)
-  #define DLOGNNL_LIB(...)     dbgLog(false, __VA_ARGS__)
-  #define DFMT_LIB(...)        cerr << dbgFormat(__VA_ARGS__) << endl
-  #define DCALL_LIB(func, ...) func(__VA_ARGS__)
-#else
-  #define DLOG_LIB(...)
-  #define DFMT_LIB(...)
-  #define DCALL_LIB(func, ...)
-#endif
-*/
-
-#define DUP1(E1)       #E1 "=", E1
-#define DUP2(E1,E2)    DUP1(E1), DUP1(E2)
-#define DUP3(E1,...)   DUP1(E1), DUP2(__VA_ARGS__)
-#define DUP4(E1,...)   DUP1(E1), DUP3(__VA_ARGS__)
-#define DUP5(E1,...)   DUP1(E1), DUP4(__VA_ARGS__)
-#define DUP6(E1,...)   DUP1(E1), DUP5(__VA_ARGS__)
-#define DUP7(E1,...)   DUP1(E1), DUP6(__VA_ARGS__)
-#define DUP8(E1,...)   DUP1(E1), DUP7(__VA_ARGS__)
-#define DUP9(E1,...)   DUP1(E1), DUP8(__VA_ARGS__)
-#define DUP10(E1,...)   DUP1(E1), DUP9(__VA_ARGS__)
-#define DUP11(E1,...)   DUP1(E1), DUP10(__VA_ARGS__)
-#define DUP12(E1,...)   DUP1(E1), DUP11(__VA_ARGS__)
-#define GET_MACRO(_1,_2,_3,_4,_5,_6,_7,_8,_9,_10,_11,_12,NAME,...) NAME
-#define DUP(...)          GET_MACRO(__VA_ARGS__, DUP12, DUP11, DUP10, DUP9, DUP8, DUP7, DUP6, DUP5, DUP4, DUP3, DUP2, DUP1)(__VA_ARGS__)
-#define DLOGK(...)        DLOG(DUP(__VA_ARGS__))
-#define DLOGKL(lab, ...)  DLOG(lab, DUP(__VA_ARGS__))
-
-#if DEBUG_LIB
-  #define DLOG_LIB   DLOG
-  #define DLOGK_LIB  DLOGK
-  #define DLOGKL_LIB DLOGKL
-#endif
-
-// ---- end debug.cc
-
 // @@ !! LIM -- end mark --
+
+template<typename T, typename prod_tp>
+struct swag {
+  prod_tp prod;
+  T unit;
+  vector<T> elem_front{};
+  vector<T> val_front{};
+  vector<T> elem_back{};
+  vector<T> val_back{};
+  
+  void push(T t) {
+    const T& e = val_back.empty() ? unit : val_back.back();
+    val_back.push_back(prod(e, t));  // Order matters!
+    elem_back.push_back(move(t));
+  }
+  void pop() {
+    if (val_front.empty()) {
+      if (val_back.empty()) throw runtime_error("swag empty");
+      while (not val_back.empty()) {
+        val_back.pop_back();
+        T t = move(elem_back.back());
+        elem_back.pop_back();
+        const T& e = val_front.empty() ? unit : val_front.back();
+        val_front.push_back(prod(t, e)); // Order matters!
+        elem_front.push_back(move(t));
+      }
+    }
+    val_front.pop_back();
+    elem_front.pop_back();
+  }
+  T get_val() const {
+    T vf = val_front.empty() ? unit : val_front.back();
+    T vb = val_back.empty()  ? unit : val_back.back();
+    return prod(vf, vb);
+  }
+  const T& back() const {
+    if (not elem_back.empty()) return elem_back.back(); 
+    else if (not elem_front.empty()) return elem_front.front();
+    else throw runtime_error("swag empty");
+  }
+  const T& front() const {
+    if (not elem_front.empty()) return elem_front.back();
+    else if (not elem_back.empty()) return elem_back.front();
+    else throw runtime_error("swag empty");
+  }
+};
+
+template<typename T, typename prod_tp>
+swag<T, prod_tp> make_swag(prod_tp prod, T unit) { return swag<T, decltype(prod)>(prod, unit); }
 
 constexpr ll big = 1LL << 60;
 
-// @DefStruct(A, (x, y, z), ord=x) [SxkCiv48]
-struct A_t {
-  ll x;
-  ll y;
-  ll z;
-  A_t(ll x_ = ll(), ll y_ = ll(), ll z_ = ll()) : x(x_), y(y_), z(z_) {}
-  friend ostream& operator<<(ostream& ostr, const A_t& t) {
-    ostr << "(" << t.x << ", " << t.y << ", " << t.z << ")";
-    return ostr;
-  }
-  strong_ordering operator<=>(const A_t& o) const {
-    if (auto r = x <=> o.x; r != 0) return r;
-    if (auto r = y <=> o.y; r != 0) return r;
-    if (auto r = z <=> o.z; r != 0) return r;
-    return std::strong_ordering::equal;
-  }
-  bool operator==(const A_t& o) const = default;
+struct MinPlusLL {
+  using value_type = ll;
+  static constexpr ll mpll_big = big;
+  static value_type zero(      const value_type& u)                      { return mpll_big; }
+  static value_type one(       const value_type& u)                      { return 0; }
+  static value_type add(       const value_type& u, const value_type& v) { return min(u, v); }
+  static void       subst_mult(      value_type& u, const value_type& v) { u += v; }
 };
-// @End [SxkCiv48]
-
-// @DefStruct(st, (x00, x01, x10, x11)) [6Ta5jDIp]
-struct st_t {
-  ll x00;
-  ll x01;
-  ll x10;
-  ll x11;
-  auto operator<=>(const st_t&) const = default;
-  friend ostream& operator<<(ostream& ostr, const st_t& t) {
-    ostr << "(" << t.x00 << ", " << t.x01 << ", " << t.x10 << ", " << t.x11 << ")";
-    return ostr;
-  }
-};
-// @End [6Ta5jDIp]
+using MP = MyAlg<MinPlusLL>;
+using MyMat = Matrix<MP>;
 
 int main(/* int argc, char *argv[] */) {
   ios_base::sync_with_stdio(false);
   cin.tie(nullptr);
   cout << setprecision(20);
 
-  auto solve = [&]() -> void {
+  auto solve = [&]() -> ll {
     ll N, K; cin >> N >> K;
-    // @InpVec(N, A) [eVXxCjfW]
+    // @InpVec(N, A) [Oz59timT]
     auto A = vector(N, ll());
     for (int i = 0; i < N; i++) { ll v; cin >> v; A[i] = v; }
-    // @End [eVXxCjfW]
-
-    constexpr st_t unit_st_t{0, 0, 0, 0};
-    auto min3 = [&](ll a, ll b, ll c) -> ll { return min(big, min(a, min(b, c))); };
-    auto add = [&](const st_t& a, const st_t& b) -> st_t {
-      if (a == unit_st_t) return b;
-      if (b == unit_st_t) return a;
-      st_t ret;
-      ret.x00 = min3(a.x00 + b.x10, a.x01 + b.x00, a.x01 + b.x10);
-      ret.x01 = min3(a.x00 + b.x11, a.x01 + b.x01, a.x01 + b.x11);
-      ret.x10 = min3(a.x10 + b.x10, a.x11 + b.x00, a.x11 + b.x10);
-      ret.x11 = min3(a.x10 + b.x11, a.x11 + b.x01, a.x11 + b.x11);
-      return ret;
-    };
-    auto st_t_from_ll = [&](ll x) -> st_t {
-      return st_t(0, big, big, x);
-    };
-    // auto min_st_t = [&](const st_t& a) { return min(a.x00, min(a.x01, min(a.x10, a.x11))); };
-    vector<st_t> init_dat(N);
-    REP(i, 0, N) init_dat[i] = st_t_from_ll(A[i]);
-    auto st = make_seg_tree(unit_st_t, add, init_dat);
+    // @End [Oz59timT]
 
     ll ans = big;
-    REP(i, 0, N) {
-      if (i + K > N) break;
-      DLOGK(i, st.query(i, i + K));
-      updMin(ans, st.query(i, i + K).x11);
-      if (i + K + 1 <= N) updMin(ans, st.query(i, i + K + 1).x11);
+    auto sw = make_swag(multiplies<MyMat>(), MyMat{{0, big}, {big, 0}});
+    REP(i, 0, K) sw.push(MyMat{{A[i], A[i]}, {0, big}});
+    ll i0 = K;
+    while (true) {
+      auto m1 = sw.get_val();
+      auto v1 = m1 * vector<MP>{big, 0};
+      DLOGK(i0, m1, v1);
+      updMin(ans, (ll)v1[0]);
+      if (i0 == N) break;
+      sw.push(MyMat{{A[i0], A[i0]}, {0, big}});
+      auto m2 = sw.get_val();
+      auto v2 = m2 * vector<MP>{big, 0};
+      DLOGK(i0, m2, v2);
+      updMin(ans, (ll)v2[0]);
+      sw.pop();
+      i0++;
     }
-    cout << ans << "\n";
+    return ans;
   };
 
-
   ll T; cin >> T;
-  REP(t, 0, T) solve();
+  REP(t, 0, T) cout << solve() << "\n";
 
   return 0;
 }

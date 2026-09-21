@@ -68,17 +68,21 @@ def main():
 #           (l, r) = sorted(sample(range(1, n + 1), 2))
 
 def onecase(case):
-    N = randrange(1, 10)
-    Q = randrange(1, 10)
+    # N = randrange(1, 10)
+    # Q = randrange(1, 10)
+    N = 5*10**4
+    Q = 5*10**4
     case.p(N, Q)
     for i in range(2, N + 1):
         p = randrange(1, i)
-        w = randrange(1, 5)
+        # w = randrange(1, 5)
+        w = randrange(1, 10**9)
         case.p(p, i, w)
     for q in range(Q):
         if N >= 2 and randrange(0, 2) == 0:
             case.p(1, randrange(2, N + 1))
         else:
-            case.p(2, randrange(1, N + 1), randrange(0, 10))
+            # case.p(2, randrange(1, N + 1), randrange(0, 10))
+            case.p(2, randrange(1, N + 1), randrange(0, 5*10**13))
 
 main()

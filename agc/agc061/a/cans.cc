@@ -2,6 +2,7 @@
 #include <cassert>
 using namespace std;
 using ll = long long int;
+using u64 = unsigned long long;
 using pll = pair<ll, ll>;
 // #include <atcoder/all>
 // using namespace atcoder;
@@ -11,383 +12,171 @@ using pll = pair<ll, ll>;
 #define SIZE(v) ((ll)((v).size()))
 #define REPOUT(i, a, b, exp, sep) REP(i, (a), (b)) cout << (exp) << (i + 1 == (b) ? "" : (sep)); cout << "\n"
 
-// @@ !! LIM(debug cmpNaive)
+// @@ !! LIM(unordered_map)
 
-// ---- inserted function f:<< from util.cc
+// ---- inserted library file unordered_map.cc
+// published at https://github.com/yamate11/compprog-clib/blob/master/unordered_map.cc
+
+/* This code is based on https://codeforces.com/blog/entry/62393 */
+
+#include <ext/pb_ds/assoc_container.hpp>
+using namespace __gnu_pbds;
+
+#if !defined(__TEMPLATE_SAFE_CUSTOM_HASH__)
+#define __TEMPLATE_SAFE_CUSTOM_HASH__
+template <typename T, typename Enable = void>
+struct safe_custom_hash;
+#endif
+
+// For integer types (int, ll, u64, unsigned, ....)
+template <typename T>
+struct safe_custom_hash<T, typename enable_if<is_integral<T>::value>::type> {
+  static uint64_t splitmix64(uint64_t x) {
+    // http://xorshift.di.unimi.it/splitmix64.c
+    x += 0x9e3779b97f4a7c15;
+    x = (x ^ (x >> 30)) * 0xbf58476d1ce4e5b9;
+    x = (x ^ (x >> 27)) * 0x94d049bb133111eb;
+    return x ^ (x >> 31);
+  }
+
+  size_t operator()(uint64_t x) const {
+    static const uint64_t FIXED_RANDOM = chrono::steady_clock::now().time_since_epoch().count();
+    return splitmix64(x + FIXED_RANDOM);
+  }
+};
+
+// For string
+template <>
+struct safe_custom_hash<string, void> {
+  static uint64_t mix(uint64_t x) {
+    x += 0x9e3779b97f4a7c15ULL;
+    x = (x ^ (x >> 30)) * 0xbf58476d1ce4e5b9ULL;
+    x = (x ^ (x >> 27)) * 0x94d049bb133111ebULL;
+    return x ^ (x >> 31);
+  }
+
+  size_t operator()(const string& s) const {
+    static const uint64_t seed = chrono::steady_clock::now().time_since_epoch().count();
+    uint64_t h = seed ^ 0x9e3779b97f4a7c15ULL;
+    const unsigned char* p = (const unsigned char*)s.data();
+    size_t n = s.size();
+    while (n >= 8) {
+      uint64_t v;
+      memcpy(&v, p, 8);
+      h = mix(h ^ v);
+      p += 8; n -= 8;
+    }
+    uint64_t tail = 0;
+    for (size_t i = 0; i < n; ++i) tail |= uint64_t(p[i]) << (8*i);
+    h = mix(h ^ tail);
+    return (size_t)h;
+  }
+};
+
+// For pair
 template <typename T1, typename T2>
-ostream& operator<< (ostream& os, const pair<T1,T2>& p) {
-  os << "(" << p.first << ", " << p.second << ")";
-  return os;
-}
-
-template <typename T1, typename T2, typename T3>
-ostream& operator<< (ostream& os, const tuple<T1,T2,T3>& t) {
-  os << "(" << get<0>(t) << ", " << get<1>(t)
-     << ", " << get<2>(t) << ")";
-  return os;
-}
-
-template <typename T1, typename T2, typename T3, typename T4>
-ostream& operator<< (ostream& os, const tuple<T1,T2,T3,T4>& t) {
-  os << "(" << get<0>(t) << ", " << get<1>(t)
-     << ", " << get<2>(t) << ", " << get<3>(t) << ")";
-  return os;
-}
-
-template <typename T>
-ostream& operator<< (ostream& os, const vector<T>& v) {
-  os << '[';
-  for (auto it = v.begin(); it != v.end(); it++) {
-    if (it != v.begin()) os << ", ";
-    os << *it;
+struct safe_custom_hash<pair<T1, T2>, void> {
+  size_t operator()(const pair<T1, T2>& x) const {
+    static const uint64_t frand = chrono::steady_clock::now().time_since_epoch().count();
+    static const uint64_t a = (frand ^ 0x9e3779b97f4a7c15) | 1;
+    static const uint64_t b = (frand ^ 0xbf58476d1ce4e5b9) | 1;
+    return a * safe_custom_hash<T1>{}(x.first) + b * safe_custom_hash<T2>{}(x.second);
   }
-  os << ']';
+};
 
-  return os;
-}
-
-template <typename T, typename C>
-ostream& operator<< (ostream& os, const set<T, C>& v) {
-  os << '{';
-  for (auto it = v.begin(); it != v.end(); it++) {
-    if (it != v.begin()) os << ", ";
-    os << *it;
+// For tuple
+template <typename... Ts>
+struct safe_custom_hash<tuple<Ts...>, void> {
+  size_t operator()(const tuple<Ts...>& x) const { return impl(x, index_sequence_for<Ts...>{}); }
+  static uint64_t splitmix64(uint64_t x) {
+    x += 0x9e3779b97f4a7c15ULL;
+    x = (x ^ (x >> 30)) * 0xbf58476d1ce4e5b9ULL;
+    x = (x ^ (x >> 27)) * 0x94d049bb133111ebULL;
+    return x ^ (x >> 31);
   }
-  os << '}';
-
-  return os;
-}
-
-template <typename T, typename C>
-ostream& operator<< (ostream& os, const unordered_set<T, C>& v) {
-  os << '{';
-  for (auto it = v.begin(); it != v.end(); it++) {
-    if (it != v.begin()) os << ", ";
-    os << *it;
+  template <size_t... Is>
+  static size_t impl(const tuple<Ts...>& x, index_sequence<Is...>) {
+    static const uint64_t frand = chrono::steady_clock::now().time_since_epoch().count();
+    static const array<uint64_t, sizeof...(Ts)> coef = { (splitmix64(frand + Is) | 1)... };
+    uint64_t h = 0;
+    (
+      void( h += coef[Is] * uint64_t(safe_custom_hash<tuple_element_t<Is, tuple<Ts...>>>{}(get<Is>(x))) ),
+      ...
+    );
+    return h;
   }
-  os << '}';
+};
 
-  return os;
-}
+template <typename T_key, typename T_value, bool useGP = false>
+using safe_umap = conditional_t<useGP, gp_hash_table<T_key, T_value, safe_custom_hash<T_key>>,
+                                unordered_map<T_key, T_value, safe_custom_hash<T_key>>>;
+template <typename T_key, bool useGP = false>
+using safe_uset = conditional_t<useGP, gp_hash_table<T_key, null_type, safe_custom_hash<T_key>>,
+                                unordered_set<T_key, safe_custom_hash<T_key>>>;
+template <typename T_key>
+using safe_umultiset = unordered_multiset<T_key, safe_custom_hash<T_key>>;
 
-template <typename T, typename C>
-ostream& operator<< (ostream& os, const multiset<T, C>& v) {
-  os << '{';
-  for (auto it = v.begin(); it != v.end(); it++) {
-    if (it != v.begin()) os << ", ";
-    os << *it;
-  }
-  os << '}';
 
-  return os;
-}
+// ---- end unordered_map.cc
 
-template <typename T1, typename T2, typename C>
-ostream& operator<< (ostream& os, const map<T1, T2, C>& mp) {
-  os << '[';
-  for (auto it = mp.begin(); it != mp.end(); it++) {
-    if (it != mp.begin()) os << ", ";
-    os << it->first << ": " << it->second;
-  }
-  os << ']';
+// @@ !! LIM -- end mark --
 
-  return os;
-}
-
-template <typename T1, typename T2, typename C>
-ostream& operator<< (ostream& os, const unordered_map<T1, T2, C>& mp) {
-  os << '[';
-  for (auto it = mp.begin(); it != mp.end(); it++) {
-    if (it != mp.begin()) os << ", ";
-    os << it->first << ": " << it->second;
-  }
-  os << ']';
-
-  return os;
-}
-
-template <typename T, typename T2>
-ostream& operator<< (ostream& os, const queue<T, T2>& orig) {
-  queue<T, T2> que(orig);
-  bool first = true;
-  os << '[';
-  while (!que.empty()) {
-    T x = que.front(); que.pop();
-    if (!first) os << ", ";
-    os << x;
-    first = false;
-  }
-  return os << ']';
-}
-
-template <typename T, typename T2>
-ostream& operator<< (ostream& os, const deque<T, T2>& orig) {
-  deque<T, T2> que(orig);
-  bool first = true;
-  os << '[';
-  while (!que.empty()) {
-    T x = que.front(); que.pop_front();
-    if (!first) os << ", ";
-    os << x;
-    first = false;
-  }
-  return os << ']';
-}
-
-template <typename T, typename T2, typename T3>
-ostream& operator<< (ostream& os, const priority_queue<T, T2, T3>& orig) {
-  priority_queue<T, T2, T3> pq(orig);
-  bool first = true;
-  os << '[';
-  while (!pq.empty()) {
-    T x = pq.top(); pq.pop();
-    if (!first) os << ", ";
-    os << x;
-    first = false;
-  }
-  return os << ']';
-}
-
-template <typename T>
-ostream& operator<< (ostream& os, const stack<T>& st) {
-  stack<T> tmp(st);
-  os << '[';
-  bool first = true;
-  while (!tmp.empty()) {
-    T& t = tmp.top();
-    if (first) first = false;
-    else os << ", ";
-    os << t;
-    tmp.pop();
-  }
-  os << ']';
-  return os;
-}
-
-#if __cplusplus >= 201703L
-template <typename T>
-ostream& operator<< (ostream& os, const optional<T>& t) {
-  if (t.has_value()) os << "v(" << t.value() << ")";
-  else               os << "nullopt";
-  return os;
-}
-#endif
-
-ostream& operator<< (ostream& os, int8_t x) {
-  os << (int32_t)x;
-  return os;
-}
-
-// ---- end f:<<
-
-// ---- inserted library file debug.cc
-template <class... Args>
-string dbgFormat(const char* fmt, Args... args) {
-  size_t len = snprintf(nullptr, 0, fmt, args...);
-  char buf[len + 1];
-  snprintf(buf, len + 1, fmt, args...);
-  return string(buf);
-}
-
-template <class Head>
-void dbgLog(bool with_nl, Head&& head) {
-  cerr << head;
-  if (with_nl) cerr << endl;
-}
-
-template <class Head, class... Tail>
-void dbgLog(bool with_nl, Head&& head, Tail&&... tail)
-{
-  cerr << head << " ";
-  dbgLog(with_nl, forward<Tail>(tail)...);
-}
-
-#if DEBUG
-  #define DLOG(...)        dbgLog(true, __VA_ARGS__)
-  #define DLOGNNL(...)     dbgLog(false, __VA_ARGS__)
-  #define DFMT(...)        cerr << dbgFormat(__VA_ARGS__) << endl
-  #define DCALL(func, ...) func(__VA_ARGS__)
-#else
-  #define DLOG(...)
-  #define DLOGNNL(...)
-  #define DFMT(...)
-  #define DCALL(func, ...)
-#endif
-
-/*
-#if DEBUG_LIB
-  #define DLOG_LIB(...)        dbgLog(true, __VA_ARGS__)
-  #define DLOGNNL_LIB(...)     dbgLog(false, __VA_ARGS__)
-  #define DFMT_LIB(...)        cerr << dbgFormat(__VA_ARGS__) << endl
-  #define DCALL_LIB(func, ...) func(__VA_ARGS__)
-#else
-  #define DLOG_LIB(...)
-  #define DFMT_LIB(...)
-  #define DCALL_LIB(func, ...)
-#endif
-*/
-
-#define DUP1(E1)       #E1 "=", E1
-#define DUP2(E1,E2)    DUP1(E1), DUP1(E2)
-#define DUP3(E1,...)   DUP1(E1), DUP2(__VA_ARGS__)
-#define DUP4(E1,...)   DUP1(E1), DUP3(__VA_ARGS__)
-#define DUP5(E1,...)   DUP1(E1), DUP4(__VA_ARGS__)
-#define DUP6(E1,...)   DUP1(E1), DUP5(__VA_ARGS__)
-#define DUP7(E1,...)   DUP1(E1), DUP6(__VA_ARGS__)
-#define DUP8(E1,...)   DUP1(E1), DUP7(__VA_ARGS__)
-#define DUP9(E1,...)   DUP1(E1), DUP8(__VA_ARGS__)
-#define DUP10(E1,...)   DUP1(E1), DUP9(__VA_ARGS__)
-#define DUP11(E1,...)   DUP1(E1), DUP10(__VA_ARGS__)
-#define DUP12(E1,...)   DUP1(E1), DUP11(__VA_ARGS__)
-#define GET_MACRO(_1,_2,_3,_4,_5,_6,_7,_8,_9,_10,_11,_12,NAME,...) NAME
-#define DUP(...)          GET_MACRO(__VA_ARGS__, DUP12, DUP11, DUP10, DUP9, DUP8, DUP7, DUP6, DUP5, DUP4, DUP3, DUP2, DUP1)(__VA_ARGS__)
-#define DLOGK(...)        DLOG(DUP(__VA_ARGS__))
-#define DLOGKL(lab, ...)  DLOG(lab, DUP(__VA_ARGS__))
-
-#if DEBUG_LIB
-  #define DLOG_LIB   DLOG
-  #define DLOGK_LIB  DLOGK
-  #define DLOGKL_LIB DLOGKL
-#endif
-
-// ---- end debug.cc
-
-// ---- inserted library file cmpNaive.cc
-
-const string end_mark("^__=end=__^");
-
-int naive(istream& cin, ostream& cout);
-int body(istream& cin, ostream& cout);
-
-void cmpNaive() {
-  while (true) {
-    string s;
-    getline(cin, s);
-    bool run_body;
-    if (s.at(0) == 'Q') {
-      return;
-    }else if (s.at(0) == 'B') {
-      run_body = true;
-    }else if (s.at(0) == 'N') {
-      run_body = false;
-    }else {
-      cerr << "Unknown body/naive specifier.\n";
-      exit(1);
-    }
-    string input_s;
-    while (true) {
-      getline(cin, s);
-      if (s == end_mark) break;
-      input_s += s;
-      input_s += "\n";
-    }
-    stringstream ss_in(move(input_s));
-    stringstream ss_out;
-    if (run_body) {
-      body(ss_in, ss_out);
-    }else {
-      naive(ss_in, ss_out);
-    }
-    cout << ss_out.str() << end_mark << endl;
-  }
-}
-
-int main(int argc, char *argv[]) {
+int main(/* int argc, char *argv[] */) {
   ios_base::sync_with_stdio(false);
   cin.tie(nullptr);
   cout << setprecision(20);
 
-#if CMPNAIVE
-  if (argc == 2) {
-    if (strcmp(argv[1], "cmpNaive") == 0) {
-      cmpNaive();
-    }else if (strcmp(argv[1], "naive") == 0) {
-      naive(cin, cout);
-    }else if (strcmp(argv[1], "skip") == 0) {
-      exit(0);
-    }else {
-      cerr << "Unknown argument.\n";
-      exit(1);
-    }
-  }else {
-#endif
-    body(cin, cout);
-#if CMPNAIVE
-  }
-#endif
-  return 0;
-}
-
-/*
-int naive(istream& cin, ostream& cout) {
-  return 0;
-}
-int body(istream& cin, ostream& cout) {
-  return 0;
-}
-*/
-
-// ---- end cmpNaive.cc
-
-// @@ !! LIM -- end mark --
-
-int naive(istream& cin, ostream& cout) {
-  ll T; cin >> T;
-  REP(t, 0, T) {
-    ll N, K; cin >> N >> K;
-    vector<ll> A(N); REP(i, 0, N) A[i] = i;
-    auto sol = [&](auto rF, ll l, ll r) -> void {
-      if (r == l + 1) swap(A[l], A[r]);
-      else {
-        rF(rF, l, r - 1);
-        rF(rF, l + 1, r);
+#if 0
+  REP(N, 2, 33) {
+    vector<ll> A(N);
+    REP(i, 0, N) A[i] = i;
+    auto func = [&](auto rF, ll a, ll b) -> void {
+      if (a + 1 == b) {
+        swap(A[a], A[b]);
+        return;
       }
+      rF(rF, a, b - 1);
+      rF(rF, a + 1, b);
     };
-    sol(sol, 0, N - 1);
-    cout << A[K - 1] + 1 << "\n";
+    func(func, 0, N - 1);
+    REPOUT(i, 0, N, A[i], " ");
   }
 
-  return 0;
-}
-int body(istream& cin, ostream& cout) {
+#else
+  
+  auto solve = [&]() -> ll {
+    auto g = [&](auto rF, ll n, ll k) -> bool {
+      ll a = bit_floor((u64)n);
+      if (n == a) return true;
+      k = min(k, n - 1 - k);
+      if (k < n - a) return rF(rF, n - a, k);
+      else return false;
+    };
 
-  auto len = [&](ll i) -> ll {
-    return 64 - __builtin_clzll(i);
-  };
-  auto reduce = [&](ll i) -> ll {
-    return i ^ (1LL << (len(i) - 1));
-  };
-  auto dest = [&](ll i, ll j) -> pll {
-    if (len(i) == len(j)) return pll(i, reduce(j));
-    else return pll(reduce(i), j);
-  };
+    auto f = [&](ll n, ll k) -> ll {  // n : even
+      bool b = g(g, n / 2, k / 2);
+      return (not b) ? k : (k % 2 == 0) ? k + 1 : k - 1;
+    };
 
-  auto diff = [&](auto rF, ll n, ll k) -> ll {
-    DLOGK(n, k);
-    if (k == 0) return 1;
-    if (k > n) return 0;
-    if (k == n) {
-      if (n % 2 == 1) return -1;
-      else return -2;
+    ll N, K; cin >> N >> K; K--;
+    if (N % 2 == 0) {
+      return f(N, K);
+    }else {
+      REP(x, K - 2, K + 3) {
+        if (not (0 <= x and x < N)) continue;
+        ll a = (x == N - 1) ? N - 1 : f(N - 1, x);
+        ll b = (a == 0) ? 0 : f(N - 1, a - 1) + 1;
+        if (b == K) return x;
+      }
+      assert(0);
     }
-    if (n == (1LL << (len(n) - 1))) {
-      if (k == n - 1) return 1;
-      else if (k % 2 == 0) return -2;
-      else return 2;
-    }
-    auto [a, b] = dest(n, k);
-    return rF(rF, a, b);
-  };
-
-  auto solve = [&](ll N, ll K) -> ll {
-    return K + diff(diff, N - 1, K - 1);
   };
 
   ll T; cin >> T;
-  REP(t, 0, T) {
-    ll N, K; cin >> N >> K;
-    cout << solve(N, K) << "\n";
-  }
+  REP(t, 0, T) cout << solve() + 1 << "\n";
+
+#endif
+
   return 0;
 }
 

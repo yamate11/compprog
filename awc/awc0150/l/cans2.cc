@@ -1362,107 +1362,101 @@ int naive(istream& cin, ostream& cout) {
 int body(istream& cin, ostream& cout) {
   ll big = 1LL << 60;
   ll N, Q; cin >> N >> Q;
-  Tree tr(N);
+  Tree tr0(N);
   vector C(N - 1, 0LL);
   REP(i, 0, N - 1) {
     ll a, b, c; cin >> a >> b >> c; a--; b--; 
-    tr.add_edge(a, b);
+    tr0.add_edge(a, b);
     C[i] = c;
   }
-  tr._set_heavy();
-  DLOG(tr);
-  vector<ll> dist0(N);
-  vector<ll> heavy_tail(N);
-  vector<safe_umap<ll, ll>> umap_lcvs(N); // light children values
-  vector<set<pll>> set_lcvs(N);
-  vector<ll> val_subt(N);
-  auto dfs0 = [&](auto rF, ll nd, ll acc) -> void {
-    dist0[nd] = acc;
-    val_subt[nd] = nd == 0 ? 0 : big;
-    if (tr.num_children(nd) == 0) {
-      heavy_tail[nd] = nd;
-    }else {
-      for (ll c : tr.children(nd)) rF(rF, c, acc + C[tr.edge_idx(c)]);
-      heavy_tail[nd] = heavy_tail[tr.child(nd, 0)];
-      REP(i, 1, tr.num_children(nd)) {
-        ll c = tr.child(nd, i);
-        umap_lcvs[nd][c] = big;
-        set_lcvs[nd].emplace(big, c);
+
+  auto cstsize = tr0._stsize;
+  vector<ll> cd_parent(N, -2LL);
+  auto dfs0 = [&](auto rF_main, ll top, ll size, ll parent) -> ll {
+    if (cd_parent[top] != -2LL) return -1LL;
+    auto get_center = [&](auto rF_sub, ll nd) -> ll {
+      for (ll c : tr0.children(nd)) {
+        if (cd_parent[c] >= 0) continue;
+        if (cstsize[c] * 2 > size) return rF_sub(rF_sub, c);
       }
+      return nd;
+    };
+    ll g = get_center(get_center, top);
+    cd_parent[g] = parent;
+    ll sz = cstsize[g];
+    for (ll t = g; true; t = tr0.parent(t)) {
+      cstsize[t] -= sz;
+      if (t == top) break;
+    }
+    for (ll c : tr0.children(g)) rF_main(rF_main, c, cstsize[c], g);
+    rF_main(rF_main, top, cstsize[top], g);
+    return g;
+  };
+  ll cd_root = dfs0(dfs0, 0, cstsize[0], -1LL);
+  Tree tr_cd(N, cd_root);
+  REP(i, 0, N) if (cd_parent[i] >= 0) tr_cd.add_edge(i, cd_parent[i]);
+  DLOG(tr_cd.show());
+
+  vector<ll> dist0(N);
+  auto dfs2 = [&](auto rF, ll nd, ll acc) -> void {
+    dist0[nd] = acc;
+    for (ll c : tr0.children(nd)) rF(rF, c, acc + C[tr0.edge_idx(c)]);
+  };
+  dfs2(dfs2, 0, 0);
+
+  auto get_dist = [&](ll x, ll y) -> ll {
+    ll z = tr0.lca(x, y);
+    ll d = dist0[x] + dist0[y] - 2 * dist0[z];
+    return d;
+  };
+
+  vector<multiset<ll>> on_dists(N);
+  
+  auto reg = [&](ll nd) -> void {
+    for (ll t = nd; true; t = tr_cd.parent(t)) {
+      on_dists[t].insert(get_dist(nd, t));
+      if (t == cd_root) break;
     }
   };
-  dfs0(dfs0, 0, 0);
-
-  vector<ll> init1(2*N, big);
-  init1[0] = 0;
-  vector<ll> init2(2*N, big);
-  init2[0] = dist0[heavy_tail[0]];
-  auto mymin = [&](ll a, ll b) -> ll { return min(a, b); };
-  auto segt1 = make_seg_tree(big, mymin, init1);
-  auto segt2 = make_seg_tree(big, mymin, init2);
-  
-  auto shift1 = [&](ll x) -> ll { return dist0[x] - dist0[tr.heavy_head(x)]; };
-  auto shift2 = [&](ll x) -> ll { return dist0[heavy_tail[x]] - dist0[x]; };
+  auto unreg = [&](ll nd) -> void {
+    for (ll t = nd; true; t = tr_cd.parent(t)) {
+      auto it = on_dists[t].find(get_dist(nd, t));
+      assert(it != on_dists[t].end());
+      on_dists[t].erase(it);
+      if (t == cd_root) break;
+    }
+  };
+  reg(0);
 
   vector<bool> on(N, false);
   on[0] = true;
 
-  auto update_lcvs = [&](ll nd, ll lc, ll new_val) -> void {
-    ll old_val = umap_lcvs[nd][lc];
-    set_lcvs[nd].erase(pll(old_val, lc));
-    set_lcvs[nd].emplace(new_val, lc);
-    umap_lcvs[nd][lc] = new_val;
-  };
-
+  DLOGK(on_dists);
   REP(_q, 0, Q) {
     ll tp; cin >> tp;
     if (tp == 1) {
       ll x; cin >> x; x--;
+      if (on[x]) unreg(x);
+      else reg(x);
       on[x] = not on[x];
-      ll v = x;
-      while (true) {
-        ll new_lsv = on[v] ? 0 : (tr.num_children(v) <= 1) ? big : set_lcvs[v].begin()->first;
-        ll i = tr.euler_idx_in(v);
-        DLOGK(v, tr.euler_idx_in(v));
-        if (segt1.at(i) == new_lsv + shift1(v)) break;
-        segt1.rs(i) = new_lsv + shift1(v);
-        segt2.rs(i) = new_lsv + shift2(v);
-        ll hh = tr.heavy_head(v);
-        ll new_vs = segt1.query(tr.euler_idx_in(hh), tr.euler_idx_in(heavy_tail[hh]) + 1) - shift1(hh);
-        if (new_vs == val_subt[hh]) break;
-        val_subt[hh] = new_vs;
-        if (hh == 0) break;
-        v = tr.parent(hh);
-        i = tr.euler_idx_in(v);
-        update_lcvs(v, hh, dist0[hh] - dist0[v] + new_vs);
-      }
+      DLOGK(_q, on_dists);
     }else if (tp == 2) {
-      ll v0, t; cin >> v0 >> t; v0--;
-      ll d = segt1.query(tr.euler_idx_in(v0), tr.euler_idx_in(heavy_tail[v0]) + 1) - shift1(v0);
-      DLOGK(v0, t, d);
-      ll v = v0;
-      ll uplen = 0;
-      while (true) {
-        ll i = tr.euler_idx_in(v);
-        ll d1 = segt1.query(i, tr.euler_idx_in(heavy_tail[v]) + 1) - shift1(v);
-        ll d2 = segt2.query(tr.euler_idx_in(tr.heavy_head(v)), i + 1) - shift2(v);
-        DLOGKL("  ", v, i, d1, d2);
-        updMin(d, uplen + min(d1, d2));
-        if (tr.heavy_head(v) == 0) break;
-        ll new_v = tr.parent(tr.heavy_head(v));
-        uplen += dist0[v] - dist0[new_v];
-        if (uplen >= d) break;
-        v = new_v;
+      ll v; cin >> v; v--;
+      ll thr; cin >> thr;
+      ll d = big;
+      for (ll t = v; true; t = tr_cd.parent(t)) {
+        if (not on_dists[t].empty()) d = min(d, *on_dists[t].begin() + get_dist(v, t));
+        if (t == cd_root) break;
       }
-      DLOGKL("query 2", v0, t, d);
 #if ANS_DIGIT
       cout << d << "\n";
 #else
-      cout << (d <= t ? "YES\n" : "NO\n");
+      cout << (d <= thr ? "YES\n" : "NO\n");
 #endif
     }else assert(0);
-    DLOGK(_q, segt1.vec_view());
   }
+
+
 
   return 0;
 }
