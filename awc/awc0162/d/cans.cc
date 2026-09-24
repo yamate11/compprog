@@ -329,144 +329,64 @@ void dbgLogKL(Label&& label, const char* names_c, Args&&... args) {
 
 // @@ !! LIM -- end mark --
 
-// T must be integral or floating
-template<typename T = long long, typename comp_tp = less<T>>
-requires (std::integral<T> || std::floating_point<T>)
-struct LiChaoDyn {
-  struct Line {
-    T a{};
-    T b{};
-    T val_at(T t) const { return a * t + b; }
-  };
-
-  struct Node {
-    Line line;
-    Node* cldL{};
-    Node* cldH{};
-    Node(Line line_ = Line{}) : line(line_) {}
-    T val_at(T t) const { return line.val_at(t); }
-  };
-
-  T range_min;
-  T range_max;
-  comp_tp comp;
-  Node* root{};
-  
-  LiChaoDyn(T rmin, T rmax, comp_tp comp_ = comp_tp()) : range_min(rmin), range_max(rmax), comp(comp_) {}
-
-  T _better(T t1, T t2) const { return comp(t1, t2) ? t1 : t2; };
-
-  void _sub_add_line(Node*& p, T lo, T hi, Line y) {
-    if (not p) p = new Node(y);
-    else {
-      bool r_lo  = comp(p->val_at(lo), y.val_at(lo));
-      bool r_hi  = comp(p->val_at(hi), y.val_at(hi));
-      if (r_lo and r_hi) ; // nothing to do
-      else if (not r_lo and not r_hi) p->line = y;
-      else {
-        T mid = (lo + hi) / 2;
-        bool r_mid = comp(p->val_at(mid), y.val_at(mid));
-        if (not r_mid) {
-          swap(p->line, y);
-          r_lo = not r_lo;
-          r_hi = not r_hi;
-        }
-        if (not r_lo)      _sub_add_line(p->cldL, lo, mid, y);
-        else if (not r_hi) _sub_add_line(p->cldH, mid, hi, y);
-        else assert(0);
-      }
-    }
-  }
-  void add_line(T a, T b) { _sub_add_line(root, range_min, range_max, Line{a, b}); }
-
-  T _sub_query(Node* p, T lo, T hi, T t) const {
-    if (not p) { throw runtime_error("LiChaoDyn.query: null pointer"); }
-    T thisval = p->val_at(t);
-    T mid = (lo + hi) / 2;
-    if (t < mid) return p->cldL ? _better(thisval, _sub_query(p->cldL, lo, mid, t)) : thisval;
-    else         return p->cldH ? _better(thisval, _sub_query(p->cldH, mid, hi, t)) : thisval;
-  }
-  T query(T t) const { return _sub_query(root, range_min, range_max, t); }
-
-#if DEBUG
-  string innerstr() const {
-    stringstream ss;
-    ll seq = 0;
-    map<Node*, ll> mp;
-    auto f = [&](auto rF, Node* p) -> void {
-      ss << "[" << mp[p] << "]  y = " << p->line.a << " x + " << p->line.b << "  ";
-      auto g = [&](Node* q) -> void {
-        if (q) {
-          ss << "(" << seq << ")  ";
-          mp[q] = seq;
-          seq++;
-        }else {
-          ss << "(null)  ";
-        }
-      };
-      g(p->cldL);
-      g(p->cldH);
-      ss << "\n";
-      if (p->cldL) rF(rF, p->cldL);
-      if (p->cldH) rF(rF, p->cldH);
-    };
-    mp[root] = seq++;
-    f(f, root);
-    return ss.str();
-  }
-#endif
-
-};
-
-
-
 int main(/* int argc, char *argv[] */) {
   ios_base::sync_with_stdio(false);
   cin.tie(nullptr);
   cout << setprecision(20);
 
-#if 0
-  {
-    LiChaoDyn<ll, greater<ll>> lct(-1e6, 1e6);
-    lct.add_line(2, 3);
-    DLOG(lct.innerstr());
-    lct.add_line(4, 10);
-    DLOG(lct.innerstr());
-    lct.add_line(-1, 11);
-    DLOG(lct.innerstr());
-    ll a = lct.query(3);
-    cerr << a << endl;
-    return 0;
-  }
-#endif
-
+  ll sigma = 26;
+  ll H, W; cin >> H >> W;
+  ll R, C; cin >> R >> C; R--; C--;
+  vector<string> G(H);
+  REP(i, 0, H) cin >> G[i];
+  vector pos(sigma, vector<pll>());
+  REP(i, 0, H) REP(j, 0, W) pos[G[i][j] - 'a'].emplace_back(i, j);
 
   ll N; cin >> N;
-  // @InpMVec(N, (A, B)) [iud2sRRU]
-  auto A = vector(N, ll());
-  auto B = vector(N, ll());
-  for (int i = 0; i < N; i++) {
-    ll v1; cin >> v1; A[i] = v1;
-    ll v2; cin >> v2; B[i] = v2;
-  }
-  // @End [iud2sRRU]
+  string S; cin >> S;
 
-  LiChaoDyn<ll, greater<ll>> lct(-1e6, 1e6);
-  ll big = 1LL << 60;
-  ll pmax = -big;
-  REP(i, 0, N) {
-    ll p = A[i];
-    if (i >= 1) {
-      ll x = max(0LL, lct.query(B[i]));
-      DLOGK(i, x);
-      p += x;
-    }
-    lct.add_line(B[i], p);
-    DLOGKL("added", B[i], p);
-    DLOGK(i, p);
-    pmax = max(pmax, p);
+  REP(i, 0, N) if (pos[S[i] - 'a'].empty()) {
+    cout << -1 << "\n";
+    return 0;
   }
-  cout << pmax << "\n";
+
+  ll big = 1LL << 60;
+  vector dist_init(H, vector(W, big));
+  auto dist = dist_init;
+  REP(i, 0, N) {
+    auto prev = move(dist);
+    dist = dist_init;
+    using sta = tuple<ll, ll, ll>;
+    priority_queue<sta, vector<sta>, greater<sta>> pque;
+    if (i == 0) {
+      dist[R][C] = 0;
+      pque.emplace(0, R, C);
+    }else {
+      for (auto [p, q] : pos[S[i - 1] - 'a']) {
+        dist[p][q] = prev[p][q];
+        pque.emplace(dist[p][q], p, q);
+      }
+      DLOGKL("before", i, dist);
+    }
+    while (not pque.empty()) {
+      auto [d, p, q] = pque.top(); pque.pop();
+      if (dist[p][q] == d) {
+        for (auto [dp, dq] : vector<pll>{{-1, 0}, {1, 0}, {0, -1}, {0, 1}}) {
+          ll np = p + dp;
+          ll nq = q + dq;
+          if (0 <= np and np < H and 0 <= nq and nq < W and dist[np][nq] > d + 1) {
+            dist[np][nq] = d + 1;
+            pque.emplace(d + 1, np, nq);
+          }
+        }
+      }
+    }
+    DLOGK("after", i, dist);
+  }
+  ll ans = big;
+  for (auto [p, q] : pos[S[N - 1] - 'a']) ans = min(ans, dist[p][q]);
+  ans += N;
+  cout << ans << "\n";
 
   return 0;
 }

@@ -12,7 +12,33 @@ using pll = pair<ll, ll>;
 #define SIZE(v) ((ll)((v).size()))
 #define REPOUT(i, a, b, exp, sep) REP(i, (a), (b)) cout << (exp) << (i + 1 == (b) ? "" : (sep)); cout << "\n"
 
-// @@ !! LIM(debug)
+// @@ !! LIM(rle debug)
+
+// ---- inserted library file rle.cc
+// published at https://github.com/yamate11/compprog-clib/blob/master/rle.cc
+
+template<class InputIt, class OutputIt>
+OutputIt rle_iter(InputIt first, InputIt last, OutputIt d_first) {
+  InputIt itA = first;
+  OutputIt oit = d_first;
+  while (itA != last) {
+    InputIt itB = next(itA);
+    for (; itB != last and *itA == *itB; itB++);
+    *oit = make_pair(*itA, itB - itA);
+    itA = itB;
+    oit++;
+  }
+  return oit;
+}
+
+template<class V>
+auto rle(V vec) {
+  vector<pair<typename V::value_type, ll>> ret;
+  rle_iter(vec.begin(), vec.end(), back_inserter(ret));
+  return ret;
+}
+
+// ---- end rle.cc
 
 // ---- inserted function f:<< from util.cc
 
@@ -329,144 +355,49 @@ void dbgLogKL(Label&& label, const char* names_c, Args&&... args) {
 
 // @@ !! LIM -- end mark --
 
-// T must be integral or floating
-template<typename T = long long, typename comp_tp = less<T>>
-requires (std::integral<T> || std::floating_point<T>)
-struct LiChaoDyn {
-  struct Line {
-    T a{};
-    T b{};
-    T val_at(T t) const { return a * t + b; }
-  };
-
-  struct Node {
-    Line line;
-    Node* cldL{};
-    Node* cldH{};
-    Node(Line line_ = Line{}) : line(line_) {}
-    T val_at(T t) const { return line.val_at(t); }
-  };
-
-  T range_min;
-  T range_max;
-  comp_tp comp;
-  Node* root{};
-  
-  LiChaoDyn(T rmin, T rmax, comp_tp comp_ = comp_tp()) : range_min(rmin), range_max(rmax), comp(comp_) {}
-
-  T _better(T t1, T t2) const { return comp(t1, t2) ? t1 : t2; };
-
-  void _sub_add_line(Node*& p, T lo, T hi, Line y) {
-    if (not p) p = new Node(y);
-    else {
-      bool r_lo  = comp(p->val_at(lo), y.val_at(lo));
-      bool r_hi  = comp(p->val_at(hi), y.val_at(hi));
-      if (r_lo and r_hi) ; // nothing to do
-      else if (not r_lo and not r_hi) p->line = y;
-      else {
-        T mid = (lo + hi) / 2;
-        bool r_mid = comp(p->val_at(mid), y.val_at(mid));
-        if (not r_mid) {
-          swap(p->line, y);
-          r_lo = not r_lo;
-          r_hi = not r_hi;
-        }
-        if (not r_lo)      _sub_add_line(p->cldL, lo, mid, y);
-        else if (not r_hi) _sub_add_line(p->cldH, mid, hi, y);
-        else assert(0);
-      }
-    }
-  }
-  void add_line(T a, T b) { _sub_add_line(root, range_min, range_max, Line{a, b}); }
-
-  T _sub_query(Node* p, T lo, T hi, T t) const {
-    if (not p) { throw runtime_error("LiChaoDyn.query: null pointer"); }
-    T thisval = p->val_at(t);
-    T mid = (lo + hi) / 2;
-    if (t < mid) return p->cldL ? _better(thisval, _sub_query(p->cldL, lo, mid, t)) : thisval;
-    else         return p->cldH ? _better(thisval, _sub_query(p->cldH, mid, hi, t)) : thisval;
-  }
-  T query(T t) const { return _sub_query(root, range_min, range_max, t); }
-
-#if DEBUG
-  string innerstr() const {
-    stringstream ss;
-    ll seq = 0;
-    map<Node*, ll> mp;
-    auto f = [&](auto rF, Node* p) -> void {
-      ss << "[" << mp[p] << "]  y = " << p->line.a << " x + " << p->line.b << "  ";
-      auto g = [&](Node* q) -> void {
-        if (q) {
-          ss << "(" << seq << ")  ";
-          mp[q] = seq;
-          seq++;
-        }else {
-          ss << "(null)  ";
-        }
-      };
-      g(p->cldL);
-      g(p->cldH);
-      ss << "\n";
-      if (p->cldL) rF(rF, p->cldL);
-      if (p->cldH) rF(rF, p->cldH);
-    };
-    mp[root] = seq++;
-    f(f, root);
-    return ss.str();
-  }
-#endif
-
-};
-
-
-
 int main(/* int argc, char *argv[] */) {
   ios_base::sync_with_stdio(false);
   cin.tie(nullptr);
   cout << setprecision(20);
 
-#if 0
-  {
-    LiChaoDyn<ll, greater<ll>> lct(-1e6, 1e6);
-    lct.add_line(2, 3);
-    DLOG(lct.innerstr());
-    lct.add_line(4, 10);
-    DLOG(lct.innerstr());
-    lct.add_line(-1, 11);
-    DLOG(lct.innerstr());
-    ll a = lct.query(3);
-    cerr << a << endl;
-    return 0;
-  }
-#endif
+  auto solve = [&]() -> ll {
+    ll N; cin >> N;
+    string S; cin >> S;
+    auto f = [&]() -> ll {
+      ll c0 = 0, c1 = 0;
+      REP(i, 0, N) {
+        if (S[i] == '0') c0++;
+        else c1++;
+      }
+      if (c0 < c1) {
+        REP(i, 0, N) S[i] = S[i] == '0' ? '1' : '0';
+        swap(c0, c1);
+      }
+      DLOGK(S, c0, c1);
+      if (c0 > c1 + 2) return -1;
+      auto vec = rle(S);
+      ll m = ssize(vec);
+      if (m == 1) return 1;
+      ll xF = 0, xB = 0;
+      if (vec[0].first == '1') xF = 1;
+      if (vec.back().first == '1') xB = 1;
+      if (c0 == c1) return m;
+      if (c0 == c1 + 1) {
+        if (xF == 1 and xB == 1) return m - 1;
+        else return m;
+      }
+      if (c0 == c1 + 2) {
+        return m - (xF + xB);
+      }
+      assert(0);
+    };
+    ll a = f();
+    if (a == -1) return -1;
+    else return N - a;
+  };
 
-
-  ll N; cin >> N;
-  // @InpMVec(N, (A, B)) [iud2sRRU]
-  auto A = vector(N, ll());
-  auto B = vector(N, ll());
-  for (int i = 0; i < N; i++) {
-    ll v1; cin >> v1; A[i] = v1;
-    ll v2; cin >> v2; B[i] = v2;
-  }
-  // @End [iud2sRRU]
-
-  LiChaoDyn<ll, greater<ll>> lct(-1e6, 1e6);
-  ll big = 1LL << 60;
-  ll pmax = -big;
-  REP(i, 0, N) {
-    ll p = A[i];
-    if (i >= 1) {
-      ll x = max(0LL, lct.query(B[i]));
-      DLOGK(i, x);
-      p += x;
-    }
-    lct.add_line(B[i], p);
-    DLOGKL("added", B[i], p);
-    DLOGK(i, p);
-    pmax = max(pmax, p);
-  }
-  cout << pmax << "\n";
+  ll T; cin >> T;
+  for (ll _t = 0; _t < T; _t++) cout << solve() << "\n";
 
   return 0;
 }
