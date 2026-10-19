@@ -12,7 +12,7 @@ using pll = pair<ll, ll>;
 #define SIZE(v) ((ll)((v).size()))
 #define REPOUT(i, a, b, exp, sep) REP(i, (a), (b)) cout << (exp) << (i + 1 == (b) ? "" : (sep)); cout << "\n"
 
-// @@ !! LIM(debug)
+// @@ !! LIM(debug LiChao)
 
 // ---- inserted function f:<< from util.cc
 
@@ -327,7 +327,8 @@ void dbgLogKL(Label&& label, const char* names_c, Args&&... args) {
 
 // ---- end debug.cc
 
-// @@ !! LIM -- end mark --
+// ---- inserted library file LiChao.cc
+// published at https://github.com/yamate11/compprog-clib/blob/master/LiChao.cc
 
 // T must be integral or floating
 template<typename T = long long, typename comp_tp = less<T>>
@@ -388,7 +389,7 @@ struct LiChaoDyn {
   }
   T query(T t) const { return _sub_query(root, range_min, range_max, t); }
 
-#if DEBUG
+#if LIB_DEBUG
   string innerstr() const {
     stringstream ss;
     ll seq = 0;
@@ -414,11 +415,13 @@ struct LiChaoDyn {
     f(f, root);
     return ss.str();
   }
-#endif
+#endif // LIB_DEBUG
 
 };
 
+// ---- end LiChao.cc
 
+// @@ !! LIM -- end mark --
 
 int main(/* int argc, char *argv[] */) {
   ios_base::sync_with_stdio(false);

@@ -1,0 +1,1 @@
+n+round(n-n*(n/(n+n)))-n

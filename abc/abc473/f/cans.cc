@@ -161,8 +161,8 @@ ostream& operator<<(ostream& ostr, unsigned __int128 x) {
   if (x == 0) return ostr << "0";
   string s;
   while (x > 0) {
-    int d = x % 10;
-    s.push_back('0' + d);
+    int d = (int)(x % 10);
+    s.push_back((char)('0' + d));
     x /= 10;
   }
   reverse(s.begin(), s.end());
@@ -207,17 +207,17 @@ concept HasGShow = requires(const T& t) {
 // It seems that we should keep the size power of two,
 // considering the binary search.
 
-pair<int, int> segtree_range_of_node(int ht, unsigned i) {
-  unsigned m = bit_floor(i);
-  unsigned w = ht + 1 - bit_width(i);
-  int lo = (i ^ m) << w;
-  int hi = lo + (1LL << w);
+pair<ll, ll> segtree_range_of_node(ll ht, ll i) {
+  ll m = bit_floor((unsigned long long)i);
+  ll w = ht + 1 - bit_width((unsigned long long)i);
+  ll lo = (i ^ m) << w;
+  ll hi = lo + (1LL << w);
   return make_pair(lo, hi);
 }
 
-vector<int> segtree_nodes_for_range(int ht, unsigned lo, unsigned hi) {
-  vector<int> left;
-  vector<int> right;
+vector<ll> segtree_nodes_for_range(ll ht, ll lo, ll hi) {
+  vector<ll> left;
+  vector<ll> right;
   lo = (1 << ht) + lo;
   hi = (1 << ht) + hi - 1;
   while (lo <= hi) {
@@ -248,9 +248,9 @@ template <typename DAT, typename OP,
 struct GenSegTree {
   using GST = GenSegTree<DAT, OP, ADD_t, COMP_t, APPL_t, lazy>;
 
-  int orig_size;     // size of initdat
-  int size;	     // power of two; >= 2
-  int height;        // size = 1 << height;
+  ll orig_size;     // size of initdat
+  ll size;	     // power of two; >= 2
+  ll height;        // size = 1 << height;
   vector<DAT> node;  // vector of size 2*size.
                      // 0                 : unused
                      // 1    ... size-1   : interval
@@ -274,19 +274,20 @@ struct GenSegTree {
   void set_data(const vector<DAT>& initdat) {
     orig_size = initdat.size();
     if (initdat.size() <= 1) height = 0;
-    else   height = sizeof(int) * 8 - __builtin_clz(initdat.size() - 1);
+    else height = bit_width(initdat.size() - 1U);
+    // else   height = sizeof(int) * 8 - __builtin_clz((int)initdat.size() - 1);
     size = 1 << height;
     node.resize(2*size, unit_dat);
-    for (int i = 0; i < (int)initdat.size(); i++) node[size + i] = initdat[i];
-    for (int t = size - 1; t >= 1; t--) node[t] = add(node[t<<1|0], node[t<<1|1]);
+    for (ll i = 0; i < (int)initdat.size(); i++) node[size + i] = initdat[i];
+    for (ll t = size - 1; t >= 1; t--) node[t] = add(node[t<<1|0], node[t<<1|1]);
     susp.resize(size, unit_op);
   }
 
-  void child_updated_sub(int t) {
+  void child_updated_sub(ll t) {
     node[t] = appl(susp[t], add(node[t<<1|0], node[t<<1|1]));
   }
 
-  void child_updated(int l, int r) {
+  void child_updated(ll l, ll r) {
     r--;
     while (l > 1) {
       l >>= 1;
@@ -296,29 +297,29 @@ struct GenSegTree {
     }
   }
 
-  void node_op(int i, OP f) {
+  void node_op(ll i, OP f) {
     node[i] = appl(f, node[i]);
     if (i < size) susp[i] = comp(f, susp[i]);
   }
 
   // Note that susp[i] HAS ALREADY BEEN APPLIED TO node[i].
   // When push_one(i) is called, susp[j] is updated (for j : i's child) and it is applied to node[j].
-  void push_one(int i) {
+  void push_one(ll i) {
     node_op(i<<1|0, susp[i]);
     node_op(i<<1|1, susp[i]);
     susp[i] = unit_op;
   }
 
-  void push_upto(int l, int r) {
-    for (int s = height; s >= 1; s--) {
-      int lz = l >> s;
-      int rz = (r-1) >> s;
+  void push_upto(ll l, ll r) {
+    for (ll s = height; s >= 1; s--) {
+      ll lz = l >> s;
+      ll rz = (r-1) >> s;
       push_one(lz);
       if (lz < rz) push_one(rz);
     }
   }
 
-  DAT query(int l, int r) {
+  DAT query(ll l, ll r) {
     if (l >= r) return unit_dat;
     DAT ret_l = unit_dat;
     DAT ret_r = unit_dat;
@@ -340,12 +341,12 @@ struct GenSegTree {
     return ret;
   }
 
-  const DAT& at(int i) {
+  const DAT& at(ll i) {
     if constexpr(lazy) push_upto(size + i, size + i + 1);
     return node[size + i];
   }
 
-  const DAT& set_single(int i, const DAT& t) {
+  const DAT& set_single(ll i, const DAT& t) {
     ll x = size + i;
     if constexpr(lazy) push_upto(x, x + 1);
     node[x] = t;
@@ -355,27 +356,27 @@ struct GenSegTree {
 
   struct STSubst {
     GenSegTree& st;
-    int i;
-    STSubst(GenSegTree& st_, int i_) : st(st_), i(i_) {}
+    ll i;
+    STSubst(GenSegTree& st_, ll i_) : st(st_), i(i_) {}
     const DAT& operator=(const DAT& t) { return st.set_single(i, t); }
   };
 
   // Reference for Substitution
-  STSubst rs(int i) { return STSubst(*this, i); }
+  STSubst rs(ll i) { return STSubst(*this, i); }
 
   // obsolete
-  template<bool xx = lazy> enable_if_t<! xx> update(int i, DAT t) {
+  template<bool xx = lazy> enable_if_t<! xx> update(ll i, DAT t) {
     ll x = size + i;
     node[x] = t;
     for (x >>= 1; x >= 1; x >>= 1) node[x] = add(node[x<<1|0], node[x<<1|1]);
   }
 
-  template<bool xx = lazy> enable_if_t<xx> update(int l, int r, const OP& f) {
+  template<bool xx = lazy> enable_if_t<xx> update(ll l, ll r, const OP& f) {
     if (l >= r) return;
     l += size;
     r += size;
     push_upto(l, r);
-    int l0 = l, r0 = r;
+    ll l0 = l, r0 = r;
     while (l < r) {
       if (l & 1) {
 	node_op(l, f);
@@ -390,13 +391,13 @@ struct GenSegTree {
     child_updated(l0, r0);
   }
 
-  pair<int, int> range_of_node(unsigned i) { return segtree_range_of_node(height, i); }
+  pair<ll, ll> range_of_node(ll i) { return segtree_range_of_node(height, i); }
 
-  vector<int> nodes_for_range(unsigned lo, unsigned hi) { return segtree_nodes_for_range(height, lo, hi); }
+  vector<ll> nodes_for_range(ll lo, ll hi) { return segtree_nodes_for_range(height, lo, hi); }
 
   friend ostream& operator<<(ostream& os, GenSegTree& st) {
     os << '[';
-    for (int i = 0; i < st.orig_size; i++) {
+    for (ll i = 0; i < st.orig_size; i++) {
       if (i > 0) os << ", ";
       os << st.at(i);
     }
@@ -404,12 +405,12 @@ struct GenSegTree {
     return os;
   }
 
-  int binsearch_r_until(const auto& check, int l) {
+  ll binsearch_r_until(const auto& check, ll l) {
     // DLOGKL("in: binsearch_r_until", l);
     if (not check(unit_dat)) return l - 1;
     if (l == orig_size) return l;
     DAT val = unit_dat;
-    int x = l + size;
+    ll x = l + size;
     if constexpr(lazy) push_upto(x, x + 1);
     while (true) {
       if (x & 1) {
@@ -436,15 +437,15 @@ struct GenSegTree {
     return min(x - size, orig_size);
   }
 
-  int binsearch_r_from(const auto& check, int l) {
+  ll binsearch_r_from(const auto& check, ll l) {
     return binsearch_r_until([&](DAT x) { return not check(x); }, l) + 1;
   }
 
-  int binsearch_l_until(const auto& check, int r) {
+  ll binsearch_l_until(const auto& check, ll r) {
     if (not check(unit_dat)) return r + 1;
     if (r == 0) return 0;
     DAT val = unit_dat;
-    int x = r + size;
+    ll x = r + size;
     if (x == 2 * size) {
       if (check(node[1])) return 0;
       x = 1;
@@ -473,13 +474,13 @@ struct GenSegTree {
     return x + 1 - size;
   }
 
-  int binsearch_l_from(const auto& check, int r) {
+  ll binsearch_l_from(const auto& check, ll r) {
     return binsearch_l_until([&](DAT x) { return not check(x); }, r) - 1;
   }
 
   vector<DAT> vec_view() {
     vector<DAT> ret(orig_size);
-    for (int i = 0; i <  orig_size; i++) ret[i] = at(i);
+    for (ll i = 0; i <  orig_size; i++) ret[i] = at(i);
     return ret;
   };
 

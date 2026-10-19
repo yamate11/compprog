@@ -217,25 +217,25 @@ struct formatter<FpG<mod, INT, dyn_id>> : formatter<INT>  {
 
 template<typename T>
 struct Comb {
-  int nMax;
+  ll nMax;
   vector<T> vFact;
   vector<T> vInvFact;
 
-  Comb(int nm) : nMax(nm), vFact(nm+1), vInvFact(nm+1) {
+  Comb(ll nm) : nMax(nm), vFact(nm+1), vInvFact(nm+1) {
     vFact[0] = 1;
-    for (int i = 1; i <= nMax; i++) vFact[i] = i * vFact[i-1];
+    for (ll i = 1; i <= nMax; i++) vFact[i] = (T)i * vFact[i-1];
     vInvFact.at(nMax) = (T)1 / vFact[nMax];
-    for (int i = nMax; i >= 1; i--) vInvFact[i-1] = i * vInvFact[i];
+    for (ll i = nMax; i >= 1; i--) vInvFact[i-1] = (T)i * vInvFact[i];
   }
-  T fact(int n) const { return vFact[n]; }
-  T inv_fact(int n) const { return vInvFact[n]; }
-  T binom(int n, int r) const {
+  T fact(ll n) const { return vFact[n]; }
+  T inv_fact(ll n) const { return vInvFact[n]; }
+  T binom(ll n, ll r) const {
     if (r < 0 || r > n) return (T)0;
     return vFact[n] * vInvFact[r] * vInvFact[n-r];
   }
-  T binom_dup(int n, int r) const { return binom(n + r - 1, r); }
+  T binom_dup(ll n, ll r) const { return binom(n + r - 1, r); }
   // The number of permutation extracting r from n.
-  T perm(int n, int r) const {
+  T perm(ll n, ll r) const {
     return vFact[n] * vInvFact[n-r];
   }
 };
@@ -510,7 +510,7 @@ ll llsqrt(ll a) {
 
 // a >= 0, m >= 2;  Returns x s.t. x^m <= a < (x + 1)^m
 ll llroot(ll a, ll m) {
-  ll x = llround(pow(a, 1.0 / m));
+  ll x = llround(pow(a, 1.0 / (double)m));
   ll y = llpower(x, m);
   if (y == -1 or a < y) return x - 1;
   else return x;
@@ -533,27 +533,27 @@ ll lllog(ll base, ll a) {
 // sieve(upto) returns the list of prime numbers up to upto.
 //   Size: upto(1e8).size() ... 5.7e6,  upto(1e9).size() ... 5.1e7
 //   Performance: upto(1e8) ... 0.7sec,   upto(1e9) ... 9.2sec
-vector<int> sieve(int upto) {
-  vector<int> res;
+vector<ll> sieve(ll upto) {
+  vector<ll> res;
   vector<bool> tbl(upto+1);
-  ll lim = (int)(sqrt((double)upto)) + 1;
-  for (int x = 2; x <= upto; x++) {
+  ll lim = (ll)(sqrt((double)upto)) + 1;
+  for (ll x = 2; x <= upto; x++) {
     if (tbl[x]) continue;
     res.push_back(x);
     if (x <= lim) {
-      for (int y = x * x; y <= upto; y += x) tbl[y] = true;
+      for (ll y = x * x; y <= upto; y += x) tbl[y] = true;
     }
   }
   return res;
 }
 
-vector<int> divisorSieve(int upto) {
-  vector<int> tbl(upto+1);
+vector<ll> divisorSieve(ll upto) {
+  vector<ll> tbl(upto+1);
   iota(tbl.begin(), tbl.end(), 0);
-  ll lim = (int)(sqrt((double)upto)) + 1;
-  for (int x = 2; x <= lim; x++) {
+  ll lim = (ll)(sqrt((double)upto)) + 1;
+  for (ll x = 2; x <= lim; x++) {
     if (tbl[x] < x) continue;
-    for (int y = x * x; y <= upto; y += x) if (tbl[y] == y) tbl[y] = x;
+    for (ll y = x * x; y <= upto; y += x) if (tbl[y] == y) tbl[y] = x;
   }
   return tbl;
 }
@@ -567,19 +567,19 @@ vector<int> divisorSieve(int upto) {
  */
 
 struct myiter_primes {
-  const vector<int>& primes;
-  int i;
+  const vector<ll>& primes;
+  ll i;
   myiter_primes(const auto& primes_) : primes(primes_), i(0) {}
-  int next() {
+  ll next() {
     if (i == ssize(primes)) return -1;
     else return primes[i++];
   }
 };
 
 struct myiter_int {
-  int x;
+  ll x;
   myiter_int() : x(0) {}
-  int next() {
+  ll next() {
     x++;
     if (x == 1) { return 2; }
     if (x == 2) { return 3; }
@@ -588,8 +588,8 @@ struct myiter_int {
   }
 };
 
-vector<pair<ll, int>> _prfac_sub(ll n, auto& mit) {
-  vector<pair<ll, int>> res;
+vector<pair<ll, ll>> _prfac_sub(ll n, auto& mit) {
+  vector<pair<ll, ll>> res;
   ll x = n;
   while (x > 1) {
     ll p = mit.next();
@@ -600,7 +600,7 @@ vector<pair<ll, int>> _prfac_sub(ll n, auto& mit) {
       break;
     }
     if (p * p > x) break;
-    int r = 0;
+    ll r = 0;
     while (x % p == 0) {
       x /= p;
       r++;
@@ -611,21 +611,21 @@ vector<pair<ll, int>> _prfac_sub(ll n, auto& mit) {
   return res;
 }
 
-vector<pair<ll, int>> prfac(ll n) {
+vector<pair<ll, ll>> prfac(ll n) {
   myiter_int mit;
   return _prfac_sub(n, mit);
 }
-vector<pair<ll, int>> prfac(ll n, const vector<int>& primes) {
+vector<pair<ll, ll>> prfac(ll n, const vector<ll>& primes) {
   myiter_primes mit(primes);
   return _prfac_sub(n, mit);
 }
 
-vector<pair<int, int>> prfacDivSieve(int n, const vector<int>& divSieve) {
-  vector<pair<int, int>> ret;
-  int p = -1;
-  int r = 0;
+vector<pair<ll, ll>> prfacDivSieve(ll n, const vector<ll>& divSieve) {
+  vector<pair<ll, ll>> ret;
+  ll p = -1;
+  ll r = 0;
   while (n > 1) {
-    int q = divSieve[n];
+    ll q = divSieve[n];
     if (p == q) {
       r++;
     }else {
@@ -648,22 +648,22 @@ vector<pair<int, int>> prfacDivSieve(int n, const vector<int>& divSieve) {
  */
 
 // _gdsub ... aux function used in getDivisors()
-vector<ll> _gdsub(int i, const auto& fs) {
-  if (i == (int)fs.size()) { return vector<ll>({1}); }
+vector<ll> _gdsub(ll i, const auto& fs) {
+  if (i == (ll)fs.size()) { return vector<ll>({1}); }
   auto part = _gdsub(i+1, fs);
   auto [p, r] = fs[i];
   ll pp = 1;    // pp = p^m, for m \in [1, r]
-  int partOrigLen = part.size();
-  for (int m = 1; m <= r; m++) {
+  ll partOrigLen = part.size();
+  for (ll m = 1; m <= r; m++) {
     pp *= p;
-    for (int j = 0; j < partOrigLen; j++) part.push_back(pp * part[j]);
+    for (ll j = 0; j < partOrigLen; j++) part.push_back(pp * part[j]);
   }
   return part;
 }
 
 vector<ll> getDivisors(ll n) { return _gdsub(0, prfac(n)); }
-vector<ll> getDivisors(ll n, const vector<int>& primes) { return _gdsub(0, prfac(n, primes)); }
-vector<ll> getDivisorsDivSieve(ll n, const vector<int>& divSieve) { return _gdsub(0, prfacDivSieve(n, divSieve)); }
+vector<ll> getDivisors(ll n, const vector<ll>& primes) { return _gdsub(0, prfac(n, primes)); }
+vector<ll> getDivisorsDivSieve(ll n, const vector<ll>& divSieve) { return _gdsub(0, prfacDivSieve(n, divSieve)); }
 
 // Miller-Rabin prime judgement
 // is_prime_MR(n) returns true iff n is prime for u64 n.
@@ -709,28 +709,28 @@ ll findPrimeFactor(ll n) {
   if (n % 2 == 0) return 2;
   ll m = llround(ceil(pow((double)n, 0.125)));
   auto loop_c = [&]() -> ll {
-    auto sub_c = [&](int c) -> ll {
+    auto sub_c = [&](ll c) -> ll {
       ll y = 0;
-      auto sub_r = [&](int r) -> ll {
-        auto next_rand = [&](__int128 a) -> ll { return (a * a + c) % n; };
+      auto sub_r = [&](ll r) -> ll {
+        auto next_rand = [&](__int128 a) -> ll { return (ll)((a * a + c) % n); };
 
         ll x = y;
-        int th1 = 3 * r / 4;
-        for (int k = 0; k < th1; k++) y = next_rand(y);
-        for (int j = 0; th1 + j * m < r; j++) {
+        ll th1 = 3 * r / 4;
+        for (ll k = 0; k < th1; k++) y = next_rand(y);
+        for (ll j = 0; th1 + j * m < r; j++) {
           auto sub_range_all = [&](ll st, ll len) -> ll {
             ll en = st + len > r ? r : st + len;
             ll q = 1;
-            for (int k = st; k < en; k++) {
+            for (ll k = st; k < en; k++) {
               y = next_rand(y);
-              q = (__int128)q * abs(x - y) % n;
+              q = (ll)((__int128)q * abs(x - y) % n);
             }
             return gcd(q, n);
           };
 
           auto sub_range_each = [&](ll st, ll len) -> ll {
             ll en = st + len > r ? r : st + len;
-            for (int k = st; k < en; k++) {
+            for (ll k = st; k < en; k++) {
               y = next_rand(y);
               if (ll g = gcd(abs(x - y), n); g != 1) return g;
             }
@@ -747,10 +747,10 @@ ll findPrimeFactor(ll n) {
         return 1;
       };
 
-      for (int r = 1; true; r *= 2) { if (ll res = sub_r(r); res != 1) return res; }
+      for (ll r = 1; true; r *= 2) { if (ll res = sub_r(r); res != 1) return res; }
     };
 
-    for (int c = 1; true; c++) { if (ll res = sub_c(c); res != n) return res; }
+    for (ll c = 1; true; c++) { if (ll res = sub_c(c); res != n) return res; }
   };
 
   ll v = loop_c();
@@ -759,11 +759,11 @@ ll findPrimeFactor(ll n) {
   else return findPrimeFactor(v);
 }
 
-vector<pair<ll, int>> prfacPollardsRho(ll n) {
-  vector<pair<ll, int>> ret;
+vector<pair<ll, ll>> prfacPollardsRho(ll n) {
+  vector<pair<ll, ll>> ret;
   while (n > 1 and not is_prime_MR(n)) {
     ll p = findPrimeFactor(n);
-    int r = 0;
+    ll r = 0;
     while (n % p == 0) {
       n /= p;
       r++;
@@ -914,7 +914,7 @@ struct digit_util {
     string ret(w, ' ');
     for (ll i = w - 1; x != 0; x /= base, i--) {
       ll y = x % base;
-      ret[i] = y < 10 ? '0' + y : ten + (y - 10);
+      ret[i] = y < 10 ? (char)('0' + y) : (char)(ten + (y - 10));
     }
     return ret;
   }

@@ -10,7 +10,7 @@ else
   endif
 endif
 
-WARNINGS := -Wall -Wno-format-security -Wshadow -fconcepts
+WARNINGS := -Wall -Wno-format-security -Wshadow -fconcepts -Wconversion -Wno-sign-conversion
 # "-Wextra" should be added (after we fix unused parameter problems in library files)
 
 CXXFLAGS := -std=gnu++23 $(DEBUGFLAGS) $(WARNINGS)

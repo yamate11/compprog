@@ -1,0 +1,197 @@
+#include <bits/stdc++.h>
+#include <cassert>
+using namespace std;
+using ll = long long int;
+using u64 = unsigned long long;
+using pll = pair<ll, ll>;
+// #include <atcoder/all>
+// using namespace atcoder;
+#define REP(i, a, b) for (ll i = (a); i < (b); i++)
+#define REPrev(i, a, b) for (ll i = (a); i >= (b); i--)
+#define ALL(coll) (coll).begin(), (coll).end()
+#define SIZE(v) ((ll)((v).size()))
+#define REPOUT(i, a, b, exp, sep) REP(i, (a), (b)) cout << (exp) << (i + 1 == (b) ? "" : (sep)); cout << "\n"
+
+// @@ !! LIM(UnionFind forall)
+
+// ---- inserted library file UnionFind.cc
+// published at https://github.com/yamate11/compprog-clib/blob/master/UnionFind.cc
+
+struct UFDummyAlg {
+  static UFDummyAlg zero;
+  UFDummyAlg(ll = 0) {}
+  UFDummyAlg operator -() const { return *this; }
+  UFDummyAlg operator +(const UFDummyAlg&) const { return *this; }
+};
+UFDummyAlg UFDummyAlg::zero;
+
+template<typename T = UFDummyAlg, typename oplus_t = decltype(plus<T>()), typename onegate_t = decltype(negate<T>())>
+struct UnionFind {
+
+  struct GroupInfo {
+    UnionFind& uf;
+    vector<vector<ll>> _groups;
+    GroupInfo(UnionFind& uf_) : uf(uf_), _groups(uf.size) {
+      for (ll j = 0; j < uf.size; j++) {
+        if (uf.leader(j) == j) {
+          _groups[j].resize(uf.group_size(j));
+          _groups[j].resize(0);
+        }
+      }
+      for (ll j = 0; j < uf.size; j++) _groups[uf.leader(j)].push_back(j);
+    }
+    const vector<ll>& group(ll i) { return _groups[uf.leader(i)]; }
+  };
+
+  ll size;
+  T zero;
+  oplus_t oplus;
+  onegate_t onegate;
+  vector<ll> _leader;
+  vector<optional<T>> _pot;
+  vector<ll> _gsize;
+  ll _num_groups;
+  static constexpr bool _with_pot = not is_same_v<T, UFDummyAlg>;
+  
+  UnionFind() : size(0), zero((T)0), oplus(plus<T>()), onegate(negate<T>()),
+                _leader(0), _pot(0), _gsize(0), _num_groups(0) {}
+
+  UnionFind(ll size_, T zero_ = (T)0, oplus_t oplus_ = plus<T>(), onegate_t onegate_ = negate<T>())
+    : size(size_), zero(zero_), oplus(oplus_), onegate(onegate_),
+      _leader(size, -1), _pot(0), _gsize(size, 1), _num_groups(size) {
+    if constexpr (_with_pot) _pot.resize(size, zero);
+  }
+
+  void set_size(ll size_) {
+    size = size_;
+    _leader.resize(size, -1);
+    if constexpr (_with_pot) _pot.resize(size, zero);
+    _gsize.resize(size, 1);
+  }
+
+  ll merge(ll i, ll j, T p) {
+    ll li = leader(i);
+    ll lj = leader(j);
+    optional<T> ld_p;
+    if constexpr (_with_pot) {
+      if (_pot[i] and _pot[j]) ld_p = oplus(p, oplus(*_pot[j], onegate(*_pot[i])));
+      else                     ld_p = nullopt;
+    }
+    if (li == lj) {
+      if constexpr (_with_pot) { if (not (ld_p and *ld_p == zero)) _pot[li] = nullopt; }
+      return lj;
+    }
+    _num_groups--;
+    if (_gsize[lj] < _gsize[li]) {
+      swap(li, lj);
+      if constexpr (_with_pot) if (ld_p) ld_p = onegate(*ld_p);
+    }
+    // lj is the newleader
+    _gsize[lj] += _gsize[li];
+    _leader[li] = lj;
+    if constexpr (_with_pot) {
+      if (_pot[lj] and _pot[li]) _pot[li] = ld_p;
+      else _pot[lj] = nullopt;
+    }
+    return lj;
+  }
+
+  template<typename U = T>
+  enable_if_t<is_same_v<U, UFDummyAlg>, ll> merge(ll i, ll j) { return merge(i, j, zero); }
+
+  void _leaderpot(ll i) {
+    ll oj = _leader[i];
+    if (oj < 0) return;
+    ll nj = _leader[i] = leader(oj);
+    if constexpr (_with_pot) {
+      if (_pot[nj]) _pot[i] = oplus(*_pot[i], *_pot[oj]);
+      else _pot[i] = nullopt;
+    }
+  }
+  ll leader(ll i) {
+    _leaderpot(i);
+    return _leader[i] < 0 ? i : _leader[i];
+  }
+  optional<T> pot(ll i)  { _leaderpot(i); return _pot[i]; }
+
+  ll group_size(ll i) { return _gsize[leader(i)]; }
+
+  ll num_groups() { return _num_groups; }
+
+  GroupInfo group_info() { return GroupInfo(*this); }
+
+};
+
+template<typename T = UFDummyAlg>
+auto makeUnionFind(ll size, T zero, auto oplus, auto onegate) {
+  return UnionFind<T, decltype(oplus), decltype(onegate)>(size, zero, oplus, onegate);
+}
+
+// ---- end UnionFind.cc
+
+// ---- inserted library file forall.cc
+// published at https://github.com/yamate11/compprog-clib/blob/master/forall.cc
+
+#define EX_REP_LL(i, from, to) for (ll i = (from); i < (to); i++)
+#define EX_REP_RB(x, coll) for (auto x : coll)
+#define EXGEN(rep_part, cond, yes, no_behaviour) ([&]() { rep_part if (cond) return (yes); no_behaviour; }())
+#define EXISTS_BASE(rep_part, cond) EXGEN(rep_part, cond, true, return false)
+#define EXFIND_BASE(rep_part, cond, t) EXGEN(rep_part, cond, t, assert(0))
+#define EXFIND_D_BASE(rep_part, cond, t, def) EXGEN(rep_part, cond, t, return def)
+
+#define EXISTS(i, from, to, cond) EXISTS_BASE(EX_REP_LL(i, from, to), cond)
+#define FORALL(i, from, to, cond) (not EXISTS(i, from, to, not (cond)))
+#define EXFIND(i, from, to, cond) EXFIND_BASE(EX_REP_LL(i, from, to), cond, i)
+#define EXFIND_D(i, from, to, cond, def) EXFIND_D_BASE(EX_REP_LL(i, from, to), cond, i, def)
+
+#define EXISTS_C(x, coll, cond) EXISTS_BASE(EX_REP_RB(x, coll), cond)
+#define FORALL_C(x, coll, cond) (not EXISTS_C(x, coll, not (cond)))
+#define EXFIND_C(x, coll, cond) EXFIND_BASE(EX_REP_RB(x, coll), cond, x)
+#define EXFIND_D_C(x, coll, cond, def) EXFIND_D_BASE(EX_REP_RB(x, coll), cond, x, def)
+
+#define COUNT_BASE(rep_part, cond) ([&](){ ll ret = 0; rep_part if (cond) ret++; return ret; }())
+#define COUNT(i, from, to, cond) COUNT_BASE(EX_REP_LL(i, from, to), cond)
+#define COUNT_C(x, coll, cond) COUNT_BASE(EX_REP_RB(x, coll), cond)
+
+#define IMPLIES(a, b) (not (a) or (b))
+
+// ---- end forall.cc
+
+// @@ !! LIM -- end mark --
+
+int main(/* int argc, char *argv[] */) {
+  ios_base::sync_with_stdio(false);
+  cin.tie(nullptr);
+  cout << setprecision(20);
+
+  auto solve = [&]() -> string {
+    ll N, M; cin >> N >> M;
+    // @InpMVec(M, ((U, dec=1), (V, dec=1))) [iyDi03Gt]
+    auto U = vector(M, ll());
+    auto V = vector(M, ll());
+    for (int i = 0; i < M; i++) {
+      ll v1; cin >> v1; v1 -= 1; U[i] = v1;
+      ll v2; cin >> v2; v2 -= 1; V[i] = v2;
+    }
+    // @End [iyDi03Gt]
+    vector<ll> deg(N);
+    REP(i, 0, M) {
+      deg[U[i]]++;
+      deg[V[i]]++;
+    }
+    if (EXISTS(i, 0, N, deg[i] == 0)) return "Brain Melt";
+    UnionFind uf(N);
+    REP(i, 0, M) uf.merge(U[i], V[i]);
+    if (uf.group_size(0) != N) return "Many";
+    REP(i, 0, M) if (deg[U[i]] >= 2 and deg[V[i]] >= 2) return "Many";
+    return "2";
+  };
+
+  ll T; cin >> T;
+  for (ll _t = 0; _t < T; _t++) {
+    cout << solve() << "\n";
+  }
+
+  return 0;
+}
+

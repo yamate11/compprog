@@ -1,0 +1,1316 @@
+
+
+
+
+<!DOCTYPE html>
+<html>
+<head>
+	<title>問題 - AtCoder Beginner Contest 478</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+	<meta http-equiv="Content-Language" content="ja">
+	<meta name="viewport" content="width=device-width,initial-scale=1.0">
+	<meta name="format-detection" content="telephone=no">
+	<meta name="google-site-verification" content="nXGC_JxO0yoP1qBzMnYD_xgufO6leSLw1kyNo2HZltM" />
+	<meta name="robots" content="noai, noimageai">
+
+	
+	<script async src="https://www.googletagmanager.com/gtag/js?id=G-RC512FD18N"></script>
+	<script>
+		window.dataLayer = window.dataLayer || [];
+		function gtag(){dataLayer.push(arguments);}
+		gtag('js', new Date());
+		gtag('set', 'user_properties', {
+			
+				'login_status': 'logged_in',
+			
+		});
+		gtag('config', 'G-RC512FD18N');
+	</script>
+
+	
+	<meta name="description" content="プログラミング初級者から上級者まで楽しめる、競技プログラミングコンテストサイト「AtCoder」。オンラインで毎週開催プログラミングコンテストを開催しています。競技プログラミングを用いて、客観的に自分のスキルを計ることのできるサービスです。">
+	<meta name="author" content="AtCoder Inc.">
+
+	<meta property="og:site_name" content="AtCoder">
+	
+	<meta property="og:title" content="問題 - AtCoder Beginner Contest 478" />
+	<meta property="og:description" content="プログラミング初級者から上級者まで楽しめる、競技プログラミングコンテストサイト「AtCoder」。オンラインで毎週開催プログラミングコンテストを開催しています。競技プログラミングを用いて、客観的に自分のスキルを計ることのできるサービスです。" />
+	<meta property="og:type" content="website" />
+	<meta property="og:url" content="https://atcoder.jp/contests/abc478/tasks" />
+	<meta property="og:image" content="https://img.atcoder.jp/assets/atcoder.png" />
+	<meta name="twitter:card" content="summary" />
+	<meta name="twitter:site" content="@atcoder" />
+	
+	<meta property="twitter:title" content="問題 - AtCoder Beginner Contest 478" />
+
+	<link href="//fonts.googleapis.com/css?family=Lato:400,700" rel="stylesheet" type="text/css">
+	<link rel="stylesheet" type="text/css" href="//img.atcoder.jp/public/7e7ac38/css/bootstrap.min.css">
+	<link rel="stylesheet" type="text/css" href="//img.atcoder.jp/public/7e7ac38/css/base.css">
+	<link rel="shortcut icon" type="image/png" href="//img.atcoder.jp/assets/favicon.png">
+	<link rel="apple-touch-icon" href="//img.atcoder.jp/assets/atcoder.png">
+	<script src="//img.atcoder.jp/public/7e7ac38/js/lib/jquery-1.9.1.min.js"></script>
+	<script src="//img.atcoder.jp/public/7e7ac38/js/lib/bootstrap.min.js"></script>
+	<script src="//img.atcoder.jp/public/7e7ac38/js/cdn/js.cookie.min.js"></script>
+	<script src="//img.atcoder.jp/public/7e7ac38/js/cdn/moment.min.js"></script>
+	<script src="//img.atcoder.jp/public/7e7ac38/js/cdn/moment_js-ja.js"></script>
+	<script>
+		var LANG = "ja";
+		var userScreenName = "yamate11";
+		var csrfToken = "AapGcs+m6IwzooLm3xaWeJUYR8j0cbaTCHgxhhUVYsw="
+	</script>
+	<script src="//img.atcoder.jp/public/7e7ac38/js/utils.js"></script>
+	
+	
+		<script src="//img.atcoder.jp/public/7e7ac38/js/contest.js"></script>
+		<link href="//img.atcoder.jp/public/7e7ac38/css/contest.css" rel="stylesheet" />
+		<script>
+			var contestScreenName = "abc478";
+			var remainingText = "残り時間";
+			var countDownText = "開始まであと";
+			var startTime = moment("2026-10-03T21:00:00+09:00");
+			var endTime = moment("2026-10-03T22:40:00+09:00");
+		</script>
+		<style>/* ========================================
+   AtCoderJobsAgent User Interview
+======================================== */
+
+.aja-interview {
+  --aja-navy: #172033;
+  --aja-blue: #2468d8;
+  --aja-light-blue: #edf5ff;
+  --aja-green: #008000;
+  --aja-border: #dfe5ec;
+  --aja-text: #303846;
+  --aja-muted: #697386;
+
+  max-width: 860px;
+  margin: 0 auto;
+  padding: 20px 0 64px;
+  color: var(--aja-text);
+  font-family:
+    -apple-system,
+    BlinkMacSystemFont,
+    "Helvetica Neue",
+    "Hiragino Kaku Gothic ProN",
+    "Yu Gothic",
+    YuGothic,
+    Meiryo,
+    sans-serif;
+  font-size: 16px;
+  line-height: 1.9;
+}
+
+/* ヘッダー */
+
+.aja-hero {
+  position: relative;
+  overflow: hidden;
+  padding: 64px 56px;
+  border-radius: 20px;
+  color: #ffffff;
+  background:
+    radial-gradient(
+      circle at 90% 10%,
+      rgba(77, 148, 255, 0.45) 0,
+      rgba(77, 148, 255, 0) 34%
+    ),
+    linear-gradient(135deg, #101827 0%, #1b2f55 55%, #164c8f 100%);
+  box-shadow: 0 18px 45px rgba(20, 44, 82, 0.2);
+}
+
+.aja-hero::before {
+  content: "";
+  position: absolute;
+  top: -100px;
+  right: -80px;
+  width: 270px;
+  height: 270px;
+  border: 1px solid rgba(255, 255, 255, 0.13);
+  border-radius: 50%;
+}
+
+.aja-hero::after {
+  content: "";
+  position: absolute;
+  right: 75px;
+  bottom: -105px;
+  width: 210px;
+  height: 210px;
+  border: 1px solid rgba(255, 255, 255, 0.09);
+  border-radius: 50%;
+}
+
+.aja-hero__label {
+  position: relative;
+  z-index: 1;
+  margin-bottom: 18px;
+  color: #8dbbff;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.2em;
+}
+
+.aja-hero__title {
+  position: relative;
+  z-index: 1;
+  margin: 0;
+  color: #ffffff;
+  font-size: clamp(28px, 5vw, 44px);
+  font-weight: 800;
+  line-height: 1.35;
+  letter-spacing: 0.01em;
+}
+
+.aja-hero__name {
+  position: relative;
+  z-index: 1;
+  margin: 12px 0 16px;
+  color: #ffffff;
+  font-size: 22px;
+  font-weight: 700;
+}
+
+.aja-rating {
+  position: relative;
+  z-index: 1;
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  padding: 7px 14px;
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  border-radius: 999px;
+  color: #ffffff !important;
+  background: rgba(255, 255, 255, 0.1);
+  font-size: 13px;
+  font-weight: 600;
+  text-decoration: none !important;
+  backdrop-filter: blur(5px);
+  transition:
+    background 0.2s ease,
+    transform 0.2s ease;
+}
+
+.aja-rating:hover {
+  color: #ffffff !important;
+  background: rgba(255, 255, 255, 0.2);
+  transform: translateY(-1px);
+}
+
+.aja-rating__dot {
+  width: 10px;
+  height: 10px;
+  border: 2px solid rgba(255, 255, 255, 0.65);
+  border-radius: 50%;
+  background: var(--aja-green);
+}
+
+.aja-hero__lead {
+  position: relative;
+  z-index: 1;
+  max-width: 650px;
+  margin: 28px 0 0;
+  color: rgba(255, 255, 255, 0.82);
+  font-size: 15px;
+  line-height: 1.9;
+}
+
+/* サービス紹介 */
+
+.aja-service {
+  margin: 40px 0;
+  padding: 30px 34px;
+  border: 1px solid #d6e6fb;
+  border-radius: 16px;
+  background: linear-gradient(135deg, #f7fbff 0%, #edf5ff 100%);
+}
+
+.aja-service__heading {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.aja-service__icon {
+  display: flex;
+  flex: 0 0 auto;
+  align-items: center;
+  justify-content: center;
+  width: 46px;
+  height: 46px;
+  border-radius: 13px;
+  color: #ffffff;
+  background: var(--aja-blue);
+  font-size: 21px;
+  font-weight: 800;
+  box-shadow: 0 8px 18px rgba(36, 104, 216, 0.22);
+}
+
+.aja-service__eyebrow,
+.aja-cta__eyebrow {
+  margin: 0 0 2px;
+  color: var(--aja-blue);
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 0.18em;
+}
+
+.aja-service__title {
+  margin: 0;
+  color: var(--aja-navy);
+  font-size: 21px;
+  font-weight: 750;
+}
+
+.aja-service__text {
+  margin: 20px 0 14px;
+  font-size: 15px;
+  line-height: 1.85;
+}
+
+.aja-service__link {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--aja-blue) !important;
+  font-size: 14px;
+  font-weight: 700;
+  text-decoration: none !important;
+}
+
+.aja-service__link:hover {
+  text-decoration: underline !important;
+}
+
+/* 開閉案内 */
+
+.aja-guide {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  margin: 46px 0 16px;
+  color: var(--aja-muted);
+  font-size: 13px;
+  text-align: center;
+}
+
+.aja-guide__icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 20px;
+  height: 20px;
+  border: 1px solid var(--aja-border);
+  border-radius: 50%;
+  color: var(--aja-blue);
+  background: #ffffff;
+  font-weight: 700;
+}
+
+/* 質問 */
+
+.aja-questions {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.aja-question {
+  overflow: hidden;
+  border: 1px solid var(--aja-border);
+  border-radius: 14px;
+  background: #ffffff;
+  box-shadow: 0 5px 16px rgba(25, 39, 65, 0.05);
+  transition:
+    border-color 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.aja-question:hover {
+  border-color: #bfd1ea;
+  box-shadow: 0 8px 24px rgba(25, 39, 65, 0.08);
+}
+
+.aja-question[open] {
+  border-color: #abc8ee;
+  box-shadow: 0 10px 28px rgba(36, 104, 216, 0.1);
+}
+
+.aja-question__summary {
+  position: relative;
+  display: grid;
+  grid-template-columns: 52px minmax(0, 1fr) 24px;
+  align-items: center;
+  gap: 16px;
+  padding: 23px 25px;
+  cursor: pointer;
+  list-style: none;
+  user-select: none;
+}
+
+.aja-question__summary::-webkit-details-marker {
+  display: none;
+}
+
+.aja-question__summary::marker {
+  display: none;
+  content: "";
+}
+
+.aja-question__summary:hover {
+  background: #fafcff;
+}
+
+.aja-question__number {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 46px;
+  height: 34px;
+  border-radius: 9px;
+  color: var(--aja-blue);
+  background: var(--aja-light-blue);
+  font-size: 13px;
+  font-weight: 800;
+  letter-spacing: 0.05em;
+}
+
+.aja-question__title {
+  color: var(--aja-navy);
+  font-size: 17px;
+  font-weight: 700;
+  line-height: 1.55;
+}
+
+.aja-question__toggle {
+  position: relative;
+  width: 22px;
+  height: 22px;
+}
+
+.aja-question__toggle::before,
+.aja-question__toggle::after {
+  content: "";
+  position: absolute;
+  top: 10px;
+  left: 3px;
+  width: 16px;
+  height: 2px;
+  border-radius: 2px;
+  background: var(--aja-blue);
+  transition: transform 0.25s ease;
+}
+
+.aja-question__toggle::after {
+  transform: rotate(90deg);
+}
+
+.aja-question[open] .aja-question__toggle::after {
+  transform: rotate(0deg);
+}
+
+.aja-question[open] .aja-question__summary {
+  border-bottom: 1px solid #e7edf5;
+  background: #f8fbff;
+}
+
+.aja-question__answer {
+  padding: 27px 34px 32px 93px;
+  animation: aja-fade-in 0.25s ease;
+}
+
+.aja-question__answer p {
+  margin: 0 0 1.4em;
+}
+
+.aja-question__answer p:last-child {
+  margin-bottom: 0;
+}
+
+@keyframes aja-fade-in {
+  from {
+    opacity: 0;
+    transform: translateY(-4px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* 引用 */
+
+.aja-quote {
+  position: relative;
+  margin: 28px 0;
+  padding: 23px 28px 23px 32px;
+  border: 0;
+  border-left: 4px solid var(--aja-blue);
+  border-radius: 0 12px 12px 0;
+  color: var(--aja-navy);
+  background: #f3f7fd;
+  font-size: 18px;
+  font-weight: 700;
+  line-height: 1.8;
+}
+
+.aja-quote::before {
+  content: "“";
+  position: absolute;
+  top: -15px;
+  right: 18px;
+  color: rgba(36, 104, 216, 0.12);
+  font-family: Georgia, serif;
+  font-size: 82px;
+  line-height: 1;
+}
+
+/* 締め */
+
+.aja-thanks {
+  margin: 45px 0;
+  color: var(--aja-muted);
+  text-align: center;
+  font-size: 15px;
+  font-weight: 600;
+}
+
+/* CTA */
+
+.aja-cta {
+  position: relative;
+  overflow: hidden;
+  padding: 48px 30px;
+  border-radius: 18px;
+  color: #ffffff;
+  background:
+    radial-gradient(
+      circle at 100% 0,
+      rgba(74, 145, 255, 0.42),
+      transparent 38%
+    ),
+    linear-gradient(135deg, #121c30 0%, #1b3768 100%);
+  text-align: center;
+  box-shadow: 0 16px 38px rgba(20, 44, 82, 0.18);
+}
+
+.aja-cta::after {
+  content: "";
+  position: absolute;
+  right: -70px;
+  bottom: -110px;
+  width: 230px;
+  height: 230px;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 50%;
+}
+
+.aja-cta__eyebrow {
+  position: relative;
+  z-index: 1;
+  color: #8fbcff;
+}
+
+.aja-cta__title {
+  position: relative;
+  z-index: 1;
+  margin: 9px 0 15px;
+  color: #ffffff;
+  font-size: 28px;
+  font-weight: 800;
+  line-height: 1.5;
+}
+
+.aja-cta__text {
+  position: relative;
+  z-index: 1;
+  margin: 0 0 25px;
+  color: rgba(255, 255, 255, 0.78);
+  font-size: 14px;
+  line-height: 1.8;
+}
+
+.aja-cta__button {
+  position: relative;
+  z-index: 1;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 13px;
+  min-width: 310px;
+  padding: 15px 25px;
+  border-radius: 999px;
+  color: var(--aja-blue) !important;
+  background: #ffffff;
+  font-size: 15px;
+  font-weight: 800;
+  text-decoration: none !important;
+  box-shadow: 0 9px 22px rgba(0, 0, 0, 0.18);
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.aja-cta__button:hover {
+  color: var(--aja-blue) !important;
+  text-decoration: none !important;
+  transform: translateY(-2px);
+  box-shadow: 0 13px 28px rgba(0, 0, 0, 0.22);
+}
+
+.aja-cta__note {
+  position: relative;
+  z-index: 1;
+  margin: 13px 0 0;
+  color: rgba(255, 255, 255, 0.63);
+  font-size: 12px;
+}
+
+.aja-sp-only {
+  display: none;
+}
+
+/* スマートフォン */
+
+@media (max-width: 640px) {
+  .aja-interview {
+    padding-top: 8px;
+    font-size: 15px;
+  }
+
+  .aja-hero {
+    padding: 42px 25px;
+    border-radius: 14px;
+  }
+
+  .aja-hero__title {
+    font-size: 28px;
+  }
+
+  .aja-hero__name {
+    font-size: 19px;
+  }
+
+  .aja-hero__lead {
+    margin-top: 22px;
+    font-size: 14px;
+  }
+
+  .aja-service {
+    margin: 25px 0 34px;
+    padding: 25px 22px;
+    border-radius: 13px;
+  }
+
+  .aja-service__heading {
+    align-items: flex-start;
+    gap: 13px;
+  }
+
+  .aja-service__icon {
+    width: 40px;
+    height: 40px;
+    border-radius: 11px;
+    font-size: 18px;
+  }
+
+  .aja-service__title {
+    font-size: 18px;
+  }
+
+  .aja-question__summary {
+    grid-template-columns: 41px minmax(0, 1fr) 20px;
+    gap: 11px;
+    padding: 19px 16px;
+  }
+
+  .aja-question__number {
+    width: 39px;
+    height: 30px;
+    font-size: 12px;
+  }
+
+  .aja-question__title {
+    font-size: 15px;
+  }
+
+  .aja-question__answer {
+    padding: 23px 20px 27px;
+  }
+
+  .aja-quote {
+    padding: 20px 21px;
+    font-size: 16px;
+  }
+
+  .aja-cta {
+    padding: 40px 20px;
+    border-radius: 14px;
+  }
+
+  .aja-cta__title {
+    font-size: 23px;
+  }
+
+  .aja-cta__button {
+    box-sizing: border-box;
+    width: 100%;
+    min-width: 0;
+    padding-right: 18px;
+    padding-left: 18px;
+    font-size: 14px;
+  }
+
+  .aja-sp-only {
+    display: block;
+  }
+
+  .aja-pc-only {
+    display: none;
+  }
+}
+
+/* ========================================
+   コンパクト表示
+======================================== */
+
+.aja-interview {
+  max-width: 780px;
+  padding: 10px 0 42px;
+  font-size: 15px;
+  line-height: 1.8;
+}
+
+/* ヘッダー */
+
+.aja-hero {
+  padding: 38px 42px;
+  border-radius: 16px;
+}
+
+.aja-hero__label {
+  margin-bottom: 10px;
+  font-size: 10px;
+}
+
+.aja-hero__title {
+  font-size: 34px;
+  line-height: 1.3;
+}
+
+.aja-hero__name {
+  margin: 7px 0 12px;
+  font-size: 19px;
+}
+
+.aja-hero__name-link {
+  color: #ffffff !important;
+  text-decoration: none !important;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.55);
+  transition:
+    border-color 0.2s ease,
+    opacity 0.2s ease;
+}
+
+.aja-hero__name-link:hover {
+  color: #ffffff !important;
+  border-bottom-color: #ffffff;
+  opacity: 0.8;
+}
+
+.aja-rating {
+  padding: 5px 11px;
+  font-size: 12px;
+  cursor: default;
+}
+
+.aja-hero__lead {
+  max-width: 620px;
+  margin-top: 18px;
+  font-size: 14px;
+  line-height: 1.75;
+}
+
+/* サービス紹介 */
+
+.aja-service {
+  margin: 24px 0;
+  padding: 21px 25px;
+  border-radius: 13px;
+}
+
+.aja-service__heading {
+  gap: 12px;
+}
+
+.aja-service__icon {
+  width: 38px;
+  height: 38px;
+  border-radius: 10px;
+  font-size: 17px;
+}
+
+.aja-service__title {
+  font-size: 18px;
+}
+
+.aja-service__text {
+  margin: 13px 0 9px;
+  font-size: 14px;
+  line-height: 1.75;
+}
+
+.aja-service__link {
+  font-size: 13px;
+}
+
+/* 開閉案内 */
+
+.aja-guide {
+  margin: 28px 0 11px;
+  font-size: 12px;
+}
+
+/* 質問 */
+
+.aja-questions {
+  gap: 10px;
+}
+
+.aja-question {
+  border-radius: 11px;
+}
+
+.aja-question__summary {
+  grid-template-columns: 43px minmax(0, 1fr) 20px;
+  gap: 12px;
+  padding: 17px 20px;
+}
+
+.aja-question__number {
+  width: 40px;
+  height: 29px;
+  border-radius: 7px;
+  font-size: 11px;
+}
+
+.aja-question__title {
+  font-size: 15px;
+  line-height: 1.5;
+}
+
+.aja-question__toggle {
+  width: 20px;
+  height: 20px;
+}
+
+.aja-question__toggle::before,
+.aja-question__toggle::after {
+  top: 9px;
+  width: 14px;
+}
+
+.aja-question__answer {
+  padding: 20px 27px 23px 75px;
+}
+
+.aja-question__answer p {
+  margin-bottom: 1.1em;
+}
+
+.aja-quote {
+  margin: 20px 0;
+  padding: 17px 22px 17px 25px;
+  font-size: 16px;
+  line-height: 1.7;
+}
+
+/* 締め・申込み */
+
+.aja-thanks {
+  margin: 28px 0;
+  font-size: 14px;
+}
+
+.aja-cta {
+  padding: 34px 25px;
+  border-radius: 15px;
+}
+
+.aja-cta__title {
+  margin: 6px 0 10px;
+  font-size: 23px;
+}
+
+.aja-cta__text {
+  margin-bottom: 18px;
+  font-size: 13px;
+}
+
+.aja-cta__button {
+  min-width: 290px;
+  padding: 12px 22px;
+  font-size: 14px;
+}
+
+.aja-cta__note {
+  margin-top: 8px;
+  font-size: 11px;
+}
+
+/* スマートフォン */
+
+@media (max-width: 640px) {
+  .aja-interview {
+    font-size: 14px;
+  }
+
+  .aja-hero {
+    padding: 30px 21px;
+    border-radius: 12px;
+  }
+
+  .aja-hero__title {
+    font-size: 25px;
+  }
+
+  .aja-hero__name {
+    font-size: 17px;
+  }
+
+  .aja-hero__lead {
+    margin-top: 16px;
+    font-size: 13px;
+  }
+
+  .aja-service {
+    padding: 19px 18px;
+  }
+
+  .aja-question__summary {
+    grid-template-columns: 37px minmax(0, 1fr) 18px;
+    gap: 9px;
+    padding: 15px 13px;
+  }
+
+  .aja-question__number {
+    width: 35px;
+    height: 27px;
+  }
+
+  .aja-question__title {
+    font-size: 14px;
+  }
+
+  .aja-question__answer {
+    padding: 18px 17px 21px;
+  }
+
+  .aja-quote {
+    margin: 17px 0;
+    padding: 15px 17px;
+    font-size: 15px;
+  }
+
+  .aja-cta {
+    padding: 30px 18px;
+  }
+
+  .aja-cta__title {
+    font-size: 21px;
+  }
+}</style>
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	<script src="//img.atcoder.jp/public/7e7ac38/js/base.js"></script>
+</head>
+
+<body>
+
+<div id="modal-contest-start" class="modal fade" tabindex="-1" role="dialog">
+	<div class="modal-dialog" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+				<h4 class="modal-title">コンテスト開始</h4>
+			</div>
+			<div class="modal-body">
+				<p>AtCoder Beginner Contest 478が開始されました。</p>
+			</div>
+			<div class="modal-footer">
+				
+					<a class="btn btn-primary" href='/contests/abc478/tasks'>問題一覧ページへ移動</a>
+				
+			</div>
+		</div>
+	</div>
+</div>
+<div id="modal-contest-end" class="modal fade" tabindex="-1" role="dialog">
+	<div class="modal-dialog" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+				<h4 class="modal-title">コンテスト終了</h4>
+			</div>
+			<div class="modal-body">
+				<p>AtCoder Beginner Contest 478は終了しました。</p>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-default" data-dismiss="modal">閉じる</button>
+			</div>
+		</div>
+	</div>
+</div>
+<div id="main-div" class="float-container">
+
+
+	<nav class="navbar navbar-inverse navbar-fixed-top">
+		<div class="container-fluid">
+			<div class="navbar-header">
+				<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapse" aria-expanded="false">
+					<span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span>
+				</button>
+				<a class="navbar-brand" href="/home"></a>
+			</div>
+			<div class="collapse navbar-collapse" id="navbar-collapse">
+				<ul class="nav navbar-nav">
+				
+					<li><a class="contest-title" href="/contests/abc478">AtCoder Beginner Contest 478</a></li>
+				
+				</ul>
+				<ul class="nav navbar-nav navbar-right">
+					
+					<li class="dropdown">
+						<a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
+							<img src='//img.atcoder.jp/assets/top/img/flag-lang/ja.png'> 日本語 <span class="caret"></span>
+						</a>
+						<ul class="dropdown-menu">
+							<li><a href="/contests/abc478/tasks?lang=ja"><img src='//img.atcoder.jp/assets/top/img/flag-lang/ja.png'> 日本語</a></li>
+							<li><a href="/contests/abc478/tasks?lang=en"><img src='//img.atcoder.jp/assets/top/img/flag-lang/en.png'> English</a></li>
+						</ul>
+					</li>
+					
+					
+						<li class="dropdown">
+							<a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
+								<span class="glyphicon glyphicon-cog" aria-hidden="true"></span> yamate11 (Contestant) <span class="caret"></span>
+							</a>
+							<ul class="dropdown-menu">
+								<li><a href="/users/yamate11"><span class="glyphicon glyphicon-user" aria-hidden="true"></span> マイプロフィール</a></li>
+								<li class="divider"></li>
+								<li><a href="/settings"><span class="glyphicon glyphicon-wrench" aria-hidden="true"></span> 基本設定</a></li>
+								<li><a href="/settings/icon"><span class="glyphicon glyphicon-picture" aria-hidden="true"></span> アイコン設定</a></li>
+								<li><a href="/settings/password"><span class="glyphicon glyphicon-lock" aria-hidden="true"></span> パスワードの変更</a></li>
+								<li><a href="/settings/fav"><span class="glyphicon glyphicon-star" aria-hidden="true"></span> お気に入り管理</a></li>
+								
+								
+								
+								<li class="divider"></li>
+								<li><a href="javascript:void(form_logout.submit())"><span class="glyphicon glyphicon-log-out" aria-hidden="true"></span> ログアウト</a></li>
+							</ul>
+						</li>
+					
+				</ul>
+			</div>
+		</div>
+	</nav>
+
+	<form method="POST" name="form_logout" action="/logout?continue=https%3A%2F%2Fatcoder.jp%2Fcontests%2Fabc478%2Ftasks">
+		<input type="hidden" name="csrf_token" value="AapGcs&#43;m6IwzooLm3xaWeJUYR8j0cbaTCHgxhhUVYsw=" />
+	</form>
+	<div id="main-container" class="container"
+		 	style="padding-top:50px;">
+		
+
+
+<div class="row">
+	<div id="contest-nav-tabs" class="col-sm-12 mb-2 cnvtb-fixed">
+	<div>
+		<small class="contest-duration">
+			
+				コンテスト時間:
+				<a href='http://www.timeanddate.com/worldclock/fixedtime.html?iso=20261003T2100&p1=248' target='blank'><time class='fixtime fixtime-full'>2026-10-03 21:00:00+0900</time></a> ~ <a href='http://www.timeanddate.com/worldclock/fixedtime.html?iso=20261003T2240&p1=248' target='blank'><time class='fixtime fixtime-full'>2026-10-03 22:40:00+0900</time></a> 
+				(100分)
+			
+		</small>
+		<small class="back-to-home pull-right"><a href="/home">AtCoderホームへ戻る</a></small>
+	</div>
+	<ul class="nav nav-tabs">
+		<li><a href="/contests/abc478"><span class="glyphicon glyphicon-home" aria-hidden="true"></span> トップ</a></li>
+		
+			<li class="active"><a href="/contests/abc478/tasks"><span class="glyphicon glyphicon-tasks" aria-hidden="true"></span> 問題</a></li>
+		
+
+		
+			<li><a href="/contests/abc478/clarifications"><span class="glyphicon glyphicon-question-sign" aria-hidden="true"></span> 質問 <span id="clar-badge" class="badge" ></span></a></li>
+		
+
+		
+			<li><a href="/contests/abc478/submit"><span class="glyphicon glyphicon-send" aria-hidden="true"></span> 提出</a></li>
+		
+
+		
+			<li>
+				<a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false"><span class="glyphicon glyphicon-list" aria-hidden="true"></span> 提出結果<span class="caret"></span></a>
+				<ul class="dropdown-menu">
+					
+					
+						<li><a href="/contests/abc478/submissions/me"><span class="glyphicon glyphicon-user" aria-hidden="true"></span> 自分の提出</a></li>
+						
+						
+							<li class="divider"></li>
+							<li><a href="/contests/abc478/score"><span class="glyphicon glyphicon-dashboard" aria-hidden="true"></span> 自分の得点状況</a></li>
+						
+					
+				</ul>
+			</li>
+		
+
+		
+			
+				
+					<li><a href="/contests/abc478/standings"><span class="glyphicon glyphicon-sort-by-attributes-alt" aria-hidden="true"></span> 順位表</a></li>
+				
+			
+		
+
+		
+			<li><a href="/contests/abc478/custom_test"><span class="glyphicon glyphicon-wrench" aria-hidden="true"></span> コードテスト</a></li>
+		
+
+		
+		
+
+		<li class="pull-right"><a id="fix-cnvtb" href="javascript:void(0)"><span class="glyphicon glyphicon-pushpin" aria-hidden="true"></span></a></li>
+	</ul>
+</div>
+	<div class="col-sm-12">
+		<h2>問題</h2>
+		<hr>
+		
+			<div class="panel panel-default table-responsive"><table class="table table-bordered table-striped">
+				<thead>
+					<tr>
+						<th width="3%" class="text-center"></th>
+						<th>問題名</th>
+						<th width="10%" class="text-right no-break">実行時間制限</th>
+						<th width="10%" class="text-right no-break">メモリ制限</th>
+						<th width="5%"></th>
+					</tr>
+				</thead>
+				<tbody>
+					
+						<tr>
+							<td class="text-center no-break"><a href="/contests/abc478/tasks/abc478_a">A</a></td>
+							<td><a href="/contests/abc478/tasks/abc478_a">Grapes</a></td>
+							<td class="text-right">2 sec</td>
+							<td class="text-right">1024 MiB</td>
+							
+								<td class="no-break text-center">
+									
+										<a href="/contests/abc478/submit?taskScreenName=abc478_a">提出</a>
+									
+									
+								</td>
+							
+						</tr>
+					
+						<tr>
+							<td class="text-center no-break"><a href="/contests/abc478/tasks/abc478_b">B</a></td>
+							<td><a href="/contests/abc478/tasks/abc478_b">Topping</a></td>
+							<td class="text-right">2 sec</td>
+							<td class="text-right">1024 MiB</td>
+							
+								<td class="no-break text-center">
+									
+										<a href="/contests/abc478/submit?taskScreenName=abc478_b">提出</a>
+									
+									
+								</td>
+							
+						</tr>
+					
+						<tr>
+							<td class="text-center no-break"><a href="/contests/abc478/tasks/abc478_c">C</a></td>
+							<td><a href="/contests/abc478/tasks/abc478_c">Sort Subarray</a></td>
+							<td class="text-right">2 sec</td>
+							<td class="text-right">1024 MiB</td>
+							
+								<td class="no-break text-center">
+									
+										<a href="/contests/abc478/submit?taskScreenName=abc478_c">提出</a>
+									
+									
+								</td>
+							
+						</tr>
+					
+						<tr>
+							<td class="text-center no-break"><a href="/contests/abc478/tasks/abc478_d">D</a></td>
+							<td><a href="/contests/abc478/tasks/abc478_d">Range Set Insertion Query</a></td>
+							<td class="text-right">2 sec</td>
+							<td class="text-right">1024 MiB</td>
+							
+								<td class="no-break text-center">
+									
+										<a href="/contests/abc478/submit?taskScreenName=abc478_d">提出</a>
+									
+									
+								</td>
+							
+						</tr>
+					
+						<tr>
+							<td class="text-center no-break"><a href="/contests/abc478/tasks/abc478_e">E</a></td>
+							<td><a href="/contests/abc478/tasks/abc478_e">lt and le</a></td>
+							<td class="text-right">2 sec</td>
+							<td class="text-right">1024 MiB</td>
+							
+								<td class="no-break text-center">
+									
+										<a href="/contests/abc478/submit?taskScreenName=abc478_e">提出</a>
+									
+									
+								</td>
+							
+						</tr>
+					
+						<tr>
+							<td class="text-center no-break"><a href="/contests/abc478/tasks/abc478_f">F</a></td>
+							<td><a href="/contests/abc478/tasks/abc478_f">Min-First Search</a></td>
+							<td class="text-right">2 sec</td>
+							<td class="text-right">1024 MiB</td>
+							
+								<td class="no-break text-center">
+									
+										<a href="/contests/abc478/submit?taskScreenName=abc478_f">提出</a>
+									
+									
+								</td>
+							
+						</tr>
+					
+						<tr>
+							<td class="text-center no-break"><a href="/contests/abc478/tasks/abc478_g">G</a></td>
+							<td><a href="/contests/abc478/tasks/abc478_g">Division Point Hull</a></td>
+							<td class="text-right">4 sec</td>
+							<td class="text-right">1024 MiB</td>
+							
+								<td class="no-break text-center">
+									
+										<a href="/contests/abc478/submit?taskScreenName=abc478_g">提出</a>
+									
+									
+								</td>
+							
+						</tr>
+					
+				</tbody>
+			</table></div>
+		
+		<p class="btn-text-group">
+			
+			
+				
+					<a class="btn-text" href="/contests/abc478/score">自分の得点状況</a>
+					<span class="divider"></span>
+				
+			
+			<a class="btn-text" href="/contests/abc478/tasks_print">印刷用問題文</a>
+		</p>
+		
+		
+
+
+		
+<hr>
+<h1 class="text-center">Sponsored by</h1>
+<div class="row sponsor_banners">
+	
+		<div class="col-sm-12 text-center">
+			
+				<a class="ads-tracking sponsor_banner_3" data-ads-segment="sponsor_banner" href="https://www.future.co.jp/recruit/?utm_source=atcoder&amp;utm_medium=referral&amp;utm_campaign=yearly&amp;utm_content=sponsorlogo" target="_blank">
+					<img src="https://img.atcoder.jp/img/future2023.png">
+				</a>
+			
+		</div>
+	
+		<div class="col-sm-12 text-center">
+			
+				<a class="ads-tracking sponsor_banner_5" data-ads-segment="sponsor_banner" href="https://atcoder.jp/posts/799" target="_blank">
+					<img src="https://img.atcoder.jp/file/6a9bfb2f9c3723943e4a2c02015619fb.png">
+				</a>
+			
+		</div>
+	
+</div>
+
+	</div>
+</div>
+
+
+
+
+		
+			<hr>
+			
+			
+			
+<div class="a2a_kit a2a_kit_size_20 a2a_default_style pull-right" data-a2a-url="https://atcoder.jp/contests/abc478/tasks?lang=ja" data-a2a-title="問題 - AtCoder Beginner Contest 478">
+	<a class="a2a_button_facebook"></a>
+	<a class="a2a_button_twitter"></a>
+	
+		<a class="a2a_button_hatena"></a>
+	
+	<a class="a2a_dd" href="https://www.addtoany.com/share"></a>
+</div>
+
+		
+		<script async src="//static.addtoany.com/menu/page.js"></script>
+		
+	</div> 
+	<hr>
+</div> 
+
+	<div class="container" style="margin-bottom: 80px;">
+			<footer class="footer">
+			
+				<ul>
+					<li><a href="/contests/abc478/rules">ルール</a></li>
+					<li><a href="/contests/abc478/glossary">用語集</a></li>
+					
+				</ul>
+			
+			<ul>
+				<li><a href="/tos">利用規約</a></li>
+				<li><a href="/privacy">プライバシーポリシー</a></li>
+				<li><a href="/personal">個人情報保護方針</a></li>
+				<li><a href="/company">企業情報</a></li>
+				<li><a href="/faq">よくある質問</a></li>
+				<li><a href="/contact">お問い合わせ</a></li>
+				<li><a href="/documents/request">資料請求</a></li>
+			</ul>
+			<div class="text-center">
+					<small id="copyright">Copyright Since 2012 &copy;<a href="http://atcoder.co.jp">AtCoder Inc.</a> All rights reserved.</small>
+			</div>
+			</footer>
+	</div>
+	<p id="fixed-server-timer" class="contest-timer"></p>
+	<div id="scroll-page-top" style="display:none;"><span class="glyphicon glyphicon-arrow-up" aria-hidden="true"></span> ページトップ</div>
+
+</body>
+</html>
+
+

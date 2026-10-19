@@ -216,26 +216,26 @@ struct formatter<FpG<mod, INT, dyn_id>> : formatter<INT>  {
 };
 
 template<typename T>
-class Comb {
-  int nMax;
+struct Comb {
+  ll nMax;
   vector<T> vFact;
   vector<T> vInvFact;
-public:
-  Comb(int nm) : nMax(nm), vFact(nm+1), vInvFact(nm+1) {
+
+  Comb(ll nm) : nMax(nm), vFact(nm+1), vInvFact(nm+1) {
     vFact[0] = 1;
-    for (int i = 1; i <= nMax; i++) vFact[i] = i * vFact[i-1];
+    for (ll i = 1; i <= nMax; i++) vFact[i] = (T)i * vFact[i-1];
     vInvFact.at(nMax) = (T)1 / vFact[nMax];
-    for (int i = nMax; i >= 1; i--) vInvFact[i-1] = i * vInvFact[i];
+    for (ll i = nMax; i >= 1; i--) vInvFact[i-1] = (T)i * vInvFact[i];
   }
-  T fact(int n) { return vFact[n]; }
-  T inv_fact(int n) { return vInvFact[n]; }
-  T binom(int n, int r) {
+  T fact(ll n) const { return vFact[n]; }
+  T inv_fact(ll n) const { return vInvFact[n]; }
+  T binom(ll n, ll r) const {
     if (r < 0 || r > n) return (T)0;
     return vFact[n] * vInvFact[r] * vInvFact[n-r];
   }
-  T binom_dup(int n, int r) { return binom(n + r - 1, r); }
+  T binom_dup(ll n, ll r) const { return binom(n + r - 1, r); }
   // The number of permutation extracting r from n.
-  T perm(int n, int r) {
+  T perm(ll n, ll r) const {
     return vFact[n] * vInvFact[n-r];
   }
 };
@@ -463,7 +463,7 @@ ll llsqrt(ll a) {
 
 // a >= 0, m >= 2;  Returns x s.t. x^m <= a < (x + 1)^m
 ll llroot(ll a, ll m) {
-  ll x = llround(pow(a, 1.0 / m));
+  ll x = llround(pow(a, 1.0 / (double)m));
   ll y = llpower(x, m);
   if (y == -1 or a < y) return x - 1;
   else return x;
@@ -606,13 +606,13 @@ int prim_root = mod > 0 ? ac_primitive_root_constexpr(mod) : 0;
 template<int mod>
 int cv_get_mod() {
   if (mod > 0) return mod;
-  else return FpG<mod>::getMod();
+  else return (int)FpG<mod>::getMod();
 }
 
 template<int mod>
 int cv_get_primitive_root() {
   if (mod > 0) return prim_root<mod>;
-  else return ac_primitive_root_constexpr(FpG<mod>::getMod());
+  else return ac_primitive_root_constexpr((int)FpG<mod>::getMod());
 }
 
 
@@ -985,8 +985,8 @@ ostream& operator<<(ostream& ostr, unsigned __int128 x) {
   if (x == 0) return ostr << "0";
   string s;
   while (x > 0) {
-    int d = x % 10;
-    s.push_back('0' + d);
+    int d = (int)(x % 10);
+    s.push_back((char)('0' + d));
     x /= 10;
   }
   reverse(s.begin(), s.end());

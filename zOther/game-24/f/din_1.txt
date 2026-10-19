@@ -1,0 +1,7 @@
+3
+3
+ABC
+4
+AAAA
+10
+AACBACBABC

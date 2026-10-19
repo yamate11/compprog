@@ -161,8 +161,8 @@ ostream& operator<<(ostream& ostr, unsigned __int128 x) {
   if (x == 0) return ostr << "0";
   string s;
   while (x > 0) {
-    int d = x % 10;
-    s.push_back('0' + d);
+    int d = (int)(x % 10);
+    s.push_back((char)('0' + d));
     x /= 10;
   }
   reverse(s.begin(), s.end());
@@ -402,26 +402,26 @@ struct formatter<FpG<mod, INT, dyn_id>> : formatter<INT>  {
 };
 
 template<typename T>
-class Comb {
-  int nMax;
+struct Comb {
+  ll nMax;
   vector<T> vFact;
   vector<T> vInvFact;
-public:
-  Comb(int nm) : nMax(nm), vFact(nm+1), vInvFact(nm+1) {
+
+  Comb(ll nm) : nMax(nm), vFact(nm+1), vInvFact(nm+1) {
     vFact[0] = 1;
-    for (int i = 1; i <= nMax; i++) vFact[i] = i * vFact[i-1];
+    for (ll i = 1; i <= nMax; i++) vFact[i] = (T)i * vFact[i-1];
     vInvFact.at(nMax) = (T)1 / vFact[nMax];
-    for (int i = nMax; i >= 1; i--) vInvFact[i-1] = i * vInvFact[i];
+    for (ll i = nMax; i >= 1; i--) vInvFact[i-1] = (T)i * vInvFact[i];
   }
-  T fact(int n) { return vFact[n]; }
-  T inv_fact(int n) { return vInvFact[n]; }
-  T binom(int n, int r) {
+  T fact(ll n) const { return vFact[n]; }
+  T inv_fact(ll n) const { return vInvFact[n]; }
+  T binom(ll n, ll r) const {
     if (r < 0 || r > n) return (T)0;
     return vFact[n] * vInvFact[r] * vInvFact[n-r];
   }
-  T binom_dup(int n, int r) { return binom(n + r - 1, r); }
+  T binom_dup(ll n, ll r) const { return binom(n + r - 1, r); }
   // The number of permutation extracting r from n.
-  T perm(int n, int r) {
+  T perm(ll n, ll r) const {
     return vFact[n] * vInvFact[n-r];
   }
 };
@@ -649,7 +649,7 @@ ll llsqrt(ll a) {
 
 // a >= 0, m >= 2;  Returns x s.t. x^m <= a < (x + 1)^m
 ll llroot(ll a, ll m) {
-  ll x = llround(pow(a, 1.0 / m));
+  ll x = llround(pow(a, 1.0 / (double)m));
   ll y = llpower(x, m);
   if (y == -1 or a < y) return x - 1;
   else return x;
@@ -792,13 +792,13 @@ int prim_root = mod > 0 ? ac_primitive_root_constexpr(mod) : 0;
 template<int mod>
 int cv_get_mod() {
   if (mod > 0) return mod;
-  else return FpG<mod>::getMod();
+  else return (int)FpG<mod>::getMod();
 }
 
 template<int mod>
 int cv_get_primitive_root() {
   if (mod > 0) return prim_root<mod>;
-  else return ac_primitive_root_constexpr(FpG<mod>::getMod());
+  else return ac_primitive_root_constexpr((int)FpG<mod>::getMod());
 }
 
 
@@ -1082,7 +1082,7 @@ public:
   }
 
   // Degree of the zero polynomial is -1.
-  int degree() const { return coef.size() - 1; }
+  ll degree() const { return (int)coef.size() - 1; }
 
   void normalize() {
     while (!coef.empty() && coef.back() == (T)0) coef.pop_back();
@@ -1121,7 +1121,7 @@ public:
   }
 
   Polynomial& operator +=(const Polynomial& o) {
-    int deg = max(degree(), o.degree());
+    ll deg = max(degree(), o.degree());
     if ((int)coef.size() < deg + 1) { coef.resize(deg + 1); }
     for (int i = 0; i <= o.degree(); i++) { coef[i] += o.coef[i]; }
     normalize();
@@ -1129,7 +1129,7 @@ public:
   }
 
   Polynomial& operator -=(const Polynomial& o) {
-    int deg = max(degree(), o.degree());
+    ll deg = max(degree(), o.degree());
     if ((int)coef.size() < deg + 1) { coef.resize(deg + 1); }
     for (int i = 0; i <= o.degree(); i++) { coef[i] -= o.coef[i]; }
     normalize();
@@ -1138,8 +1138,8 @@ public:
 
   vector<T> coef_conv(const vector<T>& a, const vector<T>& b) const {
     if (use_fft == 0) {
-      int a_size = a.size();
-      int b_size = b.size();
+      int a_size = (int)a.size();
+      int b_size = (int)b.size();
       int new_size = a_size + b_size - 1;
       auto ret = vector<T>(new_size);
       for (int i = 0; i < new_size; i++) {
@@ -1185,15 +1185,15 @@ public:
     return ret;
   }
 
-  Polynomial& selfCutoff(int deg) {
+  Polynomial& selfCutoff(ll deg) {
     if (degree() <= deg) return *this;
     coef.resize(deg + 1);
     normalize();
     return *this;
   }
 
-  Polynomial cutoff(int deg) const {
-    int new_deg = min(deg, degree());
+  Polynomial cutoff(ll deg) const {
+    ll new_deg = min(deg, degree());
     vector<T> new_coef(new_deg + 1);
     for (int i = 0; i <= new_deg; i++) new_coef[i] = coef[i];
     return Polynomial(move(new_coef));
@@ -1223,16 +1223,16 @@ public:
   //   - T is a field, or
   //   - the coefficient of the highest degree of q is (T)1.
   pair<Polynomial, Polynomial> divmod(const Polynomial& q) const {
-    int this_deg = degree();
-    int q_deg = q.degree();
+    ll this_deg = degree();
+    ll q_deg = q.degree();
     if (q_deg == 0) {
       vector<T> new_coef(coef);
       for (ll i = 0; i <= this_deg; i++) { new_coef[i] /= q.coef[0]; }
       return {Polynomial(move(new_coef)), Polynomial()};
     }
-    int div_deg = this_deg - q_deg;
+    ll div_deg = this_deg - q_deg;
     if (div_deg < 0) { return { (T)0, *this }; }
-    int mod_deg = q_deg - 1;
+    ll mod_deg = q_deg - 1;
     vector<T> div_coef(div_deg + 1);
     vector<T> mod_coef(coef);
     DLOGK_LIB(div_deg, mod_deg);
@@ -1254,9 +1254,9 @@ public:
      also https://nyaannyaan.github.io/library/fps/ntt-friendly-fps.hpp
    */
   // This works, but very slow.   (Library Checker: 334ms)
-  Polynomial inverse(int n) const {  
+  Polynomial inverse(ll n) const {  
     Polynomial g{(T)1 / coef[0]};
-    ll k = 1;
+    int k = 1;
     while (n >= k) {
       g = (g * 2 - g * g * cutoff(2 * k - 1)).cutoff(2 * k - 1);
       k = 2 * k;
@@ -1265,7 +1265,7 @@ public:
     return g;
   }
 
-  Polynomial divide(const Polynomial& q, int n) const { return ((*this) * q.inverse(n)).selfCutoff(n); }
+  Polynomial divide(const Polynomial& q, ll n) const { return ((*this) * q.inverse(n)).selfCutoff(n); }
 
   T subBostanMori(const Polynomial& o, ll n) const {
     auto rev = [](vector<T> &f) -> void {
@@ -1287,7 +1287,7 @@ public:
     rev(q_rev);
     for (; n; n >>= 1) {
       p = coef_conv(move(p), q_rev);
-      shift(p, n % 2);
+      shift(p, (int)n % 2);
       q = coef_conv(move(q), move(q_rev));
       shift(q, 0);
       q_rev = q; rev(q_rev);
@@ -1296,6 +1296,30 @@ public:
   }
 
   friend T bostanMori(const Polynomial& p, const Polynomial& q, ll n) { return p.subBostanMori(q, n); }
+
+  Polynomial taylorShift(T c, const auto& cb) const {
+    ll d = degree();
+    if (d <= 0) return *this;
+    vector<T> x(d + 1), y(d + 1);
+    T cpow = 1;
+    for (int i = 0; i < d + 1; i++) {
+      x[d - i] = cb.fact(i) * getCoef(i);
+      y[i] = cpow * cb.inv_fact(i);
+      cpow *= c;
+    }
+    auto z = convolution(move(x), move(y));
+    z.resize(d + 1);
+    vector<T> g(d + 1);
+    for (int i = 0; i < d + 1; i++) g[i] = z[d - i] * cb.inv_fact(i);
+    return Polynomial(move(g));
+  }
+  Polynomial taylorShift(T c) const {
+    if (degree() <= 0) return *this;
+    Comb<T> cb(degree());
+    return taylorShift(c, cb);
+  }
+  
+
 
   Polynomial differential() const {
     if (coef.empty()) return Polynomial();
@@ -1312,13 +1336,13 @@ public:
   }
 
   // This works, but very slow.   (Library Checker: 454ms)
-  Polynomial log(int n) const {
+  Polynomial log(ll n) const {
     if (coef[0] != 1) throw runtime_error("polynomial: log: coef[0] must be one.");
     return differential().divide(*this, n).integral();
   }
 
   // This works, but very slow.   (Library Checker: 975ms)
-  Polynomial exp(int n) const {
+  Polynomial exp(ll n) const {
     if (coef[0] != 0) throw runtime_error("polynomial: exp: coef[0] must be zero.");
     Polynomial g((T)1);
     ll k = 1;
@@ -1366,10 +1390,10 @@ public:
     return *this;
   }
 
-  Polynomial& selfMult(const SP& o, int lim = -1) {
+  Polynomial& selfMult(const SP& o, ll lim = -1) {
     if (coef.empty()) return *this;
     if (o.coef.empty()) { coef.resize(0); return *this; }
-    int dd = degree() + o.degree();
+    ll dd = degree() + o.degree();
     if (lim < 0 || dd < lim) lim = dd;
     auto old_coef = move(coef);
     coef = vector<T>(lim + 1);
@@ -1382,7 +1406,7 @@ public:
     return *this;
   }
 
-  Polynomial mult(const SP& o, int lim = -1) const {
+  Polynomial mult(const SP& o, ll lim = -1) const {
     Polynomial p(*this);
     return p.selfMult(o, lim);
   }
@@ -1390,7 +1414,7 @@ public:
   Polynomial& operator *=(const SP& o) { return selfMult(o, -1); }
 
   // the constant term of o should have the inverse.
-  Polynomial& selfDivide(const SP& o, int lim = -1) {
+  Polynomial& selfDivide(const SP& o, ll lim = -1) {
     if (o.coef.empty()) throw runtime_error("selfDivide: o.coef.empty");
     auto [i, t0] = o.coef.front();
     if (i != 0) throw runtime_error("selfDivide: no constant factor");
@@ -1411,7 +1435,7 @@ public:
     return *this;
   }
 
-  Polynomial divide(const SP& o, int lim = -1) const {
+  Polynomial divide(const SP& o, ll lim = -1) const {
     Polynomial p(*this);
     return p.selfDivide(o, lim);
   }
@@ -1429,12 +1453,10 @@ public:
     return os;
   }
 
-  static const SparsePoly<T> X;
-  static SparsePoly<T> Xn(int n) { return SparsePoly<T>::Xn(n); }
+  static Polynomial X() { return Polynomial(vector<T>{0, 1}); }
+  static Polynomial Xn(ll n) { return (Polynomial)(SparsePoly<T>::Xn(n)); }
 
 };
-template<typename T, int use_fft>
-const SparsePoly<T> Polynomial<T, use_fft>::X({{1,1}});
 
 
 template<typename T>
@@ -1446,9 +1468,9 @@ struct SparsePoly {   // Sparse Polynomial
   // Thus, 0 (as polynomial) should be represented by the empty vector.
 
   // degree of 0 (as polynomial) is -1
-  int degree() const {
+  ll degree() const {
     if (coef.empty()) return -1;
-    return coef.back().first;
+    return (int)coef.back().first;
   }
   void normalize() {
     while (!coef.empty() && coef.back().second == (T)0) coef.pop_back();
@@ -1519,12 +1541,7 @@ struct SparsePoly {   // Sparse Polynomial
     else return (T)0;
   }
 
-  /*
-  static SparsePoly getX() { return SparsePoly({{1, 1}}); }
-  static SparsePoly getXn(int n) { return SparsePoly({{n, 1}}); }
-  */
-
-  coef_t _plus_minus(const coef_t& a, const coef_t& b, int flag) const {
+  coef_t _plus_minus(const coef_t& a, const coef_t& b, ll flag) const {
     coef_t ret;
     int i = 0, j = 0;
     while (true) {
@@ -1612,12 +1629,10 @@ struct SparsePoly {   // Sparse Polynomial
     return os;
   }
 
-  static const SparsePoly X;
-  static SparsePoly Xn(int n) { return SparsePoly({{n,1}}); }
+  static SparsePoly Xn(ll n) { return SparsePoly({{n,1}}); }
+  static SparsePoly X() { return Xn(1); }
 
 };
-template<typename T>
-const SparsePoly<T> SparsePoly<T>::X({{1,1}});
 
 using PolyLL = Polynomial<ll, 2>;
 using PolyFpA = Polynomial<FpA, 0>;
@@ -1781,7 +1796,7 @@ int main(/* int argc, char *argv[] */) {
 
   if (0) {
     Comb<Fp> cb(10);
-    Poly X = Poly::X;
+    Poly X = Poly::X();
     Poly f = X*X + 4 * X + 1;
     // Poly f = X * X;
     auto g = pts(f, 2, cb);
@@ -1797,12 +1812,12 @@ int main(/* int argc, char *argv[] */) {
   }
   Comb<Fp> cb(N);
   auto calc = [&](auto rF, ll d) -> Poly {
-    if (d == 1) return Poly::X;
+    if (d == 1) return Poly::X();
     else if (d % 2 == 0) {
       auto f = rF(rF, d / 2);
       return f * pts(f, d / 2, cb);
     }else {
-      return rF(rF, d - 1) * (Poly::X + (d - 1));
+      return rF(rF, d - 1) * (Poly::X() + (d - 1));
       // return rF(rF, d - 1) * ((d - 1) * Poly::X + 1);
     }
   };

@@ -1,0 +1,1793 @@
+
+
+
+
+
+
+
+
+<!DOCTYPE html>
+<html>
+<head>
+	<title>F - Min-First Search</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+	<meta http-equiv="Content-Language" content="ja">
+	<meta name="viewport" content="width=device-width,initial-scale=1.0">
+	<meta name="format-detection" content="telephone=no">
+	<meta name="google-site-verification" content="nXGC_JxO0yoP1qBzMnYD_xgufO6leSLw1kyNo2HZltM" />
+	<meta name="robots" content="noai, noimageai">
+
+	
+	<script async src="https://www.googletagmanager.com/gtag/js?id=G-RC512FD18N"></script>
+	<script>
+		window.dataLayer = window.dataLayer || [];
+		function gtag(){dataLayer.push(arguments);}
+		gtag('js', new Date());
+		gtag('set', 'user_properties', {
+			
+				'login_status': 'logged_in',
+			
+		});
+		gtag('config', 'G-RC512FD18N');
+	</script>
+
+	
+	<meta name="description" content="プログラミング初級者から上級者まで楽しめる、競技プログラミングコンテストサイト「AtCoder」。オンラインで毎週開催プログラミングコンテストを開催しています。競技プログラミングを用いて、客観的に自分のスキルを計ることのできるサービスです。">
+	<meta name="author" content="AtCoder Inc.">
+
+	<meta property="og:site_name" content="AtCoder">
+	
+	<meta property="og:title" content="F - Min-First Search" />
+	<meta property="og:description" content="プログラミング初級者から上級者まで楽しめる、競技プログラミングコンテストサイト「AtCoder」。オンラインで毎週開催プログラミングコンテストを開催しています。競技プログラミングを用いて、客観的に自分のスキルを計ることのできるサービスです。" />
+	<meta property="og:type" content="website" />
+	<meta property="og:url" content="https://atcoder.jp/contests/abc478/tasks/abc478_f" />
+	<meta property="og:image" content="https://img.atcoder.jp/assets/atcoder.png" />
+	<meta name="twitter:card" content="summary" />
+	<meta name="twitter:site" content="@atcoder" />
+	
+	<meta property="twitter:title" content="F - Min-First Search" />
+
+	<link href="//fonts.googleapis.com/css?family=Lato:400,700" rel="stylesheet" type="text/css">
+	<link rel="stylesheet" type="text/css" href="//img.atcoder.jp/public/7e7ac38/css/bootstrap.min.css">
+	<link rel="stylesheet" type="text/css" href="//img.atcoder.jp/public/7e7ac38/css/base.css">
+	<link rel="shortcut icon" type="image/png" href="//img.atcoder.jp/assets/favicon.png">
+	<link rel="apple-touch-icon" href="//img.atcoder.jp/assets/atcoder.png">
+	<script src="//img.atcoder.jp/public/7e7ac38/js/lib/jquery-1.9.1.min.js"></script>
+	<script src="//img.atcoder.jp/public/7e7ac38/js/lib/bootstrap.min.js"></script>
+	<script src="//img.atcoder.jp/public/7e7ac38/js/cdn/js.cookie.min.js"></script>
+	<script src="//img.atcoder.jp/public/7e7ac38/js/cdn/moment.min.js"></script>
+	<script src="//img.atcoder.jp/public/7e7ac38/js/cdn/moment_js-ja.js"></script>
+	<script>
+		var LANG = "ja";
+		var userScreenName = "yamate11";
+		var csrfToken = "AapGcs+m6IwzooLm3xaWeJUYR8j0cbaTCHgxhhUVYsw="
+	</script>
+	<script src="//img.atcoder.jp/public/7e7ac38/js/utils.js"></script>
+	
+	
+		<script src="//img.atcoder.jp/public/7e7ac38/js/contest.js"></script>
+		<link href="//img.atcoder.jp/public/7e7ac38/css/contest.css" rel="stylesheet" />
+		<script>
+			var contestScreenName = "abc478";
+			var remainingText = "残り時間";
+			var countDownText = "開始まであと";
+			var startTime = moment("2026-10-03T21:00:00+09:00");
+			var endTime = moment("2026-10-03T22:40:00+09:00");
+		</script>
+		<style>/* ========================================
+   AtCoderJobsAgent User Interview
+======================================== */
+
+.aja-interview {
+  --aja-navy: #172033;
+  --aja-blue: #2468d8;
+  --aja-light-blue: #edf5ff;
+  --aja-green: #008000;
+  --aja-border: #dfe5ec;
+  --aja-text: #303846;
+  --aja-muted: #697386;
+
+  max-width: 860px;
+  margin: 0 auto;
+  padding: 20px 0 64px;
+  color: var(--aja-text);
+  font-family:
+    -apple-system,
+    BlinkMacSystemFont,
+    "Helvetica Neue",
+    "Hiragino Kaku Gothic ProN",
+    "Yu Gothic",
+    YuGothic,
+    Meiryo,
+    sans-serif;
+  font-size: 16px;
+  line-height: 1.9;
+}
+
+/* ヘッダー */
+
+.aja-hero {
+  position: relative;
+  overflow: hidden;
+  padding: 64px 56px;
+  border-radius: 20px;
+  color: #ffffff;
+  background:
+    radial-gradient(
+      circle at 90% 10%,
+      rgba(77, 148, 255, 0.45) 0,
+      rgba(77, 148, 255, 0) 34%
+    ),
+    linear-gradient(135deg, #101827 0%, #1b2f55 55%, #164c8f 100%);
+  box-shadow: 0 18px 45px rgba(20, 44, 82, 0.2);
+}
+
+.aja-hero::before {
+  content: "";
+  position: absolute;
+  top: -100px;
+  right: -80px;
+  width: 270px;
+  height: 270px;
+  border: 1px solid rgba(255, 255, 255, 0.13);
+  border-radius: 50%;
+}
+
+.aja-hero::after {
+  content: "";
+  position: absolute;
+  right: 75px;
+  bottom: -105px;
+  width: 210px;
+  height: 210px;
+  border: 1px solid rgba(255, 255, 255, 0.09);
+  border-radius: 50%;
+}
+
+.aja-hero__label {
+  position: relative;
+  z-index: 1;
+  margin-bottom: 18px;
+  color: #8dbbff;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.2em;
+}
+
+.aja-hero__title {
+  position: relative;
+  z-index: 1;
+  margin: 0;
+  color: #ffffff;
+  font-size: clamp(28px, 5vw, 44px);
+  font-weight: 800;
+  line-height: 1.35;
+  letter-spacing: 0.01em;
+}
+
+.aja-hero__name {
+  position: relative;
+  z-index: 1;
+  margin: 12px 0 16px;
+  color: #ffffff;
+  font-size: 22px;
+  font-weight: 700;
+}
+
+.aja-rating {
+  position: relative;
+  z-index: 1;
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  padding: 7px 14px;
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  border-radius: 999px;
+  color: #ffffff !important;
+  background: rgba(255, 255, 255, 0.1);
+  font-size: 13px;
+  font-weight: 600;
+  text-decoration: none !important;
+  backdrop-filter: blur(5px);
+  transition:
+    background 0.2s ease,
+    transform 0.2s ease;
+}
+
+.aja-rating:hover {
+  color: #ffffff !important;
+  background: rgba(255, 255, 255, 0.2);
+  transform: translateY(-1px);
+}
+
+.aja-rating__dot {
+  width: 10px;
+  height: 10px;
+  border: 2px solid rgba(255, 255, 255, 0.65);
+  border-radius: 50%;
+  background: var(--aja-green);
+}
+
+.aja-hero__lead {
+  position: relative;
+  z-index: 1;
+  max-width: 650px;
+  margin: 28px 0 0;
+  color: rgba(255, 255, 255, 0.82);
+  font-size: 15px;
+  line-height: 1.9;
+}
+
+/* サービス紹介 */
+
+.aja-service {
+  margin: 40px 0;
+  padding: 30px 34px;
+  border: 1px solid #d6e6fb;
+  border-radius: 16px;
+  background: linear-gradient(135deg, #f7fbff 0%, #edf5ff 100%);
+}
+
+.aja-service__heading {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.aja-service__icon {
+  display: flex;
+  flex: 0 0 auto;
+  align-items: center;
+  justify-content: center;
+  width: 46px;
+  height: 46px;
+  border-radius: 13px;
+  color: #ffffff;
+  background: var(--aja-blue);
+  font-size: 21px;
+  font-weight: 800;
+  box-shadow: 0 8px 18px rgba(36, 104, 216, 0.22);
+}
+
+.aja-service__eyebrow,
+.aja-cta__eyebrow {
+  margin: 0 0 2px;
+  color: var(--aja-blue);
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 0.18em;
+}
+
+.aja-service__title {
+  margin: 0;
+  color: var(--aja-navy);
+  font-size: 21px;
+  font-weight: 750;
+}
+
+.aja-service__text {
+  margin: 20px 0 14px;
+  font-size: 15px;
+  line-height: 1.85;
+}
+
+.aja-service__link {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--aja-blue) !important;
+  font-size: 14px;
+  font-weight: 700;
+  text-decoration: none !important;
+}
+
+.aja-service__link:hover {
+  text-decoration: underline !important;
+}
+
+/* 開閉案内 */
+
+.aja-guide {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  margin: 46px 0 16px;
+  color: var(--aja-muted);
+  font-size: 13px;
+  text-align: center;
+}
+
+.aja-guide__icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 20px;
+  height: 20px;
+  border: 1px solid var(--aja-border);
+  border-radius: 50%;
+  color: var(--aja-blue);
+  background: #ffffff;
+  font-weight: 700;
+}
+
+/* 質問 */
+
+.aja-questions {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.aja-question {
+  overflow: hidden;
+  border: 1px solid var(--aja-border);
+  border-radius: 14px;
+  background: #ffffff;
+  box-shadow: 0 5px 16px rgba(25, 39, 65, 0.05);
+  transition:
+    border-color 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.aja-question:hover {
+  border-color: #bfd1ea;
+  box-shadow: 0 8px 24px rgba(25, 39, 65, 0.08);
+}
+
+.aja-question[open] {
+  border-color: #abc8ee;
+  box-shadow: 0 10px 28px rgba(36, 104, 216, 0.1);
+}
+
+.aja-question__summary {
+  position: relative;
+  display: grid;
+  grid-template-columns: 52px minmax(0, 1fr) 24px;
+  align-items: center;
+  gap: 16px;
+  padding: 23px 25px;
+  cursor: pointer;
+  list-style: none;
+  user-select: none;
+}
+
+.aja-question__summary::-webkit-details-marker {
+  display: none;
+}
+
+.aja-question__summary::marker {
+  display: none;
+  content: "";
+}
+
+.aja-question__summary:hover {
+  background: #fafcff;
+}
+
+.aja-question__number {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 46px;
+  height: 34px;
+  border-radius: 9px;
+  color: var(--aja-blue);
+  background: var(--aja-light-blue);
+  font-size: 13px;
+  font-weight: 800;
+  letter-spacing: 0.05em;
+}
+
+.aja-question__title {
+  color: var(--aja-navy);
+  font-size: 17px;
+  font-weight: 700;
+  line-height: 1.55;
+}
+
+.aja-question__toggle {
+  position: relative;
+  width: 22px;
+  height: 22px;
+}
+
+.aja-question__toggle::before,
+.aja-question__toggle::after {
+  content: "";
+  position: absolute;
+  top: 10px;
+  left: 3px;
+  width: 16px;
+  height: 2px;
+  border-radius: 2px;
+  background: var(--aja-blue);
+  transition: transform 0.25s ease;
+}
+
+.aja-question__toggle::after {
+  transform: rotate(90deg);
+}
+
+.aja-question[open] .aja-question__toggle::after {
+  transform: rotate(0deg);
+}
+
+.aja-question[open] .aja-question__summary {
+  border-bottom: 1px solid #e7edf5;
+  background: #f8fbff;
+}
+
+.aja-question__answer {
+  padding: 27px 34px 32px 93px;
+  animation: aja-fade-in 0.25s ease;
+}
+
+.aja-question__answer p {
+  margin: 0 0 1.4em;
+}
+
+.aja-question__answer p:last-child {
+  margin-bottom: 0;
+}
+
+@keyframes aja-fade-in {
+  from {
+    opacity: 0;
+    transform: translateY(-4px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* 引用 */
+
+.aja-quote {
+  position: relative;
+  margin: 28px 0;
+  padding: 23px 28px 23px 32px;
+  border: 0;
+  border-left: 4px solid var(--aja-blue);
+  border-radius: 0 12px 12px 0;
+  color: var(--aja-navy);
+  background: #f3f7fd;
+  font-size: 18px;
+  font-weight: 700;
+  line-height: 1.8;
+}
+
+.aja-quote::before {
+  content: "“";
+  position: absolute;
+  top: -15px;
+  right: 18px;
+  color: rgba(36, 104, 216, 0.12);
+  font-family: Georgia, serif;
+  font-size: 82px;
+  line-height: 1;
+}
+
+/* 締め */
+
+.aja-thanks {
+  margin: 45px 0;
+  color: var(--aja-muted);
+  text-align: center;
+  font-size: 15px;
+  font-weight: 600;
+}
+
+/* CTA */
+
+.aja-cta {
+  position: relative;
+  overflow: hidden;
+  padding: 48px 30px;
+  border-radius: 18px;
+  color: #ffffff;
+  background:
+    radial-gradient(
+      circle at 100% 0,
+      rgba(74, 145, 255, 0.42),
+      transparent 38%
+    ),
+    linear-gradient(135deg, #121c30 0%, #1b3768 100%);
+  text-align: center;
+  box-shadow: 0 16px 38px rgba(20, 44, 82, 0.18);
+}
+
+.aja-cta::after {
+  content: "";
+  position: absolute;
+  right: -70px;
+  bottom: -110px;
+  width: 230px;
+  height: 230px;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 50%;
+}
+
+.aja-cta__eyebrow {
+  position: relative;
+  z-index: 1;
+  color: #8fbcff;
+}
+
+.aja-cta__title {
+  position: relative;
+  z-index: 1;
+  margin: 9px 0 15px;
+  color: #ffffff;
+  font-size: 28px;
+  font-weight: 800;
+  line-height: 1.5;
+}
+
+.aja-cta__text {
+  position: relative;
+  z-index: 1;
+  margin: 0 0 25px;
+  color: rgba(255, 255, 255, 0.78);
+  font-size: 14px;
+  line-height: 1.8;
+}
+
+.aja-cta__button {
+  position: relative;
+  z-index: 1;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 13px;
+  min-width: 310px;
+  padding: 15px 25px;
+  border-radius: 999px;
+  color: var(--aja-blue) !important;
+  background: #ffffff;
+  font-size: 15px;
+  font-weight: 800;
+  text-decoration: none !important;
+  box-shadow: 0 9px 22px rgba(0, 0, 0, 0.18);
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.aja-cta__button:hover {
+  color: var(--aja-blue) !important;
+  text-decoration: none !important;
+  transform: translateY(-2px);
+  box-shadow: 0 13px 28px rgba(0, 0, 0, 0.22);
+}
+
+.aja-cta__note {
+  position: relative;
+  z-index: 1;
+  margin: 13px 0 0;
+  color: rgba(255, 255, 255, 0.63);
+  font-size: 12px;
+}
+
+.aja-sp-only {
+  display: none;
+}
+
+/* スマートフォン */
+
+@media (max-width: 640px) {
+  .aja-interview {
+    padding-top: 8px;
+    font-size: 15px;
+  }
+
+  .aja-hero {
+    padding: 42px 25px;
+    border-radius: 14px;
+  }
+
+  .aja-hero__title {
+    font-size: 28px;
+  }
+
+  .aja-hero__name {
+    font-size: 19px;
+  }
+
+  .aja-hero__lead {
+    margin-top: 22px;
+    font-size: 14px;
+  }
+
+  .aja-service {
+    margin: 25px 0 34px;
+    padding: 25px 22px;
+    border-radius: 13px;
+  }
+
+  .aja-service__heading {
+    align-items: flex-start;
+    gap: 13px;
+  }
+
+  .aja-service__icon {
+    width: 40px;
+    height: 40px;
+    border-radius: 11px;
+    font-size: 18px;
+  }
+
+  .aja-service__title {
+    font-size: 18px;
+  }
+
+  .aja-question__summary {
+    grid-template-columns: 41px minmax(0, 1fr) 20px;
+    gap: 11px;
+    padding: 19px 16px;
+  }
+
+  .aja-question__number {
+    width: 39px;
+    height: 30px;
+    font-size: 12px;
+  }
+
+  .aja-question__title {
+    font-size: 15px;
+  }
+
+  .aja-question__answer {
+    padding: 23px 20px 27px;
+  }
+
+  .aja-quote {
+    padding: 20px 21px;
+    font-size: 16px;
+  }
+
+  .aja-cta {
+    padding: 40px 20px;
+    border-radius: 14px;
+  }
+
+  .aja-cta__title {
+    font-size: 23px;
+  }
+
+  .aja-cta__button {
+    box-sizing: border-box;
+    width: 100%;
+    min-width: 0;
+    padding-right: 18px;
+    padding-left: 18px;
+    font-size: 14px;
+  }
+
+  .aja-sp-only {
+    display: block;
+  }
+
+  .aja-pc-only {
+    display: none;
+  }
+}
+
+/* ========================================
+   コンパクト表示
+======================================== */
+
+.aja-interview {
+  max-width: 780px;
+  padding: 10px 0 42px;
+  font-size: 15px;
+  line-height: 1.8;
+}
+
+/* ヘッダー */
+
+.aja-hero {
+  padding: 38px 42px;
+  border-radius: 16px;
+}
+
+.aja-hero__label {
+  margin-bottom: 10px;
+  font-size: 10px;
+}
+
+.aja-hero__title {
+  font-size: 34px;
+  line-height: 1.3;
+}
+
+.aja-hero__name {
+  margin: 7px 0 12px;
+  font-size: 19px;
+}
+
+.aja-hero__name-link {
+  color: #ffffff !important;
+  text-decoration: none !important;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.55);
+  transition:
+    border-color 0.2s ease,
+    opacity 0.2s ease;
+}
+
+.aja-hero__name-link:hover {
+  color: #ffffff !important;
+  border-bottom-color: #ffffff;
+  opacity: 0.8;
+}
+
+.aja-rating {
+  padding: 5px 11px;
+  font-size: 12px;
+  cursor: default;
+}
+
+.aja-hero__lead {
+  max-width: 620px;
+  margin-top: 18px;
+  font-size: 14px;
+  line-height: 1.75;
+}
+
+/* サービス紹介 */
+
+.aja-service {
+  margin: 24px 0;
+  padding: 21px 25px;
+  border-radius: 13px;
+}
+
+.aja-service__heading {
+  gap: 12px;
+}
+
+.aja-service__icon {
+  width: 38px;
+  height: 38px;
+  border-radius: 10px;
+  font-size: 17px;
+}
+
+.aja-service__title {
+  font-size: 18px;
+}
+
+.aja-service__text {
+  margin: 13px 0 9px;
+  font-size: 14px;
+  line-height: 1.75;
+}
+
+.aja-service__link {
+  font-size: 13px;
+}
+
+/* 開閉案内 */
+
+.aja-guide {
+  margin: 28px 0 11px;
+  font-size: 12px;
+}
+
+/* 質問 */
+
+.aja-questions {
+  gap: 10px;
+}
+
+.aja-question {
+  border-radius: 11px;
+}
+
+.aja-question__summary {
+  grid-template-columns: 43px minmax(0, 1fr) 20px;
+  gap: 12px;
+  padding: 17px 20px;
+}
+
+.aja-question__number {
+  width: 40px;
+  height: 29px;
+  border-radius: 7px;
+  font-size: 11px;
+}
+
+.aja-question__title {
+  font-size: 15px;
+  line-height: 1.5;
+}
+
+.aja-question__toggle {
+  width: 20px;
+  height: 20px;
+}
+
+.aja-question__toggle::before,
+.aja-question__toggle::after {
+  top: 9px;
+  width: 14px;
+}
+
+.aja-question__answer {
+  padding: 20px 27px 23px 75px;
+}
+
+.aja-question__answer p {
+  margin-bottom: 1.1em;
+}
+
+.aja-quote {
+  margin: 20px 0;
+  padding: 17px 22px 17px 25px;
+  font-size: 16px;
+  line-height: 1.7;
+}
+
+/* 締め・申込み */
+
+.aja-thanks {
+  margin: 28px 0;
+  font-size: 14px;
+}
+
+.aja-cta {
+  padding: 34px 25px;
+  border-radius: 15px;
+}
+
+.aja-cta__title {
+  margin: 6px 0 10px;
+  font-size: 23px;
+}
+
+.aja-cta__text {
+  margin-bottom: 18px;
+  font-size: 13px;
+}
+
+.aja-cta__button {
+  min-width: 290px;
+  padding: 12px 22px;
+  font-size: 14px;
+}
+
+.aja-cta__note {
+  margin-top: 8px;
+  font-size: 11px;
+}
+
+/* スマートフォン */
+
+@media (max-width: 640px) {
+  .aja-interview {
+    font-size: 14px;
+  }
+
+  .aja-hero {
+    padding: 30px 21px;
+    border-radius: 12px;
+  }
+
+  .aja-hero__title {
+    font-size: 25px;
+  }
+
+  .aja-hero__name {
+    font-size: 17px;
+  }
+
+  .aja-hero__lead {
+    margin-top: 16px;
+    font-size: 13px;
+  }
+
+  .aja-service {
+    padding: 19px 18px;
+  }
+
+  .aja-question__summary {
+    grid-template-columns: 37px minmax(0, 1fr) 18px;
+    gap: 9px;
+    padding: 15px 13px;
+  }
+
+  .aja-question__number {
+    width: 35px;
+    height: 27px;
+  }
+
+  .aja-question__title {
+    font-size: 14px;
+  }
+
+  .aja-question__answer {
+    padding: 18px 17px 21px;
+  }
+
+  .aja-quote {
+    margin: 17px 0;
+    padding: 15px 17px;
+    font-size: 15px;
+  }
+
+  .aja-cta {
+    padding: 30px 18px;
+  }
+
+  .aja-cta__title {
+    font-size: 21px;
+  }
+}</style>
+	
+	
+		<link href="//img.atcoder.jp/public/7e7ac38/css/cdn/select2.min.css" rel="stylesheet" />
+		<link href="//img.atcoder.jp/public/7e7ac38/css/cdn/select2-bootstrap.min.css" rel="stylesheet" />
+		<script src="//img.atcoder.jp/public/7e7ac38/js/lib/select2.min.js"></script>
+	
+	
+		<script src="//img.atcoder.jp/public/7e7ac38/js/ace/ace.js"></script>
+		<script src="//img.atcoder.jp/public/7e7ac38/js/ace/ext-language_tools.js"></script>
+	
+	
+		<script src="//img.atcoder.jp/public/7e7ac38/js/cdn/run_prettify.js"></script>
+	
+	
+		<link rel="stylesheet" href="//img.atcoder.jp/public/7e7ac38/css/cdn/katex.min.css">
+		<script defer src="//img.atcoder.jp/public/7e7ac38/js/cdn/katex.min.js"></script>
+		<script defer src="//img.atcoder.jp/public/7e7ac38/js/cdn/auto-render.min.js"></script>
+		<script>$(function(){$('var').each(function(){var html=$(this).html().replace(/<sub>/g,'_{').replace(/<\/sub>/g,'}');$(this).html('\\('+html+'\\)');});});</script>
+		<script>
+			var katexOptions = {
+				delimiters: [
+					{left: "$$", right: "$$", display: true},
+					
+					{left: "\\(", right: "\\)", display: false},
+					{left: "\\[", right: "\\]", display: true}
+				],
+      	ignoredTags: ["script", "noscript", "style", "textarea", "code", "option"],
+				ignoredClasses: ["prettyprint", "source-code-for-copy"],
+				throwOnError: false
+			};
+			document.addEventListener("DOMContentLoaded", function() { renderMathInElement(document.body, katexOptions);});
+		</script>
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	<script src="//img.atcoder.jp/public/7e7ac38/js/base.js"></script>
+</head>
+
+<body>
+
+<div id="modal-contest-start" class="modal fade" tabindex="-1" role="dialog">
+	<div class="modal-dialog" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+				<h4 class="modal-title">コンテスト開始</h4>
+			</div>
+			<div class="modal-body">
+				<p>AtCoder Beginner Contest 478が開始されました。</p>
+			</div>
+			<div class="modal-footer">
+				
+					<a class="btn btn-primary" href='/contests/abc478/tasks'>問題一覧ページへ移動</a>
+				
+			</div>
+		</div>
+	</div>
+</div>
+<div id="modal-contest-end" class="modal fade" tabindex="-1" role="dialog">
+	<div class="modal-dialog" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+				<h4 class="modal-title">コンテスト終了</h4>
+			</div>
+			<div class="modal-body">
+				<p>AtCoder Beginner Contest 478は終了しました。</p>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-default" data-dismiss="modal">閉じる</button>
+			</div>
+		</div>
+	</div>
+</div>
+<div id="main-div" class="float-container">
+
+
+	<nav class="navbar navbar-inverse navbar-fixed-top">
+		<div class="container-fluid">
+			<div class="navbar-header">
+				<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapse" aria-expanded="false">
+					<span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span>
+				</button>
+				<a class="navbar-brand" href="/home"></a>
+			</div>
+			<div class="collapse navbar-collapse" id="navbar-collapse">
+				<ul class="nav navbar-nav">
+				
+					<li><a class="contest-title" href="/contests/abc478">AtCoder Beginner Contest 478</a></li>
+				
+				</ul>
+				<ul class="nav navbar-nav navbar-right">
+					
+					<li class="dropdown">
+						<a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
+							<img src='//img.atcoder.jp/assets/top/img/flag-lang/ja.png'> 日本語 <span class="caret"></span>
+						</a>
+						<ul class="dropdown-menu">
+							<li><a href="/contests/abc478/tasks/abc478_f?lang=ja"><img src='//img.atcoder.jp/assets/top/img/flag-lang/ja.png'> 日本語</a></li>
+							<li><a href="/contests/abc478/tasks/abc478_f?lang=en"><img src='//img.atcoder.jp/assets/top/img/flag-lang/en.png'> English</a></li>
+						</ul>
+					</li>
+					
+					
+						<li class="dropdown">
+							<a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
+								<span class="glyphicon glyphicon-cog" aria-hidden="true"></span> yamate11 (Contestant) <span class="caret"></span>
+							</a>
+							<ul class="dropdown-menu">
+								<li><a href="/users/yamate11"><span class="glyphicon glyphicon-user" aria-hidden="true"></span> マイプロフィール</a></li>
+								<li class="divider"></li>
+								<li><a href="/settings"><span class="glyphicon glyphicon-wrench" aria-hidden="true"></span> 基本設定</a></li>
+								<li><a href="/settings/icon"><span class="glyphicon glyphicon-picture" aria-hidden="true"></span> アイコン設定</a></li>
+								<li><a href="/settings/password"><span class="glyphicon glyphicon-lock" aria-hidden="true"></span> パスワードの変更</a></li>
+								<li><a href="/settings/fav"><span class="glyphicon glyphicon-star" aria-hidden="true"></span> お気に入り管理</a></li>
+								
+								
+								
+								<li class="divider"></li>
+								<li><a href="javascript:void(form_logout.submit())"><span class="glyphicon glyphicon-log-out" aria-hidden="true"></span> ログアウト</a></li>
+							</ul>
+						</li>
+					
+				</ul>
+			</div>
+		</div>
+	</nav>
+
+	<form method="POST" name="form_logout" action="/logout?continue=https%3A%2F%2Fatcoder.jp%2Fcontests%2Fabc478%2Ftasks%2Fabc478_f">
+		<input type="hidden" name="csrf_token" value="AapGcs&#43;m6IwzooLm3xaWeJUYR8j0cbaTCHgxhhUVYsw=" />
+	</form>
+	<div id="main-container" class="container"
+		 	style="padding-top:50px;">
+		
+
+
+<div class="row">
+	<div id="contest-nav-tabs" class="col-sm-12 mb-2 cnvtb-fixed">
+	<div>
+		<small class="contest-duration">
+			
+				コンテスト時間:
+				<a href='http://www.timeanddate.com/worldclock/fixedtime.html?iso=20261003T2100&p1=248' target='blank'><time class='fixtime fixtime-full'>2026-10-03 21:00:00+0900</time></a> ~ <a href='http://www.timeanddate.com/worldclock/fixedtime.html?iso=20261003T2240&p1=248' target='blank'><time class='fixtime fixtime-full'>2026-10-03 22:40:00+0900</time></a> 
+				(100分)
+			
+		</small>
+		<small class="back-to-home pull-right"><a href="/home">AtCoderホームへ戻る</a></small>
+	</div>
+	<ul class="nav nav-tabs">
+		<li><a href="/contests/abc478"><span class="glyphicon glyphicon-home" aria-hidden="true"></span> トップ</a></li>
+		
+			<li class="active"><a href="/contests/abc478/tasks"><span class="glyphicon glyphicon-tasks" aria-hidden="true"></span> 問題</a></li>
+		
+
+		
+			<li><a href="/contests/abc478/clarifications"><span class="glyphicon glyphicon-question-sign" aria-hidden="true"></span> 質問 <span id="clar-badge" class="badge" ></span></a></li>
+		
+
+		
+			<li><a href="/contests/abc478/submit?taskScreenName=abc478_f"><span class="glyphicon glyphicon-send" aria-hidden="true"></span> 提出</a></li>
+		
+
+		
+			<li>
+				<a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false"><span class="glyphicon glyphicon-list" aria-hidden="true"></span> 提出結果<span class="caret"></span></a>
+				<ul class="dropdown-menu">
+					
+					
+						<li><a href="/contests/abc478/submissions/me"><span class="glyphicon glyphicon-user" aria-hidden="true"></span> 自分の提出</a></li>
+						
+						
+							<li class="divider"></li>
+							<li><a href="/contests/abc478/score"><span class="glyphicon glyphicon-dashboard" aria-hidden="true"></span> 自分の得点状況</a></li>
+						
+					
+				</ul>
+			</li>
+		
+
+		
+			
+				
+					<li><a href="/contests/abc478/standings"><span class="glyphicon glyphicon-sort-by-attributes-alt" aria-hidden="true"></span> 順位表</a></li>
+				
+			
+		
+
+		
+			<li><a href="/contests/abc478/custom_test"><span class="glyphicon glyphicon-wrench" aria-hidden="true"></span> コードテスト</a></li>
+		
+
+		
+		
+
+		<li class="pull-right"><a id="fix-cnvtb" href="javascript:void(0)"><span class="glyphicon glyphicon-pushpin" aria-hidden="true"></span></a></li>
+	</ul>
+</div>
+	<div class="col-sm-12">
+		<span class="h2">
+			F - Min-First Search
+			
+		</span>
+		<span id="task-lang-btn" class="pull-right"><span data-lang="ja"><img src='//img.atcoder.jp/assets/top/img/flag-lang/ja.png'></span> / <span data-lang="en"><img src='//img.atcoder.jp/assets/top/img/flag-lang/en.png'></span></span>
+		<script>
+			$(function() {
+				var ts = $('#task-statement span.lang');
+				if (ts.children('span').size() <= 1) {
+					$('#task-lang-btn').hide();
+					ts.children('span').show();
+					return;
+				}
+
+				var REMEMBER_LB = 5;
+				var LS_KEY = 'task_lang';
+				var taskLang = getLS(LS_KEY) || '';
+				function isTaskLangSet(taskLang) { return taskLang === 'ja' || taskLang === 'en';}
+				if (isTaskLangSet(taskLang)) {
+					const params = new URLSearchParams(window.location.search);
+					if (params.get('lang')) {
+						setLS(LS_KEY, REMEMBER_LB);
+						taskLang = LANG;
+					}
+				} else {
+					taskLang = LANG;
+				}
+				ts.children('span.lang-' + taskLang).show();
+
+				$('#task-lang-btn span').click(function() {
+					var l = $(this).data('lang');
+					ts.children('span').hide();
+					ts.children('span.lang-' + l).show();
+
+					taskLang = getLS(LS_KEY) || '';
+					let changeTimes = 0;
+					if (isTaskLangSet(taskLang)) {
+						changeTimes = REMEMBER_LB;
+					} else {
+						changeTimes = parseInt(taskLang, 10);
+						if (isNaN(changeTimes)) changeTimes = 0;
+						changeTimes++;
+					}
+					if (changeTimes < REMEMBER_LB) setLS(LS_KEY, changeTimes);
+					else setLS(LS_KEY, l);
+				});
+			});
+		</script>
+		<hr/>
+		<p>
+			実行時間制限: 2 sec / メモリ制限: 1024 MiB
+			
+			
+		</p>
+
+		<div id="task-statement">
+			
+
+	<div class="alert alert-warning alert-dismissible fade in">
+		<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+		<p>2026/10/03 22:40:00 まで、問題の内容・感想・解法などをSNS上に投稿することは<a href="/contests/abc478/rules" target="_blank">ルール</a>に違反する行為です。</p>
+		<p>どのような投稿がルールに違反するかはこちらの<a href="/posts/262" target="_blank">記事</a>もお読みください。</p>
+	</div>
+
+
+
+
+	<div class="alert alert-warning alert-dismissible fade in">
+		<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+		<p class="marked_warn_text">&lt;a href=&#34;https://info.atcoder.jp/entry/llm-rules-ja&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34; class=&#34;alert-link&#34;&gt;AtCoder生成AI対策ルール - 20251003版&lt;/a&gt;
+
+このコンテストでは、生成AIの使用を禁止しております。詳しくは&lt;a href=&#34;https://atcoder.jp/posts/1567&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34; class=&#34;alert-link&#34;&gt;こちらの記事&lt;/a&gt;をご覧ください。
+
+&lt;b&gt;Unrated参加の場合にもこのルールは適用されます。&lt;/b&gt;</p>
+	</div>
+	<script src="//img.atcoder.jp/public/7e7ac38/js/lib/marked.js"></script>
+	<script>
+		$(function() {
+			$(".marked_warn_text").each(function() {
+				$(this).html(marked($(this).text()));
+			});
+		})
+	</script>
+
+			
+			<span class="lang">
+<span class="lang-ja">
+<p>配点 : <var>525</var> 点</p>
+
+<div class="part">
+<section>
+<h3>問題文</h3><p>頂点 <var>1,</var> 頂点 <var>2,\ldots,</var> 頂点 <var>N</var> からなる <var>N</var> 頂点の木 <var>T</var> に対して、以下の手順で得られる <var>(1,2,\ldots,N)</var> の順列 <var>P</var> を <var>f(T)</var> とします。</p>
+<ul>
+<li>はじめ、列 <var>P</var> を空列 <var>()</var> とし、集合 <var>S</var> を <var>\lbrace1\rbrace</var> とする。</li>
+<li>以下を <var>N</var> 回繰り返す。<ul>
+<li><var>S</var> の最小値を <var>x</var> とする。<var>S</var> から <var>x</var> を削除し、<var>P</var> の末尾に <var>x</var>を追加する。</li>
+<li>その後、<var>T</var> において頂点 <var>x</var> に隣接する頂点を頂点 <var>v _ 1,</var> 頂点 <var>v _ 2,\ldots,</var> 頂点 <var>v _ k</var> とする。<var>i=1,2,\ldots,k</var> について、<var>P</var> に <var>v _ i</var> が含まれていなければ <var>S</var> に <var>v _ i</var> を追加する。</li>
+</ul>
+</li>
+</ul>
+<p><var>(1,2,\ldots,N)</var> の順列 <var>Q=(Q _ 1,Q _ 2,\ldots,Q _ N)</var> が与えられます。
+<var>f(T)=Q</var> となる木 <var>T</var> の個数を <var>998244353</var> で割った余りを求めてください。
+ただし、ふたつの木は、ある頂点の組 <var>(u,v)</var> が存在して、一方の木では頂点 <var>u</var> と頂点 <var>v</var> の間に辺があり、もう一方の木では辺がないとき、区別されます。</p>
+</section>
+</div>
+
+<div class="part">
+<section>
+<h3>制約</h3><ul>
+<li><var>1\le N\le2\times10 ^ 5</var></li>
+<li><var>1\le Q _ i\le N\ (1\le i\le N)</var></li>
+<li><var>Q _ i\ne Q _ j\ (1\le i\lt j\le N)</var></li>
+<li><var>Q _ 1=1</var></li>
+<li>入力はすべて整数</li>
+</ul>
+</section>
+</div>
+
+<hr />
+<div class="io-style">
+<div class="part">
+<section>
+<h3>入力</h3><p>入力は以下の形式で標準入力から与えられる。</p>
+<pre><var>N</var>
+<var>Q _ 1</var> <var>Q _ 2</var> <var>\ldots</var> <var>Q _ N</var>
+</pre>
+
+</section>
+</div>
+
+<div class="part">
+<section>
+<h3>出力</h3><p><var>f(T)=Q</var> となる木 <var>T</var> の個数を <var>998244353</var> で割った余りを出力せよ。</p>
+</section>
+</div>
+</div>
+
+<hr />
+<div class="part">
+<section>
+<h3>入力例 1</h3><pre>5
+1 3 4 2 5
+</pre>
+
+</section>
+</div>
+
+<div class="part">
+<section>
+<h3>出力例 1</h3><pre>8
+</pre>
+
+<p>例えば、以下のような木を <var>T</var> とすると、<var>f(T)=Q</var> となります。</p>
+<p><img src="https://img.atcoder.jp/abc478/d31974d768e0fb7bbb6559f39c52a00d.png" class="img-responsive center-block" style="max-width: 40%"/></p>
+<p><var>f(T)</var> を求める手順は以下の図のように進行します。</p>
+<p><img src="https://img.atcoder.jp/abc478/24aabf9d8baf9d7a33143643919667b2.png" class="img-responsive center-block" style="max-width: 100%"/></p>
+<p>この木を含めた以下の図のような <var>8</var> つの木が条件を満たします。</p>
+<p><img src="https://img.atcoder.jp/abc478/326664da2fd21f5bd2ddf55ff6b387a0.png" class="img-responsive center-block" style="max-width: 100%"/></p>
+<p>よって、<code>8</code> を出力してください。</p>
+</section>
+</div>
+
+<hr />
+<div class="part">
+<section>
+<h3>入力例 2</h3><pre>20
+1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20
+</pre>
+
+</section>
+</div>
+
+<div class="part">
+<section>
+<h3>出力例 2</h3><pre>868586527
+</pre>
+
+<p>条件を満たす木の個数を <var>998244353</var> で割った余りを出力してください。</p>
+</section>
+</div>
+
+<hr />
+<div class="part">
+<section>
+<h3>入力例 3</h3><pre>30
+1 16 23 14 18 10 12 21 27 30 17 28 4 9 20 13 22 11 19 3 25 26 6 7 2 8 5 24 15 29
+</pre>
+
+</section>
+</div>
+
+<div class="part">
+<section>
+<h3>出力例 3</h3><pre>910753763
+</pre></section>
+</div>
+</span>
+<span class="lang-en">
+<p>Score : <var>525</var> points</p>
+
+<div class="part">
+<section>
+<h3>Problem Statement</h3><p>For a tree <var>T</var> with <var>N</var> vertices called vertex <var>1</var>, vertex <var>2</var>, <var>\ldots</var>, vertex <var>N</var>, let <var>f(T)</var> be the permutation <var>P</var> of <var>(1,2,\ldots,N)</var> obtained by the following procedure.</p>
+<ul>
+<li>Initially, let the sequence <var>P</var> be the empty sequence <var>()</var>, and let the set <var>S</var> be <var>\lbrace1\rbrace</var>.</li>
+<li>Repeat the following <var>N</var> times.<ul>
+<li>Let <var>x</var> be the minimum value of <var>S</var>. Remove <var>x</var> from <var>S</var>, and append <var>x</var> to the end of <var>P</var>.</li>
+<li>Then, let <var>v_1, v_2, \ldots, v_k</var> be the vertices adjacent to vertex <var>x</var> in <var>T</var>. For <var>i=1,2,\ldots,k</var>, if <var>v _ i</var> is not contained in <var>P</var>, add <var>v _ i</var> to <var>S</var>.</li>
+</ul>
+</li>
+</ul>
+<p>You are given a permutation <var>Q=(Q _ 1,Q _ 2,\ldots,Q _ N)</var> of <var>(1,2,\ldots,N)</var>.
+Find the number, modulo <var>998244353</var>, of trees <var>T</var> such that <var>f(T)=Q</var>.
+Here, two trees are distinguished when there exists a pair of vertices <var>(u,v)</var> such that there is an edge between vertex <var>u</var> and vertex <var>v</var> in one tree and there is no edge in the other tree.</p>
+</section>
+</div>
+
+<div class="part">
+<section>
+<h3>Constraints</h3><ul>
+<li><var>1\le N\le2\times10 ^ 5</var></li>
+<li><var>1\le Q _ i\le N\ (1\le i\le N)</var></li>
+<li><var>Q _ i\ne Q _ j\ (1\le i\lt j\le N)</var></li>
+<li><var>Q _ 1=1</var></li>
+<li>All input values are integers.</li>
+</ul>
+</section>
+</div>
+
+<hr />
+<div class="io-style">
+<div class="part">
+<section>
+<h3>Input</h3><p>The input is given from Standard Input in the following format:</p>
+<pre><var>N</var>
+<var>Q _ 1</var> <var>Q _ 2</var> <var>\ldots</var> <var>Q _ N</var>
+</pre>
+
+</section>
+</div>
+
+<div class="part">
+<section>
+<h3>Output</h3><p>Output the number, modulo <var>998244353</var>, of trees <var>T</var> such that <var>f(T)=Q</var>.</p>
+</section>
+</div>
+</div>
+
+<hr />
+<div class="part">
+<section>
+<h3>Sample Input 1</h3><pre>5
+1 3 4 2 5
+</pre>
+
+</section>
+</div>
+
+<div class="part">
+<section>
+<h3>Sample Output 1</h3><pre>8
+</pre>
+
+<p>For example, if <var>T</var> is the following tree, then <var>f(T)=Q</var>.</p>
+<p><img src="https://img.atcoder.jp/abc478/d31974d768e0fb7bbb6559f39c52a00d.png" class="img-responsive center-block" style="max-width: 40%"/></p>
+<p>The procedure to find <var>f(T)</var> proceeds as shown in the following figure.</p>
+<p><img src="https://img.atcoder.jp/abc478/24aabf9d8baf9d7a33143643919667b2.png" class="img-responsive center-block" style="max-width: 100%"/></p>
+<p>Including this tree, the following eight trees satisfy the condition.</p>
+<p><img src="https://img.atcoder.jp/abc478/326664da2fd21f5bd2ddf55ff6b387a0.png" class="img-responsive center-block" style="max-width: 100%"/></p>
+<p>Thus, output <code>8</code>.</p>
+</section>
+</div>
+
+<hr />
+<div class="part">
+<section>
+<h3>Sample Input 2</h3><pre>20
+1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20
+</pre>
+
+</section>
+</div>
+
+<div class="part">
+<section>
+<h3>Sample Output 2</h3><pre>868586527
+</pre>
+
+<p>Output modulo <var>998244353</var> the number of trees satisfying the condition.</p>
+</section>
+</div>
+
+<hr />
+<div class="part">
+<section>
+<h3>Sample Input 3</h3><pre>30
+1 16 23 14 18 10 12 21 27 30 17 28 4 9 20 13 22 11 19 3 25 26 6 7 2 8 5 24 15 29
+</pre>
+
+</section>
+</div>
+
+<div class="part">
+<section>
+<h3>Sample Output 3</h3><pre>910753763
+</pre></section>
+</div>
+</span>
+</span>
+
+		</div>
+
+		
+
+		
+		<hr/>
+		<form class="form-horizontal form-code-submit" action="/contests/abc478/submit" method="POST">
+			<input type="hidden" name="data.TaskScreenName" value="abc478_f" />
+			
+			<div class="form-group ">
+				<label class="control-label col-sm-3 col-md-2" for="select-lang">言語</label>
+				<div id="select-lang" class="col-sm-5" data-name="data.LanguageId">
+					<select class="form-control current" data-placeholder="-" name="data.LanguageId" required>
+						<option></option>
+						
+							<option value="6001" data-ace-mode="text">&gt;&lt;&gt; (fishr 0.1.0)</option>
+						
+							<option value="6002" data-ace-mode="ada">Ada 2022 (GNAT 15.2.0)</option>
+						
+							<option value="6003" data-ace-mode="text">APL (GNU APL 1.9)</option>
+						
+							<option value="6004" data-ace-mode="mips">Assembly MIPS O32 ABI (GNU assembler 2.42)</option>
+						
+							<option value="6005" data-ace-mode="assembly_x86">Assembly x64 (NASM 2.16.03)</option>
+						
+							<option value="6006" data-ace-mode="text">AWK (GNU awk 5.2.1)</option>
+						
+							<option value="6007" data-ace-mode="text">A言語 (interpreter af48a2a)</option>
+						
+							<option value="6008" data-ace-mode="sh">Bash (bash 5.3)</option>
+						
+							<option value="6009" data-ace-mode="basic">BASIC (FreeBASIC 1.10.1)</option>
+						
+							<option value="6010" data-ace-mode="text">bc (GNU bc 1.08.2)</option>
+						
+							<option value="6011" data-ace-mode="text">Befunge93 (TBC 1.0)</option>
+						
+							<option value="6012" data-ace-mode="text">Brainfuck (Tritium 1.2.73)</option>
+						
+							<option value="6013" data-ace-mode="c_cpp">C23 (Clang 21.1.0)</option>
+						
+							<option value="6014" data-ace-mode="c_cpp">C23 (GCC 14.2.0)</option>
+						
+							<option value="6015" data-ace-mode="csharp">C# 13.0 (.NET 9.0.8)</option>
+						
+							<option value="6016" data-ace-mode="csharp">C# 13.0 (.NET Native AOT 9.0.8)</option>
+						
+							<option value="6017" data-ace-mode="c_cpp">C&#43;&#43;23 (GCC 15.2.0)</option>
+						
+							<option value="6018" data-ace-mode="text">C3 (c3c 0.7.5)</option>
+						
+							<option value="6019" data-ace-mode="text">Carp(Carp 0.5.5)</option>
+						
+							<option value="6020" data-ace-mode="c_cpp">cLay (cLay 20250308-1 (GCC 15.2.0))</option>
+						
+							<option value="6021" data-ace-mode="clojure">Clojure (babashka 1.12.208)</option>
+						
+							<option value="6022" data-ace-mode="clojure">Clojure (clojure 1.12.2)</option>
+						
+							<option value="6023" data-ace-mode="clojure">Clojure (Clojure AOT 1.12.2)</option>
+						
+							<option value="6025" data-ace-mode="clojure">Clojure (ClojureScript 1.12.42 (Clojure 1.12.2 Node.js 22.19.0))</option>
+						
+							<option value="6026" data-ace-mode="cobol">COBOL (Free) (GnuCOBOL 3.2)</option>
+						
+							<option value="6027" data-ace-mode="lisp">Common Lisp (SBCL 2.5.8)</option>
+						
+							<option value="6028" data-ace-mode="crystal">Crystal (Crystal 1.17.0)</option>
+						
+							<option value="6029" data-ace-mode="text">Cyber (Cyber v0.3)</option>
+						
+							<option value="6030" data-ace-mode="d">D (DMD 2.111.0)</option>
+						
+							<option value="6031" data-ace-mode="d">D (GDC 15.2)</option>
+						
+							<option value="6032" data-ace-mode="d">D (LDC 1.41.0)</option>
+						
+							<option value="6033" data-ace-mode="dart">Dart (Dart 3.9.2)</option>
+						
+							<option value="6034" data-ace-mode="text">dc 1.5.2 (GNU bc 1.08.2)</option>
+						
+							<option value="6035" data-ace-mode="prolog">ECLiPSe (ECLiPSe 7.1_13)</option>
+						
+							<option value="6036" data-ace-mode="eiffel">Eiffel (Gobo Eiffel 22.01)</option>
+						
+							<option value="6037" data-ace-mode="eiffel">Eiffel (Liberty Eiffel 07829e3)</option>
+						
+							<option value="6038" data-ace-mode="elixir">Elixir (Elixir 1.18.4 (OTP 28.0.2))</option>
+						
+							<option value="6039" data-ace-mode="lisp">Emacs Lisp(Native Compile)(GNU Emacs 29.4)</option>
+						
+							<option value="6040" data-ace-mode="text">Emojicode 1.0 beta 2 (emojicodec 1.0 beta 2)</option>
+						
+							<option value="6041" data-ace-mode="erlang">Erlang (Erlang 28.0.2)</option>
+						
+							<option value="6042" data-ace-mode="fsharp">F# 9.0 (.NET 9.0.8)</option>
+						
+							<option value="6043" data-ace-mode="text">Factor (Factor 0.100)</option>
+						
+							<option value="6044" data-ace-mode="sh">Fish (fish 4.0.2)</option>
+						
+							<option value="6045" data-ace-mode="forth">Forth (gforth 0.7.3)</option>
+						
+							<option value="6046" data-ace-mode="fortran">Fortran2018 (Flang 20.1.7)</option>
+						
+							<option value="6047" data-ace-mode="fortran">Fortran2023 (GCC 14.2.0)</option>
+						
+							<option value="6048" data-ace-mode="fortran">FORTRAN77 (GCC 14.2.0)</option>
+						
+							<option value="6049" data-ace-mode="text">Gleam (Gleam 1.12.0 (OTP 28.0.2))</option>
+						
+							<option value="6050" data-ace-mode="golang">Go 1.18 (gccgo 15.2.0)</option>
+						
+							<option value="6051" data-ace-mode="golang">Go (go 1.25.1)</option>
+						
+							<option value="6052" data-ace-mode="haskell">Haskell (GHC 9.8.4)</option>
+						
+							<option value="6053" data-ace-mode="haxe">Haxe/JVM 4.3.7 (hxjava 4.2.0)</option>
+						
+							<option value="6054" data-ace-mode="c_cpp">C&#43;&#43; IOI-Style(GNU&#43;&#43;20) (GCC 14.2.0)</option>
+						
+							<option value="6055" data-ace-mode="lisp">ISLisp (Easy-ISLisp 5.43)</option>
+						
+							<option value="6056" data-ace-mode="java">Java24 (OpenJDK 24.0.2)</option>
+						
+							<option value="6057" data-ace-mode="javascript">JavaScript (Bun 1.2.21)</option>
+						
+							<option value="6058" data-ace-mode="javascript">JavaScript (Deno 2.4.5)</option>
+						
+							<option value="6059" data-ace-mode="javascript">JavaScript (Node.js 22.19.0)</option>
+						
+							<option value="6060" data-ace-mode="text">Jule (jule 0.1.6)</option>
+						
+							<option value="6061" data-ace-mode="text">Koka (koka v3.2.2)</option>
+						
+							<option value="6062" data-ace-mode="kotlin">Kotlin (Kotlin/JVM 2.2.10)</option>
+						
+							<option value="6063" data-ace-mode="text">Kuin (kuincl v.2021.8.17)</option>
+						
+							<option value="6064" data-ace-mode="text">Lazy K (irori v1.0.0)</option>
+						
+							<option value="6065" data-ace-mode="text">Lean (lean v4.22.0)</option>
+						
+							<option value="6066" data-ace-mode="text">LLVM IR (Clang 21.1.0)</option>
+						
+							<option value="6067" data-ace-mode="lua">Lua (Lua 5.4.7)</option>
+						
+							<option value="6068" data-ace-mode="lua">Lua (LuaJIT 2.1.1703358377)</option>
+						
+							<option value="6069" data-ace-mode="text">Mercury (Mercury 22.01.8)</option>
+						
+							<option value="6071" data-ace-mode="nim">Nim (Nim 1.6.20)</option>
+						
+							<option value="6072" data-ace-mode="nim">Nim (Nim 2.2.4)</option>
+						
+							<option value="6073" data-ace-mode="ocaml">OCaml (ocamlopt 5.3.0)</option>
+						
+							<option value="6074" data-ace-mode="text">Octave (GNU Octave 10.2.0)</option>
+						
+							<option value="6075" data-ace-mode="pascal">Pascal (fpc 3.2.2)</option>
+						
+							<option value="6076" data-ace-mode="perl">Perl (perl 5.38.2)</option>
+						
+							<option value="6077" data-ace-mode="php">PHP (PHP 8.4.12)</option>
+						
+							<option value="6078" data-ace-mode="text">Piet (your-diary/piet_programming_language 3.0.0) (PPM image)</option>
+						
+							<option value="6079" data-ace-mode="text">Pony (ponyc 0.59.0)</option>
+						
+							<option value="6080" data-ace-mode="powershell">PowerShell (PowerShell 7.5.2)</option>
+						
+							<option value="6081" data-ace-mode="prolog">Prolog (SWI-Prolog 9.2.9)</option>
+						
+							<option value="6082" data-ace-mode="python">Python (CPython 3.13.7)</option>
+						
+							<option value="6083" data-ace-mode="python">Python (PyPy 3.11-v7.3.20)</option>
+						
+							<option value="6084" data-ace-mode="r">R (GNU R 4.5.0)</option>
+						
+							<option value="6085" data-ace-mode="text">ReasonML (reson 3.16.0)</option>
+						
+							<option value="6086" data-ace-mode="ruby">Ruby 3.3 (truffleruby 25.0.0)</option>
+						
+							<option value="6087" data-ace-mode="ruby">Ruby 3.4 (ruby 3.4.5)</option>
+						
+							<option value="6088" data-ace-mode="rust">Rust (rustc 1.89.0)</option>
+						
+							<option value="6089" data-ace-mode="python">SageMath (SageMath 10.7)</option>
+						
+							<option value="6090" data-ace-mode="scala">Scala (Dotty 3.7.2)</option>
+						
+							<option value="6091" data-ace-mode="scala">Scala 3.7.2 (Scala Native 0.5.8)</option>
+						
+							<option value="6092" data-ace-mode="scheme">Scheme (ChezScheme 10.2.0)</option>
+						
+							<option value="6093" data-ace-mode="scheme">Scheme (Gauche 0.9.15)</option>
+						
+							<option value="6094" data-ace-mode="text">Seed7 (Seed7 3.5.0)</option>
+						
+							<option value="6095" data-ace-mode="swift">Swift 6.2</option>
+						
+							<option value="6096" data-ace-mode="tcl">Tcl (tclsh 9.0.1)</option>
+						
+							<option value="6097" data-ace-mode="text">Terra (Terra 1.2.0)</option>
+						
+							<option value="6098" data-ace-mode="tex">TeX (tex 3.141592653)</option>
+						
+							<option value="6099" data-ace-mode="text">Text (cat 9.4)</option>
+						
+							<option value="6100" data-ace-mode="typescript">TypeScript 5.8 (Deno 2.4.5)</option>
+						
+							<option value="6101" data-ace-mode="typescript">TypeScript 5.9 (tsc 5.9.2 (Bun 1.2.21))</option>
+						
+							<option value="6102" data-ace-mode="typescript">TypeScript 5.9 (tsc 5.9.2 (Node.js 22.19.0))</option>
+						
+							<option value="6103" data-ace-mode="text">Uiua (uiua 0.16.2)</option>
+						
+							<option value="6104" data-ace-mode="text">Unison (Unison 0.5.47)</option>
+						
+							<option value="6105" data-ace-mode="text">V (0.4.10)</option>
+						
+							<option value="6106" data-ace-mode="vala">Vala (valac 0.56.18)</option>
+						
+							<option value="6107" data-ace-mode="verilog">Verilog 2012 (Icarus Verilog 12.0)</option>
+						
+							<option value="6108" data-ace-mode="text">Veryl (veryl 0.16.4)</option>
+						
+							<option value="6109" data-ace-mode="text">WebAssembly (wabt 1.0.34 &#43; iwasm 2.4.1)</option>
+						
+							<option value="6110" data-ace-mode="text">Whitespace (whitespacers 1.3.0)</option>
+						
+							<option value="6111" data-ace-mode="zig">Zig (Zig 0.15.1)</option>
+						
+							<option value="6112" data-ace-mode="text">なでしこ (cnako3 3.7.8 (Node.js 22.19.0))</option>
+						
+							<option value="6113" data-ace-mode="text">プロデル (mono版プロデル 2.0.1353)</option>
+						
+							<option value="6114" data-ace-mode="julia">Julia (Julia 1.11.6)</option>
+						
+							<option value="6115" data-ace-mode="python">Python (Codon 0.19.3)</option>
+						
+							<option value="6116" data-ace-mode="c_cpp">C&#43;&#43;23 (Clang 21.1.0)</option>
+						
+							<option value="6117" data-ace-mode="text">Fix (1.1.0-alpha.12)</option>
+						
+							<option value="6118" data-ace-mode="sql">SQL (DuckDB 1.3.2)</option>
+						
+							<option value="6119" data-ace-mode="vbscript">Visual Basic 16.9 (.NET 9.0.8)</option>
+						
+					</select>
+					<span class="error"></span>
+				</div>
+			</div>
+			<script>var currentLang = getLS('defaultLang');</script>
+			
+			
+<div class="form-group">
+	<div class="col-sm-3 col-md-2 editor-label">
+		<label class="control-label" for="sourceCode">ソースコード</label>
+		<div class="editor-buttons">
+			<button id="btn-open-file" type="button" class="btn btn-default btn-sm">
+				<span class="glyphicon glyphicon-folder-open" aria-hidden="true"></span> &nbsp; ファイルを開く
+			</button>
+			<button id="btn-customize" type="button" class="btn btn-default btn-sm">
+				<span class="glyphicon glyphicon-cog" aria-hidden="true"></span> &nbsp; カスタマイズ
+			</button>
+			<button type="button" class="btn btn-default btn-sm btn-toggle-editor" data-toggle="button" autocomplete="off">
+				エディタ切り替え
+			</button>
+			<button type="button" class="btn btn-default btn-sm btn-auto-height" data-toggle="button" autocomplete="off">
+				高さ自動調節
+			</button>
+		</div>
+	</div>
+	<div class="col-sm-9 col-md-10" id="sourceCode">
+		<div id="editor"></div>
+		<textarea id="plain-textarea" class="form-control" style="display:none;" name="sourceCode"></textarea>
+		<p>
+			<span class="gray">※ 512 KiB まで</span><br>
+		</p>
+	</div>
+	<input id="input-open-file" type="file" style="display:none;">
+</div>
+
+
+			<input type="hidden" name="csrf_token" value="AapGcs&#43;m6IwzooLm3xaWeJUYR8j0cbaTCHgxhhUVYsw=" />
+			<div class="form-group">
+				<label class="control-label col-sm-3 col-md-2"></label>
+				<div class="col-sm-5">
+					
+					<button type="submit" class="btn btn-primary" id="submit">提出</button>
+				</div>
+			</div>
+		</form>
+		
+	</div>
+</div>
+
+
+
+
+		
+			<hr>
+			
+			
+			
+<div class="a2a_kit a2a_kit_size_20 a2a_default_style pull-right" data-a2a-url="https://atcoder.jp/contests/abc478/tasks/abc478_f?lang=ja" data-a2a-title="F - Min-First Search">
+	<a class="a2a_button_facebook"></a>
+	<a class="a2a_button_twitter"></a>
+	
+		<a class="a2a_button_hatena"></a>
+	
+	<a class="a2a_dd" href="https://www.addtoany.com/share"></a>
+</div>
+
+		
+		<script async src="//static.addtoany.com/menu/page.js"></script>
+		
+	</div> 
+	<hr>
+</div> 
+
+	<div class="container" style="margin-bottom: 80px;">
+			<footer class="footer">
+			
+				<ul>
+					<li><a href="/contests/abc478/rules">ルール</a></li>
+					<li><a href="/contests/abc478/glossary">用語集</a></li>
+					
+				</ul>
+			
+			<ul>
+				<li><a href="/tos">利用規約</a></li>
+				<li><a href="/privacy">プライバシーポリシー</a></li>
+				<li><a href="/personal">個人情報保護方針</a></li>
+				<li><a href="/company">企業情報</a></li>
+				<li><a href="/faq">よくある質問</a></li>
+				<li><a href="/contact">お問い合わせ</a></li>
+				<li><a href="/documents/request">資料請求</a></li>
+			</ul>
+			<div class="text-center">
+					<small id="copyright">Copyright Since 2012 &copy;<a href="http://atcoder.co.jp">AtCoder Inc.</a> All rights reserved.</small>
+			</div>
+			</footer>
+	</div>
+	<p id="fixed-server-timer" class="contest-timer"></p>
+	<div id="scroll-page-top" style="display:none;"><span class="glyphicon glyphicon-arrow-up" aria-hidden="true"></span> ページトップ</div>
+
+</body>
+</html>
+
+

@@ -1,0 +1,24 @@
+CXX := g++
+
+ifeq ($(DEBUG),)
+  DEBUGFLAGS := -O2
+else
+  DEBUGFLAGS := -g -O0 -D_GLIBCXX_DEBUG -DDEBUG=1 -fsanitize=address,undefined -fno-sanitize-recover -fno-omit-frame-pointer -fconcepts-diagnostics-depth=3
+  ifneq ($(DEBUG_LIB),)
+    DEBUGFLAGS := $(DEBUGFLAGS) -DDEBUG_LIB=1
+  endif
+endif
+
+WARNINGS := -Wall -Wextra -Wno-format-security -Wshadow -Wconversion -Wno-sign-conversion
+
+CXXFLAGS := -std=gnu++23 $(DEBUGFLAGS) $(WARNINGS)
+
+# CXXFLAGS := $(CXXFLAGS) -I/home/y-tanabe/lib/boost_1_73_0
+# CXXFLAGS := $(CXXFLAGS) -I/home/y-tanabe/proj/compprog/clib/ac-library
+CXXFLAGS := $(CXXFLAGS) $(if $(CMPNAIVE),-DCMPNAIVE=1)
+CXXFLAGS := $(CXXFLAGS)
+
+all: cans
+
+clean:
+	$(RM) cans.o cans cans.exe *~ *.stackdump core

@@ -1,0 +1,7 @@
+6
+a
+aa
+ab
+abcabc
+zzz
+xyxxyx

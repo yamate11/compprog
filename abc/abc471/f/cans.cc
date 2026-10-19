@@ -151,7 +151,7 @@ struct digit_util {
     string ret(w, ' ');
     for (ll i = w - 1; x != 0; x /= base, i--) {
       ll y = x % base;
-      ret[i] = y < 10 ? '0' + y : ten + (y - 10);
+      ret[i] = y < 10 ? (char)('0' + y) : (char)(ten + (y - 10));
     }
     return ret;
   }
@@ -264,9 +264,9 @@ int body(istream& cin, ostream& cout) {
 
 template <bool dup, typename T>
 struct IntPermBase {
-  int n;
-  int r;
-  vector<int> vec;
+  ll n;
+  ll r;
+  vector<ll> vec;
   bool started;
   vector<T> mapping;
 
@@ -284,49 +284,49 @@ struct IntPermBase {
     return false;
   }
 
-  IntPermBase(int n_, int r_) : n(n_), r(r_), started(false) {
+  IntPermBase(ll n_, ll r_) : n(n_), r(r_), started(false) {
     if (n >= 0) {
       mapping = vector<T>(n);
-      for (int i = 0; i < n; i++) {
+      for (ll i = 0; i < n; i++) {
         if constexpr (is_integral<T>::value) mapping[i] = (T)i;
         else mapping[i] = T();
       }
     }
   }
-  IntPermBase(int n_, int r_, vector<T> mp) : n(n_), r(r_), started(false), mapping(move(mp)) {
+  IntPermBase(ll n_, ll r_, vector<T> mp) : n(n_), r(r_), started(false), mapping(move(mp)) {
     if (ssize(mapping) != n) throw runtime_error("IntPermBase: incorrect mapping length");
   }
 
-  T at(int i) const { return mapping[vec[i]]; }
+  T at(ll i) const { return mapping[vec[i]]; }
 
-  T operator[](int i) const { return at(i); }
+  T operator[](ll i) const { return at(i); }
 
   void set_mapping(auto f) {
-    for (int i = 0; i < n; i++) mapping[i] = f(i);
+    for (ll i = 0; i < n; i++) mapping[i] = f(i);
   }
 
   vector<T> vec_view() const {
     vector<T> res;
-    for (int i = 0; i < r; i++) res.push_back(mapping[vec[i]]);
+    for (ll i = 0; i < r; i++) res.push_back(mapping[vec[i]]);
     return res;
   }
 };
 
-template<typename T = int>
+template<typename T = ll>
 struct IntPerm : IntPermBase<false, T> {
   using Base = IntPermBase<false, T>;
   using Base::vec, Base::r, Base::n, Base::started;
 
-  vector<vector<int>> cands;
-  vector<int> cidx;
+  vector<vector<ll>> cands;
+  vector<ll> cidx;
 
   bool start_check() {
     if (not IntPermBase<false, T>::start_check()) return false;
     iota(vec.begin(), vec.end(), 0);
     cands.resize(r);
     cidx.resize(r);
-    for (int i = 0; i < r; i++) {
-      for (int j = n - 1; j >= i; j--) cands[i].push_back(j);
+    for (ll i = 0; i < r; i++) {
+      for (ll j = n - 1; j >= i; j--) cands[i].push_back(j);
       cidx[i] = n - i - 1;
     }
     return true;
@@ -338,19 +338,19 @@ struct IntPerm : IntPermBase<false, T> {
     return IntPermBase<false, T>::finish();
   }
 
-  IntPerm(int n_, int r_) : IntPermBase<false, T>(n_, r_) {}
-  IntPerm(int n_, int r_, vector<T> mp) : IntPermBase<false, T>(n_, r_, mp) {}
+  IntPerm(ll n_, ll r_) : IntPermBase<false, T>(n_, r_) {}
+  IntPerm(ll n_, ll r_, vector<T> mp) : IntPermBase<false, T>(n_, r_, mp) {}
 
   bool get() {
     if (not started) return start_check();
-    int i = r - 1;
+    ll i = r - 1;
     for (; i >= 0 and cidx[i] == 0; i--);
     if (i < 0) return finish();
     vec[i] = cands[i][--cidx[i]];
-    for (int j = i + 1; j < r; j++) {
+    for (ll j = i + 1; j < r; j++) {
       if (j == i + 1) {
         cands[j].resize(0);
-        for (int k = 0; k < (int)cands[i].size(); k++) {
+        for (ll k = 0; k < (ll)cands[i].size(); k++) {
           if (k == cidx[i]) continue;
           cands[j].push_back(cands[i][k]);
         }
@@ -365,7 +365,7 @@ struct IntPerm : IntPermBase<false, T> {
   }
 };
 
-template<typename T = int>
+template<typename T = ll>
 struct IntComb : IntPermBase<false, T> {
   using Base = IntPermBase<false, T>;
   using Base::vec, Base::r, Base::n, Base::started, Base::finish;
@@ -376,89 +376,89 @@ struct IntComb : IntPermBase<false, T> {
     return true;
   }
 
-  IntComb(int n_, int r_) : IntPermBase<false, T>(n_, r_) {}
-  IntComb(int n_, int r_, vector<T> mp) : IntPermBase<false, T>(n_, r_, mp) {}
+  IntComb(ll n_, ll r_) : IntPermBase<false, T>(n_, r_) {}
+  IntComb(ll n_, ll r_, vector<T> mp) : IntPermBase<false, T>(n_, r_, mp) {}
 
   bool get() {
     if (not started) return start_check();
-    int i = r - 1;
+    ll i = r - 1;
     for (; i >= 0 and vec[i] == n - r + i; i--);
     if (i < 0) return finish();
     vec[i]++;
-    for (int j = i + 1; j < r; j++) vec[j] = vec[j - 1] + 1;
+    for (ll j = i + 1; j < r; j++) vec[j] = vec[j - 1] + 1;
     return true;
   }
 };
 
-template<typename T = int>
+template<typename T = ll>
 struct IntDupPerm : IntPermBase<true, T> {
   using Base = IntPermBase<true, T>;
   using Base::vec, Base::r, Base::n, Base::started, Base::finish, Base::start_check;
 
-  IntDupPerm(int n_, int r_) : IntPermBase<true, T>(n_, r_) {}
-  IntDupPerm(int n_, int r_, vector<T> mp) : IntPermBase<true, T>(n_, r_, mp) {}
+  IntDupPerm(ll n_, ll r_) : IntPermBase<true, T>(n_, r_) {}
+  IntDupPerm(ll n_, ll r_, vector<T> mp) : IntPermBase<true, T>(n_, r_, mp) {}
 
   bool get() {
     if (not started) return start_check();
-    for (int i = r - 1; i >= 0; vec[i--] = 0) if (++vec[i] < n) return true;
+    for (ll i = r - 1; i >= 0; vec[i--] = 0) if (++vec[i] < n) return true;
     return finish();
   }
 };
 
-template<typename T = int>
+template<typename T = ll>
 struct IntDupComb : IntPermBase<true, T> {
   using Base = IntPermBase<true, T>;
   using Base::vec, Base::r, Base::n, Base::started, Base::finish, Base::start_check;
 
-  IntDupComb(int n_, int r_) : IntPermBase<true, T>(n_, r_) {}
-  IntDupComb(int n_, int r_, vector<T> mp) : IntPermBase<true, T>(n_, r_, mp) {}
+  IntDupComb(ll n_, ll r_) : IntPermBase<true, T>(n_, r_) {}
+  IntDupComb(ll n_, ll r_, vector<T> mp) : IntPermBase<true, T>(n_, r_, mp) {}
 
   bool get() {
     if (not started) return start_check();
-    int i = r - 1;
+    ll i = r - 1;
     for (; i >= 0 and vec[i] == n - 1; i--);
     if (i < 0) return finish();
     vec[i]++;
-    for (int j = i + 1; j < r; j++) vec[j] = vec[i];
+    for (ll j = i + 1; j < r; j++) vec[j] = vec[i];
     return true;
   }
 };
 
 struct IDCBoxBall {
-  int box;
-  int ball;
+  ll box;
+  ll ball;
   IntDupComb<> idc;
-  vector<int> numBalls;
-  IDCBoxBall(int box_, int ball_) : box(box_), ball(ball_), idc(box, ball) {}
+  vector<ll> numBalls;
+  IDCBoxBall(ll box_, ll ball_) : box(box_), ball(ball_), idc(box, ball) {}
   bool get() {
     bool b = idc.get();
     if (not b) return false;
-    numBalls = vector<int>(box);
-    for (int i = 0; i < ball; i++) numBalls[idc.at(i)]++;
+    numBalls = vector<ll>(box);
+    for (ll i = 0; i < ball; i++) numBalls[idc.at(i)]++;
     return true;
   }
-  int at(int i) const { return numBalls[i]; }
-  int operator[](int i) const { return at(i); }
-  vector<int> vec_view() const { return numBalls; }
+  ll at(ll i) const { return numBalls[i]; }
+  ll operator[](ll i) const { return at(i); }
+  vector<ll> vec_view() const { return numBalls; }
 };
 
 
 template<typename INT>
 struct IntDirProd {
   vector<INT> lim;
-  int r;
+  ll r;
   vector<INT> vec;
   bool started;
 
   IntDirProd(const vector<INT>& lim_) : lim(lim_), r(lim.size()), started(false) {}
 
-  int at(int i) const { return vec[i]; }
-  int operator[](int i) const { return at(i); }
+  ll at(ll i) const { return vec[i]; }
+  ll operator[](ll i) const { return at(i); }
 
   const vector<INT>& vec_view() const { return vec; }
 
   bool start_check() {
-    for (int i = 0; i < r; i++) if (lim[i] == 0) return false;
+    for (ll i = 0; i < r; i++) if (lim[i] == 0) return false;
     started = true;
     vec.resize(r, 0);
     return true;
@@ -472,7 +472,7 @@ struct IntDirProd {
 
   bool get() {
     if (not started) return start_check();
-    for (int i = r - 1; i >= 0; vec[i--] = 0) if (++vec[i] < lim[i]) return true;
+    for (ll i = r - 1; i >= 0; vec[i--] = 0) if (++vec[i] < lim[i]) return true;
     return finish();
   }
 };
@@ -493,10 +493,10 @@ struct IntPartition {
       started = false;
       return false;
     }else {
-      ll b = vec.back(); vec.pop_back();
-      ll a = vec.back(); vec.pop_back();
-      ll c = a + b;
-      ll a1 = a + 1;
+      INT b = vec.back(); vec.pop_back();
+      INT a = vec.back(); vec.pop_back();
+      INT c = a + b;
+      INT a1 = a + 1;
       while (c - a1 >= a1) {
         vec.push_back(a1);
         c -= a1;
@@ -506,7 +506,7 @@ struct IntPartition {
     }
   }
 
-  INT at(int i) const { return vec[i]; }
+  INT at(ll i) const { return vec[i]; }
   const vector<INT>& vec_view() const { return vec; }
 };
 

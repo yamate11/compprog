@@ -216,26 +216,26 @@ struct formatter<FpG<mod, INT, dyn_id>> : formatter<INT>  {
 };
 
 template<typename T>
-class Comb {
-  int nMax;
+struct Comb {
+  ll nMax;
   vector<T> vFact;
   vector<T> vInvFact;
-public:
-  Comb(int nm) : nMax(nm), vFact(nm+1), vInvFact(nm+1) {
+
+  Comb(ll nm) : nMax(nm), vFact(nm+1), vInvFact(nm+1) {
     vFact[0] = 1;
-    for (int i = 1; i <= nMax; i++) vFact[i] = i * vFact[i-1];
+    for (ll i = 1; i <= nMax; i++) vFact[i] = (T)i * vFact[i-1];
     vInvFact.at(nMax) = (T)1 / vFact[nMax];
-    for (int i = nMax; i >= 1; i--) vInvFact[i-1] = i * vInvFact[i];
+    for (ll i = nMax; i >= 1; i--) vInvFact[i-1] = (T)i * vInvFact[i];
   }
-  T fact(int n) { return vFact[n]; }
-  T inv_fact(int n) { return vInvFact[n]; }
-  T binom(int n, int r) {
+  T fact(ll n) const { return vFact[n]; }
+  T inv_fact(ll n) const { return vInvFact[n]; }
+  T binom(ll n, ll r) const {
     if (r < 0 || r > n) return (T)0;
     return vFact[n] * vInvFact[r] * vInvFact[n-r];
   }
-  T binom_dup(int n, int r) { return binom(n + r - 1, r); }
+  T binom_dup(ll n, ll r) const { return binom(n + r - 1, r); }
   // The number of permutation extracting r from n.
-  T perm(int n, int r) {
+  T perm(ll n, ll r) const {
     return vFact[n] * vInvFact[n-r];
   }
 };
