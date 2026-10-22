@@ -1,0 +1,7 @@
+6
+cat
+catalog
+dog
+hotdog
+at
+a

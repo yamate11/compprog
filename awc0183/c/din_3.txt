@@ -1,0 +1,11 @@
+10
+abc
+abcd
+abcde
+xyz
+xy
+z
+hello
+helloworld
+world
+or
